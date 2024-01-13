@@ -1,32 +1,12 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 import { api } from '@zix/api';
-import { useSupabase } from '@zix/core/supabase';
-import { Tables } from '@zix/supabase';
 import { router } from 'expo-router';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button } from 'tamagui';
 
 export default function Screen() {
-  const supabase = useSupabase();
   const { data: countriesData } = api.countries.get.useQuery();
-
-  const [countries, setCountries] = useState<Tables<'countries'>>();
-
-  useEffect(() => {
-    async function fetchCountries() {
-      const { data, error } = await supabase
-        .from('countries')
-        .select('*')
-        .limit(10);
-      if (error) {
-        console.error(error);
-      } else {
-        setCountries(data);
-      }
-    }
-    fetchCountries();
-  }, [supabase]);
 
   return (
     <View style={styles.section}>
