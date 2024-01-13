@@ -1,7 +1,7 @@
 {
-  "name": "app-providers",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/app/providers/src",
+  "name": "app-providers-mobile",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/app/providers/mobile/src",
   "projectType": "library",
   "tags": [],
   "targets": {
@@ -13,7 +13,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/app/providers/jest.config.ts"
+        "jestConfig": "libs/app/providers/mobile/jest.config.ts"
       }
     }
   }

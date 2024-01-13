@@ -15,7 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@zix/app/providers": ["libs/app/providers/src/index.ts"],
+      "@zix/app/providers/admin": ["libs/app/providers/admin/src/index.ts"],
+      "@zix/app/providers/mobile": ["libs/app/providers/mobile/src/index.ts"],
+      "@zix/app/providers/website": ["libs/app/providers/website/src/index.ts"],
       "@zix/app/themes/admin": ["libs/app/themes/admin/src/index.ts"],
       "@zix/app/themes/mobile": ["libs/app/themes/mobile/src/index.ts"],
       "@zix/app/themes/shared": ["libs/app/themes/shared/src/index.ts"],

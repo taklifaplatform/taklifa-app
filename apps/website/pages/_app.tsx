@@ -1,6 +1,6 @@
 import type { SolitoAppProps } from 'solito';
 
-import { WebsiteAppProvider } from '@zix/app/providers';
+import { WebsiteAppProvider } from '@zix/app/providers/website';
 import Head from 'next/head';
 
 const ZixApp: React.FC<SolitoAppProps> = ({ Component, pageProps }) => {

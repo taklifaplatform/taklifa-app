@@ -1,4 +1,4 @@
-import { MobileAppProvider } from '@zix/app/providers';
+import { MobileAppProvider } from '@zix/app/providers/mobile';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import React, { useCallback } from 'react';

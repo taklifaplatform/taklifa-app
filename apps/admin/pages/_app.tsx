@@ -1,9 +1,9 @@
 import { AppProps } from 'next/app';
-import { AdminAppProvider } from '@zix/app/providers';
 
 import { Refine } from '@refinedev/core';
-import dataProvider from '@refinedev/simple-rest';
 import routerProvider from '@refinedev/nextjs-router';
+import dataProvider from '@refinedev/simple-rest';
+import { AdminAppProvider } from '@zix/app/providers/admin';
 
 // import { Layout } from 'components/Layout';
 
