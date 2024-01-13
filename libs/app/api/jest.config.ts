@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'features-auth',
+  displayName: 'app-api',
   resolver: '@nx/jest/plugins/resolver',
   preset: 'jest-expo',
   transformIgnorePatterns: [

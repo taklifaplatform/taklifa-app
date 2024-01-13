@@ -3,7 +3,7 @@ import type { SolitoAppProps } from 'solito';
 import { WebsiteAppProvider } from '@zix/app/providers/website';
 import { AuthProviderProps } from '@zix/core/providers';
 import Head from 'next/head';
-import { api } from '@zix/api';
+import { api } from '@zix/app/api';
 
 const ZixApp: React.FC<
   SolitoAppProps<{ initialSession: AuthProviderProps['initialSession'] }>

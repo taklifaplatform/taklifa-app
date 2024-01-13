@@ -1,5 +1,5 @@
 import { useTable } from '@refinedev/core';
-import { Tables } from '@zix/supabase';
+import { Tables } from '@zix/core/supabase';
 import Link from 'next/link';
 
 export default function CountryList() {

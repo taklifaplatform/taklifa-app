@@ -1,7 +1,7 @@
 {
-  "name": "features-auth",
+  "name": "app-api",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/features/auth/src",
+  "sourceRoot": "libs/app/api/src",
   "projectType": "library",
   "tags": [],
   "targets": {
@@ -13,7 +13,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/features/auth/jest.config.ts"
+        "jestConfig": "libs/app/api/jest.config.ts"
       }
     }
   }
