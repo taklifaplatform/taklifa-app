@@ -1,20 +1,19 @@
+import { ProvidersComposer, TamaguiProvider } from '@zix/core/providers';
 
 import React from 'react';
 
-import { View, Text } from 'react-native';
-
-/* eslint-disable-next-line */
 export interface AdminAppProviderProps {
+  children: React.ReactNode;
 }
 
-
-export function AdminAppProvider(props: AdminAppProviderProps) {
+export const AdminAppProvider: React.FC<AdminAppProviderProps> = ({
+  children
+}) => {
   return (
-    <View>
-      <Text>Welcome to admin-app-provider!</Text>
-    </View>
+    <ProvidersComposer providers={[TamaguiProvider]}>
+      {children}
+    </ProvidersComposer>
   );
 };
-
 
 export default AdminAppProvider;

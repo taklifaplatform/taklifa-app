@@ -3,6 +3,7 @@ import '@tamagui/font-inter/css/400.css';
 import '@tamagui/font-inter/css/700.css';
 import type { SolitoAppProps } from 'solito';
 
+import { WebsiteAppProvider } from '@zix/app/providers';
 import Head from 'next/head';
 
 const ZixApp: React.FC<SolitoAppProps> = ({ Component, pageProps }) => {
@@ -16,7 +17,9 @@ const ZixApp: React.FC<SolitoAppProps> = ({ Component, pageProps }) => {
         <meta name="description" content="ZIX Core" />
         <link rel="icon" href="/favicon.svg" />
       </Head>
-      <main className="app">{getLayout(<Component {...pageProps} />)}</main>
+      <WebsiteAppProvider>
+        {getLayout(<Component {...pageProps} />)}
+      </WebsiteAppProvider>
     </>
   );
 };

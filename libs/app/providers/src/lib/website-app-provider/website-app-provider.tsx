@@ -1,20 +1,19 @@
+import { ProvidersComposer, TamaguiProvider } from '@zix/core/providers';
 
 import React from 'react';
 
-import { View, Text } from 'react-native';
-
-/* eslint-disable-next-line */
 export interface WebsiteAppProviderProps {
+  children: React.ReactNode;
 }
 
-
-export function WebsiteAppProvider(props: WebsiteAppProviderProps) {
+export const WebsiteAppProvider: React.FC<WebsiteAppProviderProps> = ({
+  children
+}) => {
   return (
-    <View>
-      <Text>Welcome to website-app-provider!</Text>
-    </View>
+    <ProvidersComposer providers={[TamaguiProvider]}>
+      {children}
+    </ProvidersComposer>
   );
 };
-
 
 export default WebsiteAppProvider;
