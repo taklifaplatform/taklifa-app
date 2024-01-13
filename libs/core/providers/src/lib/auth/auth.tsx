@@ -1,20 +1,33 @@
+import {
+  Session,
+  createPagesBrowserClient
+} from '@supabase/auth-helpers-nextjs';
+import { SessionContextProvider } from '@supabase/auth-helpers-react';
+import { Database } from '@zix/supabase';
 
-import React from 'react';
+import React, { useState } from 'react';
 
-import { View, Text } from 'react-native';
-
-/* eslint-disable-next-line */
-export interface AuthProps {
+export interface AuthProviderProps {
+  initialSession?: Session | null;
+  children?: React.ReactNode;
 }
 
+export const AuthProvider: React.FC<AuthProviderProps> = ({
+  initialSession,
+  children
+}) => {
+  // Create a new supabase browser client on every first render.
+  const [supabaseClient] = useState(() => createPagesBrowserClient<Database>());
 
-export function Auth(props: AuthProps) {
   return (
-    <View>
-      <Text>Welcome to auth!</Text>
-    </View>
+    <SessionContextProvider
+      supabaseClient={supabaseClient}
+      initialSession={initialSession}
+    >
+      {/* <AuthStateChangeHandler /> */}
+      {children}
+    </SessionContextProvider>
   );
 };
 
-
-export default Auth;
+export default AuthProvider;

@@ -1,6 +1,6 @@
-import { Database } from '@zix/supabase'
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { Database } from "@zix/supabase";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 export const useSupabase = () => {
-  return useSupabaseClient<Database>()
-}
+  return createClientComponentClient<Database>();
+};
