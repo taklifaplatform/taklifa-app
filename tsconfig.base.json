@@ -24,6 +24,7 @@
       "@zix/app/themes/website": ["libs/app/themes/website/src/index.ts"],
       "@zix/core/providers": ["libs/core/providers/src/index.ts"],
       "@zix/core/theme": ["libs/core/theme/src/index.ts"],
+      "@zix/core/utils": ["libs/core/utils/src/index.ts"],
       "@zix/supabase": ["libs/supabase/src/index.ts"]
     }
   },
