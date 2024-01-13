@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
-import { useSupabase } from '@zix/core/api';
+import { useSupabase } from '@zix/core/supabase';
 import { Tables } from '@zix/supabase';
 import { router } from 'expo-router';
 import React, { useState, useEffect } from 'react';

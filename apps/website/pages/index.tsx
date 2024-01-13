@@ -1,34 +1,9 @@
-import { useEffect, useState } from 'react';
-
-import { useSupabase } from '@zix/core/api';
 import { api } from '@zix/api';
-import { Tables } from '@zix/supabase';
 import { Button } from 'tamagui';
 
 export function Index() {
-  const supabase = useSupabase();
+  const { data } = api.countries.get.useQuery();
 
-  const countriesQuery = api.countries.get.useQuery();
-
-  const [countries, setCountries] = useState<Tables<'countries'>>();
-
-  useEffect(() => {
-    async function fetchCountries() {
-      console.log('=============');
-      console.log('fetchCountries->supabase:', Object.keys(supabase));
-      console.log('=============');
-      const { data, error } = await supabase
-        .from('countries')
-        .select('*')
-        .limit(10);
-      if (error) {
-        console.error(error);
-      } else {
-        setCountries(data);
-      }
-    }
-    fetchCountries();
-  }, [supabase]);
   /*
    * Replace the elements below with your own.
    *
@@ -44,7 +19,7 @@ export function Index() {
               Welcome website 👋
             </h1>
             <Button>Hello world</Button>
-            {JSON.stringify(countriesQuery?.data)}
+            {JSON.stringify(data)}
           </div>
         </div>
       </div>

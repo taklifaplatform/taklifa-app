@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'core-api',
+  displayName: 'core-supabase',
   resolver: '@nx/jest/plugins/resolver',
   preset: 'jest-expo',
   transformIgnorePatterns: [
