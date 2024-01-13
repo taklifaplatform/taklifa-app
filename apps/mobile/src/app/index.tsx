@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 import { router } from 'expo-router';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { Button } from 'tamagui';
 
 export default function Screen() {
   return (
@@ -10,9 +11,9 @@ export default function Screen() {
       <Text style={[styles.textXL, styles.appTitleText]} testID="heading">
         Welcome Demo 👋
       </Text>
-      <TouchableOpacity onPress={() => router.push('/auth/login')}>
+      <Button onPress={() => router.push('/auth/login')}>
         <Text>Open Login Flox</Text>
-      </TouchableOpacity>
+      </Button>
     </View>
   );
 }

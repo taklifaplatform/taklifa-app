@@ -1,5 +1,7 @@
-# Core Theme
+# core-theme
 
-Note the theme should be and always built with https://studio.tamagui.dev/
+This library was generated with [Nx](https://nx.dev).
 
-TODO: have an internal theme builder
+## Running unit tests
+
+Run `nx test core-theme` to execute the unit tests via [Jest](https://jestjs.io).
