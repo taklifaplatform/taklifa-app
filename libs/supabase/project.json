@@ -24,6 +24,42 @@
       "options": {
         "jestConfig": "libs/supabase/jest.config.ts"
       }
+    },
+    "start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "supabase start",
+        "cwd": "libs/supabase"
+      }
+    },
+
+    "stop": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "supabase start",
+        "cwd": "libs/supabase"
+      }
+    },
+    "status": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "supabase status",
+        "cwd": "libs/supabase"
+      }
+    },
+    "generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "supabase gen types typescript --local --schema public,chat > ./src/types.ts",
+        "cwd": "libs/supabase"
+      }
+    },
+    "reset": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "supabase db reset && supabase start",
+        "cwd": "libs/supabase"
+      }
     }
   },
   "tags": []

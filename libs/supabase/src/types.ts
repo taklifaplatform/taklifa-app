@@ -1,0 +1,1086 @@
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
+
+export interface Database {
+  chat: {
+    Tables: {
+      channel_invitations: {
+        Row: {
+          channel_id: string
+          created_at: string
+          id: string
+          invited_by_user_id: string | null
+          type: string
+          user_id: string
+        }
+        Insert: {
+          channel_id: string
+          created_at?: string
+          id?: string
+          invited_by_user_id?: string | null
+          type?: string
+          user_id: string
+        }
+        Update: {
+          channel_id?: string
+          created_at?: string
+          id?: string
+          invited_by_user_id?: string | null
+          type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "channel_invitations_channel_id_fkey"
+            columns: ["channel_id"]
+            isOneToOne: false
+            referencedRelation: "channels"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "channel_invitations_invited_by_user_id_fkey"
+            columns: ["invited_by_user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "channel_invitations_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      channel_members: {
+        Row: {
+          added_by_user_id: string | null
+          channel_id: string
+          created_at: string
+          id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          added_by_user_id?: string | null
+          channel_id: string
+          created_at?: string
+          id?: string
+          role?: string
+          user_id: string
+        }
+        Update: {
+          added_by_user_id?: string | null
+          channel_id?: string
+          created_at?: string
+          id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "channel_members_added_by_user_id_fkey"
+            columns: ["added_by_user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "channel_members_channel_id_fkey"
+            columns: ["channel_id"]
+            isOneToOne: false
+            referencedRelation: "channels"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "channel_members_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      channels: {
+        Row: {
+          created_at: string
+          creator_id: string
+          disabled: boolean
+          frozen: boolean
+          hidden: boolean
+          id: string
+          is_public: boolean
+          last_message_at: string | null
+          members_count: number
+          name: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          creator_id?: string
+          disabled?: boolean
+          frozen?: boolean
+          hidden?: boolean
+          id?: string
+          is_public?: boolean
+          last_message_at?: string | null
+          members_count?: number
+          name: string
+          type?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          creator_id?: string
+          disabled?: boolean
+          frozen?: boolean
+          hidden?: boolean
+          id?: string
+          is_public?: boolean
+          last_message_at?: string | null
+          members_count?: number
+          name?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "channels_creator_id_fkey"
+            columns: ["creator_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      messages: {
+        Row: {
+          attachments: Json[] | null
+          channel_id: string
+          created_at: string
+          id: string
+          mentioned_users: string[] | null
+          parent_id: string | null
+          quoted_message_id: string | null
+          show_in_channel: boolean | null
+          text: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          attachments?: Json[] | null
+          channel_id: string
+          created_at?: string
+          id?: string
+          mentioned_users?: string[] | null
+          parent_id?: string | null
+          quoted_message_id?: string | null
+          show_in_channel?: boolean | null
+          text: string
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          attachments?: Json[] | null
+          channel_id?: string
+          created_at?: string
+          id?: string
+          mentioned_users?: string[] | null
+          parent_id?: string | null
+          quoted_message_id?: string | null
+          show_in_channel?: boolean | null
+          text?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_channel_id_fkey"
+            columns: ["channel_id"]
+            isOneToOne: false
+            referencedRelation: "channels"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "messages_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "messages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "messages_quoted_message_id_fkey"
+            columns: ["quoted_message_id"]
+            isOneToOne: false
+            referencedRelation: "messages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "messages_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      reactions: {
+        Row: {
+          created_at: string
+          id: string
+          message_id: string
+          score: number
+          type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message_id: string
+          score?: number
+          type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message_id?: string
+          score?: number
+          type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reactions_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "messages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reactions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      users: {
+        Row: {
+          banned: boolean
+          created_at: string
+          id: string
+          image: string | null
+          last_active: string
+          name: string | null
+          online: boolean
+          role: string
+          updated_at: string
+        }
+        Insert: {
+          banned?: boolean
+          created_at?: string
+          id: string
+          image?: string | null
+          last_active?: string
+          name?: string | null
+          online?: boolean
+          role?: string
+          updated_at?: string
+        }
+        Update: {
+          banned?: boolean
+          created_at?: string
+          id?: string
+          image?: string | null
+          last_active?: string
+          name?: string | null
+          online?: boolean
+          role?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "users_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      [_ in never]: never
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+  public: {
+    Tables: {
+      cities: {
+        Row: {
+          country_id: number | null
+          created_at: string | null
+          id: number
+          name: Json
+          ref: string
+          timezone: string | null
+          updated_at: string | null
+          wikidata_id: string | null
+        }
+        Insert: {
+          country_id?: number | null
+          created_at?: string | null
+          id: number
+          name: Json
+          ref: string
+          timezone?: string | null
+          updated_at?: string | null
+          wikidata_id?: string | null
+        }
+        Update: {
+          country_id?: number | null
+          created_at?: string | null
+          id?: number
+          name?: Json
+          ref?: string
+          timezone?: string | null
+          updated_at?: string | null
+          wikidata_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cities_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      companies: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          owner_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          owner_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          owner_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "companies_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      company_invitations: {
+        Row: {
+          company_id: string
+          created_at: string
+          id: string
+          role: string
+          sender_id: string | null
+          token: string
+          updated_at: string
+          user_email: string | null
+          user_name: string
+          user_phone: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          id?: string
+          role: string
+          sender_id?: string | null
+          token: string
+          updated_at?: string
+          user_email?: string | null
+          user_name: string
+          user_phone: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          id?: string
+          role?: string
+          sender_id?: string | null
+          token?: string
+          updated_at?: string
+          user_email?: string | null
+          user_name?: string
+          user_phone?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_invitations_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      company_manager_invitations: {
+        Row: {
+          company_id: string
+          created_at: string | null
+          email: string | null
+          id: string
+          invitation_code: string
+          name: string
+          phone_number: string
+          sender_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          company_id: string
+          created_at?: string | null
+          email?: string | null
+          id: string
+          invitation_code: string
+          name: string
+          phone_number: string
+          sender_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          company_id?: string
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          invitation_code?: string
+          name?: string
+          phone_number?: string
+          sender_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      company_managers: {
+        Row: {
+          company_id: string
+          user_id: string
+        }
+        Insert: {
+          company_id: string
+          user_id: string
+        }
+        Update: {
+          company_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      countries: {
+        Row: {
+          code: string
+          created_at: string | null
+          flag: string | null
+          id: number
+          languages: Json | null
+          name: Json
+          updated_at: string | null
+          wikidata_id: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string | null
+          flag?: string | null
+          id: number
+          languages?: Json | null
+          name: Json
+          updated_at?: string | null
+          wikidata_id?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string | null
+          flag?: string | null
+          id?: number
+          languages?: Json | null
+          name?: Json
+          updated_at?: string | null
+          wikidata_id?: string | null
+        }
+        Relationships: []
+      }
+      country_diallings: {
+        Row: {
+          country_id: number | null
+          created_at: string | null
+          dial_code: string | null
+          id: number
+          international_prefix: string | null
+          mask: string | null
+          mask_char: string | null
+          national_destination_code_lengths: Json | null
+          national_number_lengths: Json | null
+          national_prefix: string | null
+          prefix: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          country_id?: number | null
+          created_at?: string | null
+          dial_code?: string | null
+          id: number
+          international_prefix?: string | null
+          mask?: string | null
+          mask_char?: string | null
+          national_destination_code_lengths?: Json | null
+          national_number_lengths?: Json | null
+          national_prefix?: string | null
+          prefix?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          country_id?: number | null
+          created_at?: string | null
+          dial_code?: string | null
+          id?: number
+          international_prefix?: string | null
+          mask?: string | null
+          mask_char?: string | null
+          national_destination_code_lengths?: Json | null
+          national_number_lengths?: Json | null
+          national_prefix?: string | null
+          prefix?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "country_diallings_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      currencies: {
+        Row: {
+          banknotes: Json | null
+          coins: Json | null
+          created_at: string | null
+          id: number
+          iso_code: string
+          iso_number: string
+          name: string
+          units: Json | null
+          updated_at: string | null
+        }
+        Insert: {
+          banknotes?: Json | null
+          coins?: Json | null
+          created_at?: string | null
+          id: number
+          iso_code: string
+          iso_number: string
+          name: string
+          units?: Json | null
+          updated_at?: string | null
+        }
+        Update: {
+          banknotes?: Json | null
+          coins?: Json | null
+          created_at?: string | null
+          id?: number
+          iso_code?: string
+          iso_number?: string
+          name?: string
+          units?: Json | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      currency_countries: {
+        Row: {
+          country_id: number | null
+          currency_id: number | null
+        }
+        Insert: {
+          country_id?: number | null
+          currency_id?: number | null
+        }
+        Update: {
+          country_id?: number | null
+          currency_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "currency_countries_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "currency_currencies_currency_id_fkey"
+            columns: ["currency_id"]
+            isOneToOne: false
+            referencedRelation: "currencies"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      installs: {
+        Row: {
+          expo_tokens: string[] | null
+          user_id: string
+        }
+        Insert: {
+          expo_tokens?: string[] | null
+          user_id: string
+        }
+        Update: {
+          expo_tokens?: string[] | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "installs_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      locations: {
+        Row: {
+          address: string | null
+          address_complement: string | null
+          city_id: number | null
+          country_id: number | null
+          created_at: string | null
+          id: string
+          is_primary: boolean
+          latitude: string | null
+          locationable_id: number
+          locationable_type: string
+          longitude: string | null
+          name: string | null
+          phone_number: string | null
+          postcode: string | null
+          state_id: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          address?: string | null
+          address_complement?: string | null
+          city_id?: number | null
+          country_id?: number | null
+          created_at?: string | null
+          id: string
+          is_primary?: boolean
+          latitude?: string | null
+          locationable_id: number
+          locationable_type: string
+          longitude?: string | null
+          name?: string | null
+          phone_number?: string | null
+          postcode?: string | null
+          state_id?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          address?: string | null
+          address_complement?: string | null
+          city_id?: number | null
+          country_id?: number | null
+          created_at?: string | null
+          id?: string
+          is_primary?: boolean
+          latitude?: string | null
+          locationable_id?: number
+          locationable_type?: string
+          longitude?: string | null
+          name?: string | null
+          phone_number?: string | null
+          postcode?: string | null
+          state_id?: number | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          about: string | null
+          avatar_url: string | null
+          id: string
+          name: string | null
+        }
+        Insert: {
+          about?: string | null
+          avatar_url?: string | null
+          id: string
+          name?: string | null
+        }
+        Update: {
+          about?: string | null
+          avatar_url?: string | null
+          id?: string
+          name?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      rating_scores: {
+        Row: {
+          created_at: string | null
+          id: string
+          rating_id: string | null
+          rating_type_id: string | null
+          score: number
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id: string
+          rating_id?: string | null
+          rating_type_id?: string | null
+          score?: number
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          rating_id?: string | null
+          rating_type_id?: string | null
+          score?: number
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      rating_types: {
+        Row: {
+          created_at: string | null
+          id: string
+          name: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id: string
+          name: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          name?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      ratings: {
+        Row: {
+          comment: string | null
+          created_at: string | null
+          id: string
+          rateable_id: number
+          rateable_type: string
+          score: number
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string | null
+          id: string
+          rateable_id: number
+          rateable_type: string
+          score?: number
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string | null
+          id?: string
+          rateable_id?: number
+          rateable_type?: string
+          score?: number
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      states: {
+        Row: {
+          code: string
+          country_id: number | null
+          created_at: string | null
+          id: number
+          name: string | null
+          postal: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          code: string
+          country_id?: number | null
+          created_at?: string | null
+          id: number
+          name?: string | null
+          postal?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          code?: string
+          country_id?: number | null
+          created_at?: string | null
+          id?: number
+          name?: string | null
+          postal?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "states_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      taxes: {
+        Row: {
+          cca2: string | null
+          cca3: string | null
+          country_id: number | null
+          created_at: string | null
+          generic_label: string | null
+          id: number
+          name: string
+          rates: Json | null
+          tax_type: string | null
+          updated_at: string | null
+          vat_id: string | null
+          zone: string | null
+        }
+        Insert: {
+          cca2?: string | null
+          cca3?: string | null
+          country_id?: number | null
+          created_at?: string | null
+          generic_label?: string | null
+          id: number
+          name: string
+          rates?: Json | null
+          tax_type?: string | null
+          updated_at?: string | null
+          vat_id?: string | null
+          zone?: string | null
+        }
+        Update: {
+          cca2?: string | null
+          cca3?: string | null
+          country_id?: number | null
+          created_at?: string | null
+          generic_label?: string | null
+          id?: number
+          name?: string
+          rates?: Json | null
+          tax_type?: string | null
+          updated_at?: string | null
+          vat_id?: string | null
+          zone?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "taxes_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      user_verifications: {
+        Row: {
+          birth_date: string | null
+          created_at: string | null
+          driving_license_number: string | null
+          id: string
+          name: string | null
+          nationality_id: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          birth_date?: string | null
+          created_at?: string | null
+          driving_license_number?: string | null
+          id: string
+          name?: string | null
+          nationality_id?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          birth_date?: string | null
+          created_at?: string | null
+          driving_license_number?: string | null
+          id?: string
+          name?: string | null
+          nationality_id?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_verifications_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_verifications_nationality_id_fkey"
+            columns: ["nationality_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      supabase_url: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+}
+
+export type Tables<
+  PublicTableNameOrOptions extends
+    | keyof (Database["public"]["Tables"] & Database["public"]["Views"])
+    | { schema: keyof Database },
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
+        Database[PublicTableNameOrOptions["schema"]]["Views"])
+    : never = never
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
+      Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : PublicTableNameOrOptions extends keyof (Database["public"]["Tables"] &
+      Database["public"]["Views"])
+  ? (Database["public"]["Tables"] &
+      Database["public"]["Views"])[PublicTableNameOrOptions] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : never
+
+export type TablesInsert<
+  PublicTableNameOrOptions extends
+    | keyof Database["public"]["Tables"]
+    | { schema: keyof Database },
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
+    : never = never
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
+  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : never
+
+export type TablesUpdate<
+  PublicTableNameOrOptions extends
+    | keyof Database["public"]["Tables"]
+    | { schema: keyof Database },
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
+    : never = never
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
+  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : never
+
+export type Enums<
+  PublicEnumNameOrOptions extends
+    | keyof Database["public"]["Enums"]
+    | { schema: keyof Database },
+  EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
+    : never = never
+> = PublicEnumNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
+  ? Database["public"]["Enums"][PublicEnumNameOrOptions]
+  : never
+
