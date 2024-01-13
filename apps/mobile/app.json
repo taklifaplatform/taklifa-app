@@ -28,13 +28,15 @@
       "bundler": "metro"
     },
     "plugins": [
+      "expo-router",
       [
         "@config-plugins/detox",
         {
           "skipProguard": false,
           "subdomains": ["10.0.2.2", "localhost"]
         }
-      ]
+      ],
+      "sentry-expo"
     ]
   }
 }
