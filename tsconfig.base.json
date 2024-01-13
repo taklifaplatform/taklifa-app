@@ -23,7 +23,8 @@
       "@zix/app/themes/shared": ["libs/app/themes/shared/src/index.ts"],
       "@zix/app/themes/website": ["libs/app/themes/website/src/index.ts"],
       "@zix/core/providers": ["libs/core/providers/src/index.ts"],
-      "@zix/core/theme": ["libs/core/theme/src/index.ts"]
+      "@zix/core/theme": ["libs/core/theme/src/index.ts"],
+      "@zix/supabase": ["libs/supabase/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
