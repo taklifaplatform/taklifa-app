@@ -61,3 +61,6 @@ apps/mobile-e2e/artifacts
 
 # local env files
 .env
+
+# Next.js
+.next

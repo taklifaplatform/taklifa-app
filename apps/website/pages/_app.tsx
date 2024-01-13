@@ -1,0 +1,24 @@
+import '@tamagui/core/reset.css';
+import '@tamagui/font-inter/css/400.css';
+import '@tamagui/font-inter/css/700.css';
+import type { SolitoAppProps } from 'solito';
+
+import Head from 'next/head';
+
+const ZixApp: React.FC<SolitoAppProps> = ({ Component, pageProps }) => {
+  // reference: https://nextjs.org/docs/pages/building-your-application/routing/pages-and-layouts
+  const getLayout = Component.getLayout || ((page) => page);
+
+  return (
+    <>
+      <Head>
+        <title>ZIX Core</title>
+        <meta name="description" content="ZIX Core" />
+        <link rel="icon" href="/favicon.svg" />
+      </Head>
+      <main className="app">{getLayout(<Component {...pageProps} />)}</main>
+    </>
+  );
+};
+
+export default ZixApp;
