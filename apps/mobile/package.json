@@ -21,7 +21,11 @@
     "react-native-url-polyfill": "*",
     "@tamagui/font-inter": "*",
     "tamagui": "*",
-    "@tamagui/config": "*"
+    "@tamagui/config": "*",
+    "tslib": "*",
+    "@tamagui/themes": "*",
+    "@tamagui/theme-builder": "*",
+    "@tamagui/core": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",

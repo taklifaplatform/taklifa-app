@@ -1,19 +1,16 @@
 import React from 'react';
-import { TamaguiProvider as TGProvider, createTamagui } from 'tamagui';
-
-// TODO: replace with your own config
-import { config } from '@tamagui/config/v2';
-
-const tamaguiConfig = createTamagui(config);
+import { TamaguiProvider as TGProvider, TamaguiInternalConfig } from 'tamagui';
 
 export interface TamaguiProviderProps {
   children: React.ReactNode;
+  config: TamaguiInternalConfig;
 }
 
 export const TamaguiProvider: React.FC<TamaguiProviderProps> = ({
-  children
+  children,
+  config
 }) => {
-  return <TGProvider config={tamaguiConfig}>{children}</TGProvider>;
+  return <TGProvider config={config}>{children}</TGProvider>;
 };
 
 export default TamaguiProvider;
