@@ -1,0 +1,23 @@
+{
+  "name": "app-themes-website",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/app/themes/website/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/app/themes/website",
+        "main": "libs/app/themes/website/src/index.ts",
+        "tsConfig": "libs/app/themes/website/tsconfig.lib.json",
+        "assets": ["libs/app/themes/website/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": []
+}
