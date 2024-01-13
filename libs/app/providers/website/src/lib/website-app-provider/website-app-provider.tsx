@@ -1,23 +1,38 @@
-// import '@tamagui/core/reset.css';
-// import '@tamagui/font-inter/css/400.css';
-// import '@tamagui/font-inter/css/700.css';
-import { Session } from '@supabase/supabase-js'
+import { Session } from '@supabase/supabase-js';
 import { themeConfig } from '@zix/app/themes/website';
-import { ProvidersComposer, TamaguiProvider } from '@zix/core/providers';
+import {
+  AuthProvider,
+  ProvidersComposer,
+  QueryClientProvider,
+  SafeAreaProvider,
+  TamaguiProvider,
+  ToastProvider
+} from '@zix/core/providers';
+import { Provider as JotaiProvider } from 'jotai';
 
 import React from 'react';
 
 export interface WebsiteAppProviderProps {
   children: React.ReactNode;
-  initialSession?: Session | null
+  initialSession?: Session | null;
 }
 
 export const WebsiteAppProvider: React.FC<WebsiteAppProviderProps> = ({
-  children
+  children,
+  initialSession
 }) => {
   return (
     <ProvidersComposer
       providers={[
+        JotaiProvider,
+        QueryClientProvider,
+        SafeAreaProvider,
+        ToastProvider,
+        ({ children }) => (
+          <AuthProvider initialSession={initialSession}>
+            {children}
+          </AuthProvider>
+        ),
         ({ children }) => (
           <TamaguiProvider config={themeConfig}>{children}</TamaguiProvider>
         )
