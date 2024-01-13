@@ -1,19 +1,14 @@
 import { useShow } from '@refinedev/core';
+import { Tables } from '@zix/supabase';
 
-type IPost = {
-  id: string;
-  title: string;
-  description: string;
-};
-
-export default function PostShow() {
+export default function CountryShow() {
   // `posts` resource and the `id` will be inferred from the route.
   // Because we've defined `/posts/show/:id` as the `show` action of the `posts` resource.
   const {
     queryResult: { data, isLoading }
-  } = useShow<IPost>();
+  } = useShow<Tables<'countries'>>();
 
-  const postData = data?.data;
+  const country = data?.data;
 
   return (
     <>
@@ -21,8 +16,8 @@ export default function PostShow() {
         {isLoading && <p>Loading...</p>}
         {!isLoading && (
           <>
-            <h1>{postData?.title}</h1>
-            <p>{postData?.description}</p>
+            <h1>{country?.name?.en}</h1>
+            <p>{JSON.stringify(country?.languages)}</p>
           </>
         )}
       </div>
