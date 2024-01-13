@@ -2,7 +2,7 @@ import {
   CustomToast,
   PortalProvider,
   ToastProvider as ToastProviderOG
-} from '@zix/ui';
+} from '@zix/core/ui';
 import { ToastViewport, ToastViewportProps } from './toast-viewport';
 
 /**

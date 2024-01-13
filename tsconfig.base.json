@@ -27,9 +27,9 @@
       "@zix/core/providers": ["libs/core/providers/src/index.ts"],
       "@zix/core/supabase": ["libs/core/supabase/src/index.ts"],
       "@zix/core/theme": ["libs/core/theme/src/index.ts"],
+      "@zix/core/ui": ["libs/core/ui/src/index.ts"],
       "@zix/core/utils": ["libs/core/utils/src/index.ts"],
-      "@zix/supabase": ["libs/supabase/src/index.ts"],
-      "@zix/ui": ["libs/ui/src/index.ts"]
+      "@zix/supabase": ["libs/supabase/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

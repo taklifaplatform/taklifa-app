@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'ui',
+  displayName: 'core-ui',
   resolver: '@nx/jest/plugins/resolver',
   preset: 'jest-expo',
   transformIgnorePatterns: [

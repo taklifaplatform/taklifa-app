@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 import { api } from '@zix/app/api';
-import { useToastController } from '@zix/ui';
+import { useToastController } from '@zix/core/ui';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button } from 'tamagui';
