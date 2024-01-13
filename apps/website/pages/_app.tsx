@@ -3,7 +3,7 @@ import type { SolitoAppProps } from 'solito';
 import { WebsiteAppProvider } from '@zix/app/providers/website';
 import { AuthProviderProps } from '@zix/core/providers';
 import Head from 'next/head';
-import { api } from '@zix/core/api';
+import { api } from '@zix/api';
 
 const ZixApp: React.FC<
   SolitoAppProps<{ initialSession: AuthProviderProps['initialSession'] }>
@@ -25,5 +25,4 @@ const ZixApp: React.FC<
   );
 };
 
-// TODO: inject trpc client
 export default api.withTRPC(ZixApp);

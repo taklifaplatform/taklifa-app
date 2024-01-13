@@ -3,7 +3,7 @@ import { httpBatchLink } from "@trpc/client";
 import { createTRPCNext } from "@trpc/next";
 import { getBaseUrl } from "@zix/core/utils";
 import SuperJSON from "superjson";
-import { AppRouter } from "../routers/_app";
+import { AppRouter } from "./routers/_app";
 
 // export const api = createTRPCNext({
 export const api = createTRPCNext<AppRouter>({
