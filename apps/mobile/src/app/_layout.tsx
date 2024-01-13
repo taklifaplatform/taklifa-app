@@ -1,6 +1,6 @@
 import { Session } from '@supabase/supabase-js';
 import { MobileAppProvider } from '@zix/app/providers/mobile';
-import { supabase } from '@zix/core/supabase';
+import { supabase } from '@zix/app/api';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import React, { useCallback, useEffect, useState } from 'react';
