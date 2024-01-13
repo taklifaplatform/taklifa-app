@@ -1,18 +1,34 @@
 import { AppProps } from 'next/app';
-import Head from 'next/head';
-import './styles.css';
 
-function CustomApp({ Component, pageProps }: AppProps) {
+import { Refine } from '@refinedev/core';
+import dataProvider from '@refinedev/simple-rest';
+import routerProvider from '@refinedev/nextjs-router';
+
+// import { Layout } from 'components/Layout';
+
+const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
-    <>
-      <Head>
-        <title>Welcome to admin!</title>
-      </Head>
-      <main className="app">
+    <Refine
+      dataProvider={dataProvider('https://api.fake-rest.refine.dev')}
+      routerProvider={routerProvider}
+      resources={[
+        {
+          name: 'posts',
+          list: '/posts',
+          show: '/posts/show/:id'
+        },
+        {
+          name: 'categories',
+          list: '/categories',
+          show: '/categories/show/:id'
+        }
+      ]}
+    >
+      {/* <Layout> */}
         <Component {...pageProps} />
-      </main>
-    </>
+      {/* </Layout> */}
+    </Refine>
   );
-}
+};
 
-export default CustomApp;
+export default App;
