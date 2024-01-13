@@ -1,16 +1,19 @@
 import React from 'react';
+import { TamaguiProvider as TGProvider, createTamagui } from 'tamagui';
 
-import { View, Text } from 'react-native';
+// TODO: replace with your own config
+import { config } from '@tamagui/config/v2';
 
-/* eslint-disable-next-line */
-export interface TamaguiProviderProps {}
+const tamaguiConfig = createTamagui(config);
 
-export function TamaguiProvider(props: TamaguiProviderProps) {
-  return (
-    <View>
-      <Text>Welcome to tamaguiProvider!</Text>
-    </View>
-  );
+export interface TamaguiProviderProps {
+  children: React.ReactNode;
 }
+
+export const TamaguiProvider: React.FC<TamaguiProviderProps> = ({
+  children
+}) => {
+  return <TGProvider config={tamaguiConfig}>{children}</TGProvider>;
+};
 
 export default TamaguiProvider;

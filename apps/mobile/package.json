@@ -19,7 +19,9 @@
     "sentry-expo": "*",
     "expo-font": "*",
     "react-native-url-polyfill": "*",
-    "@tamagui/font-inter": "*"
+    "@tamagui/font-inter": "*",
+    "tamagui": "*",
+    "@tamagui/config": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",

@@ -8,6 +8,7 @@
     "@expo/metro-config": "~0.10.7",
     "@refinedev/nextjs-router": "^5.5.5",
     "@refinedev/simple-rest": "^5.0.1",
+    "@tamagui/config": "^1.85.0",
     "@tamagui/font-inter": "^1.85.0",
     "expo": "49.0.16",
     "expo-router": "^2.0.0",
@@ -23,6 +24,7 @@
     "react-native-web": "~0.19.9",
     "sentry-expo": "~7.1.0",
     "solito": "^4.2.0",
+    "tamagui": "^1.85.0",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
