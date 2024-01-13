@@ -25,7 +25,11 @@
     "tslib": "*",
     "@tamagui/themes": "*",
     "@tamagui/theme-builder": "*",
-    "@tamagui/core": "*"
+    "@tamagui/core": "*",
+    "@supabase/supabase-js": "*",
+    "expo-secure-store": "*",
+    "expo-constants": "*",
+    "@supabase/auth-helpers-react": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",

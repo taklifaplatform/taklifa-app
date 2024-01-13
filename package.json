@@ -9,6 +9,7 @@
     "@react-native-masked-view/masked-view": "0.2.9",
     "@refinedev/nextjs-router": "^5.5.5",
     "@refinedev/simple-rest": "^5.0.1",
+    "@supabase/auth-helpers-react": "^0.4.2",
     "@tamagui/config": "^1.85.0",
     "@tamagui/font-inter": "^1.85.0",
     "@tamagui/next-plugin": "^1.85.0",
@@ -27,7 +28,8 @@
     "sentry-expo": "~7.1.0",
     "solito": "^4.2.0",
     "tamagui": "^1.85.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "expo-secure-store": "~12.3.1"
   },
   "devDependencies": {
     "@config-plugins/detox": "~6.0.0",
