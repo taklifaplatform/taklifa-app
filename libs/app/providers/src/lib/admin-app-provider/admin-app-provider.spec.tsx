@@ -5,7 +5,7 @@ import AdminAppProvider from './admin-app-provider';
 
 describe('AdminAppProvider', () => {
   it('should render successfully', () => {
-    const { root } = render(< AdminAppProvider />);
+    const { root } = render(<AdminAppProvider> </AdminAppProvider>);
     expect(root).toBeTruthy();
   });
 });

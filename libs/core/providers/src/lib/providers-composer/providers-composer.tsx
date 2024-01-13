@@ -21,6 +21,8 @@ export const ProvidersComposer: React.FC<ProvidersComposerProps> = ({
   providers,
   children
 }): React.ReactNode => {
+  if (!providers?.length) return children;
+
   const Providers = compose(providers);
   return <Providers>{children}</Providers>;
 };
