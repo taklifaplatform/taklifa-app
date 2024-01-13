@@ -2,6 +2,6 @@
 
 This library was generated with [Nx](https://nx.dev).
 
-## Building
+## Running unit tests
 
-Run `nx build app-themes-website` to build the library.
+Run `nx test app-themes-website` to execute the unit tests via [Jest](https://jestjs.io).

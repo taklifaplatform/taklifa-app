@@ -1,5 +1,5 @@
 import { ProvidersComposer, TamaguiProvider } from '@zix/core/providers';
-import { themeConfig } from '@zix/app/themes/admin';
+// import { themeConfig } from '@zix/app/themes/admin';
 
 import React from 'react';
 

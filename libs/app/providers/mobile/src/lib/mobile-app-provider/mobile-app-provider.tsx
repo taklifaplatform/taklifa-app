@@ -1,7 +1,6 @@
 import { ProvidersComposer, TamaguiProvider } from '@zix/core/providers';
 import React from 'react';
 
-// import { coreThemeConfig } from '@zix/core/theme';
 import { themeConfig } from '@zix/app/themes/mobile';
 export interface MobileAppProviderProps {
   children: React.ReactNode;
