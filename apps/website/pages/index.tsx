@@ -1,3 +1,5 @@
+import { Button } from 'tamagui';
+
 export function Index() {
   /*
    * Replace the elements below with your own.
@@ -13,6 +15,7 @@ export function Index() {
               <span> Hello there, </span>
               Welcome website 👋
             </h1>
+            <Button>Hello world</Button>
           </div>
         </div>
       </div>

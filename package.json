@@ -10,6 +10,7 @@
     "@refinedev/simple-rest": "^5.0.1",
     "@tamagui/config": "^1.85.0",
     "@tamagui/font-inter": "^1.85.0",
+    "@tamagui/next-plugin": "^1.85.0",
     "expo": "49.0.16",
     "expo-router": "^2.0.0",
     "expo-splash-screen": "~0.20.5",

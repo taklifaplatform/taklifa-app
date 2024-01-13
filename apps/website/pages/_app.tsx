@@ -1,6 +1,3 @@
-import '@tamagui/core/reset.css';
-import '@tamagui/font-inter/css/400.css';
-import '@tamagui/font-inter/css/700.css';
 import type { SolitoAppProps } from 'solito';
 
 import { WebsiteAppProvider } from '@zix/app/providers';
