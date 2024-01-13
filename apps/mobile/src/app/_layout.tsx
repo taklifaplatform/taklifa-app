@@ -1,7 +1,9 @@
+import { Session } from '@supabase/supabase-js';
 import { MobileAppProvider } from '@zix/app/providers/mobile';
+import { supabase } from '@zix/core/supabase';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { LogBox, View } from 'react-native';
 
 LogBox.ignoreAllLogs();
@@ -14,19 +16,33 @@ export default function HomeLayout() {
     InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf')
   });
 
+  const [sessionLoadAttempted, setSessionLoadAttempted] = useState(false);
+  const [initialSession, setInitialSession] = useState<Session | null>(null);
+  useEffect(() => {
+    supabase.auth
+      .getSession()
+      .then(({ data }) => {
+        if (data) {
+          setInitialSession(data.session);
+        }
+      })
+      .finally(() => {
+        setSessionLoadAttempted(true);
+      });
+  }, []);
   const onLayoutRootView = useCallback(async () => {
-    if (fontLoaded) {
+    if (fontLoaded && sessionLoadAttempted) {
       await SplashScreen.hideAsync();
     }
-  }, [fontLoaded]);
+  }, [fontLoaded, sessionLoadAttempted]);
 
-  if (!fontLoaded) {
+  if (!fontLoaded || !sessionLoadAttempted) {
     return null;
   }
 
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <MobileAppProvider>
+      <MobileAppProvider initialSession={initialSession}>
         <Stack screenOptions={{ headerShown: false }} />
       </MobileAppProvider>
     </View>

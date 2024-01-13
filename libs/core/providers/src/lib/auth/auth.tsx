@@ -4,6 +4,7 @@ import {
 } from '@supabase/auth-helpers-nextjs';
 import { SessionContextProvider } from '@supabase/auth-helpers-react';
 import { Database } from '@zix/supabase';
+import { AuthStateChangeHandler } from './auth-state-change-handler';
 
 import React, { useState } from 'react';
 
@@ -24,7 +25,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
       supabaseClient={supabaseClient}
       initialSession={initialSession}
     >
-      {/* <AuthStateChangeHandler /> */}
+      <AuthStateChangeHandler />
       {children}
     </SessionContextProvider>
   );

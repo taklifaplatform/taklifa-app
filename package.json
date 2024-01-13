@@ -19,11 +19,14 @@
     "@trpc/next": "^10.45.0",
     "@trpc/react-query": "^10.45.0",
     "@trpc/server": "^10.45.0",
+    "buffer": "^6.0.3",
     "expo": "49.0.16",
     "expo-crypto": "~12.4.1",
+    "expo-random": "~13.2.0",
     "expo-router": "^2.0.0",
     "expo-secure-store": "~12.3.1",
     "expo-splash-screen": "~0.20.5",
+    "expo-standard-web-crypto": "^1.7.0",
     "expo-status-bar": "~1.6.0",
     "next": "13.4.4",
     "react": "18.2.0",
@@ -37,7 +40,9 @@
     "solito": "^4.2.0",
     "superjson": "^2.2.1",
     "tamagui": "^1.85.0",
-    "tslib": "^2.3.0"
+    "text-encoding": "^0.7.0",
+    "tslib": "^2.3.0",
+    "@react-native-community/netinfo": "9.3.10"
   },
   "devDependencies": {
     "@config-plugins/detox": "~6.0.0",

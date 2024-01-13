@@ -35,7 +35,13 @@
     "superjson": "*",
     "@trpc/react-query": "*",
     "@trpc/client": "*",
-    "@trpc/next": "*"
+    "@trpc/next": "*",
+    "solito": "*",
+    "expo-standard-web-crypto": "*",
+    "buffer": "*",
+    "text-encoding": "*",
+    "@react-native-community/netinfo": "*",
+    "@tanstack/react-query": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",

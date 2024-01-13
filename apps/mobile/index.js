@@ -2,6 +2,7 @@
 // on web.
 // This file should only import and register the root. No components or exports
 // should be added here.
+import './importPolyfills'
 import '@expo/metro-runtime'
 import { renderRootComponent } from 'expo-router/src/renderRootComponent'
 import 'react-native-url-polyfill/auto'

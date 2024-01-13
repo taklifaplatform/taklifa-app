@@ -1,13 +1,13 @@
 import { createTRPCReact } from "@trpc/react-query";
 
-// import type { AppRouter } from "@zix/api";
 import { httpBatchLink } from "@trpc/client";
 import { getBaseUrl } from "@zix/core/utils";
 import SuperJSON from "superjson";
-import { supabase } from "../supabase/client.native";
+import { supabase } from "@zix/core/supabase";
+import { AppRouter } from "./routers/_app";
 
-export const api = createTRPCReact();
-// export const api = createTRPCReact<AppRouter>();
+export const api = createTRPCReact<AppRouter>();
+
 export const createTrpcClient = () =>
   api.createClient({
     transformer: SuperJSON,

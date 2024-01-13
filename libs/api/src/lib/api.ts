@@ -1,4 +1,3 @@
-// import type { AppRouter } from '@zix/api'
 import { httpBatchLink } from "@trpc/client";
 import { createTRPCNext } from "@trpc/next";
 import { getBaseUrl } from "@zix/core/utils";

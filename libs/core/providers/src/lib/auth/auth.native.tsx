@@ -1,20 +1,79 @@
-import { Session } from '@supabase/auth-helpers-nextjs';
+import {
+  Session,
+  SessionContext as SessionContextHelper
+} from '@supabase/auth-helpers-react';
+import { AuthError } from '@supabase/supabase-js';
+import { supabase } from '@zix/core/supabase';
+import { createContext, useEffect, useState } from 'react';
+import { AuthProviderProps } from './auth';
+import { AuthStateChangeHandler } from './auth-state-change-handler';
 
-import React from 'react';
+export const SessionContext = createContext<SessionContextHelper>({
+  session: null,
+  error: null,
+  isLoading: false,
+  supabaseClient: supabase
+});
 
-import { View, Text } from 'react-native';
-
-export interface AuthProps {
-  initialSession?: Session | null;
-  children?: React.ReactNode;
-}
-
-export function Auth(props: AuthProps) {
-  return (
-    <View>
-      <Text>Welcome to auth!</Text>
-    </View>
+export const AuthProvider: React.FC<AuthProviderProps> = ({
+  children,
+  initialSession
+}) => {
+  const [session, setSession] = useState<Session | null>(
+    initialSession || null
   );
-}
+  const [error, setError] = useState<AuthError | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    setIsLoading(true);
+    supabase.auth
+      .getSession()
+      .then(({ data: { session: newSession } }) => {
+        setSession(newSession);
+      })
+      .catch((error) => setError(new AuthError(error.message)))
+      .finally(() => setIsLoading(false));
+  }, []);
+  useEffect(() => {
+    const {
+      data: { subscription }
+    } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      setSession(newSession);
+    });
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
 
-export default Auth;
+  return (
+    <SessionContext.Provider
+      value={
+        session
+          ? {
+              session,
+              isLoading: false,
+              error: null,
+              supabaseClient: supabase
+            }
+          : error
+          ? {
+              error,
+              isLoading: false,
+              session: null,
+              supabaseClient: supabase
+            }
+          : {
+              error: null,
+              isLoading,
+              session: null,
+              supabaseClient: supabase
+            }
+      }
+    >
+      <AuthStateChangeHandler />
+      {children}
+    </SessionContext.Provider>
+  );
+};
+
+export default AuthProvider;

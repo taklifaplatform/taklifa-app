@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import ReactQuery from './react-query';
+import QueryClientProvider from './react-query';
 
-describe('ReactQuery', () => {
+describe('QueryClientProvider', () => {
   it('should render successfully', () => {
-    const { root } = render(< ReactQuery />);
+    const { root } = render(<QueryClientProvider> </QueryClientProvider>);
     expect(root).toBeTruthy();
   });
 });

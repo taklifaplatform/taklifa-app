@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
+import { api } from '@zix/api';
 import { useSupabase } from '@zix/core/supabase';
 import { Tables } from '@zix/supabase';
 import { router } from 'expo-router';
@@ -8,6 +9,8 @@ import { Button } from 'tamagui';
 
 export default function Screen() {
   const supabase = useSupabase();
+  const { data: countriesData } = api.countries.get.useQuery();
+
   const [countries, setCountries] = useState<Tables<'countries'>>();
 
   useEffect(() => {
@@ -30,7 +33,7 @@ export default function Screen() {
       <Text style={styles.textLg}>Hello there,</Text>
       <Text style={[styles.textXL, styles.appTitleText]} testID="heading">
         Welcome Demo 👋
-        {JSON.stringify(countries)}
+        {JSON.stringify(countriesData)}
       </Text>
       <Button onPress={() => router.push('/auth/login')}>
         <Text>Open Login Flox</Text>
