@@ -22,6 +22,7 @@
       "@zix/app/themes/mobile": ["libs/app/themes/mobile/src/index.ts"],
       "@zix/app/themes/shared": ["libs/app/themes/shared/src/index.ts"],
       "@zix/app/themes/website": ["libs/app/themes/website/src/index.ts"],
+      "@zix/core/api": ["libs/core/api/src/index.ts"],
       "@zix/core/providers": ["libs/core/providers/src/index.ts"],
       "@zix/core/theme": ["libs/core/theme/src/index.ts"],
       "@zix/core/utils": ["libs/core/utils/src/index.ts"],
