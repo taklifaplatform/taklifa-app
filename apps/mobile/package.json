@@ -41,7 +41,10 @@
     "buffer": "*",
     "text-encoding": "*",
     "@react-native-community/netinfo": "*",
-    "@tanstack/react-query": "*"
+    "@tanstack/react-query": "*",
+    "react-native-safe-area-context": "*",
+    "@tamagui/toast": "*",
+    "jotai": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",

@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 import { api } from '@zix/api';
+import { useToastController } from '@zix/ui';
 import { router } from 'expo-router';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
@@ -7,17 +8,19 @@ import { Button } from 'tamagui';
 
 export default function Screen() {
   const { data: countriesData } = api.countries.get.useQuery();
+  const toast = useToastController();
 
   return (
     <View style={styles.section}>
       <Text style={styles.textLg}>Hello there,</Text>
-      <Text style={[styles.textXL, styles.appTitleText]} testID="heading">
+
+      <Button onPress={() => toast.show('Hello world')}>
+        <Text>Open Login Flox</Text>
+      </Button>
+      <Text testID="heading">
         Welcome Demo 👋
         {JSON.stringify(countriesData)}
       </Text>
-      <Button onPress={() => router.push('/auth/login')}>
-        <Text>Open Login Flox</Text>
-      </Button>
     </View>
   );
 }

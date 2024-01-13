@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import Theme from './theme';
+import CustomToast from './custom-toast';
 
-describe('Theme', () => {
+describe('CustomToast', () => {
   it('should render successfully', () => {
-    const { root } = render(< Theme />);
+    const { root } = render(< CustomToast />);
     expect(root).toBeTruthy();
   });
 });

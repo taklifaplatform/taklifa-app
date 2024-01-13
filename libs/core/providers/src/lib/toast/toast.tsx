@@ -1,20 +1,40 @@
+import {
+  CustomToast,
+  PortalProvider,
+  ToastProvider as ToastProviderOG
+} from '@zix/ui';
+import { ToastViewport, ToastViewportProps } from './toast-viewport';
 
-import React from 'react';
-
-import { View, Text } from 'react-native';
-
-/* eslint-disable-next-line */
-export interface ToastProps {
-}
-
-
-export function Toast(props: ToastProps) {
+/**
+ * ToastProvider component provides a toast notification system for displaying messages to the user.
+ *
+ * @component
+ * @param children - The content to be rendered inside the ToastProvider.
+ * @param viewportProps - Additional props for the ToastViewport component.
+ * @returns The rendered ToastProvider component.
+ */
+export const ToastProvider: React.FC<
+  { children: React.ReactNode } & ToastViewportProps
+> = ({ children, ...viewportProps }) => {
   return (
-    <View>
-      <Text>Welcome to toast!</Text>
-    </View>
+    <PortalProvider>
+      <ToastProviderOG
+        swipeDirection="up"
+        swipeThreshold={20}
+        duration={6000}
+        native={
+          [
+            /* uncomment the next line to do native toasts on mobile - note that it won't be as customizable as custom toasts, especially on android */
+            // 'mobile'
+          ]
+        }
+      >
+        {children}
+        <ToastViewport {...viewportProps} />
+        <CustomToast />
+      </ToastProviderOG>
+    </PortalProvider>
   );
 };
 
-
-export default Toast;
+export default ToastProvider;

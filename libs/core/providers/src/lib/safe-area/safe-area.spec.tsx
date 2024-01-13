@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import SafeArea from './safe-area';
+import SafeAreaProvider from './safe-area';
 
-describe('SafeArea', () => {
+describe('SafeAreaProvider', () => {
   it('should render successfully', () => {
-    const { root } = render(< SafeArea />);
+    const { root } = render(<SafeAreaProvider> </SafeAreaProvider>);
     expect(root).toBeTruthy();
   });
 });
