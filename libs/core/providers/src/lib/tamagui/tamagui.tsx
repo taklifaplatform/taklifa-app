@@ -1,20 +1,16 @@
-
 import React from 'react';
 
 import { View, Text } from 'react-native';
 
 /* eslint-disable-next-line */
-export interface TamaguiProps {
-}
+export interface TamaguiProviderProps {}
 
-
-export function Tamagui(props: TamaguiProps) {
+export function TamaguiProvider(props: TamaguiProviderProps) {
   return (
     <View>
-      <Text>Welcome to tamagui!</Text>
+      <Text>Welcome to tamaguiProvider!</Text>
     </View>
   );
-};
+}
 
-
-export default Tamagui;
+export default TamaguiProvider;

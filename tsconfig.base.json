@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@zix/app/providers": ["libs/app/providers/src/index.ts"],
       "@zix/core/providers": ["libs/core/providers/src/index.ts"]
     }
   },

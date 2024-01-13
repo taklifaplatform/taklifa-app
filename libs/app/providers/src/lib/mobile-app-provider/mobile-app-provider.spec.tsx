@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import TamaguiProvider from './tamagui';
+import MobileAppProvider from './mobile-app-provider';
 
-describe('Tamagui', () => {
+describe('MobileAppProvider', () => {
   it('should render successfully', () => {
-    const { root } = render(<TamaguiProvider />);
+    const { root } = render(< MobileAppProvider />);
     expect(root).toBeTruthy();
   });
 });

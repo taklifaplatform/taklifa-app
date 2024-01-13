@@ -17,7 +17,9 @@
     "@expo/metro-runtime": "*",
     "expo-router": "*",
     "sentry-expo": "*",
-    "expo-font": "*"
+    "expo-font": "*",
+    "react-native-url-polyfill": "*",
+    "@tamagui/font-inter": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",

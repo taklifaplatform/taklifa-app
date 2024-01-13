@@ -1,3 +1,4 @@
+import { MobileAppProvider } from '@zix/app/providers';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import React, { useCallback } from 'react';
@@ -25,7 +26,9 @@ export default function HomeLayout() {
 
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <Stack screenOptions={{ headerShown: false }} />
+      <MobileAppProvider>
+        <Stack screenOptions={{ headerShown: false }} />
+      </MobileAppProvider>
     </View>
   );
 }

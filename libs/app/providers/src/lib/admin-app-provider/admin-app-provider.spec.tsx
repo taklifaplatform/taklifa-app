@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import TamaguiProvider from './tamagui';
+import AdminAppProvider from './admin-app-provider';
 
-describe('Tamagui', () => {
+describe('AdminAppProvider', () => {
   it('should render successfully', () => {
-    const { root } = render(<TamaguiProvider />);
+    const { root } = render(< AdminAppProvider />);
     expect(root).toBeTruthy();
   });
 });
