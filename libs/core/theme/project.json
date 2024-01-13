@@ -1,0 +1,23 @@
+{
+  "name": "core-theme",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/core/theme/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/core/theme",
+        "main": "libs/core/theme/src/index.ts",
+        "tsConfig": "libs/core/theme/tsconfig.lib.json",
+        "assets": ["libs/core/theme/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": []
+}
