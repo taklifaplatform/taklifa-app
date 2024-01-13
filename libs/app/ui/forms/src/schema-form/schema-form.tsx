@@ -5,8 +5,9 @@ import { ComponentProps, ReactElement } from 'react';
 import { RenderedFieldMap } from '@ts-react/form/lib/src/createSchemaForm';
 import { useFormContext } from 'react-hook-form';
 import { z } from 'zod';
-import FieldError from '../../common/field-error/field-error';
-import FormWrapper from '../../common/form-wrapper/form-wrapper';
+import FieldError from '../common/field-error/field-error';
+import FormWrapper from '../common/form-wrapper/form-wrapper';
+import { TextField } from '../form-fields';
 
 export const formFields = {
   text: z.string(),
@@ -43,11 +44,6 @@ export const formFields = {
   row_date: createUniqueFieldSchema(z.string(), 'row_date'),
   row_time: createUniqueFieldSchema(z.string(), 'row_time'),
 
-  /**
-   * example of how to handle more complex fields
-   */
-  address: createUniqueFieldSchema(AddressSchema, 'address'),
-
   phone: createUniqueFieldSchema(
     z.string().regex(/[0-9]{10}/, 'Please enter a valid phone number'),
     'phone'
@@ -79,7 +75,7 @@ export const formFields = {
   image: createUniqueFieldSchema(z.string(), 'image')
 };
 
-const mapping = [] as const;
+const mapping = [[formFields.text, TextField] as const] as const;
 
 const FormComponent = (props: FormProps) => {
   return (
