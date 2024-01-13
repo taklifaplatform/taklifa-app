@@ -30,6 +30,7 @@
       "@zix/app/themes/shared": ["libs/app/themes/shared/src/index.ts"],
       "@zix/app/themes/website": ["libs/app/themes/website/src/index.ts"],
       "@zix/app/ui/common": ["libs/app/ui/common/src/index.ts"],
+      "@zix/app/ui/core": ["libs/app/ui/core/src/index.ts"],
       "@zix/app/ui/forms": ["libs/app/ui/forms/src/index.ts"],
       "@zix/app/ui/widgets": ["libs/app/ui/widgets/src/index.ts"],
       "@zix/core/providers": ["libs/core/providers/src/index.ts"],
