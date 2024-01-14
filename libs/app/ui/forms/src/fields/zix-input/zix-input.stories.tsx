@@ -1,11 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { XStack, YStack } from 'tamagui';
-import { ZixInput } from './zix-input';
+import ZixInput from './zix-input';
 
 const meta = {
   title: 'Forms/Input',
   component: ZixInput
 } satisfies Meta<typeof ZixInput>;
+
 
 export default meta;
 

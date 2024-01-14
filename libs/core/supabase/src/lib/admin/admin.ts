@@ -1,12 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { Database } from "@zix/supabase";
 
-console.log("==========");
-console.log("process.env::", JSON.stringify({
-  a: process.env.NEXT_PUBLIC_SUPABASE_URL,
-  b: process.env.NEXT_SUPABASE_SERVICE_ROLE,
-}));
-console.log("==========");
 
 const SUPABASE_URL = "http://localhost:54321";
 const SUPABASE_KEY =

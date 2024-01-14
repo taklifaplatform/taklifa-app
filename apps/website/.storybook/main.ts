@@ -3,6 +3,7 @@ import type { StorybookConfig } from "@storybook/nextjs";
 const config: StorybookConfig = {
   stories: [
     "../../../libs/app/ui/**/src/**/*.stories.@(js|jsx|ts|tsx|mdx)",
+    "../../../libs/app/ui/**/src/**/**/*.stories.@(js|jsx|ts|tsx|mdx)",
     // '../../../libs/ui/**/src/**/**/*.stories.@(js|jsx|ts|tsx|mdx)',
     // '../../../libs/ui/**/src/**/**/**/*.stories.@(js|jsx|ts|tsx|mdx)',
   ],
@@ -21,16 +22,27 @@ const config: StorybookConfig = {
           "expo-document-picker",
           "expo-av",
           "expo-asset",
+          'tamagui'
         ],
       },
     },
   ],
   framework: {
-    name: '@storybook/nextjs',
+    name: "@storybook/nextjs",
     options: {
-      // builder: {
-      //   useSWC: false,
-      // },
+      builder: {
+        useSWC: false,
+      },
+    },
+  },
+  core: {
+    builder: {
+      name: "@storybook/builder-webpack5",
+      options: {
+        fsCache: true,
+        lazyCompilation: true,
+        useSWC: true
+      },
     },
   },
   webpackFinal: async (config) => {
@@ -54,7 +66,7 @@ const config: StorybookConfig = {
   },
   env: (config) => ({
     ...config,
-    TAMAGUI_TARGET: 'web',
+    TAMAGUI_TARGET: "web",
   }),
   docs: {
     autodocs: true,
