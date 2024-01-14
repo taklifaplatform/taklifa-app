@@ -22,7 +22,7 @@ const config: StorybookConfig = {
           "expo-document-picker",
           "expo-av",
           "expo-asset",
-          'tamagui'
+          // 'tamagui'
         ],
       },
     },
