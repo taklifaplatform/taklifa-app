@@ -16,6 +16,12 @@
     "baseUrl": ".",
     "paths": {
       "@zix/api": ["libs/api/src/index.ts"],
+      "@zix/app/api": ["libs/app/api/src/index.ts"],
+      "@zix/app/features/auth": ["libs/app/features/auth/src/index.ts"],
+      "@zix/app/features/chat": ["libs/app/features/chat/src/index.ts"],
+      "@zix/app/features/notification": [
+        "libs/app/features/notification/src/index.ts"
+      ],
       "@zix/app/providers/admin": ["libs/app/providers/admin/src/index.ts"],
       "@zix/app/providers/mobile": ["libs/app/providers/mobile/src/index.ts"],
       "@zix/app/providers/website": ["libs/app/providers/website/src/index.ts"],
@@ -23,13 +29,16 @@
       "@zix/app/themes/mobile": ["libs/app/themes/mobile/src/index.ts"],
       "@zix/app/themes/shared": ["libs/app/themes/shared/src/index.ts"],
       "@zix/app/themes/website": ["libs/app/themes/website/src/index.ts"],
+      "@zix/app/ui/common": ["libs/app/ui/common/src/index.ts"],
+      "@zix/app/ui/core": ["libs/app/ui/core/src/index.ts"],
+      "@zix/app/ui/forms": ["libs/app/ui/forms/src/index.ts"],
+      "@zix/app/ui/widgets": ["libs/app/ui/widgets/src/index.ts"],
       "@zix/core/providers": ["libs/core/providers/src/index.ts"],
       "@zix/core/supabase": ["libs/core/supabase/src/index.ts"],
       "@zix/core/theme": ["libs/core/theme/src/index.ts"],
+      "@zix/core/ui": ["libs/core/ui/src/index.ts"],
       "@zix/core/utils": ["libs/core/utils/src/index.ts"],
-      "@zix/features/auth": ["libs/features/auth/src/index.ts"],
-      "@zix/supabase": ["libs/supabase/src/index.ts"],
-      "@zix/ui": ["libs/ui/src/index.ts"]
+      "@zix/supabase": ["libs/supabase/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

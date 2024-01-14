@@ -1,5 +1,5 @@
 import { useShow } from '@refinedev/core';
-import { Tables } from '@zix/supabase';
+import { Tables } from '@zix/app/api';
 
 export default function CountryShow() {
   // `posts` resource and the `id` will be inferred from the route.

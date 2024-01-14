@@ -1,4 +1,4 @@
-import { api } from '@zix/api';
+import { api } from '@zix/app/api';
 import { Button } from 'tamagui';
 
 export function Index() {

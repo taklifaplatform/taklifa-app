@@ -1,4 +1,4 @@
-import { appRouter, createTRPCContext } from "@zix/api";
+import { appRouter, createTRPCContext } from "@zix/app/api";
 import * as trpcNext from "@trpc/server/adapters/next";
 
 // export API handler

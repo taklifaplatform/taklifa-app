@@ -1,5 +1,5 @@
 import { useSafeAreaInsets } from '@zix/core/utils';
-import { ToastViewport as ToastViewportOg } from '@zix/ui';
+import { ToastViewport as ToastViewportOg } from '@zix/core/ui';
 import { ToastViewportProps } from './toast-viewport';
 
 export const ToastViewport = ({ noSafeArea }: ToastViewportProps) => {

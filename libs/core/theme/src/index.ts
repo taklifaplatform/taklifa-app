@@ -1,7 +1,7 @@
-import { config } from '@tamagui/config/v2';
+import { config } from "@tamagui/config/v2";
 
+import { animations } from './lib/animations';
 import { themes } from './lib/theme-builder';
-
 
 /**
  * coreThemeConfig:
@@ -20,4 +20,5 @@ import { themes } from './lib/theme-builder';
 export const coreThemeConfig = {
   ...config,
   themes,
+  animations,
 };

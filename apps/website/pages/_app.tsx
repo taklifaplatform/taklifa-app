@@ -1,9 +1,17 @@
 import type { SolitoAppProps } from 'solito';
 
-import { WebsiteAppProvider } from '@zix/app/providers/website';
-import { AuthProviderProps } from '@zix/core/providers';
+import { api } from '@zix/app/api';
+import {
+  AuthProviderProps,
+  WebsiteAppProvider
+} from '@zix/app/providers/website';
+import { NextPage } from 'next';
 import Head from 'next/head';
-import { api } from '@zix/api';
+import { ReactElement, ReactNode } from 'react';
+
+export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
 
 const ZixApp: React.FC<
   SolitoAppProps<{ initialSession: AuthProviderProps['initialSession'] }>
