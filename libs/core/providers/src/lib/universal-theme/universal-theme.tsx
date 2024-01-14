@@ -12,7 +12,7 @@ export type UniversalThemeProviderProps = {
 export const UniversalThemeProvider: React.FC<UniversalThemeProviderProps> = ({
   children
 }) => {
-  return children;
+  return <>{children}</>
 };
 
 export { useRootTheme, useThemeSetting } from '@tamagui/next-theme';

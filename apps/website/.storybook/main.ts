@@ -26,8 +26,12 @@ const config: StorybookConfig = {
     },
   ],
   framework: {
-    name: "@storybook/nextjs",
-    options: {},
+    name: '@storybook/nextjs',
+    options: {
+      // builder: {
+      //   useSWC: false,
+      // },
+    },
   },
   webpackFinal: async (config) => {
     // Remove export-order-loader since it doesn't work properly for CommonJS code
