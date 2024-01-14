@@ -6,12 +6,12 @@
   "private": true,
   "dependencies": {
     "@expo/metro-config": "~0.10.7",
+    "@react-native-async-storage/async-storage": "1.18.2",
     "@react-native-community/netinfo": "9.3.10",
     "@react-native-masked-view/masked-view": "0.2.9",
     "@refinedev/nextjs-router": "^5.5.5",
     "@refinedev/simple-rest": "^5.0.1",
     "@refinedev/supabase": "^5.7.5",
-    "@storybook/react": "^7.6.8",
     "@supabase/auth-helpers-nextjs": "^0.8.7",
     "@supabase/auth-helpers-react": "^0.4.2",
     "@supabase/supabase-js": "^2.39.3",
@@ -20,6 +20,7 @@
     "@tamagui/helpers-icon": "^1.85.2",
     "@tamagui/lucide-icons": "^1.85.2",
     "@tamagui/next-plugin": "^1.85.0",
+    "@tamagui/next-theme": "^1.85.2",
     "@tamagui/toast": "^1.85.1",
     "@trpc/client": "^10.45.0",
     "@trpc/next": "^10.45.0",
@@ -54,6 +55,8 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.14.5",
+    "@babel/preset-react": "^7.14.5",
     "@config-plugins/detox": "~6.0.0",
     "@expo/cli": "~0.10.13",
     "@nx/cypress": "17.2.8",

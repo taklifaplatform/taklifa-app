@@ -1,3 +1,5 @@
+
+export * from './lib/universal-theme/universal-theme';
 export * from "./lib/providers-composer/providers-composer";
 
 export * from "./lib/auth/auth";
