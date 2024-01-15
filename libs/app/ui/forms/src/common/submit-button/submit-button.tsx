@@ -43,8 +43,8 @@ export const SubmitButton: React.FC<ButtonProps> = (props) => {
       }
       disabled={isSubmitting}
       {...props}
-      h={'$5'}
-      br={'$6'}
+      height={'$5'}
+      borderRadius={'$6'}
     />
   );
 };
