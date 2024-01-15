@@ -41,7 +41,6 @@ const config: StorybookConfig = {
       options: {
         fsCache: true,
         lazyCompilation: true,
-        useSWC: true
       },
     },
   },
