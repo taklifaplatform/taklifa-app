@@ -1,4 +1,4 @@
-export * from "./field-container/field-container";
+export * from "../common/field-container/field-container";
 export * from "./zix-input/zix-input";
 export * from "./zix-auto-complete-field/zix-auto-complete-field";
 export * from "./zix-boolean-field/zix-boolean-field";

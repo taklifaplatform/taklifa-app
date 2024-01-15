@@ -5,7 +5,7 @@ import FieldContainer from './field-container';
 
 describe('FieldContainer', () => {
   it('should render successfully', () => {
-    const { root } = render(< FieldContainer />);
+    const { root } = render(<FieldContainer />);
     expect(root).toBeTruthy();
   });
 });

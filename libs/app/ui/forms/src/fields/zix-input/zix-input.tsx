@@ -3,7 +3,7 @@ import { IconProps } from '@tamagui/helpers-icon';
 import { Eye, EyeOff } from '@tamagui/lucide-icons';
 import FieldContainer, {
   FieldContainerProps
-} from '../field-container/field-container';
+} from '../../common/field-container/field-container';
 import { Ref, forwardRef, useId, useState } from 'react';
 import {
   NativeSyntheticEvent,

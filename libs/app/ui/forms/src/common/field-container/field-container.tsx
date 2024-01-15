@@ -6,10 +6,10 @@ import {
   Paragraph,
   ParagraphProps,
   SizeTokens,
+  Theme,
   ThemeableStack,
   ThemeableStackProps,
   YStack,
-  Theme,
   styled,
   useThemeName
 } from '@zix/app/ui/core';
