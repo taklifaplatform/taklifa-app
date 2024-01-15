@@ -1,2 +1,4 @@
-export * from "./screens";
-export * from "./components/layout";
+
+export * from './screens/register-screen/register-screen';
+
+export * from './screens';
