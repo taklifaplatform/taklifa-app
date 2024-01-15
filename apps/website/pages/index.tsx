@@ -1,5 +1,5 @@
 import { api } from '@zix/app/api';
-import { Button } from 'tamagui';
+import { Button, H1, Text, Theme, View } from '@zix/app/ui/core';
 
 export function Index() {
   const { data } = api.countries.get.useQuery();
@@ -11,18 +11,16 @@ export function Index() {
    */
   return (
     <>
-      <div className="wrapper">
-        <div className="container">
-          <div id="welcome">
-            <h1>
-              <span> Hello there, </span>
-              Welcome website 👋
-            </h1>
-            <Button>Hello world</Button>
-            {JSON.stringify(data)}
-          </div>
-        </div>
-      </div>
+      <Theme inverse>
+        <View p="$12">
+          <H1>
+            <Text> Hello there, </Text>
+            Welcome website 👋
+          </H1>
+          <Button>Hello world</Button>
+          <Text>{JSON.stringify(data)}</Text>
+        </View>
+      </Theme>
     </>
   );
 }

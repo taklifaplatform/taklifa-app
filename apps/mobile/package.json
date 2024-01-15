@@ -44,7 +44,20 @@
     "@tanstack/react-query": "*",
     "react-native-safe-area-context": "*",
     "@tamagui/toast": "*",
-    "jotai": "*"
+    "jotai": "*",
+    "@tamagui/animations-moti": "*",
+    "@storybook/react": "*",
+    "@react-native-async-storage/async-storage": "*",
+    "@react-navigation/native": "*",
+    "@tamagui/next-theme": "*",
+    "expo-status-bar": "*",
+    "@react-navigation/elements": "*",
+    "react-hook-form": "*",
+    "@tamagui/web": "*",
+    "@tamagui/helpers-icon": "*",
+    "@tamagui/lucide-icons": "*",
+    "@ts-react/form": "*",
+    "zod": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",

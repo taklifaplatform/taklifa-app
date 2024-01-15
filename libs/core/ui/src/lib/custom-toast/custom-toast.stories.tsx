@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { CustomToast } from './CustomToast'
+import { CustomToast } from './custom-toast'
 import { useToastController } from '@tamagui/toast'
 import { Button, XStack } from 'tamagui'
 
 const meta: Meta<typeof CustomToast> = {
-  title: 'ui/Toast',
+  title: 'Core/UI/Toast',
   parameters: { layout: 'fullscreen' },
   component: function ToastTrigger() {
     const toastController = useToastController()

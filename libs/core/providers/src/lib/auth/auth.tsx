@@ -3,7 +3,7 @@ import {
   createPagesBrowserClient
 } from '@supabase/auth-helpers-nextjs';
 import { SessionContextProvider } from '@supabase/auth-helpers-react';
-import { Database } from '@zix/supabase';
+import { Database } from '@zix/core/supabase';
 import { AuthStateChangeHandler } from './auth-state-change-handler';
 
 import React, { useState } from 'react';
