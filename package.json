@@ -68,7 +68,9 @@
     "tamagui": "^1.85.7",
     "text-encoding": "^0.7.0",
     "tslib": "^2.3.0",
-    "react-native-safe-area-context": "4.6.3"
+    "react-native-safe-area-context": "4.6.3",
+    "expo-web-browser": "~12.3.2",
+    "expo-apple-authentication": "~6.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.5",
