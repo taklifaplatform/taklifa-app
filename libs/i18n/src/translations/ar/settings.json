@@ -1,0 +1,18 @@
+{
+    "index_title": "الإعدادات",
+    "general": "عام",
+    "change_password": "تغيير كلمة المرور",
+    "change_email": "تغيير البريد الإلكتروني",
+    "privacy_policy": "سياسة الخصوصية",
+    "terms_of_service": "شروط الخدمة",
+    "about_us": "معلومات عنا",
+    "out_social_accounts": "حساباتنا الاجتماعية",
+    "theme_mode": "وضع السمة",
+    "notifications": "الإشعارات",
+    "logout": "تسجيل الخروج",
+    "theme_modes": {
+        "light": "فاتح",
+        "dark": "داكن",
+        "system": "النظام"
+    }
+}

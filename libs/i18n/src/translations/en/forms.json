@@ -1,0 +1,20 @@
+{
+  "name": "Name // Enter your full name",
+  "username": "Username // Enter your username",
+  "phone_number": "Phone Number // Enter your phone number",
+  "password": "Password // Enter your password",
+  "password_confirmation": "Password Confirmation // Enter your password again",
+  "accept_terms": "Accept Terms // Accept terms and conditions",
+  "license_number": "License Number // Enter your license number",
+  "vehicle_driving_license": "Vehicle Driving License // Enter your vehicle driving license",
+  "insurance_image": "Insurance Image // Upload your insurance image",
+  "photo": "Photo // Upload your photo",
+  "pin_code": "Pin Code // Enter your pin code",
+  "company_logo": "Company Logo // Upload your company logo",
+  "company_name": "Company Name // Enter your company name",
+  "company_legal_document": "Company Legal Document // Upload your company legal document",
+  "company_location": "Company Location // Enter your company location",
+  "labels": {
+    "code": "Code"
+  }
+}

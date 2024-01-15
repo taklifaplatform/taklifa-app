@@ -1,0 +1,18 @@
+{
+    "index_title": "Settings",
+    "general": "General",
+    "change_password": "Change Password",
+    "change_email": "Change Email",
+    "privacy_policy": "Privacy Policy",
+    "terms_of_service": "Terms Of Service",
+    "about_us": "About",
+    "out_social_accounts": "Our Social Accounts",
+    "theme_mode": "Theme",
+    "notifications": "Notifications",
+    "logout": "Logout",
+    "theme_modes": {
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
+    }
+}

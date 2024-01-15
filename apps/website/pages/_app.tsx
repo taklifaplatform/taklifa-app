@@ -6,6 +6,7 @@ import {
   NextThemeProvider,
   useRootTheme
 } from '@tamagui/next-theme';
+import { bootMultiLang, MultiLangAppProvider } from '@zix/i18n';
 
 import { api } from '@zix/app/api';
 import {
@@ -27,6 +28,8 @@ export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
+const defaultLang = bootMultiLang();
+
 const ZixApp: React.FC<
   SolitoAppProps<{ initialSession: AuthProviderProps['initialSession'] }>
 > = ({ Component, pageProps }) => {
@@ -42,15 +45,17 @@ const ZixApp: React.FC<
         <meta name="description" content="ZIX Core" />
         <link rel="icon" href="/favicon.svg" />
       </Head>
-      <NextThemeProvider
-        onChangeTheme={(next) => {
-          setTheme(next as ColorScheme);
-        }}
-      >
-        <WebsiteAppProvider initialSession={pageProps.initialSession}>
-          {getLayout(<Component {...pageProps} />)}
-        </WebsiteAppProvider>
-      </NextThemeProvider>
+      <MultiLangAppProvider defaultLang={defaultLang}>
+        <NextThemeProvider
+          onChangeTheme={(next) => {
+            setTheme(next as ColorScheme);
+          }}
+        >
+          <WebsiteAppProvider initialSession={pageProps.initialSession}>
+            {getLayout(<Component {...pageProps} />)}
+          </WebsiteAppProvider>
+        </NextThemeProvider>
+      </MultiLangAppProvider>
     </>
   );
 };

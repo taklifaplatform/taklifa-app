@@ -1,0 +1,12 @@
+{
+  "app_name": "سواعد اللوجستية",
+  "welcome": "مرحبًا",
+  "next": "التالي",
+  "confirm": "تأكيد",
+  "user_types": { "individual": "فرد", "company": "شركة" },
+  "account_types": {
+    "seek": { "service_requestor": "أبحث عن الخدمة", "service_provider": "مقدم الخدمة" }
+  },
+  "select_country": "اختر الدولة",
+  "search": "بحث..."
+}

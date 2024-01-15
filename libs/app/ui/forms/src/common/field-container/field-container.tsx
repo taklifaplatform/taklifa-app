@@ -69,7 +69,7 @@ export const FieldContainer: React.FC<BaseFieldContainerProps> = ({
   error,
   errorMessage,
   helperTextProps,
-  collapsible = true,
+  collapsible,
   ...rest
 }) => {
   const themeName = useThemeName();

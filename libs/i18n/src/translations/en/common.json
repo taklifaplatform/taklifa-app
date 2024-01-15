@@ -1,0 +1,18 @@
+{
+  "app_name": "Sawaeed Logistic",
+  "welcome": "Welcome",
+  "next": "Next",
+  "confirm": "Confirm",
+  "user_types": {
+    "individual": "Individual",
+    "company": "Company"
+  },
+  "account_types": {
+    "seek": {
+      "service_requestor": "Looking for service",
+      "service_provider": "Service provider"
+    }
+  },
+  "select_country": "Select country",
+  "search": "Search..."
+}

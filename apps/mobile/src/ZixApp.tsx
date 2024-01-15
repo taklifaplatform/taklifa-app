@@ -1,3 +1,4 @@
+import { bootMultiLang, MultiLangAppProvider } from '@zix/i18n'
 import { ExpoRoot } from 'expo-router';
 import React from 'react';
 // import { LogBox } from 'react-native'
@@ -6,6 +7,12 @@ import React from 'react';
 // @ts-ignore
 const context = require.context('./app');
 
+const defaultLang = bootMultiLang()
+
 export default function ZixApp() {
-  return <ExpoRoot context={context} />;
+  return (
+    <MultiLangAppProvider defaultLang={defaultLang}>
+      <ExpoRoot context={context} />
+    </MultiLangAppProvider>
+  )
 }
