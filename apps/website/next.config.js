@@ -3,6 +3,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { composePlugins, withNx } = require('@nx/next');
 const { withTamagui } = require('@tamagui/next-plugin')
+const withSvgr = require('next-plugin-svgr');
 
 /**
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
@@ -32,6 +33,7 @@ const tamaguiPlugin = withTamagui({
 const plugins = [
   // Add more Next.js plugins to this list if needed.
   withNx,
+  withSvgr,
   tamaguiPlugin,
 ];
 

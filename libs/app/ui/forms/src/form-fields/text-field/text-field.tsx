@@ -33,7 +33,6 @@ export const TextField: React.FC<TextFieldProps> = (props) => {
 
   return (
     <ZixInput
-      collapsible
       ref={field.ref}
       required={!isOptional}
       label={label}
