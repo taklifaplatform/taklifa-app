@@ -33,12 +33,13 @@ export const TextField: React.FC<TextFieldProps> = (props) => {
 
   return (
     <ZixInput
+      collapsible
       ref={field.ref}
       required={!isOptional}
       label={label}
       placeholder={placeholder}
       error={!!error?.errorMessage}
-      helperText={error?.errorMessage}
+      errorMessage={error?.errorMessage}
       isPassword={props.secureTextEntry}
       spellCheck={isEmail ? false : undefined}
       autoCapitalize={isEmail ? 'none' : undefined}

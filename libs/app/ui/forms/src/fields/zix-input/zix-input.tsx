@@ -129,6 +129,7 @@ export const ZixInput = forwardRef(function ZixInputEl(
     <FieldContainer
       id={id}
       error={error}
+      errorMessage={rest.errorMessage}
       required={required}
       labelProps={labelProps}
       label={label}
