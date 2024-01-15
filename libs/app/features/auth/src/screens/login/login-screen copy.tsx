@@ -18,7 +18,7 @@ const LoginSchema = z
   .object({
     phone: formFields.text.describe('Phone Number'),
     // phone: formFields.phone.describe(t('forms:phone_number').toString()),
-    password: formFields.text.min(8).describe(t('forms:password')),
+    // password: formFields.text.min(8).describe(t('forms:password')),
     // accept_terms: formFields.boolean_checkbox.describe(t('forms:accept_terms'))
   })
   .required({

@@ -101,7 +101,6 @@ export const CustomIcon: React.FC<CustomIconProps> = ({
     return <ArrowRight size={$size} color={style.color} />;
   }
 
-
   if (!IconsMap[$name]) {
     return (
       <Text
