@@ -21,24 +21,28 @@ const IconsMap = Object.keys(Icons).reduce((acc: Record<string, any>, name) => {
   return acc;
 }, {});
 
+const iconNames = [
+  'logo',
+  'avatar',
+  'circle_avatar',
+  'home',
+  'orders',
+  'create',
+  'notifications',
+  'chat',
+  'apps',
+  'success',
+  'arrow_left',
+  'arrow_right',
+  'chevron_left',
+  'chevron_right',
+  'chevrons_left',
+  'chevrons_right'
+];
+
+export type CustomIconName = (typeof iconNames)[number];
 export interface CustomIconProps {
-  name:
-    | 'logo'
-    | 'avatar'
-    | 'circle_avatar'
-    | 'home'
-    | 'orders'
-    | 'create'
-    | 'notifications'
-    | 'chat'
-    | 'apps'
-    | 'success'
-    | 'arrow_left'
-    | 'arrow_right'
-    | 'chevron_left'
-    | 'chevron_right'
-    | 'chevrons_left'
-    | 'chevrons_right';
+  name: CustomIconName;
 
   size?: SizeTokens;
   color?: string;
