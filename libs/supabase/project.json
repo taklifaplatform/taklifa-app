@@ -36,7 +36,7 @@
     "stop": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "supabase start",
+        "command": "supabase stop",
         "cwd": "libs/supabase"
       }
     },
