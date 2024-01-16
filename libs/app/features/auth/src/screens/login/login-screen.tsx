@@ -11,6 +11,7 @@ import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { createParam } from 'solito';
 import { Link } from 'solito/link';
 import { z } from 'zod';
+import AcceptTermsLink from '../../components/accept-terms-link/accept-terms-link';
 // import { AcceptTermsLink } from '../components/AcceptTermsLink';
 const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
 
@@ -18,7 +19,7 @@ const LoginSchema = z
   .object({
     phone: formFields.text.describe('Phone Number'),
     // phone: formFields.phone.describe(t('forms:phone_number').toString()),
-    password: formFields.text.min(8).describe(t('forms:password')),
+    password: formFields.text.min(8).describe(t('forms:password'))
     // accept_terms: formFields.boolean_checkbox.describe(t('forms:accept_terms'))
   })
   .required({
@@ -78,10 +79,10 @@ export const LoginScreen: React.FC = () => {
           password: {
             afterElement: <ForgotPasswordLink />,
             secureTextEntry: true
+          },
+          accept_terms: {
+            prepend: <AcceptTermsLink />
           }
-          // accept_terms: {
-          //   prepend: <AcceptTermsLink />
-          // }
         }}
         renderAfter={({ submit }) => {
           return (
