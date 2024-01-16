@@ -1,2 +1,11 @@
-
-export * from './login/login-screen';
+export * from "./login/login-screen";
+export * from "./register/phone-number-verification-screen";
+export * from "./register/select-account-type-screen";
+export * from "./register/select-user-type-screen";
+export * from "./register/sign-up-screen";
+export * from "./register/sign-up-success-screen";
+export * from "./reset-password/change-password-screen";
+export * from "./reset-password/reset-password-screen";
+export * from "./reset-password/verify-phone-number-screen";
+export * from "./verification/auth-driver-verification-screen";
+export * from "./verification/kyc-verification-screen";
