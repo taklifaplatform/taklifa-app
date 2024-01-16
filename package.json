@@ -45,6 +45,7 @@
     "expo": "49.0.16",
     "expo-apple-authentication": "~6.1.0",
     "expo-crypto": "~12.4.1",
+    "expo-localization": "~14.3.0",
     "expo-random": "~13.2.0",
     "expo-router": "^2.0.0",
     "expo-secure-store": "~12.3.1",
@@ -56,6 +57,8 @@
     "jotai": "^2.6.1",
     "next": "13.4.4",
     "next-plugin-svgr": "^1.1.10",
+    "nextra": "^2.13.2",
+    "nextra-theme-docs": "^2.13.2",
     "raf": "^3.4.1",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
@@ -74,8 +77,7 @@
     "tamagui": "^1.85.7",
     "text-encoding": "^0.7.0",
     "tslib": "^2.3.0",
-    "zod-i18n-map": "^2.25.0",
-    "expo-localization": "~14.3.0"
+    "zod-i18n-map": "^2.25.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.5",
