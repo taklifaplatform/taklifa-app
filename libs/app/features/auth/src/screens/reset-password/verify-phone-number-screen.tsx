@@ -1,20 +1,18 @@
+import { useRouter } from 'solito/router';
+import VerifyPhoneNumberForm from '../../forms/verify-phone-number-form/verify-phone-number-form';
 
-import React from 'react';
+export const ResetPasswordVerifyPhoneNumberScreen = () => {
+  const router = useRouter();
 
-import { View, Text } from 'react-native';
-
-/* eslint-disable-next-line */
-export interface VerifyPhoneNumberScreenProps {
-}
-
-
-export function VerifyPhoneNumberScreen(props: VerifyPhoneNumberScreenProps) {
   return (
-    <View>
-      <Text>Welcome to verify-phone-number-screen!</Text>
-    </View>
+    <VerifyPhoneNumberForm
+      totalSteps={3}
+      activeStep={2}
+      onSuccess={() => {
+        router.push('/auth/reset-password/change');
+      }}
+    />
   );
 };
 
-
-export default VerifyPhoneNumberScreen;
+export default ResetPasswordVerifyPhoneNumberScreen;
