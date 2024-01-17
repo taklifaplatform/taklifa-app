@@ -9,7 +9,13 @@ import {
   View
 } from 'react-native';
 import { Channel } from 'stream-chat';
-import { ChannelList, CircleClose, Search, useTheme } from 'stream-chat-expo';
+import {
+  ChannelList,
+  CircleClose,
+  Search,
+  useChatContext,
+  useTheme
+} from 'stream-chat-expo';
 import { ChannelPreview } from '../src/components/ChannelPreview';
 import { ChatScreenHeader } from '../src/components/ChatScreenHeader';
 import { MessageSearchList } from '../src/components/MessageSearch/MessageSearchList';
@@ -18,7 +24,6 @@ import { usePaginatedSearchedMessages } from '../src/hooks/usePaginatedSearchedM
 import type { ChannelSort } from 'stream-chat';
 
 import { useRouter } from 'solito/router';
-import { useChatClient } from '../hooks/useChatClient';
 import type { StreamChatGenerics } from '../src/types';
 
 const styles = StyleSheet.create({
@@ -67,7 +72,7 @@ const options = {
 };
 
 export function ChannelListScreen() {
-  const { client: chatClient } = useChatClient();
+  const { client: chatClient } = useChatContext();
   const router = useRouter();
   const {
     theme: {

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 import type { MessageFilters, MessageResponse } from "stream-chat";
 
-import { useChatClient } from "../../hooks/useChatClient";
+import { useChatContext } from "stream-chat-expo";
 import type { StreamChatGenerics } from "../types";
 import { DEFAULT_PAGINATION_LIMIT } from "../utils/constants";
 
@@ -18,7 +18,7 @@ export const usePaginatedSearchedMessages = (
   const offset = useRef(0);
   const hasMoreResults = useRef(true);
   const queryInProgress = useRef(false);
-  const { chatClient } = useChatClient();
+  const { client } = useChatContext();
 
   const done = () => {
     queryInProgress.current = false;
@@ -55,10 +55,10 @@ export const usePaginatedSearchedMessages = (
         return;
       }
 
-      const res = await chatClient?.search(
+      const res = await client?.search(
         {
           members: {
-            $in: [chatClient?.user?.id || null],
+            $in: [client?.user?.id || null],
           },
         },
         messageFilters,
@@ -117,7 +117,7 @@ export const usePaginatedSearchedMessages = (
   }, [messageFilters]);
 
   const refreshList = () => {
-    if (!chatClient?.user?.id) return;
+    if (!client?.user?.id) return;
 
     offset.current = 0;
     hasMoreResults.current = true;
