@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useSupabase } from "@zix/core/supabase";
-import { useSessionContext } from "@supabase/auth-helpers-react";
+import { useSessionContext, useSupabase } from "@zix/core/supabase";
 
 function useProfile() {
   const { session } = useSessionContext();

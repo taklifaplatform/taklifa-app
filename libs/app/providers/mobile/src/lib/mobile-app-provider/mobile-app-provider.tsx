@@ -21,25 +21,22 @@ export const MobileAppProvider: React.FC<MobileAppProviderProps> = ({
   initialSession
 }) => {
   return (
-    <ProvidersComposer
-      providers={[
-        JotaiProvider,
-        UniversalThemeProvider,
-        SafeAreaProvider,
-        ({ children }) => (
-          <TamaguiProvider config={themeConfig}>{children}</TamaguiProvider>
-        ),
-        ToastProvider,
-        ({ children }) => (
-          <AuthProvider initialSession={initialSession}>
-            {children}
-          </AuthProvider>
-        ),
-        QueryClientProvider
-      ]}
-    >
-      {children}
-    </ProvidersComposer>
+    <AuthProvider initialSession={initialSession}>
+      <ProvidersComposer
+        providers={[
+          JotaiProvider,
+          UniversalThemeProvider,
+          SafeAreaProvider,
+          ({ children }) => (
+            <TamaguiProvider config={themeConfig}>{children}</TamaguiProvider>
+          ),
+          ToastProvider,
+          QueryClientProvider
+        ]}
+      >
+        {children}
+      </ProvidersComposer>
+    </AuthProvider>
   );
 };
 

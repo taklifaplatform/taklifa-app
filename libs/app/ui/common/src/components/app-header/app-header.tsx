@@ -32,6 +32,9 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   const router = useRouter();
 
   const onAvatarPress = useCallback(() => {
+    console.log('============');
+    console.log('onAvatarPress::', user);
+    console.log('============');
     if (user) {
       router.push('/profile');
     } else {

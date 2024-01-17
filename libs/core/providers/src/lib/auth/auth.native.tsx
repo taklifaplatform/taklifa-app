@@ -1,19 +1,9 @@
-import {
-  Session,
-  SessionContext as SessionContextHelper
-} from '@supabase/auth-helpers-react';
+import { Session } from '@supabase/auth-helpers-react';
 import { AuthError } from '@supabase/supabase-js';
-import { supabase } from '@zix/core/supabase';
-import { createContext, useEffect, useState } from 'react';
+import { SessionContext, supabase } from '@zix/core/supabase';
+import { useEffect, useState } from 'react';
 import { AuthProviderProps } from './auth';
 import { AuthStateChangeHandler } from './auth-state-change-handler';
-
-export const SessionContext = createContext<SessionContextHelper>({
-  session: null,
-  error: null,
-  isLoading: false,
-  supabaseClient: supabase
-});
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({
   children,
