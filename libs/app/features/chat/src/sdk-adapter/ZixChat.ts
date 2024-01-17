@@ -328,6 +328,9 @@ export class ZixChat<
   public static getInstance<
     ZixChatGenerics extends ExtendableGenerics = DefaultGenerics,
   >(): ZixChat<ZixChatGenerics> {
+    console.log("===================");
+    console.log("ZixChat->getInstance");
+    console.log("===================");
     if (!ZixChat._instance) {
       ZixChat._instance = new ZixChat<ZixChatGenerics>();
     }

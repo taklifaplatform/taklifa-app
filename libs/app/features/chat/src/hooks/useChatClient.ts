@@ -11,6 +11,9 @@ export function useChatClient() {
   const [clientReady, setClientReady] = useState(false);
 
   useEffect(() => {
+    console.log('===================')
+    console.log('useChatClient:', useChatClient)
+    console.log('===================')
     if (!client.supabase) {
       client.setSupabaseClient(supabase);
     }

@@ -7,7 +7,8 @@ import {
   SafeAreaProvider,
   TamaguiProvider,
   ToastProvider,
-  UniversalThemeProvider
+  UniversalThemeProvider,
+  ChatProvider
 } from '@zix/core/providers';
 import { Provider as JotaiProvider } from 'jotai';
 import React from 'react';
@@ -31,7 +32,8 @@ export const MobileAppProvider: React.FC<MobileAppProviderProps> = ({
             <TamaguiProvider config={themeConfig}>{children}</TamaguiProvider>
           ),
           ToastProvider,
-          QueryClientProvider
+          QueryClientProvider,
+          ChatProvider
         ]}
       >
         {children}
