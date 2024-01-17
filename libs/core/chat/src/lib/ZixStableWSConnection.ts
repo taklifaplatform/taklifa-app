@@ -1,15 +1,7 @@
-import { RealtimeChannel } from "@supabase/realtime-js";
-import WebSocket from "isomorphic-ws";
-import {
-  ConnectAPIResponse,
-  ConnectionOpen,
-  DefaultGenerics,
-  ExtendableGenerics,
-  LogLevel,
-  UR,
-} from "stream-chat/src/types";
+import { DefaultGenerics, ExtendableGenerics } from "stream-chat/src/types";
 import { addConnectionEventListeners, sleep } from "stream-chat/src/utils";
 import { ZixChat } from "./ZixChat";
+import { RealtimeChannel } from "@supabase/supabase-js";
 
 /**
  * ZixStableWSConnection - A WS connection that reconnects upon failure.
@@ -33,12 +25,12 @@ export class ZixStableWSConnection<
 > {
   // global from constructor
   client: ZixChat<ZixChatGenerics>;
-  globalChannel: RealtimeChannel;
+  globalChannel?: RealtimeChannel;
   //
 
   // local vars
   connectionID?: string;
-  connectionOpen?: ConnectAPIResponse<ZixChatGenerics>;
+  connectionOpen?: any; //ConnectAPIResponse<ZixChatGenerics>;
   consecutiveFailures: number;
   pingInterval: number;
   healthCheckTimeoutRef?: NodeJS.Timeout;
@@ -57,12 +49,14 @@ export class ZixStableWSConnection<
     },
   ) => void;
   requestID: string | undefined;
-  resolvePromise?: (value: ConnectionOpen<ZixChatGenerics>) => void;
+  resolvePromise?: (value: any) => void;
+  // resolvePromise?: (value: ConnectionOpen<ZixChatGenerics>) => void;
   totalFailures: number;
-  ws?: WebSocket;
+  ws?: any;
   wsID: number;
 
-  constructor({ client }: { client: ZixChat<ZixChatGenerics> }) {
+  constructor({ client }: { client: any }) {
+    // constructor({ client }: { client: ZixChat<ZixChatGenerics> }) {
     /** ZixChat client */
     this.client = client;
     /** consecutive failures influence the duration of the timeout */
@@ -88,7 +82,8 @@ export class ZixStableWSConnection<
     addConnectionEventListeners(this.onlineStatusChanged);
   }
 
-  _log(msg: string, extra: UR = {}, level: LogLevel = "info") {
+  _log(msg: string, extra = {}, level = "info") {
+    // _log(msg: string, extra: UR = {}, level: LogLevel = "info") {
     this.client.logger(level, "connection:" + msg, {
       tags: ["connection"],
       ...extra,
@@ -96,10 +91,6 @@ export class ZixStableWSConnection<
     console.log("=========");
     console.log("WS_log::", msg, extra, level);
     console.log("=========");
-  }
-
-  setClient(client: ZixChat<ZixChatGenerics>) {
-    this.client = client;
   }
 
   /**

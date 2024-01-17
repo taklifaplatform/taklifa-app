@@ -18,14 +18,10 @@ module.exports = function (api) {
       [
         '@tamagui/babel-plugin',
         {
-          components: [
-            // '@zix/app/themes/mobile',
-            // '@zix/app/themes/shared',
-            // '@zix/core/theme',
-            'tamagui',
-          ],
+          components: ['tamagui'],
           config: './tamagui.config.ts',
-          disable: true
+          logTimings: true,
+          disableExtraction: process.env.NODE_ENV === 'development',
         },
       ],
       [

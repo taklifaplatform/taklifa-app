@@ -1,7 +1,7 @@
 /* eslint no-unused-vars: "off" */
 /* global process */
 import { SupabaseClient } from "@supabase/supabase-js";
-import { Database, supabase } from "@zix/core/supabase";
+import { Database } from "@zix/core/supabase";
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { Channel, ClientState } from "stream-chat";
 import { ZixStableWSConnection } from "./ZixStableWSConnection";
@@ -22,11 +22,11 @@ import {
   APIResponse,
   AppSettings,
   AppSettingsAPIResponse,
-  BanUserOptions,
   BannedUsersFilters,
   BannedUsersPaginationOptions,
   BannedUsersResponse,
   BannedUsersSort,
+  BanUserOptions,
   BaseDeviceFields,
   BlockList,
   BlockListResponse,
@@ -77,10 +77,10 @@ import {
   FlagReportsFilters,
   FlagReportsPaginationOptions,
   FlagReportsResponse,
-  FlagUserResponse,
   FlagsFilters,
   FlagsPaginationOptions,
   FlagsResponse,
+  FlagUserResponse,
   GetCallTokenResponse,
   GetChannelTypeResponse,
   GetCommandResponse,
@@ -133,6 +133,7 @@ import {
   SegmentFilters,
   SegmentQueryOptions,
   SendFileAPIResponse,
+  StreamChatOptions as ZixChatOptions,
   SyncOptions,
   SyncResponse,
   TaskResponse,
@@ -147,15 +148,14 @@ import {
   UpdateChannelResponse,
   UpdateCommandOptions,
   UpdateCommandResponse,
+  UpdatedMessage,
   UpdateMessageAPIResponse,
   UpdateMessageOptions,
-  UpdatedMessage,
   UserCustomEvent,
   UserFilters,
   UserOptions,
   UserResponse,
   UserSort,
-  StreamChatOptions as ZixChatOptions,
 } from "stream-chat/src/types";
 import { ZixChatApiClient } from "./ZixChatApiClient";
 
@@ -228,8 +228,6 @@ export class ZixChat<
    * new ZixChat('api_key', "secret", { httpsAgent: customAgent })
    */
   constructor() {
-    // setup supabase
-    this.supabase = supabase
     this.listeners = {};
     this.state = new ClientState<ZixChatGenerics>();
     // a list of channels to hide ws events from

@@ -1,12 +1,13 @@
 import React from 'react';
 import { Chat, OverlayProvider } from 'stream-chat-expo';
-import { StreamChat } from 'stream-chat';
+import { ZixChat } from '@zix/core/chat';
+import { useUser } from '@zix/core/auth';
 
 export type ChatProviderProps = {
   children: React.ReactNode;
 };
 
-const client = StreamChat.getInstance('e2yk5ayrht2m');
+const client = ZixChat.getInstance();
 
 const accessToken =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiamxhaGV5In0.sUGnVd7E7bhs4HQTDyTKMnSA2YszXlgkrs2OnaMUQSQ';
@@ -15,6 +16,12 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({
   children,
   ...props
 }) => {
+  const { user } = useUser();
+  React.useEffect(() => {
+    if (user) {
+      client.connectUser(user);
+    }
+  }, [user]);
   return (
     <OverlayProvider>
       <Chat client={client}>{children}</Chat>

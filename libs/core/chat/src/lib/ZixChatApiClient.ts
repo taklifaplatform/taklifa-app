@@ -1,5 +1,4 @@
 import { DefaultGenerics, ExtendableGenerics } from "stream-chat/src/types";
-import { isReturnStatement } from "typescript";
 import { ZixChat } from "./ZixChat";
 import { MessageStatusTypes } from "./constants";
 import { getAppData } from "./data-responses/get-app-data";
@@ -20,7 +19,7 @@ export class ZixChatApiClient<
     options: [],
   };
 
-  constructor(client) {
+  constructor(client: ZixChat<ZixChatGenerics>) {
     this.client = client;
     // GET /app
     this.router.get.push({
@@ -234,7 +233,6 @@ export class ZixChatApiClient<
           data,
         );
 
-        isReturnStatement;
         if (!this.client.user?.id) {
           return {
             error: "User is not logged in",
