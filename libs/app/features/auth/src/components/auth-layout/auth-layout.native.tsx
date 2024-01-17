@@ -1,20 +1,15 @@
-
-import React from 'react';
-
-import { View, Text } from 'react-native';
+import { Stack } from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 /* eslint-disable-next-line */
-export interface AuthLayoutProps {
-}
-
+export interface AuthLayoutProps {}
 
 export function AuthLayout(props: AuthLayoutProps) {
   return (
-    <View>
-      <Text>Welcome to auth-layout!</Text>
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <Stack screenOptions={{ headerShown: false }} />
+    </SafeAreaView>
   );
-};
-
+}
 
 export default AuthLayout;

@@ -9,3 +9,4 @@ export * from "./reset-password/reset-password-screen";
 export * from "./reset-password/verify-phone-number-screen";
 export * from "./verification/auth-driver-verification-screen";
 export * from "./verification/kyc-verification-screen";
+export * from "./onboarding-screen/onboarding-screen";

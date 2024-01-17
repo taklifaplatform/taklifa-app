@@ -1,5 +1,5 @@
-import { RegisterScreen } from '@zix/app/features/auth';
+import { SelectAccountTypeScreen } from '@zix/app/features/auth';
 
 export default function Screen() {
-  return <RegisterScreen />;
+  return <SelectAccountTypeScreen />;
 }
