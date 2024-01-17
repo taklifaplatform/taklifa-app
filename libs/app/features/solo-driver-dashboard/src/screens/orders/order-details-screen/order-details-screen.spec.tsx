@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import OrdersScreen from './orders-screen';
+import OrderDetailsScreen from './order-details-screen';
 
-describe('OrdersScreen', () => {
+describe('OrderDetailsScreen', () => {
   it('should render successfully', () => {
-    const { root } = render(< OrdersScreen />);
+    const { root } = render(< OrderDetailsScreen />);
     expect(root).toBeTruthy();
   });
 });

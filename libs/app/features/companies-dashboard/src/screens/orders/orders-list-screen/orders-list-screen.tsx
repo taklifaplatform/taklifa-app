@@ -4,11 +4,11 @@ import React from 'react';
 import { View, Text } from 'react-native';
 
 /* eslint-disable-next-line */
-export interface OrdersScreenProps {
+export interface OrdersListScreenProps {
 }
 
 
-export function OrdersScreen(props: OrdersScreenProps) {
+export function OrdersListScreen(props: OrdersListScreenProps) {
   return (
     <View>
       <Text>Welcome to orders-screen!</Text>
@@ -17,4 +17,4 @@ export function OrdersScreen(props: OrdersScreenProps) {
 };
 
 
-export default OrdersScreen;
+export default OrdersListScreen;
