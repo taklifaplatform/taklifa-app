@@ -57,7 +57,22 @@
     "@tamagui/helpers-icon": "*",
     "@tamagui/lucide-icons": "*",
     "@ts-react/form": "*",
-    "zod": "*"
+    "zod": "*",
+    "i18next": "*",
+    "expo-localization": "*",
+    "react-i18next": "*",
+    "zod-i18n-map": "*",
+    "@tamagui/react-native-media-driver": "*",
+    "@tamagui/shorthands": "*",
+    "@tamagui/create-theme": "*",
+    "expo-apple-authentication": "*",
+    "expo-web-browser": "*",
+    "@tamagui/linear-gradient": "*",
+    "google-libphonenumber": "*",
+    "moment": "*",
+    "next": "*",
+    "expo-crypto": "*",
+    "expo-updates": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",

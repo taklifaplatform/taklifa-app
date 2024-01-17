@@ -79,7 +79,12 @@
     "tamagui": "^1.85.7",
     "text-encoding": "^0.7.0",
     "tslib": "^2.3.0",
-    "zod-i18n-map": "^2.25.0"
+    "zod-i18n-map": "^2.25.0",
+    "expo-notifications": "~0.20.1",
+    "expo-location": "~16.1.0",
+    "expo-updates": "~0.18.19",
+    "expo-document-picker": "~11.5.4",
+    "expo-image-picker": "~14.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.14.5",
