@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import {
   Image,
   SafeAreaView,
@@ -7,222 +7,240 @@ import {
   Switch,
   Text,
   TouchableOpacity,
-  View,
-} from 'react-native'
-import { useTheme } from 'stream-chat-expo'
+  View
+} from 'react-native';
+import { useTheme } from 'stream-chat-expo';
 
-import { useAppContext } from '../context/AppContext'
-import { useAppOverlayContext } from '../context/AppOverlayContext'
-import { useBottomSheetOverlayContext } from '../context/BottomSheetOverlayContext'
-import { Contacts } from '../icons/Contacts'
-import { Delete } from '../icons/Delete'
-import { File } from '../icons/File'
-import { GoBack } from '../icons/GoBack'
-import { GoForward } from '../icons/GoForward'
-import { Mute } from '../icons/Mute'
-import { Notification } from '../icons/Notification'
-import { Picture } from '../icons/Picture'
-import { Pin } from '../icons/Pin'
-import { getUserActivityStatus } from '../utils/getUserActivityStatus'
+import { useAppOverlayContext } from '../context/AppOverlayContext';
+import { useBottomSheetOverlayContext } from '../context/BottomSheetOverlayContext';
+import { Contacts } from '../icons/Contacts';
+import { Delete } from '../icons/Delete';
+import { File } from '../icons/File';
+import { GoBack } from '../icons/GoBack';
+import { GoForward } from '../icons/GoForward';
+import { Mute } from '../icons/Mute';
+import { Notification } from '../icons/Notification';
+import { Picture } from '../icons/Picture';
+import { Pin } from '../icons/Pin';
+import { getUserActivityStatus } from '../utils/getUserActivityStatus';
 
-import type { RouteProp } from '@react-navigation/native'
-import type { StackNavigationProp } from '@react-navigation/stack'
+import type { RouteProp } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
 
-import type { StackNavigatorParamList } from '../types'
+import { useChatClient } from '../../hooks/useChatClient';
+import type { StackNavigatorParamList } from '../types';
 
 const styles = StyleSheet.create({
   actionContainer: {
     borderBottomWidth: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 20,
+    padding: 20
   },
   actionLabelContainer: {
     alignItems: 'center',
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   avatar: {
     borderRadius: 36,
     height: 72,
-    width: 72,
+    width: 72
   },
   backButton: {
     left: 0,
     paddingLeft: 16,
     position: 'absolute',
-    top: 0,
+    top: 0
   },
   container: {
-    flex: 1,
+    flex: 1
   },
   contentContainer: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   displayName: {
     fontSize: 16,
     fontWeight: '600',
-    paddingTop: 16,
+    paddingTop: 16
   },
   itemText: {
     fontSize: 14,
-    paddingLeft: 16,
+    paddingLeft: 16
   },
   onlineIndicator: {
     borderRadius: 4,
     height: 8,
-    width: 8,
+    width: 8
   },
   onlineStatus: {
     fontSize: 12,
-    paddingLeft: 8,
+    paddingLeft: 8
   },
   onlineStatusContainer: {
     alignItems: 'center',
     flexDirection: 'row',
     paddingBottom: 16,
-    paddingTop: 8,
+    paddingTop: 8
   },
   spacer: {
-    height: 8,
+    height: 8
   },
   userInfoContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 20,
+    paddingTop: 20
   },
   userName: {
-    fontSize: 14,
+    fontSize: 14
   },
   userNameContainer: {
     alignSelf: 'stretch',
     borderTopWidth: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 20,
-  },
-})
+    padding: 20
+  }
+});
 
 type OneOnOneChannelDetailScreenRouteProp = RouteProp<
   StackNavigatorParamList,
   'OneOnOneChannelDetailScreen'
->
+>;
 
 type OneOnOneChannelDetailScreenNavigationProp = StackNavigationProp<
   StackNavigatorParamList,
   'OneOnOneChannelDetailScreen'
->
+>;
 
 type Props = {
-  navigation: OneOnOneChannelDetailScreenNavigationProp
-  route: OneOnOneChannelDetailScreenRouteProp
-}
+  navigation: OneOnOneChannelDetailScreenNavigationProp;
+  route: OneOnOneChannelDetailScreenRouteProp;
+};
 
 const Spacer = () => {
   const {
     theme: {
-      colors: { grey_gainsboro },
-    },
-  } = useTheme()
+      colors: { grey_gainsboro }
+    }
+  } = useTheme();
   return (
     <View
       style={[
         styles.spacer,
         {
-          backgroundColor: grey_gainsboro,
-        },
+          backgroundColor: grey_gainsboro
+        }
       ]}
     />
-  )
-}
+  );
+};
 
 export const OneOnOneChannelDetailScreen: React.FC<Props> = ({
   navigation,
   route: {
-    params: { channel },
-  },
+    params: { channel }
+  }
 }) => {
   const {
     theme: {
-      colors: { accent_green, accent_red, black, border, grey, white, white_smoke },
-    },
-  } = useTheme()
-  const { chatClient } = useAppContext()
-  const { setOverlay } = useAppOverlayContext()
-  const { setData } = useBottomSheetOverlayContext()
+      colors: {
+        accent_green,
+        accent_red,
+        black,
+        border,
+        grey,
+        white,
+        white_smoke
+      }
+    }
+  } = useTheme();
+  const { chatClient } = useChatClient();
+  const { setOverlay } = useAppOverlayContext();
+  const { setData } = useBottomSheetOverlayContext();
 
   const member = Object.values(channel.state.members).find(
     (channelMember) => channelMember.user?.id !== chatClient?.user?.id
-  )
+  );
 
-  const user = member?.user
+  const user = member?.user;
   const [muted, setMuted] = useState(
     chatClient?.mutedUsers &&
-      chatClient?.mutedUsers?.findIndex((mutedUser) => mutedUser.target.id === user?.id) > -1
-  )
+      chatClient?.mutedUsers?.findIndex(
+        (mutedUser) => mutedUser.target.id === user?.id
+      ) > -1
+  );
   const [notificationsEnabled, setNotificationsEnabled] = useState(
     chatClient?.mutedChannels &&
       chatClient.mutedChannels.findIndex(
         (mutedChannel) => mutedChannel.channel?.id === channel.id
       ) > -1
-  )
+  );
 
   /**
    * Opens confirmation sheet for deleting the conversation
    */
   const openDeleteConversationConfirmationSheet = () => {
-    if (!chatClient?.user?.id) return
+    if (!chatClient?.user?.id) return;
     setData({
       confirmText: 'DELETE',
       onConfirm: deleteConversation,
       subtext: 'Are you sure you want to delete this conversation?',
-      title: 'Delete Conversation',
-    })
-    setOverlay('confirmation')
-  }
+      title: 'Delete Conversation'
+    });
+    setOverlay('confirmation');
+  };
 
   /**
    * Leave the group/channel
    */
   const deleteConversation = async () => {
-    await channel.delete()
-    setOverlay('none')
+    await channel.delete();
+    setOverlay('none');
     navigation.reset({
       index: 0,
       routes: [
         {
-          name: 'ChatScreen',
-        },
-      ],
-    })
-  }
+          name: 'ChatScreen'
+        }
+      ]
+    });
+  };
 
-  if (!user) return null
+  if (!user) return null;
 
   return (
     <SafeAreaView style={[{ backgroundColor: white }, styles.container]}>
-      <ScrollView contentContainerStyle={styles.contentContainer} style={styles.container}>
+      <ScrollView
+        contentContainerStyle={styles.contentContainer}
+        style={styles.container}
+      >
         <View style={styles.userInfoContainer}>
           <Image source={{ uri: user.image }} style={styles.avatar} />
           <Text
             style={[
               styles.displayName,
               {
-                color: black,
-              },
+                color: black
+              }
             ]}
           >
             {user.name}
           </Text>
           <View style={styles.onlineStatusContainer}>
             {user.online && (
-              <View style={[{ backgroundColor: accent_green }, styles.onlineIndicator]} />
+              <View
+                style={[
+                  { backgroundColor: accent_green },
+                  styles.onlineIndicator
+                ]}
+              />
             )}
             <Text
               style={[
                 styles.onlineStatus,
                 {
-                  color: black,
-                },
+                  color: black
+                }
               ]}
             >
               {user?.online ? 'Online' : getUserActivityStatus(user)}
@@ -232,16 +250,16 @@ export const OneOnOneChannelDetailScreen: React.FC<Props> = ({
             style={[
               styles.userNameContainer,
               {
-                borderTopColor: border,
-              },
+                borderTopColor: border
+              }
             ]}
           >
             <Text
               style={[
                 styles.userName,
                 {
-                  color: black,
-                },
+                  color: black
+                }
               ]}
             >
               @{user.id}
@@ -250,8 +268,8 @@ export const OneOnOneChannelDetailScreen: React.FC<Props> = ({
               style={[
                 styles.userName,
                 {
-                  color: grey,
-                },
+                  color: grey
+                }
               ]}
             >
               {user.name}
@@ -259,7 +277,7 @@ export const OneOnOneChannelDetailScreen: React.FC<Props> = ({
           </View>
           <TouchableOpacity
             onPress={() => {
-              navigation.goBack()
+              navigation.goBack();
             }}
             style={styles.backButton}
           >
@@ -271,8 +289,8 @@ export const OneOnOneChannelDetailScreen: React.FC<Props> = ({
           style={[
             styles.actionContainer,
             {
-              borderBottomColor: border,
-            },
+              borderBottomColor: border
+            }
           ]}
         >
           <View style={styles.actionLabelContainer}>
@@ -281,8 +299,8 @@ export const OneOnOneChannelDetailScreen: React.FC<Props> = ({
               style={[
                 styles.itemText,
                 {
-                  color: black,
-                },
+                  color: black
+                }
               ]}
             >
               Notifications
@@ -292,15 +310,15 @@ export const OneOnOneChannelDetailScreen: React.FC<Props> = ({
             <Switch
               onValueChange={async () => {
                 if (notificationsEnabled) {
-                  await channel.unmute()
+                  await channel.unmute();
                 } else {
-                  await channel.mute()
+                  await channel.mute();
                 }
-                setNotificationsEnabled((previousState) => !previousState)
+                setNotificationsEnabled((previousState) => !previousState);
               }}
               trackColor={{
                 false: white_smoke,
-                true: accent_green,
+                true: accent_green
               }}
               value={notificationsEnabled}
             />
@@ -310,8 +328,8 @@ export const OneOnOneChannelDetailScreen: React.FC<Props> = ({
           style={[
             styles.actionContainer,
             {
-              borderBottomColor: border,
-            },
+              borderBottomColor: border
+            }
           ]}
         >
           <View style={styles.actionLabelContainer}>
@@ -320,8 +338,8 @@ export const OneOnOneChannelDetailScreen: React.FC<Props> = ({
               style={[
                 styles.itemText,
                 {
-                  color: black,
-                },
+                  color: black
+                }
               ]}
             >
               Mute user
@@ -331,17 +349,17 @@ export const OneOnOneChannelDetailScreen: React.FC<Props> = ({
             <Switch
               onValueChange={async () => {
                 if (muted) {
-                  const r = await chatClient?.unmuteUser(user.id)
-                  console.warn(r)
+                  const r = await chatClient?.unmuteUser(user.id);
+                  console.warn(r);
                 } else {
-                  const r = await chatClient?.muteUser(user.id)
-                  console.warn(r)
+                  const r = await chatClient?.muteUser(user.id);
+                  console.warn(r);
                 }
-                setMuted((previousState) => !previousState)
+                setMuted((previousState) => !previousState);
               }}
               trackColor={{
                 false: white_smoke,
-                true: accent_green,
+                true: accent_green
               }}
               value={muted}
             />
@@ -350,14 +368,14 @@ export const OneOnOneChannelDetailScreen: React.FC<Props> = ({
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('ChannelPinnedMessagesScreen', {
-              channel,
-            })
+              channel
+            });
           }}
           style={[
             styles.actionContainer,
             {
-              borderBottomColor: border,
-            },
+              borderBottomColor: border
+            }
           ]}
         >
           <View style={styles.actionLabelContainer}>
@@ -366,8 +384,8 @@ export const OneOnOneChannelDetailScreen: React.FC<Props> = ({
               style={[
                 styles.itemText,
                 {
-                  color: black,
-                },
+                  color: black
+                }
               ]}
             >
               Pinned Messages
@@ -380,14 +398,14 @@ export const OneOnOneChannelDetailScreen: React.FC<Props> = ({
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('ChannelImagesScreen', {
-              channel,
-            })
+              channel
+            });
           }}
           style={[
             styles.actionContainer,
             {
-              borderBottomColor: border,
-            },
+              borderBottomColor: border
+            }
           ]}
         >
           <View style={styles.actionLabelContainer}>
@@ -396,8 +414,8 @@ export const OneOnOneChannelDetailScreen: React.FC<Props> = ({
               style={[
                 styles.itemText,
                 {
-                  color: black,
-                },
+                  color: black
+                }
               ]}
             >
               Photos and Videos
@@ -410,14 +428,14 @@ export const OneOnOneChannelDetailScreen: React.FC<Props> = ({
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('ChannelFilesScreen', {
-              channel,
-            })
+              channel
+            });
           }}
           style={[
             styles.actionContainer,
             {
-              borderBottomColor: border,
-            },
+              borderBottomColor: border
+            }
           ]}
         >
           <View style={styles.actionLabelContainer}>
@@ -426,8 +444,8 @@ export const OneOnOneChannelDetailScreen: React.FC<Props> = ({
               style={[
                 styles.itemText,
                 {
-                  color: black,
-                },
+                  color: black
+                }
               ]}
             >
               Files
@@ -440,14 +458,14 @@ export const OneOnOneChannelDetailScreen: React.FC<Props> = ({
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('SharedGroupsScreen', {
-              user,
-            })
+              user
+            });
           }}
           style={[
             styles.actionContainer,
             {
-              borderBottomColor: border,
-            },
+              borderBottomColor: border
+            }
           ]}
         >
           <View style={styles.actionLabelContainer}>
@@ -456,8 +474,8 @@ export const OneOnOneChannelDetailScreen: React.FC<Props> = ({
               style={[
                 styles.itemText,
                 {
-                  color: black,
-                },
+                  color: black
+                }
               ]}
             >
               Shared Groups
@@ -473,8 +491,8 @@ export const OneOnOneChannelDetailScreen: React.FC<Props> = ({
           style={[
             styles.actionContainer,
             {
-              borderBottomColor: border,
-            },
+              borderBottomColor: border
+            }
           ]}
         >
           <View style={styles.actionLabelContainer}>
@@ -483,8 +501,8 @@ export const OneOnOneChannelDetailScreen: React.FC<Props> = ({
               style={[
                 styles.itemText,
                 {
-                  color: accent_red,
-                },
+                  color: accent_red
+                }
               ]}
             >
               Delete contact
@@ -493,5 +511,5 @@ export const OneOnOneChannelDetailScreen: React.FC<Props> = ({
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
-  )
-}
+  );
+};

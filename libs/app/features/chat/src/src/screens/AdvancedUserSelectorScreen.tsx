@@ -1,83 +1,89 @@
-import React, { useState } from 'react'
-import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { KeyboardCompatibleView, useTheme, version } from 'stream-chat-expo'
+import React, { useState } from 'react';
+import {
+  Alert,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
+} from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { KeyboardCompatibleView, useTheme, version } from 'stream-chat-expo';
 
-import { ScreenHeader } from '../components/ScreenHeader'
-import { useAppContext } from '../context/AppContext'
+import { ScreenHeader } from '../components/ScreenHeader';
 
 const styles = StyleSheet.create({
   bottomContainer: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 16
   },
   bottomInnerContainer: {
     alignItems: 'center',
     alignSelf: 'flex-end',
     borderRadius: 26,
     padding: 16,
-    width: '100%',
+    width: '100%'
   },
   container: {
-    height: '100%',
+    height: '100%'
   },
   innerContainer: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   input: {
     fontSize: 14,
     includeFontPadding: false,
     padding: 0,
     paddingTop: 0,
-    textAlignVertical: 'center',
+    textAlignVertical: 'center'
   },
   labelsContainer: { paddingHorizontal: 16, paddingTop: 8 },
   labelText: {
     fontSize: 10,
-    fontWeight: '700',
+    fontWeight: '700'
   },
   labelTextContainer: {
     borderRadius: 6,
     height: 48,
     justifyContent: 'center',
     marginTop: 8,
-    paddingHorizontal: 16,
+    paddingHorizontal: 16
   },
   versionText: {
     marginTop: 16,
-    textAlign: 'center',
-  },
-})
+    textAlign: 'center'
+  }
+});
 
 type LabeledTextInputProps = {
-  onChangeText: (text: string) => void
-  value: string
-  error?: boolean
-  label?: string
-}
+  onChangeText: (text: string) => void;
+  value: string;
+  error?: boolean;
+  label?: string;
+};
 
 export const LabeledTextInput: React.FC<LabeledTextInputProps> = ({
   error = false,
   label = '',
   onChangeText,
-  value,
+  value
 }) => {
   const {
     theme: {
-      colors: { accent_blue, accent_red, black, grey, white_smoke },
-    },
-  } = useTheme()
-  const [borderColor, setBorderColor] = useState(white_smoke)
+      colors: { accent_blue, accent_red, black, grey, white_smoke }
+    }
+  } = useTheme();
+  const [borderColor, setBorderColor] = useState(white_smoke);
 
   const onFocus = () => {
-    setBorderColor(accent_blue)
-  }
+    setBorderColor(accent_blue);
+  };
 
   const onBlur = () => {
-    setBorderColor(white_smoke)
-  }
+    setBorderColor(white_smoke);
+  };
 
-  const isEmpty = value === undefined
+  const isEmpty = value === undefined;
 
   return (
     <View
@@ -87,8 +93,8 @@ export const LabeledTextInput: React.FC<LabeledTextInputProps> = ({
           backgroundColor: white_smoke,
           borderColor,
           borderWidth: 1,
-          paddingVertical: !!value || !!error ? 16 : 8,
-        },
+          paddingVertical: !!value || !!error ? 16 : 8
+        }
       ]}
     >
       {!!value && (
@@ -96,8 +102,8 @@ export const LabeledTextInput: React.FC<LabeledTextInputProps> = ({
           style={[
             styles.labelText,
             {
-              color: grey,
-            },
+              color: grey
+            }
           ]}
         >
           {label}
@@ -108,8 +114,8 @@ export const LabeledTextInput: React.FC<LabeledTextInputProps> = ({
           style={[
             styles.labelText,
             {
-              color: accent_red,
-            },
+              color: accent_red
+            }
           ]}
         >
           Please enter {label}
@@ -126,51 +132,50 @@ export const LabeledTextInput: React.FC<LabeledTextInputProps> = ({
           styles.input,
           {
             color: black,
-            fontWeight: isEmpty ? '500' : 'normal',
-          }, // design team wanted placeholder fontWeight of 500
+            fontWeight: isEmpty ? '500' : 'normal'
+          } // design team wanted placeholder fontWeight of 500
         ]}
         value={value}
       />
     </View>
-  )
-}
+  );
+};
 
 export const AdvancedUserSelectorScreen: React.FC = () => {
-  const { bottom } = useSafeAreaInsets()
+  const { bottom } = useSafeAreaInsets();
   const {
     theme: {
-      colors: { button_background, button_text, grey_gainsboro, white_snow },
-    },
-  } = useTheme()
+      colors: { button_background, button_text, grey_gainsboro, white_snow }
+    }
+  } = useTheme();
 
-  const { loginUser } = useAppContext()
-  const [apiKey, setApiKey] = useState('')
-  const [apiKeyError, setApiKeyError] = useState(false)
-  const [userId, setUserId] = useState('')
-  const [userIdError, setUserIdError] = useState(false)
-  const [userName, setUserName] = useState('')
-  const [userToken, setUserToken] = useState('')
-  const [userTokenError, setUserTokenError] = useState(false)
+  const [apiKey, setApiKey] = useState('');
+  const [apiKeyError, setApiKeyError] = useState(false);
+  const [userId, setUserId] = useState('');
+  const [userIdError, setUserIdError] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [userToken, setUserToken] = useState('');
+  const [userTokenError, setUserTokenError] = useState(false);
 
   const isValidInput = () => {
-    let isValid = true
+    let isValid = true;
     if (!apiKey) {
-      setApiKeyError(true)
-      isValid = false
+      setApiKeyError(true);
+      isValid = false;
     }
 
     if (!userId) {
-      setUserIdError(true)
-      isValid = false
+      setUserIdError(true);
+      isValid = false;
     }
 
     if (!userToken) {
-      setUserTokenError(true)
-      isValid = false
+      setUserTokenError(true);
+      isValid = false;
     }
 
-    return isValid
-  }
+    return isValid;
+  };
   return (
     <KeyboardCompatibleView keyboardVerticalOffset={0}>
       <View
@@ -178,8 +183,8 @@ export const AdvancedUserSelectorScreen: React.FC = () => {
           styles.container,
           {
             backgroundColor: white_snow,
-            paddingBottom: bottom,
-          },
+            paddingBottom: bottom
+          }
         ]}
       >
         <ScreenHeader titleText="Advanced Options" />
@@ -189,8 +194,8 @@ export const AdvancedUserSelectorScreen: React.FC = () => {
               error={apiKeyError}
               label="Chat API Key"
               onChangeText={(text) => {
-                setApiKeyError(false)
-                setApiKey(text)
+                setApiKeyError(false);
+                setApiKey(text);
               }}
               value={apiKey}
             />
@@ -198,8 +203,8 @@ export const AdvancedUserSelectorScreen: React.FC = () => {
               error={userIdError}
               label="User ID"
               onChangeText={(text) => {
-                setUserIdError(false)
-                setUserId(text)
+                setUserIdError(false);
+                setUserId(text);
               }}
               value={userId}
             />
@@ -207,15 +212,15 @@ export const AdvancedUserSelectorScreen: React.FC = () => {
               error={userTokenError}
               label="User Token"
               onChangeText={(text) => {
-                setUserTokenError(false)
-                setUserToken(text)
+                setUserTokenError(false);
+                setUserToken(text);
               }}
               value={userToken}
             />
             <LabeledTextInput
               label="Username (optional)"
               onChangeText={(text) => {
-                setUserName(text)
+                setUserName(text);
               }}
               value={userName}
             />
@@ -223,31 +228,31 @@ export const AdvancedUserSelectorScreen: React.FC = () => {
           <View style={styles.bottomContainer}>
             <TouchableOpacity
               onPress={async () => {
-                if (!isValidInput()) return
+                if (!isValidInput()) return;
 
                 try {
-                  await loginUser({
+                  console.log({
                     apiKey,
                     userId,
                     userName,
-                    userToken,
-                  })
+                    userToken
+                  });
                 } catch (e) {
                   Alert.alert(
                     'Login resulted in error. Please make sure you have entered valid credentials'
-                  )
+                  );
                 }
               }}
               style={[
                 styles.bottomInnerContainer,
                 {
-                  backgroundColor: button_background,
-                },
+                  backgroundColor: button_background
+                }
               ]}
             >
               <Text
                 style={{
-                  color: button_text,
+                  color: button_text
                 }}
               >
                 Login
@@ -257,8 +262,8 @@ export const AdvancedUserSelectorScreen: React.FC = () => {
               style={[
                 styles.versionText,
                 {
-                  color: grey_gainsboro,
-                },
+                  color: grey_gainsboro
+                }
               ]}
             >
               Stream SDK v{version}
@@ -267,5 +272,5 @@ export const AdvancedUserSelectorScreen: React.FC = () => {
         </View>
       </View>
     </KeyboardCompatibleView>
-  )
-}
+  );
+};

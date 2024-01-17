@@ -1,65 +1,70 @@
-import React from 'react'
-import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { Edit, Group, User, useTheme } from 'stream-chat-expo'
+import React from 'react';
+import {
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
+import { Edit, Group, User, useTheme } from 'stream-chat-expo';
 
-import { useAppContext } from '../context/AppContext'
-
-import type { DrawerContentComponentProps } from '@react-navigation/drawer'
+import { useChatClient } from '../../hooks/useChatClient';
 
 const styles = StyleSheet.create({
   avatar: {
     borderRadius: 20,
     height: 40,
-    width: 40,
+    width: 40
   },
   container: {
-    flex: 1,
+    flex: 1
   },
   menuContainer: {
     flex: 1,
     justifyContent: 'space-between',
-    marginTop: 16,
+    marginTop: 16
   },
   menuItem: {
     alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 12
   },
   menuTitle: {
     fontSize: 14,
     fontWeight: '500',
-    marginLeft: 16,
+    marginLeft: 16
   },
   userName: {
     fontSize: 16,
     fontWeight: '600',
-    marginLeft: 16,
+    marginLeft: 16
   },
   userRow: {
     alignItems: 'center',
     flexDirection: 'row',
-    padding: 8,
-  },
-})
+    padding: 8
+  }
+});
 
-export const MenuDrawer: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
+export const MenuDrawer: React.FC = ({ navigation }) => {
   const {
     theme: {
-      colors: { black, grey, white },
-    },
-  } = useTheme()
+      colors: { black, grey, white }
+    }
+  } = useTheme();
 
-  const { chatClient, logout } = useAppContext()
+  const { chatClient } = useChatClient();
 
-  if (!chatClient) return null
+  if (!chatClient) return null;
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: white }]}>
       <View style={styles.userRow}>
         <Image
           source={{
-            uri: chatClient.user?.image,
+            uri: chatClient.user?.image
           }}
           style={styles.avatar}
         />
@@ -67,8 +72,8 @@ export const MenuDrawer: React.FC<DrawerContentComponentProps> = ({ navigation }
           style={[
             styles.userName,
             {
-              color: black,
-            },
+              color: black
+            }
           ]}
         >
           {chatClient.user?.name}
@@ -85,15 +90,17 @@ export const MenuDrawer: React.FC<DrawerContentComponentProps> = ({ navigation }
               style={[
                 styles.menuTitle,
                 {
-                  color: black,
-                },
+                  color: black
+                }
               ]}
             >
               New Direct Messages
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate('NewGroupChannelAddMemberScreen')}
+            onPress={() =>
+              navigation.navigate('NewGroupChannelAddMemberScreen')
+            }
             style={styles.menuItem}
           >
             <Group height={24} pathFill={grey} width={24} />
@@ -101,8 +108,8 @@ export const MenuDrawer: React.FC<DrawerContentComponentProps> = ({ navigation }
               style={[
                 styles.menuTitle,
                 {
-                  color: black,
-                },
+                  color: black
+                }
               ]}
             >
               New Group
@@ -111,7 +118,7 @@ export const MenuDrawer: React.FC<DrawerContentComponentProps> = ({ navigation }
         </View>
         <TouchableOpacity
           onPress={() => {
-            logout()
+            alert('logout()');
           }}
           style={styles.menuItem}
         >
@@ -120,8 +127,8 @@ export const MenuDrawer: React.FC<DrawerContentComponentProps> = ({ navigation }
             style={[
               styles.menuTitle,
               {
-                color: black,
-              },
+                color: black
+              }
             ]}
           >
             Sign Out
@@ -129,5 +136,5 @@ export const MenuDrawer: React.FC<DrawerContentComponentProps> = ({ navigation }
         </TouchableOpacity>
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};

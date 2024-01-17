@@ -1,19 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { useAppContext } from '../context/AppContext';
-import { getUserActivityStatus } from '../utils/getUserActivityStatus';
+import { getUserActivityStatus } from "../utils/getUserActivityStatus";
 
-import type { Channel } from 'stream-chat';
+import type { Channel } from "stream-chat";
 
-import type { StreamChatGenerics } from '../types';
+import { useChatClient } from "../../hooks/useChatClient";
+import type { StreamChatGenerics } from "../types";
 
-export const useChannelMembersStatus = (channel: Channel<StreamChatGenerics>) => {
+export const useChannelMembersStatus = (
+  channel: Channel<StreamChatGenerics>,
+) => {
   const watchersCount = channel.state.watcher_count;
   const memberCount = channel?.data?.member_count;
 
   const getStatus = () => {
-    let newStatus = '';
-    const isOneOnOneConversation = memberCount === 2 && channel.id?.indexOf('!members-') === 0;
+    let newStatus = "";
+    const isOneOnOneConversation = memberCount === 2 &&
+      channel.id?.indexOf("!members-") === 0;
 
     if (isOneOnOneConversation) {
       const result = Object.values({ ...channel.state.members }).find(
@@ -23,16 +26,18 @@ export const useChannelMembersStatus = (channel: Channel<StreamChatGenerics>) =>
       return (newStatus = getUserActivityStatus(result?.user));
     } else {
       const memberCountText = `${memberCount} Members`;
-      const onlineCountText = watchersCount > 0 ? `${watchersCount} Online` : '';
+      const onlineCountText = watchersCount > 0
+        ? `${watchersCount} Online`
+        : "";
 
-      newStatus = `${[memberCountText, onlineCountText].join(',')}`;
+      newStatus = `${[memberCountText, onlineCountText].join(",")}`;
 
       return newStatus;
     }
   };
 
   const [status, setStatus] = useState(getStatus());
-  const { chatClient } = useAppContext();
+  const { chatClient } = useChatClient();
 
   useEffect(() => {
     setStatus(getStatus());

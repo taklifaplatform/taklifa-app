@@ -26,5 +26,5 @@ export function useChatClient() {
     }
   }, [profile]);
 
-  return { client, clientReady };
+  return { client, chatClient: client, clientReady };
 }

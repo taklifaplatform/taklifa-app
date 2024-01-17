@@ -2,7 +2,6 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { useTheme } from 'stream-chat-expo'
 
-import { useAppContext } from '../context/AppContext'
 
 const styles = StyleSheet.create({
   unreadContainer: {
@@ -26,7 +25,7 @@ export const UnreadCountBadge: React.FC = () => {
     },
   } = useTheme()
 
-  const { unreadCount } = useAppContext()
+  const unreadCount = 10 // TODO une unreadCount from context
 
   return (
     <View style={[styles.unreadContainer, { backgroundColor: accent_red }]}>

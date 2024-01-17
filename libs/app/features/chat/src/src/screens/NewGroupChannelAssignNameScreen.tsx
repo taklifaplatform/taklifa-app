@@ -1,30 +1,33 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, TextInput, View } from 'react-native'
-import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg'
-import { Check, generateRandomId, useTheme, useViewport } from 'stream-chat-expo'
+import React, { useState } from 'react';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
+import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
+import {
+  Check,
+  generateRandomId,
+  useTheme,
+  useViewport
+} from 'stream-chat-expo';
 
-import { RoundButton } from '../components/RoundButton'
-import { ScreenHeader } from '../components/ScreenHeader'
-import { UserSearchResults } from '../components/UserSearch/UserSearchResults'
-import { useAppContext } from '../context/AppContext'
-import { useUserSearchContext } from '../context/UserSearchContext'
+import type { StackNavigationProp } from '@react-navigation/stack';
+import { RoundButton } from '../components/RoundButton';
+import { ScreenHeader } from '../components/ScreenHeader';
+import { UserSearchResults } from '../components/UserSearch/UserSearchResults';
+import { useUserSearchContext } from '../context/UserSearchContext';
 
-import type { StackNavigationProp } from '@react-navigation/stack'
-
-import type { StackNavigatorParamList } from '../types'
-
+import { useChatClient } from '../../hooks/useChatClient';
+import type { StackNavigatorParamList } from '../types';
 const styles = StyleSheet.create({
   absolute: { position: 'absolute' },
   container: {
-    flex: 1,
+    flex: 1
   },
   gradient: {
     height: 24,
     paddingHorizontal: 8,
-    paddingVertical: 5,
+    paddingVertical: 5
   },
   header: {
-    borderBottomWidth: 0,
+    borderBottomWidth: 0
   },
   inputBox: {
     flex: 1,
@@ -34,86 +37,95 @@ const styles = StyleSheet.create({
     padding: 0, // removal of default text input padding on android
     paddingHorizontal: 16,
     paddingTop: 0, // removal of iOS top padding for weird centering
-    textAlignVertical: 'center', // for android vertical text centering
+    textAlignVertical: 'center' // for android vertical text centering
   },
   inputBoxContainer: {
     alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: 16,
-    paddingVertical: 20,
+    paddingVertical: 20
   },
   memberLength: { fontSize: 12 },
   nameText: {
     fontSize: 12,
-    textAlignVertical: 'center',
-  },
-})
+    textAlignVertical: 'center'
+  }
+});
 
 type ConfirmButtonProps = {
-  disabled?: boolean
-  onPress?: () => void
-}
+  disabled?: boolean;
+  onPress?: () => void;
+};
 
 const ConfirmButton: React.FC<ConfirmButtonProps> = (props) => {
-  const { disabled, onPress } = props
+  const { disabled, onPress } = props;
   const {
     theme: {
-      colors: { accent_blue, grey },
-    },
-  } = useTheme()
+      colors: { accent_blue, grey }
+    }
+  } = useTheme();
 
   return (
     <RoundButton disabled={disabled} onPress={onPress}>
       <Check pathFill={!disabled ? accent_blue : grey} />
     </RoundButton>
-  )
-}
+  );
+};
 
 type NewGroupChannelAssignNameScreenNavigationProp = StackNavigationProp<
   StackNavigatorParamList,
   'NewGroupChannelAssignNameScreen'
->
+>;
 
 export type NewGroupChannelAssignNameScreenProps = {
-  navigation: NewGroupChannelAssignNameScreenNavigationProp
-}
+  navigation: NewGroupChannelAssignNameScreenNavigationProp;
+};
 
-export const NewGroupChannelAssignNameScreen: React.FC<NewGroupChannelAssignNameScreenProps> = ({
-  navigation,
-}) => {
-  const { chatClient } = useAppContext()
-  const { selectedUserIds, selectedUsers } = useUserSearchContext()
+export const NewGroupChannelAssignNameScreen: React.FC<
+  NewGroupChannelAssignNameScreenProps
+> = ({ navigation }) => {
+  const { chatClient } = useChatClient();
+  const { selectedUserIds, selectedUsers } = useUserSearchContext();
 
   const {
     theme: {
-      colors: { bg_gradient_end, bg_gradient_start, black, border, grey, white_snow },
-    },
-  } = useTheme()
-  const { vw } = useViewport()
+      colors: {
+        bg_gradient_end,
+        bg_gradient_start,
+        black,
+        border,
+        grey,
+        white_snow
+      }
+    }
+  } = useTheme();
+  const { vw } = useViewport();
 
-  const [groupName, setGroupName] = useState('')
+  const [groupName, setGroupName] = useState('');
 
-  if (!chatClient) return null
+  if (!chatClient) return null;
 
   const onConfirm = () => {
-    if (!chatClient.user || !selectedUsers || !groupName) return
+    if (!chatClient.user || !selectedUsers || !groupName) return;
 
     const channel = chatClient.channel('messaging', generateRandomId(), {
       members: [...selectedUserIds, chatClient.user?.id],
-      name: groupName,
-    })
+      name: groupName
+    });
 
     // TODO: Maybe there is a better way to do this.
-    navigation.pop(2)
+    navigation.pop(2);
     navigation.replace('ChannelScreen', {
-      channelId: channel.id,
-    })
-  }
+      channelId: channel.id
+    });
+  };
 
   return (
     <View style={styles.container}>
       <ScreenHeader
-        RightContent={() => <ConfirmButton disabled={!groupName} onPress={onConfirm} />}
+        RightContent={() => (
+          <ConfirmButton disabled={!groupName} onPress={onConfirm} />
+        )}
         style={styles.header}
         titleText="Name of Group Chat"
       />
@@ -123,8 +135,8 @@ export const NewGroupChannelAssignNameScreen: React.FC<NewGroupChannelAssignName
             styles.inputBoxContainer,
             {
               backgroundColor: white_snow,
-              borderColor: border,
-            },
+              borderColor: border
+            }
           ]}
         >
           <Text style={[styles.nameText, { color: grey }]}>NAME</Text>
@@ -136,15 +148,21 @@ export const NewGroupChannelAssignNameScreen: React.FC<NewGroupChannelAssignName
             style={[
               styles.inputBox,
               {
-                color: black,
-              },
+                color: black
+              }
             ]}
             value={groupName}
           />
         </View>
         <View style={styles.gradient}>
           <Svg height={24} style={styles.absolute} width={vw(100)}>
-            <Rect fill="url(#gradient)" height={24} width={vw(100)} x={0} y={0} />
+            <Rect
+              fill="url(#gradient)"
+              height={24}
+              width={vw(100)}
+              x={0}
+              y={0}
+            />
             <Defs>
               <LinearGradient
                 gradientUnits="userSpaceOnUse"
@@ -154,7 +172,11 @@ export const NewGroupChannelAssignNameScreen: React.FC<NewGroupChannelAssignName
                 y1={0}
                 y2={24}
               >
-                <Stop offset={1} stopColor={bg_gradient_start} stopOpacity={1} />
+                <Stop
+                  offset={1}
+                  stopColor={bg_gradient_start}
+                  stopOpacity={1}
+                />
                 <Stop offset={0} stopColor={bg_gradient_end} stopOpacity={1} />
               </LinearGradient>
             </Defs>
@@ -163,8 +185,8 @@ export const NewGroupChannelAssignNameScreen: React.FC<NewGroupChannelAssignName
             style={[
               styles.memberLength,
               {
-                color: grey,
-              },
+                color: grey
+              }
             ]}
           >
             {selectedUsers.length} Members
@@ -180,5 +202,5 @@ export const NewGroupChannelAssignNameScreen: React.FC<NewGroupChannelAssignName
         )}
       </View>
     </View>
-  )
-}
+  );
+};

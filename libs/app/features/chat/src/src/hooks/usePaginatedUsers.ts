@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
-import { useAppContext } from '../context/AppContext';
+import type { UserFilters, UserResponse } from "stream-chat";
 
-import type { UserFilters, UserResponse } from 'stream-chat';
-
-import type { StreamChatGenerics } from '../types';
+import { useChatClient } from "../../hooks/useChatClient";
+import type { StreamChatGenerics } from "../types";
 
 export type PaginatedUsers = {
   clearText: () => void;
@@ -22,31 +21,41 @@ export type PaginatedUsers = {
   setInitialResults: React.Dispatch<
     React.SetStateAction<UserResponse<StreamChatGenerics>[] | null>
   >;
-  setResults: React.Dispatch<React.SetStateAction<UserResponse<StreamChatGenerics>[]>>;
+  setResults: React.Dispatch<
+    React.SetStateAction<UserResponse<StreamChatGenerics>[]>
+  >;
   setSearchText: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedUsers: React.Dispatch<React.SetStateAction<UserResponse<StreamChatGenerics>[]>>;
+  setSelectedUsers: React.Dispatch<
+    React.SetStateAction<UserResponse<StreamChatGenerics>[]>
+  >;
   toggleUser: (user: UserResponse<StreamChatGenerics>) => void;
 };
 
 export const usePaginatedUsers = (): PaginatedUsers => {
-  const { chatClient } = useAppContext();
+  const { chatClient } = useChatClient();
 
-  const [initialResults, setInitialResults] = useState<UserResponse<StreamChatGenerics>[] | null>(
+  const [initialResults, setInitialResults] = useState<
+    UserResponse<StreamChatGenerics>[] | null
+  >(
     null,
   );
   const [loading, setLoading] = useState(true);
-  const [results, setResults] = useState<UserResponse<StreamChatGenerics>[]>([]);
-  const [searchText, setSearchText] = useState('');
+  const [results, setResults] = useState<UserResponse<StreamChatGenerics>[]>(
+    [],
+  );
+  const [searchText, setSearchText] = useState("");
   const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
-  const [selectedUsers, setSelectedUsers] = useState<UserResponse<StreamChatGenerics>[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<
+    UserResponse<StreamChatGenerics>[]
+  >([]);
 
   const hasMoreResults = useRef(true);
   const offset = useRef(0);
   const queryInProgress = useRef(false);
 
   const reset = () => {
-    setSearchText('');
-    fetchUsers('');
+    setSearchText("");
+    fetchUsers("");
     setSelectedUserIds([]);
     setSelectedUsers([]);
   };
@@ -57,7 +66,7 @@ export const usePaginatedUsers = (): PaginatedUsers => {
       prevSelectedUserIds.push(user.id);
       return prevSelectedUserIds;
     });
-    setSearchText('');
+    setSearchText("");
     setResults(initialResults || []);
   };
 
@@ -112,7 +121,7 @@ export const usePaginatedUsers = (): PaginatedUsers => {
     }
   };
 
-  const fetchUsers = async (query = '') => {
+  const fetchUsers = async (query = "") => {
     if (queryInProgress.current || !chatClient?.userID) return;
     setLoading(true);
 
@@ -122,7 +131,7 @@ export const usePaginatedUsers = (): PaginatedUsers => {
         id: {
           $nin: [chatClient?.userID],
         },
-        role: 'user',
+        role: "user",
       };
 
       if (query) {
@@ -157,7 +166,10 @@ export const usePaginatedUsers = (): PaginatedUsers => {
       }
 
       // Dumb check to avoid duplicates
-      if (query === searchText && results.findIndex((r) => res?.users[0].id === r.id) > -1) {
+      if (
+        query === searchText &&
+        results.findIndex((r) => res?.users[0].id === r.id) > -1
+      ) {
         queryInProgress.current = false;
         return;
       }
@@ -169,7 +181,9 @@ export const usePaginatedUsers = (): PaginatedUsers => {
         return r.concat(res?.users || []);
       });
 
-      if (res?.users.length < 10 && (offset.current === 0 || query === searchText)) {
+      if (
+        res?.users.length < 10 && (offset.current === 0 || query === searchText)
+      ) {
         hasMoreResults.current = false;
       }
 
@@ -193,8 +207,8 @@ export const usePaginatedUsers = (): PaginatedUsers => {
 
   return {
     clearText: () => {
-      setSearchText('');
-      fetchUsers('');
+      setSearchText("");
+      fetchUsers("");
     },
     initialResults,
     loading,
