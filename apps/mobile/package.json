@@ -86,7 +86,8 @@
     "@supabase/realtime-js": "*",
     "@gorhom/bottom-sheet": "*",
     "react-native-reanimated": "*",
-    "@react-navigation/core": "*"
+    "@react-navigation/core": "*",
+    "seamless-immutable": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",
