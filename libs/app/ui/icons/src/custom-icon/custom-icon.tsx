@@ -37,7 +37,10 @@ const iconNames = [
   'chevron_left',
   'chevron_right',
   'chevrons_left',
-  'chevrons_right'
+  'chevrons_right',
+  'star',
+  'half_star',
+  'local_shipping'
 ];
 
 export type CustomIconName = (typeof iconNames)[number];

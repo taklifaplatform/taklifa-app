@@ -9,6 +9,9 @@ import Logo from "./icons/logo.svg";
 import Notifications from "./icons/notifications.svg";
 import Orders from "./icons/orders.svg";
 import Success from "./icons/success.svg";
+import Star from "./icons/star.svg";
+import HalfStar from "./icons/half-star.svg";
+import LocalShipping from "./icons/local-shipping.svg";
 
 // arts
 import CompanyCars from "./arts/company-cars.svg";
@@ -21,7 +24,9 @@ export {
   Avatar,
   Chat,
   CompanyCars,
+  HalfStar,
   Home,
+  LocalShipping,
   Logo,
   // arts
   LookingForService,
@@ -29,5 +34,6 @@ export {
   Orders,
   ServiceProvider,
   SoloTransporterCar,
+  Star,
   Success,
 };
