@@ -30,7 +30,7 @@ export default function Screen() {
         showBackButton
         headerTitle={() => <DashboardSwitcher user={user} companies={data} />}
         headerRight={() => (
-          <TouchableOpacity onPress={() => router.push('/settings')}>
+          <TouchableOpacity onPress={() => router.push('/account/settings')}>
             <Cog size="$2" />
           </TouchableOpacity>
         )}

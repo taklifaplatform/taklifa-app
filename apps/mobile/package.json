@@ -73,7 +73,9 @@
     "next": "*",
     "expo-crypto": "*",
     "expo-updates": "*",
-    "@react-navigation/bottom-tabs": "*"
+    "@react-navigation/bottom-tabs": "*",
+    "base64-arraybuffer": "*",
+    "expo-image-picker": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",
