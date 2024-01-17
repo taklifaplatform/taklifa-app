@@ -88,7 +88,6 @@
     "react-native-web": "^0.19.10",
     "sentry-expo": "~7.1.0",
     "solito": "^4.2.0",
-    "stream-chat": "^8.14.5",
     "stream-chat-expo": "^5.22.1",
     "superjson": "^2.2.1",
     "tamagui": "^1.85.7",
