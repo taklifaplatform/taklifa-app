@@ -3,7 +3,7 @@ import { t } from 'i18next';
 import { useMemo } from 'react';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
-import { useUser } from '../../hooks/useUser';
+import { useUser } from '@zix/core/auth';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 import { CustomIcon } from '@zix/app/ui/icons';
 import { SubmitButton } from '@zix/app/ui/forms';

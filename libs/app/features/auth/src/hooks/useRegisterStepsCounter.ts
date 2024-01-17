@@ -1,5 +1,5 @@
+import { useUser } from "@zix/core/auth";
 import { useMemo } from "react";
-import { useUser } from "./useUser";
 
 export function useRegisterStepsCounter() {
   const { user } = useUser();

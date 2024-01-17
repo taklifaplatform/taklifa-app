@@ -1,7 +1,7 @@
 import { User } from "@supabase/supabase-js";
 import { useCallback } from "react";
 import { useRouter } from "solito/router";
-import { useUser } from "./useUser";
+import { useUser } from "@zix/core/auth";
 
 export function useUserRedirect() {
   const { user } = useUser();

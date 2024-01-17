@@ -44,6 +44,7 @@
       "@zix/app/ui/forms": ["libs/app/ui/forms/src/index.ts"],
       "@zix/app/ui/icons": ["libs/app/ui/icons/src/index.ts"],
       "@zix/app/ui/widgets": ["libs/app/ui/widgets/src/index.ts"],
+      "@zix/core/auth": ["libs/core/auth/src/index.ts"],
       "@zix/core/providers": ["libs/core/providers/src/index.ts"],
       "@zix/core/supabase": ["libs/core/supabase/src/index.ts"],
       "@zix/core/theme": ["libs/core/theme/src/index.ts"],

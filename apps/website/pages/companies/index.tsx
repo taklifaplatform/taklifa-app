@@ -1,4 +1,4 @@
-import { CompaniesScreen } from 'app/features/companies/companies-screen'
+// import { CompaniesScreen } from 'app/features/companies/companies-screen'
 import Head from 'next/head'
 import { userProtectedGetSSP } from 'utils/userProtected'
 import { NextPageWithLayout } from 'pages/_app'
@@ -10,7 +10,7 @@ export const Page: NextPageWithLayout = () => {
       <Head>
         <title>Companies</title>
       </Head>
-      <CompaniesScreen />
+      {/* <CompaniesScreen /> */}
     </>
   )
 }

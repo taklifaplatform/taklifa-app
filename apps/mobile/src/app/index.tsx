@@ -14,7 +14,7 @@ export default function Screen() {
         alignItems="center"
         justifyContent="center"
         onLayout={() => {
-          router.replace('/auth');
+          router.replace('/customer');
         }}
       >
         <Theme name="light">
