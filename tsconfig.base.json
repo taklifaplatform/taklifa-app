@@ -17,10 +17,20 @@
     "paths": {
       "@zix/api": ["libs/api/src/index.ts"],
       "@zix/app/api": ["libs/app/api/src/index.ts"],
+      "@zix/app/features/account": ["libs/app/features/account/src/index.ts"],
       "@zix/app/features/auth": ["libs/app/features/auth/src/index.ts"],
       "@zix/app/features/chat": ["libs/app/features/chat/src/index.ts"],
+      "@zix/app/features/companies-dashboard": [
+        "libs/app/features/companies-dashboard/src/index.ts"
+      ],
+      "@zix/app/features/customer-dashboard": [
+        "libs/app/features/customer-dashboard/src/index.ts"
+      ],
       "@zix/app/features/notification": [
         "libs/app/features/notification/src/index.ts"
+      ],
+      "@zix/app/features/solo-driver-dashboard": [
+        "libs/app/features/solo-driver-dashboard/src/index.ts"
       ],
       "@zix/app/providers/admin": ["libs/app/providers/admin/src/index.ts"],
       "@zix/app/providers/mobile": ["libs/app/providers/mobile/src/index.ts"],
