@@ -172,3 +172,5 @@ function useNonFlickeringColorScheme() {
 
   return nonFlickerScheme || 'system';
 }
+
+export default UniversalThemeProvider;
