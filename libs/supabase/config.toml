@@ -1,6 +1,6 @@
 # A string used to distinguish different Supabase projects on the same host. Defaults to the working
 # directory name when running `supabase init`.
-project_id = "zix"
+project_id = "sawaeed"
 
 [api]
 port = 54321
@@ -66,8 +66,11 @@ enable_confirmations = true
 966444444444444 = "123456" # Fake Company Manager
 966555555555555 = "123456" # Fake Company Driver
 
-# [auth.sms.vonage]
-# enabled = true
+[auth.sms.vonage]
+enabled = true
+from = "Saawaeed"
+api_key = "3c8543ed"
+api_secret = "U1fqF2awiMyChAKW"
 
 
 # Use an external OAuth provider. The full list of providers are: `apple`, `azure`, `bitbucket`,

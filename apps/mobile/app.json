@@ -1,44 +1,135 @@
 {
   "expo": {
-    "name": "Mobile",
-    "slug": "mobile",
+    "name": "سواعد",
+    "slug": "sawaeed",
     "jsEngine": "hermes",
-    "scheme": "zix",
+    "scheme": "sawaeed",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#FECA16"
     },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.zixdev.demo.sawaeed",
+      "buildNumber": "25",
+      "infoPlist": {
+        "CFBundleDevelopmentRegion": "en",
+        "ExpoLocalization_supportsRTL": true,
+        "CFBundleLocalizations": [
+          "ar",
+          "en",
+          "fr"
+        ],
+        "LSApplicationQueriesSchemes": [
+          "comgooglemaps",
+          "citymapper",
+          "uber",
+          "lyft",
+          "transit",
+          "truckmap",
+          "waze",
+          "yandexnavi",
+          "moovit",
+          "yandextaxi",
+          "yandexmaps",
+          "kakaomap",
+          "szn-mapy",
+          "mapsme",
+          "osmandmaps",
+          "gett",
+          "nmap",
+          "dgis",
+          "lftgpas"
+        ]
+      }
     },
     "android": {
+      "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "backgroundColor": "#FECA16"
+      },
+      "package": "com.zixdev.demo.sawaeed",
+      "versionCode": 13,
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
     "plugins": [
-      "expo-router",
+      "expo-localization",
       [
-        "@config-plugins/detox",
+        "expo-notifications",
         {
-          "skipProguard": false,
-          "subdomains": ["10.0.2.2", "localhost"]
+          "icon": "./assets/icon.png",
+          "color": "#FECA16"
         }
       ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ],
+      [
+        "expo-document-picker",
+        {
+          "iCloudContainerEnvironment": "Production"
+        }
+      ],
+      [
+        "expo-updates",
+        {
+          "username": "zixdev"
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+        }
+      ],
+      "expo-apple-authentication",
+      "expo-router",
+      "expo-build-properties",
       "sentry-expo"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "e42af032-da25-4337-9836-69ea04279e11"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "owner": "zixdev",
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "zix-dev",
+            "project": "sawaeed"
+          }
+        }
+      ]
+    },
+    "updates": {
+      "url": "https://u.expo.dev/e42af032-da25-4337-9836-69ea04279e11"
+    }
   }
 }
