@@ -1,12 +1,8 @@
-// don't import from here, that's handled already
-// instead this is just setting types for this folder
+import { themeConfig as config } from "@zix/app/themes/mobile";
 
-import { themeConfig } from '@zix/app/themes/mobile'
+export type Conf = typeof config;
 
-type Conf = typeof themeConfig
-
-declare module 'tamagui' {
+declare module "tamagui" {
   interface TamaguiCustomConfig extends Conf {}
 }
-
-export default themeConfig
+export default config;

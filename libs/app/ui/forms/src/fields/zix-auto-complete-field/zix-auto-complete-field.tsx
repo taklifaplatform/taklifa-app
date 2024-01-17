@@ -25,9 +25,8 @@ import {
   isWeb,
   useThemeName
 } from '@zix/app/ui/core';
-import { useSupabase } from '@zix/core/supabase';
+import { useSupabase, Database } from '@zix/core/supabase';
 import { useMultiLang } from '@zix/i18n';
-import { Database } from '@zix/supabase';
 import { t } from 'i18next';
 import React, { useState } from 'react';
 

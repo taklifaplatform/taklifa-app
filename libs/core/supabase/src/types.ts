@@ -507,6 +507,51 @@ export interface Database {
         }
         Relationships: []
       }
+      company_vehicle_drivers: {
+        Row: {
+          driver_id: string
+          vehicle_id: string
+        }
+        Insert: {
+          driver_id: string
+          vehicle_id: string
+        }
+        Update: {
+          driver_id?: string
+          vehicle_id?: string
+        }
+        Relationships: []
+      }
+      company_vehicle_service_areas: {
+        Row: {
+          service_area_id: string
+          vehicle_id: string
+        }
+        Insert: {
+          service_area_id: string
+          vehicle_id: string
+        }
+        Update: {
+          service_area_id?: string
+          vehicle_id?: string
+        }
+        Relationships: []
+      }
+      company_vehicle_service_zones: {
+        Row: {
+          service_zone_id: string
+          vehicle_id: string
+        }
+        Insert: {
+          service_zone_id: string
+          vehicle_id: string
+        }
+        Update: {
+          service_zone_id?: string
+          vehicle_id?: string
+        }
+        Relationships: []
+      }
       countries: {
         Row: {
           code: string
@@ -849,6 +894,84 @@ export interface Database {
         }
         Relationships: []
       }
+      service_areas: {
+        Row: {
+          created_at: string | null
+          id: string
+          name: string
+          service_zone_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id: string
+          name: string
+          service_zone_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          name?: string
+          service_zone_id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      service_zones: {
+        Row: {
+          created_at: string | null
+          id: string
+          name: string
+          ownable_id: number
+          ownable_type: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id: string
+          name: string
+          ownable_id: number
+          ownable_type: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          name?: string
+          ownable_id?: number
+          ownable_type?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      shipment_types: {
+        Row: {
+          created_at: string | null
+          id: string
+          identifier: string | null
+          is_multiple: boolean
+          name: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id: string
+          identifier?: string | null
+          is_multiple?: boolean
+          name?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          identifier?: string | null
+          is_multiple?: boolean
+          name?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       states: {
         Row: {
           code: string
@@ -984,6 +1107,255 @@ export interface Database {
             referencedColumns: ["id"]
           }
         ]
+      }
+      vehicle_capacity_dimensions: {
+        Row: {
+          created_at: string | null
+          height: string | null
+          id: string
+          length: string | null
+          unit: string
+          updated_at: string | null
+          vehicle_id: string
+          width: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          height?: string | null
+          id: string
+          length?: string | null
+          unit?: string
+          updated_at?: string | null
+          vehicle_id: string
+          width?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          height?: string | null
+          id?: string
+          length?: string | null
+          unit?: string
+          updated_at?: string | null
+          vehicle_id?: string
+          width?: string | null
+        }
+        Relationships: []
+      }
+      vehicle_capacity_weights: {
+        Row: {
+          created_at: string | null
+          id: string
+          unit: string
+          updated_at: string | null
+          value: string | null
+          vehicle_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id: string
+          unit?: string
+          updated_at?: string | null
+          value?: string | null
+          vehicle_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          unit?: string
+          updated_at?: string | null
+          value?: string | null
+          vehicle_id?: string
+        }
+        Relationships: []
+      }
+      vehicle_fuel_information: {
+        Row: {
+          created_at: string | null
+          fuel_capacity: number | null
+          fuel_type: string | null
+          id: string
+          liter_per_km_in_city: number | null
+          liter_per_km_in_highway: number | null
+          liter_per_km_mixed: number | null
+          updated_at: string | null
+          vehicle_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          fuel_capacity?: number | null
+          fuel_type?: string | null
+          id: string
+          liter_per_km_in_city?: number | null
+          liter_per_km_in_highway?: number | null
+          liter_per_km_mixed?: number | null
+          updated_at?: string | null
+          vehicle_id: string
+        }
+        Update: {
+          created_at?: string | null
+          fuel_capacity?: number | null
+          fuel_type?: string | null
+          id?: string
+          liter_per_km_in_city?: number | null
+          liter_per_km_in_highway?: number | null
+          liter_per_km_mixed?: number | null
+          updated_at?: string | null
+          vehicle_id?: string
+        }
+        Relationships: []
+      }
+      vehicle_icons: {
+        Row: {
+          created_at: string | null
+          id: string
+          name: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id: string
+          name?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          name?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      vehicle_information: {
+        Row: {
+          body_type: string | null
+          created_at: string | null
+          doors_count: number | null
+          id: string
+          seats_count: number | null
+          steering_wheel: string | null
+          top_speed: number | null
+          updated_at: string | null
+          vehicle_id: string
+        }
+        Insert: {
+          body_type?: string | null
+          created_at?: string | null
+          doors_count?: number | null
+          id: string
+          seats_count?: number | null
+          steering_wheel?: string | null
+          top_speed?: number | null
+          updated_at?: string | null
+          vehicle_id: string
+        }
+        Update: {
+          body_type?: string | null
+          created_at?: string | null
+          doors_count?: number | null
+          id?: string
+          seats_count?: number | null
+          steering_wheel?: string | null
+          top_speed?: number | null
+          updated_at?: string | null
+          vehicle_id?: string
+        }
+        Relationships: []
+      }
+      vehicle_makes: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          name: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id: string
+          name?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      vehicle_models: {
+        Row: {
+          created_at: string | null
+          id: string
+          name: string | null
+          updated_at: string | null
+          vehicle_make_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id: string
+          name?: string | null
+          updated_at?: string | null
+          vehicle_make_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          name?: string | null
+          updated_at?: string | null
+          vehicle_make_id?: string
+        }
+        Relationships: []
+      }
+      vehicles: {
+        Row: {
+          color: string | null
+          created_at: string | null
+          id: string
+          internal_id: string | null
+          ownable_id: number
+          ownable_type: string
+          plate_number: string | null
+          updated_at: string | null
+          vehicle_icon_id: string | null
+          vehicle_make_id: string | null
+          vehicle_model_id: string | null
+          VIN_number: string | null
+          year: number | null
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string | null
+          id: string
+          internal_id?: string | null
+          ownable_id: number
+          ownable_type: string
+          plate_number?: string | null
+          updated_at?: string | null
+          vehicle_icon_id?: string | null
+          vehicle_make_id?: string | null
+          vehicle_model_id?: string | null
+          VIN_number?: string | null
+          year?: number | null
+        }
+        Update: {
+          color?: string | null
+          created_at?: string | null
+          id?: string
+          internal_id?: string | null
+          ownable_id?: number
+          ownable_type?: string
+          plate_number?: string | null
+          updated_at?: string | null
+          vehicle_icon_id?: string | null
+          vehicle_make_id?: string | null
+          vehicle_model_id?: string | null
+          VIN_number?: string | null
+          year?: number | null
+        }
+        Relationships: []
       }
     }
     Views: {

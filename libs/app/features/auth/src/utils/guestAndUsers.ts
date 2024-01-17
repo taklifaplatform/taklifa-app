@@ -1,4 +1,4 @@
-import { Database } from "@zix/supabase";
+import { Database } from "@zix/core/supabase";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSideProps, PreviewData } from "next";
 import { ParsedUrlQuery } from "querystring";

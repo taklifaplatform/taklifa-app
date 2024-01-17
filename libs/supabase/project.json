@@ -50,7 +50,7 @@
     "generate": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "supabase gen types typescript --local --schema public,chat > ./src/types.ts",
+        "command": "supabase gen types typescript --local --schema public,chat > ../core/supabase/src/types.ts",
         "cwd": "libs/supabase"
       }
     },

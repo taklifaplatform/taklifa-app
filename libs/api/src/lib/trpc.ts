@@ -1,7 +1,7 @@
 // server-side tRPC setup need to run only in server
 
 
-import { Database } from "@zix/supabase";
+import { Database } from "@zix/core/supabase";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { initTRPC, TRPCError } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";

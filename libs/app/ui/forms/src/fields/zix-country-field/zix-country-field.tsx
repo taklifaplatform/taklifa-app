@@ -1,7 +1,7 @@
 import { CheckCircle2 } from '@tamagui/lucide-icons';
 import { Select, SelectProps } from '@zix/app/ui/core';
 import { useMultiLang } from '@zix/i18n';
-import { Tables } from '@zix/supabase';
+import { Tables } from '@zix/core/supabase';
 import { t } from 'i18next';
 import React from 'react';
 import {

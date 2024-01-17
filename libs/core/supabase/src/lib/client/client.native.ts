@@ -1,7 +1,7 @@
-import { Database } from "@zix/supabase";
 import { createClient } from "@supabase/supabase-js";
 import * as SecureStore from "expo-secure-store";
 import { replaceLocalhost } from "@zix/core/utils";
+import { Database } from "../../types";
 
 if (!process.env.EXPO_PUBLIC_SUPABASE_URL) {
   throw new Error(

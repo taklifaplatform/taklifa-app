@@ -6,7 +6,8 @@ import {
   QueryClientProvider,
   SafeAreaProvider,
   TamaguiProvider,
-  ToastProvider
+  ToastProvider,
+  UniversalThemeProvider
 } from '@zix/core/providers';
 import { Provider as JotaiProvider } from 'jotai';
 import React from 'react';
@@ -22,8 +23,11 @@ export const MobileAppProvider: React.FC<MobileAppProviderProps> = ({
   return (
     <ProvidersComposer
       providers={[
+        ({ children }) => (
+          <TamaguiProvider config={themeConfig}>{children}</TamaguiProvider>
+        ),
         JotaiProvider,
-        QueryClientProvider,
+        UniversalThemeProvider,
         SafeAreaProvider,
         ToastProvider,
         ({ children }) => (
@@ -31,9 +35,8 @@ export const MobileAppProvider: React.FC<MobileAppProviderProps> = ({
             {children}
           </AuthProvider>
         ),
-        ({ children }) => (
-          <TamaguiProvider config={themeConfig}>{children}</TamaguiProvider>
-        )
+
+        QueryClientProvider,
       ]}
     >
       {children}
