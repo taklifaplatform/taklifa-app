@@ -1,20 +1,23 @@
+import { ChangePasswordForm } from '@zix/app/features/auth';
+import { isWeb } from '@zix/app/ui/core';
 
-import React from 'react';
-
-import { View, Text } from 'react-native';
+import { useRouter } from 'solito/router';
 
 /* eslint-disable-next-line */
-export interface ChangePasswordScreenProps {
-}
+export interface ChangePasswordScreenProps {}
 
+export const ChangePasswordScreen = () => {
+  const router = useRouter();
 
-export function ChangePasswordScreen(props: ChangePasswordScreenProps) {
   return (
-    <View>
-      <Text>Welcome to change-password-screen!</Text>
-    </View>
+    <ChangePasswordForm
+      onSuccess={() => {
+        if (!isWeb) {
+          router.back();
+        }
+      }}
+    />
   );
 };
-
 
 export default ChangePasswordScreen;

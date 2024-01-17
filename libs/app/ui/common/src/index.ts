@@ -1,4 +1,8 @@
 
+export * from './components/setting-item/setting-item';
+
+export * from './components/settings/settings';
+
 export * from './components/full-screen-spinner/full-screen-spinner';
 
 export * from './components/user-avatar/user-avatar';
