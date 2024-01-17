@@ -1,4 +1,6 @@
 
+export * from './components/dashboard-switcher/dashboard-switcher';
+
 export * from './screens/create-company-screen/create-company-screen';
 export * from "./screens/manage/managers/create-manager-screen/create-manager-screen";
 

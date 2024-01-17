@@ -36,7 +36,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
     console.log('onAvatarPress::', user);
     console.log('============');
     if (user) {
-      router.push('/profile');
+      router.push('/account');
     } else {
       router.push('/auth/login');
     }
