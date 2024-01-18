@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import type { Channel as StreamChatChannel } from 'stream-chat';
 import {
   Channel,
   Thread,
   ThreadContextValue,
   useAttachmentPickerContext,
+  useChannelContext,
   useTheme,
+  useThreadContext,
   useTypingString
 } from 'stream-chat-expo';
 
@@ -20,11 +21,6 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
-
-type ThreadScreenProps = {
-  channel: StreamChatChannel<StreamChatGenerics>;
-  thread?: any; // TODO: Fix type
-};
 
 export type ThreadHeaderProps = {
   thread: ThreadContextValue<StreamChatGenerics>['thread'];
@@ -42,16 +38,15 @@ const ThreadHeader: React.FC<ThreadHeaderProps> = ({ thread }) => {
   );
 };
 
-export const ThreadScreen: React.FC<ThreadScreenProps> = ({
-  channel,
-  thread
-}) => {
+export const ThreadScreen: React.FC = () => {
   const {
     theme: {
       colors: { white }
     }
   } = useTheme();
   const { setSelectedImages } = useAttachmentPickerContext();
+  const { channel } = useChannelContext();
+  const { thread } = useThreadContext();
 
   useEffect(() => {
     setSelectedImages([]);

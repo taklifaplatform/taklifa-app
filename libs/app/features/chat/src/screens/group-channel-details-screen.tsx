@@ -11,6 +11,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   Avatar,
+  useChannelContext,
   useChannelPreviewDisplayName,
   useChatContext,
   useOverlayContext,
@@ -122,10 +123,6 @@ const styles = StyleSheet.create({
   }
 });
 
-type GroupChannelDetailsProps = {
-  channel: Channel<StreamChatGenerics>;
-};
-
 const Spacer = () => {
   const {
     theme: {
@@ -144,9 +141,8 @@ const Spacer = () => {
   );
 };
 
-export const GroupChannelDetailsScreen: React.FC<GroupChannelDetailsProps> = ({
-  channel
-}) => {
+export const GroupChannelDetailsScreen: React.FC = () => {
+  const { channel } = useChannelContext();
   const { client: chatClient } = useChatContext();
   const router = useRouter();
 

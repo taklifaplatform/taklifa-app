@@ -1,60 +1,42 @@
 import React from 'react';
-import { Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { useChatContext, useTheme } from 'stream-chat-expo';
+import { useChatContext } from 'stream-chat-expo';
 
-import { RoundButton } from './RoundButton';
 import { ScreenHeader } from './ScreenHeader';
 
-import { NewDirectMessageIcon } from '../icons/NewDirectMessageIcon';
-
+import { MoreHorizontal, Plus } from '@tamagui/lucide-icons';
 import { useRouter } from 'solito/router';
+import { Button } from 'tamagui';
 import { NetworkDownIndicator } from './NetworkDownIndicator';
 
-const styles = StyleSheet.create({
-  avatar: {
-    borderRadius: 20,
-    height: 40,
-    width: 40
-  }
-});
-
 export const ChatScreenHeader: React.FC<{ title?: string }> = ({
-  title = 'Sawaeed Chat'
+  title = 'Chat'
 }) => {
-  const {
-    theme: {
-      colors: { accent_blue }
-    }
-  } = useTheme();
   const router = useRouter();
-  const { client: chatClient } = useChatContext();
   const { isOnline } = useChatContext();
 
   return (
     <ScreenHeader
       LeftContent={() => (
-        <TouchableOpacity onPress={() => alert('NOTHING!!')}>
-          <Image
-            source={{
-              uri: chatClient?.user?.image
-            }}
-            style={styles.avatar}
-          />
-        </TouchableOpacity>
+        <Button
+          width="$4"
+          backgroundColor="$gray5"
+          color="black"
+          onPress={() => {
+            router.back();
+          }}
+          icon={(props) => <MoreHorizontal {...props} size="$2" />}
+        />
       )}
       RightContent={() => (
-        <RoundButton
+        <Button
+          width="$4"
+          backgroundColor="$gray5"
+          color="black"
           onPress={() => {
             router.push('/chat/new-direct-messaging');
           }}
-        >
-          <NewDirectMessageIcon
-            active
-            color={accent_blue}
-            height={25}
-            width={25}
-          />
-        </RoundButton>
+          icon={(props) => <Plus {...props} size="$2" />}
+        />
       )}
       Title={
         isOnline ? undefined : () => <NetworkDownIndicator titleSize="large" />

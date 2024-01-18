@@ -1,17 +1,17 @@
 import { useScrollToTop } from '@react-navigation/native';
-import React, { useMemo, useRef, useState } from 'react';
 import {
-  FlatList,
-  StyleSheet,
+  Button,
+  Input,
   Text,
-  TextInput,
-  TouchableOpacity,
-  View
-} from 'react-native';
+  Input as TextInput,
+  View,
+  XStack
+} from '@zix/app/ui/core';
+import React, { useMemo, useRef, useState } from 'react';
+import { FlatList, StyleSheet } from 'react-native';
 import { Channel } from 'stream-chat';
 import {
   ChannelList,
-  CircleClose,
   Search,
   useChatContext,
   useTheme
@@ -23,6 +23,7 @@ import { usePaginatedSearchedMessages } from '../src/hooks/usePaginatedSearchedM
 
 import type { ChannelSort } from 'stream-chat';
 
+import { XCircle } from '@tamagui/lucide-icons';
 import { useRouter } from 'solito/router';
 import type { StreamChatGenerics } from '../src/types';
 
@@ -121,61 +122,76 @@ export function ChannelListScreen() {
     return null;
   }
 
-  return (
-    <View
-      style={[
-        styles.flex,
-        {
-          backgroundColor: white_snow
-        }
-      ]}
+  const renderSearchBar = () => (
+    <XStack
+      padding="$4"
+      paddingVertical="$2"
+      alignItems="center"
+      justifyContent="space-between"
     >
+      <XStack
+        alignItems="center"
+        flex={1}
+        borderWidth="$0.5"
+        borderRadius="$5"
+        borderColor="$gray10"
+      >
+        <Button
+          size="$4"
+          icon={Search}
+          color="$color5"
+          marginRight="$-3"
+          backgroundColor="white"
+        />
+        <Input
+          size="$4"
+          placeholder={'Search here'}
+          flex={1}
+          borderColor="transparent"
+          focusStyle={{ borderColor: 'transparent' }}
+          value={searchInputText}
+          onChangeText={(text) => {
+            setSearchInputText(text);
+            if (!text) {
+              reset();
+              setSearchQuery('');
+            }
+          }}
+          onSubmitEditing={({ nativeEvent: { text } }) => {
+            setSearchQuery(text);
+          }}
+          ref={searchInputRef}
+          returnKeyType="search"
+        />
+
+        {!!searchInputText && (
+          <Button
+            unstyled
+            paddingHorizontal="$2.5"
+            paddingVertical="$1.5"
+            icon={<XCircle size="$1" />}
+            marginLeft="$-4"
+            onPress={() => {
+              setSearchInputText('');
+              setSearchQuery('');
+              if (searchInputRef.current) {
+                searchInputRef.current.blur();
+              }
+              reset();
+            }}
+          />
+        )}
+      </XStack>
+    </XStack>
+  );
+
+  return (
+    <View flex={1}>
       <ChatScreenHeader />
 
-      <View style={styles.flex}>
-        <View
-          style={[
-            styles.searchContainer,
-            {
-              backgroundColor: white,
-              borderColor: grey_whisper
-            }
-          ]}
-        >
-          <Search pathFill={black} />
-          <TextInput
-            onChangeText={(text) => {
-              setSearchInputText(text);
-              if (!text) {
-                reset();
-                setSearchQuery('');
-              }
-            }}
-            onSubmitEditing={({ nativeEvent: { text } }) => {
-              setSearchQuery(text);
-            }}
-            placeholder="Search"
-            placeholderTextColor={grey}
-            ref={searchInputRef}
-            returnKeyType="search"
-            style={[styles.searchInput, { color: black }]}
-            value={searchInputText}
-          />
-          {!!searchInputText && (
-            <TouchableOpacity
-              onPress={() => {
-                setSearchInputText('');
-                setSearchQuery('');
-                if (searchInputRef.current) {
-                  searchInputRef.current.blur();
-                }
-                reset();
-              }}
-            >
-              <CircleClose pathFill={grey} />
-            </TouchableOpacity>
-          )}
-        </View>
+      <View flex={1}>
+        {renderSearchBar()}
+
         {(!!searchQuery || (messages && messages.length > 0)) && (
           <MessageSearchList
             EmptySearchIndicator={EmptySearchIndicator}
@@ -188,7 +204,7 @@ export function ChannelListScreen() {
             showResultCount
           />
         )}
-        <View style={{ flex: searchQuery ? 0 : 1 }}>
+        <View flex={searchQuery ? 0 : 1}>
           <View
             style={[
               styles.channelListContainer,

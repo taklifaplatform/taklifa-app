@@ -40,9 +40,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     width: 70
   },
-  safeAreaContainer: {
-    borderBottomWidth: 1
-  },
   subTitle: {
     fontSize: 12
   },
@@ -123,10 +120,7 @@ export const ScreenHeader: React.FC<ScreenHeaderProps> = (props) => {
   return (
     <View
       style={[
-        styles.safeAreaContainer,
         {
-          backgroundColor: white,
-          borderBottomColor: border,
           height: HEADER_CONTENT_HEIGHT + (inSafeArea ? 0 : insets.top)
         },
         style
