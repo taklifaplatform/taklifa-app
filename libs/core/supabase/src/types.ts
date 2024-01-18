@@ -171,6 +171,7 @@ export interface Database {
           quoted_message_id: string | null
           show_in_channel: boolean | null
           text: string
+          type: string
           updated_at: string
           user_id: string
         }
@@ -178,12 +179,13 @@ export interface Database {
           attachments?: Json[] | null
           channel_id: string
           created_at?: string
-          id?: string
+          id: string
           mentioned_users?: string[] | null
           parent_id?: string | null
           quoted_message_id?: string | null
           show_in_channel?: boolean | null
           text: string
+          type?: string
           updated_at?: string
           user_id?: string
         }
@@ -197,6 +199,7 @@ export interface Database {
           quoted_message_id?: string | null
           show_in_channel?: boolean | null
           text?: string
+          type?: string
           updated_at?: string
           user_id?: string
         }

@@ -308,7 +308,7 @@ export class ZixChat<
      */
     // this.logger = () => null
     this.logger = (logLevel, message, extraData) => {
-      // console.log(logLevel, message)
+      console.log('ZixChat', logLevel, message, extraData);
     };
     this.recoverStateOnReconnect = true;
 

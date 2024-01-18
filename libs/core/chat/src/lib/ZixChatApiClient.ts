@@ -308,6 +308,55 @@ export class ZixChatApiClient<
       },
     });
 
+    // DELETE /messages/{messageId} (DONE)
+    this.router.delete.push({
+      pattern: /^\/messages\/([a-f\d-]+)$/,
+      handler: async (messageId: string, data, req) => {
+        const result = await this.client.supabase
+          .schema("chat")
+          .from("messages")
+          .update({
+            type: "deleted",
+          })
+          .eq("id", messageId)
+          .select(MESSAGE_WITH_RELATIONS_QUERY)
+          .single();
+
+        if (result.error) {
+          console.log("DELETE hav error", result.error);
+          return {
+            error: result.error,
+            status: MessageStatusTypes.FAILED,
+          };
+        }
+
+        const channelId = result.data?.channel_id;
+
+        const event = {
+          cid: `messaging:${channelId}`,
+          type: "message.deleted",
+          channel_type: "messaging",
+          channel_id: channelId,
+          user: this.client.user,
+          created_at: result.data.created_at,
+          received_at: new Date().toISOString(),
+          message: {
+            ...result.data,
+            cid: `messaging:${channelId}`,
+          },
+        };
+        this.broadcastEvent(event);
+        this.client.dispatchEvent(event as any);
+
+        return {
+          data: {
+            message: result.data,
+            status: MessageStatusTypes.RECEIVED,
+          },
+          status: 200,
+        };
+      },
+    });
     // POST /channels/messaging/{channelId}/image
     this.router.postForm.push({
       pattern: /^\/channels\/messaging\/([a-f\d-]+)\/image$/,

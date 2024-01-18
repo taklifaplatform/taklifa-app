@@ -186,6 +186,7 @@ create table
     created_at timestamp with time zone not null default now(),
     updated_at timestamp with time zone not null default now(),
     text text not null,
+    type text not null default 'regular'::text,
     user_id uuid not null default auth.uid (),
     channel_id uuid not null,
     attachments jsonb[] null,

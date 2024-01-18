@@ -1,7 +1,5 @@
-// import { ChannelListScreen } from 'app/features/chat/screens/channel-list-screen'
-import React from 'react'
+import { ChannelListScreen } from '@zix/app/features/chat';
 
 export default function Screen() {
-  return null
-  // return <ChannelListScreen />
+  return <ChannelListScreen />;
 }

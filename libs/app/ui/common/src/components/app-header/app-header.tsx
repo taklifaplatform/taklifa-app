@@ -109,7 +109,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
           padding="0"
           backgroundColor="$color5"
           icon={<MessageCircle size="$2" />}
-          onPress={() => router.push('/chat')}
+          onPress={() => router.push('/messenger')}
         />
         <Button
           size="$4"

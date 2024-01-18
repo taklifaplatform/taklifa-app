@@ -1,7 +1,6 @@
-// import { ChatLayout } from 'app/features/chat/layout'
-import React from 'react'
+import { Stack } from 'expo-router';
+import React from 'react';
 
 export default function Layout() {
-  return null
-  // return <ChatLayout />
+  return <Stack screenOptions={{ headerShown: false }} />;
 }
