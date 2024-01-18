@@ -129,10 +129,16 @@ export class ZixStableWSConnection<
       //   })
 
       this.globalChannel.on("broadcast", { event: "*" }, (event) => {
+        if (event?.payload?.user?.id !== this.client.user?.id) {
+          console.log("@@@@@@@@@@@@@@@");
+          console.log(
+            `New Event For: ${this.client.user?.name}`,
+            JSON.stringify(event),
+          );
+          console.log("@@@@@@@@@@@@@@@");
+
+        }
         this.client.dispatchEvent(event.payload);
-        console.log("==================");
-        console.log("event::", event);
-        console.log("==================");
       });
       this.globalChannel.subscribe(async (status) => {
         console.log("status::", this.client.user?.name, status);

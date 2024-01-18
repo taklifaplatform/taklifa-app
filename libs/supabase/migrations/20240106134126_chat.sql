@@ -64,7 +64,7 @@ begin
         image = new.avatar_url
     where id = new.id;
   end if;
-  
+
   return new;
 end;
 $$;
@@ -182,7 +182,7 @@ CREATE POLICY "Users can view all channel members of channels they're a member o
 
 create table
   chat.messages (
-    id uuid not null default gen_random_uuid (),
+    id text not null,
     created_at timestamp with time zone not null default now(),
     updated_at timestamp with time zone not null default now(),
     text text not null,
@@ -190,9 +190,9 @@ create table
     channel_id uuid not null,
     attachments jsonb[] null,
     mentioned_users text[] null,
-    quoted_message_id uuid null,
+    quoted_message_id text null,
     show_in_channel boolean null,
-    parent_id uuid null,
+    parent_id text null,
     constraint messages_pkey primary key (id),
     constraint messages_user_id_fkey foreign key (user_id) references chat.users (id) on delete cascade,
     constraint messages_channel_id_fkey foreign key (channel_id) references chat.channels (id) on delete cascade,
@@ -207,7 +207,7 @@ create table
     id uuid not null default gen_random_uuid (),
     created_at timestamp with time zone not null default now(),
     updated_at timestamp with time zone not null default now(),
-    message_id uuid not null,
+    message_id text not null,
     user_id uuid not null default auth.uid (),
     type text not null default 'haha'::text,
     score numeric not null default '1'::numeric,

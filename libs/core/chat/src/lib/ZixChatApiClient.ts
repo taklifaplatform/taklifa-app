@@ -1,8 +1,17 @@
+import { Database } from "@zix/core/supabase";
 import { DefaultGenerics, ExtendableGenerics } from "stream-chat/src/types";
 import { ZixChat } from "./ZixChat";
 import { MessageStatusTypes } from "./constants";
 import { getAppData } from "./data-responses/get-app-data";
 import { fakeChannelObject } from "./fakeChannelObject";
+
+const MESSAGE_WITH_RELATIONS_QUERY = `
+  *,
+  user:users(*),
+  latest_reactions:reactions(*, user:users(*)),
+  quoted_message: quoted_message_id(*, user:users(*)),
+  reply_count:messages!parent_id(count)
+`;
 
 export class ZixChatApiClient<
   ZixChatGenerics extends ExtendableGenerics = DefaultGenerics,
@@ -73,12 +82,7 @@ export class ZixChatApiClient<
           .from("channels")
           .select(
             `*,
-            messages(*,
-              user:users(*),
-              latest_reactions:reactions(*, user:users(*)),
-              quoted_message: quoted_message_id(*, user:users(*)),
-              reply_count:messages!parent_id(count)
-            )`,
+            messages(${MESSAGE_WITH_RELATIONS_QUERY})`,
           );
 
         const channels = (data || []).map((channel) => {
@@ -90,13 +94,7 @@ export class ZixChatApiClient<
               cid: `${channel.type}:${channel.id}`,
             },
             // messages: channel.messages || [],
-            messages: (channel.messages || []).map((message) => ({
-              ...message,
-              reply_count: message.reply_count?.length
-                ? message.reply_count[0].count
-                : 0,
-              // quoted_message: message.quoted_message?.length ? message.quoted_message[0] : null,
-            })),
+            messages: (channel.messages || []).map(this._mapMessageObject),
           };
         });
         return {
@@ -134,44 +132,74 @@ export class ZixChatApiClient<
           created_at: new Date().toISOString(),
         };
         return this.broadcastEvent(event);
-
-        // return new Promise((resolve, reject) => {
-        //   const channel = this.client.supabase
-        //     .channel(cid, {
-        //       config: {
-        //         broadcast: { self: true },
-        //       },
-        //     })
-        //     .subscribe(async (status) => {
-        //       if (status !== 'SUBSCRIBED') {
-        //         return
-        //       }
-
-        //       await channel.send({
-        //         type: 'broadcast',
-        //         event: data.event.type,
-        //         payload: eventData,
-        //       })
-
-        //       this.client.supabase.removeChannel(channel)
-        //       resolve({
-        //         event: eventData,
-        //         duration: '1.15ms',
-        //         status: 200,
-        //       })
-        //     })
-        // })
       },
     });
 
-    // POST /channels/messaging/{channelId}/query
+    // POST /channels/messaging/{channelId}/reaction (DONE)
+    this.router.post.push({
+      pattern: /^\/messages\/([a-f\d-]+)\/reaction$/,
+      handler: async (messageId: string, data, req) => {
+        const reaction = {
+          message_id: messageId,
+          ...data.reaction,
+        };
+
+        const result = await this.client.supabase
+          .schema("chat")
+          .from("reactions")
+          .upsert([reaction])
+          .select(`*, user:users(*)`)
+          .single();
+
+        if (result.error) {
+          return {
+            error: result.error,
+            status: MessageStatusTypes.FAILED,
+          };
+        }
+
+        const retrieveMessage = await this.client.supabase
+          .schema("chat")
+          .from("messages")
+          .select(MESSAGE_WITH_RELATIONS_QUERY)
+          .eq("id", messageId)
+          .single();
+        const channelId = retrieveMessage.data?.channel_id;
+
+        const event = {
+          cid: `messaging:${channelId}`,
+          type: "reaction.new",
+          channel_type: "messaging",
+          channel_id: channelId,
+          user: result.data.user,
+          created_at: result.data.created_at,
+          message: this._mapMessageObject(retrieveMessage.data),
+          reaction: result.data,
+        };
+        this.broadcastEvent(event);
+        this.client.dispatchEvent(event);
+
+        return {
+          data: {
+            message: retrieveMessage.data,
+            reaction: result.data,
+            status: MessageStatusTypes.RECEIVED,
+          },
+          message: this._mapMessageObject(retrieveMessage.data),
+          reaction: result.data,
+          status: 200,
+        };
+      },
+    });
+
+
+    // POST /channels/messaging/{channelId}/message (Done)
     this.router.post.push({
       pattern: /^\/channels\/messaging\/([a-f\d-]+)\/message$/,
       handler: async (channelId, data, req) => {
         const message = {
           channel_id: channelId,
           ...data.message,
-          id: data.message.id.replace(`${this.client.user?.id}-`, ""),
         };
 
         const result = await this.client.supabase
@@ -181,12 +209,6 @@ export class ZixChatApiClient<
           .select(`*, user:users(*)`)
           .single();
 
-        console.log("===========");
-        console.log(
-          "SUPACustomClient->post:chat_messages::",
-          JSON.stringify({ message, result }, null, 2),
-        );
-        console.log("===========");
         if (result.error) {
           return {
             error: result.error,
@@ -301,8 +323,9 @@ export class ZixChatApiClient<
         return route.handler(...match.slice(1), ...args);
       }
     }
-    console.log("========");
+    console.log("==== REQUEST NOT HANDLED YET ====");
     console.log(
+      `${this.client.user?.name} :::`,
       "ZixChatApiClient->",
       method,
       JSON.stringify({ url, args }, null, 2),
@@ -330,5 +353,39 @@ export class ZixChatApiClient<
   }
   async options(url, requestConfig) {
     return this.resolveRoute("options", url, requestConfig);
+  }
+
+  _mapMessageObject(message: any) {
+    let reply_count = 0;
+    const reaction_counts: any = {};
+    const reaction_scores: any = {};
+
+    const own_reactions: any[] = []; // TODO: better to get it from message.reactions query filter;
+
+    message.latest_reactions?.forEach(
+      (reaction: Database["chat"]["Tables"]["reactions"]["Row"]) => {
+        reaction_counts[reaction.type] = reaction_counts[reaction.type] || 0;
+        reaction_counts[reaction.type] += 1;
+        reaction_scores[reaction.type] = reaction_scores[reaction.type] || 0;
+        reaction_scores[reaction.type] += reaction.score;
+
+        if (this.client.user?.id === reaction.user_id) {
+          own_reactions.push(reaction);
+        }
+      },
+    );
+
+    if (message.reply_count?.length) {
+      reply_count = message.reply_count[0].count;
+    }
+
+    return {
+      ...message,
+      reply_count,
+      reaction_counts,
+      reaction_scores,
+      own_reactions,
+      // quoted_message: message.quoted_message?.length ? message.quoted_message[0] : null,
+    };
   }
 }

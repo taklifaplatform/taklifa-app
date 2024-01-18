@@ -16,12 +16,12 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({
   children,
   ...props
 }) => {
-  const { user } = useUser();
+  const { profile } = useUser();
   React.useEffect(() => {
-    if (user) {
-      client.connectUser(user);
+    if (profile) {
+      client.connectUser(profile);
     }
-  }, [user]);
+  }, [profile]);
   return (
     <OverlayProvider>
       <Chat client={client}>{children}</Chat>
