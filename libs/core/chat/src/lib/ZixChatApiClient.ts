@@ -1,5 +1,9 @@
 import { Database } from "@zix/core/supabase";
-import { DefaultGenerics, ExtendableGenerics } from "stream-chat/src/types";
+import {
+  DefaultGenerics,
+  ExtendableGenerics,
+  MessageResponse,
+} from "stream-chat/src/types";
 import { ZixChat } from "./ZixChat";
 import { MessageStatusTypes } from "./constants";
 import { getAppData } from "./data-responses/get-app-data";
@@ -33,6 +37,68 @@ export class ZixChatApiClient<
       handler: async () => {
         return {
           data: getAppData,
+          status: 200,
+        };
+      },
+    });
+
+    // GET /search
+    this.router.get.push({
+      pattern: /^\/search$/,
+      handler: async ({ params, headers }) => {
+        const exampleParams = {
+          "user_id": "46dd14f9-f410-40f5-b4e4-a38f9308aa22",
+          "payload": {
+            "filter_conditions": {
+              "cid": {
+                "$in": [
+                  "messaging:4c59448d-9bde-4869-bb27-26d88f6bdaf7",
+                ],
+              },
+            },
+            "limit": 10,
+            "offset": 0,
+            "message_filter_conditions": {
+              "attachments.type": {
+                "$in": [
+                  "image",
+                ],
+              },
+            },
+          },
+        };
+        console.log(
+          "GET /search",
+          JSON.stringify({ params, headers }, null, 2),
+        );
+        const { data, error } = await this.client.supabase
+          .schema("chat")
+          .from("messages")
+          .select(CHAT_MESSAGE_WITH_RELATIONS_QUERY)
+          .not("attachments", "is", null);
+
+        if (error) {
+          console.log("==========");
+          console.log(
+            "GOT CHANNELS",
+            JSON.stringify(
+              {
+                data,
+                error,
+              },
+              null,
+              2,
+            ),
+          );
+          console.log("==========");
+        }
+
+        const results = (data || []).map(this._mapMessageObject.bind(this));
+
+        return {
+          data: {
+            results,
+          },
           status: 200,
         };
       },
@@ -85,19 +151,21 @@ export class ZixChatApiClient<
           .from("channels")
           .select(CHAT_CHANNELS_QUERY_SELECTOR);
 
-        console.log("==========");
-        console.log(
-          "GOT CHANNELS",
-          JSON.stringify(
-            {
-              data,
-              error,
-            },
-            null,
-            2,
-          ),
-        );
-        console.log("==========");
+        if (error) {
+          console.log("==========");
+          console.log(
+            "GOT CHANNELS",
+            JSON.stringify(
+              {
+                data,
+                error,
+              },
+              null,
+              2,
+            ),
+          );
+          console.log("==========");
+        }
 
         const channels = (data || []).map(this._mapChannelObject.bind(this));
         return {
@@ -564,7 +632,7 @@ export class ZixChatApiClient<
     };
   }
 
-  _mapMessageObject(message: any, params = {}) {
+  _mapMessageObject(message: any, params = {}): MessageResponse {
     const options = {
       includeOwnReactions: true,
       ...params,

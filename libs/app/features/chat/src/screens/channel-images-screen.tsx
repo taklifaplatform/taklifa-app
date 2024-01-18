@@ -108,6 +108,14 @@ export const ChannelImagesScreen: React.FC = () => {
    * Photos array created from all currently available
    * photo attachments
    */
+  messages.forEach((message) => {
+    console.log('=');
+    console.log('=');
+    console.log('message::', JSON.stringify(message, null, 2));
+    console.log('=');
+    console.log('=');
+    console.log('=');
+  });
   const photos = messages.reduce((acc: Photo<StreamChatGenerics>[], cur) => {
     const attachmentImages =
       (cur.attachments as Attachment<StreamChatGenerics>[])?.filter(

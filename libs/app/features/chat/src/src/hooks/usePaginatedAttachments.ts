@@ -47,7 +47,8 @@ export const usePaginatedAttachments = (
         },
       );
 
-      const newMessages = res?.results.map((r) => r.message);
+      const newMessages = res?.results.map((r) => r);
+      // const newMessages = res?.results.map((r) => r.message);
 
       if (!newMessages) {
         queryInProgress.current = false;
