@@ -76,6 +76,12 @@ export class ZixChatApiClient<
     this.router.post.push({
       pattern: /^\/channels$/,
       handler: async (filters, { params }) => {
+        if (!this.client.user?.id) {
+          return {
+            error: "User is not logged in",
+            status: 401,
+          };
+        }
         // console.log(`Get channels`, { filters, requestConfig })
         const { data, error } = await this.client.supabase
           .schema("chat")
@@ -94,7 +100,9 @@ export class ZixChatApiClient<
               cid: `${channel.type}:${channel.id}`,
             },
             // messages: channel.messages || [],
-            messages: (channel.messages || []).map(this._mapMessageObject),
+            messages: (channel.messages || []).map(
+              this._mapMessageObject.bind(this),
+            ),
           };
         });
         return {
@@ -185,13 +193,76 @@ export class ZixChatApiClient<
             reaction: result.data,
             status: MessageStatusTypes.RECEIVED,
           },
-          message: this._mapMessageObject(retrieveMessage.data),
-          reaction: result.data,
           status: 200,
         };
       },
     });
 
+    // DELETE /channels/messaging/{channelId}/reaction/{reactionType} (DONE)
+    this.router.delete.push({
+      pattern: /^\/messages\/([a-f\d-]+)\/reaction\/([^]+)$/,
+      handler: async (messageId: string, reactionType: string, data, req) => {
+        if (!this.client.user?.id) {
+          return {
+            error: "User is not logged in",
+            status: 401,
+          };
+        }
+
+        const retrieveReaction = await this.client.supabase
+          .schema("chat")
+          .from("reactions")
+          .select(`*, user:users(*)`)
+          .eq("user_id", this.client.user?.id)
+          .eq("message_id", messageId)
+          .eq("type", reactionType)
+          .single();
+
+        if (!retrieveReaction.data) {
+          return {
+            status: 404,
+          };
+        }
+
+        await this.client.supabase.schema("chat").from(
+          "reactions",
+        ).delete().match({
+          user_id: this.client.user?.id,
+          message_id: messageId,
+          type: reactionType,
+        }).single();
+
+        const retrieveMessage = await this.client.supabase
+          .schema("chat")
+          .from("messages")
+          .select(MESSAGE_WITH_RELATIONS_QUERY)
+          .eq("id", messageId)
+          .single();
+        const channelId = retrieveMessage.data?.channel_id;
+
+        const event = {
+          cid: `messaging:${channelId}`,
+          type: "reaction.deleted",
+          channel_type: "messaging",
+          channel_id: channelId,
+          user: this.client.user,
+          created_at: retrieveReaction.data.created_at,
+          message: this._mapMessageObject(retrieveMessage.data),
+          reaction: retrieveReaction.data,
+        };
+        this.broadcastEvent(event);
+        this.client.dispatchEvent(event as any);
+
+        return {
+          data: {
+            message: retrieveMessage.data,
+            reaction: retrieveReaction.data,
+            status: MessageStatusTypes.RECEIVED,
+          },
+          status: 200,
+        };
+      },
+    });
 
     // POST /channels/messaging/{channelId}/message (Done)
     this.router.post.push({
@@ -369,7 +440,7 @@ export class ZixChatApiClient<
         reaction_scores[reaction.type] = reaction_scores[reaction.type] || 0;
         reaction_scores[reaction.type] += reaction.score;
 
-        if (this.client.user?.id === reaction.user_id) {
+        if (this.client?.user?.id === reaction.user_id) {
           own_reactions.push(reaction);
         }
       },
