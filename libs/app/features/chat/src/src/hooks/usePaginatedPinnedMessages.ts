@@ -2,14 +2,14 @@ import { useEffect, useRef, useState } from "react";
 
 import type { Channel, MessageResponse } from "stream-chat";
 
-import { useChatClient } from "../../hooks/useChatClient";
+import { useChatContext } from "stream-chat-expo";
 import type { StreamChatGenerics } from "../types";
 import { DEFAULT_PAGINATION_LIMIT } from "../utils/constants";
 
 export const usePaginatedPinnedMessages = (
   channel: Channel<StreamChatGenerics>,
 ) => {
-  const { chatClient } = useChatClient();
+  const { client: chatClient } = useChatContext();
   const offset = useRef(0);
   const hasMoreResults = useRef(true);
   const queryInProgress = useRef(false);

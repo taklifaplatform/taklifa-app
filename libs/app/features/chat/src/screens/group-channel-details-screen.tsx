@@ -12,6 +12,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   Avatar,
   useChannelPreviewDisplayName,
+  useChatContext,
   useOverlayContext,
   useTheme
 } from 'stream-chat-expo';
@@ -36,7 +37,6 @@ import { getUserActivityStatus } from '../src/utils/getUserActivityStatus';
 import type { Channel, UserResponse } from 'stream-chat';
 
 import { useRouter } from 'solito/router';
-import { useChatClient } from '../hooks/useChatClient';
 import { Pin } from '../src/icons/Pin';
 import type { StreamChatGenerics } from '../src/types';
 
@@ -147,7 +147,7 @@ const Spacer = () => {
 export const GroupChannelDetailsScreen: React.FC<GroupChannelDetailsProps> = ({
   channel
 }) => {
-  const { client: chatClient } = useChatClient();
+  const { client: chatClient } = useChatContext();
   const router = useRouter();
 
   const { setOverlay: setAppOverlay } = useAppOverlayContext();

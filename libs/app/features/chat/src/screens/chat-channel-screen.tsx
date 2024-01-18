@@ -4,7 +4,6 @@ import { useFocusEffect } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import type { Channel as StreamChatChannel } from 'stream-chat';
 import {
   Channel,
   ChannelAvatar,
@@ -12,6 +11,7 @@ import {
   MessageList,
   ThreadContextValue,
   useAttachmentPickerContext,
+  useChannelContext,
   useChannelPreviewDisplayName,
   useChatContext,
   useTheme,
@@ -23,7 +23,6 @@ import { ScreenHeader } from '../src/components/ScreenHeader';
 import { useChannelMembersStatus } from '../src/hooks/useChannelMembersStatus';
 
 import { useRouter } from 'solito/router';
-import { useChatClient } from '../hooks/useChatClient';
 import { NetworkDownIndicator } from '../src/components/NetworkDownIndicator';
 import type { StreamChatGenerics } from '../src/types';
 
@@ -37,12 +36,13 @@ export type ChannelScreenProps = {
 };
 
 export type ChannelHeaderProps = {
-  channel: StreamChatChannel<StreamChatGenerics>;
+  // channel: StreamChatChannel<StreamChatGenerics>;
 };
 
-const ChannelHeader: React.FC<ChannelHeaderProps> = ({ channel }) => {
+const ChannelHeader: React.FC<ChannelHeaderProps> = () => {
   const router = useRouter();
-  const { client: chatClient } = useChatClient();
+  const { channel } = useChannelContext();
+  const { client: chatClient } = useChatContext();
   const { closePicker } = useAttachmentPickerContext();
   const membersStatus = useChannelMembersStatus(channel);
   const displayName = useChannelPreviewDisplayName(channel, 30);
@@ -93,9 +93,8 @@ const ChannelHeader: React.FC<ChannelHeaderProps> = ({ channel }) => {
 
 const { useParam } = createParam<{ channel: string; message?: string }>();
 
-export const ChatChannelScreen: React.FC<ChannelHeaderProps> = ({
-  channel
-}) => {
+export const ChatChannelScreen: React.FC<ChannelHeaderProps> = () => {
+  const { channel } = useChannelContext();
   const [messageId] = useParam('message');
   const router = useRouter();
   const { bottom } = useSafeAreaInsets();

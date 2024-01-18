@@ -1,7 +1,7 @@
 import React, { useMemo, useRef } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { MessageResponse } from 'stream-chat';
-import { AtMentions, useTheme } from 'stream-chat-expo';
+import { AtMentions, useChatContext, useTheme } from 'stream-chat-expo';
 
 import { useScrollToTop } from '@react-navigation/native';
 import { ChatScreenHeader } from '../components/ChatScreenHeader';
@@ -10,7 +10,6 @@ import { usePaginatedSearchedMessages } from '../hooks/usePaginatedSearchedMessa
 
 import type { StackNavigationProp } from '@react-navigation/stack';
 
-import { useChatClient } from '../../hooks/useChatClient';
 import type { BottomTabNavigatorParamList, StreamChatGenerics } from '../types';
 
 const styles = StyleSheet.create({
@@ -58,7 +57,7 @@ export const MentionsScreen: React.FC<MentionsScreenProps> = () => {
       colors: { white_snow }
     }
   } = useTheme();
-  const { chatClient } = useChatClient();
+  const { client: chatClient } = useChatContext();
   const messageFilters = useMemo(
     () => ({
       'mentioned_users.id': {

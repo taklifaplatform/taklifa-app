@@ -15,6 +15,7 @@ import {
   MessageList,
   User,
   UserAdd,
+  useChatContext,
   useTheme
 } from 'stream-chat-expo';
 
@@ -27,7 +28,6 @@ import { useUserSearchContext } from '../src/context/UserSearchContext';
 import type { Channel as StreamChatChannel } from 'stream-chat';
 
 import { useRouter } from 'solito/router';
-import { useChatClient } from '../hooks/useChatClient';
 import { NewDirectMessagingSendButton } from '../src/components/NewDirectMessagingSendButton';
 import type { StreamChatGenerics } from '../src/types';
 
@@ -118,7 +118,7 @@ export const NewDirectMessagingScreen: React.FC = () => {
     }
   } = useTheme();
   const router = useRouter();
-  const { client: chatClient } = useChatClient();
+  const { client: chatClient } = useChatContext();
 
   const {
     onChangeSearchText,

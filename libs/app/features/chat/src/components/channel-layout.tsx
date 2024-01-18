@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { createParam } from 'solito';
 import type { Channel as StreamChatChannel } from 'stream-chat';
+import { Channel, useChatContext } from 'stream-chat-expo';
 import type { StreamChatGenerics } from '../src/types';
-import { useChatClient } from '../hooks/useChatClient';
 
 const { useParam } = createParam<{ channel: string; message?: string }>();
 
 export type ChannelLayoutProps = {
-  children: (props: {
-    client: StreamChatGenerics['client'];
-    channel: StreamChatChannel<StreamChatGenerics>;
-  }) => React.ReactNode;
+  children: React.ReactNode;
 };
 
+/**
+ * Renders the layout for a chat channel.
+ * @param children - The child components to render within the channel layout.
+ */
 export const ChannelLayout: React.FC<ChannelLayoutProps> = ({ children }) => {
   const [channelId] = useParam('channel');
-  const { client } = useChatClient();
+  const { client } = useChatContext();
+
   const [channel, setChannel] = useState<
     StreamChatChannel<StreamChatGenerics> | undefined
   >();
@@ -34,8 +36,9 @@ export const ChannelLayout: React.FC<ChannelLayoutProps> = ({ children }) => {
     initChannel();
   }, [channelId, client]);
 
-  // TODO:: Add loading state
   if (!channel || !client) return null;
 
-  return children({ client, channel });
+  return <Channel channel={channel}>{children}</Channel>;
 };
+
+export default ChannelLayout;

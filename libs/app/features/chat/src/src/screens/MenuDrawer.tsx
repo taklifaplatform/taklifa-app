@@ -7,9 +7,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { Edit, Group, User, useTheme } from 'stream-chat-expo';
-
-import { useChatClient } from '../../hooks/useChatClient';
+import { Edit, Group, User, useChatContext, useTheme } from 'stream-chat-expo';
 
 const styles = StyleSheet.create({
   avatar: {
@@ -48,14 +46,14 @@ const styles = StyleSheet.create({
   }
 });
 
-export const MenuDrawer: React.FC = ({ navigation }) => {
+export const MenuDrawer: React.FC = () => {
   const {
     theme: {
       colors: { black, grey, white }
     }
   } = useTheme();
 
-  const { chatClient } = useChatClient();
+  const { client: chatClient } = useChatContext();
 
   if (!chatClient) return null;
 
@@ -82,7 +80,7 @@ export const MenuDrawer: React.FC = ({ navigation }) => {
       <View style={styles.menuContainer}>
         <View>
           <TouchableOpacity
-            onPress={() => navigation.navigate('NewDirectMessagingScreen')}
+            onPress={() => alert('NewDirectMessagingScreen')}
             style={styles.menuItem}
           >
             <Edit height={24} pathFill={grey} width={24} />
@@ -98,9 +96,7 @@ export const MenuDrawer: React.FC = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('NewGroupChannelAddMemberScreen')
-            }
+            onPress={() => alert('NewGroupChannelAddMemberScreen')}
             style={styles.menuItem}
           >
             <Group height={24} pathFill={grey} width={24} />

@@ -4,7 +4,7 @@ import { getUserActivityStatus } from "../utils/getUserActivityStatus";
 
 import type { Channel } from "stream-chat";
 
-import { useChatClient } from "../../hooks/useChatClient";
+import { useChatContext } from "stream-chat-expo";
 import type { StreamChatGenerics } from "../types";
 
 export const useChannelMembersStatus = (
@@ -20,7 +20,7 @@ export const useChannelMembersStatus = (
 
     if (isOneOnOneConversation) {
       const result = Object.values({ ...channel.state.members }).find(
-        (member) => member.user?.id !== chatClient?.user?.id,
+        (member) => member.user?.id !== client?.user?.id,
       );
 
       return (newStatus = getUserActivityStatus(result?.user));
@@ -37,11 +37,11 @@ export const useChannelMembersStatus = (
   };
 
   const [status, setStatus] = useState(getStatus());
-  const { chatClient } = useChatClient();
+  const { client } = useChatContext();
 
   useEffect(() => {
     setStatus(getStatus());
-  }, [watchersCount, memberCount, chatClient]);
+  }, [watchersCount, memberCount, client]);
 
   return status;
 };

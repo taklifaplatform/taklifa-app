@@ -4,7 +4,7 @@ import type { Channel as StreamChatChannel } from 'stream-chat';
 
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { useTheme } from 'stream-chat-expo';
+import { useChatContext, useTheme } from 'stream-chat-expo';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MessageSearchList } from '../src/components/MessageSearch/MessageSearchList';
@@ -15,7 +15,6 @@ import type { StreamChatGenerics } from '../src/types';
 
 import type { RouteProp } from '@react-navigation/native';
 
-import { useChatClient } from '../hooks/useChatClient';
 import type { StackNavigatorParamList } from '../src/types';
 
 const styles = StyleSheet.create({
@@ -84,7 +83,7 @@ export const ChannelPinnedMessagesScreen: React.FC = () => {
       colors: { white_snow }
     }
   } = useTheme();
-  const { client: chatClient } = useChatClient();
+  const { client: chatClient } = useChatContext();
 
   const [channelId] = useParam('channel');
   const [channel, setChannel] = useState<

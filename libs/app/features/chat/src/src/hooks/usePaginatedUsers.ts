@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 import type { UserFilters, UserResponse } from "stream-chat";
 
-import { useChatClient } from "../../hooks/useChatClient";
+import { useChatContext } from "stream-chat-expo";
 import type { StreamChatGenerics } from "../types";
 
 export type PaginatedUsers = {
@@ -32,7 +32,7 @@ export type PaginatedUsers = {
 };
 
 export const usePaginatedUsers = (): PaginatedUsers => {
-  const { chatClient } = useChatClient();
+  const { client: chatClient } = useChatContext();
 
   const [initialResults, setInitialResults] = useState<
     UserResponse<StreamChatGenerics>[] | null

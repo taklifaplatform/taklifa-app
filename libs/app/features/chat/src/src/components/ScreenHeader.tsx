@@ -1,72 +1,68 @@
-import React, { useEffect } from 'react'
-import { StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native'
-import { CompositeNavigationProp, useNavigation } from '@react-navigation/native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useAttachmentPickerContext, useTheme } from 'stream-chat-expo'
+import React, { useEffect } from 'react';
+import {
+  StyleProp,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewStyle
+} from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useAttachmentPickerContext, useTheme } from 'stream-chat-expo';
 
-import { UnreadCountBadge } from './UnreadCountBadge'
+import { UnreadCountBadge } from './UnreadCountBadge';
 
-import { GoBack } from '../icons/GoBack'
-
-import type { DrawerNavigationProp } from '@react-navigation/drawer'
-import type { StackNavigationProp } from '@react-navigation/stack'
-
-import type { DrawerNavigatorParamList, StackNavigatorParamList } from '../types'
+import { useRouter } from 'solito/router';
+import { GoBack } from '../icons/GoBack';
 
 const styles = StyleSheet.create({
   backButton: {
-    paddingVertical: 8,
+    paddingVertical: 8
   },
   backButtonUnreadCount: {
     left: 25,
-    position: 'absolute',
+    position: 'absolute'
   },
   centerContainer: {
     alignItems: 'center',
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   contentContainer: {
     alignItems: 'center',
     flexDirection: 'row',
-    padding: 8,
+    padding: 8
   },
   leftContainer: {
-    width: 70,
+    width: 70
   },
   rightContainer: {
     alignItems: 'flex-end',
-    width: 70,
+    width: 70
   },
   safeAreaContainer: {
-    borderBottomWidth: 1,
+    borderBottomWidth: 1
   },
   subTitle: {
-    fontSize: 12,
+    fontSize: 12
   },
   title: {
     fontSize: 16,
-    fontWeight: '700',
-  },
-})
-
-type ScreenHeaderNavigationProp = CompositeNavigationProp<
-  DrawerNavigationProp<DrawerNavigatorParamList>,
-  StackNavigationProp<StackNavigatorParamList>
->
+    fontWeight: '700'
+  }
+});
 
 export const BackButton: React.FC<{
-  onBack?: () => void
-  showUnreadCountBadge?: boolean
+  onBack?: () => void;
+  showUnreadCountBadge?: boolean;
 }> = ({ onBack, showUnreadCountBadge }) => {
-  const navigation = useNavigation<ScreenHeaderNavigationProp>()
-
+  const router = useRouter();
   return (
     <TouchableOpacity
       onPress={() => {
-        navigation.goBack()
+        router.back();
         if (onBack) {
-          onBack()
+          onBack();
         }
       }}
       style={styles.backButton}
@@ -78,23 +74,23 @@ export const BackButton: React.FC<{
         </View>
       )}
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 type ScreenHeaderProps = {
-  titleText: string
-  inSafeArea?: boolean
-  LeftContent?: React.ElementType
-  onBack?: () => void
-  RightContent?: React.ElementType
-  showUnreadCountBadge?: boolean
-  style?: StyleProp<ViewStyle>
-  Subtitle?: React.ElementType
-  subtitleText?: string
-  Title?: React.ElementType
-}
+  titleText: string;
+  inSafeArea?: boolean;
+  LeftContent?: React.ElementType;
+  onBack?: () => void;
+  RightContent?: React.ElementType;
+  showUnreadCountBadge?: boolean;
+  style?: StyleProp<ViewStyle>;
+  Subtitle?: React.ElementType;
+  subtitleText?: string;
+  Title?: React.ElementType;
+};
 
-const HEADER_CONTENT_HEIGHT = 55
+const HEADER_CONTENT_HEIGHT = 55;
 
 export const ScreenHeader: React.FC<ScreenHeaderProps> = (props) => {
   const {
@@ -107,22 +103,22 @@ export const ScreenHeader: React.FC<ScreenHeaderProps> = (props) => {
     Subtitle,
     subtitleText,
     Title,
-    titleText = 'Stream Chat',
-  } = props
+    titleText = 'Stream Chat'
+  } = props;
 
   const {
     theme: {
-      colors: { black, border, grey, white },
-    },
-  } = useTheme()
-  const insets = useSafeAreaInsets()
-  const { setTopInset } = useAttachmentPickerContext()
+      colors: { black, border, grey, white }
+    }
+  } = useTheme();
+  const insets = useSafeAreaInsets();
+  const { setTopInset } = useAttachmentPickerContext();
 
   useEffect(() => {
     if (setTopInset) {
-      setTopInset(HEADER_CONTENT_HEIGHT + insets.top)
+      setTopInset(HEADER_CONTENT_HEIGHT + insets.top);
     }
-  }, [insets.top])
+  }, [insets.top]);
 
   return (
     <View
@@ -131,9 +127,9 @@ export const ScreenHeader: React.FC<ScreenHeaderProps> = (props) => {
         {
           backgroundColor: white,
           borderBottomColor: border,
-          height: HEADER_CONTENT_HEIGHT + (inSafeArea ? 0 : insets.top),
+          height: HEADER_CONTENT_HEIGHT + (inSafeArea ? 0 : insets.top)
         },
-        style,
+        style
       ]}
     >
       <View
@@ -141,15 +137,18 @@ export const ScreenHeader: React.FC<ScreenHeaderProps> = (props) => {
           styles.contentContainer,
           {
             height: HEADER_CONTENT_HEIGHT,
-            marginTop: inSafeArea ? 0 : insets.top,
-          },
+            marginTop: inSafeArea ? 0 : insets.top
+          }
         ]}
       >
         <View style={styles.leftContainer}>
           {LeftContent ? (
             <LeftContent />
           ) : (
-            <BackButton onBack={onBack} showUnreadCountBadge={showUnreadCountBadge} />
+            <BackButton
+              onBack={onBack}
+              showUnreadCountBadge={showUnreadCountBadge}
+            />
           )}
         </View>
         <View style={styles.centerContainer}>
@@ -162,8 +161,8 @@ export const ScreenHeader: React.FC<ScreenHeaderProps> = (props) => {
                   style={[
                     styles.title,
                     {
-                      color: black,
-                    },
+                      color: black
+                    }
                   ]}
                 >
                   {titleText}
@@ -179,8 +178,8 @@ export const ScreenHeader: React.FC<ScreenHeaderProps> = (props) => {
                 style={[
                   styles.subTitle,
                   {
-                    color: grey,
-                  },
+                    color: grey
+                  }
                 ]}
               >
                 {subtitleText}
@@ -193,5 +192,5 @@ export const ScreenHeader: React.FC<ScreenHeaderProps> = (props) => {
         </View>
       </View>
     </View>
-  )
-}
+  );
+};

@@ -13,10 +13,11 @@ import {
   ThemeProvider,
   getFileSizeDisplayText,
   goToURL,
+  useChannelContext,
   useTheme
 } from 'stream-chat-expo';
 
-import type { Channel, Attachment } from 'stream-chat';
+import type { Attachment } from 'stream-chat';
 import type { StreamChatGenerics } from '../src/types';
 
 import { ScreenHeader } from '../src/components/ScreenHeader';
@@ -73,13 +74,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export type ChannelFilesScreenProps = {
-  channel: Channel<StreamChatGenerics>;
-};
-
-export const ChannelFilesScreen: React.FC<ChannelFilesScreenProps> = ({
-  channel
-}) => {
+export const ChannelFilesScreen: React.FC = () => {
+  const { channel } = useChannelContext();
   const { loading, loadMore, messages } = usePaginatedAttachments(
     channel,
     'file'

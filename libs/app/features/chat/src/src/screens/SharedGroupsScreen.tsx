@@ -11,13 +11,13 @@ import {
   getChannelPreviewDisplayAvatar,
   useChannelPreviewDisplayName,
   useChannelsContext,
+  useChatContext,
   useTheme
 } from 'stream-chat-expo';
 
 import { ScreenHeader } from '../components/ScreenHeader';
 import { Contacts } from '../icons/Contacts';
 
-import { useChatClient } from '../../hooks/useChatClient';
 import type { StackNavigatorParamList, StreamChatGenerics } from '../types';
 
 const styles = StyleSheet.create({
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
 type CustomPreviewProps = ChannelPreviewMessengerProps<StreamChatGenerics>;
 
 const CustomPreview: React.FC<CustomPreviewProps> = ({ channel }) => {
-  const { chatClient } = useChatClient();
+  const { chatClient } = useChatContext();
   const name = useChannelPreviewDisplayName(channel, 30);
   const navigation = useNavigation();
   const {
@@ -179,7 +179,7 @@ export const SharedGroupsScreen: React.FC<SharedGroupsScreenProps> = ({
     params: { user }
   }
 }) => {
-  const { chatClient } = useChatClient();
+  const { client: chatClient } = useChatContext();
 
   if (!chatClient?.user) return null;
 

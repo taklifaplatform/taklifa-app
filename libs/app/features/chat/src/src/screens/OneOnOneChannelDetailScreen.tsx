@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { useTheme } from 'stream-chat-expo';
+import { useChatContext, useTheme } from 'stream-chat-expo';
 
 import { useAppOverlayContext } from '../context/AppOverlayContext';
 import { useBottomSheetOverlayContext } from '../context/BottomSheetOverlayContext';
@@ -27,7 +27,6 @@ import { getUserActivityStatus } from '../utils/getUserActivityStatus';
 import type { RouteProp } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 
-import { useChatClient } from '../../hooks/useChatClient';
 import type { StackNavigatorParamList } from '../types';
 
 const styles = StyleSheet.create({
@@ -154,7 +153,7 @@ export const OneOnOneChannelDetailScreen: React.FC<Props> = ({
       }
     }
   } = useTheme();
-  const { chatClient } = useChatClient();
+  const { chatClient } = useChatContext();
   const { setOverlay } = useAppOverlayContext();
   const { setData } = useBottomSheetOverlayContext();
 

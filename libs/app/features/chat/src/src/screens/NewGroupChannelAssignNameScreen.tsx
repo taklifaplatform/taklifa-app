@@ -4,6 +4,7 @@ import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import {
   Check,
   generateRandomId,
+  useChatContext,
   useTheme,
   useViewport
 } from 'stream-chat-expo';
@@ -14,7 +15,6 @@ import { ScreenHeader } from '../components/ScreenHeader';
 import { UserSearchResults } from '../components/UserSearch/UserSearchResults';
 import { useUserSearchContext } from '../context/UserSearchContext';
 
-import { useChatClient } from '../../hooks/useChatClient';
 import type { StackNavigatorParamList } from '../types';
 const styles = StyleSheet.create({
   absolute: { position: 'absolute' },
@@ -84,7 +84,7 @@ export type NewGroupChannelAssignNameScreenProps = {
 export const NewGroupChannelAssignNameScreen: React.FC<
   NewGroupChannelAssignNameScreenProps
 > = ({ navigation }) => {
-  const { chatClient } = useChatClient();
+  const { client: chatClient } = useChatContext();
   const { selectedUserIds, selectedUsers } = useUserSearchContext();
 
   const {

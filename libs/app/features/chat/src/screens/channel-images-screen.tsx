@@ -14,12 +14,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   DateHeader,
   Photo,
+  useChannelContext,
   useImageGalleryContext,
   useOverlayContext,
   useTheme
 } from 'stream-chat-expo';
 
-import type { Channel } from 'stream-chat';
 import { ScreenHeader } from '../src/components/ScreenHeader';
 import { usePaginatedAttachments } from '../src/hooks/usePaginatedAttachments';
 import { Picture } from '../src/icons/Picture';
@@ -54,13 +54,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export type ChannelImagesScreenProps = {
-  channel: Channel<StreamChatGenerics>;
-};
-
-export const ChannelImagesScreen: React.FC<ChannelImagesScreenProps> = ({
-  channel
-}) => {
+export const ChannelImagesScreen: React.FC = () => {
+  const { channel } = useChannelContext();
   const {
     messages: images,
     setMessages: setImages,
@@ -232,3 +227,5 @@ const EmptyListComponent = () => {
     </View>
   );
 };
+
+export default ChannelImagesScreen;

@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { ArrowRight, Search, useTheme } from 'stream-chat-expo';
+import { ArrowRight, Search, useChatContext, useTheme } from 'stream-chat-expo';
 
 import { ScreenHeader } from '../src/components/ScreenHeader';
 import { UserGridItem } from '../src/components/UserSearch/UserGridItem';
@@ -14,7 +14,6 @@ import { UserSearchResults } from '../src/components/UserSearch/UserSearchResult
 import { useUserSearchContext } from '../src/context/UserSearchContext';
 
 import { useRouter } from 'solito/router';
-import { useChatClient } from '../hooks/useChatClient';
 
 const styles = StyleSheet.create({
   container: {
@@ -73,7 +72,7 @@ const RightArrowButton: React.FC<RightArrowButtonProps> = (props) => {
 
 export const NewGroupChannelAddMemberScreen: React.FC = () => {
   const router = useRouter();
-  const { client: chatClient } = useChatClient();
+  const { client: chatClient } = useChatContext();
 
   const {
     theme: {

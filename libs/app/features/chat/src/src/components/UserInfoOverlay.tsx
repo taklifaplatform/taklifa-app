@@ -33,6 +33,7 @@ import {
   MessageIcon,
   User,
   UserMinus,
+  useChatContext,
   useTheme,
   useViewport
 } from 'stream-chat-expo';
@@ -42,7 +43,6 @@ import { useBottomSheetOverlayContext } from '../context/BottomSheetOverlayConte
 import { useUserInfoOverlayContext } from '../context/UserInfoOverlayContext';
 
 import { UserResponse } from 'stream-chat';
-import { useChatClient } from '../../hooks/useChatClient';
 
 dayjs.extend(relativeTime);
 
@@ -109,7 +109,7 @@ export type UserInfoOverlayProps = {
 export const UserInfoOverlay = (props: UserInfoOverlayProps) => {
   const { overlayOpacity, visible } = props;
   const { overlay, setOverlay } = useAppOverlayContext();
-  const { client } = useChatClient();
+  const { client } = useChatContext();
   const { setData } = useBottomSheetOverlayContext();
   const { data, reset } = useUserInfoOverlayContext();
   const { vh } = useViewport();
