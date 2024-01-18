@@ -308,7 +308,12 @@ export class ZixChat<
      */
     // this.logger = () => null
     this.logger = (logLevel, message, extraData) => {
-      console.log('ZixChat', logLevel, message, extraData);
+      console.log(
+        `ZixChat: (${this.user?.name})`,
+        logLevel,
+        message,
+        extraData,
+      );
     };
     this.recoverStateOnReconnect = true;
 
@@ -957,20 +962,17 @@ export class ZixChat<
       name,
       contentType || "multipart/form-data",
     );
-    if (user != null) formData.append("user", JSON.stringify(user));
-    formData.append(
-      "_data",
-      JSON.stringify({
-        name,
-        contentType,
-      }),
-    );
 
     return this.doAxiosRequest<SendFileAPIResponse>(
       "postForm",
       url,
       {
         formData,
+        url,
+        uri,
+        name,
+        contentType,
+        user,
       },
       {
         headers: formData.getHeaders ? formData.getHeaders() : {}, // node vs browser

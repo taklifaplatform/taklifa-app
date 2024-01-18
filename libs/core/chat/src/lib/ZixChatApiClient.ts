@@ -5,13 +5,10 @@ import { MessageStatusTypes } from "./constants";
 import { getAppData } from "./data-responses/get-app-data";
 import { fakeChannelObject } from "./fakeChannelObject";
 
-const MESSAGE_WITH_RELATIONS_QUERY = `
-  *,
-  user:users(*),
-  latest_reactions:reactions(*, user:users(*)),
-  quoted_message: quoted_message_id(*, user:users(*)),
-  reply_count:messages!parent_id(count)
-`;
+import {
+  CHAT_CHANNELS_QUERY_SELECTOR,
+  CHAT_MESSAGE_WITH_RELATIONS_QUERY,
+} from "./queries";
 
 export class ZixChatApiClient<
   ZixChatGenerics extends ExtendableGenerics = DefaultGenerics,
@@ -86,31 +83,28 @@ export class ZixChatApiClient<
         const { data, error } = await this.client.supabase
           .schema("chat")
           .from("channels")
-          .select(
-            `*,
-            messages(${MESSAGE_WITH_RELATIONS_QUERY})`,
-          );
+          .select(CHAT_CHANNELS_QUERY_SELECTOR);
 
-        const channels = (data || []).map((channel) => {
-          return {
-            ...fakeChannelObject,
-            channel: {
-              ...fakeChannelObject.channel,
-              ...channel,
-              cid: `${channel.type}:${channel.id}`,
+        console.log("==========");
+        console.log(
+          "GOT CHANNELS",
+          JSON.stringify(
+            {
+              data,
+              error,
             },
-            // messages: channel.messages || [],
-            messages: (channel.messages || []).map(
-              this._mapMessageObject.bind(this),
-            ),
-          };
-        });
+            null,
+            2,
+          ),
+        );
+        console.log("==========");
+
+        const channels = (data || []).map(this._mapChannelObject.bind(this));
         return {
           data: {
             channels,
           },
           status: 200,
-          // error,
         };
       },
     });
@@ -169,7 +163,7 @@ export class ZixChatApiClient<
         const retrieveMessage = await this.client.supabase
           .schema("chat")
           .from("messages")
-          .select(MESSAGE_WITH_RELATIONS_QUERY)
+          .select(CHAT_MESSAGE_WITH_RELATIONS_QUERY)
           .eq("id", messageId)
           .single();
         const channelId = retrieveMessage.data?.channel_id;
@@ -237,7 +231,7 @@ export class ZixChatApiClient<
         const retrieveMessage = await this.client.supabase
           .schema("chat")
           .from("messages")
-          .select(MESSAGE_WITH_RELATIONS_QUERY)
+          .select(CHAT_MESSAGE_WITH_RELATIONS_QUERY)
           .eq("id", messageId)
           .single();
         const channelId = retrieveMessage.data?.channel_id;
@@ -343,7 +337,7 @@ export class ZixChatApiClient<
         const result = await this.client.supabase
           .schema("chat")
           .from("messages")
-          .select(MESSAGE_WITH_RELATIONS_QUERY)
+          .select(CHAT_MESSAGE_WITH_RELATIONS_QUERY)
           .eq("id", messageId)
           .single();
 
@@ -399,7 +393,7 @@ export class ZixChatApiClient<
             type: "deleted",
           })
           .eq("id", messageId)
-          .select(MESSAGE_WITH_RELATIONS_QUERY)
+          .select(CHAT_MESSAGE_WITH_RELATIONS_QUERY)
           .single();
 
         if (result.error) {
@@ -437,58 +431,52 @@ export class ZixChatApiClient<
         };
       },
     });
-    // POST /channels/messaging/{channelId}/image
+    // POST /channels/messaging/{channelId}/image (DONE)
     this.router.postForm.push({
       pattern: /^\/channels\/messaging\/([a-f\d-]+)\/image$/,
-      handler: async (channelId, data, req) => {
-        console.log("/////////////////////");
-        console.log(
-          "Upload file::",
-          JSON.stringify(
-            {
-              channelId,
-              req,
-            },
-            null,
-            2,
-          ),
-          data,
-        );
+      handler: async (channelId: string, data: any, req) => {
+        try {
+          if (!this.client.user?.id) {
+            return {
+              error: "User is not logged in",
+              status: 401,
+            };
+          }
 
-        if (!this.client.user?.id) {
+          const result = await this.client.supabase.storage
+            .from("chat")
+            .upload(
+              `${channelId}/${this.client.user.id}/${data.name}`,
+              data.formData,
+              {
+                contentType: data.contentType,
+                upsert: true,
+              },
+            );
+
+          if (result.error) {
+            return {
+              error: result.error,
+              status: 500,
+            };
+          }
+          const publicUrlRes = await this.client.supabase.storage
+            .from("chat")
+            .getPublicUrl(result.data.path.replace(`chat/`, ""));
+
           return {
-            error: "User is not logged in",
-            status: 401,
+            data: {
+              file: publicUrlRes.data.publicUrl,
+              duration: 0,
+            },
+            status: 200,
+          };
+        } catch (error) {
+          return {
+            error: error?.message || "Error while uploading file",
+            status: 500,
           };
         }
-
-        const result = await this.client.supabase.storage
-          .from("avatars")
-          .upload(`${this.client.user.id}/chat/image.png`, data, {
-            // contentType,
-            upsert: true,
-          });
-        // const result = await this.client.supabase.storage
-        //   .from('avatars')
-        //   .upload(`${this.client.user.id}/chat/${name}`, data, {
-        //     contentType,
-        //     upsert: true,
-        //   })
-        if (result.error) {
-          console.log(result.error);
-          throw new Error(result.error.message);
-        }
-        const publicUrlRes = await this.client.supabase.storage
-          .from("avatars")
-          .getPublicUrl(result.data.path.replace(`avatars/`, ""));
-
-        return {
-          data: {
-            file: publicUrlRes.data.publicUrl,
-            duration: 0,
-          },
-          status: 200,
-        };
       },
     });
   }
@@ -553,6 +541,27 @@ export class ZixChatApiClient<
   }
   async options(url, requestConfig) {
     return this.resolveRoute("options", url, requestConfig);
+  }
+
+  _mapChannelObject(channel: any) {
+    const member_count =
+      (channel.members_count?.length
+        ? channel.members_count[0].count
+        : channel?.members?.length) || 50;
+    return {
+      ...fakeChannelObject,
+      channel: {
+        ...fakeChannelObject.channel,
+        ...channel,
+        cid: `${channel.type}:${channel.id}`,
+        member_count,
+      },
+      members: channel.members || [],
+      // messages: channel.messages || [],
+      messages: (channel.messages || []).map(
+        this._mapMessageObject.bind(this),
+      ),
+    };
   }
 
   _mapMessageObject(message: any, params = {}) {

@@ -3,15 +3,12 @@ import relativeTime from "dayjs/plugin/relativeTime";
 
 import { StreamChatGenerics } from "../types";
 
-import type { Immutable } from "seamless-immutable";
 import type { UserResponse } from "stream-chat";
 
 Dayjs.extend(relativeTime);
 
 export const getUserActivityStatus = (
-  user?:
-    | Immutable<UserResponse<StreamChatGenerics>>
-    | UserResponse<StreamChatGenerics>,
+  user?: UserResponse<StreamChatGenerics>,
 ) => {
   if (!user) return "";
 

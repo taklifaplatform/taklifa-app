@@ -10,8 +10,8 @@ import type { StreamChatGenerics } from "../types";
 export const useChannelMembersStatus = (
   channel: Channel<StreamChatGenerics>,
 ) => {
-  const watchersCount = channel.state.watcher_count;
-  const memberCount = channel?.data?.member_count;
+  const watchersCount = channel.state.watcher_count || 1;
+  const memberCount = channel?.data?.member_count || 1;
 
   const getStatus = () => {
     let newStatus = "";

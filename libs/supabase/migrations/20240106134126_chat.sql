@@ -97,13 +97,16 @@ create table
 create table
   chat.channel_members (
     id uuid not null default gen_random_uuid (),
-    role text not null default 'user'::text,
-
+    role text not null default 'member'::text,
     channel_id uuid not null,
     user_id uuid not null,
-
     added_by_user_id uuid null default auth.uid (),
     created_at timestamp with time zone not null default now(),
+    channel_role text not null default 'channel_member'::text,
+    status text not null default 'member'::text,
+    shadow_banned boolean not null default false,
+    notifications_muted boolean not null default false,
+    banned boolean not null default false,
     constraint channel_members_channel_id_fkey foreign key (channel_id) references chat.channels (id) on delete cascade,
     constraint channel_members_user_id_fkey foreign key (user_id) references chat.users (id) on delete cascade,
     constraint channel_members_added_by_user_id_fkey foreign key (added_by_user_id) references chat.users (id) on delete set null

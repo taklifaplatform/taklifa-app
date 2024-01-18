@@ -114,52 +114,85 @@ export class ZixStableWSConnection<
       this.globalChannel = this.client.supabase.realtime.channel("messaging", {
         config: {
           broadcast: { ack: true, self: false },
+          // presence: {
+          //   key: "s",
+          // },
         },
       });
-      // this.globalChannel
-      //   .on('presence', { event: 'sync' }, () => {
-      //     const newState = this.globalChannel.presenceState()
-      //     console.log('PRESENCE:: sync', newState)
-      //   })
-      //   .on('presence', { event: 'join' }, ({ key, newPresences }) => {
-      //     console.log('PRESENCE::join', key, newPresences)
-      //   })
-      //   .on('presence', { event: 'leave' }, ({ key, leftPresences }) => {
-      //     console.log('PRESENCE::leave', key, leftPresences)
-      //   })
-
-      this.globalChannel.on("broadcast", { event: "*" }, (event) => {
-        if (event?.payload?.user?.id !== this.client.user?.id) {
+      this.globalChannel
+        .on("presence", { event: "sync" }, () => {
+          if (!this.globalChannel) return;
+          const newState = this.globalChannel.presenceState();
           console.log("@@@@@@@@@@@@@@@");
-          console.log(
-            `New Event For: ${this.client.user?.name}`,
-            JSON.stringify(event),
-          );
+          console.log("PRESENCE:: CALLED BY", this.client.user?.name);
+          for (const channelId of Object.keys(this.client.configs)) {
+            console.log("channelId::", channelId);
+            Object.values(newState).forEach((user: any) => {
+              this.client.dispatchEvent({
+                type: "user.watching.start",
+                user,
+                state: newState,
+                cid: `messaging:${channelId}`,
+                channel_id: channelId,
+                channel_type: "messaging",
+                created_at: new Date().toISOString(),
+                watcher_count: Object.keys(newState).length,
+              });
+            });
+          }
+          console.log("PRESENCE:: sync", JSON.stringify(newState));
+          console.log("@@@@@@@@@@@@@@@");
+        })
+        .on("presence", { event: "join" }, (e) => {
+          // const eventType == 'user.presence.changed'
           console.log("@@@@@@@@@@@@@@@");
 
-        }
-        this.client.dispatchEvent(event.payload);
-      });
-      this.globalChannel.subscribe(async (status) => {
-        console.log("status::", this.client.user?.name, status);
+          console.log("PRESENCE::join", JSON.stringify(e));
+          console.log("@@@@@@@@@@@@@@@");
+        })
+        .on("presence", { event: "leave" }, (e) => {
+          console.log("@@@@@@@@@@@@@@@");
+          console.log("PRESENCE::leave", JSON.stringify(e));
+          console.log("@@@@@@@@@@@@@@@");
+        })
+        .on("broadcast", { event: "*" }, (event) => {
+          if (event?.payload?.user?.id !== this.client.user?.id) {
+            console.log("@@@@@@@@@@@@@@@");
+            console.log(
+              `New Event For: ${this.client.user?.name}`,
+              JSON.stringify(event),
+            );
+            console.log("@@@@@@@@@@@@@@@");
+          }
+          this.client.dispatchEvent(event.payload);
+        })
+        .subscribe(async (status) => {
+          console.log("status::", this.client.user?.name, status);
 
-        if (status === "CLOSED") {
-          return;
-        }
+          if (status === "CLOSED") {
+            return;
+          }
 
-        this.isHealthy = status === "SUBSCRIBED";
+          this.isHealthy = status === "SUBSCRIBED";
 
-        this.client.dispatchEvent({
-          type: "connection.changed",
-          online: this.isHealthy,
-        });
-        this.isConnecting = false;
+          this.client.dispatchEvent({
+            type: "connection.changed",
+            online: this.isHealthy,
+          });
+          this.isConnecting = false;
 
-        // if (this.client.user) {
-        //   const presenceTrackStatus = await this.globalChannel.track(this.client.user)
-        //   console.log('presenceTrackStatus::', presenceTrackStatus)
-        // }
-      }, timeout);
+          if (this.client.user && this.globalChannel) {
+            const presenceTrackStatus = await this.globalChannel.track(
+              this.client.user,
+            );
+            console.log("presenceTrackStatus::", presenceTrackStatus);
+            this.globalChannel.send({
+              type: "broadcast",
+              event: "user.watching.start",
+              payload: {},
+            });
+          }
+        }, timeout);
 
       // this.globalChannel.rejoinTimer()
       this.consecutiveFailures = 0;
@@ -180,6 +213,31 @@ export class ZixStableWSConnection<
     }
 
     return await this._waitForHealthy(timeout);
+  }
+
+  async disconnect(timeout = 15000) {
+    this.isDisconnected = true;
+    this.isConnecting = false;
+    this.isHealthy = false;
+
+    if (this.connectionCheckTimeoutRef) {
+      clearTimeout(this.connectionCheckTimeoutRef);
+    }
+
+    if (this.healthCheckTimeoutRef) {
+      clearTimeout(this.healthCheckTimeoutRef);
+    }
+
+    if (this.ws) {
+      this.ws.close();
+    }
+
+    if (this.globalChannel) {
+      this.globalChannel.untrack();
+      await this.client.supabase.realtime.removeChannel(this.globalChannel);
+    }
+
+    this._log("disconnect() - Closing the websocket connection");
   }
 
   async onChannelSubscriptionClosed() {

@@ -1,9 +1,9 @@
 import { createParam } from 'solito';
 
 import { useFocusEffect } from '@react-navigation/native';
+import { View } from '@zix/app/ui/core';
 import React, { useState } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Platform } from 'react-native';
 import {
   Channel,
   ChannelAvatar,
@@ -22,24 +22,12 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ScreenHeader } from '../src/components/ScreenHeader';
 import { useChannelMembersStatus } from '../src/hooks/useChannelMembersStatus';
 
+import { useSafeAreaInsets } from '@zix/core/utils';
 import { useRouter } from 'solito/router';
 import { NetworkDownIndicator } from '../src/components/NetworkDownIndicator';
 import type { StreamChatGenerics } from '../src/types';
 
-const styles = StyleSheet.create({
-  flex: { flex: 1 }
-});
-
-export type ChannelScreenProps = {
-  channelId?: string;
-  messageId?: string;
-};
-
-export type ChannelHeaderProps = {
-  // channel: StreamChatChannel<StreamChatGenerics>;
-};
-
-const ChannelHeader: React.FC<ChannelHeaderProps> = () => {
+const ChannelHeader: React.FC = () => {
   const router = useRouter();
   const { channel } = useChannelContext();
   const { client: chatClient } = useChatContext();
@@ -93,7 +81,7 @@ const ChannelHeader: React.FC<ChannelHeaderProps> = () => {
 
 const { useParam } = createParam<{ channel: string; message?: string }>();
 
-export const ChatChannelScreen: React.FC<ChannelHeaderProps> = () => {
+export const ChatChannelScreen: React.F = () => {
   const { channel } = useChannelContext();
   const [messageId] = useParam('message');
   const router = useRouter();
@@ -112,17 +100,13 @@ export const ChatChannelScreen: React.FC<ChannelHeaderProps> = () => {
   });
 
   return (
-    <View
-      style={[styles.flex, { backgroundColor: white, paddingBottom: bottom }]}
-    >
+    <View flex={1} backgroundColor={white} paddingBottom={bottom}>
       <Channel
         channel={channel}
-        disableTypingIndicator
-        enforceUniqueReaction
-        initialScrollToFirstUnreadMessage
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -300}
+        // enforceUniqueReaction
+        // initialScrollToFirstUnreadMessage
+        // keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -300}
         messageId={messageId}
-        NetworkDownIndicator={() => null}
         thread={selectedThread}
       >
         <ChannelHeader channel={channel} />

@@ -34,7 +34,7 @@ with check (
       SELECT 1
       FROM chat.channel_members
       WHERE channel_id = (storage.foldername(name))[1]::uuid
-      AND user_id = auth.uid()::uuid      
+      AND user_id = auth.uid()::uuid
     )
   )
 );
@@ -53,8 +53,8 @@ using (
       SELECT 1
       FROM chat.channel_members
       WHERE channel_id = (storage.foldername(name))[1]::uuid
-      AND user_id = auth.uid()::uuid      
-    )    
+      AND user_id = auth.uid()::uuid
+    )
   )
 );
 
@@ -73,7 +73,7 @@ using (
       FROM chat.channel_members
       WHERE channel_id = (storage.foldername(name))[1]::uuid
       AND user_id = auth.uid()::uuid
-    )    
+    )
   )
 );
 
