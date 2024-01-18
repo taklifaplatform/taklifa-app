@@ -181,7 +181,9 @@ export class ZixChatApiClient<
           channel_id: channelId,
           user: result.data.user,
           created_at: result.data.created_at,
-          message: this._mapMessageObject(retrieveMessage.data),
+          message: this._mapMessageObject(retrieveMessage.data, {
+            includeOwnReactions: false,
+          }),
           reaction: result.data,
         };
         this.broadcastEvent(event);
@@ -247,7 +249,9 @@ export class ZixChatApiClient<
           channel_id: channelId,
           user: this.client.user,
           created_at: retrieveReaction.data.created_at,
-          message: this._mapMessageObject(retrieveMessage.data),
+          message: this._mapMessageObject(retrieveMessage.data, {
+            includeOwnReactions: false,
+          }),
           reaction: retrieveReaction.data,
         };
         this.broadcastEvent(event);
@@ -301,6 +305,82 @@ export class ZixChatApiClient<
         return {
           data: {
             message: result.data,
+            status: MessageStatusTypes.RECEIVED,
+          },
+          status: 200,
+        };
+      },
+    });
+
+    // POST /messages/{messageId}
+    this.router.post.push({
+      pattern: /^\/messages\/([a-f\d-]+)$/,
+      handler: async (messageId: string, data, req) => {
+        const updateResult = await this.client.supabase
+          .schema("chat")
+          .from("messages")
+          .update({
+            text: data.message.text,
+            attachments: data.message.attachments,
+            quoted_message_id: data.message.quoted_message_id,
+            parent_id: data.message.parent_id,
+            // TODO: add new props
+          })
+          .eq("id", messageId);
+
+        if (updateResult.error) {
+          console.error(
+            "DELETE hav error",
+            updateResult.error,
+            JSON.stringify({ data, req }, null, 2),
+          );
+          return {
+            error: updateResult.error,
+            status: MessageStatusTypes.FAILED,
+          };
+        }
+
+        const result = await this.client.supabase
+          .schema("chat")
+          .from("messages")
+          .select(MESSAGE_WITH_RELATIONS_QUERY)
+          .eq("id", messageId)
+          .single();
+
+        console.log("RETREIVE AFTRE UPDATE", result);
+
+        if (result.error) {
+          console.error(
+            "RETREIVE AFTRE UPDATE hav error",
+            result,
+          );
+          return {
+            error: result.error,
+            status: MessageStatusTypes.FAILED,
+          };
+        }
+
+        const channelId = result.data?.channel_id;
+
+        // TODO: fix message update
+        const event = {
+          cid: `messaging:${channelId}`,
+          type: "message.updated",
+          channel_type: "messaging",
+          channel_id: channelId,
+          user: this.client.user,
+          created_at: result.data.created_at,
+          received_at: new Date().toISOString(),
+          message: this._mapMessageObject(result.data, {
+            includeOwnReactions: false,
+          }),
+        };
+        this.broadcastEvent(event);
+        this.client.dispatchEvent(event as any);
+
+        return {
+          data: {
+            message: this._mapMessageObject(result.data),
             status: MessageStatusTypes.RECEIVED,
           },
           status: 200,
@@ -475,7 +555,12 @@ export class ZixChatApiClient<
     return this.resolveRoute("options", url, requestConfig);
   }
 
-  _mapMessageObject(message: any) {
+  _mapMessageObject(message: any, params = {}) {
+    const options = {
+      includeOwnReactions: true,
+      ...params,
+    };
+
     let reply_count = 0;
     const reaction_counts: any = {};
     const reaction_scores: any = {};
@@ -489,7 +574,10 @@ export class ZixChatApiClient<
         reaction_scores[reaction.type] = reaction_scores[reaction.type] || 0;
         reaction_scores[reaction.type] += reaction.score;
 
-        if (this.client?.user?.id === reaction.user_id) {
+        if (
+          this.client?.user?.id === reaction.user_id &&
+          options.includeOwnReactions
+        ) {
           own_reactions.push(reaction);
         }
       },
