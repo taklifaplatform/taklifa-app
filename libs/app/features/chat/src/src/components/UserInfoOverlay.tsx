@@ -43,6 +43,7 @@ import { useBottomSheetOverlayContext } from '../context/BottomSheetOverlayConte
 import { useUserInfoOverlayContext } from '../context/UserInfoOverlayContext';
 
 import { UserResponse } from 'stream-chat';
+import { useRouter } from 'solito/router';
 
 dayjs.extend(relativeTime);
 
@@ -112,12 +113,13 @@ export const UserInfoOverlay = (props: UserInfoOverlayProps) => {
   const { client } = useChatContext();
   const { setData } = useBottomSheetOverlayContext();
   const { data, reset } = useUserInfoOverlayContext();
+  const router = useRouter();
   const { vh } = useViewport();
 
   const screenHeight = vh(100);
   const halfScreenHeight = vh(50);
 
-  const { channel, member, navigation } = data || {};
+  const { channel, member } = data || {};
 
   const {
     theme: {
@@ -333,14 +335,12 @@ export const UserInfoOverlay = (props: UserInfoOverlayProps) => {
                                     members
                                   });
                             setOverlay('none');
-                            if (navigation) {
-                              navigation.navigate(
-                                'OneOnOneChannelDetailScreen',
-                                {
-                                  channel: newChannel
-                                }
-                              );
-                            }
+                            alert(
+                              JSON.stringify({
+                                navigateTo: 'OneOnOneChannelDetailScreen',
+                                channel: newChannel.id
+                              })
+                            );
                           }
                         }}
                       >
@@ -386,12 +386,7 @@ export const UserInfoOverlay = (props: UserInfoOverlayProps) => {
                                   });
 
                             setOverlay('none');
-                            if (navigation) {
-                              navigation.navigate('ChannelScreen', {
-                                channel: newChannel,
-                                channelId: newChannel.id
-                              });
-                            }
+                            router.push(`/chat/channels/${newChannel.id}`);
                           }
                         }}
                       >

@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
+import { useQuery } from "@tanstack/react-query";
+import { useSupabase } from "@zix/core/supabase";
+
 import type { UserFilters, UserResponse } from "stream-chat";
 
 import { useChatContext } from "stream-chat-expo";
@@ -33,6 +36,7 @@ export type PaginatedUsers = {
 
 export const usePaginatedUsers = (): PaginatedUsers => {
   const { client: chatClient } = useChatContext();
+  const supabase = useSupabase();
 
   const [initialResults, setInitialResults] = useState<
     UserResponse<StreamChatGenerics>[] | null
@@ -49,13 +53,27 @@ export const usePaginatedUsers = (): PaginatedUsers => {
     UserResponse<StreamChatGenerics>[]
   >([]);
 
+  const { data, refetch, isLoading, isFetching } = useQuery([
+    "users",
+    "chat",
+    searchText,
+  ], {
+    queryFn: async () => {
+      const result = await supabase.schema("chat").from("users").select();
+      console.log("========");
+      console.log("result::", result);
+      console.log("========");
+      return result.data;
+    },
+  });
+
   const hasMoreResults = useRef(true);
   const offset = useRef(0);
   const queryInProgress = useRef(false);
 
   const reset = () => {
     setSearchText("");
-    fetchUsers("");
+    // fetchUsers("");
     setSelectedUserIds([]);
     setSelectedUsers([]);
   };
@@ -107,7 +125,7 @@ export const usePaginatedUsers = (): PaginatedUsers => {
       setResults(initialResults || []);
       setLoading(false);
     } else {
-      fetchUsers(searchText);
+      // fetchUsers(searchText);
     }
   };
 
@@ -117,82 +135,89 @@ export const usePaginatedUsers = (): PaginatedUsers => {
       setResults(initialResults || []);
       setLoading(false);
     } else {
-      fetchUsers(newText);
+      // fetchUsers(newText);
     }
   };
 
   const fetchUsers = async (query = "") => {
+    if (isFetching || !chatClient?.userID) return;
+    refetch();
+
+    //
+    console.log("================");
+    console.log("fetchUsers::", queryInProgress.current || !chatClient?.userID);
+    console.log("================");
     if (queryInProgress.current || !chatClient?.userID) return;
     setLoading(true);
 
-    try {
-      queryInProgress.current = true;
-      const filter: UserFilters = {
-        id: {
-          $nin: [chatClient?.userID],
-        },
-        role: "user",
-      };
+    // try {
+    //   queryInProgress.current = true;
+    //   const filter: UserFilters = {
+    //     id: {
+    //       $nin: [chatClient?.userID],
+    //     },
+    //     role: "user",
+    //   };
 
-      if (query) {
-        filter.name = { $autocomplete: query };
-      }
+    //   if (query) {
+    //     filter.name = { $autocomplete: query };
+    //   }
 
-      if (query !== searchText) {
-        offset.current = 0;
-        hasMoreResults.current = true;
-      } else {
-        offset.current = offset.current + results.length;
-      }
+    //   if (query !== searchText) {
+    //     offset.current = 0;
+    //     hasMoreResults.current = true;
+    //   } else {
+    //     offset.current = offset.current + results.length;
+    //   }
 
-      if (!hasMoreResults.current) {
-        queryInProgress.current = false;
-        return;
-      }
+    //   if (!hasMoreResults.current) {
+    //     queryInProgress.current = false;
+    //     return;
+    //   }
 
-      const res = await chatClient?.queryUsers(
-        filter,
-        { name: 1 },
-        {
-          limit: 10,
-          offset: offset.current,
-          presence: true,
-        },
-      );
+    //   const res = await chatClient?.queryUsers(
+    //     filter,
+    //     { name: 1 },
+    //     {
+    //       limit: 10,
+    //       offset: offset.current,
+    //       presence: true,
+    //     },
+    //   );
 
-      if (!res?.users) {
-        queryInProgress.current = false;
-        return;
-      }
+    //   if (!res?.users) {
+    //     queryInProgress.current = false;
+    //     return;
+    //   }
 
-      // Dumb check to avoid duplicates
-      if (
-        query === searchText &&
-        results.findIndex((r) => res?.users[0].id === r.id) > -1
-      ) {
-        queryInProgress.current = false;
-        return;
-      }
+    //   // Dumb check to avoid duplicates
+    //   if (
+    //     query === searchText &&
+    //     results.findIndex((r) => res?.users[0].id === r.id) > -1
+    //   ) {
+    //     queryInProgress.current = false;
+    //     return;
+    //   }
 
-      setResults((r) => {
-        if (query !== searchText) {
-          return res?.users;
-        }
-        return r.concat(res?.users || []);
-      });
+    //   setResults((r) => {
+    //     if (query !== searchText) {
+    //       return res?.users;
+    //     }
+    //     return r.concat(res?.users || []);
+    //   });
 
-      if (
-        res?.users.length < 10 && (offset.current === 0 || query === searchText)
-      ) {
-        hasMoreResults.current = false;
-      }
+    //   if (
+    //     res?.users.length < 10 && (offset.current === 0 || query === searchText)
+    //   ) {
+    //     hasMoreResults.current = false;
+    //   }
 
-      if (!query && offset.current === 0) {
-        setInitialResults(res?.users || []);
-      }
-    } catch (e) {
-      // do nothing;
-    }
+    //   if (!query && offset.current === 0) {
+    //     setInitialResults(res?.users || []);
+    //   }
+    // } catch (e) {
+    //   // do nothing;
+    // }
     queryInProgress.current = false;
     setLoading(false);
   };
@@ -202,22 +227,25 @@ export const usePaginatedUsers = (): PaginatedUsers => {
   };
 
   useEffect(() => {
+    console.log("================");
+    console.log("useEffect::", "usePaginatedUsers");
+    console.log("================");
     fetchUsers();
   }, []);
 
   return {
     clearText: () => {
       setSearchText("");
-      fetchUsers("");
+      // fetchUsers("");
     },
     initialResults,
-    loading,
+    loading: isLoading,
     loadMore,
     onChangeSearchText,
     onFocusInput,
     removeUser,
     reset,
-    results,
+    results: data,
     searchText,
     selectedUserIds,
     selectedUsers,

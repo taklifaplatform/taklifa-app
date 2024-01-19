@@ -1,40 +1,46 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   SectionList,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-} from 'react-native'
-import dayjs from 'dayjs'
-import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg'
-import { Avatar, CheckSend, Close, useTheme, useViewport } from 'stream-chat-expo'
+  View
+} from 'react-native';
+import dayjs from 'dayjs';
+import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
+import {
+  Avatar,
+  CheckSend,
+  Close,
+  useTheme,
+  useViewport
+} from 'stream-chat-expo';
 
-import { useUserSearchContext } from '../../context/UserSearchContext'
+import { useUserSearchContext } from '@zix/core/chat';
 
-import type { UserResponse } from 'stream-chat'
+import type { UserResponse } from 'stream-chat';
 
-import type { StreamChatGenerics } from '../../types'
-import { Search } from '../../icons/Search'
+import type { StreamChatGenerics } from '../../types';
+import { Search } from '../../icons/Search';
 
 const styles = StyleSheet.create({
   absolute: { position: 'absolute' },
   emptyResultIndicator: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 28,
+    paddingTop: 28
   },
   emptyResultIndicatorText: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 28,
+    paddingTop: 28
   },
   flex: { flex: 1 },
   gradient: {
     height: 24,
     paddingHorizontal: 8,
-    paddingVertical: 5,
+    paddingVertical: 5
   },
   matches: { fontSize: 12 },
   searchResultContainer: {
@@ -43,11 +49,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingLeft: 8,
     paddingRight: 16,
-    paddingVertical: 12,
+    paddingVertical: 12
   },
   searchResultUserDetails: {
     flex: 1,
-    paddingLeft: 8,
+    paddingLeft: 8
   },
   searchResultUserLastOnline: { fontSize: 12 },
   searchResultUserName: { fontSize: 14, fontWeight: '700' },
@@ -55,24 +61,24 @@ const styles = StyleSheet.create({
     fontSize: 14.5,
     fontWeight: '700',
     paddingHorizontal: 8,
-    paddingVertical: 6,
-  },
-})
+    paddingVertical: 6
+  }
+});
 
 type UserSearchResultsProps = {
-  groupedAlphabetically?: boolean
-  removeOnPressOnly?: boolean
-  results?: UserResponse<StreamChatGenerics>[]
-  showOnlineStatus?: boolean
-  toggleSelectedUser?: (user: UserResponse<StreamChatGenerics>) => void
-}
+  groupedAlphabetically?: boolean;
+  removeOnPressOnly?: boolean;
+  results?: UserResponse<StreamChatGenerics>[];
+  showOnlineStatus?: boolean;
+  toggleSelectedUser?: (user: UserResponse<StreamChatGenerics>) => void;
+};
 
 export const UserSearchResults: React.FC<UserSearchResultsProps> = ({
   groupedAlphabetically = true,
   removeOnPressOnly = false,
   results: resultsProp,
   showOnlineStatus = true,
-  toggleSelectedUser,
+  toggleSelectedUser
 }) => {
   const {
     loading,
@@ -80,14 +86,14 @@ export const UserSearchResults: React.FC<UserSearchResultsProps> = ({
     results: resultsContext,
     searchText,
     selectedUserIds,
-    toggleUser,
-  } = useUserSearchContext()
+    toggleUser
+  } = useUserSearchContext();
   const [sections, setSections] = useState<
     Array<{
-      data: UserResponse<StreamChatGenerics>[]
-      title: string
+      data: UserResponse<StreamChatGenerics>[];
+      title: string;
     }>
-  >([])
+  >([]);
   const {
     theme: {
       colors: {
@@ -99,45 +105,51 @@ export const UserSearchResults: React.FC<UserSearchResultsProps> = ({
         grey,
         grey_gainsboro,
         white_smoke,
-        white_snow,
-      },
-    },
-  } = useTheme()
-  const { vw } = useViewport()
+        white_snow
+      }
+    }
+  } = useTheme();
+  const { vw } = useViewport();
 
-  const results = resultsProp || resultsContext || []
-  const resultsLength = results.length
+  const results = resultsProp || resultsContext || [];
+  const resultsLength = results.length;
   useEffect(() => {
     const newSections: {
       [key: string]: {
-        data: UserResponse<StreamChatGenerics>[]
-        title: string
-      }
-    } = {}
+        data: UserResponse<StreamChatGenerics>[];
+        title: string;
+      };
+    } = {};
 
     results.forEach((user) => {
-      const initial = user.name?.slice(0, 1).toUpperCase()
+      const initial = user.name?.slice(0, 1).toUpperCase();
 
-      if (!initial) return
+      if (!initial) return;
 
       if (!newSections[initial]) {
         newSections[initial] = {
           data: [user],
-          title: initial,
-        }
+          title: initial
+        };
       } else {
-        newSections[initial].data.push(user)
+        newSections[initial].data.push(user);
       }
-    })
-    setSections(Object.values(newSections))
-  }, [resultsLength])
+    });
+    setSections(Object.values(newSections));
+  }, [resultsLength]);
 
   return (
     <View style={[styles.flex, { backgroundColor: white_snow }]}>
       {groupedAlphabetically && sections.length > 0 && (
         <View style={styles.gradient}>
           <Svg height={24} style={styles.absolute} width={vw(100)}>
-            <Rect fill="url(#gradient)" height={24} width={vw(100)} x={0} y={0} />
+            <Rect
+              fill="url(#gradient)"
+              height={24}
+              width={vw(100)}
+              x={0}
+              y={0}
+            />
             <Defs>
               <LinearGradient
                 gradientUnits="userSpaceOnUse"
@@ -147,7 +159,11 @@ export const UserSearchResults: React.FC<UserSearchResultsProps> = ({
                 y1={0}
                 y2={24}
               >
-                <Stop offset={1} stopColor={bg_gradient_start} stopOpacity={1} />
+                <Stop
+                  offset={1}
+                  stopColor={bg_gradient_start}
+                  stopOpacity={1}
+                />
                 <Stop offset={0} stopColor={bg_gradient_end} stopOpacity={1} />
               </LinearGradient>
             </Defs>
@@ -156,8 +172,8 @@ export const UserSearchResults: React.FC<UserSearchResultsProps> = ({
             style={[
               styles.matches,
               {
-                color: grey,
-              },
+                color: grey
+              }
             ]}
           >
             {searchText ? `Matches for "${searchText}"` : 'On the platform'}
@@ -184,27 +200,32 @@ export const UserSearchResults: React.FC<UserSearchResultsProps> = ({
               key={item.id}
               onPress={() => {
                 if (toggleSelectedUser) {
-                  toggleSelectedUser(item)
+                  toggleSelectedUser(item);
                 } else {
-                  toggleUser(item)
+                  toggleUser(item);
                 }
               }}
               style={[
                 styles.searchResultContainer,
                 {
                   backgroundColor: white_snow,
-                  borderBottomColor: border,
-                },
+                  borderBottomColor: border
+                }
               ]}
             >
-              <Avatar id={item?.id} image={item.image} name={item.name} size={40} />
+              <Avatar
+                id={item?.id}
+                image={item.image}
+                name={item.name}
+                size={40}
+              />
               <View style={styles.searchResultUserDetails}>
                 <Text
                   style={[
                     styles.searchResultUserName,
                     {
-                      color: black,
-                    },
+                      color: black
+                    }
                   ]}
                 >
                   {item.name}
@@ -214,11 +235,11 @@ export const UserSearchResults: React.FC<UserSearchResultsProps> = ({
                     style={[
                       styles.searchResultUserLastOnline,
                       {
-                        color: grey,
-                      },
+                        color: grey
+                      }
                     ]}
                   >
-                    Last online {dayjs(item.last_active).calendar()}
+                    Last online {dayjs(item.last_active).fromNow()}
                   </Text>
                 )}
               </View>
@@ -235,7 +256,7 @@ export const UserSearchResults: React.FC<UserSearchResultsProps> = ({
           )}
           renderSectionHeader={({ section: { title } }) => {
             if (searchText || !groupedAlphabetically) {
-              return null
+              return null;
             }
 
             return (
@@ -245,18 +266,18 @@ export const UserSearchResults: React.FC<UserSearchResultsProps> = ({
                   styles.sectionHeader,
                   {
                     backgroundColor: white_smoke,
-                    color: grey,
-                  },
+                    color: grey
+                  }
                 ]}
               >
                 {title}
               </Text>
-            )
+            );
           }}
           sections={sections}
           stickySectionHeadersEnabled
         />
       )}
     </View>
-  )
-}
+  );
+};

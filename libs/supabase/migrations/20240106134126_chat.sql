@@ -219,3 +219,34 @@ create table
     constraint reactions_message_id_fkey foreign key (message_id) references chat.messages (id) on delete cascade,
     constraint reactions_user_id_fkey foreign key (user_id) references chat.users (id) on delete cascade
   ) tablespace pg_default;
+
+
+
+
+-- Functions
+
+-- create new channel and add members
+
+create or replace function chat.create_channel_and_add_members(
+  channel_name text,
+  channel_type text,
+  is_public boolean,
+  members uuid[]
+)
+returns chat.channels as $$
+declare
+  channel chat.channels;
+  member uuid;
+begin
+  insert into chat.channels (name, type, is_public)
+  values (channel_name, channel_type, is_public)
+  returning * into channel;
+
+  foreach member in array members loop
+    insert into chat.channel_members (channel_id, user_id)
+    values (channel.id, member);
+  end loop;
+
+  return channel;
+end;
+$$ language plpgsql security definer set search_path = chat;

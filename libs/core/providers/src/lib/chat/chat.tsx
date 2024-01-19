@@ -1,6 +1,6 @@
 import React from 'react';
 import { Chat, OverlayProvider } from 'stream-chat-expo';
-import { ZixChat } from '@zix/core/chat';
+import { ZixChat, UserSearchProvider } from '@zix/core/chat';
 import { useUser } from '@zix/core/auth';
 
 export type ChatProviderProps = {
@@ -24,7 +24,9 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({
   }, [profile]);
   return (
     <OverlayProvider>
-      <Chat client={client}>{children}</Chat>
+      <Chat client={client}>
+        <UserSearchProvider>{children}</UserSearchProvider>
+      </Chat>
     </OverlayProvider>
   );
 };

@@ -1,28 +1,34 @@
-import React, { useState } from 'react'
-import { ActivityIndicator, StyleSheet, Text, TextInput, View } from 'react-native'
-import { TouchableOpacity } from '@gorhom/bottom-sheet'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { CircleClose, Search, useTheme } from 'stream-chat-expo'
+import React, { useState } from 'react';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TextInput,
+  View
+} from 'react-native';
+import { TouchableOpacity } from '@gorhom/bottom-sheet';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { CircleClose, Search, useTheme } from 'stream-chat-expo';
 
-import { UserSearchResultsGrid } from './UserSearch/UserSearchResultsGrid'
+import { UserSearchResultsGrid } from './UserSearch/UserSearchResultsGrid';
 
-import { useAppOverlayContext } from '../context/AppOverlayContext'
+import { useAppOverlayContext } from '../context/AppOverlayContext';
 import {
   isAddMemberBottomSheetData,
-  useBottomSheetOverlayContext,
-} from '../context/BottomSheetOverlayContext'
-import { usePaginatedUsers } from '../hooks/usePaginatedUsers'
+  useBottomSheetOverlayContext
+} from '../context/BottomSheetOverlayContext';
+import { usePaginatedUsers } from '@zix/core/chat';
 
-import type { UserResponse } from 'stream-chat'
+import type { UserResponse } from 'stream-chat';
 
-import { StreamChatGenerics } from '../types'
+import { StreamChatGenerics } from '../types';
 
 const styles = StyleSheet.create({
   container: {
-    height: 300,
+    height: 300
   },
   flex: {
-    flex: 1,
+    flex: 1
   },
   inputBox: {
     flex: 1,
@@ -31,7 +37,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     padding: 0, // removal of default text input padding on android
     paddingTop: 0, // removal of iOS top padding for weird centering
-    textAlignVertical: 'center', // for android vertical text centering
+    textAlignVertical: 'center' // for android vertical text centering
   },
   inputBoxContainer: {
     alignItems: 'center',
@@ -41,37 +47,38 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginRight: 16,
     paddingHorizontal: 10,
-    paddingVertical: 8,
+    paddingVertical: 8
   },
   inputRow: {
     alignItems: 'center',
     flexDirection: 'row',
-    padding: 16,
+    padding: 16
   },
   text: {
-    marginLeft: 10,
+    marginLeft: 10
   },
   textContainer: {
     alignItems: 'center',
     flexDirection: 'row',
     padding: 5,
-    width: '100%',
-  },
-})
+    width: '100%'
+  }
+});
 
 export const AddMemberBottomSheet: React.FC = () => {
-  const { setOverlay } = useAppOverlayContext()
-  const { data, reset } = useBottomSheetOverlayContext()
+  const { setOverlay } = useAppOverlayContext();
+  const { data, reset } = useBottomSheetOverlayContext();
 
-  const channel = data && isAddMemberBottomSheetData(data) ? data.channel : undefined
+  const channel =
+    data && isAddMemberBottomSheetData(data) ? data.channel : undefined;
 
-  const insets = useSafeAreaInsets()
+  const insets = useSafeAreaInsets();
 
   const {
     theme: {
-      colors: { accent_red, black, grey, grey_whisper, white, white_smoke },
-    },
-  } = useTheme()
+      colors: { accent_red, black, grey, grey_whisper, white, white_smoke }
+    }
+  } = useTheme();
   const {
     clearText,
     loading: loadingResults,
@@ -79,36 +86,37 @@ export const AddMemberBottomSheet: React.FC = () => {
     onChangeSearchText,
     onFocusInput,
     results,
-    searchText,
-  } = usePaginatedUsers()
+    searchText
+  } = usePaginatedUsers();
 
-  const [addMemberQueryInProgress, setAddMemberQueryInProgress] = useState(false)
-  const [error, setError] = useState(false)
+  const [addMemberQueryInProgress, setAddMemberQueryInProgress] =
+    useState(false);
+  const [error, setError] = useState(false);
 
   if (!channel) {
-    return null
+    return null;
   }
 
   const addMember = async (user: UserResponse<StreamChatGenerics>) => {
-    setAddMemberQueryInProgress(true)
+    setAddMemberQueryInProgress(true);
 
     try {
-      await channel.addMembers([user.id])
-      reset()
-      setOverlay('none')
+      await channel.addMembers([user.id]);
+      reset();
+      setOverlay('none');
     } catch (err) {
-      setError(true)
+      setError(true);
     }
-    setAddMemberQueryInProgress(false)
-  }
+    setAddMemberQueryInProgress(false);
+  };
 
   return (
     <View
       style={[
         styles.container,
         {
-          marginBottom: insets.bottom,
-        },
+          marginBottom: insets.bottom
+        }
       ]}
     >
       <View style={styles.inputRow}>
@@ -117,8 +125,8 @@ export const AddMemberBottomSheet: React.FC = () => {
             styles.inputBoxContainer,
             {
               backgroundColor: white,
-              borderColor: grey_whisper,
-            },
+              borderColor: grey_whisper
+            }
           ]}
         >
           <Search pathFill={black} />
@@ -130,8 +138,8 @@ export const AddMemberBottomSheet: React.FC = () => {
             style={[
               styles.inputBox,
               {
-                color: black,
-              },
+                color: black
+              }
             ]}
             value={searchText}
           />
@@ -146,8 +154,8 @@ export const AddMemberBottomSheet: React.FC = () => {
             style={[
               styles.textContainer,
               {
-                backgroundColor: white_smoke,
-              },
+                backgroundColor: white_smoke
+              }
             ]}
           >
             <ActivityIndicator size="small" />
@@ -159,16 +167,16 @@ export const AddMemberBottomSheet: React.FC = () => {
             style={[
               styles.textContainer,
               {
-                backgroundColor: accent_red,
-              },
+                backgroundColor: accent_red
+              }
             ]}
           >
             <Text
               style={[
                 styles.text,
                 {
-                  color: white,
-                },
+                  color: white
+                }
               ]}
             >
               Error adding user to channel
@@ -185,5 +193,5 @@ export const AddMemberBottomSheet: React.FC = () => {
         />
       </View>
     </View>
-  )
-}
+  );
+};

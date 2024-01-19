@@ -42,7 +42,7 @@ export class ZixChatApiClient<
       },
     });
 
-    // GET /search
+    // GET /search TODO: add filters
     this.router.get.push({
       pattern: /^\/search$/,
       handler: async ({ params, headers }) => {
@@ -99,6 +99,100 @@ export class ZixChatApiClient<
           data: {
             results,
           },
+          status: 200,
+        };
+      },
+    });
+
+    // POST /channels/messaging/query (In-Progress)
+    this.router.post.push({
+      pattern: /^\/channels\/messaging\/query$/,
+      handler: async ({ data }, { params }, filter) => {
+        console.log("================");
+        console.log(
+          "/channels/messaging/query::",
+          JSON.stringify(
+            {
+              data,
+              params,
+              filter,
+            },
+            null,
+            2,
+          ),
+        );
+        console.log("================");
+        const createChannelResult = await this.client.supabase.schema("chat")
+          .rpc(
+            "create_channel_and_add_members",
+            {
+              members: data.members,
+              channel_name: "ABC",
+              channel_type: "messaging",
+              is_public: false,
+            },
+          );
+        console.log(
+          "CREATE CHAT RESULT",
+          JSON.stringify(
+            createChannelResult,
+            null,
+            2,
+          ),
+        );
+        console.log("================");
+        const result = await this.client.supabase
+          .schema("chat")
+          .from("channels")
+          .select(CHAT_CHANNELS_QUERY_SELECTOR)
+          .eq("id", createChannelResult.data.id)
+          .single();
+
+        if (result.error) {
+          console.log("==========");
+          console.log(
+            "GOT CHANNELS",
+            JSON.stringify(
+              result,
+              null,
+              2,
+            ),
+          );
+          console.log("==========");
+        }
+
+        return {
+          data: this._mapChannelObject(result.data),
+          status: 200,
+        };
+      },
+    });
+    // POST /channels/messaging/{message_id}/replies
+    this.router.post.push({
+      pattern: /^\/channels\/messaging\/([a-f\d-]+)\/query$/,
+      handler: async (channelId: string) => {
+        const result = await this.client.supabase
+          .schema("chat")
+          .from("channels")
+          .select(CHAT_CHANNELS_QUERY_SELECTOR)
+          .eq("id", channelId)
+          .single();
+
+        if (result.error) {
+          console.log("==========");
+          console.log(
+            "GOT CHANNELS",
+            JSON.stringify(
+              result,
+              null,
+              2,
+            ),
+          );
+          console.log("==========");
+        }
+
+        return {
+          data: this._mapChannelObject(result.data),
           status: 200,
         };
       },

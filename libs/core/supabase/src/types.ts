@@ -61,26 +61,41 @@ export interface Database {
       channel_members: {
         Row: {
           added_by_user_id: string | null
+          banned: boolean
           channel_id: string
+          channel_role: string
           created_at: string
           id: string
+          notifications_muted: boolean
           role: string
+          shadow_banned: boolean
+          status: string
           user_id: string
         }
         Insert: {
           added_by_user_id?: string | null
+          banned?: boolean
           channel_id: string
+          channel_role?: string
           created_at?: string
           id?: string
+          notifications_muted?: boolean
           role?: string
+          shadow_banned?: boolean
+          status?: string
           user_id: string
         }
         Update: {
           added_by_user_id?: string | null
+          banned?: boolean
           channel_id?: string
+          channel_role?: string
           created_at?: string
           id?: string
+          notifications_muted?: boolean
           role?: string
+          shadow_banned?: boolean
+          status?: string
           user_id?: string
         }
         Relationships: [
@@ -328,7 +343,28 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      create_channel_and_add_members: {
+        Args: {
+          channel_name: string
+          channel_type: string
+          is_public: boolean
+          members: string[]
+        }
+        Returns: {
+          created_at: string
+          creator_id: string
+          disabled: boolean
+          frozen: boolean
+          hidden: boolean
+          id: string
+          is_public: boolean
+          last_message_at: string | null
+          members_count: number
+          name: string
+          type: string
+          updated_at: string
+        }
+      }
     }
     Enums: {
       [_ in never]: never

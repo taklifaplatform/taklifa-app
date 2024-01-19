@@ -308,12 +308,12 @@ export class ZixChat<
      */
     // this.logger = () => null
     this.logger = (logLevel, message, extraData) => {
-      console.log(
-        `ZixChat: (${this.user?.name})`,
-        logLevel,
-        message,
-        extraData,
-      );
+      // console.log(
+      //   `ZixChat: (${this.user?.name})`,
+      //   logLevel,
+      //   message,
+      //   extraData,
+      // );
     };
     this.recoverStateOnReconnect = true;
 
@@ -1459,6 +1459,9 @@ export class ZixChat<
     sort: UserSort<ZixChatGenerics> = [],
     options: UserOptions = {},
   ) {
+    console.info('==================')
+    console.info('queryUsers')
+    console.info('==================')
     const defaultOptions = {
       presence: false,
     };
@@ -1466,9 +1469,9 @@ export class ZixChat<
     // Make sure we wait for the connect promise if there is a pending one
     // await this.wsPromise
 
-    if (!this._hasConnectionID()) {
-      defaultOptions.presence = false;
-    }
+    // if (!this._hasConnectionID()) {
+    //   defaultOptions.presence = false;
+    // }
 
     // Return a list of users
     const data = await this.get<

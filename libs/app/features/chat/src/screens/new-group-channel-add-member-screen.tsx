@@ -4,16 +4,19 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  View
+  View,
+  Text
 } from 'react-native';
 import { ArrowRight, Search, useChatContext, useTheme } from 'stream-chat-expo';
 
 import { ScreenHeader } from '../src/components/ScreenHeader';
 import { UserGridItem } from '../src/components/UserSearch/UserGridItem';
 import { UserSearchResults } from '../src/components/UserSearch/UserSearchResults';
-import { useUserSearchContext } from '../src/context/UserSearchContext';
+import { useUserSearchContext } from '@zix/core/chat';
+import { useQuery } from '@tanstack/react-query';
 
 import { useRouter } from 'solito/router';
+import { useSupabase } from '@zix/core/supabase';
 
 const styles = StyleSheet.create({
   container: {
@@ -89,6 +92,16 @@ export const NewGroupChannelAddMemberScreen: React.FC = () => {
     selectedUsers = []
   } = useUserSearchContext();
 
+  // const supabase = useSupabase();
+  // const { data, refetch, isLoading } = useQuery(['users', 'chat', searchText], {
+  //   queryFn: async () => {
+  //     const result = await supabase.schema('chat').from('users').select();
+
+
+  //     return res
+  //   }
+  // });
+
   const onRightArrowPress = () => {
     if (selectedUsers.length === 0) return;
     router.push('chat/NewGroupChannelAssignNameScreen');
@@ -106,7 +119,7 @@ export const NewGroupChannelAddMemberScreen: React.FC = () => {
             onPress={onRightArrowPress}
           />
         )}
-        titleText="Add Group Members"
+        titleText="Add Group Members v2"
       />
       <View>
         <View
@@ -151,7 +164,7 @@ export const NewGroupChannelAddMemberScreen: React.FC = () => {
           style={selectedUsers.length ? styles.flatList : {}}
         />
       </View>
-      <UserSearchResults />
+      {/* <UserSearchResults /> */}
     </View>
   );
 };

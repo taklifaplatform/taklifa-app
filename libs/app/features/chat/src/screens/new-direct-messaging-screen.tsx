@@ -23,7 +23,7 @@ import { RoundButton } from '../src/components/RoundButton';
 import { ScreenHeader } from '../src/components/ScreenHeader';
 import { SelectedUserTag } from '../src/components/UserSearch/SelectedUserTag';
 import { UserSearchResults } from '../src/components/UserSearch/UserSearchResults';
-import { useUserSearchContext } from '../src/context/UserSearchContext';
+import { useUserSearchContext } from '@zix/core/chat';
 
 import type { Channel as StreamChatChannel } from 'stream-chat';
 

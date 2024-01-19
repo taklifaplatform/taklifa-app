@@ -9,13 +9,12 @@ import {
   useViewport
 } from 'stream-chat-expo';
 
-import type { StackNavigationProp } from '@react-navigation/stack';
+import { useUserSearchContext } from '@zix/core/chat';
 import { RoundButton } from '../components/RoundButton';
 import { ScreenHeader } from '../components/ScreenHeader';
 import { UserSearchResults } from '../components/UserSearch/UserSearchResults';
-import { useUserSearchContext } from '../context/UserSearchContext';
+import { useRouter } from 'solito/router';
 
-import type { StackNavigatorParamList } from '../types';
 const styles = StyleSheet.create({
   absolute: { position: 'absolute' },
   container: {
@@ -72,18 +71,8 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = (props) => {
   );
 };
 
-type NewGroupChannelAssignNameScreenNavigationProp = StackNavigationProp<
-  StackNavigatorParamList,
-  'NewGroupChannelAssignNameScreen'
->;
-
-export type NewGroupChannelAssignNameScreenProps = {
-  navigation: NewGroupChannelAssignNameScreenNavigationProp;
-};
-
-export const NewGroupChannelAssignNameScreen: React.FC<
-  NewGroupChannelAssignNameScreenProps
-> = ({ navigation }) => {
+export const NewGroupChannelAssignNameScreen: React.FC = () => {
+  const router = useRouter();
   const { client: chatClient } = useChatContext();
   const { selectedUserIds, selectedUsers } = useUserSearchContext();
 
@@ -114,10 +103,12 @@ export const NewGroupChannelAssignNameScreen: React.FC<
     });
 
     // TODO: Maybe there is a better way to do this.
-    navigation.pop(2);
-    navigation.replace('ChannelScreen', {
-      channelId: channel.id
-    });
+    alert('hoho');
+    router.push(`/chat/${channel.id}`);
+    // navigation.pop(2);
+    // navigation.replace('ChannelScreen', {
+    //   channelId: channel.id
+    // });
   };
 
   return (

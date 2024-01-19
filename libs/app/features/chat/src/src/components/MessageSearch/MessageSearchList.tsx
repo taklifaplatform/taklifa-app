@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import React from 'react';
 import {
@@ -12,6 +11,7 @@ import { Avatar, Spinner, useTheme, useViewport } from 'stream-chat-expo';
 
 import type { MessageResponse } from 'stream-chat';
 
+import { useRouter } from 'solito/router';
 import type { StreamChatGenerics } from '../../types';
 import { DEFAULT_PAGINATION_LIMIT } from '../../utils/constants';
 
@@ -80,7 +80,7 @@ export const MessageSearchList: React.FC<MessageSearchListProps> =
         }
       } = useTheme();
       const { vw } = useViewport();
-      const navigation = useNavigation();
+      const router = useRouter();
 
       if (loading && !refreshing && (!messages || messages.length === 0)) {
         return (
@@ -127,10 +127,9 @@ export const MessageSearchList: React.FC<MessageSearchListProps> =
             renderItem={({ item }) => (
               <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate('ChannelScreen', {
-                    channelId: item.channel?.id,
-                    messageId: item.id
-                  });
+                  router.push(
+                    `/chat/channels/${item.channel?.id}/messages/${item.id}`
+                  );
                 }}
                 style={[styles.itemContainer, { borderBottomColor: border }]}
                 testID="channel-preview-button"
