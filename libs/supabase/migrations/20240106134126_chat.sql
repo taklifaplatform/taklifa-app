@@ -261,3 +261,50 @@ begin
   return channel;
 end;
 $$ language plpgsql security definer set search_path = chat;
+
+
+/**
+  * Start chat between 2 users
+  * if the channel already exists between the 2 users, it will return the existing channel
+  * @param {string} user_id - The user to start the chat with
+  * @returns {object} The newly created channel
+ */
+create or replace function chat.start_chat_with_user(
+  member_id uuid
+)
+returns chat.channels as $$
+declare
+  channel chat.channels;
+begin
+  select * from chat.channels
+  where type = 'messaging'
+  and members_count = 2
+  and exists (
+    select 1 from chat.channel_members
+    where channel_id = chat.channels.id
+    and user_id = auth.uid()
+  )
+  and exists (
+    select 1 from chat.channel_members
+    where channel_id = chat.channels.id
+    and user_id = member_id
+  )
+  into channel;
+
+  if found then
+    return channel;
+  end if;
+
+  insert into chat.channels (type, members_count)
+  values ('messaging', 2)
+  returning * into channel;
+
+  insert into chat.channel_members (channel_id, user_id)
+  values (channel.id, auth.uid());
+
+  insert into chat.channel_members (channel_id, user_id)
+  values (channel.id, member_id);
+
+  return channel;
+end;
+$$ language plpgsql security definer set search_path = chat;

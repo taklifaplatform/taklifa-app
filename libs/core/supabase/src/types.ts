@@ -364,6 +364,25 @@ export interface Database {
           updated_at: string
         }
       }
+      start_chat_with_user: {
+        Args: {
+          user_id: string
+        }
+        Returns: {
+          created_at: string
+          creator_id: string
+          disabled: boolean
+          frozen: boolean
+          hidden: boolean
+          id: string
+          is_public: boolean
+          last_message_at: string | null
+          members_count: number
+          name: string | null
+          type: string
+          updated_at: string
+        }
+      }
     }
     Enums: {
       [_ in never]: never

@@ -108,6 +108,10 @@ export class ZixChatApiClient<
     this.router.post.push({
       pattern: /^\/channels\/messaging\/query$/,
       handler: async ({ data }, { params }, filter) => {
+        const members = data.members.filter((m: string) =>
+          m !== params.user_id
+        );
+        let createdChannelId = null;
         console.log("================");
         console.log(
           "/channels/messaging/query::",
@@ -122,30 +126,62 @@ export class ZixChatApiClient<
           ),
         );
         console.log("================");
-        const createChannelResult = await this.client.supabase.schema("chat")
-          .rpc(
-            "create_channel_and_add_members",
-            {
-              members: data.members,
-              channel_name: "ABC",
-              channel_type: "messaging",
-              is_public: false,
-            },
-          );
-        console.log(
-          "CREATE CHAT RESULT",
-          JSON.stringify(
-            createChannelResult,
-            null,
-            2,
-          ),
-        );
-        console.log("================");
+        if (members.length === 1) {
+          const startChatWithUser = await this.client.supabase.schema("chat")
+            .rpc(
+              "start_chat_with_user",
+              {
+                member_id: members[0],
+              },
+            );
+
+          if (startChatWithUser.error) {
+            console.error(startChatWithUser.error);
+            return {
+              error: startChatWithUser.error,
+              status: 500,
+            };
+          }
+
+          createdChannelId = startChatWithUser.data.id;
+        }
+        // const createChannelResult = await this.client.supabase.schema("chat")
+        //   .rpc(
+        //     "create_channel_group",
+        //     {
+        //       members: data.members,
+        //       channel_name: "",
+        //       is_public: false,
+        //     },
+        //   );
+
+        // if (createChannelResult.error) {
+        //   console.error(createChannelResult.error);
+        //   return {
+        //     error: createChannelResult.error,
+        //     status: 500,
+        //   };
+        // }
+        // console.log(
+        //   "CREATE CHAT RESULT",
+        //   JSON.stringify(
+        //     createChannelResult,
+        //     null,
+        //     2,
+        //   ),
+        // );
+        // console.log("================");
+        if (!createdChannelId) {
+          return {
+            error: "Channel not created",
+            status: 500,
+          };
+        }
         const result = await this.client.supabase
           .schema("chat")
           .from("channels")
           .select(CHAT_CHANNELS_QUERY_SELECTOR)
-          .eq("id", createChannelResult.data.id)
+          .eq("id", createdChannelId)
           .single();
 
         if (result.error) {
