@@ -96,7 +96,7 @@ export const NewGroupChannelAssignNameScreen: React.FC = () => {
     // create a new channel with the selected users
     const createChannelResult = await supabase
       .schema('chat')
-      .rpc('create_channel_group', {
+      .rpc('start_chat', {
         members: selectedUserIds,
         channel_name: groupName,
         is_public: false

@@ -343,11 +343,11 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      create_channel_group: {
+      start_chat: {
         Args: {
-          channel_name: string
-          is_public: boolean
           members: string[]
+          channel_name?: string
+          is_public?: boolean
         }
         Returns: {
           created_at: string
@@ -366,7 +366,7 @@ export interface Database {
       }
       start_chat_with_user: {
         Args: {
-          user_id: string
+          member_id: string
         }
         Returns: {
           created_at: string

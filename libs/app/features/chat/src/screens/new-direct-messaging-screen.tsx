@@ -146,6 +146,9 @@ export const NewDirectMessagingScreen: React.FC = () => {
   const selectedUsersLength = selectedUsers?.length || 0;
   useEffect(() => {
     const initChannel = async () => {
+      // console.log('=========');
+      // console.log('initChannel', selectedUsers);
+      // console.log('=========');
       if (!chatClient?.user?.id) return;
 
       // If there are no selected users, then set dummy channel.
@@ -166,6 +169,9 @@ export const NewDirectMessagingScreen: React.FC = () => {
         // Channel already exist
         currentChannel.current = channels[0];
         isDraft.current = false;
+        console.log('=========');
+        console.log('Channels exist', currentChannel.current?.id);
+        console.log('=========');
       } else {
         // Channel doesn't exist.
         isDraft.current = true;
@@ -173,6 +179,9 @@ export const NewDirectMessagingScreen: React.FC = () => {
         const channel = chatClient.channel('messaging', {
           members
         });
+        console.log('=========');
+        console.log('Channels not exist', members);
+        console.log('=========');
 
         // Hack to trick channel component into accepting channel without watching it.
         channel.initialized = true;

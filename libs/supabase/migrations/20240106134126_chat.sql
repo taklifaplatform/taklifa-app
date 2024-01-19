@@ -225,43 +225,6 @@ create table
 
 -- Functions
 
-/**
- * Creates a new channel
- * Don't include the auth user, cause by default he will be added as a owner
- * @param {string} channel_name - The name of the channel
- * @param {boolean} is_public - Whether the channel is public or private
- * @param {string[]} members - The members of the channel
- * @returns {object} The newly created channel
- */
-
-create or replace function chat.create_channel_group(
-  channel_name text,
-  is_public boolean,
-  members uuid[]
-)
-returns chat.channels as $$
-declare
-  channel chat.channels;
-  member uuid;
-begin
-  insert into chat.channels (name, is_public)
-  values (channel_name, is_public)
-  returning * into channel;
-
-  insert into chat.channel_members (channel_id, user_id, role)
-  values (channel.id, auth.uid(), 'owner');
-
-  foreach member in array members loop
-    if member != auth.uid() then
-      insert into chat.channel_members (channel_id, user_id)
-      values (channel.id, member) on conflict do nothing;
-    end if;
-  end loop;
-
-  return channel;
-end;
-$$ language plpgsql security definer set search_path = chat;
-
 
 /**
   * Start chat between 2 users
@@ -304,6 +267,73 @@ begin
 
   insert into chat.channel_members (channel_id, user_id)
   values (channel.id, member_id);
+
+  return channel;
+end;
+$$ language plpgsql security definer set search_path = chat;
+
+
+
+/**
+  * Start Chat
+  * will accept members array, optional channel_name, optional is_public
+  * @param {string[]} members - The members of the channel
+  * @param {string} channel_name - The name of the channel
+  * @param {boolean} is_public - Whether the channel is public or private
+  *
+  */
+create or replace function chat.start_chat(
+  members uuid[],
+  channel_name text default null,
+  is_public boolean default false
+)
+returns chat.channels as $$
+declare
+  channel chat.channels;
+  member uuid;
+begin
+  -- if members array is empty, throw error
+  if array_length(members, 1) = 0 then
+    raise exception 'Members array cannot be empty';
+  end if;
+
+  -- if members array has only 1 member and no channel_name is given, start chat with that user
+  if array_length(members, 1) = 1 and channel_name is null then
+    return chat.start_chat_with_user(members[1]);
+  end if;
+
+  -- if members array is 2 and auth.uid() is one of the members, start chat with the other member
+  if array_length(members, 1) = 2 and auth.uid() = any(members) then
+    foreach member in array members loop
+      if member != auth.uid() then
+        return chat.start_chat_with_user(member);
+      end if;
+    end loop;
+  end if;
+
+  -- initialize the channel
+  insert into chat.channels (type, members_count, is_public)
+  values ('messaging', array_length(members, 1), is_public)
+  returning * into channel;
+
+  -- if channel_name is provided update it
+  if channel_name is not null then
+    update chat.channels
+    set name = channel_name
+    where id = channel.id;
+  end if;
+
+  -- create channel owner
+  insert into chat.channel_members (channel_id, user_id, role)
+  values (channel.id, auth.uid(), 'owner');
+
+  -- add members to the channel
+  foreach member in array members loop
+    if member != auth.uid() then
+      insert into chat.channel_members (channel_id, user_id)
+      values (channel.id, member) on conflict do nothing;
+    end if;
+  end loop;
 
   return channel;
 end;

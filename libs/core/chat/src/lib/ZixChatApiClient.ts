@@ -104,14 +104,10 @@ export class ZixChatApiClient<
       },
     });
 
-    // POST /channels/messaging/query (In-Progress)
+    // POST /channels/messaging/query (DONE)
     this.router.post.push({
       pattern: /^\/channels\/messaging\/query$/,
       handler: async ({ data }, { params }, filter) => {
-        const members = data.members.filter((m: string) =>
-          m !== params.user_id
-        );
-        let createdChannelId = null;
         console.log("================");
         console.log(
           "/channels/messaging/query::",
@@ -126,52 +122,21 @@ export class ZixChatApiClient<
           ),
         );
         console.log("================");
-        if (members.length === 1) {
-          const startChatWithUser = await this.client.supabase.schema("chat")
-            .rpc(
-              "start_chat_with_user",
-              {
-                member_id: members[0],
-              },
-            );
+        const startChat = await this.client.supabase.schema("chat")
+          .rpc(
+            "start_chat",
+            data,
+          );
 
-          if (startChatWithUser.error) {
-            console.error(startChatWithUser.error);
-            return {
-              error: startChatWithUser.error,
-              status: 500,
-            };
-          }
-
-          createdChannelId = startChatWithUser.data.id;
+        if (startChat.error) {
+          console.error(startChat.error);
+          return {
+            error: startChat.error,
+            status: 500,
+          };
         }
-        // const createChannelResult = await this.client.supabase.schema("chat")
-        //   .rpc(
-        //     "create_channel_group",
-        //     {
-        //       members: data.members,
-        //       channel_name: "",
-        //       is_public: false,
-        //     },
-        //   );
 
-        // if (createChannelResult.error) {
-        //   console.error(createChannelResult.error);
-        //   return {
-        //     error: createChannelResult.error,
-        //     status: 500,
-        //   };
-        // }
-        // console.log(
-        //   "CREATE CHAT RESULT",
-        //   JSON.stringify(
-        //     createChannelResult,
-        //     null,
-        //     2,
-        //   ),
-        // );
-        // console.log("================");
-        if (!createdChannelId) {
+        if (!startChat?.data?.id) {
           return {
             error: "Channel not created",
             status: 500,
@@ -181,7 +146,7 @@ export class ZixChatApiClient<
           .schema("chat")
           .from("channels")
           .select(CHAT_CHANNELS_QUERY_SELECTOR)
-          .eq("id", createdChannelId)
+          .eq("id", startChat.data.id)
           .single();
 
         if (result.error) {
@@ -268,7 +233,13 @@ export class ZixChatApiClient<
     // POST /channels
     this.router.post.push({
       pattern: /^\/channels$/,
-      handler: async (filters, { params }) => {
+      handler: async (filters, params) => {
+        console.log("=============");
+        console.log(
+          "POST /channels",
+          JSON.stringify({ filters, params }, null, 2),
+        );
+        console.log("=============");
         if (!this.client.user?.id) {
           return {
             error: "User is not logged in",
