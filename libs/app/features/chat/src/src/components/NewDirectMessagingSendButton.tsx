@@ -22,6 +22,7 @@ import {
 
 import { useRouter } from 'solito/router';
 import { StreamChatGenerics } from '../types';
+import { useUserSearchContext } from '@zix/core/chat';
 
 type NewDirectMessagingSendButtonPropsWithContext<
   At extends UnknownType = DefaultAttachmentType,
@@ -155,7 +156,7 @@ export const NewDirectMessagingSendButton = (
 ) => {
   const router = useRouter();
   const { channel } = useChannelContext<StreamChatGenerics>();
-
+  const { reset } = useUserSearchContext();
   const { giphyActive, text } = useMessageInputContext<StreamChatGenerics>();
 
   const sendMessage = async () => {
@@ -164,6 +165,7 @@ export const NewDirectMessagingSendButton = (
     await channel.query({});
     try {
       await channel.sendMessage({ text });
+      reset();
       router.push(`/chat/channels/${channel.id}`);
     } catch (e) {
       Alert.alert('Error sending a message');

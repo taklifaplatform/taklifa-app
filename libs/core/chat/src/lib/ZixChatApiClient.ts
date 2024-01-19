@@ -1,8 +1,10 @@
 import { Database } from "@zix/core/supabase";
 import {
+  ChannelOptions,
   DefaultGenerics,
   ExtendableGenerics,
   MessageResponse,
+  QueryChannelsAPIResponse,
 } from "stream-chat/src/types";
 import { ZixChat } from "./ZixChat";
 import { MessageStatusTypes } from "./constants";
@@ -126,7 +128,7 @@ export class ZixChatApiClient<
           .rpc(
             "start_chat",
             data,
-          );
+          ).select(CHAT_CHANNELS_QUERY_SELECTOR);
 
         if (startChat.error) {
           console.error(startChat.error);
@@ -136,34 +138,8 @@ export class ZixChatApiClient<
           };
         }
 
-        if (!startChat?.data?.id) {
-          return {
-            error: "Channel not created",
-            status: 500,
-          };
-        }
-        const result = await this.client.supabase
-          .schema("chat")
-          .from("channels")
-          .select(CHAT_CHANNELS_QUERY_SELECTOR)
-          .eq("id", startChat.data.id)
-          .single();
-
-        if (result.error) {
-          console.log("==========");
-          console.log(
-            "GOT CHANNELS",
-            JSON.stringify(
-              result,
-              null,
-              2,
-            ),
-          );
-          console.log("==========");
-        }
-
         return {
-          data: this._mapChannelObject(result.data),
+          data: this._mapChannelObject(startChat.data),
           status: 200,
         };
       },
@@ -233,7 +209,15 @@ export class ZixChatApiClient<
     // POST /channels
     this.router.post.push({
       pattern: /^\/channels$/,
-      handler: async (filters, params) => {
+      handler: async (
+        filters: ChannelOptions = {
+          limit: 30,
+          offset: 0,
+        },
+        params,
+      ): Promise<
+        { data?: QueryChannelsAPIResponse; error?: string; status: number }
+      > => {
         console.log("=============");
         console.log(
           "POST /channels",
@@ -250,7 +234,12 @@ export class ZixChatApiClient<
         const { data, error } = await this.client.supabase
           .schema("chat")
           .from("channels")
-          .select(CHAT_CHANNELS_QUERY_SELECTOR);
+          .select(CHAT_CHANNELS_QUERY_SELECTOR)
+          .limit(filters.limit || 30)
+          .range(
+            filters.offset || 0,
+            (filters.offset || 0) + (filters.limit || 30),
+          );
 
         if (error) {
           console.log("==========");

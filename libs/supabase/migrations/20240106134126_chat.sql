@@ -338,3 +338,71 @@ begin
   return channel;
 end;
 $$ language plpgsql security definer set search_path = chat;
+
+
+
+--- Query Functions
+
+-- Get all channels
+-- create or replace function chat.query_channels(
+--   -- filter_conditions jsonb default '{
+--   --   "type": "messaging",
+--   --   "members": ["fb9c6286-c8ab-4337-ab28-5c2365117f71"],
+--   --   "sort": [
+--   --     {
+--   --       "field": "last_updated",
+--   --       "direction": -1
+--   --     }
+--   --   ]
+--   -- }'::jsonb
+--   filter_conditions jsonb default null
+-- )
+-- returns setof chat.channels as $$
+-- declare
+--   query text;
+--   channel chat.channels;
+--   sort jsonb;
+--   member_uuid uuid; -- declare the variable to store the UUID
+--   user_id uuid;
+--   filter_conditions jsonb;
+-- begin
+--   query := 'select * from chat.channels';
+
+--   if (filter_conditions->>'type')::text is not null then
+--     query := query || ' where type = ''' || (filter_conditions->>'type')::text || '''';
+--   end if;
+
+--   if filter_conditions is not null then
+--     -- check if filter_conditions->>'members' is not null and is array
+--     IF filter_conditions->>'members' IS NOT NULL AND jsonb_typeof(filter_conditions->'members') = 'array' THEN
+--       query := query || ' AND EXISTS (
+--         SELECT 1 FROM chat.channel_members,
+--         LATERAL unnest((filter_conditions->''members'')::uuid[]) AS user_id
+--           WHERE channel_id = chat.channels.id
+--           AND user_id = ANY (ARRAY[' || array_to_string(array_agg(user_id), ',') || '])
+--       )';
+--     END IF;
+
+--     -- if filter_conditions->>'sort' is not null and is array
+--     if filter_conditions->>'sort' is not null and jsonb_typeof(filter_conditions->'sort') = 'array' then
+--       query := query || ' order by ';
+--       for sort in select * from jsonb_array_elements(filter_conditions->'sort') loop
+--         if (sort->>'field')::text = 'last_updated' then
+--           query := query || 'last_message_at ' || (sort->>'direction')::text || ', ';
+--         else
+--           query := query || (sort->>'field')::text || ' ' || (sort->>'direction')::text || ', ';
+--         end if;
+--       end loop;
+--       query := left(query, length(query) - 2); -- Remove the trailing comma and space
+--     end if;
+--   end if;
+
+
+--   for channel in execute query loop
+--     return next channel;
+--   end loop;
+
+--   return;
+-- end;
+-- $$ language plpgsql security definer set search_path = chat;
+

@@ -319,6 +319,7 @@ export const NewDirectMessagingScreen: React.FC = () => {
     return renderUserSearch({ inSafeArea: false });
   }
 
+
   return (
     <SafeAreaView
       style={[
