@@ -81,7 +81,7 @@ create table
     id uuid not null default gen_random_uuid (),
     is_public boolean not null default false,
     created_at timestamp with time zone not null default now(),
-    name text not null,
+    name text null,
     updated_at timestamp without time zone not null default now(),
     type text not null default 'messaging'::text,
     last_message_at timestamp without time zone null,
@@ -225,11 +225,17 @@ create table
 
 -- Functions
 
--- create new channel and add members
+/**
+ * Creates a new channel
+ * Don't include the auth user, cause by default he will be added as a owner
+ * @param {string} channel_name - The name of the channel
+ * @param {boolean} is_public - Whether the channel is public or private
+ * @param {string[]} members - The members of the channel
+ * @returns {object} The newly created channel
+ */
 
-create or replace function chat.create_channel_and_add_members(
+create or replace function chat.create_channel_group(
   channel_name text,
-  channel_type text,
   is_public boolean,
   members uuid[]
 )
@@ -238,13 +244,18 @@ declare
   channel chat.channels;
   member uuid;
 begin
-  insert into chat.channels (name, type, is_public)
-  values (channel_name, channel_type, is_public)
+  insert into chat.channels (name, is_public)
+  values (channel_name, is_public)
   returning * into channel;
 
+  insert into chat.channel_members (channel_id, user_id, role)
+  values (channel.id, auth.uid(), 'owner');
+
   foreach member in array members loop
-    insert into chat.channel_members (channel_id, user_id)
-    values (channel.id, member);
+    if member != auth.uid() then
+      insert into chat.channel_members (channel_id, user_id)
+      values (channel.id, member) on conflict do nothing;
+    end if;
   end loop;
 
   return channel;

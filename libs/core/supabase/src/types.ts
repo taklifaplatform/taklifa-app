@@ -133,7 +133,7 @@ export interface Database {
           is_public: boolean
           last_message_at: string | null
           members_count: number
-          name: string
+          name: string | null
           type: string
           updated_at: string
         }
@@ -147,7 +147,7 @@ export interface Database {
           is_public?: boolean
           last_message_at?: string | null
           members_count?: number
-          name: string
+          name?: string | null
           type?: string
           updated_at?: string
         }
@@ -161,7 +161,7 @@ export interface Database {
           is_public?: boolean
           last_message_at?: string | null
           members_count?: number
-          name?: string
+          name?: string | null
           type?: string
           updated_at?: string
         }
@@ -343,10 +343,9 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      create_channel_and_add_members: {
+      create_channel_group: {
         Args: {
           channel_name: string
-          channel_type: string
           is_public: boolean
           members: string[]
         }
@@ -360,7 +359,7 @@ export interface Database {
           is_public: boolean
           last_message_at: string | null
           members_count: number
-          name: string
+          name: string | null
           type: string
           updated_at: string
         }

@@ -7,3 +7,4 @@ export * from "./new-direct-messaging-screen";
 export * from "./new-group-channel-add-member-screen";
 export * from "./thread-screen";
 export * from "./chat-channel-screen";
+export * from "./new-group-channel-assign-name-screen";

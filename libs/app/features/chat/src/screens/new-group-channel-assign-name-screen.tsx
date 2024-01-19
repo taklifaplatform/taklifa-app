@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
-import {
-  Check,
-  generateRandomId,
-  useChatContext,
-  useTheme,
-  useViewport
-} from 'stream-chat-expo';
+import { Check, useChatContext, useTheme, useViewport } from 'stream-chat-expo';
 
 import { useUserSearchContext } from '@zix/core/chat';
-import { RoundButton } from '../components/RoundButton';
-import { ScreenHeader } from '../components/ScreenHeader';
-import { UserSearchResults } from '../components/UserSearch/UserSearchResults';
+import { useSupabase } from '@zix/core/supabase';
 import { useRouter } from 'solito/router';
+import { RoundButton } from '../src/components/RoundButton';
+import { ScreenHeader } from '../src/components/ScreenHeader';
+import { UserSearchResults } from '../src/components/UserSearch/UserSearchResults';
 
 const styles = StyleSheet.create({
   absolute: { position: 'absolute' },
@@ -74,7 +69,8 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = (props) => {
 export const NewGroupChannelAssignNameScreen: React.FC = () => {
   const router = useRouter();
   const { client: chatClient } = useChatContext();
-  const { selectedUserIds, selectedUsers } = useUserSearchContext();
+  const { selectedUserIds, selectedUsers, reset } = useUserSearchContext();
+  const supabase = useSupabase();
 
   const {
     theme: {
@@ -94,21 +90,37 @@ export const NewGroupChannelAssignNameScreen: React.FC = () => {
 
   if (!chatClient) return null;
 
-  const onConfirm = () => {
+  const onConfirm = async () => {
     if (!chatClient.user || !selectedUsers || !groupName) return;
 
-    const channel = chatClient.channel('messaging', generateRandomId(), {
-      members: [...selectedUserIds, chatClient.user?.id],
-      name: groupName
-    });
+    // create a new channel with the selected users
+    const createChannelResult = await supabase
+      .schema('chat')
+      .rpc('create_channel_group', {
+        members: selectedUserIds,
+        channel_name: groupName,
+        is_public: false
+      });
 
-    // TODO: Maybe there is a better way to do this.
-    alert('hoho');
-    router.push(`/chat/${channel.id}`);
-    // navigation.pop(2);
-    // navigation.replace('ChannelScreen', {
-    //   channelId: channel.id
-    // });
+    if (createChannelResult.error) {
+      console.error(createChannelResult.error);
+      return;
+    }
+
+    const channel = chatClient.channel(
+      'messaging',
+      createChannelResult.data?.id,
+      {
+        members: [...selectedUserIds, chatClient.user?.id],
+        name: groupName
+      }
+    );
+
+    reset();
+
+    router.back();
+    router.back();
+    router.push(`/chat/channels/${channel.id}`);
   };
 
   return (
