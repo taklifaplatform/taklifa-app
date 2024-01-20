@@ -1,6 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToastController } from '@zix/app/ui/core';
-import { Tables, useSupabase } from '@zix/core/supabase';
+import {
+  ORGS_TABLE,
+  ORG_MEMBERSHIPS_TABLE,
+  Tables,
+  useSupabase
+} from '@zix/core/supabase';
 import React from 'react';
 
 import { FormProvider, Theme } from '@zix/app/ui/core';
@@ -51,7 +56,7 @@ export const CreateCompanyScreen: React.FC = () => {
       return data;
     },
     onSuccess: (data: Tables<'orgs'>) => {
-      queryClient.invalidateQueries(['orgs']);
+      queryClient.invalidateQueries([ORGS_TABLE, ORG_MEMBERSHIPS_TABLE]);
       toast.show('Company Created Successfully!');
       router.push(`/companies/${data.id}`);
     }
