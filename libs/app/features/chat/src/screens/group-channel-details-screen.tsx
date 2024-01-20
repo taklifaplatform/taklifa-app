@@ -33,6 +33,7 @@ import type { Channel, UserResponse } from 'stream-chat';
 import {
   Check,
   ChevronDown,
+  ChevronRight,
   Forward,
   ImagePlus,
   MessageCircleOff,
@@ -460,7 +461,7 @@ export const GroupChannelDetailsScreen: React.FC = () => {
             ]}
           >
             <View style={styles.actionLabelContainer}>
-              <ImagePlus fill={grey} />
+              <ImagePlus />
               <Text
                 style={[
                   styles.itemText,
@@ -473,7 +474,7 @@ export const GroupChannelDetailsScreen: React.FC = () => {
               </Text>
             </View>
             <View>
-              <Forward height={24} width={24} />
+              <ChevronRight height={24} width={24} />
             </View>
           </TouchableOpacity>
           {/* <TouchableOpacity

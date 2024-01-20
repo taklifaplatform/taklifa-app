@@ -3,6 +3,7 @@ export * from "./channel-images-screen";
 export * from "./channel-list-screen";
 export * from "./channel-pinned-messages-screen";
 export * from "./group-channel-details-screen";
+export * from "./simple-channel-details-screen";
 export * from "./new-direct-messaging-screen";
 export * from "./new-group-channel-add-member-screen";
 export * from "./thread-screen";
