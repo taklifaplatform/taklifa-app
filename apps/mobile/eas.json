@@ -1,26 +1,52 @@
 {
   "build": {
-    "production": {
-      "android": {
-        "buildType": "app-bundle"
+    "development:simulator": {
+      "distribution": "internal",
+      "developmentClient": true,
+      "channel": "development",
+      "env": {
+        "APP_ENV": "development"
+      },
+      "ios": {
+        "simulator": true,
+        "image": "latest"
       }
     },
     "development": {
-      "developmentClient": true,
-      "distribution": "internal"
-    },
-    "preview": {
       "distribution": "internal",
-      "ios": {
-        "simulator": true
+      "channel": "development",
+      "env": {
+        "APP_ENV": "development"
       },
       "android": {
         "buildType": "apk"
+      },
+      "ios": {
+        "image": "latest"
       }
+    },
+    "preview": {
+      "distribution": "store",
+      "channel": "preview",
+      "env": {
+        "TAMAGUI_TARGET": "native",
+        "APP_ENV": "preview"
+      },
+      "ios": {
+        "image": "latest"
+      },
+      "autoIncrement": true
+    },
+    "production": {
+      "env": {
+        "TAMAGUI_TARGET": "native"
+      },
+      "channel": "production"
     }
   },
   "submit": {
-    "production": {}
+    "production": {},
+    "preview": {}
   },
   "cli": {
     "version": ">= 5.2.0"

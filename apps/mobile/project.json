@@ -32,9 +32,20 @@
         "platform": "android"
       }
     },
+    "release:development": {
+      "executor": "@nx/expo:build",
+      "options": {
+        "autoSubmit": true,
+        "profile": "preview",
+        "platform": "ios"
+      }
+    },
     "build": {
       "executor": "@nx/expo:build",
-      "options": {}
+      "options": {
+        "autoSubmit": true,
+        "profile": "production"
+      }
     },
     "submit": {
       "executor": "@nx/expo:submit",
