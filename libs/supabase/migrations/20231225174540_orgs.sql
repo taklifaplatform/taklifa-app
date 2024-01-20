@@ -115,16 +115,16 @@ begin
   end if;
 
   -- get user membership
-  select * from public.org_memberships where user_id = user.id and org_id = org.id into user_membership;
+  -- select * from public.org_memberships where user_id = user.id and org_id = org.id into user_membership;
 
-  if user_membership is null then
-    insert into public.org_memberships (user_id, org_id, role)
-      values (user.id, org.id, role)
-    returning * into membership;
-  else
-    update public.org_memberships set role = role where id = user_membership.id returning * into membership;
-  end if;
+  -- if user_membership is null then
+  --   insert into public.org_memberships (user_id, org_id, role)
+  --     values (user.id, org.id, role)
+  --   returning * into membership;
+  -- else
+  --   update public.org_memberships set role = role where id = user_membership.id returning * into membership;
+  -- end if;
 
-  return membership
+  return membership;
 end;
 $$ language plpgsql security definer set search_path = public;

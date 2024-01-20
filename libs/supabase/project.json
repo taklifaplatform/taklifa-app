@@ -60,6 +60,14 @@
         "command": "supabase db reset && supabase start",
         "cwd": "libs/supabase"
       }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "supabase link --project-ref $NEXT_PUBLIC_SUPABASE_PROJECT_ID && supabase db push",
+        "cwd": "libs/supabase",
+        "envFile": ".env"
+      }
     }
   },
   "tags": []
