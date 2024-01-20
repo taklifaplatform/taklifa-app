@@ -1,4 +1,6 @@
 
+export * from './lib/action-sheet/action-sheet';
+
 export * from './components/map-view/map-view';
 
 export * from './components/setting-item/setting-item';

@@ -1,0 +1,116 @@
+import { ListFilter, MapPin, XCircle } from '@tamagui/lucide-icons';
+import { Button, SizableText, Tabs, XStack, YStack } from '@zix/app/ui/core';
+import { ScrollView } from 'react-native-gesture-handler';
+import DriversListScreen from '../drivers/drivers-list-screen/drivers-list-screen';
+import ManagersListScreen from '../managers/managers-list-screen/managers-list-screen';
+import VehiclesListScreen from '../vehicles/vehicles-list-screen/vehicles-list-screen';
+import ManageTeamFabButton from '../../../components/manage-team-fab-button/manage-team-fab-button';
+
+/* eslint-disable-next-line */
+export interface ManageTeamScreenProps {}
+
+export function ManageTeamScreen(props: ManageTeamScreenProps) {
+  // taps
+  const renderFilters = () => {
+    const filters = [
+      {
+        name: 'Location',
+        icon: <MapPin size="$1" color="$color5" />,
+        value: 'all'
+      },
+      {
+        name: 'Type',
+        icon: <ListFilter size="$1" color="$color5" />,
+        value: 'all'
+      },
+      {
+        name: 'State',
+        icon: <XCircle size="$1" color="$color5" />,
+        value: 'all'
+      }
+    ];
+    return (
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <XStack space="$2" paddingVertical="$2">
+          {filters.map((filter) => (
+            <Button
+              size="$3"
+              fontWeight="bold"
+              backgroundColor="$color2"
+              borderColor="$color5"
+              borderRadius="$5"
+              icon={filter.icon}
+            >
+              <SizableText fontWeight="500" fontSize="$1">
+                {filter.name}: {filter.value}
+              </SizableText>
+            </Button>
+          ))}
+        </XStack>
+      </ScrollView>
+    );
+  };
+
+  const renderHorizonTabs = () => {
+    return (
+      <Tabs
+        defaultValue="tab1"
+        orientation="horizontal"
+        flexDirection="column"
+        height={'90%'}
+        marginTop="$4"
+        paddingHorizontal="$4"
+      >
+        <Tabs.List aria-label="Manage your account" space>
+          <Tabs.Tab flex={1} value="tab1" borderRadius="$4">
+            <SizableText fontFamily="$body">Manager</SizableText>
+          </Tabs.Tab>
+          <Tabs.Tab flex={1} value="tab2" borderRadius="$4">
+            <SizableText fontFamily="$body">Drivers</SizableText>
+          </Tabs.Tab>
+          <Tabs.Tab flex={1} value="tab3" borderRadius="$4">
+            <SizableText fontFamily="$body">Vehicles</SizableText>
+          </Tabs.Tab>
+        </Tabs.List>
+        <Tabs.Content
+          value="tab1"
+          backgroundColor="$background"
+          padding="$2"
+          flex={1}
+        >
+          {renderFilters()}
+          <ManagersListScreen />
+        </Tabs.Content>
+
+        <Tabs.Content
+          value="tab2"
+          backgroundColor="$background"
+          padding="$2"
+          flex={1}
+        >
+          {renderFilters()}
+          <DriversListScreen />
+        </Tabs.Content>
+
+        <Tabs.Content
+          value="tab3"
+          backgroundColor="$background"
+          padding="$2"
+          flex={1}
+        >
+          {renderFilters()}
+          <VehiclesListScreen />
+        </Tabs.Content>
+      </Tabs>
+    );
+  };
+
+  return (
+    <YStack flex={1}>
+      {renderHorizonTabs()}
+      <ManageTeamFabButton />
+    </YStack>
+  );
+}
+
+export default ManageTeamScreen;

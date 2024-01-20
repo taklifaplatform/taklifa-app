@@ -1,8 +1,12 @@
+import { ManageTeamScreen } from '@zix/app/features/companies-dashboard';
 import { AppHeader } from '@zix/app/ui/common';
 import React from 'react';
 
 export default function Screen() {
   return (
-    <AppHeader showBackButton title="Manage Team" />
+    <>
+      <AppHeader showBackButton title="Manage Team" />
+      <ManageTeamScreen />
+    </>
   );
 }
