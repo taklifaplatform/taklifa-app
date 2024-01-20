@@ -66,7 +66,7 @@ export const UploadAvatar = ({ children }: { children: React.ReactNode }) => {
           .getPublicUrl(result.data.path.replace(`avatars/`, ''))
 
         await supabase
-          .from('profiles')
+          .from('users')
           .update({ avatar_url: publicUrlRes.data.publicUrl })
           .eq('id', user.id)
         await updateProfile()

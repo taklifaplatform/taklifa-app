@@ -46,7 +46,7 @@ const EditProfileForm = ({
   const mutation = useMutation({
     async mutationFn(data: z.infer<typeof ProfileSchema>) {
       await supabase
-        .from('profiles')
+        .from('users')
         .update({ name: data.name, about: data.about })
         .eq('id', userId);
     },

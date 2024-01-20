@@ -8,7 +8,7 @@ function useProfile() {
   const { data, isLoading, refetch } = useQuery(["profile", user?.id], {
     queryFn: async () => {
       if (!user?.id) return null;
-      const { data, error } = await supabase.from("profiles").select("*").eq(
+      const { data, error } = await supabase.from("users").select("*").eq(
         "id",
         user.id,
       ).single();

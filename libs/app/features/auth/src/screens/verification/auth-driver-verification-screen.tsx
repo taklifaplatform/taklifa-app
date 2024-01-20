@@ -110,7 +110,7 @@ export const AuthDriverVerificationScreen = () => {
         .getPublicUrl(uploadAvatarResult.data.path.replace(`avatars/`, ''));
 
       await supabase
-        .from('profiles')
+        .from('users')
         .update({ avatar_url: publicUrlRes.data.publicUrl })
         .eq('id', user.id);
     }

@@ -1,13 +1,34 @@
-/** 
- * Shipment System Tables
- */
-create table public.shipment_types (
-  "id" uuid not null,
-  "name" character varying(255),
-  "identifier" character varying(255),
-  "is_multiple" boolean not null default false,
-  "created_at" timestamp(0) without time zone,
-  "updated_at" timestamp(0) without time zone
+create type shipment_types as ENUM (
+  'document',
+  'box',
+  'multiple_boxes',
+  'other'
 );
 
-CREATE UNIQUE INDEX shipment_types_id_unique ON public.shipment_types USING btree (id);
+create type shipment_status as ENUM (
+  'draft'
+);
+
+create type shipment_delivery_status as ENUM (
+  'pending',
+  'cancelled',
+  'delivering',
+  'delivered'
+);
+
+/**
+ * Shipment System Tables
+ */
+create table public.shipments (
+  id uuid not null default gen_random_uuid (),
+  user_id uuid not null default auth.uid (),
+
+  type shipment_types not null default 'document',
+  status shipment_status not null default 'draft',
+  delivery_status shipment_delivery_status null,
+
+  created_at timestamp without time zone not null default now(),
+  updated_at timestamp without time zone not null default now(),
+
+  constraint channels_user_id_fkey foreign key (user_id) references public.users (id) on delete cascade
+);

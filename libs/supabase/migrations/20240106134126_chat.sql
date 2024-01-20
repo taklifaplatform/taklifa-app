@@ -9,7 +9,7 @@ ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA chat GRANT ALL ON ROUTINES 
 ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA chat GRANT ALL ON SEQUENCES TO anon, authenticated, service_role;
 
 ----------------------------------------
--- a copy of the profiles table in chat schema
+-- a copy of the users table in chat schema
 create table chat.users (
   id uuid not null references auth.users on delete cascade,
   -- Your profile fields go here...
@@ -32,7 +32,7 @@ create policy "Chat users are viewable by everyone."
   on chat.users for select
   using ( true );
 
--- the policy above could be replaced by this if profiles are private:
+-- the policy above could be replaced by this if users are private:
 
 -- create policy "Profiles are viewable by users who created them."
 -- on users for select
@@ -71,7 +71,7 @@ $$;
 
 -- trigger the function every time a user profile is created or updated
 create trigger on_user_profile_changes
-  after insert or update on public.profiles
+  after insert or update on public.users
   for each row execute procedure chat.handle_user_profile_changes();
 
 

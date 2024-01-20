@@ -841,7 +841,7 @@ export interface Database {
         }
         Relationships: []
       }
-      profiles: {
+      users: {
         Row: {
           about: string | null
           avatar_url: string | null
@@ -862,7 +862,7 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "profiles_id_fkey"
+            foreignKeyName: "users_id_fkey"
             columns: ["id"]
             isOneToOne: true
             referencedRelation: "users"

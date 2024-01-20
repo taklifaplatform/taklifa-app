@@ -8,7 +8,7 @@ import { Avatar, SizeTokens, useStyle } from 'tamagui';
 export type UserAvatarProps = {
   size?: SizeTokens;
   user?: User;
-  profile?: Tables<'profiles'>;
+  profile?: Tables<'users'>;
 };
 
 export const UserAvatar: React.FC<UserAvatarProps> = ({
