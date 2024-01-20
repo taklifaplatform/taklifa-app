@@ -1,12 +1,15 @@
-import { HomeScreen } from '@zix/app/features/companies-dashboard';
+import {
+  HomeScreen,
+  useCurrentActiveOrg
+} from '@zix/app/features/companies-dashboard';
 import { AppHeader } from '@zix/app/ui/common';
 import React from 'react';
 
 export default function Screen() {
-  // const {company} = useActiveCompany()
+  const { data } = useCurrentActiveOrg();
   return (
     <>
-      <AppHeader title={'Dashboard (TODO)'} />
+      <AppHeader title={data?.org?.name || '...'} />
       <HomeScreen />
     </>
   );

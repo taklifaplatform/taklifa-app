@@ -1,3 +1,4 @@
+export * from "./db-tables";
 export * from "./types";
 export * from "./lib/admin/admin";
 export * from "./lib/client/client";

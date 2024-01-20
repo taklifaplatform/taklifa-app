@@ -1,7 +1,8 @@
+export * from "./hooks";
 
-export * from './components/dashboard-switcher/dashboard-switcher';
+export * from "./components/dashboard-switcher/dashboard-switcher";
 
-export * from './screens/create-company-screen/create-company-screen';
+export * from "./screens/create-company-screen/create-company-screen";
 export * from "./screens/manage/managers/create-manager-screen/create-manager-screen";
 
 export * from "./screens/manage/managers/update-manager-screen/update-manager-screen";

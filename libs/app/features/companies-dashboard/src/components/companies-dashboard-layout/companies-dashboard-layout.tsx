@@ -1,20 +1,15 @@
-
 import React from 'react';
 
-import { View, Text } from 'react-native';
+import { View } from '@zix/app/ui/core';
 
-/* eslint-disable-next-line */
 export interface CompaniesDashboardLayoutProps {
+  children: React.ReactNode;
 }
 
-
-export function CompaniesDashboardLayout(props: CompaniesDashboardLayoutProps) {
-  return (
-    <View>
-      <Text>Welcome to companies-dashboard-layout!</Text>
-    </View>
-  );
+export const CompaniesDashboardLayout: React.FC<
+  CompaniesDashboardLayoutProps
+> = ({ children }) => {
+  return <View flex={1}>{children}</View>;
 };
-
 
 export default CompaniesDashboardLayout;

@@ -841,30 +841,78 @@ export interface Database {
         }
         Relationships: []
       }
-      users: {
+      org_memberships: {
         Row: {
-          about: string | null
-          avatar_url: string | null
+          code: string | null
+          created_at: string
           id: string
-          name: string | null
+          invited_email: string | null
+          org_id: string
+          role: Database["public"]["Enums"]["org_roles"]
+          user_id: string | null
         }
         Insert: {
-          about?: string | null
-          avatar_url?: string | null
-          id: string
-          name?: string | null
+          code?: string | null
+          created_at?: string
+          id?: string
+          invited_email?: string | null
+          org_id: string
+          role?: Database["public"]["Enums"]["org_roles"]
+          user_id?: string | null
         }
         Update: {
-          about?: string | null
-          avatar_url?: string | null
+          code?: string | null
+          created_at?: string
           id?: string
-          name?: string | null
+          invited_email?: string | null
+          org_id?: string
+          role?: Database["public"]["Enums"]["org_roles"]
+          user_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "users_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
+            foreignKeyName: "org_memberships_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "orgs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "org_memberships_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      orgs: {
+        Row: {
+          created_at: string
+          id: string
+          logo_url: string | null
+          name: string
+          owner_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          logo_url?: string | null
+          name: string
+          owner_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          logo_url?: string | null
+          name?: string
+          owner_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orgs_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           }
@@ -1002,32 +1050,49 @@ export interface Database {
         }
         Relationships: []
       }
-      shipment_types: {
+      shipments: {
         Row: {
-          created_at: string | null
+          created_at: string
+          delivery_status:
+            | Database["public"]["Enums"]["shipment_delivery_status"]
+            | null
           id: string
-          identifier: string | null
-          is_multiple: boolean
-          name: string | null
-          updated_at: string | null
+          status: Database["public"]["Enums"]["shipment_status"]
+          type: Database["public"]["Enums"]["shipment_types"]
+          updated_at: string
+          user_id: string
         }
         Insert: {
-          created_at?: string | null
-          id: string
-          identifier?: string | null
-          is_multiple?: boolean
-          name?: string | null
-          updated_at?: string | null
+          created_at?: string
+          delivery_status?:
+            | Database["public"]["Enums"]["shipment_delivery_status"]
+            | null
+          id?: string
+          status?: Database["public"]["Enums"]["shipment_status"]
+          type?: Database["public"]["Enums"]["shipment_types"]
+          updated_at?: string
+          user_id?: string
         }
         Update: {
-          created_at?: string | null
+          created_at?: string
+          delivery_status?:
+            | Database["public"]["Enums"]["shipment_delivery_status"]
+            | null
           id?: string
-          identifier?: string | null
-          is_multiple?: boolean
-          name?: string | null
-          updated_at?: string | null
+          status?: Database["public"]["Enums"]["shipment_status"]
+          type?: Database["public"]["Enums"]["shipment_types"]
+          updated_at?: string
+          user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "channels_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       states: {
         Row: {
@@ -1161,6 +1226,35 @@ export interface Database {
             columns: ["nationality_id"]
             isOneToOne: false
             referencedRelation: "countries"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      users: {
+        Row: {
+          about: string | null
+          avatar_url: string | null
+          id: string
+          name: string | null
+        }
+        Insert: {
+          about?: string | null
+          avatar_url?: string | null
+          id: string
+          name?: string | null
+        }
+        Update: {
+          about?: string | null
+          avatar_url?: string | null
+          id?: string
+          name?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "users_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
             referencedColumns: ["id"]
           }
         ]
@@ -1419,13 +1513,32 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
+      create_new_org: {
+        Args: {
+          org_name: string
+        }
+        Returns: {
+          created_at: string
+          id: string
+          logo_url: string | null
+          name: string
+          owner_id: string | null
+        }
+      }
       supabase_url: {
         Args: Record<PropertyKey, never>
         Returns: string
       }
     }
     Enums: {
-      [_ in never]: never
+      org_roles: "owner" | "manager" | "driver" | "member"
+      shipment_delivery_status:
+        | "pending"
+        | "cancelled"
+        | "delivering"
+        | "delivered"
+      shipment_status: "draft"
+      shipment_types: "document" | "box" | "multiple_boxes" | "other"
     }
     CompositeTypes: {
       [_ in never]: never

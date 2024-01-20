@@ -1,4 +1,3 @@
-import { User } from '@supabase/supabase-js';
 import {
   Building2,
   CarFront,
@@ -6,22 +5,22 @@ import {
   PlusSquare,
   User as UserIcon
 } from '@tamagui/lucide-icons';
-import { Tables } from '@zix/core/supabase';
+import { H3, ListItem, Sheet, Text, XStack, YGroup } from '@zix/app/ui/core';
+import { useUser } from '@zix/core/auth';
 import { useState } from 'react';
 import { useRouter } from 'solito/router';
-import { H3, ListItem, Sheet, XStack, YGroup } from 'tamagui';
+import { useAuthOrgsQuery } from '../../hooks/useAuthOrgsQuery';
 
 export type DashboardSwitcherProps = {
-  user?: User;
-  companies?: Tables<'companies'>[];
+  //
 };
 
-export const DashboardSwitcher: React.FC<DashboardSwitcherProps> = ({
-  user,
-  companies
-}) => {
+export const DashboardSwitcher: React.FC<DashboardSwitcherProps> = () => {
   const [sheetOpen, setSheetOpen] = useState(false);
   const router = useRouter();
+  const { profile } = useUser();
+
+  const { data } = useAuthOrgsQuery();
 
   const dashboard = [
     {
@@ -48,59 +47,62 @@ export const DashboardSwitcher: React.FC<DashboardSwitcherProps> = ({
   return (
     <>
       <XStack alignItems="center" gap="$2" onPress={() => setSheetOpen(true)}>
-        <H3>{user?.user_metadata?.name}</H3>
-        <ChevronDown size="$2" />
+        <Text fontWeight="bold" fontSize={15} numberOfLines={1}>
+          {profile?.name}
+        </Text>
+        <ChevronDown size="$1" />
       </XStack>
 
       <Sheet
         native
         modal
-        snapPointsMode="fit"
         open={sheetOpen}
         onOpenChange={setSheetOpen}
+        snapPoints={[50, 85]}
       >
         <Sheet.Overlay />
         <Sheet.Handle />
         <Sheet.Frame>
-          <YGroup marginBottom="$4">
-            <H3 padding="$4">Switch Dashboard</H3>
-            {dashboard.map((item) => (
-              <YGroup.Item key={item.name}>
+          <Sheet.ScrollView>
+            <YGroup marginBottom="$4">
+              <H3 padding="$4">Switch Dashboard</H3>
+              {dashboard.map((item) => (
+                <YGroup.Item key={item.name}>
+                  <ListItem
+                    onPress={() => onNavigate(item.route)}
+                    marginVertical="$2"
+                    paddingVertical="$4"
+                    hoverTheme
+                    icon={Building2}
+                    title={item.name}
+                  />
+                </YGroup.Item>
+              ))}
+              <H3 padding="$4">Companies</H3>
+              {data?.map(({ org, role }) => (
+                <YGroup.Item key={org.name}>
+                  <ListItem
+                    onPress={() => onNavigate(`/companies/${org.id}`)}
+                    marginVertical="$2"
+                    paddingVertical="$4"
+                    hoverTheme
+                    icon={Building2}
+                    title={org.name}
+                  />
+                </YGroup.Item>
+              ))}
+              <YGroup.Item>
                 <ListItem
-                  onPress={() => onNavigate(item.route)}
+                  onPress={() => onNavigate('/companies/create', false)}
                   marginVertical="$2"
                   paddingVertical="$4"
                   hoverTheme
-                  icon={Building2}
-                  title={item.name}
+                  icon={PlusSquare}
+                  title="Create New Company"
                 />
               </YGroup.Item>
-            ))}
-            <H3 padding="$4">Companies</H3>
-            {companies?.map((company: Tables<'companies'>) => (
-              <YGroup.Item key={company.name}>
-                <ListItem
-                  onPress={() => onNavigate(`/companies/${company.id}`)}
-                  marginVertical="$2"
-                  paddingVertical="$4"
-                  hoverTheme
-                  icon={Building2}
-                  title={company.name}
-                  // subTitle={item.subTitle}
-                />
-              </YGroup.Item>
-            ))}
-            <YGroup.Item>
-              <ListItem
-                onPress={() => onNavigate('/companies/create', false)}
-                marginVertical="$2"
-                paddingVertical="$4"
-                hoverTheme
-                icon={PlusSquare}
-                title="Create New Company"
-              />
-            </YGroup.Item>
-          </YGroup>
+            </YGroup>
+          </Sheet.ScrollView>
         </Sheet.Frame>
       </Sheet>
     </>
