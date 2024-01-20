@@ -19,6 +19,11 @@ import LookingForService from "./arts/looking-for-service.svg";
 import ServiceProvider from "./arts/service-provider.svg";
 import SoloTransporterCar from "./arts/solo-transporter-car.svg";
 
+// Vehicles
+import VehicleA from "./vehicles/vehicle-a.svg";
+import VehicleB from "./vehicles/vehicle-b.svg";
+import VehicleC from "./vehicles/vehicle-c.svg";
+
 export {
   Apps,
   Avatar,
@@ -36,4 +41,8 @@ export {
   SoloTransporterCar,
   Star,
   Success,
+  // vehicles
+  VehicleA,
+  VehicleB,
+  VehicleC,
 };

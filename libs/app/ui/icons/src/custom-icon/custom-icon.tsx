@@ -40,7 +40,12 @@ const iconNames = [
   'chevrons_right',
   'star',
   'half_star',
-  'local_shipping'
+  'local_shipping',
+
+  // vehicles
+  'vehicle_a',
+  'vehicle_b',
+  'vehicle_c'
 ];
 
 export type CustomIconName = (typeof iconNames)[number];

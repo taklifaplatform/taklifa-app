@@ -1,4 +1,6 @@
 
+export * from './components/map-view/map-view';
+
 export * from './components/setting-item/setting-item';
 
 export * from './components/settings/settings';

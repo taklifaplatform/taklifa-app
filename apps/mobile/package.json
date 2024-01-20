@@ -87,7 +87,8 @@
     "@gorhom/bottom-sheet": "*",
     "react-native-reanimated": "*",
     "@react-navigation/core": "*",
-    "seamless-immutable": "*"
+    "seamless-immutable": "*",
+    "react-native-maps": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",

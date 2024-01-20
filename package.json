@@ -95,7 +95,8 @@
     "tamagui": "^1.85.7",
     "text-encoding": "^0.7.0",
     "tslib": "^2.3.0",
-    "zod-i18n-map": "^2.25.0"
+    "zod-i18n-map": "^2.25.0",
+    "react-native-maps": "1.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.14.5",
