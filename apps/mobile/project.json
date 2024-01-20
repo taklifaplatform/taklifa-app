@@ -32,6 +32,14 @@
         "platform": "android"
       }
     },
+    "local:build": {
+      "executor": "@nx/expo:build",
+      "options": {
+        "profile": "preview",
+        "platform": "ios",
+        "local": true
+      }
+    },
     "release:development": {
       "executor": "@nx/expo:build",
       "options": {
