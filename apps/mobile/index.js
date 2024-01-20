@@ -11,11 +11,11 @@ import * as Sentry from 'sentry-expo'
 import ZixApp from './src/ZixApp'
 
 Sentry.init({
-  dsn: process.env.SENTRY_DNS,
-  enableInExpoDevelopment: process.env.SENTRY_ENABLE_EXPO_DEVELOPMENT || false,
+  dsn: 'https://c8ef482b856797260dfe526afebfd863@o989495.ingest.sentry.io/4506384200892416',
+  enableInExpoDevelopment: false,
   // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
   // We recommend adjusting this value in production.
-  tracesSampleRate: process.env.SENTRY_TRACE_SAMPLE_RATE || 1.0,
+  tracesSampleRate: 1.0,
 })
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
