@@ -90,8 +90,8 @@ export const SignUpScreen = () => {
         data: {
           name: name,
           requested_user_type
-        }
-        // channel: 'sms',
+        },
+        channel: 'whatsapp',
       }
     });
 
