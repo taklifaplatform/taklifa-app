@@ -5,11 +5,11 @@ import { useCurrentActiveOrg } from '../../hooks/useCurrentActiveOrg';
 export interface HomeScreenProps {}
 
 export function HomeScreen(props: HomeScreenProps) {
-  const { data } = useCurrentActiveOrg();
+  const { org } = useCurrentActiveOrg();
   return (
     <View>
       <Text>Welcome to home-screen!</Text>
-      <Text>{JSON.stringify(data, null, 2)}</Text>
+      <Text>{JSON.stringify(org, null, 2)}</Text>
     </View>
   );
 }

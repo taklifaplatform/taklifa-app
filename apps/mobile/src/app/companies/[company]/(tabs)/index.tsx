@@ -7,10 +7,10 @@ import { AppHeader } from '@zix/app/ui/common';
 import React from 'react';
 
 export default function Screen() {
-  const { data } = useCurrentActiveOrg();
+  const { org } = useCurrentActiveOrg();
   return (
     <>
-      <AppHeader title={data?.org?.name || '...'} />
+      <AppHeader title={org?.name || '...'} />
       <HomeScreen />
     </>
   );

@@ -42,7 +42,8 @@ export const ManageTeamFabButton: React.FC = () => {
           icon: <UsersRound size="$2" color="$color10" />,
           onPress: () => {
             actionSheetRef.current?.close();
-            router.push(`/companies/${org?.id}/admin/managers/create`);
+            alert('UNDER DEVELOPMENT')
+            // router.push(`/companies/${org?.id}/admin/managers/create`);
           }
         },
         {
@@ -50,7 +51,7 @@ export const ManageTeamFabButton: React.FC = () => {
           icon: <Users size="$2" color="$color10" />,
           onPress: () => {
             actionSheetRef.current?.close();
-            router.push(`/companies/${org?.id}/admin/drivers/create`);
+            router.push(`/companies/${org?.id}/manage/drivers/invite`);
           }
         },
         {
@@ -58,7 +59,8 @@ export const ManageTeamFabButton: React.FC = () => {
           icon: <CarFront size="$2" color="$color10" />,
           onPress: () => {
             actionSheetRef.current?.close();
-            router.push(`/companies/${org?.id}/admin/vehicles/create`);
+            alert('UNDER DEVELOPMENT')
+            // router.push(`/companies/${org?.id}/admin/vehicles/create`);
           }
         }
       ]}

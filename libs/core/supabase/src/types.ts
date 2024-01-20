@@ -1525,6 +1525,24 @@ export interface Database {
           owner_id: string | null
         }
       }
+      invite_org_member: {
+        Args: {
+          org_id: string
+          name?: string
+          email?: string
+          phone_number?: string
+          role?: Database["public"]["Enums"]["org_roles"]
+        }
+        Returns: {
+          code: string | null
+          created_at: string
+          id: string
+          invited_email: string | null
+          org_id: string
+          role: Database["public"]["Enums"]["org_roles"]
+          user_id: string | null
+        }
+      }
       supabase_url: {
         Args: Record<PropertyKey, never>
         Returns: string

@@ -5,7 +5,7 @@ import React from 'react';
 export default function Screen() {
   return (
     <>
-      <AppHeader showBackButton title="Invite" />
+      <AppHeader showBackButton title="Invite New Driver" />
       <CreateDriverScreen />
     </>
   );

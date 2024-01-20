@@ -13,10 +13,14 @@ export function useCurrentActiveOrg() {
   const { profile } = useUser();
   const [orgId] = useParam("company");
 
-  return useQuery([ORG_MEMBERSHIPS_TABLE, orgId, profile?.id], {
+  const { data, isLoading } = useQuery([
+    ORG_MEMBERSHIPS_TABLE,
+    orgId,
+    profile?.id,
+  ], {
     queryFn: async () => {
       if (!profile?.id || !orgId) {
-        return;
+        return null;
       }
 
       const { data, error } = await supabase
@@ -37,4 +41,10 @@ export function useCurrentActiveOrg() {
       return data;
     },
   });
+
+  return {
+    isLoading,
+    org: data?.org,
+    role: data?.role,
+  };
 }

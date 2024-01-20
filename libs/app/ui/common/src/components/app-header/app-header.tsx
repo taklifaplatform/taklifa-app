@@ -1,9 +1,4 @@
-import {
-  Bell,
-  MessageCircle,
-  ScanBarcode,
-  Search
-} from '@tamagui/lucide-icons';
+import { Bell, ScanBarcode, Search } from '@tamagui/lucide-icons';
 import { Button, H4, Input, Theme, XStack, YStack } from '@zix/app/ui/core';
 import { CustomIcon } from '@zix/app/ui/icons';
 import { useUser } from '@zix/core/auth';
