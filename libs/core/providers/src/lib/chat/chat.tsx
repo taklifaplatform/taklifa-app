@@ -1,6 +1,10 @@
 import React from 'react';
 import { Chat, OverlayProvider } from 'stream-chat-expo';
-import { ZixChat, UserSearchProvider } from '@zix/core/chat';
+import {
+  ZixChat,
+  UserSearchProvider,
+  AppOverlayProvider
+} from '@zix/core/chat';
 import { useUser } from '@zix/core/auth';
 
 export type ChatProviderProps = {
@@ -8,9 +12,6 @@ export type ChatProviderProps = {
 };
 
 const client = ZixChat.getInstance();
-
-const accessToken =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiamxhaGV5In0.sUGnVd7E7bhs4HQTDyTKMnSA2YszXlgkrs2OnaMUQSQ';
 
 export const ChatProvider: React.FC<ChatProviderProps> = ({
   children,
@@ -25,7 +26,9 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({
   return (
     <OverlayProvider>
       <Chat client={client}>
-        <UserSearchProvider>{children}</UserSearchProvider>
+        <AppOverlayProvider>
+          <UserSearchProvider>{children}</UserSearchProvider>
+        </AppOverlayProvider>
       </Chat>
     </OverlayProvider>
   );

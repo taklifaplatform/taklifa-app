@@ -3,12 +3,14 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import { Check, useChatContext, useTheme, useViewport } from 'stream-chat-expo';
 
-import { useUserSearchContext } from '@zix/core/chat';
+import {
+  RoundButton,
+  ScreenHeader,
+  UserSearchResults,
+  useUserSearchContext
+} from '@zix/core/chat';
 import { useSupabase } from '@zix/core/supabase';
 import { useRouter } from 'solito/router';
-import { RoundButton } from '../src/components/RoundButton';
-import { ScreenHeader } from '../src/components/ScreenHeader';
-import { UserSearchResults } from '../src/components/UserSearch/UserSearchResults';
 
 const styles = StyleSheet.create({
   absolute: { position: 'absolute' },

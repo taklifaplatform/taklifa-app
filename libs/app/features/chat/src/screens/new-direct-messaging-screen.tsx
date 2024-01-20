@@ -19,17 +19,19 @@ import {
   useTheme
 } from 'stream-chat-expo';
 
-import { RoundButton } from '../src/components/RoundButton';
-import { ScreenHeader } from '../src/components/ScreenHeader';
-import { SelectedUserTag } from '../src/components/UserSearch/SelectedUserTag';
-import { UserSearchResults } from '../src/components/UserSearch/UserSearchResults';
+import {
+  RoundButton,
+  ScreenHeader,
+  SelectedUserTag,
+  UserSearchResults,
+  NewDirectMessagingSendButton
+} from '@zix/core/chat';
 import { useUserSearchContext } from '@zix/core/chat';
 
 import type { Channel as StreamChatChannel } from 'stream-chat';
 
 import { useRouter } from 'solito/router';
-import { NewDirectMessagingSendButton } from '../src/components/NewDirectMessagingSendButton';
-import type { StreamChatGenerics } from '../src/types';
+import type { StreamChatGenerics } from '@zix/core/chat';
 
 const styles = StyleSheet.create({
   container: {
@@ -318,7 +320,6 @@ export const NewDirectMessagingScreen: React.FC = () => {
   if (!currentChannel.current) {
     return renderUserSearch({ inSafeArea: false });
   }
-
 
   return (
     <SafeAreaView

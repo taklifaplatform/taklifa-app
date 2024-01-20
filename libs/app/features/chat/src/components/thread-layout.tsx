@@ -1,8 +1,8 @@
+import type { StreamChatGenerics } from '@zix/core/chat';
 import React, { useEffect, useState } from 'react';
 import { createParam } from 'solito';
 import type { Channel as StreamChatChannel } from 'stream-chat';
 import { Channel, useChatContext } from 'stream-chat-expo';
-import type { StreamChatGenerics } from '../src/types';
 
 const { useParam } = createParam<{ channel: string; thread: string }>();
 

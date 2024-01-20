@@ -1,68 +1,77 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { TouchableOpacity } from '@gorhom/bottom-sheet'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { Delete, UserMinus, useTheme } from 'stream-chat-expo'
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity } from '@gorhom/bottom-sheet';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Delete, UserMinus, useTheme } from 'stream-chat-expo';
 
-import { useAppOverlayContext } from '../context/AppOverlayContext'
+import { useAppOverlayContext } from '../context/AppOverlayContext';
 import {
   isAddMemberBottomSheetData,
-  useBottomSheetOverlayContext,
-} from '../context/BottomSheetOverlayContext'
+  useBottomSheetOverlayContext
+} from '../context/BottomSheetOverlayContext';
 
 const styles = StyleSheet.create({
   actionButtonLeft: {
-    padding: 20,
+    padding: 20
   },
   actionButtonRight: {
-    padding: 20,
+    padding: 20
   },
   actionButtonsContainer: {
     borderTopWidth: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   container: {
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
-    height: 224,
+    height: 224
   },
   description: {
     alignItems: 'center',
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   subtext: {
     fontSize: 14,
     fontWeight: '500',
     marginTop: 8,
-    paddingHorizontal: 16,
+    paddingHorizontal: 16
   },
   title: {
     fontSize: 16,
     fontWeight: '700',
     marginTop: 18,
-    paddingHorizontal: 16,
-  },
-})
+    paddingHorizontal: 16
+  }
+});
 
 export const ConfirmationBottomSheet: React.FC = () => {
-  const { setOverlay } = useAppOverlayContext()
-  const { data: contextData, reset } = useBottomSheetOverlayContext()
-  const data = contextData && !isAddMemberBottomSheetData(contextData) ? contextData : undefined
+  const { setOverlay } = useAppOverlayContext();
+  const { data: contextData, reset } = useBottomSheetOverlayContext();
+  const data =
+    contextData && !isAddMemberBottomSheetData(contextData)
+      ? contextData
+      : undefined;
 
   const {
     theme: {
-      colors: { accent_red, black, border, grey, white },
-    },
-  } = useTheme()
-  const inset = useSafeAreaInsets()
+      colors: { accent_red, black, border, grey, white }
+    }
+  } = useTheme();
+  const inset = useSafeAreaInsets();
 
   if (!data) {
-    return null
+    return null;
   }
 
-  const { cancelText = 'CANCEL', confirmText = 'CONFIRM', onConfirm, subtext, title } = data
+  const {
+    cancelText = 'CANCEL',
+    confirmText = 'CONFIRM',
+    onConfirm,
+    subtext,
+    title
+  } = data;
 
   return (
     <View
@@ -70,12 +79,16 @@ export const ConfirmationBottomSheet: React.FC = () => {
         styles.container,
         {
           backgroundColor: white,
-          marginBottom: inset.bottom,
-        },
+          marginBottom: inset.bottom
+        }
       ]}
     >
       <View style={styles.description}>
-        {confirmText === 'LEAVE' ? <UserMinus pathFill={grey} /> : <Delete pathFill={accent_red} />}
+        {confirmText === 'LEAVE' ? (
+          <UserMinus pathFill={grey} />
+        ) : (
+          <Delete pathFill={accent_red} />
+        )}
         <Text style={[styles.title, { color: black }]}>{title}</Text>
         <Text style={[styles.subtext, { color: black }]}>{subtext}</Text>
       </View>
@@ -83,14 +96,14 @@ export const ConfirmationBottomSheet: React.FC = () => {
         style={[
           styles.actionButtonsContainer,
           {
-            borderTopColor: border,
-          },
+            borderTopColor: border
+          }
         ]}
       >
         <TouchableOpacity
           onPress={() => {
-            setOverlay('none')
-            reset()
+            setOverlay('none');
+            reset();
           }}
           style={styles.actionButtonLeft}
         >
@@ -101,5 +114,5 @@ export const ConfirmationBottomSheet: React.FC = () => {
         </TouchableOpacity>
       </View>
     </View>
-  )
-}
+  );
+};

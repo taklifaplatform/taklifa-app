@@ -7,15 +7,20 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useChatContext, useTheme } from 'stream-chat-expo';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { MessageSearchList } from '../src/components/MessageSearch/MessageSearchList';
-import { ScreenHeader } from '../src/components/ScreenHeader';
-import { usePaginatedPinnedMessages } from '../src/hooks/usePaginatedPinnedMessages';
-import { Message } from '../src/icons/Message';
-import type { StreamChatGenerics } from '../src/types';
+
+import {
+  MessageSearchList,
+  ScreenHeader,
+  usePaginatedPinnedMessages
+} from '@zix/core/chat';
 
 import type { RouteProp } from '@react-navigation/native';
 
-import type { StackNavigatorParamList } from '../src/types';
+import { Shell } from '@tamagui/lucide-icons';
+import type {
+  StackNavigatorParamList,
+  StreamChatGenerics
+} from '@zix/core/chat';
 
 const styles = StyleSheet.create({
   container: {
@@ -137,7 +142,7 @@ const EmptyListComponent = () => {
   } = useTheme();
   return (
     <View style={styles.emptyContainer}>
-      <Message fill={grey_gainsboro} height={110} width={130} />
+      <Shell fill={grey_gainsboro} height={110} width={130} />
       <Text style={[styles.noFiles, { color: black }]}>No pinned messages</Text>
       <Text style={[styles.noFilesDetails, { color: grey }]}>
         Long-press an important message and choose Pin to conversation.

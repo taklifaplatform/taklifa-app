@@ -9,7 +9,7 @@ import {
 import { ZixChat } from "./ZixChat";
 import { MessageStatusTypes } from "./constants";
 import { getAppData } from "./data-responses/get-app-data";
-import { fakeChannelObject } from "./fakeChannelObject";
+import { defaultChannelConfig } from "./defaultChannelConfig";
 
 import {
   CHAT_CHANNELS_QUERY_SELECTOR,
@@ -707,9 +707,8 @@ export class ZixChatApiClient<
         ? channel.members_count[0].count
         : channel?.members?.length) || 50;
     return {
-      ...fakeChannelObject,
       channel: {
-        ...fakeChannelObject.channel,
+        ...defaultChannelConfig,
         ...channel,
         cid: `${channel.type}:${channel.id}`,
         member_count,

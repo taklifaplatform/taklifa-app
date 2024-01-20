@@ -18,14 +18,16 @@ import {
   useTypingString
 } from 'stream-chat-expo';
 
+import {
+  NetworkDownIndicator,
+  ScreenHeader,
+  useChannelMembersStatus
+} from '@zix/core/chat';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { ScreenHeader } from '../src/components/ScreenHeader';
-import { useChannelMembersStatus } from '../src/hooks/useChannelMembersStatus';
 
+import type { StreamChatGenerics } from '@zix/core/chat';
 import { useSafeAreaInsets } from '@zix/core/utils';
 import { useRouter } from 'solito/router';
-import { NetworkDownIndicator } from '../src/components/NetworkDownIndicator';
-import type { StreamChatGenerics } from '../src/types';
 
 const ChannelHeader: React.FC = () => {
   const router = useRouter();
@@ -104,10 +106,11 @@ export const ChatChannelScreen: React.F = () => {
       <Channel
         channel={channel}
         // enforceUniqueReaction
-        // initialScrollToFirstUnreadMessage
-        // keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -300}
+        initialScrollToFirstUnreadMessage
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -300}
         messageId={messageId}
         thread={selectedThread}
+        CommandsButton={() => null}
       >
         <ChannelHeader channel={channel} />
         <MessageList<StreamChatGenerics>

@@ -17,7 +17,7 @@ import {
   useViewport
 } from 'stream-chat-expo';
 
-import { useUserSearchContext } from '@zix/core/chat';
+import { useUserSearchContext } from '../../hooks';
 
 import type { UserResponse } from 'stream-chat';
 

@@ -1,13 +1,13 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { TouchableOpacity } from '@gorhom/bottom-sheet'
-import { Avatar, Close, useTheme } from 'stream-chat-expo'
+import { TouchableOpacity } from '@gorhom/bottom-sheet';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Avatar, Close, useTheme } from 'stream-chat-expo';
 
-import type { UserResponse } from 'stream-chat'
+import type { UserResponse } from 'stream-chat';
 
-import type { StreamChatGenerics } from '../../types'
+import type { StreamChatGenerics } from '../../types';
 
-const presenceIndicator = { cx: 7, cy: 7, r: 5 }
+const presenceIndicator = { cx: 7, cy: 7, r: 5 };
 
 const styles = StyleSheet.create({
   presenceIndicatorContainer: {
@@ -15,16 +15,16 @@ const styles = StyleSheet.create({
     height: 14,
     right: 8,
     top: undefined,
-    width: 14,
+    width: 14
   },
   selectedUserItemContainer: {
-    alignItems: 'center',
+    alignItems: 'center'
   },
   selectedUserItemName: {
     fontSize: 12,
     fontWeight: '600',
     paddingTop: 8,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   selectedUserRemoveIcon: {
     alignItems: 'center',
@@ -34,28 +34,32 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     top: 0,
-    width: 24,
-  },
-})
+    width: 24
+  }
+});
 
 export type UserGridItemProps = {
-  onPress: () => void
-  user: UserResponse<StreamChatGenerics>
-  removeButton?: boolean
-}
+  onPress: () => void;
+  user: UserResponse<StreamChatGenerics>;
+  removeButton?: boolean;
+};
 
 export const UserGridItem: React.FC<UserGridItemProps> = ({
   onPress,
   removeButton = true,
-  user,
+  user
 }) => {
   const {
     theme: {
-      colors: { black, white_snow },
-    },
-  } = useTheme()
+      colors: { black, white_snow }
+    }
+  } = useTheme();
   return (
-    <TouchableOpacity key={user.id} onPress={onPress} style={styles.selectedUserItemContainer}>
+    <TouchableOpacity
+      key={user.id}
+      onPress={onPress}
+      style={styles.selectedUserItemContainer}
+    >
       <Avatar
         id={user.id}
         image={user.image}
@@ -69,16 +73,19 @@ export const UserGridItem: React.FC<UserGridItemProps> = ({
           style={[
             styles.selectedUserRemoveIcon,
             {
-              backgroundColor: white_snow,
-            },
+              backgroundColor: white_snow
+            }
           ]}
         >
           <Close />
         </View>
       )}
-      <Text numberOfLines={2} style={[styles.selectedUserItemName, { color: black }]}>
+      <Text
+        numberOfLines={2}
+        style={[styles.selectedUserItemName, { color: black }]}
+      >
         {user.name}
       </Text>
     </TouchableOpacity>
-  )
-}
+  );
+};

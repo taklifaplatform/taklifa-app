@@ -22,7 +22,7 @@ import Animated, {
 import { KeyboardCompatibleView, useTheme, useViewport } from 'stream-chat-expo'
 
 import { AddMemberBottomSheet } from './AddMemberBottomSheet'
-import { ConfirmationBottomSheet } from './ConfirmationBottomSheet'
+import { ConfirmationBottomSheet } from '../../../../../../core/chat/src/lib/components/ConfirmationBottomSheet'
 
 import { useAppOverlayContext } from '../context/AppOverlayContext'
 import { useBottomSheetOverlayContext } from '../context/BottomSheetOverlayContext'

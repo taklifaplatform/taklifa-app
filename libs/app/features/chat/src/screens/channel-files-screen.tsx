@@ -18,11 +18,10 @@ import {
 } from 'stream-chat-expo';
 
 import type { Attachment } from 'stream-chat';
-import type { StreamChatGenerics } from '../src/types';
 
-import { ScreenHeader } from '../src/components/ScreenHeader';
-import { usePaginatedAttachments } from '../src/hooks/usePaginatedAttachments';
-import { File } from '../src/icons/File';
+import { File } from '@tamagui/lucide-icons';
+import type { StreamChatGenerics } from '@zix/core/chat';
+import { ScreenHeader, usePaginatedAttachments } from '@zix/core/chat';
 
 const styles = StyleSheet.create({
   container: {

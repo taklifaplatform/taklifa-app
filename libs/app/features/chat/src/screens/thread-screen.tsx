@@ -12,9 +12,9 @@ import {
   useTypingString
 } from 'stream-chat-expo';
 
-import { ScreenHeader } from '../src/components/ScreenHeader';
+import { ScreenHeader } from '@zix/core/chat';
 
-import type { StreamChatGenerics } from '../src/types';
+import type { StreamChatGenerics } from '@zix/core/chat';
 
 const styles = StyleSheet.create({
   container: {

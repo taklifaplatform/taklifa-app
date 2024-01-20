@@ -8,10 +8,12 @@ import {
 } from 'react-native';
 import { ArrowRight, Search, useChatContext, useTheme } from 'stream-chat-expo';
 
-import { useUserSearchContext } from '@zix/core/chat';
-import { ScreenHeader } from '../src/components/ScreenHeader';
-import { UserGridItem } from '../src/components/UserSearch/UserGridItem';
-import { UserSearchResults } from '../src/components/UserSearch/UserSearchResults';
+import {
+  ScreenHeader,
+  UserGridItem,
+  UserSearchResults,
+  useUserSearchContext
+} from '@zix/core/chat';
 
 import { useRouter } from 'solito/router';
 

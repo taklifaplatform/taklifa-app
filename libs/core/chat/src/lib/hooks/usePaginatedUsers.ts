@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useSupabase } from "@zix/core/supabase";
 
-import type { UserFilters, UserResponse } from "stream-chat";
+import type { UserResponse } from "stream-chat";
 
 import { useChatContext } from "stream-chat-expo";
 import type { StreamChatGenerics } from "../types";

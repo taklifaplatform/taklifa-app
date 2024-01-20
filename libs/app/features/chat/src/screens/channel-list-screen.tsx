@@ -16,16 +16,19 @@ import {
   useChatContext,
   useTheme
 } from 'stream-chat-expo';
-import { ChannelPreview } from '../src/components/ChannelPreview';
-import { ChatScreenHeader } from '../src/components/ChatScreenHeader';
-import { MessageSearchList } from '../src/components/MessageSearch/MessageSearchList';
-import { usePaginatedSearchedMessages } from '../src/hooks/usePaginatedSearchedMessages';
+
+import {
+  ChannelPreview,
+  ChatScreenHeader,
+  MessageSearchList,
+  usePaginatedSearchedMessages
+} from '@zix/core/chat';
 
 import type { ChannelSort } from 'stream-chat';
 
 import { XCircle } from '@tamagui/lucide-icons';
+import type { StreamChatGenerics } from '@zix/core/chat';
 import { useRouter } from 'solito/router';
-import type { StreamChatGenerics } from '../src/types';
 
 const styles = StyleSheet.create({
   channelListContainer: {

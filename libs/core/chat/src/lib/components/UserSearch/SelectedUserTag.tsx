@@ -1,49 +1,49 @@
-import React from 'react'
-import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native'
-import { useTheme } from 'stream-chat-expo'
+import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { useTheme } from 'stream-chat-expo';
 
-import type { UserResponse } from 'stream-chat'
+import type { UserResponse } from 'stream-chat';
 
-import type { StreamChatGenerics } from '../../types'
+import type { StreamChatGenerics } from '../../types';
 
 const styles = StyleSheet.create({
   tagContainer: {
     borderRadius: 12,
     flexDirection: 'row',
     marginRight: 8,
-    marginVertical: 8,
+    marginVertical: 8
   },
   tagImage: {
     borderRadius: 12,
     height: 24,
-    width: 24,
+    width: 24
   },
   tagText: {
     alignSelf: 'center',
     fontSize: 14,
     paddingLeft: 7,
-    paddingRight: 12,
-  },
-})
+    paddingRight: 12
+  }
+});
 
 type SelectedUserTagProps = {
-  index: number
-  onPress: () => void
-  tag: UserResponse<StreamChatGenerics>
-  disabled?: boolean
-}
+  index: number;
+  onPress: () => void;
+  tag: UserResponse<StreamChatGenerics>;
+  disabled?: boolean;
+};
 
 export const SelectedUserTag: React.FC<SelectedUserTagProps> = ({
   disabled = false,
   index,
   onPress,
-  tag,
+  tag
 }) => {
   const {
     theme: {
-      colors: { black, grey_gainsboro },
-    },
-  } = useTheme()
+      colors: { black, grey_gainsboro }
+    }
+  } = useTheme();
 
   return (
     <TouchableOpacity
@@ -54,7 +54,7 @@ export const SelectedUserTag: React.FC<SelectedUserTagProps> = ({
     >
       <Image
         source={{
-          uri: tag.image,
+          uri: tag.image
         }}
         style={styles.tagImage}
       />
@@ -63,12 +63,12 @@ export const SelectedUserTag: React.FC<SelectedUserTagProps> = ({
         style={[
           styles.tagText,
           {
-            color: black,
-          },
+            color: black
+          }
         ]}
       >
         {tag.name}
       </Text>
     </TouchableOpacity>
-  )
-}
+  );
+};

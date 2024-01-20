@@ -20,11 +20,10 @@ import {
   useTheme
 } from 'stream-chat-expo';
 
-import { ScreenHeader } from '../src/components/ScreenHeader';
-import { usePaginatedAttachments } from '../src/hooks/usePaginatedAttachments';
-import { Picture } from '../src/icons/Picture';
-import type { StreamChatGenerics } from '../src/types';
+import type { StreamChatGenerics } from '@zix/core/chat';
+import { ScreenHeader, usePaginatedAttachments } from '@zix/core/chat';
 
+import { FileImage } from '@tamagui/lucide-icons';
 import type { Attachment } from 'stream-chat';
 
 const screen = Dimensions.get('screen').width;
@@ -227,7 +226,7 @@ const EmptyListComponent = () => {
   } = useTheme();
   return (
     <View style={styles.emptyContainer}>
-      <Picture fill={grey_gainsboro} scale={6} />
+      <FileImage fill={grey_gainsboro} scale={6} />
       <Text style={[styles.noMedia, { color: black }]}>No media</Text>
       <Text style={[styles.noMediaDetails, { color: grey }]}>
         Photos or video sent in this chat will appear here

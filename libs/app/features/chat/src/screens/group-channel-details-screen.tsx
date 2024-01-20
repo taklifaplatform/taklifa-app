@@ -18,28 +18,30 @@ import {
   useTheme
 } from 'stream-chat-expo';
 
-import { RoundButton } from '../src/components/RoundButton';
-import { ScreenHeader } from '../src/components/ScreenHeader';
-import { useAppOverlayContext } from '../src/context/AppOverlayContext';
-import { useBottomSheetOverlayContext } from '../src/context/BottomSheetOverlayContext';
-import { useUserInfoOverlayContext } from '../src/context/UserInfoOverlayContext';
-import { useChannelMembersStatus } from '../src/hooks/useChannelMembersStatus';
-import { AddUser } from '../src/icons/AddUser';
-import { Check } from '../src/icons/Check';
-import { CircleClose } from '../src/icons/CircleClose';
-import { DownArrow } from '../src/icons/DownArrow';
-import { File } from '../src/icons/File';
-import { GoForward } from '../src/icons/GoForward';
-import { Mute } from '../src/icons/Mute';
-import { Picture } from '../src/icons/Picture';
-import { RemoveUser } from '../src/icons/RemoveUser';
-import { getUserActivityStatus } from '../src/utils/getUserActivityStatus';
+import {
+  RoundButton,
+  ScreenHeader,
+  getUserActivityStatus,
+  useAppOverlayContext,
+  useBottomSheetOverlayContext,
+  useChannelMembersStatus,
+  useUserInfoOverlayContext
+} from '@zix/core/chat';
 
 import type { Channel, UserResponse } from 'stream-chat';
 
+import {
+  Check,
+  ChevronDown,
+  Forward,
+  ImagePlus,
+  MessageCircleOff,
+  UserRoundPlus,
+  UserRoundX,
+  XCircle
+} from '@tamagui/lucide-icons';
+import type { StreamChatGenerics } from '@zix/core/chat';
 import { useRouter } from 'solito/router';
-import { Pin } from '../src/icons/Pin';
-import type { StreamChatGenerics } from '../src/types';
 
 const styles = StyleSheet.create({
   actionContainer: {
@@ -238,7 +240,7 @@ export const GroupChannelDetailsScreen: React.FC = () => {
         RightContent={() =>
           channelCreatorId === chatClient?.user?.id ? (
             <RoundButton onPress={openAddMembersSheet}>
-              <AddUser fill={accent_blue} height={24} width={24} />
+              <UserRoundPlus fill={accent_blue} height={24} width={24} />
             </RoundButton>
           ) : null
         }
@@ -307,7 +309,7 @@ export const GroupChannelDetailsScreen: React.FC = () => {
               }
             ]}
           >
-            <DownArrow height={24} width={24} />
+            <ChevronDown height={24} width={24} />
             <Text
               style={[
                 styles.loadMoreText,
@@ -358,7 +360,7 @@ export const GroupChannelDetailsScreen: React.FC = () => {
                   paddingRight: 8
                 }}
               >
-                <CircleClose height={24} width={24} />
+                <XCircle height={24} width={24} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={async () => {
@@ -386,7 +388,7 @@ export const GroupChannelDetailsScreen: React.FC = () => {
             ]}
           >
             <View style={styles.actionLabelContainer}>
-              <Mute height={24} width={24} />
+              <MessageCircleOff height={24} width={24} />
               <Text
                 style={[
                   styles.itemText,
@@ -417,7 +419,7 @@ export const GroupChannelDetailsScreen: React.FC = () => {
               />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => {
               router.push(`/chat/channels/${channel.id}/pinned-messages`);
             }}
@@ -442,9 +444,9 @@ export const GroupChannelDetailsScreen: React.FC = () => {
               </Text>
             </View>
             <View>
-              <GoForward height={24} width={24} />
+              <Forward height={24} width={24} />
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity
             onPress={() => {
               router.push(`/chat/channels/${channel.id}/images`);
@@ -458,7 +460,7 @@ export const GroupChannelDetailsScreen: React.FC = () => {
             ]}
           >
             <View style={styles.actionLabelContainer}>
-              <Picture fill={grey} />
+              <ImagePlus fill={grey} />
               <Text
                 style={[
                   styles.itemText,
@@ -471,10 +473,10 @@ export const GroupChannelDetailsScreen: React.FC = () => {
               </Text>
             </View>
             <View>
-              <GoForward height={24} width={24} />
+              <Forward height={24} width={24} />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => {
               router.push(`/chat/channels/${channel.id}/files`);
               console.log('ChannelFilesScreen');
@@ -500,9 +502,9 @@ export const GroupChannelDetailsScreen: React.FC = () => {
               </Text>
             </View>
             <View>
-              <GoForward height={24} width={24} />
+              <Forward height={24} width={24} />
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity
             onPress={openLeaveGroupConfirmationSheet}
             style={[
@@ -513,7 +515,7 @@ export const GroupChannelDetailsScreen: React.FC = () => {
             ]}
           >
             <View style={styles.actionLabelContainer}>
-              <RemoveUser height={24} width={24} />
+              <UserRoundX height={24} width={24} />
               <Text
                 style={[
                   styles.itemText,
