@@ -50,7 +50,7 @@ export function HomeScreen(props: HomeScreenProps) {
   return (
     <ZixMap.MapView style={{ flex: 1 }} onRegionChange={onSetCurrentRegion}>
       {markers.map((marker, index) => (
-        <MapVehicleMarker index={index} marker={marker} />
+        <MapVehicleMarker key={`key-${index}`} index={index} marker={marker} />
       ))}
     </ZixMap.MapView>
   );

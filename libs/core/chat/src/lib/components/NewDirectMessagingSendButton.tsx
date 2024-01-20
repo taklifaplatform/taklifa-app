@@ -21,8 +21,8 @@ import {
 } from 'stream-chat-expo';
 
 import { useRouter } from 'solito/router';
+import { useUserSearchContext } from '../context';
 import { StreamChatGenerics } from '../types';
-import { useUserSearchContext } from '@zix/core/chat';
 
 type NewDirectMessagingSendButtonPropsWithContext<
   At extends UnknownType = DefaultAttachmentType,
