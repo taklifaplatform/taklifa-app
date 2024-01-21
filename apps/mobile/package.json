@@ -181,7 +181,8 @@
     "dayjs": "*",
     "@react-navigation/native": "*",
     "@tamagui/core": "*",
-    "expo-font": "*"
+    "expo-font": "*",
+    "react-native-confirmation-code-field": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",
