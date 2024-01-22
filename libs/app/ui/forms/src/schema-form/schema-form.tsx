@@ -16,13 +16,13 @@ const FormComponent = (props: FormProps) => {
   );
 };
 
-const _SchemaForm = createTsForm(formFieldsMappings, {
+const MappedSchemaForm = createTsForm(formFieldsMappings, {
   FormComponent: FormComponent
 });
 
 const parseNestedFields = (
-  fields: RenderedFieldMap<ReactElement | Element[] | any>
-): any => {
+  fields: RenderedFieldMap<ReactElement | Element[]>
+) => {
   if (!fields) {
     return null;
   }
@@ -35,7 +35,7 @@ const parseNestedFields = (
     return null;
   }
 
-  return Object.values(fields).map((field: any) => {
+  return Object.values(fields).map((field) => {
     if (
       field &&
       Object.keys(field).length &&
@@ -50,14 +50,14 @@ const parseNestedFields = (
 
 type RenderWrapper = (children: ReactElement) => ReactElement;
 
-type SchemaFormProps = ComponentProps<typeof _SchemaForm> & {
+type SchemaFormProps = ComponentProps<typeof MappedSchemaForm> & {
   wrappers?:
     | Record<string, RenderWrapper>
     | Record<string, Record<string, RenderWrapper>>;
 };
 
 export const SchemaForm = (props: SchemaFormProps) => {
-  const renderAfter: ComponentProps<typeof _SchemaForm>['renderAfter'] =
+  const renderAfter: ComponentProps<typeof MappedSchemaForm>['renderAfter'] =
     props.renderAfter
       ? (vars) => (
           <FormWrapper.Footer>{props.renderAfter?.(vars)}</FormWrapper.Footer>
@@ -65,13 +65,13 @@ export const SchemaForm = (props: SchemaFormProps) => {
       : undefined;
 
   return (
-    <_SchemaForm {...props} renderAfter={renderAfter}>
+    <MappedSchemaForm {...props} renderAfter={renderAfter}>
       {(fields) => (
         <FormWrapper.Body>
           {props.children ? props.children(fields) : parseNestedFields(fields)}
         </FormWrapper.Body>
       )}
-    </_SchemaForm>
+    </MappedSchemaForm>
   );
 };
 

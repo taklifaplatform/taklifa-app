@@ -19,9 +19,6 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({
 }) => {
   const { profile } = useUser();
   React.useEffect(() => {
-    console.log('====================')
-    console.log('chat: profile watch->', profile)
-    console.log('====================')
     if (profile) {
       client.connectUser(profile);
     } else {

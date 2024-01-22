@@ -75,11 +75,8 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   const renderUserAvatar = () =>
     !showBackButton && (
       <Button
-        size="$3"
-        padding="0"
+        unstyled
         icon={<UserAvatar user={profile} size="$2.5" />}
-        variant="outlined"
-        pressStyle={{ borderWidth: 0 }}
         onPress={onAvatarPress}
       />
     );
@@ -87,10 +84,8 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   const renderBackButton = () =>
     showBackButton && (
       <Button
+        unstyled
         size="$2"
-        padding="0"
-        variant="outlined"
-        pressStyle={{ borderWidth: 0 }}
         icon={<CustomIcon name="arrow_left" size="$1" />}
         onPress={() => router.back()}
       />
@@ -101,15 +96,13 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
       <XStack>
         {/* <Button
           size="$2"
-          padding="0"
           backgroundColor="$color5"
           icon={<MessageCircle size="$1" />}
           onPress={() => router.push('/messenger')}
         /> */}
         <Button
+          unstyled
           size="$2"
-          padding="0"
-          backgroundColor="$color5"
           icon={<Bell size="$1" fill="#000" />}
           onPress={() => router.push('/notifications')}
         />

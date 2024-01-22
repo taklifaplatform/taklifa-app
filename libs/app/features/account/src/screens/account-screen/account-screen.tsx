@@ -8,7 +8,6 @@ import { Link, useLink } from 'solito/link';
 export function AccountScreen() {
   const { profile } = useUser();
   const name = profile?.name;
-  const about = profile?.about;
 
   return (
     <ScrollView>
@@ -40,7 +39,6 @@ export function AccountScreen() {
           size="$4"
           marginHorizontal="$4"
           {...useLink({ href: '/account/edit' })}
-          themeInverse
         >
           Edit Profile
         </Button>
