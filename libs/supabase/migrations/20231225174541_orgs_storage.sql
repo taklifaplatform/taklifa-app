@@ -1,10 +1,11 @@
-insert into storage.buckets (id, name, public)
-values ('orgs', 'orgs', false)
-on conflict do nothing;
-
 create schema if not exists private;
 
-create policy "Only allow users to read storage from org buckets they're member on or the public files"
+insert into storage.buckets (id, name, public)
+values ('orgs', 'orgs', TRUE)
+on conflict do nothing;
+
+
+create policy "Only org member can read from org bucket"
 on storage.objects
 as permissive
 for select
@@ -23,14 +24,14 @@ using (
 );
 
 
-create policy "Only allow users to write storage from org buckets they're member on"
+create policy "Only org member can upload to org bucket"
 on storage.objects
 as permissive
 for insert
 to public
 with check (
   (
-    (bucket_id = 'chat'::text)
+    (bucket_id = 'orgs'::text)
     AND EXISTS (
       SELECT 1
       FROM public.org_memberships
@@ -41,14 +42,14 @@ with check (
 );
 
 
-create policy "Only allow users to delete storage from org buckets they're member on"
+create policy "Only org member can delete from org bucket"
 on storage.objects
 as permissive
 for delete
 to public
 using (
   (
-    (bucket_id = 'chat'::text)
+    (bucket_id = 'orgs'::text)
     AND EXISTS (
       SELECT 1
       FROM public.org_memberships
@@ -59,14 +60,14 @@ using (
 );
 
 
-create policy "Only allow users to update storage from org buckets they're member on"
+create policy "Only org member can update to org bucket"
 on storage.objects
 as permissive
 for update
 to public
 using (
   (
-    (bucket_id = 'chat'::text)
+    (bucket_id = 'orgs'::text)
     AND EXISTS (
       SELECT 1
       FROM public.org_memberships

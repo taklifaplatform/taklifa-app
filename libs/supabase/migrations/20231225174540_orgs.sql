@@ -18,20 +18,18 @@ create table
 
 create table
   public.org_memberships (
-  id uuid not null default gen_random_uuid (),
-  user_id uuid references public.users,
-  org_id uuid not null references public.orgs,
-  role org_roles not null default 'member',
-  invited_email text,
-  code text,
-  created_at timestamptz not null default now(),
-  unique (user_id, org_id)
-);
+    id uuid not null default gen_random_uuid (),
+    user_id uuid null,
+    org_id uuid not null,
+    role public.org_roles not null default 'member'::org_roles,
+    invited_email text null,
+    code text null,
+    created_at timestamp with time zone not null default now(),
+    constraint org_memberships_user_id_org_id_key unique (user_id, org_id),
+    constraint org_memberships_user_id_fkey foreign key (user_id) references users (id) on delete cascade,
+    constraint org_memberships_org_id_fkey foreign key (org_id) references orgs (id) on delete cascade
+  ) tablespace pg_default;
 
-
--- Enable RLS for Orgs, Org Memberships
-alter table public.orgs enable row level security;
-alter table public.org_memberships enable row level security;
 
 /**
   * Create new org function

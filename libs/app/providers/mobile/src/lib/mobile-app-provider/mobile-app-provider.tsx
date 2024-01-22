@@ -1,4 +1,5 @@
 import { Session } from '@supabase/supabase-js';
+import { CompanyManagerProvider } from '@zix/app/features/companies-dashboard';
 import { themeConfig } from '@zix/app/themes/mobile';
 import {
   AuthProvider,
@@ -33,7 +34,8 @@ export const MobileAppProvider: React.FC<MobileAppProviderProps> = ({
           ),
           ToastProvider,
           QueryClientProvider,
-          ChatProvider
+          ChatProvider,
+          CompanyManagerProvider,
         ]}
       >
         {children}

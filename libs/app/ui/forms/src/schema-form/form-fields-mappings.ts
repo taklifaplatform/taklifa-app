@@ -1,4 +1,4 @@
-import { FileInput } from "@tamagui/lucide-icons";
+import {} from "@tamagui/lucide-icons";
 import {
   AutoCompleteField,
   BooleanCheckboxField,
@@ -6,6 +6,7 @@ import {
   BooleanSwitchField,
   CodeInputField,
   CountryField,
+  FileField,
   NumberField,
   PhoneField,
   SelectField,
@@ -14,6 +15,7 @@ import {
 } from "../form-fields";
 
 import { formFields } from "./form-fields-schemas";
+import AvatarField from "../form-fields/avatar-field/avatar-field";
 
 export const formFieldsMappings = [
   [formFields.text, TextField] as const,
@@ -41,6 +43,7 @@ export const formFieldsMappings = [
   [formFields.phone, PhoneField] as const,
   [formFields.code, CodeInputField] as const,
   // [formFields.date, DateField] as const,
-  [formFields.file, FileInput] as const,
+  [formFields.file, FileField] as const,
+  [formFields.avatar, AvatarField] as const,
   [formFields.country, CountryField] as const,
 ] as const;

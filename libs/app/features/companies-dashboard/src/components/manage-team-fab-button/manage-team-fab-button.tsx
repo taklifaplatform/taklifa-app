@@ -4,13 +4,13 @@ import { Button, Theme } from '@zix/app/ui/core';
 import { useRef } from 'react';
 
 import { useRouter } from 'solito/router';
-import { useCurrentActiveOrg } from '../../hooks';
+import { useCompanyManagerContext } from '../../context/UseCompanyManagerContext';
 
 export const ManageTeamFabButton: React.FC = () => {
   const router = useRouter();
   const actionSheetRef = useRef<ActionSheetRef>(null);
 
-  const { org } = useCurrentActiveOrg();
+  const { activeCompany } = useCompanyManagerContext();
 
   const renderFabButton = () => (
     <Theme>
@@ -42,8 +42,8 @@ export const ManageTeamFabButton: React.FC = () => {
           icon: <UsersRound size="$2" color="$color10" />,
           onPress: () => {
             actionSheetRef.current?.close();
-            alert('UNDER DEVELOPMENT')
-            // router.push(`/companies/${org?.id}/admin/managers/create`);
+            alert('UNDER DEVELOPMENT');
+            // router.push(`/companies/${activeCompany?.id}/admin/managers/create`);
           }
         },
         {
@@ -51,7 +51,9 @@ export const ManageTeamFabButton: React.FC = () => {
           icon: <Users size="$2" color="$color10" />,
           onPress: () => {
             actionSheetRef.current?.close();
-            router.push(`/companies/${org?.id}/manage/drivers/invite`);
+            router.push(
+              `/companies/${activeCompany?.id}/manage/drivers/invite`
+            );
           }
         },
         {
@@ -59,8 +61,8 @@ export const ManageTeamFabButton: React.FC = () => {
           icon: <CarFront size="$2" color="$color10" />,
           onPress: () => {
             actionSheetRef.current?.close();
-            alert('UNDER DEVELOPMENT')
-            // router.push(`/companies/${org?.id}/admin/vehicles/create`);
+            alert('UNDER DEVELOPMENT');
+            // router.push(`/companies/${activeCompany?.id}/admin/vehicles/create`);
           }
         }
       ]}

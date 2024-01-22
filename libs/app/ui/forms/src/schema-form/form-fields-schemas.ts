@@ -32,17 +32,23 @@ export const formFields = {
   autocomplete: createUniqueFieldSchema(z.string(), "autocomplete"),
 
   /**
-   * Date Fields
+   * File Fields
    */
-  row_date: createUniqueFieldSchema(z.string(), "row_date"),
-  row_time: createUniqueFieldSchema(z.string(), "row_time"),
-
-  phone: createUniqueFieldSchema(
-    z.string().regex(/[0-9]{10}/, "Please enter a valid phone number"),
-    "phone",
+  avatar: createUniqueFieldSchema(
+    z.object({
+      height: z.number(),
+      assetId: z.string(),
+      width: z.number(),
+      base64: z.string().nullable(),
+      exif: z.string().nullable(),
+      fileSize: z.number(),
+      uri: z.string(),
+      fileName: z.string(),
+      duration: z.string().nullable(),
+      type: z.string(),
+    }),
+    "avatar",
   ),
-  code: createUniqueFieldSchema(z.number(), "code"),
-  date: createUniqueFieldSchema(z.coerce.date(), "date"),
   file: createUniqueFieldSchema(
     z.object({
       file: z.any(),
@@ -54,6 +60,20 @@ export const formFields = {
     }),
     "file",
   ),
+
+  /**
+   * Date Fields
+   */
+  row_date: createUniqueFieldSchema(z.string(), "row_date"),
+  row_time: createUniqueFieldSchema(z.string(), "row_time"),
+
+  phone: createUniqueFieldSchema(
+    z.string().regex(/[0-9]{10}/, "Please enter a valid phone number"),
+    "phone",
+  ),
+  code: createUniqueFieldSchema(z.number(), "code"),
+  date: createUniqueFieldSchema(z.coerce.date(), "date"),
+
   medias: createUniqueFieldSchema(
     z.array(
       z.object({

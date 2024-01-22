@@ -9,7 +9,7 @@ import { H3, ListItem, Sheet, Text, XStack, YGroup } from '@zix/app/ui/core';
 import { useUser } from '@zix/core/auth';
 import { useState } from 'react';
 import { useRouter } from 'solito/router';
-import { useAuthOrgsQuery } from '../../hooks/useAuthOrgsQuery';
+import { useCompanyManagerContext } from '../../context/UseCompanyManagerContext';
 
 export type DashboardSwitcherProps = {
   //
@@ -19,8 +19,7 @@ export const DashboardSwitcher: React.FC<DashboardSwitcherProps> = () => {
   const [sheetOpen, setSheetOpen] = useState(false);
   const router = useRouter();
   const { profile } = useUser();
-
-  const { data } = useAuthOrgsQuery();
+  const { companies, switchCompany } = useCompanyManagerContext();
 
   const dashboard = [
     {
@@ -79,15 +78,18 @@ export const DashboardSwitcher: React.FC<DashboardSwitcherProps> = () => {
                 </YGroup.Item>
               ))}
               <H3 padding="$4">Companies</H3>
-              {data?.map(({ org, role }) => (
-                <YGroup.Item key={org.name}>
+              {companies?.map((company) => (
+                <YGroup.Item key={company.name}>
                   <ListItem
-                    onPress={() => onNavigate(`/companies/${org.id}`)}
+                    onPress={() => {
+                      switchCompany(company.id);
+                      onNavigate(`/companies/${company.id}`);
+                    }}
                     marginVertical="$2"
                     paddingVertical="$4"
                     hoverTheme
                     icon={Building2}
-                    title={org.name}
+                    title={company.name}
                   />
                 </YGroup.Item>
               ))}

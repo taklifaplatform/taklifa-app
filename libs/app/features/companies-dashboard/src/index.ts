@@ -34,3 +34,5 @@ export * from "./screens/orders/order-details-screen/order-details-screen";
 export * from "./screens/home-screen/home-screen";
 
 export * from "./components/companies-dashboard-layout/companies-dashboard-layout";
+
+export * from "./context/UseCompanyManagerContext";

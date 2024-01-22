@@ -8,13 +8,13 @@ import {
 } from '@zix/core/supabase';
 import React from 'react';
 
-import { FormProvider, Theme } from '@zix/app/ui/core';
+import { Theme } from '@zix/app/ui/core';
 import { SchemaForm, SubmitButton, formFields } from '@zix/app/ui/forms';
 import { t } from 'i18next';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
 import { z } from 'zod';
-import { useCurrentActiveOrg } from '../../../../hooks';
+import { useCompanyManagerContext } from '../../../../context/UseCompanyManagerContext';
 
 const InviteDriverFormSchema = z
   .object({
@@ -31,7 +31,7 @@ const InviteDriverFormSchema = z
 
 export const CreateDriverScreen: React.FC = () => {
   const form = useForm<z.infer<typeof InviteDriverFormSchema>>();
-  const { org } = useCurrentActiveOrg();
+  const { activeCompany } = useCompanyManagerContext();
 
   const supabase = useSupabase();
   const queryClient = useQueryClient();
@@ -42,15 +42,15 @@ export const CreateDriverScreen: React.FC = () => {
   const { mutate } = useMutation({
     mutationFn: async (values: Tables<'orgs'>) => {
       console.error('=================');
-      console.error('No org id::', org);
+      console.error('No org id::', activeCompany);
       console.error('=================');
-      if (!org?.id) {
+      if (!activeCompany?.id) {
         throw new Error('No org id');
       }
 
       const { data, error } = await supabase
         .rpc('invite_org_member', {
-          org_id: org.id,
+          org_id: activeCompany.id,
           email: values.name,
           phone_number: values.name,
           role: 'driver'

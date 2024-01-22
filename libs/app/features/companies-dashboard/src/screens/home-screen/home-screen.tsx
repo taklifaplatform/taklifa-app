@@ -1,15 +1,15 @@
 import { Text, View } from '@zix/app/ui/core';
-import { useCurrentActiveOrg } from '../../hooks/useCurrentActiveOrg';
+import { useCompanyManagerContext } from '../../context/UseCompanyManagerContext';
 
 /* eslint-disable-next-line */
 export interface HomeScreenProps {}
 
 export function HomeScreen(props: HomeScreenProps) {
-  const { org } = useCurrentActiveOrg();
+  const { activeCompany } = useCompanyManagerContext();
   return (
     <View>
       <Text>Welcome to home-screen!</Text>
-      <Text>{JSON.stringify(org, null, 2)}</Text>
+      <Text>{JSON.stringify(activeCompany, null, 2)}</Text>
     </View>
   );
 }
