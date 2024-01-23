@@ -16,7 +16,8 @@
       "distribution": "internal",
       "channel": "development",
       "env": {
-        "APP_ENV": "development"
+        "TAMAGUI_TARGET": "native",
+        "APP_ENV": "preview"
       },
       "android": {
         "buildType": "apk"

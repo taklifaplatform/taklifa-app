@@ -36,7 +36,7 @@
       "executor": "@nx/expo:build",
       "dependsOn": ["ensure-symlink", "sync-deps"],
       "options": {
-        "profile": "preview",
+        "profile": "development",
         "platform": "ios",
         "local": true
       }
@@ -45,7 +45,7 @@
       "executor": "@nx/expo:build",
       "dependsOn": ["ensure-symlink", "sync-deps"],
       "options": {
-        "profile": "preview",
+        "profile": "development",
         "platform": "android",
         "local": true
       }
