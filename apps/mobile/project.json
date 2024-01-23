@@ -46,7 +46,7 @@
       "dependsOn": ["ensure-symlink", "sync-deps"],
       "options": {
         "profile": "preview",
-        "platform": "ios",
+        "platform": "android",
         "local": true
       }
     },
@@ -64,7 +64,7 @@
       "dependsOn": ["ensure-symlink", "sync-deps"],
       "options": {
         "profile": "preview",
-        "platform": "ios"
+        "platform": "android"
       }
     },
     "build": {
