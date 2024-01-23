@@ -2,7 +2,6 @@ import { createTsForm } from '@ts-react/form';
 import { Form, FormProps, Theme } from '@zix/core/ui';
 import { ComponentProps, ReactElement } from 'react';
 
-import { RenderedFieldMap } from '@ts-react/form/lib/src/createSchemaForm';
 import { useFormContext } from 'react-hook-form';
 import FieldError from '../common/field-error/field-error';
 import FormWrapper from '../common/form-wrapper/form-wrapper';
@@ -19,34 +18,6 @@ const FormComponent = (props: FormProps) => {
 const MappedSchemaForm = createTsForm(formFieldsMappings, {
   FormComponent: FormComponent
 });
-
-const parseNestedFields = (
-  fields: RenderedFieldMap<ReactElement | Element[]>
-) => {
-  if (!fields) {
-    return null;
-  }
-
-  if (typeof fields !== 'object') {
-    return fields;
-  }
-
-  if (!Object.keys(fields).length) {
-    return null;
-  }
-
-  return Object.values(fields).map((field) => {
-    if (
-      field &&
-      Object.keys(field).length &&
-      !Object.keys(field).includes('_store')
-    ) {
-      return parseNestedFields(field);
-    }
-
-    return field;
-  });
-};
 
 type RenderWrapper = (children: ReactElement) => ReactElement;
 
@@ -69,7 +40,6 @@ export const SchemaForm = (props: SchemaFormProps) => {
       {(fields) => (
         <FormWrapper.Body>
           {props.children ? props.children(fields) : Object.values(fields)}
-          {/* {props.children ? props.children(fields) : parseNestedFields(fields)} */}
         </FormWrapper.Body>
       )}
     </MappedSchemaForm>
