@@ -73,7 +73,7 @@ export const ZixFileField: React.FC<ZixFileFieldProps> = ({
       ) : (
         <ZixMediaPickerField
           {...pickerButtonProps}
-          onChange={(files) => {
+          onChange={(files: any) => {
             if (directUpload) {
               return upload(files);
             } else {

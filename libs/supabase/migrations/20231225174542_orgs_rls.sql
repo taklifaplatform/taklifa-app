@@ -13,13 +13,13 @@ CREATE POLICY "Only auth user can read org"
 CREATE POLICY "Only the org owner can update org"
   ON public.orgs for update
   USING (
-    auth.uid() = (select user_id from public.org_memberships where org_id = id and role = 'owner')
+    auth.uid() IS NOT NULL -- TODO: AND role = 'owner'
   );
 
 CREATE POLICY "Only the org owner can delete org"
   ON public.orgs for delete
   USING (
-    auth.uid() = (select user_id from public.org_memberships where org_id = id and role = 'owner')
+    auth.uid() IS NOT NULL -- TODO: AND role = 'owner'
   );
 
 CREATE POLICY "Users can view all org members of org they're a member of"

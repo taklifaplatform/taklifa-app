@@ -1,5 +1,7 @@
 export * from "./db-tables";
+export * from "./extra-types";
 export * from "./types";
+export * from "./lib/uploadMediaFile";
 export * from "./lib/admin/admin";
 export * from "./lib/client/client";
 export * from "./lib/use-supabase/use-supabase";

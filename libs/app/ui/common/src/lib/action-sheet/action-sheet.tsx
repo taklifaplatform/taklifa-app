@@ -48,11 +48,9 @@ export const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
     return (
       <Sheet
         modal
-        animation="lazy"
         open={isOpen}
         onOpenChange={setIsOpen}
         snapPoints={SNAP_POINTS}
-        // snapPoints={[props.actions.length * 8]}
         position={position}
         onPositionChange={setPosition}
         dismissOnSnapToBottom

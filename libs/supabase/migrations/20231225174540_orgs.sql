@@ -11,7 +11,7 @@ create table
     created_at timestamp with time zone not null default now(),
     owner_id uuid null default auth.uid (),
     name text not null,
-    logo_url text null,
+    logo media_file null,
     constraint orgs_pkey primary key (id),
     constraint orgs_owner_id_fkey foreign key (owner_id) references users (id) on delete set null
   ) tablespace pg_default;

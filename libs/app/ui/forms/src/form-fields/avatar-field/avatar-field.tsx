@@ -14,20 +14,21 @@ import {
   useStyle,
   useThemeName
 } from '@zix/app/ui/core';
+import { IMediaFile } from '@zix/core/supabase';
 import { useId } from 'react';
 import { FieldError } from '../../common';
 import { ZixMediaPickerField } from '../../fields';
+import { ImageStyle } from 'expo-image';
 export interface FileProps extends Pick<InputProps, 'size' | 'autoFocus'> {
   isMultiple?: boolean;
 }
 
 // this
 export const AvatarField = (props: FileProps) => {
-  const { field, error } = useTsController<string[]>();
+  const { field, error } = useTsController<IMediaFile>();
   const { label } = useFieldInfo();
   const themeName = useThemeName();
   const id = useId();
-  // const disabled = isSubmitting
 
   const avatarStyle = useStyle({
     width: '$7',
@@ -40,12 +41,7 @@ export const AvatarField = (props: FileProps) => {
         <Shake shakeKey={error?.errorMessage}>
           <ZixMediaPickerField
             type="image"
-            onChange={(files: any) => {
-              console.log('==============');
-              console.log('files', JSON.stringify(files, null, 2));
-              console.log('==============');
-              field.onChange(files);
-            }}
+            onChange={({ file }) => field.onChange(file)}
           >
             {({ onPress }) => (
               <XStack
@@ -63,11 +59,11 @@ export const AvatarField = (props: FileProps) => {
                     justifyContent="center"
                     {...props}
                   >
-                    {field.value ? (
+                    {field.value?.uri ? (
                       <SolitoImage
-                        src={field.value?.uri || field.value}
+                        src={field.value?.uri}
                         alt="your avatar"
-                        style={avatarStyle}
+                        style={avatarStyle as ImageStyle}
                         contentFit="cover"
                       />
                     ) : (
@@ -82,7 +78,7 @@ export const AvatarField = (props: FileProps) => {
                       size={props.size || '$3'}
                       htmlFor={id}
                     >
-                      {label} ::{error?.errorMessage}
+                      {label}
                     </Label>
                   )}
                 </YStack>

@@ -15,12 +15,12 @@ import { t } from 'i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
 import { z } from 'zod';
-import { useCompanyManagerContext } from '../../context/UseCompanyManagerContext';
+import { useCompanyManagerContext } from '../../../context/UseCompanyManagerContext';
 
-const CreateCompanyFormSchema = z
+const UpdateCompanyFormSchema = z
   .object({
     logo: formFields.avatar.describe('Add Company Logo'),
-    name: formFields.text.min(2).max(25).describe(t('forms:company_name')),
+    name: formFields.text.min(2).max(25).describe(t('forms:company_name'))
     // documents: formFields.file.describe(
     //   t('Company Documents // Attach documents...')
     // ),
@@ -28,19 +28,17 @@ const CreateCompanyFormSchema = z
     //   .min(2)
     //   .max(25)
     //   .describe('Company Location // Enter company location'),
-    accept_terms: formFields.boolean_checkbox.describe(t('forms:accept_terms'))
   })
   .required({
-    name: true,
-    // logo: true,
+    logo: true,
+    name: true
     // location: true,
     // legal_document: true,
-    accept_terms: true
   });
 
-export const CreateCompanyScreen: React.FC = () => {
-  const form = useForm<z.infer<typeof CreateCompanyFormSchema>>();
-  const { switchCompany } = useCompanyManagerContext();
+export const UpdateCompanyScreen: React.FC = () => {
+  const form = useForm<z.infer<typeof UpdateCompanyFormSchema>>();
+  const { activeCompany, refreshActiveCompany } = useCompanyManagerContext();
   const supabase = useSupabase();
   const queryClient = useQueryClient();
   const toast = useToastController();
@@ -48,56 +46,44 @@ export const CreateCompanyScreen: React.FC = () => {
   const router = useRouter();
 
   const { mutate } = useMutation({
-    mutationFn: async (values: z.infer<typeof CreateCompanyFormSchema>) => {
-      console.log('===========');
-      console.log('mutationFn::');
-      console.log('===========');
-      const { data, error } = await supabase
-        .rpc('create_new_org', {
-          org_name: values.name
-        })
-        .select('*')
-        .single();
-
-      if (error) {
-        throw error;
+    mutationFn: async (values: z.infer<typeof UpdateCompanyFormSchema>) => {
+      if (!activeCompany?.id) {
+        throw new Error('No active company');
       }
 
-      if (!data?.id) {
-        console.log('===========');
-        console.log(
-          '{ data, error }::',
-          JSON.stringify({ data, error }, null, 2)
-        );
-        console.log('===========');
-        return null;
-      }
+      const updatedData = {
+        ...activeCompany,
+        name: values.name
+      };
 
       if (values.logo) {
         const uploadedAvatar = await uploadMediaFile({
           file: values.logo,
           bucket: 'orgs',
-          path: `${data.id}/public`
+          path: `${activeCompany.id}/public`
         });
         if (uploadedAvatar) {
-          await supabase
-            .from('orgs')
-            .update({
-              logo: uploadedAvatar
-            })
-            .eq('id', data?.id)
-            .select('*');
+          updatedData.logo = uploadedAvatar;
         }
       }
 
-      switchCompany(data.id);
+      const { data, error } = await supabase
+        .from('orgs')
+        .update(updatedData)
+        .eq('id', activeCompany?.id)
+        .select('*');
+
+      if (error) {
+        throw error;
+      }
+      refreshActiveCompany();
 
       return data;
     },
     onSuccess: (data: Tables<'orgs'>) => {
       queryClient.invalidateQueries([ORGS_TABLE, ORG_MEMBERSHIPS_TABLE]);
-      toast.show('Company Created Successfully!');
-      router.push(`/companies/${data.id}`);
+      toast.show('Company Updated Successfully!');
+      router.back();
     },
     onError: (error) => {
       console.log('====================');
@@ -106,13 +92,15 @@ export const CreateCompanyScreen: React.FC = () => {
     }
   });
 
+  if (!activeCompany?.id) {
+    return null;
+  }
+
   return (
     <FormProvider {...form}>
       <SchemaForm
-        schema={CreateCompanyFormSchema}
-        defaultValues={{
-          name: ''
-        }}
+        schema={UpdateCompanyFormSchema}
+        defaultValues={activeCompany}
         onSubmit={mutate}
         renderAfter={({ submit }) => {
           return (
@@ -128,4 +116,4 @@ export const CreateCompanyScreen: React.FC = () => {
   );
 };
 
-export default CreateCompanyScreen;
+export default UpdateCompanyScreen;

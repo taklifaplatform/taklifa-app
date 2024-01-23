@@ -890,21 +890,21 @@ export interface Database {
         Row: {
           created_at: string
           id: string
-          logo_url: string | null
+          logo: Database["public"]["CompositeTypes"]["media_file"] | null
           name: string
           owner_id: string | null
         }
         Insert: {
           created_at?: string
           id?: string
-          logo_url?: string | null
+          logo?: Database["public"]["CompositeTypes"]["media_file"] | null
           name: string
           owner_id?: string | null
         }
         Update: {
           created_at?: string
           id?: string
-          logo_url?: string | null
+          logo?: Database["public"]["CompositeTypes"]["media_file"] | null
           name?: string
           owner_id?: string | null
         }
@@ -1520,7 +1520,7 @@ export interface Database {
         Returns: {
           created_at: string
           id: string
-          logo_url: string | null
+          logo: Database["public"]["CompositeTypes"]["media_file"] | null
           name: string
           owner_id: string | null
         }
@@ -1559,7 +1559,12 @@ export interface Database {
       shipment_types: "document" | "box" | "multiple_boxes" | "other"
     }
     CompositeTypes: {
-      [_ in never]: never
+      media_file: {
+        id: string
+        uri: string
+        file_name: string
+        file_type: string
+      }
     }
   }
 }

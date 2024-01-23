@@ -4,9 +4,13 @@ import { ORG_MEMBERSHIPS_TABLE, Tables, useSupabase } from "@zix/core/supabase";
 import { useState } from "react";
 
 export type CompanyManager = {
-  activeCompany?: Tables<"orgs">;
   switchCompany: (id: string) => void;
+
+  activeCompany?: Tables<"orgs">;
+  refreshActiveCompany: () => void;
+
   companies: Tables<"orgs">[];
+  refreshCompanies: () => void;
 };
 
 export function useCompanyManager(): CompanyManager {
@@ -74,8 +78,10 @@ export function useCompanyManager(): CompanyManager {
   }
   return {
     activeCompany: activeCompanyQuery?.data?.org,
+    refreshActiveCompany: activeCompanyQuery.refetch,
     switchCompany,
 
     companies: companiesQuery?.data?.map((item) => item.org) || [],
+    refreshCompanies: companiesQuery.refetch,
   };
 }

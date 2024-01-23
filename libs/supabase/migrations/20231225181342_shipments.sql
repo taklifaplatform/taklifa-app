@@ -1,3 +1,4 @@
+drop type if exists shipment_types;
 create type shipment_types as ENUM (
   'document',
   'box',
@@ -5,10 +6,12 @@ create type shipment_types as ENUM (
   'other'
 );
 
+drop type if exists shipment_status;
 create type shipment_status as ENUM (
   'draft'
 );
 
+drop type if exists shipment_delivery_status;
 create type shipment_delivery_status as ENUM (
   'pending',
   'cancelled',

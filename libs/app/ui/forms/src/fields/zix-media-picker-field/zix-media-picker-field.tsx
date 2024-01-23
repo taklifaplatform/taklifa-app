@@ -2,9 +2,9 @@ import { Platform, UIManager } from 'react-native';
 
 import { Camera, Image } from '@tamagui/lucide-icons';
 import { ActionSheet, ActionSheetRef } from '@zix/app/ui/common';
+import { IMediaFile } from '@zix/core/supabase';
 import { getDocumentAsync } from 'expo-document-picker';
 import {
-  ImagePickerAsset,
   MediaTypeOptions,
   launchCameraAsync,
   launchImageLibraryAsync
@@ -16,9 +16,13 @@ export type ZixMediaPickerFieldProps = {
   // documentPickerOptions?: DocumentPickerOptions;
   // onChange?: (files: DocumentPickerResult) => Promise<void> | void;
   isMultiple?: boolean;
-  onChange: (
-    images: ImagePickerAsset | ImagePickerAsset[]
-  ) => Promise<void> | void;
+  onChange: ({
+    files,
+    file
+  }: {
+    files: IMediaFile[];
+    file: IMediaFile;
+  }) => Promise<void> | void;
   children: ({ onPress }: { onPress: () => void }) => React.ReactNode;
   type?: 'documents' | 'image' | 'video' | 'image-video';
 };
@@ -35,7 +39,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
   type = 'image-video',
   children
 }) => {
-  const actionRef = useRef<ActionSheetRef>();
+  const actionRef = useRef<ActionSheetRef>(null);
 
   const renderImagePicker = () => (
     <ActionSheet
@@ -52,7 +56,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
           onPress: pickMedia
         }
       ]}
-      ref={actionRef as any}
+      ref={actionRef}
     />
   );
 
@@ -74,7 +78,16 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     }
 
     if (result.assets.length) {
-      onChange((isMultiple ? result.assets : result.assets[0]) as any);
+      const files: IMediaFile[] = result.assets.map((file) => ({
+        id: '',
+        uri: file.uri,
+        file_name: file.fileName || file.assetId || file.uri,
+        file_type: file.type || type
+      }));
+      onChange({
+        files,
+        file: files[0]
+      });
     }
   };
 
@@ -91,7 +104,16 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     }
 
     if (result.assets.length) {
-      onChange((isMultiple ? result.assets : result.assets[0]) as any);
+      const files: IMediaFile[] = result.assets.map((file) => ({
+        id: '',
+        uri: file.uri,
+        file_name: file.name,
+        file_type: file.mimeType || type
+      }));
+      onChange({
+        files,
+        file: files[0]
+      });
     }
   };
 
@@ -106,7 +128,16 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
       quality: 1
     });
     if (!result.canceled) {
-      onChange(isMultiple ? result.assets : (result.assets[0] as any));
+      const files: IMediaFile[] = result.assets.map((file) => ({
+        id: '',
+        uri: file.uri,
+        file_name: file.fileName || file.assetId || file.uri,
+        file_type: file.type || type
+      }));
+      onChange({
+        files,
+        file: files[0]
+      });
     }
   };
 

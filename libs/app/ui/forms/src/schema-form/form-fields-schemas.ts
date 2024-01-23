@@ -36,29 +36,32 @@ export const formFields = {
    */
   avatar: createUniqueFieldSchema(
     z.object({
-      height: z.number(),
-      assetId: z.string(),
-      width: z.number(),
-      base64: z.string().nullable(),
-      exif: z.string().nullable(),
-      fileSize: z.number(),
+      id: z.string(),
       uri: z.string(),
-      fileName: z.string(),
-      duration: z.string().nullable(),
-      type: z.string(),
+      file_name: z.string(),
+      file_type: z.string(),
     }),
     "avatar",
   ),
   file: createUniqueFieldSchema(
     z.object({
-      file: z.any(),
-      lastModified: z.number(),
-      mimeType: z.string(),
-      name: z.string(),
-      size: z.number(),
+      id: z.string(),
       uri: z.string(),
+      file_name: z.string(),
+      file_type: z.string(),
     }),
     "file",
+  ),
+  files: createUniqueFieldSchema(
+    z.array(
+      z.object({
+        id: z.string(),
+        uri: z.string(),
+        file_name: z.string(),
+        file_type: z.string(),
+      }),
+    ),
+    "files",
   ),
 
   /**
@@ -74,16 +77,6 @@ export const formFields = {
   code: createUniqueFieldSchema(z.number(), "code"),
   date: createUniqueFieldSchema(z.coerce.date(), "date"),
 
-  medias: createUniqueFieldSchema(
-    z.array(
-      z.object({
-        id: z.number(),
-        url: z.string(),
-        original_url: z.string(),
-      }),
-    ),
-    "medias",
-  ),
   country: createUniqueFieldSchema(z.number(), "nationality"),
   image: createUniqueFieldSchema(z.string(), "image"),
 };
