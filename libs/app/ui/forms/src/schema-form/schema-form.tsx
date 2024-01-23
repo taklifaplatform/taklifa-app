@@ -68,7 +68,8 @@ export const SchemaForm = (props: SchemaFormProps) => {
     <MappedSchemaForm {...props} renderAfter={renderAfter}>
       {(fields) => (
         <FormWrapper.Body>
-          {props.children ? props.children(fields) : parseNestedFields(fields)}
+          {props.children ? props.children(fields) : Object.values(fields)}
+          {/* {props.children ? props.children(fields) : parseNestedFields(fields)} */}
         </FormWrapper.Body>
       )}
     </MappedSchemaForm>

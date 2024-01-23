@@ -52,7 +52,7 @@ export function useCompanyManager(): CompanyManager {
   const companiesQuery = useQuery([ORG_MEMBERSHIPS_TABLE, user?.id, "v8"], {
     queryFn: async () => {
       if (!user?.id) {
-        return;
+        return null;
       }
 
       const { data, error } = await supabase

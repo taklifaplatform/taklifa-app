@@ -32,7 +32,7 @@
         "platform": "android"
       }
     },
-    "local:build": {
+    "local:build:ios": {
       "executor": "@nx/expo:build",
       "dependsOn": ["ensure-symlink", "sync-deps"],
       "options": {
@@ -41,11 +41,28 @@
         "local": true
       }
     },
-    "release:development": {
+    "local:build:android": {
+      "executor": "@nx/expo:build",
+      "dependsOn": ["ensure-symlink", "sync-deps"],
+      "options": {
+        "profile": "preview",
+        "platform": "ios",
+        "local": true
+      }
+    },
+    "release:ios": {
       "executor": "@nx/expo:build",
       "dependsOn": ["ensure-symlink", "sync-deps"],
       "options": {
         "autoSubmit": true,
+        "profile": "preview",
+        "platform": "ios"
+      }
+    },
+    "release:android": {
+      "executor": "@nx/expo:build",
+      "dependsOn": ["ensure-symlink", "sync-deps"],
+      "options": {
         "profile": "preview",
         "platform": "ios"
       }

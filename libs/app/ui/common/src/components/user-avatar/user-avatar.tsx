@@ -35,7 +35,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
     <Avatar
       size={size}
       circular
-      borderWidth="1"
+      borderWidth="$0.75"
       backgroundColor="white"
       alignItems="center"
       justifyContent="center"
