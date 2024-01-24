@@ -20,7 +20,7 @@ import { useCompanyManagerContext } from '../../context/UseCompanyManagerContext
 const CreateCompanyFormSchema = z
   .object({
     logo: formFields.avatar.describe('Add Company Logo'),
-    name: formFields.text.min(2).max(25).describe(t('forms:company_name')),
+    name: formFields.text.min(2).max(150).describe(t('forms:company_name')),
     // documents: formFields.file.describe(
     //   t('Company Documents // Attach documents...')
     // ),
@@ -32,9 +32,6 @@ const CreateCompanyFormSchema = z
   })
   .required({
     name: true,
-    // logo: true,
-    // location: true,
-    // legal_document: true,
     accept_terms: true
   });
 
@@ -49,9 +46,6 @@ export const CreateCompanyScreen: React.FC = () => {
 
   const { mutate } = useMutation({
     mutationFn: async (values: z.infer<typeof CreateCompanyFormSchema>) => {
-      console.log('===========');
-      console.log('mutationFn::');
-      console.log('===========');
       const { data, error } = await supabase
         .rpc('create_new_org', {
           org_name: values.name
@@ -64,12 +58,6 @@ export const CreateCompanyScreen: React.FC = () => {
       }
 
       if (!data?.id) {
-        console.log('===========');
-        console.log(
-          '{ data, error }::',
-          JSON.stringify({ data, error }, null, 2)
-        );
-        console.log('===========');
         return null;
       }
 

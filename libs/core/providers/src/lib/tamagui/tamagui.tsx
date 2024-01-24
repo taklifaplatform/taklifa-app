@@ -11,7 +11,7 @@ export const TamaguiProvider: React.FC<TamaguiProviderProps> = ({
   return (
     <TGProvider
       {...props}
-      disableInjectCSS
+      // disableInjectCSS // breaks nextjs styles
       disableRootThemeClass
       defaultTheme={rootTheme}
     >

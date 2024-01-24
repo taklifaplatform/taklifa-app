@@ -20,7 +20,7 @@ import { useCompanyManagerContext } from '../../../context/UseCompanyManagerCont
 const UpdateCompanyFormSchema = z
   .object({
     logo: formFields.avatar.describe('Add Company Logo'),
-    name: formFields.text.min(2).max(25).describe(t('forms:company_name'))
+    name: formFields.text.min(2).max(150).describe(t('forms:company_name'))
     // documents: formFields.file.describe(
     //   t('Company Documents // Attach documents...')
     // ),
@@ -30,10 +30,7 @@ const UpdateCompanyFormSchema = z
     //   .describe('Company Location // Enter company location'),
   })
   .required({
-    logo: true,
     name: true
-    // location: true,
-    // legal_document: true,
   });
 
 export const UpdateCompanyScreen: React.FC = () => {

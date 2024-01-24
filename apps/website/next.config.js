@@ -14,6 +14,17 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  transpilePackages: [
+    'solito',
+    'react-native-web',
+    'expo-linking',
+    'expo-constants',
+    'expo-modules-core',
+    'expo-image-picker',
+    'expo-document-picker',
+    'expo-web-browser',
+    'react-native-gesture-handler',
+  ],
 };
 
 const tamaguiPlugin = withTamagui({

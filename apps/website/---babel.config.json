@@ -1,9 +1,0 @@
-{
-  "presets": [],
-  "babelrcRoots": ["*"],
-  "plugins": [
-    "@babel/plugin-transform-runtime",
-    "react-native-reanimated/plugin"
-
-  ]
-}
