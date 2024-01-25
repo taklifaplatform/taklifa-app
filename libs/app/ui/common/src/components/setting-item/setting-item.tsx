@@ -1,4 +1,5 @@
 import { IconProps } from '@tamagui/helpers-icon';
+import { ChevronRight } from '@tamagui/lucide-icons';
 import {
   ListItem,
   ListItemProps,
@@ -37,13 +38,19 @@ export const SettingItem = ({
         cursor="pointer"
         gap="$2"
         borderRadius="$10"
-        backgroundColor={isActive ? '$backgroundFocus' : 'transparent'}
+        backgroundColor={isActive ? '$backgroundFocus' : 'white'}
         {...props}
       >
-        <YStack padding="$2" borderRadius="$3">
-          <Icon opacity={0.6} size={18} />
+        <YStack
+          padding="$2"
+          borderRadius="$3"
+          backgroundColor={'rgba(255, 251, 237, 1)'}
+        >
+          <Icon opacity={0.6} size={22} />
         </YStack>
-        <SizableText flex={1}>{children}</SizableText>
+        <SizableText flex={1} fontWeight={'500'}>
+          {children}
+        </SizableText>
         {!!rightLabel && (
           <XStack
             borderRadius="$10"
@@ -56,6 +63,7 @@ export const SettingItem = ({
             </SizableText>
           </XStack>
         )}
+        <ChevronRight size="$1" />
       </ListItem>
     </YGroup.Item>
   );

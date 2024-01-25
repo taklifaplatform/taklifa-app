@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Text } from 'react-native';
-import { SizeTokens, Stack, useStyle } from 'tamagui';
+import { SizeTokens, ColorTokens, Stack, useStyle } from 'tamagui';
 import {
   ArrowLeft,
   ArrowRight,
@@ -41,6 +41,18 @@ const iconNames = [
   'star',
   'half_star',
   'local_shipping',
+  'time',
+  'package',
+  'call',
+  'settings',
+  'lock',
+  'logout',
+  'theme',
+  'mail',
+  'share',
+  'secure',
+  'book',
+  'about',
 
   // vehicles
   'vehicle_a',
@@ -53,7 +65,7 @@ export interface CustomIconProps {
   name: CustomIconName;
 
   size?: SizeTokens;
-  color?: string;
+  color?: ColorTokens | string | null;
 }
 
 export const CustomIcon: React.FC<CustomIconProps> = ({

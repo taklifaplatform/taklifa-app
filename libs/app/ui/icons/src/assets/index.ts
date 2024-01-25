@@ -12,6 +12,19 @@ import Success from "./icons/success.svg";
 import Star from "./icons/star.svg";
 import HalfStar from "./icons/half-star.svg";
 import LocalShipping from "./icons/local-shipping.svg";
+import Time from "./icons/time.svg";
+import Package from "./icons/package.svg";
+import Delivery from "./icons/delivery.svg";
+import Call from "./icons/call.svg";
+import Settings from "./icons/settings.svg";
+import Lock from "./icons/lock.svg";
+import Book from "./icons/book.svg";
+import Mail from "./icons/mail.svg";
+import Secure from "./icons/secure.svg";
+import Share from "./icons/share.svg";
+import About from "./icons/about.svg";
+import Theme from "./icons/theme.svg";
+import Logout from "./icons/logout.svg";
 
 // arts
 import CompanyCars from "./arts/company-cars.svg";
@@ -41,6 +54,19 @@ export {
   SoloTransporterCar,
   Star,
   Success,
+  Time,
+  Package,
+  Delivery,
+  Call,
+  Settings,
+  Lock,
+  Book,
+  Mail,
+  Secure,
+  Share,
+  About,
+  Theme,
+  Logout,
   // vehicles
   VehicleA,
   VehicleB,

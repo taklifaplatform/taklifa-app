@@ -1,5 +1,13 @@
 import { Bell, ScanBarcode, Search } from '@tamagui/lucide-icons';
-import { Button, H4, Input, Theme, XStack, YStack } from '@zix/app/ui/core';
+import {
+  Button,
+  ColorTokens,
+  H4,
+  Input,
+  Theme,
+  XStack,
+  YStack
+} from '@zix/app/ui/core';
 import { CustomIcon } from '@zix/app/ui/icons';
 import { useUser } from '@zix/core/auth';
 import { t } from 'i18next';
@@ -14,6 +22,7 @@ export type AppHeaderProps = {
   headerTitle?: () => React.ReactNode;
   headerRight?: () => React.ReactNode;
   title?: string;
+  headerBackgroundColor?: ColorTokens | 'transparent';
 };
 
 export const AppHeader: React.FC<AppHeaderProps> = ({
@@ -21,7 +30,8 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   showBackButton,
   headerRight,
   headerTitle,
-  title
+  title,
+  headerBackgroundColor = '$color5'
 }) => {
   const { profile, user } = useUser();
   const router = useRouter();
@@ -111,7 +121,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
 
   return (
     <Theme name="light">
-      <YStack backgroundColor="$color5" paddingBottom="$2">
+      <YStack backgroundColor={headerBackgroundColor} paddingBottom="$2">
         <SafeAreaView edges={['top', 'left', 'right']}>
           <XStack
             padding="$4"

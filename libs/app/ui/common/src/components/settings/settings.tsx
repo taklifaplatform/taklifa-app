@@ -31,7 +31,7 @@ const SettingsGroup = styled(YGroup, {
     separator: (
       <XStack>
         <YStack width={20} backgroundColor="$color2" />
-        <Separator borderColor="$color4" borderWidth="$0.25" />
+        <Separator borderColor="#E0E0E0" borderWidth="$0.25" />
       </XStack>
     )
   },

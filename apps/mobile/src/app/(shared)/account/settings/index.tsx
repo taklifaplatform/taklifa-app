@@ -5,7 +5,11 @@ import React from 'react';
 export default function Screen() {
   return (
     <>
-      <AppHeader showBackButton title="Settings" />
+      <AppHeader
+        showBackButton
+        title="Settings"
+        headerBackgroundColor="transparent"
+      />
       <SettingsScreen />
     </>
   );

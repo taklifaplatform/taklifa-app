@@ -5,7 +5,10 @@ import React from 'react';
 export default function Screen() {
   return (
     <>
-      <AppHeader showBackButton title="Edit Profile" />
+      <AppHeader
+        showBackButton
+        title="Edit Profile"
+      />
       <EditAccountScreen />
     </>
   );

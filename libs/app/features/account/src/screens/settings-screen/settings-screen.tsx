@@ -1,25 +1,17 @@
-import {
-  Book,
-  Cog,
-  Info,
-  Lock,
-  LogOut,
-  Mail,
-  Moon,
-  Twitter
-} from '@tamagui/lucide-icons';
 import { Settings } from '@zix/app/ui/common';
 import {
   Paragraph,
   ScrollView,
-  Separator,
+
   YStack,
   isWeb,
   useMedia
 } from '@zix/app/ui/core';
+import { CustomIcon } from '@zix/app/ui/icons';
 import { useThemeSetting } from '@zix/core/providers';
 import { useSupabase } from '@zix/core/supabase';
 import { usePathname } from '@zix/core/utils';
+import { IconProps } from '@tamagui/helpers-icon';
 
 import { useLink } from 'solito/link';
 
@@ -32,25 +24,34 @@ export const SettingsScreen = () => {
   const pathname = usePathname();
 
   return (
-    <YStack flex={1} gap="$2" justifyContent="space-between">
+    <YStack
+      flex={1}
+      gap="$2"
+      justifyContent="space-between"
+      backgroundColor={'#FAFAFA'}
+    >
       <ScrollView>
         <Settings marginTop="$6">
           <Settings.Items>
             <Settings.Group $gtSm={{ space: '$2' }}>
               <Settings.Item
-                icon={Cog}
-                isActive={
-                  pathname === '/account/settings' || pathname === 'settings/general'
-                }
+                icon={(props: IconProps) => (
+                  <CustomIcon name="settings" color="$color5" {...props} />
+                )}
+                isActive={pathname === '/account/settings/general'}
                 {...useLink({
-                  href: media.sm ? '/account/settings/general' : '/account/settings'
+                  href: media.sm
+                    ? '/account/settings/general'
+                    : '/account/settings'
                 })}
                 accentColor="$green9"
               >
                 General
               </Settings.Item>
               <Settings.Item
-                icon={Lock}
+                icon={(props: IconProps) => (
+                  <CustomIcon name="lock" color="$color5" {...props} />
+                )}
                 isActive={pathname === '/account/settings/change-password'}
                 {...useLink({ href: '/account/settings/change-password' })}
                 accentColor="$green9"
@@ -58,7 +59,9 @@ export const SettingsScreen = () => {
                 Change Password
               </Settings.Item>
               <Settings.Item
-                icon={Mail}
+                icon={(props: IconProps) => (
+                  <CustomIcon name="mail" color="$color5" {...props} />
+                )}
                 isActive={pathname === '/account/settings/change-email'}
                 {...useLink({ href: '/account/settings/change-email' })}
                 accentColor="$green9"
@@ -74,14 +77,12 @@ export const SettingsScreen = () => {
                 Notifications
               </Settings.Item> */}
             </Settings.Group>
-            <Separator
-              borderColor="$color3"
-              marginHorizontal="$-4"
-              borderWidth="$0.25"
-            />
+
             <Settings.Group>
               <Settings.Item
-                icon={Book}
+                icon={(props: IconProps) => (
+                  <CustomIcon name="secure" color="$color5" {...props} />
+                )}
                 isActive={pathname === '/privacy-policy'}
                 {...useLink({ href: '/privacy-policy' })}
                 accentColor="$purple9"
@@ -89,7 +90,9 @@ export const SettingsScreen = () => {
                 Privacy Policy
               </Settings.Item>
               <Settings.Item
-                icon={Book}
+                icon={(props: IconProps) => (
+                  <CustomIcon name="book" color="$color5" {...props} />
+                )}
                 isActive={pathname === '/terms-of-service'}
                 {...useLink({ href: '/terms-of-service' })}
                 accentColor="$purple9"
@@ -101,7 +104,9 @@ export const SettingsScreen = () => {
                 // isWeb is a constant so this isn't really a conditional hook
                 // eslint-disable-next-line react-hooks/rules-of-hooks
                 <Settings.Item
-                  icon={Info}
+                  icon={(props: IconProps) => (
+                    <CustomIcon name="about" color="$color5" {...props} />
+                  )}
                   {...useLink({ href: '/about' })}
                   accentColor="$blue9"
                 >
@@ -109,25 +114,19 @@ export const SettingsScreen = () => {
                 </Settings.Item>
               )}
             </Settings.Group>
-            <Separator
-              borderColor="$color3"
-              marginHorizontal="$-4"
-              borderWidth="$0.25"
-            />
+
             <Settings.Group>
               <Settings.Item
-                icon={Twitter}
+                icon={(props: IconProps) => (
+                  <CustomIcon name="share" color="$color5" {...props} />
+                )}
                 onPress={() => redirect('https://twitter.com/zixdev')}
                 accentColor={brandColors.twitter}
               >
                 Our Twitter
               </Settings.Item>
             </Settings.Group>
-            <Separator
-              borderColor="$color3"
-              marginHorizontal="$-4"
-              borderWidth="$0.25"
-            />
+
             <Settings.Group>
               <SettingsThemeAction />
               <SettingsItemLogoutAction />
@@ -139,7 +138,7 @@ export const SettingsScreen = () => {
       NOTE: you should probably get the actual native version here using https://www.npmjs.com/package/react-native-version-info
       we just did a simple package.json read since we want to keep things simple for the starter
        */}
-      <Paragraph paddingVertical="$2" ta="center" theme="alt2">
+      <Paragraph paddingVertical="$2" textAlign="center" theme="alt2">
         v1.0.0
       </Paragraph>
     </YStack>
@@ -151,7 +150,9 @@ const SettingsThemeAction = () => {
 
   return (
     <Settings.Item
-      icon={Moon}
+      icon={(props: IconProps) => (
+        <CustomIcon name="theme" color="$color5" {...props} />
+      )}
       accentColor="$blue9"
       onPress={toggle}
       rightLabel={current}
@@ -173,7 +174,9 @@ const SettingsItemLogoutAction = () => {
 
   return (
     <Settings.Item
-      icon={LogOut}
+      icon={(props: IconProps) => (
+        <CustomIcon name="logout" color="red" {...props} />
+      )}
       accentColor="$red9"
       onPress={() => supabase.auth.signOut()}
     >
