@@ -18,10 +18,10 @@ export async function uploadMediaFile({
       uri: file.uri,
       fileName: file.file_name,
       mimeType: file.file_type,
-    },
+    } as unknown as File,
     {
       upsert: true,
-      contentType: file.mimeType,
+      contentType: file.file_type,
     },
   );
 
@@ -35,9 +35,8 @@ export async function uploadMediaFile({
     .getPublicUrl(data.path.replace(`${bucket}/`, ""));
 
   return {
-    id: data.id,
+    ...file,
+    id: (data as { path: string; id: string }).id,
     uri: publicUrlRes.data.publicUrl,
-    file_name: file.fileName,
-    file_type: file.mimeType,
   };
 }

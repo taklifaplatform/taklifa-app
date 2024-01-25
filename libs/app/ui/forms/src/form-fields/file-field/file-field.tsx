@@ -1,25 +1,26 @@
-import { FilePlus, PlusSquare } from '@tamagui/lucide-icons';
+import { PlusSquare } from '@tamagui/lucide-icons';
 import { useFieldInfo, useTsController } from '@ts-react/form';
-import { Text } from '@zix/app/ui/core';
+import { Shake } from '@zix/app/ui/common';
 import {
   Fieldset,
   InputProps,
   Label,
+  Text,
   Theme,
   XStack,
   useThemeName
 } from '@zix/app/ui/core';
+import { IMediaFile } from '@zix/core/supabase';
 import { useId, useMemo } from 'react';
-import { ZixMediaPickerField } from '../../fields';
-import { Shake } from '@zix/app/ui/common';
 import { FieldError } from '../../common';
+import { ZixMediaPickerField } from '../../fields';
 export interface FileProps extends Pick<InputProps, 'size' | 'autoFocus'> {
   isMultiple?: boolean;
 }
 
 // this
 export const FileField = (props: FileProps) => {
-  const { field, error } = useTsController<string[]>();
+  const { field, error } = useTsController<IMediaFile[]>();
   const { label, placeholder } = useFieldInfo();
   const themeName = useThemeName();
   const id = useId();
@@ -38,24 +39,14 @@ export const FileField = (props: FileProps) => {
     <Theme name={error ? 'red' : themeName} forceClassName>
       <Fieldset>
         {!!label && (
-          <Label
-            textAlign="left"
-            theme="alt1"
-            size={props.size || '$3'}
-            htmlFor={id}
-          >
+          <Label textAlign="left" size={props.size || '$3'} htmlFor={id}>
             {label}
           </Label>
         )}
         <Shake shakeKey={error?.errorMessage}>
           <ZixMediaPickerField
-            type="images"
-            onChange={(files: any) => {
-              console.log('==============');
-              console.log('files', files);
-              console.log('==============');
-              field.onChange(files);
-            }}
+            type="documents"
+            onChange={({ files }) => field.onChange(files)}
             isMultiple={props.isMultiple}
           >
             {({ onPress }) => (

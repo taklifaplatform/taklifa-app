@@ -22,7 +22,7 @@ export interface TextFieldProps
  * @param {TextFieldProps} props - The props for the TextField component.
  * @returns {React.ReactElement} The rendered TextField component.
  */
-export const TextField: React.FC<TextFieldProps> = (props) => {
+export const TextField = (props: TextFieldProps) => {
   const {
     field,
     error,

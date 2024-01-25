@@ -4,7 +4,7 @@ import { ZixInput } from '../../fields';
 
 export type TextAreaFieldProps = Pick<TextAreaProps, 'size' | 'autoFocus'>;
 
-export function TextAreaField(props: TextAreaFieldProps) {
+export const TextAreaField = (props: TextAreaFieldProps) => {
   const {
     field,
     error,
@@ -28,6 +28,6 @@ export function TextAreaField(props: TextAreaFieldProps) {
       {...props}
     />
   );
-}
+};
 
 export default TextAreaField;

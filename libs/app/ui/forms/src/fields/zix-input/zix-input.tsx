@@ -112,12 +112,12 @@ export const ZixInput = forwardRef(function ZixInputEl(
   };
 
   if (!multiline) {
-    currentInputProps.h = '$5';
+    currentInputProps.height = '$5';
   }
 
   if (error) {
     currentInputProps.theme = 'red';
-    currentInputProps.borderColor = error ? '$red8' : undefined;
+    currentInputProps.borderColor = '$red8';
   }
   if (fullWidth) {
     currentInputProps.minWidth = '100%';

@@ -1,11 +1,10 @@
-import { SolitoImage } from 'solito/image';
-
 import { ImagePlus } from '@tamagui/lucide-icons';
 import { useFieldInfo, useTsController } from '@ts-react/form';
 import { Shake } from '@zix/app/ui/common';
 import {
   Avatar,
   Fieldset,
+  Image,
   InputProps,
   Label,
   Theme,
@@ -15,10 +14,10 @@ import {
   useThemeName
 } from '@zix/app/ui/core';
 import { IMediaFile } from '@zix/core/supabase';
+import { ImageStyle } from 'expo-image';
 import { useId } from 'react';
 import { FieldError } from '../../common';
 import { ZixMediaPickerField } from '../../fields';
-import { ImageStyle } from 'expo-image';
 export interface FileProps extends Pick<InputProps, 'size' | 'autoFocus'> {
   isMultiple?: boolean;
 }
@@ -60,11 +59,13 @@ export const AvatarField = (props: FileProps) => {
                     {...props}
                   >
                     {field.value?.uri ? (
-                      <SolitoImage
-                        src={field.value?.uri}
+                      <Image
+                        source={{
+                          uri: field.value?.uri
+                        }}
                         alt="your avatar"
                         style={avatarStyle as ImageStyle}
-                        contentFit="cover"
+                        resizeMode="cover"
                       />
                     ) : (
                       <ImagePlus size="$2" color="$color11" />
@@ -74,7 +75,6 @@ export const AvatarField = (props: FileProps) => {
                   {!!label && (
                     <Label
                       textAlign="center"
-                      theme="alt1"
                       size={props.size || '$3'}
                       htmlFor={id}
                     >

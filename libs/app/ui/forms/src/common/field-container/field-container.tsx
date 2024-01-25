@@ -160,7 +160,7 @@ export const FieldContainer: React.FC<BaseFieldContainerProps> = ({
   }
 
   return (
-    <Theme name={error ? 'error' : themeName}>
+    <Theme name={error ? 'red' : themeName}>
       <StackContainer {...rest} space={rest.labelInline ? '$3' : rest.space}>
         {renderLabel()}
         {renderField()}
