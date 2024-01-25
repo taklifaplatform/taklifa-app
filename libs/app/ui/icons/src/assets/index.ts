@@ -25,6 +25,8 @@ import Share from "./icons/share.svg";
 import About from "./icons/about.svg";
 import Theme from "./icons/theme.svg";
 import Logout from "./icons/logout.svg";
+import Emptynotification from "./icons/emptynotification.svg";
+import Wallet from "./icons/wallet.svg";
 
 // arts
 import CompanyCars from "./arts/company-cars.svg";
@@ -67,6 +69,8 @@ export {
   About,
   Theme,
   Logout,
+  Emptynotification,
+  Wallet,
   // vehicles
   VehicleA,
   VehicleB,

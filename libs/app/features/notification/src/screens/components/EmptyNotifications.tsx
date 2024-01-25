@@ -1,0 +1,18 @@
+import { YStack, Text } from '@zix/app/ui/core'
+import { CustomIcon } from '@zix/app/ui/icons'
+
+export default function EmptyNotifications() {
+    return (
+        <YStack
+            flex={1}
+            backgroundColor={'#FAFAFA'}
+            gap="$4"
+            alignItems='center'
+            justifyContent='center'
+        >
+            <CustomIcon name="emptynotification" size="$20" color={'#757575'} />
+            <Text fontSize={'$3'} fontWeight={'700'}>No Notifications</Text>
+            <Text fontSize={'$3'} fontWeight={'500'} color={'#757575'}>You currently have no notifications</Text>
+        </YStack>
+    )
+}

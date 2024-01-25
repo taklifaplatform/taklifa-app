@@ -53,6 +53,8 @@ const iconNames = [
   'secure',
   'book',
   'about',
+  'emptynotification',
+  'wallet',
 
   // vehicles
   'vehicle_a',
