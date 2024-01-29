@@ -34,7 +34,7 @@ export const ZixCountryField: React.FC<Partial<ZixCountryFieldProps>> = (
       title={t('common:select_country')}
       isMultiLang
       numberOfItemsToShow={40}
-      orderBy='order'
+      orderBy='sort'
       selectQuery={`id, name, flag, country_diallings (id, dial_code)`}
       renderItem={(item: CountryWithDialling, index: number) => {
         const dial_code = item.country_diallings?.length
