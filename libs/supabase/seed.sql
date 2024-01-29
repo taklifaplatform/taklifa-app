@@ -43,6 +43,7 @@ select vault.create_secret(
 
 DO $$
 DECLARE
+    admin_id uuid;
     user_id uuid;
     customer_id uuid;
     solo_driver_id uuid;
@@ -51,6 +52,7 @@ DECLARE
     company_driver_id uuid;
 BEGIN
     -- TODO Create Super User
+    admin_id := private.create_seed_user('966554943343', 'admin@sawaeed.com', '123456789', 'سعيد القحطاني', 'https://i.pravatar.cc/150?u=admin@sawaeed.com');
     user_id := private.create_seed_user('21622074426', 'badi.ifaoui@zixdev.com', '123456789', 'Badi Ifaoui', 'https://i.pravatar.cc/150?u=badi.ifaoui@zixdev.com');
     customer_id := private.create_seed_user('966111111111', 'customer@sawaeed.com', '123456789', 'Fake Customer', 'https://i.pravatar.cc/150?u=customer@sawaeed.com');
     solo_driver_id := private.create_seed_user('966222222222', 'solo.driver@sawaeed.com', '123456789', 'Fake Solo Driver', 'https://i.pravatar.cc/150?u=solo.driver@sawaeed.com');
@@ -73,6 +75,7 @@ BEGIN
       ('user', company_driver_id, company_owner_id, 'd77326f1-bc08-47df-a006-8089f1dfee73'),
       ('user', customer_id, company_owner_id, 'd77326f1-bc08-47df-a006-8089f1dfee73'),
       -- Public Sawaeed Group
+      ('user', admin_id, null, '78e2e0e1-02af-4a5b-b794-1e3aba89dec6'),
       ('user', user_id, null, '78e2e0e1-02af-4a5b-b794-1e3aba89dec6'),
       ('user', customer_id, null, '78e2e0e1-02af-4a5b-b794-1e3aba89dec6'),
       ('user', solo_driver_id, null, '78e2e0e1-02af-4a5b-b794-1e3aba89dec6'),
