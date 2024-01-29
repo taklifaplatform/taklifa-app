@@ -19,6 +19,9 @@ const SignUpSchema = z
   .object({
     name: formFields.text.min(3).describe(t('forms:name')),
     phone: formFields.phone.describe(t('forms:phone_number')),
+    is_whatsapp: formFields.boolean_switch.describe(
+      'This is whatsapp number'
+    ),
     password: formFields.text.min(6).describe(t('forms:password')),
     password_confirmation: formFields.text
       .min(6)
@@ -76,7 +79,8 @@ export const SignUpScreen = () => {
   async function onSubmit({
     phone,
     password,
-    name
+    name,
+    is_whatsapp
   }: z.infer<typeof SignUpSchema>) {
     const requested_user_type =
       !accountType || accountType === 'service_requestor'
@@ -91,7 +95,7 @@ export const SignUpScreen = () => {
           name: name,
           requested_user_type
         },
-        channel: 'whatsapp',
+        channel: is_whatsapp ? 'whatsapp' : 'sms'
       }
     });
 

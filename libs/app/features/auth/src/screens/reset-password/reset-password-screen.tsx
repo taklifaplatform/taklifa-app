@@ -14,7 +14,8 @@ import { AuthHeader } from '../../components/auth-header/auth-header';
 const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
 
 const ResetPasswordSchema = z.object({
-  phone: formFields.phone.describe(t('forms:phone_number').toString())
+  phone: formFields.phone.describe(t('forms:phone_number').toString()),
+  is_whatsapp: formFields.boolean_switch.describe('This is whatsapp number')
 });
 
 export const ResetPasswordScreen = () => {
@@ -30,11 +31,14 @@ export const ResetPasswordScreen = () => {
 
   const form = useForm<z.infer<typeof ResetPasswordSchema>>();
 
-  async function resetPassword({ phone }: z.infer<typeof ResetPasswordSchema>) {
+  async function resetPassword({
+    phone,
+    is_whatsapp
+  }: z.infer<typeof ResetPasswordSchema>) {
     const { error } = await supabase.auth.signInWithOtp({
       phone,
       options: {
-        channel: 'whatsapp'
+        channel: is_whatsapp ? 'whatsapp' : 'sms'
       }
     });
 
