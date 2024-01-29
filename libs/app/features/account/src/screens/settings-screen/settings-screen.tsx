@@ -2,7 +2,6 @@ import { Settings } from '@zix/app/ui/common';
 import {
   Paragraph,
   ScrollView,
-
   YStack,
   isWeb,
   useMedia
@@ -22,14 +21,9 @@ const brandColors = {
 export const SettingsScreen = () => {
   const media = useMedia();
   const pathname = usePathname();
-
+  //
   return (
-    <YStack
-      flex={1}
-      gap="$2"
-      justifyContent="space-between"
-      backgroundColor={'#FAFAFA'}
-    >
+    <YStack flex={1} gap="$2" justifyContent="space-between">
       <ScrollView>
         <Settings marginTop="$6">
           <Settings.Items>

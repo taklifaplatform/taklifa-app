@@ -38,7 +38,7 @@ export const SettingItem = ({
         cursor="pointer"
         gap="$2"
         borderRadius="$10"
-        backgroundColor={isActive ? '$backgroundFocus' : 'white'}
+        backgroundColor={isActive ? '$backgroundFocus' : '$color1'}
         {...props}
       >
         <YStack
@@ -55,8 +55,8 @@ export const SettingItem = ({
           <XStack
             borderRadius="$10"
             backgroundColor="$backgroundPress"
-            px="$3"
-            py="$1.5"
+            paddingHorizontal="$3"
+            paddingVertical="$1.5"
           >
             <SizableText size="$1" textTransform="capitalize">
               {rightLabel}

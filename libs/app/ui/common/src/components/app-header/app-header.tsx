@@ -4,7 +4,6 @@ import {
   ColorTokens,
   H4,
   Input,
-  Theme,
   XStack,
   YStack
 } from '@zix/app/ui/core';
@@ -120,35 +119,33 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
     );
 
   return (
-    <Theme name="light">
-      <YStack backgroundColor={headerBackgroundColor} paddingBottom="$2">
-        <SafeAreaView edges={['top', 'left', 'right']}>
-          <XStack
-            padding="$4"
-            paddingVertical="$2"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <XStack flex={0.25} justifyContent="flex-start">
-              {renderUserAvatar()}
-              {renderBackButton()}
-            </XStack>
-            <XStack flex={0.5} justifyContent="space-around">
-              {headerTitle ? (
-                headerTitle()
-              ) : (
-                <H4 fontSize={15}>{title ?? t('common:app_name')}</H4>
-              )}
-            </XStack>
-            <XStack flex={0.25} justifyContent="flex-end">
-              {headerRight ? headerRight() : renderNotificationsButton()}
-            </XStack>
+    <YStack backgroundColor={headerBackgroundColor} paddingBottom="$2">
+      <SafeAreaView edges={['top', 'left', 'right']}>
+        <XStack
+          padding="$4"
+          paddingVertical="$2"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <XStack flex={0.25} justifyContent="flex-start">
+            {renderUserAvatar()}
+            {renderBackButton()}
           </XStack>
+          <XStack flex={0.5} justifyContent="space-around">
+            {headerTitle ? (
+              headerTitle()
+            ) : (
+              <H4 fontSize={15}>{title ?? t('common:app_name')}</H4>
+            )}
+          </XStack>
+          <XStack flex={0.25} justifyContent="flex-end">
+            {headerRight ? headerRight() : renderNotificationsButton()}
+          </XStack>
+        </XStack>
 
-          {renderSearchBar()}
-        </SafeAreaView>
-      </YStack>
-    </Theme>
+        {renderSearchBar()}
+      </SafeAreaView>
+    </YStack>
   );
 };
 
