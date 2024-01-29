@@ -1,6 +1,21 @@
 {
-  "home": "الرئيسية",
-  "orders": "الطلبات",
-  "notifications": "الإشعارات",
-  "messages": "الرسائل"
+  "customer-dashboard": {
+    "home": "Home",
+    "orders": "Orders",
+    "store": "Store",
+    "chat": "Chat"
+  },
+  "company-dashboard": {
+    "home": "Home",
+    "orders": "Orders",
+    "data": "Data",
+    "jobs": "Jobs",
+    "chat": "Chat"
+  },
+  "solo-driver-dashboard": {
+    "home": "Home",
+    "orders": "Orders",
+    "jobs": "Jobs",
+    "chat": "Chat"
+  }
 }

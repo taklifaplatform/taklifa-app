@@ -3,6 +3,7 @@ import { Plus } from '@tamagui/lucide-icons';
 import { Circle, Theme, YStack } from '@zix/app/ui/core';
 import { CustomIcon } from '@zix/app/ui/icons';
 import { Tabs, useRouter } from 'expo-router';
+import { t } from 'i18next';
 import React from 'react';
 
 /**
@@ -15,7 +16,7 @@ export default function Layout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: t('navigation:customer-dashboard.home'),
           tabBarIcon: ({ size, color }) => (
             <CustomIcon name="home" color={color} size={size} />
           )
@@ -25,7 +26,7 @@ export default function Layout() {
       <Tabs.Screen
         name="orders"
         options={{
-          title: 'Orders',
+          title: t('navigation:customer-dashboard.orders'),
           tabBarIcon: ({ size, color }) => (
             <CustomIcon name="orders" color={color} size={size} />
           )
@@ -41,7 +42,7 @@ export default function Layout() {
       <Tabs.Screen
         name="explore"
         options={{
-          title: 'Explore',
+          title: t('navigation:customer-dashboard.store'),
           tabBarIcon: ({ size, color }) => (
             <CustomIcon name="notifications" color={color} size={size} />
           )
@@ -50,7 +51,7 @@ export default function Layout() {
       <Tabs.Screen
         name="chat"
         options={{
-          title: 'Chat',
+          title: t('navigation:customer-dashboard.chat'),
           tabBarIcon: ({ size, color }) => (
             <CustomIcon name="chat" color={color} size={size} />
           )

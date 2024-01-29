@@ -72,11 +72,27 @@
     }
   },
   "navigation": {
-    "home": "الرئيسية",
-    "orders": "الطلبات",
-    "notifications": "الإشعارات",
-    "messages": "الرسائل"
-  },
+    "customer-dashboard": {
+      "home": "الرئيسية",
+      "orders": "الطلبات",
+      "store": "المتجر",
+      "chat": "المحادثات"
+    },
+    "company-dashboard": {
+      "home": "الرئيسية",
+      "orders": "الطلبات",
+      "data": "البيانات",
+      "jobs": "الوظائف",
+      "chat": "المحادثات"
+    },
+    "solo-driver-dashboard": {
+      "home": "الرئيسية",
+      "orders": "الطلبات",
+      "jobs": "الوظائف",
+      "chat": "المحادثات"
+    }
+  }
+  ,
   "settings": {
     "index_title": "الإعدادات",
     "general": "عام",
