@@ -1,20 +1,15 @@
+import { ShipmentCard } from '@zix/app/ui/sawaeed';
 
-import React from 'react';
-
-import { View, Text } from 'react-native';
+import { FlatList } from 'react-native';
 
 /* eslint-disable-next-line */
-export interface OrdersScreenProps {
-}
+export interface OrdersScreenProps {}
 
+const data = [1, 2, 3, 4];
 
 export function OrdersScreen(props: OrdersScreenProps) {
-  return (
-    <View>
-      <Text>Welcome to orders-screen!</Text>
-    </View>
-  );
-};
-
+  const renderItem = ({ item }) => <ShipmentCard />;
+  return <FlatList data={data} renderItem={renderItem} />;
+}
 
 export default OrdersScreen;
