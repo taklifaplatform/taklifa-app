@@ -52,11 +52,11 @@ DECLARE
 BEGIN
     -- TODO Create Super User
     user_id := private.create_seed_user('21622074426', 'badi.ifaoui@zixdev.com', '123456789', 'Badi Ifaoui', 'https://i.pravatar.cc/150?u=badi.ifaoui@zixdev.com');
-    customer_id := private.create_seed_user('966111111111111', 'customer@sawaeed.com', '123456789', 'Fake Customer', 'https://i.pravatar.cc/150?u=customer@sawaeed.com');
-    solo_driver_id := private.create_seed_user('966222222222222', 'solo.driver@sawaeed.com', '123456789', 'Fake Solo Driver', 'https://i.pravatar.cc/150?u=solo.driver@sawaeed.com');
-    company_owner_id := private.create_seed_user('966333333333333', 'company.admin@sawaeed.com', '123456789', 'Fake Company Owner', 'https://i.pravatar.cc/150?u=company.admin@sawaeed.com');
-    company_manager_id := private.create_seed_user('966444444444444', 'company.manager@sawaeed.com', '123456789', 'Fake Company Manager', 'https://i.pravatar.cc/150?u=company.manager@sawaeed.com');
-    company_driver_id := private.create_seed_user('966555555555555', 'company.driver@sawaeed.com', '123456789', 'Fake Company Driver', 'https://i.pravatar.cc/150?u=company.driver@sawaeed.com');
+    customer_id := private.create_seed_user('966111111111', 'customer@sawaeed.com', '123456789', 'Fake Customer', 'https://i.pravatar.cc/150?u=customer@sawaeed.com');
+    solo_driver_id := private.create_seed_user('966222222222', 'solo.driver@sawaeed.com', '123456789', 'Fake Solo Driver', 'https://i.pravatar.cc/150?u=solo.driver@sawaeed.com');
+    company_owner_id := private.create_seed_user('966333333333', 'company.admin@sawaeed.com', '123456789', 'Fake Company Owner', 'https://i.pravatar.cc/150?u=company.admin@sawaeed.com');
+    company_manager_id := private.create_seed_user('966444444444', 'company.manager@sawaeed.com', '123456789', 'Fake Company Manager', 'https://i.pravatar.cc/150?u=company.manager@sawaeed.com');
+    company_driver_id := private.create_seed_user('966555555555', 'company.driver@sawaeed.com', '123456789', 'Fake Company Driver', 'https://i.pravatar.cc/150?u=company.driver@sawaeed.com');
 
 
     INSERT INTO chat.channels (id, name, creator_id, is_public)

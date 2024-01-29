@@ -61,6 +61,7 @@ export type ZixAutoCompleteFieldProps = {
 
   //
   selectQuery?: string;
+  orderBy?: string;
 
   // handle custom render
   renderItem?: (item: any, index: number) => React.JSX.Element;
@@ -134,6 +135,9 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
             // .join(',')}` + (value?.length ? `,id.eq.${value}` : '')
           );
         }
+
+        // order by id
+        query.order(props.orderBy || 'id', { ascending: true });
 
         const { data } = await query.limit(numberOfItemsToShow);
 

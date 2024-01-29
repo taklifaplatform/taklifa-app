@@ -10,7 +10,7 @@ drop type if exists shipment_status;
 create type shipment_status as ENUM (
   'draft',
   'assigned',
-  'searching',
+  'searching'
 );
 
 drop type if exists shipment_delivery_status;

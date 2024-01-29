@@ -5,17 +5,19 @@
 -- BEGIN TABLE public.countries
 -- Inserting 239 rows into public.countries
 -- Insert batch #1
-create table public.countries (
-  id bigint not null,
-  name json not null,
-  code character varying(5) not null,
-  wikidata_id character varying(255) null,
-  languages json null,
-  flag character varying(255) null,
-  created_at timestamp without time zone null,
-  updated_at timestamp without time zone null,
-  constraint countries_pkey primary key (id)
-) tablespace pg_default;
+create table
+  public.countries (
+    id bigint not null,
+    name json not null,
+    code character varying(5) not null,
+    wikidata_id character varying(255) null,
+    languages json null,
+    flag character varying(255) null,
+    created_at timestamp without time zone null,
+    updated_at timestamp without time zone null,
+    order bigint not null default '100'::bigint,
+    constraint countries_pkey primary key (id)
+  ) tablespace pg_default;
 
 INSERT INTO
   public.countries (

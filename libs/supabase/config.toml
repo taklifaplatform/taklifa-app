@@ -60,11 +60,11 @@ enable_confirmations = true
 
 [auth.sms.test_otp]
 21622074426 = "123456"
-966111111111111 = "123456" # Fake Customer
-966222222222222 = "123456" # Fake Solo Driver
-966333333333333 = "123456" # Fake Company Owner
-966444444444444 = "123456" # Fake Company Manager
-966555555555555 = "123456" # Fake Company Driver
+966111111111 = "123456" # Fake Customer
+966222222222 = "123456" # Fake Solo Driver
+966333333333 = "123456" # Fake Company Owner
+966444444444 = "123456" # Fake Company Manager
+966555555555 = "123456" # Fake Company Driver
 
 [auth.sms.vonage]
 enabled = true
