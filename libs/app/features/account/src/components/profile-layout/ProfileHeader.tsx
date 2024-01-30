@@ -1,9 +1,11 @@
-import { Image, Linking } from 'react-native';
+import { Linking } from 'react-native';
 import React from 'react';
-import { YStack, Text, XStack, Button, Separator } from '@zix/app/ui/core';
+import { YStack, Text, XStack, Button, Separator, H4 } from '@zix/app/ui/core';
 import { CustomIcon } from '@zix/app/ui/icons';
+import { UserAvatar } from '@zix/app/ui/common';
+import { Link, useLink } from 'solito/link';
 
-export function ProfileHeader() {
+export function ProfileHeader({ profile, name }) {
   const renderInformation = (title: string, icon: string) => (
     <XStack alignItems="center">
       <CustomIcon name={icon} size={20} color={'#FECA16'} />
@@ -39,25 +41,32 @@ export function ProfileHeader() {
         paddingTop="$6"
         marginBottom="$4"
       >
-        <Image
-          source={{
-            uri: 'https://musicart.xboxlive.com/7/4d4d6500-0000-0000-0000-000000000002/504/image.jpg?w=1920&h=1080'
-          }}
-          style={{
-            width: 80,
-            height: 80,
-            borderRadius: 50,
-            borderWidth: 2,
-            borderColor: '#34C759'
-          }}
-          resizeMode="center"
-        />
-        <Text fontSize="$3" fontWeight="bold" marginTop="$2">
-          John Doe
-        </Text>
-        <Text fontSize="$3" fontWeight="500" color={'#757575'} marginTop="$2">
-          Available now
-        </Text>
+        <Button
+          position="absolute"
+          left={0}
+          size="$4"
+          marginHorizontal="$4"
+          {...useLink({ href: '/account/edit' })}
+        >
+          Edit Profile
+        </Button>
+        <YStack gap="$2">
+          <XStack gap="$2" justifyContent="center" $sm={{ marginTop: '$4' }}>
+            <UserAvatar user={profile} size="$10" />
+          </XStack>
+          <YStack gap="$2">
+            {name ? (
+              <H4 textAlign="center">{name}</H4>
+            ) : (
+              <Link href="/account/edit?edit_name=1">
+                <H4 textAlign="center" textDecorationLine="underline">
+                  No Name
+                </H4>
+              </Link>
+            )}
+            <Text textAlign="center">Online now</Text>
+          </YStack>
+        </YStack>
         <XStack justifyContent="space-between" space="$4" paddingVertical="$4">
           {renderInformation('Harley davidson', 'car')}
           <Separator vertical backgroundColor="$grey6" />
@@ -66,7 +75,7 @@ export function ProfileHeader() {
           {renderInformation('(188) 4.8', 'star')}
         </XStack>
       </YStack>
-      <XStack justifyContent="space-between" space="$4" width={'100%'}>
+      <XStack justifyContent="space-around" width={'100%'}>
         {renderButton('Service request', 'star', '')}
         {renderButton('Chat', 'chat', '#E0E0E0')}
         {renderButton('Call', 'call', '#E0E0E0', () => onCallPress())}

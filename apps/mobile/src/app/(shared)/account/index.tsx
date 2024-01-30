@@ -8,7 +8,6 @@ import { CustomIcon } from '@zix/app/ui/icons';
 
 export default function Screen() {
 
-
   return (
     <>
       <AppHeader
@@ -20,6 +19,7 @@ export default function Screen() {
           </TouchableOpacity>
         )}
       />
+      
       <AccountScreen />
     </>
   );
