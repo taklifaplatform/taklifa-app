@@ -27,6 +27,8 @@ import Theme from "./icons/theme.svg";
 import Logout from "./icons/logout.svg";
 import Emptynotification from "./icons/emptynotification.svg";
 import Wallet from "./icons/wallet.svg";
+import Location from "./icons/location.svg";
+import Car from "./icons/car.svg";
 
 // arts
 import CompanyCars from "./arts/company-cars.svg";
@@ -71,6 +73,8 @@ export {
   Logout,
   Emptynotification,
   Wallet,
+  Location,
+  Car,
   // vehicles
   VehicleA,
   VehicleB,

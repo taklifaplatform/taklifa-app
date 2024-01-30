@@ -55,6 +55,8 @@ const iconNames = [
   'about',
   'emptynotification',
   'wallet',
+  'location',
+  'car',
 
   // vehicles
   'vehicle_a',
