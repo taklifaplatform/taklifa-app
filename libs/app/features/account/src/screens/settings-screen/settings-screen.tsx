@@ -1,16 +1,11 @@
+import { IconProps } from '@tamagui/helpers-icon';
 import { Settings } from '@zix/app/ui/common';
-import {
-  Paragraph,
-  ScrollView,
-  YStack,
-  isWeb,
-  useMedia
-} from '@zix/app/ui/core';
+import { Paragraph, ScrollView, YStack, useMedia } from '@zix/app/ui/core';
 import { CustomIcon } from '@zix/app/ui/icons';
 import { useThemeSetting } from '@zix/core/providers';
 import { useSupabase } from '@zix/core/supabase';
 import { usePathname } from '@zix/core/utils';
-import { IconProps } from '@tamagui/helpers-icon';
+import { t } from 'i18next';
 
 import { useLink } from 'solito/link';
 
@@ -40,7 +35,7 @@ export const SettingsScreen = () => {
                 })}
                 accentColor="$green9"
               >
-                General
+                {t('account:general.title')}
               </Settings.Item>
               <Settings.Item
                 icon={(props: IconProps) => (
@@ -50,7 +45,7 @@ export const SettingsScreen = () => {
                 {...useLink({ href: '/account/settings/change-password' })}
                 accentColor="$green9"
               >
-                Change Password
+                {t('auth:change_password.title')}
               </Settings.Item>
               <Settings.Item
                 icon={(props: IconProps) => (
@@ -60,7 +55,7 @@ export const SettingsScreen = () => {
                 {...useLink({ href: '/account/settings/change-email' })}
                 accentColor="$green9"
               >
-                Change Email
+                {t('account:change_email.title')}
               </Settings.Item>
               {/* <Settings.Item
                 icon={Bell}
@@ -81,7 +76,7 @@ export const SettingsScreen = () => {
                 {...useLink({ href: '/privacy-policy' })}
                 accentColor="$purple9"
               >
-                Privacy Policy
+                {t('account:privacy_policy.title')}
               </Settings.Item>
               <Settings.Item
                 icon={(props: IconProps) => (
@@ -91,22 +86,8 @@ export const SettingsScreen = () => {
                 {...useLink({ href: '/terms-of-service' })}
                 accentColor="$purple9"
               >
-                Terms Of Service
+                {t('account:terms_of_service.title')}
               </Settings.Item>
-              {/* removing about from web since landing pages are more common on web - feel free to add back if needed */}
-              {!isWeb && (
-                // isWeb is a constant so this isn't really a conditional hook
-                // eslint-disable-next-line react-hooks/rules-of-hooks
-                <Settings.Item
-                  icon={(props: IconProps) => (
-                    <CustomIcon name="about" color="$color5" {...props} />
-                  )}
-                  {...useLink({ href: '/about' })}
-                  accentColor="$blue9"
-                >
-                  About
-                </Settings.Item>
-              )}
             </Settings.Group>
 
             <Settings.Group>
@@ -117,7 +98,7 @@ export const SettingsScreen = () => {
                 onPress={() => redirect('https://twitter.com/zixdev')}
                 accentColor={brandColors.twitter}
               >
-                Our Twitter
+                {t('account:social.twitter_title')}
               </Settings.Item>
             </Settings.Group>
 
@@ -149,16 +130,9 @@ const SettingsThemeAction = () => {
       )}
       accentColor="$blue9"
       onPress={toggle}
-      rightLabel={current}
-      // <Switch
-      //   size="$4"
-      //   checked={resolvedTheme === 'dark'}
-      //   onCheckedChange={() => set(resolvedTheme === 'dark' ? 'light' : 'dark')}
-      // >
-      //   <Switch.Thumb animation="100ms" />
-      // </Switch>
+      rightLabel={t(`account:theme.${current}`).toString()}
     >
-      Theme
+      {t('account:theme.title')}
     </Settings.Item>
   );
 };
@@ -174,7 +148,7 @@ const SettingsItemLogoutAction = () => {
       accentColor="$red9"
       onPress={() => supabase.auth.signOut()}
     >
-      Log Out
+      {t('account:logout')}
     </Settings.Item>
   );
 };

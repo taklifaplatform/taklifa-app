@@ -1,0 +1,28 @@
+{
+  "settings": {
+    "title": "الإعدادات",
+    "general": "عام"
+  },
+  "general": {
+    "title": "عام"
+  },
+  "change_email": {
+    "title": "تغيير البريد الإلكتروني"
+  },
+  "privacy_policy": {
+    "title": "سياسة الخصوصية"
+  },
+  "terms_of_service": {
+    "title": "شروط الخدمة"
+  },
+  "social": {
+    "twitter_title": "تويترنا"
+  },
+  "theme": {
+    "title": "السمة",
+    "system": "النظام",
+    "light": "فاتح",
+    "dark": "داكن"
+  },
+  "logout": "تسجيل الخروج"
+}

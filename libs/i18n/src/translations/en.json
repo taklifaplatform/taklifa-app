@@ -1,4 +1,29 @@
 {
+  "account": {
+    "settings": {
+      "title": "Settings",
+      "general": "General"
+    },
+    "general": {
+      "title": "General"
+    },
+    "change_email": {
+      "title": "Change Email"
+    },
+    "privacy_policy": {
+      "title": "Privacy Policy"
+    },
+    "terms_of_service": {
+      "title": "Terms of Service"
+    },
+    "social": {
+      "twitter_title": "Our Twitter"
+    },
+    "theme": {
+      "title": "Theme"
+    },
+    "logout": "Log Out"
+  },
   "auth": {
     "validation": {
       "password_confirmation_mismatch": "This field must be the same as password"

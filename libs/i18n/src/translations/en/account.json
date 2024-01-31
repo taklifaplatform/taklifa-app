@@ -1,0 +1,28 @@
+{
+  "settings": {
+    "title": "Settings",
+    "general": "General"
+  },
+  "general": {
+    "title": "General"
+  },
+  "change_email": {
+    "title": "Change Email"
+  },
+  "privacy_policy": {
+    "title": "Privacy Policy"
+  },
+  "terms_of_service": {
+    "title": "Terms of Service"
+  },
+  "social": {
+    "twitter_title": "Our Twitter"
+  },
+  "theme": {
+    "title": "Theme",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "logout": "Log Out"
+}

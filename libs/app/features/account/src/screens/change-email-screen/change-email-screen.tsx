@@ -1,21 +1,17 @@
-import {
-  Fieldset,
-  H2,
-  Input,
-  Label,
-  Theme,
-  YStack,
-  isWeb,
-  useToastController
-} from '@zix/app/ui/core';
+import { H2, Theme, YStack, isWeb, useToastController } from '@zix/app/ui/core';
 import { SchemaForm, SubmitButton, formFields } from '@zix/app/ui/forms';
-import { useSupabase } from '@zix/core/supabase';
 import { useUser } from '@zix/core/auth';
+import { useSupabase } from '@zix/core/supabase';
+import { t } from 'i18next';
 import { useRouter } from 'solito/router';
 import { z } from 'zod';
 
 const ChangeEmailSchema = z.object({
-  email: formFields.text.email().describe('New Email // email@address.com')
+  current_email: formFields.text
+    .email()
+    .optional()
+    .describe(t('forms:current_email')),
+  email: formFields.text.email().describe(t('forms:new_email'))
 });
 
 export const ChangeEmailScreen = () => {
@@ -48,40 +44,20 @@ export const ChangeEmailScreen = () => {
       renderBefore={() =>
         isWeb && (
           <YStack padding="$4" paddingBottom="$2">
-            <H2>Change Email</H2>
+            <H2>{t('account:change_email.title')}</H2>
           </YStack>
         )
       }
       defaultValues={{
+        current_email: user?.email,
         email: ''
       }}
       renderAfter={({ submit }) => (
         <Theme inverse>
-          <SubmitButton onPress={() => submit()}>Update Email</SubmitButton>
+          <SubmitButton onPress={() => submit()}>{t('common:confirm')}</SubmitButton>
         </Theme>
       )}
-    >
-      {(fields) => (
-        <>
-          <Fieldset>
-            <Label theme="alt1" size="$3" htmlFor="current-email">
-              Current Email
-            </Label>
-            <Input
-              disabled
-              opacity={0.8}
-              cursor="not-allowed"
-              id="current-email"
-              autoComplete="email"
-              value={user?.email}
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
-          </Fieldset>
-          {Object.values(fields)}
-        </>
-      )}
-    </SchemaForm>
+    />
   );
 };
 

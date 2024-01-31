@@ -48,7 +48,7 @@ export const SettingItem = ({
         >
           <Icon opacity={0.6} size={22} />
         </YStack>
-        <SizableText flex={1} fontWeight={'500'}>
+        <SizableText flex={1} fontWeight={'500'} textAlign="left">
           {children}
         </SizableText>
         {!!rightLabel && (

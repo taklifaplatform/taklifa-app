@@ -18,7 +18,7 @@ export type DashboardSwitcherProps = {
 export const DashboardSwitcher: React.FC<DashboardSwitcherProps> = () => {
   const [sheetOpen, setSheetOpen] = useState(false);
   const router = useRouter();
-  const { profile } = useUser();
+  const { profile, user } = useUser();
   const { companies, switchCompany } = useCompanyManagerContext();
 
   const dashboard = [
@@ -47,7 +47,7 @@ export const DashboardSwitcher: React.FC<DashboardSwitcherProps> = () => {
     <>
       <XStack alignItems="center" gap="$2" onPress={() => setSheetOpen(true)}>
         <Text fontWeight="bold" fontSize={15} numberOfLines={1}>
-          {profile?.name}
+          {profile?.name || user?.user_metadata?.name}
         </Text>
         <ChevronDown size="$1" />
       </XStack>
