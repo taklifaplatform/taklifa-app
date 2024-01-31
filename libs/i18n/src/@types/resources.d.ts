@@ -31,6 +31,15 @@ interface Resources {
     "formation_of_company": {
       "title": "Formation of Company",
       "description": "Enter your company information"
+    },
+    "reset_password": {
+      "title": "Reset Password",
+      "description": "Type in your phone number and we'll send you a pin code to reset your password",
+      "done_resetting": "Done Resetting?"
+    },
+    "change_password": {
+      "title": "Change Password",
+      "description": "Enter your new password and confirm it to reset your password"
     }
   },
   "common": {
@@ -57,6 +66,8 @@ interface Resources {
     "phone_number": "Phone Number // Enter your phone number",
     "password": "Password // Enter your password",
     "password_confirmation": "Password Confirmation // Enter your password again",
+    "new_password": "New Password // Enter your new password",
+    "new_password_confirmation": "New Password Confirmation // Enter your new password again",
     "accept_terms": "Accept Terms // Accept terms and conditions",
     "license_number": "License Number // Enter your license number",
     "vehicle_driving_license": "Vehicle Driving License // Enter your vehicle driving license",
@@ -67,120 +78,33 @@ interface Resources {
     "company_name": "Company Name // Enter your company name",
     "company_legal_document": "Company Legal Document // Upload your company legal document",
     "company_location": "Company Location // Enter your company location",
+    "is_whatsapp": "Is Whatsapp // Is whatsapp available",
     "labels": {
       "code": "Code"
     }
   },
   "navigation": {
-    "home": "الرئيسية",
-    "orders": "الطلبات",
-    "notifications": "الإشعارات",
-    "messages": "الرسائل"
-  },
-  "notification": {},
-  "resources": {
-    "auth": {
-      "validation": {
-        "password_confirmation_mismatch": "This field must be the same as password"
-      },
-      "sign_in": "Sign In",
-      "sign_up": "Sign Up",
-      "forgot_password": "Forgot Password?",
-      "dont_have_account": "Don't have an account?",
-      "terms_and_conditions": "Terms and Conditions",
-      "create_new_account": "Create New Account",
-      "verification_in_progress": {
-        "title": "Verification in Progress",
-        "description": "You can use the app after the verification process is completed"
-      },
-      "account_created": {
-        "title": "Account Created",
-        "description": "Your account has been created successfully!"
-      },
-      "pin_code": {
-        "resend": "Resend Code",
-        "didnt_receive_code": "Didn't receive code?",
-        "enter_pin_code_we_sent": "Enter the 6-digit confirmation code we sent",
-        "has_sent_to_your_mobile_number": "To your mobile number",
-        "code_sent": "PIN Code has been sent to your mobile number"
-      },
-      "phone_number": {
-        "confirm": "Confirm your phone number",
-        "description": "Enter your phone number to continue"
-      },
-      "formation_of_company": {
-        "title": "Formation of Company",
-        "description": "Enter your company information"
-      }
+    "customer-dashboard": {
+      "home": "Home",
+      "orders": "Orders",
+      "store": "Store",
+      "chat": "Chat"
     },
-    "common": {
-      "app_name": "Sawaeed Logistic",
-      "welcome": "Welcome",
-      "next": "Next",
-      "confirm": "Confirm",
-      "user_types": {
-        "individual": "Individual",
-        "company": "Company"
-      },
-      "account_types": {
-        "seek": {
-          "service_requestor": "Looking for service",
-          "service_provider": "Service provider"
-        }
-      },
-      "select_country": "Select country",
-      "search": "Search..."
+    "company-dashboard": {
+      "home": "Home",
+      "orders": "Orders",
+      "data": "Data",
+      "jobs": "Jobs",
+      "chat": "Chat"
     },
-    "forms": {
-      "name": "Name // Enter your full name",
-      "username": "Username // Enter your username",
-      "phone_number": "Phone Number // Enter your phone number",
-      "password": "Password // Enter your password",
-      "password_confirmation": "Password Confirmation // Enter your password again",
-      "accept_terms": "Accept Terms // Accept terms and conditions",
-      "license_number": "License Number // Enter your license number",
-      "vehicle_driving_license": "Vehicle Driving License // Enter your vehicle driving license",
-      "insurance_image": "Insurance Image // Upload your insurance image",
-      "photo": "Photo // Upload your photo",
-      "pin_code": "Pin Code // Enter your pin code",
-      "company_logo": "Company Logo // Upload your company logo",
-      "company_name": "Company Name // Enter your company name",
-      "company_legal_document": "Company Legal Document // Upload your company legal document",
-      "company_location": "Company Location // Enter your company location",
-      "labels": {
-        "code": "Code"
-      }
-    },
-    "navigation": {
-      "home": "الرئيسية",
-      "orders": "الطلبات",
-      "notifications": "الإشعارات",
-      "messages": "الرسائل"
-    },
-    "notification": {},
-    "settings": {
-      "index_title": "Settings",
-      "general": "General",
-      "change_password": "Change Password",
-      "change_email": "Change Email",
-      "privacy_policy": "Privacy Policy",
-      "terms_of_service": "Terms Of Service",
-      "about_us": "About",
-      "out_social_accounts": "Our Social Accounts",
-      "theme_mode": "Theme",
-      "notifications": "Notifications",
-      "logout": "Logout",
-      "theme_modes": {
-        "light": "Light",
-        "dark": "Dark",
-        "system": "System"
-      }
-    },
-    "vehicle": {
-      "forms": {},
-      "verification": "Vehicle verification"
+    "solo-driver-dashboard": {
+      "home": "Home",
+      "orders": "Orders",
+      "jobs": "Jobs",
+      "chat": "Chat"
     }
   },
+  "notification": {},
   "settings": {
     "index_title": "Settings",
     "general": "General",

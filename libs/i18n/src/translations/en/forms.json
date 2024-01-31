@@ -4,6 +4,8 @@
   "phone_number": "Phone Number // Enter your phone number",
   "password": "Password // Enter your password",
   "password_confirmation": "Password Confirmation // Enter your password again",
+  "new_password": "New Password // Enter your new password",
+  "new_password_confirmation": "New Password Confirmation // Enter your new password again",
   "accept_terms": "Accept Terms // Accept terms and conditions",
   "license_number": "License Number // Enter your license number",
   "vehicle_driving_license": "Vehicle Driving License // Enter your vehicle driving license",

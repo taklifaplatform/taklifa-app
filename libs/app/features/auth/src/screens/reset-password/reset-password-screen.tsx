@@ -15,7 +15,7 @@ const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
 
 const ResetPasswordSchema = z.object({
   phone: formFields.phone.describe(t('forms:phone_number').toString()),
-  is_whatsapp: formFields.phone.describe(t('forms:is_whatsapp')),
+  is_whatsapp: formFields.boolean_switch.describe(t('forms:is_whatsapp').toString()),
 });
 
 export const ResetPasswordScreen = () => {

@@ -94,7 +94,7 @@ export const AuthHeader: React.FC<AuthHeaderProps> = (props) => {
         >
           {props.title && <H3>{props.title}</H3>}
           {props.description && (
-            <Paragraph theme="alt1">{props.description}</Paragraph>
+            <Paragraph theme="alt1" textAlign='center'>{props.description}</Paragraph>
           )}
         </YStack>
       </YStack>

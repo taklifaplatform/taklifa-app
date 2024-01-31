@@ -1,17 +1,18 @@
 import { User } from '@supabase/supabase-js';
-import { H2, Theme, YStack, isWeb, useToastController } from '@zix/app/ui/core';
+import { Theme, useToastController } from '@zix/app/ui/core';
 import { SchemaForm, SubmitButton, formFields } from '@zix/app/ui/forms';
 import { useSupabase } from '@zix/core/supabase';
+import { t } from 'i18next';
 import { z } from 'zod';
 
 const ChangePasswordSchema = z
   .object({
     password: formFields.text
       .min(6)
-      .describe('New Password // Enter your new password'),
+      .describe(t('forms:new_password').toString()),
     passwordConfirm: formFields.text
       .min(6)
-      .describe('Confirm Password // Repeat your password')
+      .describe(t('forms:new_password_confirmation').toString())
   })
   .superRefine(({ passwordConfirm, password }, ctx) => {
     if (passwordConfirm !== password) {
@@ -63,16 +64,11 @@ export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
           secureTextEntry: true
         }
       }}
-      renderBefore={() =>
-        isWeb && (
-          <YStack padding="$4" paddingBottom="$2">
-            <H2>Change Password</H2>
-          </YStack>
-        )
-      }
       renderAfter={({ submit }) => (
         <Theme inverse>
-          <SubmitButton onPress={() => submit()}>Update Password</SubmitButton>
+          <SubmitButton onPress={() => submit()}>
+            {t('common:confirm')}
+          </SubmitButton>
         </Theme>
       )}
     >

@@ -31,6 +31,15 @@
     "formation_of_company": {
       "title": "Formation of Company",
       "description": "Enter your company information"
+    },
+    "reset_password": {
+      "title": "Reset Password",
+      "description": "Type in your phone number and we'll send you a pin code to reset your password",
+      "done_resetting": "Done Resetting?"
+    },
+    "change_password": {
+      "title": "Change Password",
+      "description": "Enter your new password and confirm it to reset your password"
     }
   },
   "common": {
@@ -57,6 +66,8 @@
     "phone_number": "Phone Number // Enter your phone number",
     "password": "Password // Enter your password",
     "password_confirmation": "Password Confirmation // Enter your password again",
+    "new_password": "New Password // Enter your new password",
+    "new_password_confirmation": "New Password Confirmation // Enter your new password again",
     "accept_terms": "Accept Terms // Accept terms and conditions",
     "license_number": "License Number // Enter your license number",
     "vehicle_driving_license": "Vehicle Driving License // Enter your vehicle driving license",
@@ -67,6 +78,7 @@
     "company_name": "Company Name // Enter your company name",
     "company_legal_document": "Company Legal Document // Upload your company legal document",
     "company_location": "Company Location // Enter your company location",
+    "is_whatsapp": "Is Whatsapp // Is whatsapp available",
     "labels": {
       "code": "Code"
     }
@@ -91,8 +103,7 @@
       "jobs": "Jobs",
       "chat": "Chat"
     }
-  }
-  ,
+  },
   "notification": {},
   "settings": {
     "index_title": "Settings",

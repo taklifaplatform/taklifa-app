@@ -1,6 +1,7 @@
 import { AuthHeader } from '../../components/auth-header/auth-header';
 import ChangePasswordForm from '../../forms/change-password-form/change-password-form';
 import { useUserRedirect } from '../../hooks/useUserRedirect';
+import { t } from 'i18next';
 
 export const ChangePasswordScreen = () => {
   const { redirectUser } = useUserRedirect();
@@ -11,8 +12,8 @@ export const ChangePasswordScreen = () => {
         showIcon={false}
         activeStep={3}
         totalSteps={3}
-        title="Change Password"
-        description="Enter your new password and confirm it to reset your password"
+        title={t('auth:change_password.title')}
+        description={t('auth:change_password.description')}
       />
     </ChangePasswordForm>
   );

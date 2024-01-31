@@ -15,6 +15,31 @@
       "options": {
         "jestConfig": "libs/i18n/jest.config.ts"
       }
+    },
+    "generate:en": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "i18next-resources-for-ts merge -i ./libs/i18n/src/translations/en -o ./libs/i18n/src/translations/en.json"
+      }
+    },
+    "generate:ar": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "i18next-resources-for-ts merge -i ./libs/i18n/src/translations/ar -o ./libs/i18n/src/translations/ar.json"
+      }
+    },
+    "generate:interface": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "i18next-resources-for-ts interface -i ./libs/i18n/src/translations/en -o ./libs/i18n/src/@types"
+      }
+    },
+    "generate": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["generate:en", "generate:ar", "generate:interface"],
+      "options": {
+        "command": "echo \"Done\""
+      }
     }
   }
 }

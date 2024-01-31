@@ -19,7 +19,7 @@ const SignUpSchema = z
   .object({
     name: formFields.text.min(3).describe(t('forms:name')),
     phone: formFields.phone.describe(t('forms:phone_number')),
-    is_whatsapp: formFields.phone.describe(t('forms:is_whatsapp')),
+    is_whatsapp: formFields.boolean_switch.describe(t('forms:is_whatsapp')),
     password: formFields.text.min(6).describe(t('forms:password')),
     password_confirmation: formFields.text
       .min(6)
