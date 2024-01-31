@@ -11,6 +11,7 @@ import {
   TextInput,
   TextInputFocusEventData
 } from 'react-native';
+import { useMultiLang } from '@zix/i18n';
 
 export type ZixInputProps = InputProps &
   FieldContainerProps & {
@@ -88,6 +89,7 @@ export const ZixInput = forwardRef(function ZixInputEl(
   const genId = useId();
   const [show, setShow] = useState<boolean>(false);
   const [focus, setFocus] = useState<boolean>(false);
+  const { isRtl } = useMultiLang();
 
   const id = rest.id || genId;
   const currentInputProps = {
@@ -104,6 +106,7 @@ export const ZixInput = forwardRef(function ZixInputEl(
       rest.onBlur?.(e);
       setFocus(false);
     },
+    textAlign: isRtl ? 'right' : 'left',
     ...rest
   };
   const currentPasswordIconProps = {

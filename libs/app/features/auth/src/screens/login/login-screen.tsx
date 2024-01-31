@@ -19,12 +19,10 @@ const LoginSchema = z
   .object({
     phone: formFields.phone.describe(t('forms:phone_number').toString()),
     password: formFields.text.min(8).describe(t('forms:password')),
-    accept_terms: formFields.boolean_checkbox.describe(t('forms:accept_terms'))
   })
   .required({
     phone: true,
     password: true,
-    accept_terms: true
   });
 
 export const LoginScreen: React.FC = () => {

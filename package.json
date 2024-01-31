@@ -72,6 +72,7 @@
     "expo-web-browser": "~12.3.2",
     "google-libphonenumber": "^3.2.34",
     "i18next": "^23.7.16",
+    "i18next-resources-for-ts": "^1.5.0",
     "jotai": "^2.6.1",
     "next": "13.4.4",
     "next-plugin-svgr": "^1.1.10",

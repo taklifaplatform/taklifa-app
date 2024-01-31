@@ -15,7 +15,7 @@ const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
 
 const ResetPasswordSchema = z.object({
   phone: formFields.phone.describe(t('forms:phone_number').toString()),
-  is_whatsapp: formFields.boolean_switch.describe('This is whatsapp number')
+  is_whatsapp: formFields.phone.describe(t('forms:is_whatsapp')),
 });
 
 export const ResetPasswordScreen = () => {
@@ -80,8 +80,8 @@ export const ResetPasswordScreen = () => {
             <AuthHeader
               activeStep={1}
               totalSteps={3}
-              title="Reset your password"
-              description="Type in your phone number and we'll send you a pin code to reset your password"
+              title={t('auth:reset_password.title')}
+              description={t('auth:reset_password.description')}
             />
 
             {Object.values(fields)}
@@ -108,7 +108,7 @@ const SignInLink = () => {
         justifyContent="center"
       >
         <Paragraph textAlign="center" theme="alt1">
-          Done resetting?{' '}
+          {t('auth:reset_password.done_resetting')}
         </Paragraph>
         <Theme name="light">
           <Text textDecorationLine="underline" color="$color5">

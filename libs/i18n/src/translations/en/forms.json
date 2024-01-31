@@ -14,6 +14,7 @@
   "company_name": "Company Name // Enter your company name",
   "company_legal_document": "Company Legal Document // Upload your company legal document",
   "company_location": "Company Location // Enter your company location",
+  "is_whatsapp": "Is Whatsapp // Is whatsapp available",
   "labels": {
     "code": "Code"
   }
