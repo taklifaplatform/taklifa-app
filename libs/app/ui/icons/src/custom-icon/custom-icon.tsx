@@ -57,6 +57,8 @@ const iconNames = [
   'wallet',
   'location',
   'car',
+  'followed',
+  'more',
 
   // vehicles
   'vehicle_a',

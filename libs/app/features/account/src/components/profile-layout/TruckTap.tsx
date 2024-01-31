@@ -50,33 +50,19 @@ export function TruckTap() {
     {
       id: 1,
       image:
-        'https://loozap.com/storage/files/tn/tal_02-10-2022/thumb-816x460-loozap_tunisie_w7q6p61__379a97e6-ca4c-4dad-aaaf-2498f548faa9'
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPtEGkbiVgBu7N4sHEfsoz0gM4VqfpMKPUmOOldo02jM_kxYyT4uxtmlzLxgk51IlaEIQ&usqp=CAU'
     },
     {
       id: 2,
       image:
-        'https://loozap.com/storage/files/tn/tal_02-10-2022/thumb-816x460-loozap_tunisie_w7q6p61__379a97e6-ca4c-4dad-aaaf-2498f548faa9'
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPtEGkbiVgBu7N4sHEfsoz0gM4VqfpMKPUmOOldo02jM_kxYyT4uxtmlzLxgk51IlaEIQ&usqp=CAU'
     },
     {
       id: 3,
       image:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPtEGkbiVgBu7N4sHEfsoz0gM4VqfpMKPUmOOldo02jM_kxYyT4uxtmlzLxgk51IlaEIQ&usqp=CAU'
-    },
-    {
-      id: 4,
-      image:
-        'https://loozap.com/storage/files/tn/tal_02-10-2022/thumb-816x460-loozap_tunisie_w7q6p61__379a97e6-ca4c-4dad-aaaf-2498f548faa9'
-    },
-    {
-      id: 4,
-      image:
-        'https://loozap.com/storage/files/tn/tal_02-10-2022/thumb-816x460-loozap_tunisie_w7q6p61__379a97e6-ca4c-4dad-aaaf-2498f548faa9'
-    },
-    {
-      id: 4,
-      image:
-        'https://loozap.com/storage/files/tn/tal_02-10-2022/thumb-816x460-loozap_tunisie_w7q6p61__379a97e6-ca4c-4dad-aaaf-2498f548faa9'
     }
+   
   ];
   return (
     <YStack flex={1} width={'100%'}>
@@ -85,14 +71,11 @@ export function TruckTap() {
           <Accordion.Trigger
             flexDirection="row"
             justifyContent="space-between"
-            padding="0"
-            borderWidth="0"
-            hoverStyle={{
-              backgroundColor: 'transparent'
-            }}
-            focusStyle={{
-              backgroundColor: 'transparent'
-            }}
+            borderBlockEndColor={'transparent'}
+            borderBlockStartColor={'transparent'}
+            borderLeftColor={'transparent'}
+            borderRightColor={'transparent'}
+            backgroundColor={'transparent'}
           >
             {({ open }) => (
               <>
@@ -105,7 +88,7 @@ export function TruckTap() {
               </>
             )}
           </Accordion.Trigger>
-          <Accordion.Content>
+          <Accordion.Content backgroundColor={'transparent'}>
             <FlatList
               data={TruckData}
               horizontal
@@ -132,7 +115,13 @@ export function TruckTap() {
           </Accordion.Content>
         </Accordion.Item>
         <Accordion.Item value="a2">
-          <Accordion.Trigger flexDirection="row" justifyContent="space-between">
+          <Accordion.Trigger 
+           backgroundColor={'transparent'}
+           borderBlockEndColor={'transparent'}
+           borderBlockStartColor={'transparent'}
+           borderLeftColor={'transparent'}
+           borderRightColor={'transparent'}
+          flexDirection="row" justifyContent="space-between">
             {({ open }) => (
               <>
                 <Text fontSize={'$3'} fontWeight={'700'}>
@@ -144,7 +133,7 @@ export function TruckTap() {
               </>
             )}
           </Accordion.Trigger>
-          <Accordion.Content>
+          <Accordion.Content backgroundColor={'transparent'}>
             {workTimeData.map((item, index) => (
               <XStack
                 backgroundColor={item.work ? '#FFECEB' : '$gray4'}

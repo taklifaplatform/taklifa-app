@@ -9,7 +9,9 @@ export function ProfileHeader({ profile, name }) {
   const renderInformation = (title: string, icon: string) => (
     <XStack alignItems="center">
       <CustomIcon name={icon} size={20} color={'#FECA16'} />
-      <Text paddingLeft="$2">{title}</Text>
+      <Text paddingLeft="$2"
+      fontWeight='600'
+      >{title}</Text>
     </XStack>
   );
   const renderButton = (
@@ -19,7 +21,7 @@ export function ProfileHeader({ profile, name }) {
     onPress: any
   ) => (
     <XStack>
-      <Button backgroundColor={color} onPress={onPress} size={'$3'}>
+      <Button backgroundColor={color} onPress={onPress} size={'$3'} borderRadius={'$6'}>
         <CustomIcon name={icon} size={20} color={'black'} />
         <Text fontWeight="600">{title}</Text>
       </Button>
@@ -41,18 +43,18 @@ export function ProfileHeader({ profile, name }) {
         paddingTop="$6"
         marginBottom="$4"
       >
-        <Button
+      {/*  <Button
           position="absolute"
           left={0}
-          size="$4"
+          size="$1"
           marginHorizontal="$4"
           {...useLink({ href: '/account/edit' })}
         >
           Edit Profile
-        </Button>
-        <YStack gap="$2">
+        </Button>*/}
+        <YStack gap="$2" paddingBottom='$4'>
           <XStack gap="$2" justifyContent="center" $sm={{ marginTop: '$4' }}>
-            <UserAvatar user={profile} size="$10" />
+            <UserAvatar user={profile} size="$9" borderColor={"#34C759"} borderWidth={"$1.5"}/>
           </XStack>
           <YStack gap="$2">
             {name ? (
@@ -64,19 +66,22 @@ export function ProfileHeader({ profile, name }) {
                 </H4>
               </Link>
             )}
-            <Text textAlign="center">Online now</Text>
+            <Text textAlign="center"
+            fontWeight='bold'
+            color='$gray10'
+            >Online now</Text>
           </YStack>
         </YStack>
         <XStack justifyContent="space-between" space="$4" paddingVertical="$4">
           {renderInformation('Harley davidson', 'car')}
-          <Separator vertical backgroundColor="$grey6" />
+          <Separator vertical borderColor={'$gray7'} />
           {renderInformation('Riyadh', 'location')}
-          <Separator vertical />
+          <Separator vertical borderColor={'$gray7'} />
           {renderInformation('(188) 4.8', 'star')}
         </XStack>
       </YStack>
       <XStack justifyContent="space-around" width={'100%'}>
-        {renderButton('Service request', 'star', '')}
+        {renderButton('Service request', 'followed', '#FECA16')}
         {renderButton('Chat', 'chat', '#E0E0E0')}
         {renderButton('Call', 'call', '#E0E0E0', () => onCallPress())}
       </XStack>

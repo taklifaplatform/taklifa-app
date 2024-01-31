@@ -1,5 +1,5 @@
 import { ChevronDown } from '@tamagui/lucide-icons';
-import { YStack, Text, XStack, Accordion, Paragraph, Square } from 'tamagui';
+import { YStack, Text, XStack, Accordion, Paragraph, Square } from '@zix/app/ui/core';
 
 export function DriverTap() {
   const workTimeData = [
@@ -44,7 +44,15 @@ export function DriverTap() {
     <YStack flex={1} width={'100%'}>
       <Accordion overflow="hidden" width="100%" type="multiple">
         <Accordion.Item value="a1">
-          <Accordion.Trigger flexDirection="row" justifyContent="space-between">
+          <Accordion.Trigger
+            flexDirection="row"
+            justifyContent="space-between"
+            borderBlockEndColor={'transparent'}
+            borderBlockStartColor={'transparent'}
+            borderLeftColor={'transparent'}
+            borderRightColor={'transparent'}
+            backgroundColor={'transparent'}
+          >
             {({ open }) => (
               <>
                 <Text fontSize={'$3'} fontWeight={'700'}>
@@ -56,7 +64,7 @@ export function DriverTap() {
               </>
             )}
           </Accordion.Trigger>
-          <Accordion.Content>
+          <Accordion.Content backgroundColor={'transparent'}>
             <Paragraph>
               This text is an example of text that can be replaced in the same
               space. This text was generated from the Arabic text generator,
@@ -67,7 +75,13 @@ export function DriverTap() {
           </Accordion.Content>
         </Accordion.Item>
         <Accordion.Item value="a2">
-          <Accordion.Trigger flexDirection="row" justifyContent="space-between">
+          <Accordion.Trigger flexDirection="row" justifyContent="space-between" padding="0"
+            borderWidth="0"
+            borderBlockEndColor={'transparent'}
+            borderBlockStartColor={'transparent'}
+            borderLeftColor={'transparent'}
+            backgroundColor={'transparent'}
+            borderRightColor={'transparent'}>
             {({ open }) => (
               <>
                 <Text fontSize={'$3'} fontWeight={'700'}>
@@ -79,7 +93,7 @@ export function DriverTap() {
               </>
             )}
           </Accordion.Trigger>
-          <Accordion.Content>
+          <Accordion.Content backgroundColor={'transparent'}>
             {workTimeData.map((item, index) => (
               <XStack
                 backgroundColor={item.work ? '#FFECEB' : '$gray4'}

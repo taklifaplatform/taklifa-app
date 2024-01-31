@@ -29,6 +29,8 @@ import Emptynotification from "./icons/emptynotification.svg";
 import Wallet from "./icons/wallet.svg";
 import Location from "./icons/location.svg";
 import Car from "./icons/car.svg";
+import Followed from "./icons/followed.svg";
+import More from "./icons/more.svg";
 
 // arts
 import CompanyCars from "./arts/company-cars.svg";
@@ -75,6 +77,8 @@ export {
   Wallet,
   Location,
   Car,
+  Followed,
+  More,
   // vehicles
   VehicleA,
   VehicleB,

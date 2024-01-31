@@ -95,8 +95,9 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
       <Button
         unstyled
         size="$2"
-        icon={<CustomIcon name="arrow_left" size="$1" />}
+        icon={<CustomIcon name="arrow_left" size="$2" />}
         onPress={() => router.back()}
+        backgroundColor={'#F6F6F6'}
       />
     );
 

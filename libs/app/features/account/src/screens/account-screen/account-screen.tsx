@@ -103,7 +103,7 @@ export function AccountScreen() {
                 width={activeAt.width}
                 height="$0.5"
                 x={activeAt.x}
-                bottom={0}
+                bottom={1}
                 backgroundColor={'$color2'}
               />
             )}
@@ -112,35 +112,39 @@ export function AccountScreen() {
             loop={false}
             borderBottomLeftRadius={0}
             borderBottomRightRadius={0}
-            paddingBottom="$1.5"
+           // paddingBottom="$1.5"
             borderColor="$gray5"
             borderBottomWidth="$0.5"
             backgroundColor="transparent"
             justifyContent="space-between"
           >
+            
             <Tabs.Tab
               unstyled
               padding="$5"
               value="tab1"
               onInteraction={handleOnInteraction}
+              width={'33%'}
             >
-              <SizableText color={'black'}>About Driver</SizableText>
+              <SizableText fontSize='$2.5' color={currentTab === 'tab1' ? 'black' : '$gray10'} fontWeight={currentTab === 'tab1' ? 'bold' : '600'}>About Driver</SizableText>
             </Tabs.Tab>
             <Tabs.Tab
               unstyled
               padding="$5"
               value="tab2"
               onInteraction={handleOnInteraction}
+              width={'33%'}
             >
-              <SizableText>About Truck</SizableText>
+              <SizableText fontSize='$2.5' color={currentTab === 'tab2' ? 'black' : '$gray10'} fontWeight={currentTab === 'tab2' ? 'bold' : '600'} >About Truck</SizableText>
             </Tabs.Tab>
             <Tabs.Tab
               unstyled
               padding="$5"
               value="tab3"
               onInteraction={handleOnInteraction}
+              width={'33%'}
             >
-              <SizableText>Ratings</SizableText>
+              <SizableText fontSize='$2.5' color={currentTab === 'tab3' ? 'black' : '$gray10'} fontWeight={currentTab === 'tab3' ? 'bold' : '600'}>Ratings</SizableText>
             </Tabs.Tab>
           </Tabs.List>
         </YStack>

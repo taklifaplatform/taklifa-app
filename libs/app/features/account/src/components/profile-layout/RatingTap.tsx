@@ -10,6 +10,7 @@ import {
 } from '@zix/app/ui/core';
 import { CustomIcon } from '@zix/app/ui/icons';
 import { RatingCard } from './RatingCard';
+import { TextInput } from 'react-native';
 
 export function RatingTap() {
   const data = [
@@ -47,8 +48,6 @@ export function RatingTap() {
       alignItems="center"
       marginBottom="$4"
       paddingBottom="$4"
-      borderBottomWidth="$0.5"
-      borderColor={'$gray5'}
     >
       <Text fontWeight="600" fontSize="$4" paddingTop="$4">
         How was your experience with
@@ -62,24 +61,44 @@ export function RatingTap() {
         <CustomIcon name="star" size={30} color={'#FECA16'} />
         <CustomIcon name="half_star" size={30} color={'#FECA16'} />
       </XStack>
-      <TextArea
+      {/* <TextArea
         placeholder="Enter your details..."
         width={'100%'}
         minHeight={120}
         borderWidth="$0"
         borderColor={'$gray5'}
+      />*/}
+      <TextInput
+        placeholder="Enter your details..."
+        multiline
+        style={{
+          backgroundColor: 'white',
+          width: '100%',
+          minHeight: 120,
+          maxHeight: 200,
+          borderWidth: 2,
+          borderColor: '#E5E5E5',
+          borderRadius: 10,
+          padding: 10
+        }}
       />
     </YStack>
   );
 
   const renderSubmitButtons = () => (
-    <XStack justifyContent="space-between" paddingBottom="$6">
+    <XStack
+      justifyContent="space-between"
+      paddingBottom="$6"
+      borderBottomWidth='$0.5'
+      borderColor='rgba(175, 175, 175, 0.3)'
+      marginBottom='$4'
+    >
       <Button
         backgroundColor={'black'}
         width="47%"
         height={50}
         borderRadius={10}
-        onPress={() => {}}
+        onPress={() => { }}
       >
         <Text color={'white'} fontWeight="bold" fontSize="$3">
           Submit
@@ -90,7 +109,7 @@ export function RatingTap() {
         width="47%"
         height={50}
         borderRadius={10}
-        onPress={() => {}}
+        onPress={() => { }}
       >
         <Text color={'$white'} fontWeight="bold" fontSize="$3">
           Remove
@@ -105,7 +124,13 @@ export function RatingTap() {
       {renderSubmitButtons()}
       <Accordion overflow="hidden" width="100%" type="multiple">
         <Accordion.Item value="a2">
-          <Accordion.Trigger flexDirection="row" justifyContent="space-between">
+          <Accordion.Trigger
+            backgroundColor={'transparent'}
+            borderBlockEndColor={'transparent'}
+            borderBlockStartColor={'transparent'}
+            borderLeftColor={'transparent'}
+            borderRightColor={'transparent'}
+            flexDirection="row" justifyContent="space-between">
             {({ open }) => (
               <>
                 <Text fontSize={'$3'} fontWeight={'700'}>
@@ -117,7 +142,7 @@ export function RatingTap() {
               </>
             )}
           </Accordion.Trigger>
-          <Accordion.Content>
+          <Accordion.Content backgroundColor={'transparent'}>
             {data.map((item, index) => (
               <RatingCard item={item} />
             ))}

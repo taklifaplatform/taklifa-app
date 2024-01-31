@@ -14,10 +14,17 @@ export default function Screen() {
         showBackButton
         headerTitle={() => <DashboardSwitcher />}
         headerRight={() => (
-          <TouchableOpacity onPress={() => router.push('/account/settings')}>
-            <CustomIcon name='settings' color='black' size="$2" />
+          <TouchableOpacity 
+          style={{
+            backgroundColor: '#F6F6F6',
+            borderRadius: 4,
+            padding: 5,
+          }}
+          onPress={() => router.push('/account/settings')}>
+            <CustomIcon name='more' color='black' size="$3" />
           </TouchableOpacity>
         )}
+        headerBackgroundColor='transparent'
       />
       
       <AccountScreen />
