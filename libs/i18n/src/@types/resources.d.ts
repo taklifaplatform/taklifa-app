@@ -20,7 +20,17 @@ interface Resources {
       "twitter_title": "Our Twitter"
     },
     "theme": {
-      "title": "Theme"
+      "title": "Theme",
+      "system": "System",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "language": {
+      "title": "Language",
+      "select_language": "Select Language",
+      "en": "English",
+      "ar": "Arabic",
+      "ur": "Urdu"
     },
     "logout": "Log Out"
   },

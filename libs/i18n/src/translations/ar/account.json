@@ -16,13 +16,20 @@
     "title": "شروط الخدمة"
   },
   "social": {
-    "twitter_title": "تويترنا"
+    "twitter_title": "Twitter"
   },
   "theme": {
     "title": "السمة",
     "system": "النظام",
     "light": "فاتح",
     "dark": "داكن"
+  },
+  "language": {
+    "title": "اللغة",
+    "select_language": "اختر اللغة",
+    "en": "الإنجليزية",
+    "ar": "عربى",
+    "ur": "اردو"
   },
   "logout": "تسجيل الخروج"
 }

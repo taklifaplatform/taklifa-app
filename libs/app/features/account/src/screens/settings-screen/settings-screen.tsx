@@ -1,11 +1,14 @@
 import { IconProps } from '@tamagui/helpers-icon';
-import { Settings } from '@zix/app/ui/common';
+import { Languages } from '@tamagui/lucide-icons';
+import { ActionSheet, ActionSheetRef, Settings } from '@zix/app/ui/common';
 import { Paragraph, ScrollView, YStack, useMedia } from '@zix/app/ui/core';
 import { CustomIcon } from '@zix/app/ui/icons';
 import { useThemeSetting } from '@zix/core/providers';
 import { useSupabase } from '@zix/core/supabase';
 import { usePathname } from '@zix/core/utils';
+import { useMultiLang } from '@zix/i18n';
 import { t } from 'i18next';
+import { useRef } from 'react';
 
 import { useLink } from 'solito/link';
 
@@ -103,6 +106,10 @@ export const SettingsScreen = () => {
             </Settings.Group>
 
             <Settings.Group>
+              <SettingsLanguageAction />
+            </Settings.Group>
+
+            <Settings.Group>
               <SettingsThemeAction />
               <SettingsItemLogoutAction />
             </Settings.Group>
@@ -117,6 +124,41 @@ export const SettingsScreen = () => {
         v1.0.0
       </Paragraph>
     </YStack>
+  );
+};
+
+const SettingsLanguageAction = () => {
+  const { activeLang, languages, changeLanguage } = useMultiLang();
+  const actionSheetRef = useRef<ActionSheetRef>(null);
+
+  const renderLanguages = () => (
+    <ActionSheet
+      ref={actionSheetRef}
+      title={t('account:language.select_language')}
+      actions={languages.map((lang) => ({
+        name: t(`account:language.${lang}`).toString(),
+        icon: <Languages size="$2" color="$color10" />,
+        onPress: () => {
+          actionSheetRef.current?.close();
+          changeLanguage(lang);
+        }
+      }))}
+    />
+  );
+
+  return (
+    <>
+      {renderLanguages()}
+      <Settings.Item
+        icon={(props: IconProps) => (
+          <CustomIcon name="theme" color="$color5" {...props} />
+        )}
+        onPress={() => actionSheetRef.current?.open()}
+        rightLabel={t(`account:language.${activeLang}`).toString()}
+      >
+        {t('account:language.title')}
+      </Settings.Item>
+    </>
   );
 };
 

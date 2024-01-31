@@ -1,5 +1,5 @@
 import { IconProps } from '@tamagui/helpers-icon';
-import { ChevronRight } from '@tamagui/lucide-icons';
+import { CustomIcon } from '@zix/app/ui/icons';
 import {
   ListItem,
   ListItemProps,
@@ -63,7 +63,7 @@ export const SettingItem = ({
             </SizableText>
           </XStack>
         )}
-        <ChevronRight size="$1" />
+        <CustomIcon name="chevron_right" size="$1" color="$color11" />
       </ListItem>
     </YGroup.Item>
   );
