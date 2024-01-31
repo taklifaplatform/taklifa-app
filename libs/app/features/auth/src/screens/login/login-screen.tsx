@@ -12,17 +12,17 @@ import { createParam } from 'solito';
 import { Link } from 'solito/link';
 import { z } from 'zod';
 import AcceptTermsLink from '../../components/accept-terms-link/accept-terms-link';
-// import { AcceptTermsLink } from '../components/AcceptTermsLink';
+
 const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
 
 const LoginSchema = z
   .object({
     phone: formFields.phone.describe(t('forms:phone_number').toString()),
-    password: formFields.text.min(8).describe(t('forms:password')),
+    password: formFields.text.min(8).describe(t('forms:password'))
   })
   .required({
     phone: true,
-    password: true,
+    password: true
   });
 
 export const LoginScreen: React.FC = () => {

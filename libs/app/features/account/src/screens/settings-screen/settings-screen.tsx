@@ -9,6 +9,7 @@ import { usePathname } from '@zix/core/utils';
 import { useMultiLang } from '@zix/i18n';
 import { t } from 'i18next';
 import { useRef } from 'react';
+import { Linking } from 'react-native';
 
 import { useLink } from 'solito/link';
 
@@ -98,7 +99,7 @@ export const SettingsScreen = () => {
                 icon={(props: IconProps) => (
                   <CustomIcon name="share" color="$color5" {...props} />
                 )}
-                onPress={() => redirect('https://twitter.com/zixdev')}
+                onPress={() => Linking.openURL('https://twitter.com/zixdev')}
                 accentColor={brandColors.twitter}
               >
                 {t('account:social.twitter_title')}
@@ -137,7 +138,6 @@ const SettingsLanguageAction = () => {
       title={t('account:language.select_language')}
       actions={languages.map((lang) => ({
         name: t(`account:language.${lang}`).toString(),
-        icon: <Languages size="$2" color="$color10" />,
         onPress: () => {
           actionSheetRef.current?.close();
           changeLanguage(lang);
@@ -150,9 +150,7 @@ const SettingsLanguageAction = () => {
     <>
       {renderLanguages()}
       <Settings.Item
-        icon={(props: IconProps) => (
-          <CustomIcon name="theme" color="$color5" {...props} />
-        )}
+        icon={(props: IconProps) => <Languages color="$color5" {...props} />}
         onPress={() => actionSheetRef.current?.open()}
         rightLabel={t(`account:language.${activeLang}`).toString()}
       >

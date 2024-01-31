@@ -10,3 +10,5 @@ export * from "./reset-password/verify-phone-number-screen";
 export * from "./verification/auth-driver-verification-screen";
 export * from "./verification/kyc-verification-screen";
 export * from "./onboarding-screen/onboarding-screen";
+export * from "./terms-of-service-screen";
+export * from "./privacy-policy-screen";
