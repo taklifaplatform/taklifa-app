@@ -30,7 +30,7 @@ create policy "Users can update own profile."
 
 
 -- inserts a row into public.users
-create function public.handle_new_user()
+create or replace function public.handle_new_user()
 returns trigger
 language plpgsql
 security definer set search_path = public
@@ -38,6 +38,14 @@ as $$
 begin
   insert into public.users (id)
   values (new.id);
+
+  if new.raw_user_meta_data is not null then
+    update public.users
+    set
+      name = new.raw_user_meta_data ->> 'name'
+    where id = new.id;
+  end if;
+
   return new;
 end;
 $$;
