@@ -1,26 +1,27 @@
-import { Spinner, Stack, Theme, YStack } from '@zix/app/ui/core';
-import { CustomIcon } from '@zix/app/ui/icons';
+import { Image, View } from '@zix/app/ui/core';
 import { router } from 'expo-router';
 import React from 'react';
 
+import { Dimensions } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
 export default function Screen() {
   return (
-    <YStack
+    <View
+      backgroundColor="$color5"
       flex={1}
-      gap="$4"
-      padding="$4"
-      alignItems="center"
-      justifyContent="center"
       onLayout={() => {
-        router.replace('/customer');
+        setTimeout(() => {
+          router.replace('/customer');
+        }, 3000);
       }}
     >
-      <Theme name="light">
-        <Stack width="$20">
-          <CustomIcon name="logo" size="$20" color="$color5" />
-          <Spinner mt="$4" size="large" color="$color5" />
-        </Stack>
-      </Theme>
-    </YStack>
+      <Image
+        source={require('../../assets/splash.gif')}
+        resizeMode="contain"
+        width={width}
+        height={height}
+      />
+    </View>
   );
 }
