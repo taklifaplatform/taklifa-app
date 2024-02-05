@@ -118,6 +118,9 @@ interface Resources {
       "code": "Code"
     }
   },
+  "invite": {
+    "company-member": "Hello, {{name}}! {{company}} has invited you to join their team. \n\n To accept the invitation, click the link below: \n\n {{link}} \n\n If you have any questions, please contact {{company}} directly. \n\n Thanks, \n\n The {{company}} Team"
+  },
   "navigation": {
     "customer-dashboard": {
       "home": "Home",

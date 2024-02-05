@@ -1,11 +1,12 @@
 // server-side tRPC setup need to run only in server
 
-
 import { Database } from "@zix/core/supabase";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { initTRPC, TRPCError } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import superJson from "superjson";
+
+import { t as translate } from "i18next";
 
 export const createTRPCContext = async (opts: CreateNextContextOptions) => {
   // if there's auth cookie it'll be authenticated by this helper
@@ -42,6 +43,11 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
      * do anything on behalf of the service role (RLS doesn't work - you're admin)
      */
     supabase,
+
+    /**
+     * I18n instance
+     */
+    t: translate,
   };
 };
 

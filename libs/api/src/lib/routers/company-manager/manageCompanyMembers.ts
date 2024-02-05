@@ -2,6 +2,8 @@ import { supabaseAdmin } from "@zix/core/supabase";
 import { createTRPCRouter, protectedProcedure } from "../../trpc";
 import { z } from "zod";
 
+import { sendSMS } from "../../server/send-sms";
+
 export const manageCompanyMembersRouter = createTRPCRouter({
   list: protectedProcedure
     .input(z.object({
@@ -42,11 +44,18 @@ export const manageCompanyMembersRouter = createTRPCRouter({
       name: z.string(),
       phone: z.string(),
       role: z.string(), // 'manager' | 'driver'
+      message: z.string(),
     }))
     .mutation(async ({ ctx: { supabase }, input }) => {
       console.log("======");
       console.log("invite::", input);
       console.log("======");
+
+      sendSMS({
+        to: input.phone,
+        text: input.message,
+      });
+
       // invite user
       const result = await supabaseAdmin.auth.admin.generateLink({
         email: "badi.ifaoui+1@zixdev.com",
