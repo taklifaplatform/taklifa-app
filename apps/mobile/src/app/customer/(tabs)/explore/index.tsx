@@ -1,17 +1,28 @@
 import { api } from '@zix/api';
 import { AppHeader } from '@zix/app/ui/common';
-import { View, Text } from '@zix/app/ui/core';
+import { View, Text, Button } from '@zix/app/ui/core';
 import React from 'react';
 
+import { t } from 'i18next';
+
 export default function Screen() {
-  const query = api.countries.get.useQuery()
+  const { mutate } = api.manageCompanyMembers.invite.useMutation()
   return (
     <>
       <AppHeader showBackButton title="Chat" />
-      <View>
+      <View p='$4'>
         <Text>Chat</Text>
-        <Text>query:: {JSON.stringify(query, null, 2)}</Text>
-      </View>
+        <Button onPress={() => mutate({
+          company_id: '1',
+          name: 'John Doe',
+          phone: '21622074426',
+          role: 'driver',
+          message: t("invite:company-member", { name: 'John Doe', company: "ABC" })
+            .toString()
+        })}>
+          Invite
+        </Button>
+      </View >
     </>
   );
 }

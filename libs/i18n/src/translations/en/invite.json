@@ -1,0 +1,3 @@
+{
+  "company-member": "Hello, {{name}}! \n\n{{company}} has invited you to join their team. \n\nTo accept the invitation, click the link below: \n\n{{link}} \n\n"
+}
