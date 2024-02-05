@@ -7,7 +7,9 @@ import {
   ChevronLeft,
   ChevronRight,
   ChevronsLeft,
-  ChevronsRight
+  ChevronsRight,
+  MoveLeft,
+  MoveRight
 } from '@tamagui/lucide-icons';
 import { I18nManager } from 'react-native';
 
@@ -38,6 +40,8 @@ const iconNames = [
   'chevron_right',
   'chevrons_left',
   'chevrons_right',
+  'large_arrow_left',
+  'large_arrow_right',
   'star',
   'half_star',
   'local_shipping',
@@ -59,7 +63,25 @@ const iconNames = [
   'car',
   'followed',
   'more',
-
+  'facebook',
+  'instagram',
+  'snapchat',
+  'googleplay',
+  'appstore',
+  'help',
+  'homeinfo',
+  'translate',
+  'account',
+  'rigning',
+  'search',
+  'view',
+  'flip',
+  'searchtrack',
+  'findtrack',
+  'client',
+  'companyshipping',
+  'shipping',
+  'tiktok',
   // vehicles
   'vehicle_a',
   'vehicle_b',
@@ -72,6 +94,9 @@ export interface CustomIconProps {
 
   size?: SizeTokens;
   color?: ColorTokens | string | null;
+
+  width?: SizeTokens;
+  height?: SizeTokens;
 }
 
 export const CustomIcon: React.FC<CustomIconProps> = ({
@@ -106,6 +131,21 @@ export const CustomIcon: React.FC<CustomIconProps> = ({
   } else if ($name === 'chevrons_right' && I18nManager.isRTL) {
     $name = 'chevrons_left';
   }
+
+  if ($name === 'large_arrow_left' && I18nManager.isRTL) {
+    $name = 'large_arrow_right';
+  } else if ($name === 'large_arrow_right' && I18nManager.isRTL) {
+    $name = 'large_arrow_left';
+  }
+
+  if ($name === 'large_arrow_left') {
+    return <MoveLeft size={$size} color={style.color} />;
+  }
+
+  if ($name === 'large_arrow_right') {
+    return <MoveRight size={$size} color={style.color} />;
+  }
+
 
   if ($name === 'chevron_left') {
     return <ChevronLeft size={$size} color={style.color} />;

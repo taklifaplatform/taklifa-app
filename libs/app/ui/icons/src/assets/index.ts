@@ -31,6 +31,27 @@ import Location from "./icons/location.svg";
 import Car from "./icons/car.svg";
 import Followed from "./icons/followed.svg";
 import More from "./icons/more.svg";
+import Facebook from "./icons/facebook.svg";
+import Instagram from "./icons/instagram.svg";
+import Snapchat from "./icons/snapchat.svg";
+import Googleplay from "./icons/googleplay.svg";
+import Appstore from "./icons/appstore.svg";
+import Translate from "./icons/translate.svg";
+import Homeinfo from "./icons/homeinfo.svg";
+import Help from "./icons/help.svg";
+import Rigning from "./icons/rigning.svg";
+import Account from "./icons/account.svg";
+import Search from "./icons/search.svg";
+import Weblogo from "./icons/weblogo.svg";
+import View from "./icons/view.svg";
+import LargeArrowLeft from "./icons/large-arrow-left.svg";
+import Flip from "./icons/flip.svg";
+import Searchtrack from "./icons/searchtrack.svg";
+import Findtrack from "./icons/findtrack.svg";
+import Client from "./icons/client.svg";
+import Companyshipping from "./icons/companyshipping.svg";
+import Shipping from "./icons/shipping.svg";
+import Tiktok from "./icons/tiktok.svg";
 
 // arts
 import CompanyCars from "./arts/company-cars.svg";
@@ -79,6 +100,29 @@ export {
   Car,
   Followed,
   More,
+  Facebook,
+  Instagram,
+  Snapchat,
+  Googleplay,
+  Appstore,
+  Translate,
+  Homeinfo,
+  Help,
+  Rigning,
+  Account,
+  Search,
+  Weblogo,
+  View,
+  LargeArrowLeft,
+  Flip,
+  Searchtrack,
+  Findtrack,
+  Client,
+  Companyshipping,
+  Shipping,
+  Tiktok,
+
+  
   // vehicles
   VehicleA,
   VehicleB,

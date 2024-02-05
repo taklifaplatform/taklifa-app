@@ -1,26 +1,36 @@
-import { api } from '@zix/app/api';
-import { Button, H1, Text, Theme, View } from '@zix/app/ui/core';
+import { YStack, XStack } from 'tamagui';
+import { TopHeader } from '../components/TopHeader';
+import { Header } from '../components/Header';
+import { TopBanner } from '../components/TopBanner';
+import { TrackShipments } from '../components/TrackShipments';
+import { SecondBanner } from '../components/SecondBanner';
+import { ManageShipments } from '../components/ManageShipments';
+import { StartToday } from '../components/StartToday';
+import { Accredited } from '../components/Accredited';
+import { WarningBanner } from '../components/Warning';
+import { Questions } from '../components/Questions';
+import { Footer } from '../components/Footer';
 
 export function Index() {
-  const { data } = api.countries.get.useQuery();
-
-  /*
-   * Replace the elements below with your own.
-   *
-   * Note: The corresponding styles are in the ./index.none file.
-   */
   return (
     <>
-      <Theme inverse>
-        <View p="$12">
-          <H1>
-            <Text> Hello there, </Text>
-            Welcome website 👋
-          </H1>
-          <Button>Hello world</Button>
-          <Text>{JSON.stringify(data)}</Text>
-        </View>
-      </Theme>
+      <XStack justifyContent="center" minWidth={1296}>
+        <YStack backgroundColor="$gray2" flex={1} maxWidth={1296} minWidth={
+          1200
+        } padding="$4">
+          <TopHeader />
+          <Header />
+          <TopBanner />
+          <TrackShipments />
+          <SecondBanner />
+          <ManageShipments />
+          <StartToday />
+          <Accredited />
+          <WarningBanner />
+          <Questions />
+          <Footer/>
+        </YStack>
+      </XStack>
     </>
   );
 }
