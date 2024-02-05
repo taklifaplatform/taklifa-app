@@ -438,23 +438,23 @@ export interface Database {
         Row: {
           created_at: string
           id: string
+          logo: Database["public"]["CompositeTypes"]["media_file"] | null
           name: string
-          owner_id: string
-          updated_at: string
+          owner_id: string | null
         }
         Insert: {
           created_at?: string
           id?: string
+          logo?: Database["public"]["CompositeTypes"]["media_file"] | null
           name: string
-          owner_id: string
-          updated_at?: string
+          owner_id?: string | null
         }
         Update: {
           created_at?: string
           id?: string
+          logo?: Database["public"]["CompositeTypes"]["media_file"] | null
           name?: string
-          owner_id?: string
-          updated_at?: string
+          owner_id?: string | null
         }
         Relationships: [
           {
@@ -466,103 +466,50 @@ export interface Database {
           }
         ]
       }
-      company_invitations: {
+      company_memberships: {
         Row: {
+          code: string | null
           company_id: string
           created_at: string
           id: string
-          role: string
-          sender_id: string | null
-          token: string
-          updated_at: string
-          user_email: string | null
-          user_name: string
-          user_phone: string
+          invited_email: string | null
+          role: Database["public"]["Enums"]["company_roles"]
+          user_id: string | null
         }
         Insert: {
+          code?: string | null
           company_id: string
           created_at?: string
           id?: string
-          role: string
-          sender_id?: string | null
-          token: string
-          updated_at?: string
-          user_email?: string | null
-          user_name: string
-          user_phone: string
+          invited_email?: string | null
+          role?: Database["public"]["Enums"]["company_roles"]
+          user_id?: string | null
         }
         Update: {
+          code?: string | null
           company_id?: string
           created_at?: string
           id?: string
-          role?: string
-          sender_id?: string | null
-          token?: string
-          updated_at?: string
-          user_email?: string | null
-          user_name?: string
-          user_phone?: string
+          invited_email?: string | null
+          role?: Database["public"]["Enums"]["company_roles"]
+          user_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "company_invitations_company_id_fkey"
+            foreignKeyName: "company_memberships_company_id_fkey"
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "companies"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "company_memberships_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
           }
         ]
-      }
-      company_manager_invitations: {
-        Row: {
-          company_id: string
-          created_at: string | null
-          email: string | null
-          id: string
-          invitation_code: string
-          name: string
-          phone_number: string
-          sender_id: string | null
-          updated_at: string | null
-        }
-        Insert: {
-          company_id: string
-          created_at?: string | null
-          email?: string | null
-          id: string
-          invitation_code: string
-          name: string
-          phone_number: string
-          sender_id?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          company_id?: string
-          created_at?: string | null
-          email?: string | null
-          id?: string
-          invitation_code?: string
-          name?: string
-          phone_number?: string
-          sender_id?: string | null
-          updated_at?: string | null
-        }
-        Relationships: []
-      }
-      company_managers: {
-        Row: {
-          company_id: string
-          user_id: string
-        }
-        Insert: {
-          company_id: string
-          user_id: string
-        }
-        Update: {
-          company_id?: string
-          user_id?: string
-        }
-        Relationships: []
       }
       company_vehicle_drivers: {
         Row: {
@@ -617,6 +564,7 @@ export interface Database {
           id: number
           languages: Json | null
           name: Json
+          sort: number
           updated_at: string | null
           wikidata_id: string | null
         }
@@ -627,6 +575,7 @@ export interface Database {
           id: number
           languages?: Json | null
           name: Json
+          sort?: number
           updated_at?: string | null
           wikidata_id?: string | null
         }
@@ -637,6 +586,7 @@ export interface Database {
           id?: number
           languages?: Json | null
           name?: Json
+          sort?: number
           updated_at?: string | null
           wikidata_id?: string | null
         }
@@ -840,83 +790,6 @@ export interface Database {
           updated_at?: string | null
         }
         Relationships: []
-      }
-      org_memberships: {
-        Row: {
-          code: string | null
-          created_at: string
-          id: string
-          invited_email: string | null
-          org_id: string
-          role: Database["public"]["Enums"]["org_roles"]
-          user_id: string | null
-        }
-        Insert: {
-          code?: string | null
-          created_at?: string
-          id?: string
-          invited_email?: string | null
-          org_id: string
-          role?: Database["public"]["Enums"]["org_roles"]
-          user_id?: string | null
-        }
-        Update: {
-          code?: string | null
-          created_at?: string
-          id?: string
-          invited_email?: string | null
-          org_id?: string
-          role?: Database["public"]["Enums"]["org_roles"]
-          user_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "org_memberships_org_id_fkey"
-            columns: ["org_id"]
-            isOneToOne: false
-            referencedRelation: "orgs"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "org_memberships_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      orgs: {
-        Row: {
-          created_at: string
-          id: string
-          logo: Database["public"]["CompositeTypes"]["media_file"] | null
-          name: string
-          owner_id: string | null
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          logo?: Database["public"]["CompositeTypes"]["media_file"] | null
-          name: string
-          owner_id?: string | null
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          logo?: Database["public"]["CompositeTypes"]["media_file"] | null
-          name?: string
-          owner_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "orgs_owner_id_fkey"
-            columns: ["owner_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
       }
       rating_scores: {
         Row: {
@@ -1513,9 +1386,9 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      create_new_org: {
+      create_new_company: {
         Args: {
-          org_name: string
+          company_name: string
         }
         Returns: {
           created_at: string
@@ -1525,21 +1398,21 @@ export interface Database {
           owner_id: string | null
         }
       }
-      invite_org_member: {
+      invite_company_member: {
         Args: {
-          org_id: string
+          company_id: string
           name?: string
           email?: string
           phone_number?: string
-          role?: Database["public"]["Enums"]["org_roles"]
+          role?: Database["public"]["Enums"]["company_roles"]
         }
         Returns: {
           code: string | null
+          company_id: string
           created_at: string
           id: string
           invited_email: string | null
-          org_id: string
-          role: Database["public"]["Enums"]["org_roles"]
+          role: Database["public"]["Enums"]["company_roles"]
           user_id: string | null
         }
       }
@@ -1549,13 +1422,13 @@ export interface Database {
       }
     }
     Enums: {
-      org_roles: "owner" | "manager" | "driver" | "member"
+      company_roles: "owner" | "manager" | "driver" | "member"
       shipment_delivery_status:
         | "pending"
         | "cancelled"
         | "delivering"
         | "delivered"
-      shipment_status: "draft"
+      shipment_status: "draft" | "assigned" | "searching"
       shipment_types: "document" | "box" | "multiple_boxes" | "other"
     }
     CompositeTypes: {

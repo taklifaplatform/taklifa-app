@@ -6,5 +6,5 @@
  */
 
 export const USERS_TABLE = `users`;
-export const ORGS_TABLE = `orgs`;
-export const ORG_MEMBERSHIPS_TABLE = `org_memberships`;
+export const COMPANIES_TABLE = `companies`;
+export const COMPANY_MEMBERSHIPS_TABLE = `company_memberships`;

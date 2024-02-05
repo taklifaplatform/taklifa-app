@@ -53,7 +53,7 @@ DECLARE
 BEGIN
     -- TODO Create Super User
     admin_id := private.create_seed_user('966554943343', 'admin@sawaeed.com', '123456789', 'سعيد القحطاني', 'https://i.pravatar.cc/150?u=admin@sawaeed.com');
-    user_id := private.create_seed_user('21622074426', 'badi.ifaoui@zixdev.com', '123456789', 'Badi Ifaoui', 'https://i.pravatar.cc/150?u=badi.ifaoui@zixdev.com');
+    user_id := private.create_seed_user('21622074427', 'badi.ifaoui@zixdev.com', '123456789', 'Badi Ifaoui', 'https://i.pravatar.cc/150?u=badi.ifaoui@zixdev.com');
     customer_id := private.create_seed_user('966111111111', 'customer@sawaeed.com', '123456789', 'Fake Customer', 'https://i.pravatar.cc/150?u=customer@sawaeed.com');
     solo_driver_id := private.create_seed_user('966222222222', 'solo.driver@sawaeed.com', '123456789', 'Fake Solo Driver', 'https://i.pravatar.cc/150?u=solo.driver@sawaeed.com');
     company_owner_id := private.create_seed_user('966333333333', 'company.admin@sawaeed.com', '123456789', 'Fake Company Owner', 'https://i.pravatar.cc/150?u=company.admin@sawaeed.com');

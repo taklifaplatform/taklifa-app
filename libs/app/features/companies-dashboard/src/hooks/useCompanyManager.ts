@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { useUser } from "@zix/core/auth";
-import { ORG_MEMBERSHIPS_TABLE, Tables, useSupabase } from "@zix/core/supabase";
+import { COMPANY_MEMBERSHIPS_TABLE, Tables, useSupabase } from "@zix/core/supabase";
 import { useState } from "react";
 
 export type CompanyManager = {
   switchCompany: (id: string) => void;
 
-  activeCompany?: Tables<"orgs">;
+  activeCompany?: Tables<"companies">;
   refreshActiveCompany: () => void;
 
-  companies: Tables<"orgs">[];
+  companies: Tables<"companies">[];
   refreshCompanies: () => void;
 };
 
@@ -20,7 +20,7 @@ export function useCompanyManager(): CompanyManager {
   const [activeCompanyId, setActiveCompanyId] = useState<string>();
 
   const activeCompanyQuery = useQuery([
-    ORG_MEMBERSHIPS_TABLE,
+    COMPANY_MEMBERSHIPS_TABLE,
     activeCompanyId,
     user?.id,
   ], {
@@ -30,16 +30,16 @@ export function useCompanyManager(): CompanyManager {
       }
 
       const { data, error } = await supabase
-        .from(ORG_MEMBERSHIPS_TABLE)
+        .from(COMPANY_MEMBERSHIPS_TABLE)
         .select<
           string,
           {
             role: string;
-            org: Tables<"orgs">;
+            company: Tables<"companies">;
           }
-        >(`role, org:org_id(*)`)
+        >(`role, company:company_id(*)`)
         .eq("user_id", user?.id)
-        .eq("org_id", activeCompanyId)
+        .eq("company_id", activeCompanyId)
         .single();
 
       if (error) {
@@ -49,21 +49,21 @@ export function useCompanyManager(): CompanyManager {
     },
   });
 
-  const companiesQuery = useQuery([ORG_MEMBERSHIPS_TABLE, user?.id, "v8"], {
+  const companiesQuery = useQuery([COMPANY_MEMBERSHIPS_TABLE, user?.id, "v8"], {
     queryFn: async () => {
       if (!user?.id) {
         return null;
       }
 
       const { data, error } = await supabase
-        .from(ORG_MEMBERSHIPS_TABLE)
+        .from(COMPANY_MEMBERSHIPS_TABLE)
         .select<
           string,
           {
             role: string;
-            org: Tables<"orgs">;
+            company: Tables<"companies">;
           }
-        >(`role, org:org_id(*)`)
+        >(`role, company:company_id(*)`)
         .eq("user_id", user?.id);
       if (error) {
         throw error;
@@ -77,11 +77,11 @@ export function useCompanyManager(): CompanyManager {
     activeCompanyQuery.refetch();
   }
   return {
-    activeCompany: activeCompanyQuery?.data?.org,
+    activeCompany: activeCompanyQuery?.data?.company,
     refreshActiveCompany: activeCompanyQuery.refetch,
     switchCompany,
 
-    companies: companiesQuery?.data?.map((item) => item.org) || [],
+    companies: companiesQuery?.data?.map((item) => item.company) || [],
     refreshCompanies: companiesQuery.refetch,
   };
 }

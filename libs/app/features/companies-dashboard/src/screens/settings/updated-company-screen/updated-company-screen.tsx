@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToastController } from '@zix/app/ui/core';
 import {
-  ORGS_TABLE,
-  ORG_MEMBERSHIPS_TABLE,
+  companies_TABLE,
+  COMPANY_MEMBERSHIPS_TABLE,
   Tables,
   uploadMediaFile,
   useSupabase
@@ -56,7 +56,7 @@ export const UpdateCompanyScreen: React.FC = () => {
       if (values.logo) {
         const uploadedAvatar = await uploadMediaFile({
           file: values.logo,
-          bucket: 'orgs',
+          bucket: 'companies',
           path: `${activeCompany.id}/public`
         });
         if (uploadedAvatar) {
@@ -65,7 +65,7 @@ export const UpdateCompanyScreen: React.FC = () => {
       }
 
       const { data, error } = await supabase
-        .from('orgs')
+        .from('companies')
         .update(updatedData)
         .eq('id', activeCompany?.id)
         .select('*');
@@ -77,8 +77,8 @@ export const UpdateCompanyScreen: React.FC = () => {
 
       return data;
     },
-    onSuccess: (data: Tables<'orgs'>) => {
-      queryClient.invalidateQueries([ORGS_TABLE, ORG_MEMBERSHIPS_TABLE]);
+    onSuccess: (data: Tables<'companies'>) => {
+      queryClient.invalidateQueries([companies_TABLE, COMPANY_MEMBERSHIPS_TABLE]);
       toast.show('Company Updated Successfully!');
       router.back();
     },
