@@ -1,4 +1,5 @@
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { supabaseAdmin } from "@zix/core/supabase";
+import { createTRPCRouter, protectedProcedure } from "../../trpc";
 import { z } from "zod";
 
 export const manageCompanyMembersRouter = createTRPCRouter({
@@ -23,7 +24,7 @@ export const manageCompanyMembersRouter = createTRPCRouter({
     .input(z.object({
       member_id: z.number(),
     }))
-    .query(async ({ input }) => {
+    .mutation(async ({ input }) => {
       return input;
     }),
   delete: protectedProcedure
@@ -34,13 +35,32 @@ export const manageCompanyMembersRouter = createTRPCRouter({
       return input;
     }),
 
+  // https://github.com/silentworks/waiting-list
   invite: protectedProcedure
     .input(z.object({
+      company_id: z.string(),
       name: z.string(),
       phone: z.string(),
-      type: z.string(), // 'manager' | 'driver'
+      role: z.string(), // 'manager' | 'driver'
     }))
-    .query(async ({ input }) => {
+    .mutation(async ({ ctx: { supabase }, input }) => {
+      console.log("======");
+      console.log("invite::", input);
+      console.log("======");
+      // invite user
+      const result = await supabaseAdmin.auth.admin.generateLink({
+        email: "badi.ifaoui+1@zixdev.com",
+        type: "invite",
+        options: {
+          data: {
+            company_id: input.company_id,
+            role: input.role,
+          },
+        },
+      });
+      console.log("======");
+      console.log("result::", result);
+      console.log("======");
       return input;
     }),
 });

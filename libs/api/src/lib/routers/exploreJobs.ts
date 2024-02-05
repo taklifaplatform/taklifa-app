@@ -23,14 +23,14 @@ export const exploreJobsRouter = createTRPCRouter({
     .input(z.object({
       shipment_id: z.number(),
     }))
-    .query(async ({ input }) => {
+    .mutation(async ({ input }) => {
       return input;
     }),
   updateProposal: protectedProcedure
     .input(z.object({
       shipment_id: z.number(),
     }))
-    .query(async ({ input }) => {
+    .mutation(async ({ input }) => {
       return input;
     }),
   deleteProposal: protectedProcedure

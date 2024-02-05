@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToastController } from '@zix/app/ui/core';
 import {
-  ORGS_TABLE,
-  ORG_MEMBERSHIPS_TABLE,
+  companies_TABLE,
+  COMPANY_MEMBERSHIPS_TABLE,
   Tables,
   uploadMediaFile,
   useSupabase
@@ -19,7 +19,7 @@ import { useCompanyManagerContext } from '../../context/UseCompanyManagerContext
 
 const CreateCompanyFormSchema = z
   .object({
-    logo: formFields.avatar.describe('Add Company Logo'),
+    logo: formFields.avatar.optional().describe('Add Company Logo'),
     name: formFields.text.min(2).max(150).describe(t('forms:company_name')),
     // documents: formFields.file.describe(
     //   t('Company Documents // Attach documents...')
@@ -47,8 +47,8 @@ export const CreateCompanyScreen: React.FC = () => {
   const { mutate } = useMutation({
     mutationFn: async (values: z.infer<typeof CreateCompanyFormSchema>) => {
       const { data, error } = await supabase
-        .rpc('create_new_org', {
-          org_name: values.name
+        .rpc('create_new_company', {
+          company_name: values.name
         })
         .select('*')
         .single();
@@ -64,12 +64,12 @@ export const CreateCompanyScreen: React.FC = () => {
       if (values.logo) {
         const uploadedAvatar = await uploadMediaFile({
           file: values.logo,
-          bucket: 'orgs',
+          bucket: 'companies',
           path: `${data.id}/public`
         });
         if (uploadedAvatar) {
           await supabase
-            .from('orgs')
+            .from('companies')
             .update({
               logo: uploadedAvatar
             })
@@ -82,8 +82,8 @@ export const CreateCompanyScreen: React.FC = () => {
 
       return data;
     },
-    onSuccess: (data: Tables<'orgs'>) => {
-      queryClient.invalidateQueries([ORGS_TABLE, ORG_MEMBERSHIPS_TABLE]);
+    onSuccess: (data: Tables<'companies'>) => {
+      queryClient.invalidateQueries([companies_TABLE, COMPANY_MEMBERSHIPS_TABLE]);
       toast.show('Company Created Successfully!');
       router.push(`/companies/${data.id}`);
     },

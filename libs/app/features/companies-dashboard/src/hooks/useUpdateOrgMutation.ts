@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToastController } from "@zix/app/ui/core";
-import { ORGS_TABLE, Tables, useSupabase } from "@zix/core/supabase";
+import { companies_TABLE, Tables, useSupabase } from "@zix/core/supabase";
 
 /**
  * @returns
@@ -11,8 +11,8 @@ export function useUpdateOrgMutation() {
   const toast = useToastController();
 
   return useMutation({
-    mutationFn: async (values: Tables<"orgs">) => {
-      const { data, error } = await supabase.from(ORGS_TABLE).update(values).eq(
+    mutationFn: async (values: Tables<"companies">) => {
+      const { data, error } = await supabase.from(companies_TABLE).update(values).eq(
         "id",
         values.id,
       ).select().single();
@@ -24,7 +24,7 @@ export function useUpdateOrgMutation() {
       return data;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries(["orgs"]);
+      queryClient.invalidateQueries(["companies"]);
       toast.show("Successfully updated!");
     },
   });

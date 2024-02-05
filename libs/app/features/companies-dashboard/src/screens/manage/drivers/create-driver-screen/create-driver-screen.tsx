@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToastController } from '@zix/app/ui/core';
 import {
-  ORGS_TABLE,
-  ORG_MEMBERSHIPS_TABLE,
+  companies_TABLE,
+  COMPANY_MEMBERSHIPS_TABLE,
   Tables,
   useSupabase
 } from '@zix/core/supabase';
@@ -15,6 +15,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
 import { z } from 'zod';
 import { useCompanyManagerContext } from '../../../../context/UseCompanyManagerContext';
+import { api } from '@zix/api';
 
 const InviteDriverFormSchema = z
   .object({
@@ -22,8 +23,7 @@ const InviteDriverFormSchema = z
       .min(2)
       .max(25)
       .describe('Driver Name // Enter Driver Name'),
-    phone: formFields.phone.describe('Phone Number // Enter Phone Number'),
-    email: formFields.text.email().describe('Email // Enter Email').nullable()
+    phone: formFields.phone.describe('Phone Number // Enter Phone Number')
   })
   .required({
     name: true
@@ -39,40 +39,66 @@ export const CreateDriverScreen: React.FC = () => {
 
   const router = useRouter();
 
-  const { mutate } = useMutation({
-    mutationFn: async (values: Tables<'orgs'>) => {
-      console.error('=================');
-      console.error('No org id::', activeCompany);
-      console.error('=================');
-      if (!activeCompany?.id) {
-        throw new Error('No org id');
-      }
+  const { mutateAsync } = api.manageCompanyMembers.invite.useMutation()
 
-      const { data, error } = await supabase
-        .rpc('invite_org_member', {
-          org_id: activeCompany.id,
-          email: values.name,
-          phone_number: values.name,
-          role: 'driver'
-        })
-        .select()
-        .single();
+  // const { mutate } = useMutation({
+  //   mutationFn: async (values: Tables<'companies'>) => {
+  //     console.error('=================');
+  //     console.error('No company id::', activeCompany);
+  //     console.error('=================');
+  //     if (!activeCompany?.id) {
+  //       throw new Error('No company id');
+  //     }
 
-      if (error) {
-        console.error('=================');
-        console.error('error::', error);
-        console.error('=================');
-        throw error;
-      }
+  //     const { data, error } = await supabase
+  //       .rpc('invite_company_member', {
+  //         company_id: activeCompany.id,
+  //         email: values.name,
+  //         phone_number: values.name,
+  //         role: 'driver'
+  //       })
+  //       .select()
+  //       .single();
 
-      return data;
-    },
-    onSuccess: (data: Tables<'orgs'>) => {
-      queryClient.invalidateQueries([ORGS_TABLE, ORG_MEMBERSHIPS_TABLE]);
-      toast.show('Company Created Successfully!');
-      router.push(`/companies/${data.id}`);
+  //     if (error) {
+  //       console.error('=================');
+  //       console.error('error::', error);
+  //       console.error('=================');
+  //       throw error;
+  //     }
+
+  //     return data;
+  //   },
+  //   onSuccess: (data: Tables<'companies'>) => {
+  //     queryClient.invalidateQueries([companies_TABLE, COMPANY_MEMBERSHIPS_TABLE]);
+  //     toast.show('Company Created Successfully!');
+  //     router.push(`/companies/${data.id}`);
+  //   }
+  // });
+
+  const onSubmit = async (values: z.infer<typeof InviteDriverFormSchema>) => {
+    console.error('=================');
+    console.error('No company id::', activeCompany);
+    console.error('=================');
+    if (!activeCompany?.id) {
+      throw new Error('No company id');
     }
-  });
+
+    try {
+      await mutateAsync({
+        company_id: activeCompany.id,
+        name: values.name,
+        phone: values.phone,
+        role: 'driver'
+      })
+    } catch (error) {
+      console.error('=================');
+      console.error('error::', error);
+      console.error('=================');
+      // throw error;
+    }
+  }
+
 
   return (
     <FormProvider {...form}>
@@ -81,7 +107,7 @@ export const CreateDriverScreen: React.FC = () => {
         defaultValues={{
           name: ''
         }}
-        onSubmit={mutate}
+        onSubmit={onSubmit}
         renderAfter={({ submit }) => {
           return (
             <Theme inverse>
