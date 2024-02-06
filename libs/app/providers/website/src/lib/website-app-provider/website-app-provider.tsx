@@ -12,8 +12,6 @@ import {
 import { Provider as JotaiProvider } from 'jotai';
 
 import React from 'react';
-export { AuthProviderProps } from '@zix/core/providers';
-
 export interface WebsiteAppProviderProps {
   children: React.ReactNode;
   initialSession?: Session | null;

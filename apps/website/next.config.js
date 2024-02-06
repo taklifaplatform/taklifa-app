@@ -19,7 +19,7 @@ const nextConfig = {
     // Dangerously allow production builds to successfully complete even if
     // your project has type errors.
     // !! WARN !!
-    // ignoreBuildErrors: true,
+    ignoreBuildErrors: true,
   },
   transpilePackages: [
     'solito',
@@ -58,15 +58,15 @@ const nextConfig = {
 const tamaguiPlugin = withTamagui({
   platform: 'web',
   themeBuilder: {
-    input: '../../libs/app/themes/shared/src/lib/7steps-theme/themes/theme.ts',
-    output: '../../libs/app/themes/shared/src/lib/7steps-theme/themes.ts',
+    input: '../../libs/app/themes/shared/src/lib/sawaeed-theme/themes/theme.ts',
+    output: '../../libs/app/themes/shared/src/lib/sawaeed-theme/themes.ts',
   },
 
   config: './tamagui.config.ts',
   components: ['tamagui'],
   // build-time generate CSS styles for better performance
   // we recommend only using this for production so you get reloading during dev mode
-  // outputCSS: process.env.NODE_ENV === 'production' ? './public/tamagui.css' : null,
+  outputCSS: process.env.NODE_ENV === 'production' ? './public/tamagui.css' : null,
 
 
   disableExtraction: true

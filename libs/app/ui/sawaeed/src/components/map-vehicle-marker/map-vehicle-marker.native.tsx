@@ -1,11 +1,12 @@
 import { ZixMap } from '@zix/app/ui/common';
 import { CustomIcon } from '@zix/app/ui/icons';
+import type { LatLng } from 'react-native-maps';
 import { View } from 'tamagui';
 
 export type IMarker = {
   vehicle_type: string;
   rotateDegree?: string;
-  coordinate: any;
+  coordinate: LatLng;
 };
 
 export type MapVehicleMarkerProps = {

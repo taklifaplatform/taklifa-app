@@ -2,7 +2,6 @@ import { ZixMap } from '@zix/app/ui/common';
 import { IMarker, MapVehicleMarker } from '@zix/app/ui/sawaeed';
 import { useCallback, useEffect, useState } from 'react';
 import type { Region } from 'react-native-maps';
-// import MapView from 'react-native-maps';
 
 /* eslint-disable-next-line */
 export interface HomeScreenProps {}

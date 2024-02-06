@@ -1,9 +1,9 @@
-import MapView from 'react-native-maps';
-import * as MapViewElements from 'react-native-maps';
+
+
+const MapView = () => () => null
 
 export const ZixMap = {
   MapView,
-  ...MapViewElements
 };
 
 export default ZixMap;
