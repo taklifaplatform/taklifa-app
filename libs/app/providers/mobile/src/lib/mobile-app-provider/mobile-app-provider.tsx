@@ -11,6 +11,8 @@ import {
   UniversalThemeProvider,
   ChatProvider
 } from '@zix/core/providers';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
 import { Provider as JotaiProvider } from 'jotai';
 import React from 'react';
 export interface MobileAppProviderProps {
@@ -26,6 +28,7 @@ export const MobileAppProvider: React.FC<MobileAppProviderProps> = ({
     <AuthProvider initialSession={initialSession}>
       <ProvidersComposer
         providers={[
+          ({ children }) => <GestureHandlerRootView style={{ flex: 1 }}>{children}</GestureHandlerRootView>,
           JotaiProvider,
           UniversalThemeProvider,
           SafeAreaProvider,
