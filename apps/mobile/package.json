@@ -182,7 +182,9 @@
     "@react-navigation/native": "*",
     "@tamagui/core": "*",
     "expo-font": "*",
-    "react-native-confirmation-code-field": "*"
+    "react-native-confirmation-code-field": "*",
+    "i18next-resources-for-ts": "*",
+    "expo-build-properties": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",
@@ -253,6 +255,7 @@
     "supabase": "^1.131.4",
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
-    "typescript": "~5.2.2"
+    "typescript": "~5.2.2",
+    "@types/google-libphonenumber": "*"
   }
 }

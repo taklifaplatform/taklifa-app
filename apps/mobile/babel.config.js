@@ -13,7 +13,6 @@ module.exports = function (api) {
         "allowUndefined": true,
         "verbose": false
       }],
-      'expo-router/babel',
       'react-native-reanimated/plugin',
       ...(process.env.EAS_BUILD_PLATFORM === 'android'
         ? []
