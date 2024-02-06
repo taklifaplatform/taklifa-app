@@ -2,7 +2,7 @@ import { Image, View } from '@zix/app/ui/core';
 import { router } from 'expo-router';
 import React from 'react';
 
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 export default function Screen() {
@@ -11,9 +11,14 @@ export default function Screen() {
       backgroundColor="$color5"
       flex={1}
       onLayout={() => {
-        setTimeout(() => {
+        if (Platform.OS === 'ios') {
+          setTimeout(() => {
+            router.replace('/customer');
+          }, 3000);
+        } else {
           router.replace('/customer');
-        }, 3000);
+        }
+
       }}
     >
       <Image

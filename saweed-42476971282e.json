@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "saweed",
+  "private_key_id": "42476971282e32fd20fd121f12a40521cd72b2bd",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCWKO9X1+7rjJTP\nLDZHsyCwanTmWj+UzSZ7VpsPY+uBI8tC7TPXT6tLyvf/C6gHOLsV08/lJ+ikE9my\nG5DatmqYcYgczUX0nbSSUGVM+2VLorDv0Z/fp1v00MZHwpYQStLPH0B9ysacwGYy\nUAgLZAAwNiAjHXaoyW9V6MJCwtdIK9RXZDK1SWlC5axSlJz6eSUGee5X3PjBliwQ\numhMH67CwQP7NorYLdQkE3/zYPP1kVnwAbduzwwuGlWp02vggayJJONmw1bod7Xq\nJeOR62IjA5iLDsJMSDjv+11OnMunctpF7p8/MPkat0tdy7crFfkLhPuiKhh1uno6\nHsYdEP6dAgMBAAECggEAAtBzQa+2hQFNcVhXZMJJE9Vb1IWdQ46fooKxaLlEMCyy\nggr97yDXu2r5eTwrTYYDR51kQyLw2Bgr0ETLqGBiEoCRVFP4yYFe77n2Hr31ccZl\na/vi13WElEvCEAcEbDRNdl+F9hIHVwQxN+ufu9yyGqb9e/r/G0VIGEp7pK8B0nZe\nP53CLjEilue1OZXH/1gyCs8ihKhP8qzWdrowLubpeir6cheRaw5oM6F8ogQQpVES\nJOh0OcQQ+1ma3qcJC8737n7Pb5HsUNVRolNfAu4FY70KUkrxpGiL5bTsUwKEcTjs\nM/cRI79g8U7oEPEjvMFuP7UxkruYTdWYuUhMswbJVwKBgQDOXLjQMncPMp6AWD4V\nE3WJyPrmCY54WYvTwiXQjssXw9Qo39i/xz7mGdIVLM/EEP3lLoorGwWu3ZTGNm/A\nrFq4u957m8B2w9lESMY6GkWG54F/3T3KjKcKIyv987Wsa5C+ts0eTsOu0ndSv4UP\n2o1RBT6zGK+AcNjPN96CFE2wLwKBgQC6R2ng5P37D6YOxcGqapSrIyDxWnEooPAc\n28EtzsWOd/VI7jqFfy26E8TXdJ23cx1V2B5CAJC8563SL0o2I006kZHSe9Ew1HbW\nxBMopW+fjuFGW7Bl5USyEIzDfhzhtgj4gnz9mkCRMwisQ2Jh9IDxnWpi0ELPZJpF\neYKDU5be8wKBgEuNUvSWpVRhGfqvU/tvZmcNuB4kfY6+ah0bRbD3to962OAmJDsC\nfZrM9UdfYqnL9sjDoz5o5EnDQkbXg06tS4G69peWzH4u8gq4Aisflzju5VCk9YyE\ntltVyTNu2KLJtvK8BpkECUymLZ2UFOlbAMYa/3uenBKQPjCPqd1CBbdtAoGBAKn7\nHp+s9iJSHkrepCG5Dh64eIgk6puTeGgtE7OUOmwOBNLfKKHG8tgY0Ad3j6/mKH+8\nLag20dy/YLsqkgKi5gcq7LDwcWyohCToWT8+74PfIqxMYMQqmSwPtBN0EjDZJoh2\nsk3Mo1ycAC8Jck5Gih9wcLLorf6II8p/3duuvD6HAoGBAIxGcHd+14wswSl9l4GA\nF1Yn8w/BpAy9uX+grqptMnJTw62+/mabUzFF7eN31NO7gnZoSU2bQMBO6hTuKhhj\n/lFvxKvjjuLFGBHwJ468P4j2k4ygqQdYY1tojVBhViZwoAKLcnMSl18THVcka+q/\nfBDNEuY4avgxf6RYZrNTOh2n\n-----END PRIVATE KEY-----\n",
+  "client_email": "play-console-service-account@saweed.iam.gserviceaccount.com",
+  "client_id": "116274102358257915418",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/play-console-service-account%40saweed.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

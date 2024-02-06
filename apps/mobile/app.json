@@ -58,10 +58,16 @@
         "backgroundColor": "#FECA16"
       },
       "package": "com.zixdev.demo.sawaeed",
-      "versionCode": 16,
+      "versionCode": 20,
       "permissions": [
-        "android.permission.RECORD_AUDIO"
-      ]
+        "android.permission.RECORD_AUDIO",
+        "android.permission.CAMERA"
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBw3sZh4uFyLbi9sKTzKYn3BqIS_b-vGeA"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png",

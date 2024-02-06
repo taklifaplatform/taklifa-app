@@ -33,9 +33,6 @@
         "TAMAGUI_TARGET": "native",
         "APP_ENV": "preview"
       },
-      "android": {
-        "buildType": "apk"
-      },
       "ios": {
         "image": "latest"
       },
