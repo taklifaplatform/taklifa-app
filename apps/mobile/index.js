@@ -4,7 +4,7 @@
 // should be added here.
 import './importPolyfills'
 import '@expo/metro-runtime'
-import { renderRootComponent } from 'expo-router/src/renderRootComponent'
+import { renderRootComponent } from 'expo-router/build/renderRootComponent'
 import 'react-native-url-polyfill/auto'
 import * as Sentry from 'sentry-expo'
 
