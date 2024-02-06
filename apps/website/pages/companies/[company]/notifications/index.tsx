@@ -1,7 +1,6 @@
-import { NotificationsScreen } from 'app/features/companies/notifications-screen'
+import { userProtectedGetSSP } from '@zix/app/features/auth'
 import Head from 'next/head'
-import { userProtectedGetSSP } from 'utils/userProtected'
-import { NextPageWithLayout } from 'pages/_app'
+import { NextPageWithLayout } from '../../../_app'
 
 export const Page: NextPageWithLayout = () => {
   return (
@@ -9,7 +8,7 @@ export const Page: NextPageWithLayout = () => {
       <Head>
         <title>Notifications</title>
       </Head>
-      <NotificationsScreen />
+      {/* <NotificationsScreen /> */}
     </>
   )
 }

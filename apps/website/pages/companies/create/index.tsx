@@ -1,21 +1,18 @@
-import { CreateScreen } from 'app/features/companies/create-screen'
+import { userProtectedGetSSP } from '@zix/app/features/auth'
 import Head from 'next/head'
-import { userProtectedGetSSP } from 'utils/userProtected'
-import { NextPageWithLayout } from 'pages/_app'
-import { MainLayout } from 'app/features/@main/layout.web'
-
+import { NextPageWithLayout } from '../../_app'
 export const Page: NextPageWithLayout = () => {
   return (
     <>
       <Head>
         <title>Create Company</title>
       </Head>
-      <CreateScreen />
+      {/* <CreateScreen /> */}
     </>
   )
 }
 
-Page.getLayout = (page) => <MainLayout>{page}</MainLayout>
+// Page.getLayout = (page) => <MainLayout>{page}</MainLayout>
 
 export const getServerSideProps = userProtectedGetSSP()
 

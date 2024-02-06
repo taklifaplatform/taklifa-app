@@ -1,8 +1,6 @@
-import { InviteScreen } from 'app/features/companies/invite-screen'
 import Head from 'next/head'
-import { userProtectedGetSSP } from 'utils/userProtected'
-import { NextPageWithLayout } from 'pages/_app'
-import { CompanyLayout } from 'app/features/companies/layout.web'
+import { NextPageWithLayout } from '../../../../../_app'
+import { userProtectedGetSSP } from '@zix/app/features/auth'
 
 export const Page: NextPageWithLayout = () => {
   return (
@@ -10,12 +8,12 @@ export const Page: NextPageWithLayout = () => {
       <Head>
         <title>Invite Driver</title>
       </Head>
-      <InviteScreen />
+      {/* <InviteScreen /> */}
     </>
   )
 }
 
-Page.getLayout = (page) => <CompanyLayout>{page}</CompanyLayout>
+// Page.getLayout = (page) => <CompanyLayout>{page}</CompanyLayout>
 
 export const getServerSideProps = userProtectedGetSSP()
 

@@ -1,7 +1,6 @@
-import { TermsOfServiceScreen } from 'app/features/legal/terms-of-service-screen'
 import Head from 'next/head'
 import { NextPageWithLayout } from './_app'
-import { LegalLayout } from 'app/features/legal/layout.web'
+import { TermsOfServiceScreen } from '@zix/app/features/auth'
 
 export const Page: NextPageWithLayout = () => {
   return (
@@ -14,6 +13,6 @@ export const Page: NextPageWithLayout = () => {
   )
 }
 
-Page.getLayout = (page) => <LegalLayout>{page}</LegalLayout>
+// Page.getLayout = (page) => <LegalLayout>{page}</LegalLayout>
 
 export default Page

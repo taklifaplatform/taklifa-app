@@ -14,6 +14,13 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    // ignoreBuildErrors: true,
+  },
   transpilePackages: [
     'solito',
     'react-native-web',
@@ -24,7 +31,26 @@ const nextConfig = {
     'expo-document-picker',
     'expo-web-browser',
     'react-native-gesture-handler',
+    'react-native-markdown-display',
+
+    'stream-chat',
   ],
+  images: {
+    remotePatterns: [
+      {
+        hostname: 'ui-avatars.com',
+      },
+      {
+        hostname: 'i.pravatar.cc',
+      },
+      {
+        hostname: 'localhost',
+      },
+      {
+        hostname: '192.168.0.23',
+      },
+    ],
+  },
 };
 
 
@@ -32,19 +58,16 @@ const nextConfig = {
 const tamaguiPlugin = withTamagui({
   platform: 'web',
   themeBuilder: {
-    input: '../../libs/app/themes/shared/src/lib/sawaeed-theme/themes/theme.ts',
-    output: '../../libs/app/themes/shared/src/lib/sawaeed-theme/themes.ts',
+    input: '../../libs/app/themes/shared/src/lib/7steps-theme/themes/theme.ts',
+    output: '../../libs/app/themes/shared/src/lib/7steps-theme/themes.ts',
   },
 
   config: './tamagui.config.ts',
   components: ['tamagui'],
   // build-time generate CSS styles for better performance
   // we recommend only using this for production so you get reloading during dev mode
-  outputCSS: process.env.NODE_ENV === 'production' ? './public/tamagui.css' : null,
+  // outputCSS: process.env.NODE_ENV === 'production' ? './public/tamagui.css' : null,
 
-  // set to false if you never call addTheme or updateTheme
-  // when combined with outputCSS this saves you 1Kb more bundle size
-  doesMutateThemes: true, // default true
 
   disableExtraction: true
 })

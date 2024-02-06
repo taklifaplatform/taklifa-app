@@ -1,7 +1,7 @@
-import { OrdersScreen } from 'app/features/companies/orders-screen'
+import { userProtectedGetSSP } from '@zix/app/features/auth'
+import { NextPageWithLayout } from '../../../_app'
 import Head from 'next/head'
-import { userProtectedGetSSP } from 'utils/userProtected'
-import { NextPageWithLayout } from 'pages/_app'
+
 
 export const Page: NextPageWithLayout = () => {
   return (
@@ -9,7 +9,7 @@ export const Page: NextPageWithLayout = () => {
       <Head>
         <title>Orders</title>
       </Head>
-      <OrdersScreen />
+      {/* <OrdersScreen /> */}
     </>
   )
 }

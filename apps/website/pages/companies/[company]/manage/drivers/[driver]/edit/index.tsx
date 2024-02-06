@@ -1,15 +1,13 @@
-import { EditScreen } from 'app/features/companies/edit-screen'
 import Head from 'next/head'
-import { userProtectedGetSSP } from 'utils/userProtected'
-import { NextPageWithLayout } from 'pages/_app'
-
+import { NextPageWithLayout } from '../../../../../../_app'
+import { userProtectedGetSSP } from '@zix/app/features/auth'
 export const Page: NextPageWithLayout = () => {
   return (
     <>
       <Head>
         <title>Edit</title>
       </Head>
-      <EditScreen />
+      {/* <EditScreen /> */}
     </>
   )
 }

@@ -1,9 +1,7 @@
-import { CompanyManageDriversScreen } from 'app/features/companies/manage/drivers-screen'
-import { CompanyLayout } from 'app/features/companies/layout.web'
-
+import { userProtectedGetSSP } from '@zix/app/features/auth'
 import Head from 'next/head'
-import { NextPageWithLayout } from 'pages/_app'
-import { userProtectedGetSSP } from 'utils/userProtected'
+import { NextPageWithLayout } from '../../../../_app'
+
 
 export const Page: NextPageWithLayout = () => {
   return (
@@ -11,12 +9,12 @@ export const Page: NextPageWithLayout = () => {
       <Head>
         <title>Manage Drivers</title>
       </Head>
-      <CompanyManageDriversScreen />
+      {/* <CompanyManageDriversScreen /> */}
     </>
   )
 }
 
-Page.getLayout = (page) => <CompanyLayout>{page}</CompanyLayout>
+// Page.getLayout = (page) => <CompanyLayout>{page}</CompanyLayout>
 
 export const getServerSideProps = userProtectedGetSSP()
 
