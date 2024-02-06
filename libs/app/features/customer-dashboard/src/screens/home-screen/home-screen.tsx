@@ -1,10 +1,11 @@
 import { ZixMap } from '@zix/app/ui/common';
 import { IMarker, MapVehicleMarker } from '@zix/app/ui/sawaeed';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Platform } from 'react-native';
 import type { Region } from 'react-native-maps';
 
 /* eslint-disable-next-line */
-export interface HomeScreenProps {}
+export interface HomeScreenProps { }
 
 const vehicleTypes = ['vehicle_a', 'vehicle_b', 'vehicle_c'];
 
@@ -65,12 +66,15 @@ export function HomeScreen(props: HomeScreenProps) {
     setMarkers(newMarkers);
   }, []);
 
+  const $interval = useRef<NodeJS.Timeout>();
   useEffect(() => {
-    const interval = setInterval(() => {
-      moveMarkers();
-    }, 1000);
+    if (Platform.OS === 'ios') {
+      $interval.current = setInterval(() => {
+        moveMarkers();
+      }, 1000);
+    }
     setInitialMarkers();
-    return () => clearInterval(interval);
+    return () => $interval.current && clearInterval($interval.current);
   }, [moveMarkers]);
 
   return (
