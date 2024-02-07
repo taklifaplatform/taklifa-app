@@ -20,17 +20,17 @@ export type MapVehicleMarkerProps = {
 };
 
 export function MapVehicleMarker({ marker, index , setSelectedMarker, selectedMarker, setShowModal, setSelectedMarkerIndex}: MapVehicleMarkerProps) {
-  
+
   const onMarkerPress = () => {
     setSelectedMarker(marker);
     setShowModal(true);
     setSelectedMarkerIndex && setSelectedMarkerIndex(index);
   }
-  
+
   return (
-    <ZixMap.Marker 
-    key={index} 
-    coordinate={marker.coordinate} 
+    <ZixMap.Marker
+    key={index}
+    coordinate={marker.coordinate}
     onPress={() => onMarkerPress}>
       <View
         // rotate vehicle icon based on its direction

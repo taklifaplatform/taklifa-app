@@ -12,6 +12,9 @@ import Carousel from 'react-native-reanimated-carousel';
 import MapView from 'react-native-maps';
 
 
+import { ViewDriverSheet } from '../../components/ViewDriverSheet';
+
+
 /* eslint-disable-next-line */
 export interface HomeScreenProps { }
 
@@ -201,10 +204,10 @@ export function HomeScreen(props: HomeScreenProps) {
        }))
      );
    }, []);
- 
+
    const setInitialMarkers = useCallback(() => {
      const newMarkers: IMarker[] = [];
- 
+
      Array.from({ length: 15 }).forEach(() => {
        newMarkers.push({
          vehicle_type: vehicleTypes[Math.floor(Math.random() * 3)],
@@ -229,7 +232,7 @@ export function HomeScreen(props: HomeScreenProps) {
      });
     setMarkers(newMarkers);
    }, []);
- 
+
    const $interval = useRef<NodeJS.Timeout>();
    useEffect(() => {
      if (Platform.OS === 'ios') {
