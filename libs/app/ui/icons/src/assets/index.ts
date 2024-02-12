@@ -54,6 +54,8 @@ import Shipping from "./icons/shipping.svg";
 import Tiktok from "./icons/tiktok.svg";
 import Map from "./icons/map.svg";
 import List from "./icons/list.svg";
+import Edit from "./icons/edit.svg";
+import Starlocation from "./icons/starlocation.svg";
 
 // arts
 import CompanyCars from "./arts/company-cars.svg";
@@ -125,8 +127,10 @@ export {
   Tiktok,
   Map,
   List,
+  Edit,
+  Starlocation,
 
-  
+
   // vehicles
   VehicleA,
   VehicleB,

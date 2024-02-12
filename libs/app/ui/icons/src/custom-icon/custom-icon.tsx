@@ -84,6 +84,8 @@ const iconNames = [
   'tiktok',
   'map',
   'list',
+  'edit',
+  'starlocation',
   // vehicles
   'vehicle_a',
   'vehicle_b',
