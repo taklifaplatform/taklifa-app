@@ -184,7 +184,9 @@
     "expo-font": "*",
     "react-native-confirmation-code-field": "*",
     "i18next-resources-for-ts": "*",
-    "expo-build-properties": "*"
+    "expo-build-properties": "*",
+    "react-native-snap-carousel": "*",
+    "react-native-reanimated-carousel": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",

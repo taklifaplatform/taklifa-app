@@ -52,6 +52,8 @@ import Client from "./icons/client.svg";
 import Companyshipping from "./icons/companyshipping.svg";
 import Shipping from "./icons/shipping.svg";
 import Tiktok from "./icons/tiktok.svg";
+import Map from "./icons/map.svg";
+import List from "./icons/list.svg";
 
 // arts
 import CompanyCars from "./arts/company-cars.svg";
@@ -121,6 +123,8 @@ export {
   Companyshipping,
   Shipping,
   Tiktok,
+  Map,
+  List,
 
   
   // vehicles

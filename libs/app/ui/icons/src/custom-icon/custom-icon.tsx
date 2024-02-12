@@ -82,6 +82,8 @@ const iconNames = [
   'companyshipping',
   'shipping',
   'tiktok',
+  'map',
+  'list',
   // vehicles
   'vehicle_a',
   'vehicle_b',
