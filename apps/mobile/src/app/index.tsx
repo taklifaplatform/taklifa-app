@@ -22,8 +22,8 @@ export default function Screen() {
       }}
     >
       <Image
-        source={require('../../assets/splash.gif')}
-        resizeMode="contain"
+        source={require('../../assets/splashscreen.gif')}
+        resizeMode="stretch"
         width={width}
         height={height}
       />
