@@ -14,19 +14,15 @@ module.exports = function (api) {
         "verbose": false
       }],
       'react-native-reanimated/plugin',
-      ...(process.env.EAS_BUILD_PLATFORM === 'android'
-        ? []
-        : [
-          [
-            '@tamagui/babel-plugin',
-            {
-              components: ['tamagui'],
-              config: './tamagui.config.ts',
-              logTimings: true,
-              disableExtraction: process.env.NODE_ENV === 'development',
-            },
-          ]
-        ]),
+      [
+        '@tamagui/babel-plugin',
+        {
+          components: ['tamagui'],
+          config: './tamagui.config.ts',
+          logTimings: true,
+          disableExtraction: process.env.NODE_ENV === 'development',
+        },
+      ],
       [
         'transform-inline-environment-variables',
         {
