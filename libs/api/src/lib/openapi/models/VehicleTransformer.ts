@@ -1,0 +1,30 @@
+/* generated using openapi-typescript-codegen -- do no edit */
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+import type { MediaTransformer } from './MediaTransformer';
+import type { VehicleCapacityDimensionsTransformer } from './VehicleCapacityDimensionsTransformer';
+import type { VehicleCapacityWeightTransformer } from './VehicleCapacityWeightTransformer';
+import type { VehicleFuelInformationTransformer } from './VehicleFuelInformationTransformer';
+import type { VehicleIconTransformer } from './VehicleIconTransformer';
+import type { VehicleInformationTransformer } from './VehicleInformationTransformer';
+import type { VehicleMakeTransformer } from './VehicleMakeTransformer';
+import type { VehicleModelTransformer } from './VehicleModelTransformer';
+export type VehicleTransformer = {
+    id?: number;
+    internal_id?: string;
+    color?: string;
+    plate_number?: string;
+    VIN_number?: string;
+    year?: string;
+    image?: MediaTransformer;
+    images?: Array<MediaTransformer>;
+    vehicle_make_id?: VehicleMakeTransformer;
+    vehicle_model_id?: VehicleModelTransformer;
+    vehicle_icon_id?: VehicleIconTransformer;
+    information?: VehicleInformationTransformer;
+    fuel_information?: VehicleFuelInformationTransformer;
+    capacity_dimensions?: VehicleCapacityDimensionsTransformer;
+    capacity_weight?: VehicleCapacityWeightTransformer;
+};
+

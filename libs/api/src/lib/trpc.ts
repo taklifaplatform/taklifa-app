@@ -5,12 +5,13 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { initTRPC, TRPCError } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import superJson from "superjson";
-
-import { t as translate } from "i18next";
+import { OpenAPI } from "./openapi";
 
 export const createTRPCContext = async (opts: CreateNextContextOptions) => {
   // if there's auth cookie it'll be authenticated by this helper
   const supabase = createPagesServerClient<Database>(opts);
+
+  OpenAPI.BASE = `${process.env.LARAVEL_API_URL}`;
 
   // native sends these instead of cookie auth
   if (opts.req.headers.authorization && opts.req.headers["refresh-token"]) {
@@ -43,11 +44,6 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
      * do anything on behalf of the service role (RLS doesn't work - you're admin)
      */
     supabase,
-
-    /**
-     * I18n instance
-     */
-    t: translate,
   };
 };
 
@@ -78,6 +74,8 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.session || !ctx.session.user) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
+
+  OpenAPI.TOKEN = ctx.session.access_token;
 
   return next({
     ctx: {

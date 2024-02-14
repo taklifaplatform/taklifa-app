@@ -171,6 +171,7 @@
     "metro": "0.80.4",
     "metro-resolver": "0.80.4",
     "nx": "18.0.2",
+    "openapi-typescript-codegen": "^0.27.0",
     "prettier": "^2.6.2",
     "react-test-renderer": "18.2.0",
     "supabase": "^1.131.4",
