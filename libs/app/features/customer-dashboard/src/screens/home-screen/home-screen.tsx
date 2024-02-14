@@ -1,15 +1,15 @@
+import { CustomIcon } from '@zix/app/ui/icons';
 import { IMarker, MapVehicleMarker } from '@zix/app/ui/sawaeed';
 import { useState } from 'react';
+import { Dimensions } from 'react-native';
 import type { Region } from 'react-native-maps';
-import { ViewDriverSheet } from '../../components/ViewDriverSheet';
-import { Button, ScrollView, YStack, View, Text } from 'tamagui';
-import { CustomIcon } from '@zix/app/ui/icons';
-import { DriverCard } from '../../components/DriverCard';
+import MapView from 'react-native-maps';
+import Carousel from 'react-native-reanimated-carousel';
+import { Button, ScrollView, View, YStack } from 'tamagui';
 import { CategorieButton } from '../../components/CategorieButton';
 import { CategoriesSheet } from '../../components/CategoriesSheet';
-import { Dimensions } from 'react-native';
-import Carousel from 'react-native-reanimated-carousel';
-import MapView from 'react-native-maps';
+import { DriverCard } from '../../components/DriverCard';
+import { ViewDriverSheet } from '../../components/ViewDriverSheet';
 
 
 /* eslint-disable-next-line */
@@ -201,10 +201,10 @@ export function HomeScreen(props: HomeScreenProps) {
        }))
      );
    }, []);
- 
+
    const setInitialMarkers = useCallback(() => {
      const newMarkers: IMarker[] = [];
- 
+
      Array.from({ length: 15 }).forEach(() => {
        newMarkers.push({
          vehicle_type: vehicleTypes[Math.floor(Math.random() * 3)],
@@ -229,7 +229,7 @@ export function HomeScreen(props: HomeScreenProps) {
      });
     setMarkers(newMarkers);
    }, []);
- 
+
    const $interval = useRef<NodeJS.Timeout>();
    useEffect(() => {
      if (Platform.OS === 'ios') {
@@ -335,8 +335,8 @@ export function HomeScreen(props: HomeScreenProps) {
   }
   const renderCarousel = () => (
     <YStack
-    position='absolute'
-     bottom={/*isMoving ? '-10%' :*/ 1}
+      position='absolute'
+      bottom={/*isMoving ? '-10%' :*/ 1}
     >
       <Carousel
         loop={false}

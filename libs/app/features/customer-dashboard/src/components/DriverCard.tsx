@@ -5,7 +5,7 @@ import { X } from '@tamagui/lucide-icons'
 export function DriverCard({ item, setShowCarousel, setSelectedMarker }
     :
     {
-        item: any, 
+        item: any,
         setShowCarousel: (show: boolean) => void,
         setSelectedMarker: (marker: any) => void
     }) {
@@ -31,7 +31,6 @@ export function DriverCard({ item, setShowCarousel, setSelectedMarker }
                         borderWidth={3}
                         borderColor={'#34C759'}
                     />
-
                     <YStack alignItems='flex-start'>
                         <Text
                             color={'$black'}
