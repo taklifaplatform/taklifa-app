@@ -44,6 +44,7 @@ export const formFieldsMappings = [
   [formFields.code, CodeInputField] as const,
   // [formFields.date, DateField] as const,
   [formFields.file, FileField] as const,
+  [formFields.files, FileField] as const,
   [formFields.avatar, AvatarField] as const,
   [formFields.country, CountryField] as const,
 ] as const;

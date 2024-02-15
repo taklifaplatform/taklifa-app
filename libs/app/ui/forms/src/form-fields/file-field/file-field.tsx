@@ -10,16 +10,18 @@ import {
   XStack,
   useThemeName
 } from '@zix/app/ui/core';
-import { IMediaFile } from '@zix/core/supabase';
+import { IMediaFile, uploadMediaFile } from '@zix/core/supabase';
 import { useId, useMemo } from 'react';
 import { FieldError } from '../../common';
 import { ZixMediaPickerField } from '../../fields';
+import { useUser } from '@zix/core/auth';
 export interface FileProps extends Pick<InputProps, 'size' | 'autoFocus'> {
   isMultiple?: boolean;
 }
 
-// this
+//
 export const FileField = (props: FileProps) => {
+  const { user } = useUser()
   const { field, error } = useTsController<IMediaFile[]>();
   const { label, placeholder } = useFieldInfo();
   const themeName = useThemeName();
@@ -35,6 +37,30 @@ export const FileField = (props: FileProps) => {
       : placeholder;
   }, [field.value, props.isMultiple, placeholder]);
 
+  async function handleFileChange(files: IMediaFile[]) {
+    const uploadedFiles = await Promise.all(
+      files.map((file) =>
+        uploadMediaFile({
+          file,
+          bucket: 'uploads',
+          path: `${user.id}/files/${file.file_name}`
+        })
+      )
+    );
+    field.onChange(uploadedFiles);
+    // for (const file of files) {
+
+    //   const data = await uploadMediaFile({
+    //     file,
+    //     bucket: 'uploads',
+    //     path: `${user.id}/files/${file.file_name}`
+    //   });
+    //   console.log('=========')
+    //   console.log('handleFileChange::', JSON.stringify({ data, file }, null, 2));
+    //   console.log('=========')
+    // }
+  }
+
   return (
     <Theme name={error ? 'red' : themeName} forceClassName>
       <Fieldset>
@@ -46,7 +72,7 @@ export const FileField = (props: FileProps) => {
         <Shake shakeKey={error?.errorMessage}>
           <ZixMediaPickerField
             type="documents"
-            onChange={({ files }) => field.onChange(files)}
+            onChange={({ files }) => handleFileChange(files)}
             isMultiple={props.isMultiple}
           >
             {({ onPress }) => (

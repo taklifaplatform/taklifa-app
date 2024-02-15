@@ -407,7 +407,7 @@ export interface Database {
         Insert: {
           country_id?: number | null
           created_at?: string | null
-          id: number
+          id?: number
           name: Json
           ref: string
           timezone?: string | null
@@ -426,7 +426,7 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "cities_country_id_fkey"
+            foreignKeyName: "cities_country_id_foreign"
             columns: ["country_id"]
             isOneToOne: false
             referencedRelation: "countries"
@@ -436,29 +436,35 @@ export interface Database {
       }
       companies: {
         Row: {
-          created_at: string
+          created_at: string | null
           id: string
-          logo: Database["public"]["CompositeTypes"]["media_file"] | null
+          is_enabled: boolean
+          is_verified: boolean
           name: string
           owner_id: string | null
+          updated_at: string | null
         }
         Insert: {
-          created_at?: string
+          created_at?: string | null
           id?: string
-          logo?: Database["public"]["CompositeTypes"]["media_file"] | null
+          is_enabled?: boolean
+          is_verified?: boolean
           name: string
           owner_id?: string | null
+          updated_at?: string | null
         }
         Update: {
-          created_at?: string
+          created_at?: string | null
           id?: string
-          logo?: Database["public"]["CompositeTypes"]["media_file"] | null
+          is_enabled?: boolean
+          is_verified?: boolean
           name?: string
           owner_id?: string | null
+          updated_at?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "companies_owner_id_fkey"
+            foreignKeyName: "companies_owner_id_foreign"
             columns: ["owner_id"]
             isOneToOne: false
             referencedRelation: "users"
@@ -466,44 +472,131 @@ export interface Database {
           }
         ]
       }
-      company_memberships: {
+      company_documents: {
         Row: {
-          code: string | null
           company_id: string
-          created_at: string
+          created_at: string | null
           id: string
-          invited_email: string | null
-          role: Database["public"]["Enums"]["company_roles"]
-          user_id: string | null
+          object_id: string
+          updated_at: string | null
         }
         Insert: {
-          code?: string | null
           company_id: string
-          created_at?: string
+          created_at?: string | null
           id?: string
-          invited_email?: string | null
-          role?: Database["public"]["Enums"]["company_roles"]
-          user_id?: string | null
+          object_id: string
+          updated_at?: string | null
         }
         Update: {
-          code?: string | null
           company_id?: string
-          created_at?: string
+          created_at?: string | null
           id?: string
-          invited_email?: string | null
-          role?: Database["public"]["Enums"]["company_roles"]
-          user_id?: string | null
+          object_id?: string
+          updated_at?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "company_memberships_company_id_fkey"
+            foreignKeyName: "company_documents_company_id_foreign"
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "companies"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "company_memberships_user_id_fkey"
+            foreignKeyName: "company_documents_object_id_foreign"
+            columns: ["object_id"]
+            isOneToOne: false
+            referencedRelation: "objects"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      company_invitations: {
+        Row: {
+          company_id: string
+          created_at: string | null
+          email: string | null
+          id: string
+          invitation_code: string
+          name: string
+          phone_number: string
+          sender_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          company_id: string
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          invitation_code: string
+          name: string
+          phone_number: string
+          sender_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          company_id?: string
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          invitation_code?: string
+          name?: string
+          phone_number?: string
+          sender_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_invitations_company_id_foreign"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "company_invitations_sender_id_foreign"
+            columns: ["sender_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      company_members: {
+        Row: {
+          company_id: string
+          created_at: string | null
+          id: string
+          role: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string | null
+          id?: string
+          role?: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string | null
+          id?: string
+          role?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_members_company_id_foreign"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "company_members_user_id_foreign"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
@@ -524,7 +617,22 @@ export interface Database {
           driver_id?: string
           vehicle_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "company_vehicle_drivers_driver_id_foreign"
+            columns: ["driver_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "company_vehicle_drivers_vehicle_id_foreign"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       company_vehicle_service_areas: {
         Row: {
@@ -539,7 +647,22 @@ export interface Database {
           service_area_id?: string
           vehicle_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "company_vehicle_service_areas_service_area_id_foreign"
+            columns: ["service_area_id"]
+            isOneToOne: false
+            referencedRelation: "service_areas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "company_vehicle_service_areas_vehicle_id_foreign"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       company_vehicle_service_zones: {
         Row: {
@@ -554,7 +677,22 @@ export interface Database {
           service_zone_id?: string
           vehicle_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "company_vehicle_service_zones_service_zone_id_foreign"
+            columns: ["service_zone_id"]
+            isOneToOne: false
+            referencedRelation: "service_zones"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "company_vehicle_service_zones_vehicle_id_foreign"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       countries: {
         Row: {
@@ -572,7 +710,7 @@ export interface Database {
           code: string
           created_at?: string | null
           flag?: string | null
-          id: number
+          id?: number
           languages?: Json | null
           name: Json
           sort?: number
@@ -601,8 +739,8 @@ export interface Database {
           international_prefix: string | null
           mask: string | null
           mask_char: string | null
-          national_destination_code_lengths: Json | null
-          national_number_lengths: Json | null
+          national_destination_code_lengths: string | null
+          national_number_lengths: string | null
           national_prefix: string | null
           prefix: string | null
           updated_at: string | null
@@ -611,12 +749,12 @@ export interface Database {
           country_id?: number | null
           created_at?: string | null
           dial_code?: string | null
-          id: number
+          id?: number
           international_prefix?: string | null
           mask?: string | null
           mask_char?: string | null
-          national_destination_code_lengths?: Json | null
-          national_number_lengths?: Json | null
+          national_destination_code_lengths?: string | null
+          national_number_lengths?: string | null
           national_prefix?: string | null
           prefix?: string | null
           updated_at?: string | null
@@ -629,15 +767,15 @@ export interface Database {
           international_prefix?: string | null
           mask?: string | null
           mask_char?: string | null
-          national_destination_code_lengths?: Json | null
-          national_number_lengths?: Json | null
+          national_destination_code_lengths?: string | null
+          national_number_lengths?: string | null
           national_prefix?: string | null
           prefix?: string | null
           updated_at?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "country_diallings_country_id_fkey"
+            foreignKeyName: "country_diallings_country_id_foreign"
             columns: ["country_id"]
             isOneToOne: false
             referencedRelation: "countries"
@@ -661,7 +799,7 @@ export interface Database {
           banknotes?: Json | null
           coins?: Json | null
           created_at?: string | null
-          id: number
+          id?: number
           iso_code: string
           iso_number: string
           name: string
@@ -696,40 +834,17 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "currency_countries_country_id_fkey"
+            foreignKeyName: "currency_countries_country_id_foreign"
             columns: ["country_id"]
             isOneToOne: false
             referencedRelation: "countries"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "currency_currencies_currency_id_fkey"
+            foreignKeyName: "currency_countries_currency_id_foreign"
             columns: ["currency_id"]
             isOneToOne: false
             referencedRelation: "currencies"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      installs: {
-        Row: {
-          expo_tokens: string[] | null
-          user_id: string
-        }
-        Insert: {
-          expo_tokens?: string[] | null
-          user_id: string
-        }
-        Update: {
-          expo_tokens?: string[] | null
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "installs_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: true
-            referencedRelation: "users"
             referencedColumns: ["id"]
           }
         ]
@@ -789,6 +904,85 @@ export interface Database {
           state_id?: number | null
           updated_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "locations_city_id_foreign"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "locations_country_id_foreign"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "locations_state_id_foreign"
+            columns: ["state_id"]
+            isOneToOne: false
+            referencedRelation: "states"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      migrations: {
+        Row: {
+          batch: number
+          id: number
+          migration: string
+        }
+        Insert: {
+          batch: number
+          id?: number
+          migration: string
+        }
+        Update: {
+          batch?: number
+          id?: number
+          migration?: string
+        }
+        Relationships: []
+      }
+      personal_access_tokens: {
+        Row: {
+          abilities: string | null
+          created_at: string | null
+          expires_at: string | null
+          id: number
+          last_used_at: string | null
+          name: string
+          token: string
+          tokenable_id: number
+          tokenable_type: string
+          updated_at: string | null
+        }
+        Insert: {
+          abilities?: string | null
+          created_at?: string | null
+          expires_at?: string | null
+          id?: number
+          last_used_at?: string | null
+          name: string
+          token: string
+          tokenable_id: number
+          tokenable_type: string
+          updated_at?: string | null
+        }
+        Update: {
+          abilities?: string | null
+          created_at?: string | null
+          expires_at?: string | null
+          id?: number
+          last_used_at?: string | null
+          name?: string
+          token?: string
+          tokenable_id?: number
+          tokenable_type?: string
+          updated_at?: string | null
+        }
         Relationships: []
       }
       rating_scores: {
@@ -816,7 +1010,22 @@ export interface Database {
           score?: number
           updated_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "rating_scores_rating_id_foreign"
+            columns: ["rating_id"]
+            isOneToOne: false
+            referencedRelation: "ratings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "rating_scores_rating_type_id_foreign"
+            columns: ["rating_type_id"]
+            isOneToOne: false
+            referencedRelation: "rating_types"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       rating_types: {
         Row: {
@@ -870,7 +1079,15 @@ export interface Database {
           updated_at?: string | null
           user_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "ratings_user_id_foreign"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       service_areas: {
         Row: {
@@ -894,7 +1111,15 @@ export interface Database {
           service_zone_id?: string
           updated_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "service_areas_service_zone_id_foreign"
+            columns: ["service_zone_id"]
+            isOneToOne: false
+            referencedRelation: "service_zones"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       service_zones: {
         Row: {
@@ -925,41 +1150,32 @@ export interface Database {
       }
       shipments: {
         Row: {
-          created_at: string
-          delivery_status:
-            | Database["public"]["Enums"]["shipment_delivery_status"]
-            | null
+          created_at: string | null
           id: string
-          status: Database["public"]["Enums"]["shipment_status"]
-          type: Database["public"]["Enums"]["shipment_types"]
-          updated_at: string
+          status: string | null
+          type: string | null
+          updated_at: string | null
           user_id: string
         }
         Insert: {
-          created_at?: string
-          delivery_status?:
-            | Database["public"]["Enums"]["shipment_delivery_status"]
-            | null
-          id?: string
-          status?: Database["public"]["Enums"]["shipment_status"]
-          type?: Database["public"]["Enums"]["shipment_types"]
-          updated_at?: string
-          user_id?: string
+          created_at?: string | null
+          id: string
+          status?: string | null
+          type?: string | null
+          updated_at?: string | null
+          user_id: string
         }
         Update: {
-          created_at?: string
-          delivery_status?:
-            | Database["public"]["Enums"]["shipment_delivery_status"]
-            | null
+          created_at?: string | null
           id?: string
-          status?: Database["public"]["Enums"]["shipment_status"]
-          type?: Database["public"]["Enums"]["shipment_types"]
-          updated_at?: string
+          status?: string | null
+          type?: string | null
+          updated_at?: string | null
           user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "channels_user_id_fkey"
+            foreignKeyName: "shipments_user_id_foreign"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
@@ -981,7 +1197,7 @@ export interface Database {
           code: string
           country_id?: number | null
           created_at?: string | null
-          id: number
+          id?: number
           name?: string | null
           postal?: string | null
           updated_at?: string | null
@@ -997,7 +1213,7 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "states_country_id_fkey"
+            foreignKeyName: "states_country_id_foreign"
             columns: ["country_id"]
             isOneToOne: false
             referencedRelation: "countries"
@@ -1026,7 +1242,7 @@ export interface Database {
           country_id?: number | null
           created_at?: string | null
           generic_label?: string | null
-          id: number
+          id?: number
           name: string
           rates?: Json | null
           tax_type?: string | null
@@ -1050,13 +1266,34 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "taxes_country_id_fkey"
+            foreignKeyName: "taxes_country_id_foreign"
             columns: ["country_id"]
             isOneToOne: false
             referencedRelation: "countries"
             referencedColumns: ["id"]
           }
         ]
+      }
+      temporary_uploads: {
+        Row: {
+          created_at: string | null
+          id: string
+          session_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id: string
+          session_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          session_id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
       }
       user_verifications: {
         Row: {
@@ -1067,6 +1304,7 @@ export interface Database {
           name: string | null
           nationality_id: number | null
           updated_at: string | null
+          user_id: string
         }
         Insert: {
           birth_date?: string | null
@@ -1076,6 +1314,7 @@ export interface Database {
           name?: string | null
           nationality_id?: number | null
           updated_at?: string | null
+          user_id: string
         }
         Update: {
           birth_date?: string | null
@@ -1085,20 +1324,21 @@ export interface Database {
           name?: string | null
           nationality_id?: number | null
           updated_at?: string | null
+          user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "user_verifications_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "user_verifications_nationality_id_fkey"
+            foreignKeyName: "user_verifications_nationality_id_foreign"
             columns: ["nationality_id"]
             isOneToOne: false
             referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_verifications_user_id_foreign"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
             referencedColumns: ["id"]
           }
         ]
@@ -1107,30 +1347,31 @@ export interface Database {
         Row: {
           about: string | null
           avatar_url: string | null
+          created_at: string | null
           id: string
-          name: string | null
+          name: string
+          phone_number: string | null
+          updated_at: string | null
         }
         Insert: {
           about?: string | null
           avatar_url?: string | null
+          created_at?: string | null
           id: string
-          name?: string | null
+          name: string
+          phone_number?: string | null
+          updated_at?: string | null
         }
         Update: {
           about?: string | null
           avatar_url?: string | null
+          created_at?: string | null
           id?: string
-          name?: string | null
+          name?: string
+          phone_number?: string | null
+          updated_at?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "users_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
+        Relationships: []
       }
       vehicle_capacity_dimensions: {
         Row: {
@@ -1163,7 +1404,15 @@ export interface Database {
           vehicle_id?: string
           width?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "vehicle_capacity_dimensions_vehicle_id_foreign"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       vehicle_capacity_weights: {
         Row: {
@@ -1190,7 +1439,15 @@ export interface Database {
           value?: string | null
           vehicle_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "vehicle_capacity_weights_vehicle_id_foreign"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       vehicle_fuel_information: {
         Row: {
@@ -1226,7 +1483,15 @@ export interface Database {
           updated_at?: string | null
           vehicle_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "vehicle_fuel_information_vehicle_id_foreign"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       vehicle_icons: {
         Row: {
@@ -1283,7 +1548,15 @@ export interface Database {
           updated_at?: string | null
           vehicle_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "vehicle_information_vehicle_id_foreign"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       vehicle_makes: {
         Row: {
@@ -1331,7 +1604,15 @@ export interface Database {
           updated_at?: string | null
           vehicle_make_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "vehicle_models_vehicle_make_id_foreign"
+            columns: ["vehicle_make_id"]
+            isOneToOne: false
+            referencedRelation: "vehicle_makes"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       vehicles: {
         Row: {
@@ -1379,43 +1660,35 @@ export interface Database {
           VIN_number?: string | null
           year?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "vehicles_vehicle_icon_id_foreign"
+            columns: ["vehicle_icon_id"]
+            isOneToOne: false
+            referencedRelation: "vehicle_icons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "vehicles_vehicle_make_id_foreign"
+            columns: ["vehicle_make_id"]
+            isOneToOne: false
+            referencedRelation: "vehicle_makes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "vehicles_vehicle_model_id_foreign"
+            columns: ["vehicle_model_id"]
+            isOneToOne: false
+            referencedRelation: "vehicle_models"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      create_new_company: {
-        Args: {
-          company_name: string
-        }
-        Returns: {
-          created_at: string
-          id: string
-          logo: Database["public"]["CompositeTypes"]["media_file"] | null
-          name: string
-          owner_id: string | null
-        }
-      }
-      invite_company_member: {
-        Args: {
-          company_id: string
-          name?: string
-          email?: string
-          phone_number?: string
-          role?: Database["public"]["Enums"]["company_roles"]
-        }
-        Returns: {
-          code: string | null
-          company_id: string
-          created_at: string
-          id: string
-          invited_email: string | null
-          role: Database["public"]["Enums"]["company_roles"]
-          user_id: string | null
-        }
-      }
       supabase_url: {
         Args: Record<PropertyKey, never>
         Returns: string
@@ -1423,13 +1696,6 @@ export interface Database {
     }
     Enums: {
       company_roles: "owner" | "manager" | "driver" | "member"
-      shipment_delivery_status:
-        | "pending"
-        | "cancelled"
-        | "delivering"
-        | "delivered"
-      shipment_status: "draft" | "assigned" | "searching"
-      shipment_types: "document" | "box" | "multiple_boxes" | "other"
     }
     CompositeTypes: {
       media_file: {

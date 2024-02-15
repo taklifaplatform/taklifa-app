@@ -25,6 +25,7 @@ const nextConfig = {
     'solito',
     'react-native-web',
     'expo-linking',
+    'expo-crypto',
     'expo-constants',
     'expo-modules-core',
     'expo-image-picker',

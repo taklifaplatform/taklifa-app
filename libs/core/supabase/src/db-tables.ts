@@ -7,4 +7,4 @@
 
 export const USERS_TABLE = `users`;
 export const COMPANIES_TABLE = `companies`;
-export const COMPANY_MEMBERSHIPS_TABLE = `company_memberships`;
+export const COMPANY_MEMBERSHIPS_TABLE = `company_members`;

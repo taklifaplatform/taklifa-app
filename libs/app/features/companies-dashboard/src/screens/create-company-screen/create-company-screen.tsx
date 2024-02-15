@@ -1,15 +1,13 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useToastController } from '@zix/app/ui/core';
 import {
-  companies_TABLE,
-  COMPANY_MEMBERSHIPS_TABLE,
-  Tables,
-  uploadMediaFile,
   useSupabase
 } from '@zix/core/supabase';
 import React from 'react';
+import { randomUUID } from 'expo-crypto';
 
-import { Theme } from '@zix/app/ui/core';
+import { api } from '@zix/api';
+import { Theme, Text } from '@zix/app/ui/core';
 import { SchemaForm, SubmitButton, formFields } from '@zix/app/ui/forms';
 import { t } from 'i18next';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -19,11 +17,11 @@ import { useCompanyManagerContext } from '../../context/UseCompanyManagerContext
 
 const CreateCompanyFormSchema = z
   .object({
-    logo: formFields.avatar.optional().describe('Add Company Logo'),
+    // logo: formFields.avatar.optional().describe('Add Company Logo'),
     name: formFields.text.min(2).max(150).describe(t('forms:company_name')),
-    // documents: formFields.file.describe(
-    //   t('Company Documents // Attach documents...')
-    // ),
+    company_documents: formFields.files.describe(
+      t('Company Documents // Attach documents...')
+    ),
     // location: formFields.text
     //   .min(2)
     //   .max(25)
@@ -38,61 +36,26 @@ const CreateCompanyFormSchema = z
 export const CreateCompanyScreen: React.FC = () => {
   const form = useForm<z.infer<typeof CreateCompanyFormSchema>>();
   const { switchCompany } = useCompanyManagerContext();
-  const supabase = useSupabase();
-  const queryClient = useQueryClient();
   const toast = useToastController();
 
   const router = useRouter();
 
-  const { mutate } = useMutation({
-    mutationFn: async (values: z.infer<typeof CreateCompanyFormSchema>) => {
-      const { data, error } = await supabase
-        .rpc('create_new_company', {
-          company_name: values.name
-        })
-        .select('*')
-        .single();
-
-      if (error) {
-        throw error;
-      }
-
-      if (!data?.id) {
-        return null;
-      }
-
-      if (values.logo) {
-        const uploadedAvatar = await uploadMediaFile({
-          file: values.logo,
-          bucket: 'companies',
-          path: `${data.id}/public`
-        });
-        if (uploadedAvatar) {
-          await supabase
-            .from('companies')
-            .update({
-              logo: uploadedAvatar
-            })
-            .eq('id', data?.id)
-            .select('*');
-        }
-      }
-
-      switchCompany(data.id);
-
-      return data;
-    },
-    onSuccess: (data: Tables<'companies'>) => {
-      queryClient.invalidateQueries([companies_TABLE, COMPANY_MEMBERSHIPS_TABLE]);
+  const { mutate, error } = api.manageCompany.create.useMutation({
+    onSuccess(data, variables, context) {
       toast.show('Company Created Successfully!');
+      console.log('====================');
+      console.log('onError::', JSON.stringify(data, null, 2));
+      console.log('====================');
+      switchCompany(data.id);
       router.push(`/companies/${data.id}`);
     },
-    onError: (error) => {
+    onError(error, variables, context) {
       console.log('====================');
-      console.log('onError::', error);
+      console.log('onError::', JSON.stringify(error, null, 2));
       console.log('====================');
+      toast.show('Company Creation Failed!');
     }
-  });
+  })
 
   return (
     <FormProvider {...form}>
@@ -101,7 +64,10 @@ export const CreateCompanyScreen: React.FC = () => {
         defaultValues={{
           name: ''
         }}
-        onSubmit={mutate}
+        onSubmit={(values) => mutate({
+          id: randomUUID(),
+          ...values
+        })}
         renderAfter={({ submit }) => {
           return (
             <Theme inverse>

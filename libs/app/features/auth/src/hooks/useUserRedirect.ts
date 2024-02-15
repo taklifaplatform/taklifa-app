@@ -10,7 +10,7 @@ export function useUserRedirect() {
   const redirectUser = useCallback(
     (_user?: User) => {
       // TODO handel user redirect base on last active dashboard or what he have registered with
-
+      console.log("redirectUser::::", JSON.stringify({ user, _user }, null, 2));
       if (!user && !_user) {
         router.push("/auth/login");
       } else {

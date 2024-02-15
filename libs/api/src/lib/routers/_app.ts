@@ -5,6 +5,7 @@ import { customerShipmentsRouter } from "./customerShipments";
 import { exploreDriversRouter } from "./exploreDrivers";
 import { exploreJobsRouter } from "./exploreJobs";
 import { manageCompanyMembersRouter } from "./company-manager/manageCompanyMembers";
+import { manageCompanyRouter } from "./company-manager/manageCompany";
 import { notificationsRouter } from "./notifications";
 
 export const appRouter = createTRPCRouter({
@@ -13,6 +14,7 @@ export const appRouter = createTRPCRouter({
   exploreDrivers: exploreDriversRouter,
   exploreJobs: exploreJobsRouter,
   manageCompanyMembers: manageCompanyMembersRouter,
+  manageCompany: manageCompanyRouter,
   notifications: notificationsRouter,
 });
 

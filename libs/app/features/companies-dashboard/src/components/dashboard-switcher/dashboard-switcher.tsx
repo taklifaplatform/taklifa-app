@@ -10,6 +10,7 @@ import { useUser } from '@zix/core/auth';
 import { useState } from 'react';
 import { useRouter } from 'solito/router';
 import { useCompanyManagerContext } from '../../context/UseCompanyManagerContext';
+import { api } from '@zix/api';
 
 export type DashboardSwitcherProps = {
   //
@@ -19,7 +20,8 @@ export const DashboardSwitcher: React.FC<DashboardSwitcherProps> = () => {
   const [sheetOpen, setSheetOpen] = useState(false);
   const router = useRouter();
   const { profile, user } = useUser();
-  const { companies, switchCompany } = useCompanyManagerContext();
+  const { switchCompany } = useCompanyManagerContext();
+  const { data } = api.manageCompany.list.useQuery()
 
   const dashboard = [
     {
@@ -78,7 +80,7 @@ export const DashboardSwitcher: React.FC<DashboardSwitcherProps> = () => {
                 </YGroup.Item>
               ))}
               <H3 padding="$4">Companies</H3>
-              {companies?.map((company) => (
+              {data?.data?.map(({ company }) => (
                 <YGroup.Item key={company.name}>
                   <ListItem
                     onPress={() => {
