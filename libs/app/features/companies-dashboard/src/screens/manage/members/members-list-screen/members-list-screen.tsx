@@ -1,25 +1,29 @@
 
-import React from 'react';
 
-import { View, Text, YStack, useStyle } from '@zix/app/ui/core';
 import { api } from '@zix/api';
-import { useCompanyManagerContext } from '../../../../context/UseCompanyManagerContext';
+import { H4, Stack, Text, View, YStack, useStyle } from '@zix/app/ui/core';
 import { SectionList } from 'react-native';
 import TeamMemberCard from '../../../../components/team-member-card/team-member-card';
 import TeamMemberInvitationCard from '../../../../components/team-member-invitation-card/team-member-invitation-card';
+import { useCompanyManagerContext } from '../../../../context/UseCompanyManagerContext';
+import { CustomIcon } from '@zix/app/ui/icons';
 
 /* eslint-disable-next-line */
-export interface ManagersListScreenProps {
+export interface MembersListScreenProps {
+  memberRole: 'manager' | 'driver'
+  company_id: string
 }
 
 
-export function ManagersListScreen(props: ManagersListScreenProps) {
+export function MembersListScreen({ memberRole }: MembersListScreenProps) {
   const { activeCompany } = useCompanyManagerContext()
   const membersQuery = api.companyManageMembers.list.useQuery({
     company_id: activeCompany?.id,
+    role: memberRole
   })
   const invitationsQuery = api.companyInvitations.list.useQuery({
     company_id: activeCompany?.id,
+    role: memberRole
   })
 
   const sectionListStyle = useStyle({
@@ -38,33 +42,47 @@ export function ManagersListScreen(props: ManagersListScreenProps) {
       }}
       sections={[
         {
-          key: 'managers',
+          key: 'Members',
           data: membersQuery?.data?.data || [],
-          renderItem: ({ item, index }) => <TeamMemberCard key={index} member={item} />,
+          renderItem: ({ item }) => <TeamMemberCard member={item} />,
         },
         {
           key: 'invitation',
           data: invitationsQuery?.data?.data || [],
-          renderItem: ({ item, index }) => <TeamMemberInvitationCard key={index} invitation={item} />,
+          renderItem: ({ item }) => <TeamMemberInvitationCard invitation={item} />,
         },
       ]}
-      renderSectionHeader={({ section: { key } }) => {
+      renderSectionHeader={({ section: { key, data } }) => {
         return (
           <YStack
-            bc={'$color2'}
+            backgroundColor='$background'
             width={'100%'}
             height={'$4'}
             justifyContent={'center'}
           >
             <Text fontSize="$6" fontWeight="800">
-              {key === 'managers' ? 'Members' : 'Invitation'}
+              {key === 'Members' ? 'Members' : 'Invitations'}
             </Text>
           </YStack>
         )
       }}
+      renderSectionFooter={({ section: { key, data } }) => {
+        if (data.length) {
+          return null
+        }
+        return (
+          <Stack flex={1} alignItems='center' marginBottom='$6'>
+            <CustomIcon name="empty_data" size="$20" color={'#757575'} />
+            <H4>
+              No members yet
+            </H4>
+          </Stack>
+        )
+      }}
+
     />
   )
 }
 
 
-export default ManagersListScreen;
+export default MembersListScreen;

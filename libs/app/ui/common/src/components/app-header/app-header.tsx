@@ -136,7 +136,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
             {headerTitle ? (
               headerTitle()
             ) : (
-              <H4 fontSize={15}>{title ?? t('common:app_name')}</H4>
+              <H4 fontSize={15} numberOfLines={1}>{title ?? t('common:app_name')}</H4>
             )}
           </XStack>
           <XStack flex={0.25} justifyContent="flex-end">

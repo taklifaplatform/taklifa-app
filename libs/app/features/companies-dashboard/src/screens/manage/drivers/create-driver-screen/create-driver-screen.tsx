@@ -1,13 +1,11 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useToastController } from '@zix/app/ui/core';
 import {
-  companies_TABLE,
-  COMPANY_MEMBERSHIPS_TABLE,
-  Tables,
   useSupabase
 } from '@zix/core/supabase';
 import React from 'react';
 
+import { api } from '@zix/api';
 import { Theme } from '@zix/app/ui/core';
 import { SchemaForm, SubmitButton, formFields } from '@zix/app/ui/forms';
 import { t } from 'i18next';
@@ -15,7 +13,6 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
 import { z } from 'zod';
 import { useCompanyManagerContext } from '../../../../context/UseCompanyManagerContext';
-import { api } from '@zix/api';
 
 const InviteDriverFormSchema = z
   .object({
@@ -39,65 +36,16 @@ export const CreateDriverScreen: React.FC = () => {
 
   const router = useRouter();
 
-  const { mutateAsync } = api.manageCompanyMembers.invite.useMutation()
-
-  // const { mutate } = useMutation({
-  //   mutationFn: async (values: Tables<'companies'>) => {
-  //     console.error('=================');
-  //     console.error('No company id::', activeCompany);
-  //     console.error('=================');
-  //     if (!activeCompany?.id) {
-  //       throw new Error('No company id');
-  //     }
-
-  //     const { data, error } = await supabase
-  //       .rpc('invite_company_member', {
-  //         company_id: activeCompany.id,
-  //         email: values.name,
-  //         phone_number: values.name,
-  //         role: 'driver'
-  //       })
-  //       .select()
-  //       .single();
-
-  //     if (error) {
-  //       console.error('=================');
-  //       console.error('error::', error);
-  //       console.error('=================');
-  //       throw error;
-  //     }
-
-  //     return data;
-  //   },
-  //   onSuccess: (data: Tables<'companies'>) => {
-  //     queryClient.invalidateQueries([companies_TABLE, COMPANY_MEMBERSHIPS_TABLE]);
-  //     toast.show('Company Created Successfully!');
-  //     router.push(`/companies/${data.id}`);
-  //   }
-  // });
-
-  const onSubmit = async (values: z.infer<typeof InviteDriverFormSchema>) => {
-    console.error('=================');
-    console.error('No company id::', activeCompany);
-    console.error('=================');
-    if (!activeCompany?.id) {
-      throw new Error('No company id');
+  const { mutate } = api.manageCompanyMembers.invite.useMutation({
+    onSuccess(data, variables, context) {
+      toast.show('Driver Invited Successfully!');
+      // router.push(`/companies/${activeCompany?.id}`);
+    },
+    onError(error, variables, context) {
+      toast.show('Driver Invitation Failed!');
     }
+  })
 
-    try {
-      await mutateAsync({
-        company_id: activeCompany.id,
-        name: values.name,
-        phone: values.phone,
-        role: 'driver'
-      })
-    } catch (error) {
-      console.error('=================');
-      console.error('error::', error);
-      console.error('=================');
-      // throw error;
-    }
-  }
 
 
   return (
@@ -107,7 +55,11 @@ export const CreateDriverScreen: React.FC = () => {
         defaultValues={{
           name: ''
         }}
-        onSubmit={onSubmit}
+        onSubmit={(values) => mutate({
+          ...values,
+          role: 'driver',
+          company_id: activeCompany?.id,
+        })}
         renderAfter={({ submit }) => {
           return (
             <Theme inverse>

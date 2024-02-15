@@ -1,13 +1,13 @@
 import { ListFilter, MapPin, XCircle } from '@tamagui/lucide-icons';
 import { Button, SizableText, Tabs, XStack, YStack } from '@zix/app/ui/core';
 import { ScrollView } from 'react-native-gesture-handler';
-import DriversListScreen from '../drivers/drivers-list-screen/drivers-list-screen';
-import ManagersListScreen from '../managers/managers-list-screen/managers-list-screen';
-import VehiclesListScreen from '../vehicles/vehicles-list-screen/vehicles-list-screen';
 import ManageTeamFabButton from '../../../components/manage-team-fab-button/manage-team-fab-button';
+import DriversListScreen from '../drivers/drivers-list-screen/drivers-list-screen';
+import MembersListScreen from '../members/members-list-screen/members-list-screen';
+import VehiclesListScreen from '../vehicles/vehicles-list-screen/vehicles-list-screen';
 
 /* eslint-disable-next-line */
-export interface ManageTeamScreenProps {}
+export interface ManageTeamScreenProps { }
 
 export function ManageTeamScreen(props: ManageTeamScreenProps) {
   // taps
@@ -29,6 +29,7 @@ export function ManageTeamScreen(props: ManageTeamScreenProps) {
         value: 'all'
       }
     ];
+    return null
     return (
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <XStack space="$2" paddingVertical="$2">
@@ -54,14 +55,13 @@ export function ManageTeamScreen(props: ManageTeamScreenProps) {
   const renderHorizonTabs = () => {
     return (
       <Tabs
+        flex={1}
         defaultValue="tab1"
         orientation="horizontal"
         flexDirection="column"
-        height={'90%'}
         marginTop="$4"
-        paddingHorizontal="$4"
       >
-        <Tabs.List aria-label="Manage your account" space>
+        <Tabs.List aria-label="Manage your account" paddingHorizontal="$4">
           <Tabs.Tab flex={1} value="tab1" borderRadius="$4">
             <SizableText fontFamily="$body">Manager</SizableText>
           </Tabs.Tab>
@@ -74,28 +74,22 @@ export function ManageTeamScreen(props: ManageTeamScreenProps) {
         </Tabs.List>
         <Tabs.Content
           value="tab1"
-          backgroundColor="$background"
-          padding="$2"
           flex={1}
         >
           {renderFilters()}
-          <ManagersListScreen />
+          <MembersListScreen memberRole='manager' />
         </Tabs.Content>
 
         <Tabs.Content
           value="tab2"
-          backgroundColor="$background"
-          padding="$2"
           flex={1}
         >
           {renderFilters()}
-          <DriversListScreen />
+          <MembersListScreen memberRole='driver' />
         </Tabs.Content>
 
         <Tabs.Content
           value="tab3"
-          backgroundColor="$background"
-          padding="$2"
           flex={1}
         >
           {renderFilters()}

@@ -1,7 +1,7 @@
 
 import { YStack, Text } from '@zix/app/ui/core';
 import SearchBar from '../components/SearchBar';
-import EmptyNotifications from '../components/EmptyNotifications';
+import empty_notifications from '../components/empty_notifications';
 import { SectionList, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import NotificationCard from '../components/NotificationCard';
@@ -111,7 +111,7 @@ export function NotificationScreen(props: NotificationScreenProps) {
 
           ListEmptyComponent={() => (
             <View style={{ height: 600, width: '100%' }}>
-              <EmptyNotifications />
+              <empty_notifications />
             </View>
           )}
           renderItem={({ item }) => (

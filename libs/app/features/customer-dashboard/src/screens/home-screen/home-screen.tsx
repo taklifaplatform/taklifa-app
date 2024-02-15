@@ -12,12 +12,6 @@ import { DriverCard } from '../../components/DriverCard';
 import { ViewDriverSheet } from '../../components/ViewDriverSheet';
 
 
-import { ViewDriverSheet } from '../../components/ViewDriverSheet';
-
-
-import { ViewDriverSheet } from '../../components/ViewDriverSheet';
-
-
 /* eslint-disable-next-line */
 export interface HomeScreenProps { }
 

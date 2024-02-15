@@ -4,18 +4,23 @@ import { countriesRouter } from "./countries";
 import { customerShipmentsRouter } from "./customerShipments";
 import { exploreDriversRouter } from "./exploreDrivers";
 import { exploreJobsRouter } from "./exploreJobs";
-import { manageCompanyMembersRouter } from "./company-manager/manageCompanyMembers";
 import { manageCompanyRouter } from "./company-manager/manageCompany";
 import { notificationsRouter } from "./notifications";
+// company
+import { companyInvitationsRouter } from "./companyInvitations";
+import { companyManageMembersRouter } from "./companyManageMembers";
 
 export const appRouter = createTRPCRouter({
   countries: countriesRouter,
   customerShipments: customerShipmentsRouter,
   exploreDrivers: exploreDriversRouter,
   exploreJobs: exploreJobsRouter,
-  manageCompanyMembers: manageCompanyMembersRouter,
   manageCompany: manageCompanyRouter,
   notifications: notificationsRouter,
+
+  // company
+  companyManageMembers: companyManageMembersRouter,
+  companyInvitations: companyInvitationsRouter,
 });
 
 // export type definition of API

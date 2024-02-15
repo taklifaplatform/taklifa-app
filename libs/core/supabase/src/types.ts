@@ -517,9 +517,10 @@ export interface Database {
           created_at: string | null
           email: string | null
           id: string
-          invitation_code: string
+          invitation_code: string | null
+          is_sent: boolean
           name: string
-          phone_number: string
+          phone: string
           sender_id: string | null
           updated_at: string | null
         }
@@ -528,9 +529,10 @@ export interface Database {
           created_at?: string | null
           email?: string | null
           id?: string
-          invitation_code: string
+          invitation_code?: string | null
+          is_sent?: boolean
           name: string
-          phone_number: string
+          phone: string
           sender_id?: string | null
           updated_at?: string | null
         }
@@ -539,9 +541,10 @@ export interface Database {
           created_at?: string | null
           email?: string | null
           id?: string
-          invitation_code?: string
+          invitation_code?: string | null
+          is_sent?: boolean
           name?: string
-          phone_number?: string
+          phone?: string
           sender_id?: string | null
           updated_at?: string | null
         }

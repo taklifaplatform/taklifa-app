@@ -39,7 +39,6 @@ export type { ImageUpdateVehicleRequest } from './models/ImageUpdateVehicleReque
 export type { InformationUpdateVehicleRequest } from './models/InformationUpdateVehicleRequest';
 export type { ItemRatingTransformer } from './models/ItemRatingTransformer';
 export type { JsonTransformer } from './models/JsonTransformer';
-export type { LegalDocumentUpdateCompanyRequest } from './models/LegalDocumentUpdateCompanyRequest';
 export type { ListCitiesQueryRequest } from './models/ListCitiesQueryRequest';
 export type { ListCompanyQueryRequest } from './models/ListCompanyQueryRequest';
 export type { ListCountriesQueryRequest } from './models/ListCountriesQueryRequest';
@@ -52,10 +51,8 @@ export type { ListStatesQueryRequest } from './models/ListStatesQueryRequest';
 export type { ListUserVerificationRequest } from './models/ListUserVerificationRequest';
 export type { ListVehicleQueryRequest } from './models/ListVehicleQueryRequest';
 export type { LocationTransformer } from './models/LocationTransformer';
-export type { LocationUpdateCompanyRequest } from './models/LocationUpdateCompanyRequest';
 export type { LocationUpdateUserVerificationRequest } from './models/LocationUpdateUserVerificationRequest';
 export type { LoginRequest } from './models/LoginRequest';
-export type { LogoUpdateCompanyRequest } from './models/LogoUpdateCompanyRequest';
 export type { MediaTransformer } from './models/MediaTransformer';
 export type { QueryRequest } from './models/QueryRequest';
 export type { RatesUpdateRatingRequest } from './models/RatesUpdateRatingRequest';
@@ -98,10 +95,7 @@ export type { VerifyResetPasswordPinCodeRequest } from './models/VerifyResetPass
 
 export { AuthService } from './services/AuthService';
 export { CompaniesService } from './services/CompaniesService';
-export { CompanyDriversService } from './services/CompanyDriversService';
-export { CompanyDriversInvitationsService } from './services/CompanyDriversInvitationsService';
-export { CompanyManagersService } from './services/CompanyManagersService';
-export { CompanyManagersInvitationsService } from './services/CompanyManagersInvitationsService';
+export { CompanyInvitationsService } from './services/CompanyInvitationsService';
 export { DriverAcceptInvitationService } from './services/DriverAcceptInvitationService';
 export { GeographyService } from './services/GeographyService';
 export { ManagerAcceptInvitationService } from './services/ManagerAcceptInvitationService';

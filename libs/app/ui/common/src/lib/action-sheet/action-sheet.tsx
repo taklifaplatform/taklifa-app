@@ -10,6 +10,7 @@ import { Dimensions } from 'react-native';
 
 export interface IAction {
   name: string;
+  disabled?: boolean;
   icon?:
     | JSX.Element
     | FunctionComponent<{ color?: string; size?: number }>
@@ -80,6 +81,8 @@ export const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
           <YStack>
             {props.actions.map((action, index) => (
               <Button
+                opacity={action.disabled ? 0.5 : 1}
+                disabled={action.disabled}
                 justifyContent={'flex-start'}
                 backgroundColor="$color2"
                 height={ACTION_HEIGHT}

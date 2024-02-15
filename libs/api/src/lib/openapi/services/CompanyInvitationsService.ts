@@ -2,32 +2,22 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { CompanyTransformer } from '../models/CompanyTransformer';
+import type { CompanyDriverInvitationTransformer } from '../models/CompanyDriverInvitationTransformer';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-export class CompaniesService {
+export class CompanyInvitationsService {
     /**
-     * Fetch all companies.
+     * Fetch All Driver Invitations
      * @returns any Successful response
      * @throws ApiError
      */
-    public static fetchAllCompanies({
-        page,
-        perPage,
-        search,
+    public static sentInvitation({
+        companyInvitation,
     }: {
-        /**
-         * Page number
-         */
-        page?: number,
-        /**
-         * Number of items per page
-         */
-        perPage?: number,
-        search?: string,
+        companyInvitation: string,
     }): CancelablePromise<{
-        data?: Array<CompanyTransformer>;
+        data?: Array<CompanyDriverInvitationTransformer>;
         links?: {
             first?: string;
             last?: string;
@@ -51,11 +41,9 @@ export class CompaniesService {
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/companies',
-            query: {
-                'page': page,
-                'per_page': perPage,
-                'search': search,
+            url: '/api/company/invitations/{companyInvitation}',
+            path: {
+                'companyInvitation': companyInvitation,
             },
         });
     }

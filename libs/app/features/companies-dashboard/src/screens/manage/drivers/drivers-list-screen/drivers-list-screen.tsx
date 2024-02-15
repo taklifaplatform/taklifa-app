@@ -14,7 +14,7 @@ export function DriversListScreen(props: DriversListScreenProps) {
       <Text>Welcome to drivers-list-screen!</Text>
     </View>
   );
-};
+}
 
 
 export default DriversListScreen;
