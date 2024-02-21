@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import ManagersListScreen from './managers-list-screen';
+import ManagersListScreen from './members-list-screen';
 
 describe('ManagersListScreen', () => {
   it('should render successfully', () => {

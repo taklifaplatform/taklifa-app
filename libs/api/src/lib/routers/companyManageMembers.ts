@@ -63,7 +63,6 @@ export const companyManageMembersRouter = createTRPCRouter({
           .eq("company_id", company_id)
           .eq("user_id", member_id);
 
-
         return result;
       },
     ),

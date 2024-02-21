@@ -4,9 +4,10 @@ import { countriesRouter } from "./countries";
 import { customerShipmentsRouter } from "./customerShipments";
 import { exploreDriversRouter } from "./exploreDrivers";
 import { exploreJobsRouter } from "./exploreJobs";
-import { manageCompanyRouter } from "./company-manager/manageCompany";
 import { notificationsRouter } from "./notifications";
 // company
+import { manageCompanyRouter } from "./manageCompany";
+
 import { companyInvitationsRouter } from "./companyInvitations";
 import { companyManageMembersRouter } from "./companyManageMembers";
 
@@ -15,10 +16,10 @@ export const appRouter = createTRPCRouter({
   customerShipments: customerShipmentsRouter,
   exploreDrivers: exploreDriversRouter,
   exploreJobs: exploreJobsRouter,
-  manageCompany: manageCompanyRouter,
   notifications: notificationsRouter,
 
   // company
+  manageCompany: manageCompanyRouter,
   companyManageMembers: companyManageMembersRouter,
   companyInvitations: companyInvitationsRouter,
 });

@@ -1,12 +1,11 @@
 
 
 import { api } from '@zix/api';
-import { H4, Stack, Text, View, YStack, useStyle } from '@zix/app/ui/core';
+import { H4, Stack, Text, YStack, useStyle } from '@zix/app/ui/core';
+import { CustomIcon } from '@zix/app/ui/icons';
 import { SectionList } from 'react-native';
 import TeamMemberCard from '../../../../components/team-member-card/team-member-card';
 import TeamMemberInvitationCard from '../../../../components/team-member-invitation-card/team-member-invitation-card';
-import { useCompanyManagerContext } from '../../../../context/UseCompanyManagerContext';
-import { CustomIcon } from '@zix/app/ui/icons';
 
 /* eslint-disable-next-line */
 export interface MembersListScreenProps {
@@ -15,14 +14,13 @@ export interface MembersListScreenProps {
 }
 
 
-export function MembersListScreen({ memberRole }: MembersListScreenProps) {
-  const { activeCompany } = useCompanyManagerContext()
+export function MembersListScreen({ memberRole, company_id }: MembersListScreenProps) {
   const membersQuery = api.companyManageMembers.list.useQuery({
-    company_id: activeCompany?.id,
+    company_id,
     role: memberRole
   })
   const invitationsQuery = api.companyInvitations.list.useQuery({
-    company_id: activeCompany?.id,
+    company_id,
     role: memberRole
   })
 
@@ -39,6 +37,11 @@ export function MembersListScreen({ memberRole }: MembersListScreenProps) {
       onRefresh={() => {
         membersQuery?.refetch()
         invitationsQuery?.refetch()
+      }}
+      onEndReached={() => {
+        // membersQuery?.ge()
+        // invitationsQuery?.fetchNextPage()
+
       }}
       sections={[
         {

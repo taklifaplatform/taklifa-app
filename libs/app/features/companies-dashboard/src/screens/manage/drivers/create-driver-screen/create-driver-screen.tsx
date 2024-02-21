@@ -36,7 +36,7 @@ export const CreateDriverScreen: React.FC = () => {
 
   const router = useRouter();
 
-  const { mutate } = api.manageCompanyMembers.invite.useMutation({
+  const { mutate } = api.companyInvitations.create.useMutation({
     onSuccess(data, variables, context) {
       toast.show('Driver Invited Successfully!');
       // router.push(`/companies/${activeCompany?.id}`);

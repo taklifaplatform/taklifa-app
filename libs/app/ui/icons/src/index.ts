@@ -1,2 +1,1 @@
-
-export * from './custom-icon/custom-icon';
+export * from "./custom-icon/custom-icon";

@@ -1,6 +1,6 @@
 import { COMPANY_MEMBERSHIPS_TABLE, Tables } from "@zix/core/supabase";
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "../../trpc";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const manageCompanyRouter = createTRPCRouter({
   list: protectedProcedure

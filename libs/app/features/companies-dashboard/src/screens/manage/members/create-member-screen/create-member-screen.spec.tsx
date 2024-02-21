@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import CreateManagerScreen from './create-manager-screen';
+import CreateManagerScreen from './create-member-screen';
 
 describe('CreateManagerScreen', () => {
   it('should render successfully', () => {

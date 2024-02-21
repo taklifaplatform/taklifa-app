@@ -5,13 +5,19 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 export const companyInvitationsRouter = createTRPCRouter({
   list: protectedProcedure
     .input(z.object({
+      company_id: z.string(),
       role: z.string().optional(), // 'manager' | 'driver'
     }))
-    .query(async ({ ctx: { supabase }, input: { role = "manager" } }) => {
-      return supabase.from("company_invitations")
-        .select()
-        .eq("role", role);
-    }),
+    .query(
+      async (
+        { ctx: { supabase }, input: { role = "manager", company_id } },
+      ) => {
+        return supabase.from("company_invitations")
+          .select()
+          .eq("company_id", company_id)
+          .eq("role", role);
+      },
+    ),
   get: protectedProcedure
     .input(z.object({
       id: z.string(),
