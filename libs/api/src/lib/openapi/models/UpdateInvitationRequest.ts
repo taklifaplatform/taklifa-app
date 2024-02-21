@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type UpdateManagerInvitationRequest = {
+export type UpdateInvitationRequest = {
     name?: string;
     phone_number?: string;
     email?: string;

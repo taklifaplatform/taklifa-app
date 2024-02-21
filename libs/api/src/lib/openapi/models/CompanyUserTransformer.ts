@@ -4,7 +4,7 @@
 /* eslint-disable */
 import type { MediaTransformer } from './MediaTransformer';
 export type CompanyUserTransformer = {
-    id?: number;
+    id?: string;
     username?: string;
     name?: string;
     phone_number?: string;

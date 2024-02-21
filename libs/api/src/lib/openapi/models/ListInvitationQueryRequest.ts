@@ -4,5 +4,6 @@
 /* eslint-disable */
 export type ListInvitationQueryRequest = {
     search?: string;
+    role?: string;
 };
 

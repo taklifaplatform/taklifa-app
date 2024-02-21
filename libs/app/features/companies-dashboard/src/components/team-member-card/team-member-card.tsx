@@ -1,6 +1,6 @@
 
 import { Eye, MoreHorizontal, Pencil, Trash2 } from '@tamagui/lucide-icons';
-import { api } from '@zix/api';
+import { CompanyMemberTransformer, api } from '@zix/api';
 import { ActionSheet, ActionSheetRef, UserAvatar } from '@zix/app/ui/common';
 import { Button, Text, XStack, YStack, useToastController } from '@zix/app/ui/core';
 import { useUser } from '@zix/core/auth';
@@ -12,9 +12,7 @@ import { useRouter } from 'solito/router';
 
 
 export interface TeamMemberCardProps {
-  member: Tables<'company_members'> & {
-    user: Tables<'users'>;
-  };
+  member: CompanyMemberTransformer;
 }
 
 export function TeamMemberCard({ member: { user, role, company_id } }: TeamMemberCardProps) {

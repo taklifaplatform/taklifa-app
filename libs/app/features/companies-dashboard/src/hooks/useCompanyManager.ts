@@ -1,19 +1,25 @@
-import { api } from "@zix/api";
-import { Tables } from "@zix/core/supabase";
+import { useQuery } from "@tanstack/react-query";
+import { CompanyAdminService, CompanyTransformer } from "@zix/api";
 import { useState } from "react";
 
 export type CompanyManager = {
   switchCompany: (id: string) => void;
 
-  activeCompany?: Tables<"companies">;
+  activeCompany?: CompanyTransformer;
   refreshActiveCompany: () => void;
 };
 
 export function useCompanyManager(): CompanyManager {
   const [activeCompanyId, setActiveCompanyId] = useState<string>();
 
-  const activeCompanyQuery = api.manageCompany.get.useQuery({
-    id: activeCompanyId,
+  const activeCompanyQuery = useQuery({
+    queryFn: () =>
+      activeCompanyId
+        ? CompanyAdminService.retrieve({
+          company: activeCompanyId,
+        })
+        : null,
+    queryKey: ["CompanyAdminService.list", activeCompanyId],
   });
 
   function switchCompany(id: string) {
@@ -21,7 +27,7 @@ export function useCompanyManager(): CompanyManager {
     activeCompanyQuery.refetch();
   }
   return {
-    activeCompany: activeCompanyQuery?.data?.data?.company,
+    activeCompany: activeCompanyQuery?.data?.data,
     refreshActiveCompany: activeCompanyQuery.refetch,
     switchCompany,
   };

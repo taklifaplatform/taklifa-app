@@ -12,7 +12,7 @@ export type UpdateVehicleRequest = {
     internal_id?: string;
     color?: string;
     plate_number?: string;
-    VIN_number?: string;
+    vin_number?: string;
     year?: number;
     image?: ImageUpdateVehicleRequest;
     images?: Array<ImagesUpdateVehicleRequest>;

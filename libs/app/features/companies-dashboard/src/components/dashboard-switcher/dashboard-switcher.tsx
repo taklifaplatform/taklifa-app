@@ -1,3 +1,5 @@
+import { useQuery } from "@tanstack/react-query";
+
 import {
   Building2,
   CarFront,
@@ -5,12 +7,12 @@ import {
   PlusSquare,
   User as UserIcon
 } from '@tamagui/lucide-icons';
+import { CompanyAdminService } from '@zix/api';
 import { H3, ListItem, Sheet, Text, XStack, YGroup } from '@zix/app/ui/core';
 import { useUser } from '@zix/core/auth';
 import { useState } from 'react';
 import { useRouter } from 'solito/router';
 import { useCompanyManagerContext } from '../../context/UseCompanyManagerContext';
-import { api } from '@zix/api';
 
 export type DashboardSwitcherProps = {
   //
@@ -21,7 +23,11 @@ export const DashboardSwitcher: React.FC<DashboardSwitcherProps> = () => {
   const router = useRouter();
   const { profile, user } = useUser();
   const { switchCompany } = useCompanyManagerContext();
-  const { data } = api.manageCompany.list.useQuery()
+
+  const { data } = useQuery({
+    queryFn: () => CompanyAdminService.list({}),
+    queryKey: ['CompanyAdminService.list'],
+  })
 
   const dashboard = [
     {
@@ -80,11 +86,11 @@ export const DashboardSwitcher: React.FC<DashboardSwitcherProps> = () => {
                 </YGroup.Item>
               ))}
               <H3 padding="$4">Companies</H3>
-              {data?.data?.map(({ company }) => (
+              {data?.data?.map((company) => (
                 <YGroup.Item key={company.name}>
                   <ListItem
                     onPress={() => {
-                      switchCompany(company.id);
+                      company.id && switchCompany(company.id);
                       onNavigate(`/companies/${company.id}`);
                     }}
                     marginVertical="$2"

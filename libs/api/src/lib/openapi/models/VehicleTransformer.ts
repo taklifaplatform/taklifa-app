@@ -15,7 +15,7 @@ export type VehicleTransformer = {
     internal_id?: string;
     color?: string;
     plate_number?: string;
-    VIN_number?: string;
+    vin_number?: string;
     year?: string;
     image?: MediaTransformer;
     images?: Array<MediaTransformer>;

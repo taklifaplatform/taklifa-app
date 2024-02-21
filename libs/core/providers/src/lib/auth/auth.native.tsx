@@ -4,6 +4,7 @@ import { SessionContext, supabase } from '@zix/core/supabase';
 import { useEffect, useState } from 'react';
 import { AuthProviderProps } from './auth';
 import { AuthStateChangeHandler } from './auth-state-change-handler';
+import { OpenAPI } from '@zix/api';
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({
   children,
@@ -15,10 +16,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
   const [error, setError] = useState<AuthError | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
+    OpenAPI.BASE = `${process.env.LARAVEL_API_URL}`;
     setIsLoading(true);
     supabase.auth
       .getSession()
       .then(({ data: { session: newSession } }) => {
+        OpenAPI.TOKEN = newSession?.access_token;
         setSession(newSession);
       })
       .catch((error) => setError(new AuthError(error.message)))
@@ -40,19 +43,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
       value={
         session
           ? {
-              session,
-              isLoading: false,
-              error: null,
-              supabaseClient: supabase
-            }
+            session,
+            isLoading: false,
+            error: null,
+            supabaseClient: supabase
+          }
           : error
-          ? {
+            ? {
               error,
               isLoading: false,
               session: null,
               supabaseClient: supabase
             }
-          : {
+            : {
               error: null,
               isLoading,
               session: null,

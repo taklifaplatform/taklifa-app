@@ -2,25 +2,22 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { CompanyInvitationTransformer } from '../models/CompanyInvitationTransformer';
-import type { UpdateInvitationRequest } from '../models/UpdateInvitationRequest';
+import type { CompanyTransformer } from '../models/CompanyTransformer';
+import type { UpdateCompanyRequest } from '../models/UpdateCompanyRequest';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-export class CompanyInvitationsService {
+export class CompanyAdminService {
     /**
-     * Fetch All Company New Members Invitations.
+     * Fetch all companies.
      * @returns any Successful response
      * @throws ApiError
      */
     public static list({
-        company,
         page,
         perPage,
         search,
-        role,
     }: {
-        company: string,
         /**
          * Page number
          */
@@ -30,9 +27,8 @@ export class CompanyInvitationsService {
          */
         perPage?: number,
         search?: string,
-        role?: 'manager' | 'driver',
     }): CancelablePromise<{
-        data?: Array<CompanyInvitationTransformer>;
+        data?: Array<CompanyTransformer>;
         links?: {
             first?: string;
             last?: string;
@@ -56,36 +52,29 @@ export class CompanyInvitationsService {
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/admin/companies/{company}/invitation',
-            path: {
-                'company': company,
-            },
+            url: '/api/admin/companies',
             query: {
                 'page': page,
                 'per_page': perPage,
                 'search': search,
-                'role': role,
             },
         });
     }
     /**
-     * Invite New Driver to Company
-     * @returns void
+     * Create new company.
+     * @returns any Successful response
      * @throws ApiError
      */
     public static create({
-        company,
         requestBody,
     }: {
-        company: string,
-        requestBody: UpdateInvitationRequest,
-    }): CancelablePromise<void> {
+        requestBody: UpdateCompanyRequest,
+    }): CancelablePromise<{
+        data?: CompanyTransformer;
+    }> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/admin/companies/{company}/invitation',
-            path: {
-                'company': company,
-            },
+            url: '/api/admin/companies',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -94,48 +83,44 @@ export class CompanyInvitationsService {
         });
     }
     /**
-     * Retrieve a Manager of Company.
+     * Retrieve a company.
      * @returns any Successful response
      * @throws ApiError
      */
     public static retrieve({
         company,
-        companyInvitation,
     }: {
         company: string,
-        companyInvitation: string,
     }): CancelablePromise<{
-        data?: CompanyInvitationTransformer;
+        data?: CompanyTransformer;
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/admin/companies/{company}/invitation/{companyInvitation}',
+            url: '/api/admin/companies/{company}',
             path: {
                 'company': company,
-                'companyInvitation': companyInvitation,
             },
         });
     }
     /**
-     * Update Driver Invitation
-     * @returns void
+     * Update a company.
+     * @returns any Successful response
      * @throws ApiError
      */
     public static update({
         company,
-        companyInvitation,
         requestBody,
     }: {
         company: string,
-        companyInvitation: string,
-        requestBody: UpdateInvitationRequest,
-    }): CancelablePromise<void> {
+        requestBody: UpdateCompanyRequest,
+    }): CancelablePromise<{
+        data?: CompanyTransformer;
+    }> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/admin/companies/{company}/invitation/{companyInvitation}',
+            url: '/api/admin/companies/{company}',
             path: {
                 'company': company,
-                'companyInvitation': companyInvitation,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -145,25 +130,22 @@ export class CompanyInvitationsService {
         });
     }
     /**
-     * Delete Driver Invitation
+     * Delete a company.
      * @returns any Successful response
      * @throws ApiError
      */
     public static delete({
         company,
-        companyInvitation,
     }: {
         company: string,
-        companyInvitation: string,
     }): CancelablePromise<{
-        data?: CompanyInvitationTransformer;
+        data?: CompanyTransformer;
     }> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/admin/companies/{company}/invitation/{companyInvitation}',
+            url: '/api/admin/companies/{company}',
             path: {
                 'company': company,
-                'companyInvitation': companyInvitation,
             },
         });
     }

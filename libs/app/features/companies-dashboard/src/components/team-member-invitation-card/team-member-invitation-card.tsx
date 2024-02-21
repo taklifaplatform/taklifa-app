@@ -1,13 +1,13 @@
 
 import { MoreHorizontal } from '@tamagui/lucide-icons';
+import { CompanyInvitationTransformer } from '@zix/api';
 import { UserAvatar } from '@zix/app/ui/common';
 import { Button, Text, View, XStack, YStack } from '@zix/app/ui/core';
-import { Tables } from '@zix/core/supabase';
 
 
 /* eslint-disable-next-line */
 export interface TeamMemberInvitationCardProps {
-  invitation: Tables<'company_invitations'>
+  invitation: CompanyInvitationTransformer
 }
 
 
@@ -38,7 +38,7 @@ export function TeamMemberInvitationCard({ invitation }: TeamMemberInvitationCar
             {invitation.name}
           </Text>
           <Text color={'$gray10Dark'} fontWeight={'$10'}>
-            {invitation.phone || invitation.email}
+            {invitation.phone_number || invitation.email}
           </Text>
         </YStack>
       </XStack>

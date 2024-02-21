@@ -1,13 +1,13 @@
+import { useQuery } from "@tanstack/react-query";
 
 
-import { api } from '@zix/api';
+import { CompanyInvitationsService, CompanyMembersService } from '@zix/api';
 import { H4, Stack, Text, YStack, useStyle } from '@zix/app/ui/core';
 import { CustomIcon } from '@zix/app/ui/icons';
 import { SectionList } from 'react-native';
 import TeamMemberCard from '../../../../components/team-member-card/team-member-card';
 import TeamMemberInvitationCard from '../../../../components/team-member-invitation-card/team-member-invitation-card';
 
-/* eslint-disable-next-line */
 export interface MembersListScreenProps {
   memberRole: 'manager' | 'driver'
   company_id: string
@@ -15,20 +15,26 @@ export interface MembersListScreenProps {
 
 
 export function MembersListScreen({ memberRole, company_id }: MembersListScreenProps) {
-  const membersQuery = api.companyManageMembers.list.useQuery({
-    company_id,
-    role: memberRole
+  const membersQuery = useQuery({
+    queryFn: () => CompanyMembersService.list({
+      company: company_id,
+      role: memberRole
+    }),
+    queryKey: ['CompanyMembersService.list', company_id, memberRole],
   })
-  const invitationsQuery = api.companyInvitations.list.useQuery({
-    company_id,
-    role: memberRole
+
+  const invitationsQuery = useQuery({
+    queryFn: () => CompanyInvitationsService.list({
+      company: company_id,
+      role: memberRole
+    }),
+    queryKey: ['CompanyInvitationsService.list', company_id, memberRole],
   })
 
   const sectionListStyle = useStyle({
     flex: 1,
     paddingHorizontal: '$4'
   })
-
 
   return (
     <SectionList

@@ -5,7 +5,7 @@
 import type { LocationTransformer } from './LocationTransformer';
 import type { MediaTransformer } from './MediaTransformer';
 export type CompanyTransformer = {
-    id?: number;
+    id?: string;
     name?: string;
     logo?: MediaTransformer;
     location?: LocationTransformer;

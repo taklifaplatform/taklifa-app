@@ -2,8 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type ListManagerDriverQueryRequest = {
+export type ListCompanyMembersQueryRequest = {
     search?: string;
     status?: string;
+    role?: string;
 };
 
