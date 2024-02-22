@@ -24,8 +24,16 @@ export function Questions() {
         }
     ];
     return (
-        <YStack bottom={'-7%'} alignItems="center">
-            <XStack alignItems="center" paddingVertical='$6' space="$4">
+        <YStack 
+        bottom={'-35%'}
+        alignItems="center"
+        position='absolute'
+        w={'100%'}
+        $sm={{
+           bottom: '-32%'
+        }}
+        >
+            <XStack alignItems="center" paddingVertical='$6' gap="$4">
                 <CustomIcon name="large_arrow_left" />
                 <Text
                     fontWeight='bold'
@@ -43,8 +51,21 @@ export function Questions() {
                     backgroundColor={'$gray4'}
                     borderRadius={'$2'}
                     alignItems="center"
+                    $sm={{
+                        w: '90%',
+                        paddingHorizontal: "$1",
+                        paddingVertical: "$2",
+                        marginTop: "$1"
+                    
+                    }}
                 >
-                    <Text>{item.title}</Text>
+                    <Text
+                    $sm={{
+                        fontSize: "$2",
+                        fontWeight: "600"
+                    
+                    }}
+                    >{item.title}</Text>
                     <Plus size="$2" />
                 </XStack>
             ))}

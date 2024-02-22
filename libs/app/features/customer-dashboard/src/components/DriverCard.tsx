@@ -2,18 +2,18 @@ import { Button, Separator, XStack, YStack, Image, Text } from '@zix/app/ui/core
 import { CustomIcon } from '@zix/app/ui/icons'
 import { X } from '@tamagui/lucide-icons'
 
-export function DriverCard({ item, setShowCarousel, setSelectedMarker }
-    :
-    {
-        item: any,
-        setShowCarousel: (show: boolean) => void,
-        setSelectedMarker: (marker: any) => void
-    }) {
+export type DriverCardProps = {
+    item: any,
+    setShowCarousel: (show: boolean) => void,
+    setSelectedMarker: (marker: any) => void
+}
+
+export const DriverCard : React.FC<DriverCardProps> = ({ item, setShowCarousel, setSelectedMarker }) => {
 
     const onCancell = () => {
-           setShowCarousel && setShowCarousel(false);
-           setSelectedMarker && setSelectedMarker({});
-        }
+        setShowCarousel && setShowCarousel(false);
+        setSelectedMarker && setSelectedMarker({});
+    }
     return (
         <YStack
             backgroundColor={'$color1'}
@@ -122,3 +122,6 @@ export function DriverCard({ item, setShowCarousel, setSelectedMarker }
         </YStack>
     )
 }
+
+
+export default DriverCard;

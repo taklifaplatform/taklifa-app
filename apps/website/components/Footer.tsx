@@ -6,17 +6,19 @@ import { TouchableOpacity } from 'react-native';
 
 export function Footer() {
   return (
-    <YStack bottom="-8%">
+    <YStack
+    $sm={{ display: 'none' }}
+    bottom="-55%" position='absolute' w={'100%'}>
       <YStack backgroundColor={'$color'} padding="$4" borderRadius="$4">
         <XStack justifyContent="flex-end">
           <CustomIcon name="weblogo" width={170} height={75} />
         </XStack>
         <XStack justifyContent="space-between" padding="$4">
-          <YStack space="$4">
+          <YStack gap="$4">
             <Text color={'$color1'} fontWeight={'bold'}>
             {t('web-home:followus')}
             </Text>
-            <XStack space="$4">
+            <XStack gap="$4">
               <TouchableOpacity>
                 <CustomIcon name="facebook" color={'$color1'} />
               </TouchableOpacity>
@@ -50,7 +52,7 @@ export function Footer() {
               </TouchableOpacity>
             </XStack>
           </YStack>
-          <YStack space="$4">
+          <YStack gap="$4">
             <Text color={'$color5'} fontWeight={'bold'}>
             {t('web-home:aboutfooter')}
             </Text>
@@ -70,7 +72,7 @@ export function Footer() {
               <Text color={'$color1'}>{t('web-home:aboutsawaed')}</Text>
             </TouchableOpacity>
           </YStack>
-          <YStack space="$4">
+          <YStack gap="$4">
             <Text color={'$color5'} fontWeight={'bold'}>
             {t('web-home:legal')}
             </Text>
@@ -90,7 +92,7 @@ export function Footer() {
               <Text color={'$color1'}>{t('web-home:sdk')}</Text>
             </TouchableOpacity>
           </YStack>
-          <YStack space="$4">
+          <YStack gap="$4">
             <Text color={'$color5'} fontWeight={'bold'}>
             {t('web-home:contact')}
             </Text>

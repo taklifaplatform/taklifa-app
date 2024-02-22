@@ -14,34 +14,10 @@ import { Alert, TouchableOpacity } from 'react-native';
 
 export function TopHeader() {
   const { changeLanguage } = useMultiLang();
-  const topBarData = [
-    {
-      title: 'Follow Us',
-      icons: [{ name: 'facebook' }, { name: 'instagram' }, { name: 'snapchat' }]
-    },
-    {
-      title: 'Download App',
-      icons: [{ name: 'googleplay' }, { name: 'appstore' }]
-    },
-    {
-      title: 'Saudi Arabia',
-      icons: [{ name: 'flag' }, { name: 'location' }]
-    },
-    {
-      title: 'Translate',
-      icons: [{ name: 'translate' }]
-    },
-    {
-      title: 'Questions',
-      icons: [{ name: 'help' }]
-    },
-    {
-      title: 'About',
-      icons: [{ name: 'homeinfo' }]
-    }
-  ];
+ 
   return (
     <XStack
+      $sm={{ display: 'none' }}
       alignItems="center"
       justifyContent="space-around"
       paddingVertical="$5"
@@ -63,30 +39,30 @@ export function TopHeader() {
       >
         Change Lang en
       </TouchableOpacity>*/}
-      <XStack space="$2" alignItems="center">
+      <XStack gap="$2" alignItems="center">
         <Text fontWeight={'500'} fontSize="$2">
           {t('web-home:followus')}
         </Text>
-        <XStack space="$2">
+        <XStack gap="$2">
           <CustomIcon name={'facebook'} />
           <CustomIcon name={'instagram'} />
           <CustomIcon name={'snapchat'} />
         </XStack>
       </XStack>
-      <XStack space="$2" alignItems="center">
+      <XStack gap="$2" alignItems="center">
         <Text fontWeight={'500'} fontSize="$2">
           {t('web-home:download')}
         </Text>
-        <XStack space="$2">
+        <XStack gap="$2">
           <CustomIcon name={'appstore'} />
           <CustomIcon name={'googleplay'} />
         </XStack>
       </XStack>
-      <XStack space="$2" alignItems="center">
+      <XStack gap="$2" alignItems="center">
         <Text fontWeight={'500'} fontSize="$2">
           saudi arabia
         </Text>
-        <XStack space="$2">
+        <XStack gap="$2">
           <Image
             source={{
               uri: '/images/flag.png',
@@ -132,10 +108,10 @@ export function TopHeader() {
             opacity={1}
             y={0}
           >
-            <YStack space>
+            <YStack gap>
               <AlertDialog.Description>Select Language</AlertDialog.Description>
 
-              <XStack space="$3" justifyContent="flex-end">
+              <XStack gap="$3" justifyContent="flex-end">
                 <AlertDialog.Cancel asChild>
                   <Button onPress={() => changeLanguage('en')}>English</Button>
                 </AlertDialog.Cancel>
@@ -147,19 +123,19 @@ export function TopHeader() {
           </AlertDialog.Content>
         </AlertDialog.Portal>
       </AlertDialog>
-      <XStack space="$2" alignItems="center">
+      <XStack gap="$2" alignItems="center">
         <Text fontWeight={'500'} fontSize="$2">
           {t('web-home:question')}
         </Text>
-        <XStack space="$2">
+        <XStack gap="$2">
           <CustomIcon name={'help'} />
         </XStack>
       </XStack>
-      <XStack space="$2" alignItems="center">
+      <XStack gap="$2" alignItems="center">
         <Text fontWeight={'500'} fontSize="$2">
           {t('web-home:home')}
         </Text>
-        <XStack space="$2">
+        <XStack gap="$2">
           <CustomIcon name={'homeinfo'} />
         </XStack>
       </XStack>

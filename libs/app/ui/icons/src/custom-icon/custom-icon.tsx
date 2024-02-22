@@ -86,6 +86,7 @@ const iconNames = [
   'list',
   'edit',
   'starlocation',
+  'drawer',
   // vehicles
   'vehicle_a',
   'vehicle_b',

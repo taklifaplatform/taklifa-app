@@ -7,6 +7,7 @@ import {t} from 'i18next'
 export function Header() {
   return (
     <XStack
+      $sm={{ display: 'none' }}
       justifyContent="space-between"
       w={'100%'}
       backgroundColor={'$color1'}

@@ -56,6 +56,7 @@ import Map from "./icons/map.svg";
 import List from "./icons/list.svg";
 import Edit from "./icons/edit.svg";
 import Starlocation from "./icons/starlocation.svg";
+import Drawer from "./icons/drawer.svg";
 
 // arts
 import CompanyCars from "./arts/company-cars.svg";
@@ -129,7 +130,7 @@ export {
   List,
   Edit,
   Starlocation,
-
+  Drawer,
 
   // vehicles
   VehicleA,

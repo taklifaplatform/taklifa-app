@@ -5,7 +5,7 @@ import { t } from 'i18next';
 
 export function WarningBanner() {
   return (
-    <YStack bottom="-4.5%" justifyContent="center">
+    <YStack bottom="-22%" justifyContent="center" $sm={{ display: 'none' }} w={'100%'}>
       <Image
         alt="Banner"
         source={{
