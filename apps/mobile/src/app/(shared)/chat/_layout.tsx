@@ -1,11 +1,14 @@
 import { ChatLayout } from '@zix/app/features/chat';
 import { Stack } from 'expo-router';
 import React from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Layout() {
   return (
-    <ChatLayout>
-      <Stack screenOptions={{ headerShown: false }} />
-    </ChatLayout>
+    <SafeAreaView style={{ flex: 1 }} edges={['bottom', 'left', 'right']}>
+      <ChatLayout>
+        <Stack screenOptions={{ headerShown: false }} />
+      </ChatLayout>
+    </SafeAreaView>
   );
 }

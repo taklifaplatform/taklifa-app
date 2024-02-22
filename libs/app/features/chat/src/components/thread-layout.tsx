@@ -1,8 +1,9 @@
 import type { StreamChatGenerics } from '@zix/core/chat';
 import React, { useEffect, useState } from 'react';
 import { createParam } from 'solito';
+import { Text } from 'react-native';
 import type { Channel as StreamChatChannel } from 'stream-chat';
-import { Channel, useChatContext } from 'stream-chat-expo';
+import { Channel, useChannelContext, useChatContext } from 'stream-chat-expo';
 
 const { useParam } = createParam<{ channel: string; thread: string }>();
 
@@ -18,6 +19,7 @@ export const ThreadLayout: React.FC<ThreadLayoutProps> = ({ children }) => {
   const [channelId] = useParam('channel');
   const [threadId] = useParam('thread');
   const { client } = useChatContext();
+  // const { channel, threadList } = useChannelContext()
 
   const [channel, setChannel] = useState<
     StreamChatChannel<StreamChatGenerics> | undefined
@@ -26,6 +28,8 @@ export const ThreadLayout: React.FC<ThreadLayoutProps> = ({ children }) => {
   useEffect(() => {
     const iniThread = async () => {
       if (!client || !channelId || !threadId) return;
+
+      // const newThread = client?.channel('messaging', channelId, { threadId });
 
       // const newChannel = client?.channel('messaging', channelId);
       // if (!newChannel?.initialized) {
@@ -37,9 +41,15 @@ export const ThreadLayout: React.FC<ThreadLayoutProps> = ({ children }) => {
     iniThread();
   }, [channelId, threadId, client]);
 
-  if (!channel || !client) return null;
+  // if (!channel || !client) return null;
 
-  return <Channel channel={channel}>{children}</Channel>;
+  // return (
+  //   <Text style={{ padding: 50 }}>
+  //     {threadId}
+  //   </Text>
+  // )
+
+  return children;
 };
 
 export default ThreadLayout;

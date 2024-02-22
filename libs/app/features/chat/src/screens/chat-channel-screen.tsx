@@ -1,20 +1,14 @@
-import { createParam } from 'solito';
 
-import { useFocusEffect } from '@react-navigation/native';
 import { View } from '@zix/app/ui/core';
-import React, { useState } from 'react';
-import { Platform } from 'react-native';
+import React from 'react';
 import {
-  Channel,
   ChannelAvatar,
   MessageInput,
   MessageList,
-  ThreadContextValue,
   useAttachmentPickerContext,
   useChannelContext,
   useChannelPreviewDisplayName,
   useChatContext,
-  useTheme,
   useTypingString
 } from 'stream-chat-expo';
 
@@ -26,7 +20,6 @@ import {
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import type { StreamChatGenerics } from '@zix/core/chat';
-import { useSafeAreaInsets } from '@zix/core/utils';
 import { useRouter } from 'solito/router';
 
 const ChannelHeader: React.FC = () => {
@@ -81,46 +74,21 @@ const ChannelHeader: React.FC = () => {
   );
 };
 
-const { useParam } = createParam<{ channel: string; message?: string }>();
 
-export const ChatChannelScreen: React.F = () => {
+export const ChatChannelScreen: React.FC = () => {
   const { channel } = useChannelContext();
-  const [messageId] = useParam('message');
   const router = useRouter();
-  const { bottom } = useSafeAreaInsets();
-  const {
-    theme: {
-      colors: { white }
-    }
-  } = useTheme();
 
-  const [selectedThread, setSelectedThread] =
-    useState<ThreadContextValue<StreamChatGenerics>['thread']>();
-
-  useFocusEffect(() => {
-    setSelectedThread(undefined);
-  });
 
   return (
-    <View flex={1} backgroundColor={white} paddingBottom={bottom}>
-      <Channel
-        channel={channel}
-        // enforceUniqueReaction
-        initialScrollToFirstUnreadMessage
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -300}
-        messageId={messageId}
-        thread={selectedThread}
-        CommandsButton={() => null}
-      >
-        <ChannelHeader channel={channel} />
-        <MessageList<StreamChatGenerics>
-          onThreadSelect={(thread) => {
-            setSelectedThread(thread);
-            router.push(`/chat/channels/${channel.id}/threads/${thread?.id}`);
-          }}
-        />
-        <MessageInput />
-      </Channel>
+    <View flex={1}>
+      <ChannelHeader />
+      <MessageList<StreamChatGenerics>
+        onThreadSelect={(thread) => {
+          router.push(`/chat/channels/${channel.id}/threads/${thread?.id}`);
+        }}
+      />
+      <MessageInput />
     </View>
   );
 };

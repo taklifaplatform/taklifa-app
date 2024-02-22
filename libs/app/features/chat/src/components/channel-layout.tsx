@@ -4,7 +4,10 @@ import type { Channel as StreamChatChannel } from 'stream-chat';
 import { Channel, useChatContext } from 'stream-chat-expo';
 import type { StreamChatGenerics } from '@zix/core/chat';
 
-const { useParam } = createParam<{ channel: string; message?: string }>();
+const { useParam } = createParam<{
+  channel: string;
+  message?: string;
+}>();
 
 export type ChannelLayoutProps = {
   children: React.ReactNode;

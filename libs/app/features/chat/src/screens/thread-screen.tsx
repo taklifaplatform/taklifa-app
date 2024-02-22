@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View } from '@zix/app/ui/core'
 import {
   Channel,
   Thread,
@@ -16,11 +15,6 @@ import { ScreenHeader } from '@zix/core/chat';
 
 import type { StreamChatGenerics } from '@zix/core/chat';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  }
-});
 
 export type ThreadHeaderProps = {
   thread: ThreadContextValue<StreamChatGenerics>['thread'];
@@ -31,7 +25,6 @@ const ThreadHeader: React.FC<ThreadHeaderProps> = ({ thread }) => {
 
   return (
     <ScreenHeader
-      inSafeArea
       subtitleText={typing ? typing : `with ${thread?.user?.name}`}
       titleText="Thread Reply"
     />
@@ -54,19 +47,17 @@ export const ThreadScreen: React.FC = () => {
   }, []);
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: white }]}>
-      <Channel<StreamChatGenerics>
-        channel={channel}
-        enforceUniqueReaction
-        keyboardVerticalOffset={0}
-        thread={thread}
-        threadList
-      >
-        <View style={styles.container}>
-          <ThreadHeader thread={thread} />
-          <Thread<StreamChatGenerics> />
-        </View>
-      </Channel>
-    </SafeAreaView>
+    <Channel<StreamChatGenerics>
+      channel={channel}
+      enforceUniqueReaction
+      // keyboardVerticalOffset={0}
+      thread={thread}
+      threadList
+    >
+      <View flex={1}>
+        <ThreadHeader thread={thread} />
+        <Thread<StreamChatGenerics> />
+      </View>
+    </Channel>
   );
 };
