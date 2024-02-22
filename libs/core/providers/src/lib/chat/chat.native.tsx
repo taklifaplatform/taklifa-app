@@ -11,7 +11,7 @@ export type ChatProviderProps = {
 };
 
 const client = StreamChat.getInstance('are', 'zer', {
-  baseURL: 'http://0.0.0.0:8000/api/chat',
+  baseURL: `${process.env.LARAVEL_API_URL}/api/chat`,
   logger: (logLevel, msg, extraData) => {
     console.log('====================');
     console.log('StreamChat::', msg);

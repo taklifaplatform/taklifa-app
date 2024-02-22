@@ -17,12 +17,12 @@ import {
   useViewport
 } from 'stream-chat-expo';
 
-import { useUserSearchContext } from '../../hooks';
 
 import type { UserResponse } from 'stream-chat';
 
 import type { StreamChatGenerics } from '../../types';
 import { Search } from '../../icons/Search';
+import { useUserSearchContext } from '../../context';
 
 const styles = StyleSheet.create({
   absolute: { position: 'absolute' },
