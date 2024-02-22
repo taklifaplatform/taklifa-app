@@ -4,8 +4,8 @@ import { I18nManager, Platform } from 'react-native'
 export function bootMultiLang() {
   // TODO: enable this line
   // const defaultLang = 'en';
-  const defaultLang = 'ar'
-  // const defaultLang = getLocales()?.[0]?.languageCode || 'en'
+  // const defaultLang = 'ar'
+  const defaultLang = getLocales()?.[0]?.languageCode || 'en'
 
   if (Platform.OS === 'ios') {
     const isRtl = defaultLang === 'ar'

@@ -41,8 +41,8 @@ const ZixApp: React.FC<
   return (
     <>
       <Head>
-        <title>ZIX Core</title>
-        <meta name="description" content="ZIX Core" />
+        <title>Sawaeed Logistic</title>
+        <meta name="description" content="Sawaeed Logistic" />
         <link rel="icon" href="/favicon.svg" />
       </Head>
       <MultiLangAppProvider defaultLang={defaultLang}>

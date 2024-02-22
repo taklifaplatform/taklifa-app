@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native';
 
 export function MobileFooter() {
   return (
-    <YStack bottom="-57%" position='absolute' w={'98%'} $gtSm={{ display: 'none' }}>
+    <YStack w={'98%'} $gtSm={{ display: 'none' }}>
       <YStack backgroundColor={'$color'} padding="$4" borderRadius="$4">
         <XStack justifyContent="flex-end">
           <CustomIcon name={'weblogo'} width="$6" height="$2.5" />
