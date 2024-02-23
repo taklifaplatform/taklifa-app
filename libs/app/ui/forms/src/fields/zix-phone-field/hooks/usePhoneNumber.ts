@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useSupabase } from "@zix/core/supabase";
+import { GeographyService } from "@zix/api";
 import { PhoneNumberUtil } from "google-libphonenumber";
 import { useCallback, useMemo, useState } from "react";
 import { formatPhone, FormatPhoneConfig, removeNonDigits } from "../utils";
@@ -25,48 +25,32 @@ export type UsePhoneNumberProps = {
 };
 
 export function usePhoneNumber({ value, onValueChange }: UsePhoneNumberProps) {
-  const supabase = useSupabase();
   const [selectedCountry, setSelectedCountry] = useState<string>();
 
   const preSelectedDialCode = getRegionCodeForNumber(value);
+
   const { data: defaultConfigData } = useQuery(
-    ["country_diallings.dial_code", selectedCountry, preSelectedDialCode],
     {
       queryFn: async () => {
-        if (selectedCountry) {
-          return (
-            await supabase
-              .from("country_diallings")
-              .select()
-              .eq("country_id", `${selectedCountry}`)
-              .single()
-          ).data;
-        }
-
-        if (preSelectedDialCode) {
-          const { data } = await supabase
-            .from("country_diallings")
-            .select()
-            .eq("dial_code", `${preSelectedDialCode}`)
-            .single();
-
-          if (data) {
-            setSelectedCountry(`${data.country_id}`);
-            return data;
-          }
-        }
-        return null;
+        return GeographyService.showCountry({
+          country: selectedCountry ?? "185",
+        });
       },
+      queryKey: [
+        "country_diallings.dial_code",
+        `${selectedCountry}-${preSelectedDialCode}`,
+      ],
     },
   );
 
   const defaultConfig = useMemo<FormatPhoneConfig>(
     () => ({
       prefix: "+",
-      dial_code: "## #### ####",
+      dial_code: "966",
+      mask: "##-####-#####",
+      mask_char: "#",
       charAfterDialCode: " ",
-      trimNonDigitsEnd: true,
-      ...(defaultConfigData || {}),
+      ...(defaultConfigData?.data?.dialling || {}),
     } as FormatPhoneConfig),
     [defaultConfigData],
   );

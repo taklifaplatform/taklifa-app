@@ -19,8 +19,7 @@ import { ProfileHeader } from '../../components/profile-layout/ProfileHeader';
 // TODO
 // https://www.figma.com/file/2hwhnxKlAlXCt9EiP5tEb4/SAWAAD?type=design&node-id=1326-5896&mode=design&t=3f1TojWUsWpIXEET-4
 export function AccountScreen() {
-  const { profile } = useUser();
-  const name = profile?.name;
+  const { user } = useUser();
 
   // TABS
   const [tabState, setTabState] = useState<{
@@ -112,13 +111,13 @@ export function AccountScreen() {
             loop={false}
             borderBottomLeftRadius={0}
             borderBottomRightRadius={0}
-           // paddingBottom="$1.5"
+            // paddingBottom="$1.5"
             borderColor="$gray5"
             borderBottomWidth="$0.5"
             backgroundColor="transparent"
             justifyContent="space-between"
           >
-            
+
             <Tabs.Tab
               unstyled
               padding="$5"
@@ -219,10 +218,10 @@ export function AccountScreen() {
 
   return (
     <ScrollView
-    showsVerticalScrollIndicator={false}
-    padding="$2"
+      showsVerticalScrollIndicator={false}
+      padding="$2"
     >
-      <ProfileHeader profile={profile} name={name}/>
+      {user?.id && <ProfileHeader user={user} />}
       {HorizontalTabs()}
     </ScrollView>
   );

@@ -1,33 +1,35 @@
-import {
-  Session,
-  createPagesBrowserClient
-} from '@supabase/auth-helpers-nextjs';
-import { SessionContextProvider } from '@supabase/auth-helpers-react';
-import { Database } from '@zix/core/supabase';
-import { AuthStateChangeHandler } from './auth-state-change-handler';
 
-import React, { useState } from 'react';
+import { useAtom } from 'jotai';
+import React, { useEffect } from 'react';
+import { View } from 'tamagui';
+
+import { OpenAPI } from '@zix/api';
+import { authAccessTokenStorage } from '@zix/core/auth';
 
 export interface AuthProviderProps {
-  initialSession?: Session | null;
   children?: React.ReactNode;
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({
-  initialSession,
   children
 }) => {
-  // Create a new supabase browser client on every first render.
-  const [supabaseClient] = useState(() => createPagesBrowserClient<Database>());
+  const [authAccessToken] = useAtom(authAccessTokenStorage);
+
+  // const router = useRouter();
+  // const pathname = usePathname()
+  useEffect(() => {
+    console.log('==========')
+    console.log('authUser::', authAccessToken)
+    console.log('==========')
+    OpenAPI.TOKEN = authAccessToken;
+  }, [authAccessToken]);
 
   return (
-    <SessionContextProvider
-      supabaseClient={supabaseClient}
-      initialSession={initialSession}
+    <View
+      flex={1}
     >
-      <AuthStateChangeHandler />
       {children}
-    </SessionContextProvider>
+    </View>
   );
 };
 

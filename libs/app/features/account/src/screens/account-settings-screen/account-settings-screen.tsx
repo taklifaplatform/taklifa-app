@@ -14,11 +14,13 @@ import { DriverTap } from '../../components/profile-layout/DriverTap';
 import { TruckTap } from '../../components/profile-layout/TruckTap';
 import { RatingTap } from '../../components/profile-layout/RatingTap';
 import { useState } from 'react';
+import { useUser } from '@zix/core/auth';
 
 /* eslint-disable-next-line */
-export interface AccountSettingsScreenProps {}
+export interface AccountSettingsScreenProps { }
 
 export function AccountSettingsScreen(props: AccountSettingsScreenProps) {
+  const { user } = useUser()
   const [tabState, setTabState] = useState<{
     currentTab: string;
     /**
@@ -207,9 +209,9 @@ export function AccountSettingsScreen(props: AccountSettingsScreenProps) {
   });
 
   return (
-    <YStack flex={1} backgroundColor={'#FAFAFA'} padding="$5">
+    <YStack flex={1} padding="$5">
       <ScrollView showsVerticalScrollIndicator={false}>
-        <ProfileHeader />
+        {!!user?.id && <ProfileHeader user={user} />}
         {HorizontalTabs()}
       </ScrollView>
     </YStack>

@@ -1,4 +1,4 @@
-import { ToastViewport as ToastViewportOg } from '@zix/core/ui';
+import { ToastViewport as ToastViewportOg } from '@tamagui/toast';
 
 export interface ToastViewportProps {
   noSafeArea?: boolean;

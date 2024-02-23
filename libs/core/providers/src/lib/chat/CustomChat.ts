@@ -277,7 +277,7 @@ export class StreamChat<
 
     this.axiosInstance = axios.create(this.options);
 
-    this.setBaseURL(this.options.baseURL || "https://chat.stream-io-api.com");
+    this.setBaseURL(`${OpenAPI.BASE}/api/chat`);
 
     if (typeof process !== "undefined" && process.env.STREAM_LOCAL_TEST_RUN) {
       this.setBaseURL("http://localhost:3030");

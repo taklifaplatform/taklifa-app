@@ -32,13 +32,10 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   title,
   headerBackgroundColor = '$color5'
 }) => {
-  const { profile, user } = useUser();
+  const { user } = useUser();
   const router = useRouter();
 
   const onAvatarPress = useCallback(() => {
-    console.log('============');
-    console.log('onAvatarPress::', user);
-    console.log('============');
     if (user) {
       router.push('/account');
     } else {
@@ -85,7 +82,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
     !showBackButton && (
       <Button
         unstyled
-        icon={<UserAvatar user={profile} size="$2.5" />}
+        icon={<UserAvatar user={user} size="$2.5" />}
         onPress={onAvatarPress}
       />
     );
@@ -97,7 +94,6 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
         size="$2"
         icon={<CustomIcon name="arrow_left" size="$2" />}
         onPress={() => router.back()}
-        backgroundColor={'#F6F6F6'}
       />
     );
 

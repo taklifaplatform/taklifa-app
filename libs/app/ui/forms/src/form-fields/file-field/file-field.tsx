@@ -1,5 +1,6 @@
 import { PlusSquare } from '@tamagui/lucide-icons';
 import { useFieldInfo, useTsController } from '@ts-react/form';
+import { MediaTransformer } from '@zix/api';
 import { Shake } from '@zix/app/ui/common';
 import {
   Fieldset,
@@ -10,11 +11,10 @@ import {
   XStack,
   useThemeName
 } from '@zix/app/ui/core';
-import { IMediaFile, uploadMediaFile } from '@zix/core/supabase';
+import { useUser } from '@zix/core/auth';
 import { useId, useMemo } from 'react';
 import { FieldError } from '../../common';
 import { ZixMediaPickerField } from '../../fields';
-import { useUser } from '@zix/core/auth';
 export interface FileProps extends Pick<InputProps, 'size' | 'autoFocus'> {
   isMultiple?: boolean;
 }
@@ -22,7 +22,7 @@ export interface FileProps extends Pick<InputProps, 'size' | 'autoFocus'> {
 //
 export const FileField = (props: FileProps) => {
   const { user } = useUser()
-  const { field, error } = useTsController<IMediaFile[]>();
+  const { field, error } = useTsController<MediaTransformer[]>();
   const { label, placeholder } = useFieldInfo();
   const themeName = useThemeName();
   const id = useId();
@@ -37,17 +37,20 @@ export const FileField = (props: FileProps) => {
       : placeholder;
   }, [field.value, props.isMultiple, placeholder]);
 
-  async function handleFileChange(files: IMediaFile[]) {
+  async function handleFileChange(files: MediaTransformer[]) {
     const uploadedFiles = await Promise.all(
-      files.map((file) =>
-        uploadMediaFile({
-          file,
-          bucket: 'uploads',
-          path: `${user.id}/files/${file.file_name}`
-        })
+      files.map((file) => {
+        alert('handled FileField')
+        // uploadMediaFile({
+        //   file,
+        //   bucket: 'uploads',
+        //   path: `${user.id}/files/${file.file_name}`
+        // })
+      }
+
       )
     );
-    field.onChange(uploadedFiles);
+    // field.onChange(uploadedFiles);
     // for (const file of files) {
 
     //   const data = await uploadMediaFile({

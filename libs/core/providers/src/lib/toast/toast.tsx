@@ -1,8 +1,11 @@
 import {
-  CustomToast,
-  PortalProvider,
   ToastProvider as ToastProviderOG
-} from '@zix/core/ui';
+} from '@tamagui/toast';
+import { PortalProvider } from 'tamagui';
+
+import {
+  CustomToast,
+} from './custom-toast/custom-toast';
 import { ToastViewport, ToastViewportProps } from './toast-viewport';
 
 /**

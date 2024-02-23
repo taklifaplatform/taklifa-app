@@ -1,65 +1,66 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import Apps from "./icons/apps.svg";
-import Avatar from "./icons/avatar.svg";
-import Chat from "./icons/chat.svg";
-import Home from "./icons/home.svg";
-import Logo from "./icons/logo.svg";
-import Notifications from "./icons/notifications.svg";
-import Orders from "./icons/orders.svg";
-import Success from "./icons/success.svg";
-import Star from "./icons/star.svg";
-import HalfStar from "./icons/half-star.svg";
-import LocalShipping from "./icons/local-shipping.svg";
-import Time from "./icons/time.svg";
-import Package from "./icons/package.svg";
-import Delivery from "./icons/delivery.svg";
-import Call from "./icons/call.svg";
-import Settings from "./icons/settings.svg";
-import Lock from "./icons/lock.svg";
-import Book from "./icons/book.svg";
-import Mail from "./icons/mail.svg";
-import Secure from "./icons/secure.svg";
-import Share from "./icons/share.svg";
 import About from "./icons/about.svg";
-import Theme from "./icons/theme.svg";
-import Logout from "./icons/logout.svg";
-import empty_notification from "./icons/empty-notification.svg";
-import EmptyChat from "./icons/empty-chat.svg";
-import EmptyFolder from "./icons/empty-folder.svg";
-import EmptyData from "./icons/empty-data.svg";
-import Wallet from "./icons/wallet.svg";
-import Location from "./icons/location.svg";
-import Car from "./icons/car.svg";
-import Followed from "./icons/followed.svg";
-import More from "./icons/more.svg";
-import Facebook from "./icons/facebook.svg";
-import Instagram from "./icons/instagram.svg";
-import Snapchat from "./icons/snapchat.svg";
-import Googleplay from "./icons/googleplay.svg";
-import Appstore from "./icons/appstore.svg";
-import Translate from "./icons/translate.svg";
-import Homeinfo from "./icons/homeinfo.svg";
-import Help from "./icons/help.svg";
-import Rigning from "./icons/rigning.svg";
 import Account from "./icons/account.svg";
-import Search from "./icons/search.svg";
-import Weblogo from "./icons/weblogo.svg";
-import View from "./icons/view.svg";
-import LargeArrowLeft from "./icons/large-arrow-left.svg";
-import Flip from "./icons/flip.svg";
-import Searchtrack from "./icons/searchtrack.svg";
-import Findtrack from "./icons/findtrack.svg";
+import Apps from "./icons/apps.svg";
+import Appstore from "./icons/appstore.svg";
+import Avatar from "./icons/avatar.svg";
+import Book from "./icons/book.svg";
+import Call from "./icons/call.svg";
+import Car from "./icons/car.svg";
+import Chat from "./icons/chat.svg";
 import Client from "./icons/client.svg";
 import Companyshipping from "./icons/companyshipping.svg";
-import Shipping from "./icons/shipping.svg";
-import Tiktok from "./icons/tiktok.svg";
-import Map from "./icons/map.svg";
-import List from "./icons/list.svg";
-import Edit from "./icons/edit.svg";
-import Starlocation from "./icons/starlocation.svg";
+import Delivery from "./icons/delivery.svg";
 import Drawer from "./icons/drawer.svg";
+import Edit from "./icons/edit.svg";
+import EmptyChat from "./icons/empty-chat.svg";
+import EmptyData from "./icons/empty-data.svg";
+import EmptyFolder from "./icons/empty-folder.svg";
+import empty_notification from "./icons/empty-notification.svg";
+import Facebook from "./icons/facebook.svg";
+import Findtrack from "./icons/findtrack.svg";
+import Flip from "./icons/flip.svg";
+import Followed from "./icons/followed.svg";
+import Googleplay from "./icons/googleplay.svg";
+import HalfStar from "./icons/half-star.svg";
+import Help from "./icons/help.svg";
+import Home from "./icons/home.svg";
+import Homeinfo from "./icons/homeinfo.svg";
+import Instagram from "./icons/instagram.svg";
+import LargeArrowLeft from "./icons/large-arrow-left.svg";
+import List from "./icons/list.svg";
+import LocalShipping from "./icons/local-shipping.svg";
+import Location from "./icons/location.svg";
+import Lock from "./icons/lock.svg";
+import Logo from "./icons/logo.svg";
+import Logout from "./icons/logout.svg";
+import Mail from "./icons/mail.svg";
+import Map from "./icons/map.svg";
+import More from "./icons/more.svg";
+import Notifications from "./icons/notifications.svg";
+import Orders from "./icons/orders.svg";
+import Package from "./icons/package.svg";
+import Rigning from "./icons/rigning.svg";
+import Search from "./icons/search.svg";
+import Searchtrack from "./icons/searchtrack.svg";
+import Secure from "./icons/secure.svg";
+import Settings from "./icons/settings.svg";
+import Share from "./icons/share.svg";
+import Shipping from "./icons/shipping.svg";
+import Snapchat from "./icons/snapchat.svg";
+import Star from "./icons/star.svg";
+import Starlocation from "./icons/starlocation.svg";
+import Store from "./icons/store.svg";
+import Success from "./icons/success.svg";
+import Theme from "./icons/theme.svg";
+import Tiktok from "./icons/tiktok.svg";
+import Time from "./icons/time.svg";
+import Translate from "./icons/translate.svg";
+import View from "./icons/view.svg";
+import Wallet from "./icons/wallet.svg";
+import Weblogo from "./icons/weblogo.svg";
 
 // arts
 import CompanyCars from "./arts/company-cars.svg";
@@ -86,11 +87,12 @@ export {
   CompanyCars,
   Companyshipping,
   Delivery,
+  Drawer,
   Edit,
+  empty_notification,
   EmptyChat,
   EmptyData,
   EmptyFolder,
-  empty_notification,
   Facebook,
   Findtrack,
   Flip,
@@ -128,8 +130,7 @@ export {
   SoloTransporterCar,
   Star,
   Starlocation,
-  Drawer,
-
+  Store,
   Success,
   Theme,
   Tiktok,

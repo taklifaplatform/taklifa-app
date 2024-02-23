@@ -1,5 +1,3 @@
-import { Database } from "@zix/core/supabase";
-import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSideProps, PreviewData } from "next";
 import { ParsedUrlQuery } from "querystring";
 
@@ -14,11 +12,7 @@ export function guestOnlyGetSSP<
   getServerSideProps?: GetServerSideProps<Props, Params, Preview>,
 ): GetServerSideProps<Props, Params, Preview> {
   return async (ctx) => {
-    const supabase = createPagesServerClient<Database>(ctx);
-
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
+    const session = null;
 
     if (session) {
       return {

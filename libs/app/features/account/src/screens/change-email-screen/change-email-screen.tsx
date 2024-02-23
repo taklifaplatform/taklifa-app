@@ -1,8 +1,11 @@
+import { useMutation } from '@tanstack/react-query';
+
+import { UserService } from '@zix/api';
 import { H2, Theme, YStack, isWeb, useToastController } from '@zix/app/ui/core';
-import { SchemaForm, SubmitButton, formFields } from '@zix/app/ui/forms';
+import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/app/ui/forms';
 import { useUser } from '@zix/core/auth';
-import { useSupabase } from '@zix/core/supabase';
 import { t } from 'i18next';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
 import { z } from 'zod';
 
@@ -16,30 +19,29 @@ const ChangeEmailSchema = z.object({
 
 export const ChangeEmailScreen = () => {
   const { user } = useUser();
-  const supabase = useSupabase();
   const toast = useToastController();
   const router = useRouter();
+  const form = useForm<z.infer<typeof ChangeEmailSchema>>();
 
-  const handleChangePassword = async ({
-    email
-  }: z.infer<typeof ChangeEmailSchema>) => {
-    const { data, error } = await supabase.auth.updateUser({ email });
-    if (error) {
-      toast.show(error.message);
-    } else {
+  const { mutate, isLoading } = useMutation({
+    mutationFn: (requestBody: z.infer<typeof ChangeEmailSchema>) => UserService.updateEmail({
+      requestBody
+    }),
+    onSuccess({ data }) {
       toast.show('Check your inbox', {
-        message: `We sent you a confirmation email to ${data.user.new_email}.`
+        message: `We sent you a confirmation email to ${data?.email}.`
       });
       router.back();
-      if (!isWeb) {
-        await supabase.auth.refreshSession();
-      }
+    },
+    onError(error: any) {
+      handleFormErrors(form, error?.body?.errors);
     }
-  };
+  })
 
   return (
     <SchemaForm
-      onSubmit={handleChangePassword}
+      form={form}
+      onSubmit={mutate}
       schema={ChangeEmailSchema}
       renderBefore={() =>
         isWeb && (
@@ -54,7 +56,7 @@ export const ChangeEmailScreen = () => {
       }}
       renderAfter={({ submit }) => (
         <Theme inverse>
-          <SubmitButton onPress={() => submit()}>{t('common:confirm')}</SubmitButton>
+          <SubmitButton isLoading={isLoading} onPress={() => submit()}>{t('common:confirm')}</SubmitButton>
         </Theme>
       )}
     />

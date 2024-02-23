@@ -1,7 +1,6 @@
-import { Image } from 'react-native';
-import React from 'react';
-import { XStack, YStack, Text } from '@zix/core/ui';
 import { CustomIcon } from '@zix/app/ui/icons';
+import { Image } from 'react-native';
+import { Text, XStack, YStack } from 'tamagui';
 
 export function RatingCard({ item }) {
   return (

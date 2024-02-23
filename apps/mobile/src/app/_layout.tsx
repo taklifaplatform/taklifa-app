@@ -1,9 +1,13 @@
-import { Session } from '@supabase/supabase-js';
-import { MobileAppProvider } from '@zix/app/providers/mobile';
-import { supabase } from '@zix/app/api';
-import { useFonts } from 'expo-font';
+import {
+  Almarai_300Light,
+  Almarai_400Regular,
+  Almarai_700Bold,
+  Almarai_800ExtraBold,
+  useFonts,
+} from '@expo-google-fonts/almarai';
+import { MainAppProvider } from '@zix/app/providers/main-app-provider';
 import { SplashScreen, Stack } from 'expo-router';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import { LogBox, View } from 'react-native';
 
 LogBox.ignoreAllLogs();
@@ -12,39 +16,28 @@ SplashScreen.preventAutoHideAsync();
 
 export default function HomeLayout() {
   const [fontLoaded] = useFonts({
-    Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
-    InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf')
+    Almarai_300Light,
+    Almarai_400Regular,
+    Almarai_700Bold,
+    Almarai_800ExtraBold,
   });
 
-  const [sessionLoadAttempted, setSessionLoadAttempted] = useState(false);
-  const [initialSession, setInitialSession] = useState<Session | null>(null);
-  useEffect(() => {
-    supabase.auth
-      .getSession()
-      .then(({ data }) => {
-        if (data) {
-          setInitialSession(data.session);
-        }
-      })
-      .finally(() => {
-        setSessionLoadAttempted(true);
-      });
-  }, []);
+
   const onLayoutRootView = useCallback(async () => {
-    if (fontLoaded && sessionLoadAttempted) {
+    if (fontLoaded) {
       await SplashScreen.hideAsync();
     }
-  }, [fontLoaded, sessionLoadAttempted]);
+  }, [fontLoaded]);
 
-  if (!fontLoaded || !sessionLoadAttempted) {
+  if (!fontLoaded) {
     return null;
   }
 
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <MobileAppProvider initialSession={initialSession}>
+      <MainAppProvider>
         <Stack screenOptions={{ headerShown: false }} />
-      </MobileAppProvider>
+      </MainAppProvider>
     </View>
   );
 }

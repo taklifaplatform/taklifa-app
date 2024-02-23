@@ -1,3 +1,4 @@
+import { OpenAPI } from '@zix/api';
 import { bootMultiLang, MultiLangAppProvider } from '@zix/i18n'
 import { ExpoRoot } from 'expo-router';
 import React from 'react';
@@ -9,6 +10,7 @@ import React from 'react';
 const context = require.context('./app');
 
 const defaultLang = bootMultiLang()
+OpenAPI.BASE = `${process.env.LARAVEL_API_URL}`;
 
 export default function ZixApp() {
   return (

@@ -1,4 +1,4 @@
-import { XStack, YStack } from '@zix/core/ui';
+import { XStack, YStack } from 'tamagui';
 import OnboardingScreen from '../../screens/onboarding-screen/onboarding-screen';
 
 export type AuthLayoutProps = {

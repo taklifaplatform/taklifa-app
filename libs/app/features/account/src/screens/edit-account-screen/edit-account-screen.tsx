@@ -1,58 +1,53 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { Avatar, Theme, YStack, useToastController } from '@zix/app/ui/core';
 import { SchemaForm, SubmitButton, formFields } from '@zix/app/ui/forms';
 
+import { UpdateUserRequest, UserService } from '@zix/api';
+import { FullScreenSpinner } from '@zix/app/ui/common';
 import { useUser } from '@zix/core/auth';
-import { useSupabase } from '@zix/core/supabase';
 import { createParam } from 'solito';
 import { SolitoImage } from 'solito/image';
 import { useRouter } from 'solito/router';
 import { z } from 'zod';
 import { UploadAvatar } from '../../components/upload-avatar';
-import { FullScreenSpinner } from '@zix/app/ui/common';
 
 const { useParams } = createParam<{ edit_name?: '1'; edit_about?: '1' }>();
 export const EditAccountScreen = () => {
-  const { profile, user } = useUser();
+  const { user, updateProfile } = useUser();
 
-  if (!profile || !user?.id) {
+  if (!user?.id) {
     return <FullScreenSpinner />;
   }
   return (
     <EditProfileForm
-      userId={user.id}
-      initial={{ name: profile.name, about: profile.about }}
+      user={user as UpdateUserRequest}
+      updateProfile={updateProfile}
     />
   );
 };
 
 const ProfileSchema = z.object({
   name: formFields.text.describe('Name // John Doe'),
-  about: formFields.textarea.describe('About // Tell us a bit about yourself')
+  about: formFields.textarea.optional().describe('About // Tell us a bit about yourself')
 });
 
 const EditProfileForm = ({
-  initial,
-  userId
+  user,
+  updateProfile
 }: {
-  initial: { name: string | null; about: string | null };
-  userId: string;
+  user: UpdateUserRequest;
+  updateProfile: () => void;
 }) => {
   const { params } = useParams();
-  const supabase = useSupabase();
   const toast = useToastController();
-  const queryClient = useQueryClient();
   const router = useRouter();
-  const mutation = useMutation({
-    async mutationFn(data: z.infer<typeof ProfileSchema>) {
-      await supabase
-        .from('users')
-        .update({ name: data.name, about: data.about })
-        .eq('id', userId);
+  const { mutate, isLoading } = useMutation({
+    async mutationFn(requestBody: z.infer<typeof ProfileSchema>) {
+      return UserService.updateUser({ requestBody })
     },
-    async onSuccess() {
+    async onSuccess({ data }) {
+      updateProfile()
       toast.show('Successfully updated!');
-      await queryClient.invalidateQueries(['profile', userId]);
       router.back();
     }
   });
@@ -68,14 +63,11 @@ const EditProfileForm = ({
           autoFocus: !!params?.edit_about
         }
       }}
-      defaultValues={{
-        name: initial.name ?? '',
-        about: initial.about ?? ''
-      }}
-      onSubmit={(values) => mutation.mutate(values)}
+      defaultValues={user}
+      onSubmit={mutate}
       renderAfter={({ submit }) => (
         <Theme inverse>
-          <SubmitButton onPress={() => submit()}>Update Profile</SubmitButton>
+          <SubmitButton isLoading={isLoading} onPress={() => submit()}>Update Profile</SubmitButton>
         </Theme>
       )}
     >
@@ -96,7 +88,7 @@ const EditProfileForm = ({
 const UserAvatar = () => {
   const { avatarUrl } = useUser();
   return (
-    <Avatar circular size={128}>
+    <Avatar circular size={128} overflow='hidden'>
       <SolitoImage src={avatarUrl} alt="your avatar" width={128} height={128} />
     </Avatar>
   );

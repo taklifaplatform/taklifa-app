@@ -2,7 +2,6 @@ import { Platform, UIManager } from 'react-native';
 
 import { Camera, Image } from '@tamagui/lucide-icons';
 import { ActionSheet, ActionSheetRef } from '@zix/app/ui/common';
-import { IMediaFile } from '@zix/core/supabase';
 import { getDocumentAsync } from 'expo-document-picker';
 import {
   MediaTypeOptions,
@@ -10,6 +9,7 @@ import {
   launchImageLibraryAsync
 } from 'expo-image-picker';
 import { useRef } from 'react';
+import { MediaTransformer } from '@zix/api';
 
 export type ZixMediaPickerFieldProps = {
   // label?: string;
@@ -20,8 +20,8 @@ export type ZixMediaPickerFieldProps = {
     files,
     file
   }: {
-    files: IMediaFile[];
-    file: IMediaFile;
+    files: MediaTransformer[];
+    file: MediaTransformer;
   }) => Promise<void> | void;
   children: ({ onPress }: { onPress: () => void }) => React.ReactNode;
   type?: 'documents' | 'image' | 'video' | 'image-video';

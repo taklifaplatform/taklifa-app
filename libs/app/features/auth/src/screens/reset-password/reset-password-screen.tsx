@@ -1,7 +1,9 @@
+import { useMutation } from '@tanstack/react-query';
+
+import { AuthService } from '@zix/api';
 import { Paragraph, Stack, Text, Theme } from '@zix/app/ui/core';
-import { SchemaForm, SubmitButton, formFields } from '@zix/app/ui/forms';
+import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/app/ui/forms';
 import { CustomIcon } from '@zix/app/ui/icons';
-import { useSupabase } from '@zix/core/supabase';
 import { t } from 'i18next';
 import { useEffect } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
@@ -14,12 +16,10 @@ import { AuthHeader } from '../../components/auth-header/auth-header';
 const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
 
 const ResetPasswordSchema = z.object({
-  phone: formFields.phone.describe(t('forms:phone_number').toString()),
-  is_whatsapp: formFields.boolean_switch.describe(t('forms:is_whatsapp').toString()),
+  phone_number: formFields.phone.describe(t('forms:phone_number').toString()),
 });
 
 export const ResetPasswordScreen = () => {
-  const supabase = useSupabase();
   const { params } = useParams();
   const router = useRouter();
   const updateParams = useUpdateParams();
@@ -31,27 +31,22 @@ export const ResetPasswordScreen = () => {
 
   const form = useForm<z.infer<typeof ResetPasswordSchema>>();
 
-  async function resetPassword({
-    phone,
-    is_whatsapp
-  }: z.infer<typeof ResetPasswordSchema>) {
-    const { error } = await supabase.auth.signInWithOtp({
-      phone,
-      options: {
-        channel: is_whatsapp ? 'whatsapp' : 'sms'
-      }
-    });
-
-    if (error) {
-      const errorMessage = error?.message.toLowerCase();
-      form.setError('phone', { type: 'custom', message: errorMessage });
-      return;
+  const { mutate, isLoading } = useMutation({
+    mutationFn(requestBody: z.infer<typeof ResetPasswordSchema>) {
+      return AuthService.sendResetPasswordPinCode({
+        requestBody
+      });
+    },
+    onSuccess(_, variables) {
+      router.push(
+        `/auth/reset-password/verify?${new URLSearchParams({ phone: variables?.phone_number })}`
+      );
+    },
+    onError(error: any) {
+      handleFormErrors(form, error?.body?.errors);
     }
+  })
 
-    router.push(
-      `/auth/reset-password/verify?${new URLSearchParams({ phone })}`
-    );
-  }
 
   return (
     <FormProvider {...form}>
@@ -61,12 +56,12 @@ export const ResetPasswordScreen = () => {
         defaultValues={{
           phone: params?.phone || ''
         }}
-        onSubmit={resetPassword}
+        onSubmit={mutate}
         renderAfter={({ submit }) => {
           return (
             <Stack gap="$4">
               <Theme inverse>
-                <SubmitButton onPress={() => submit()} borderRadius="$10">
+                <SubmitButton isLoading={isLoading} onPress={() => submit()} borderRadius="$10">
                   {t('common:next')}
                 </SubmitButton>
               </Theme>
@@ -94,7 +89,7 @@ export const ResetPasswordScreen = () => {
 
 const SignInLink = () => {
   const phone = useWatch<z.infer<typeof ResetPasswordSchema>>({
-    name: 'phone'
+    name: 'phone_number'
   });
 
   return (

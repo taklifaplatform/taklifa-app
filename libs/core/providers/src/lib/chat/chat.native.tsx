@@ -11,7 +11,6 @@ export type ChatProviderProps = {
 };
 
 const client = StreamChat.getInstance('are', 'zer', {
-  baseURL: `${process.env.LARAVEL_API_URL}/api/chat`,
   logger: (logLevel, msg, extraData) => {
     console.log('====================');
     console.log('StreamChat::', msg);
@@ -24,26 +23,23 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({
   children,
   ...props
 }) => {
-  const { user, profile } = useUser();
+  const { user } = useUser();
   async function initClient() {
     if (!user?.id) {
       return;
     }
     await client.connectUser({
-      id: user.id,
-      name: profile?.name,
-      image: profile?.avatar_url,
-
+      user
     });
   }
   React.useEffect(() => {
-    if (user && profile) {
+    if (user) {
 
       initClient();
     } else {
       client.disconnectUser()
     }
-  }, [user, profile]);
+  }, [user]);
 
   return (
     <OverlayProvider>

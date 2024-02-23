@@ -1,0 +1,254 @@
+/* generated using openapi-typescript-codegen -- do no edit */
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+import type { ChannelTransformer } from '../models/ChannelTransformer';
+import type { ChatUserTransformer } from '../models/ChatUserTransformer';
+import type { ListChannelQueryRequest } from '../models/ListChannelQueryRequest';
+import type { ListRepliesQueryRequest } from '../models/ListRepliesQueryRequest';
+import type { MessageTransformer } from '../models/MessageTransformer';
+import type { ModerateChannelRequest } from '../models/ModerateChannelRequest';
+import type { MuteChannelRequest } from '../models/MuteChannelRequest';
+import type { RetrieveChannelQueryRequest } from '../models/RetrieveChannelQueryRequest';
+import type { UpdateMessageRequest } from '../models/UpdateMessageRequest';
+import type { UpdateReactionRequest } from '../models/UpdateReactionRequest';
+import type { UploadAttachmentRequest } from '../models/UploadAttachmentRequest';
+import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
+import { request as __request } from '../core/request';
+export class ChatService {
+    /**
+     * Display a listing of the resource.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static channels({
+        requestBody,
+    }: {
+        requestBody: ListChannelQueryRequest,
+    }): CancelablePromise<{
+        data?: Array<ChannelTransformer>;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/chat/channels',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * Display a listing of the resource.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static channelMessages({
+        channel,
+        requestBody,
+    }: {
+        channel: string,
+        requestBody: RetrieveChannelQueryRequest,
+    }): CancelablePromise<{
+        data?: ChannelTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/chat/channels/messaging/{channel}/query',
+            path: {
+                'channel': channel,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * Display a listing of the resource.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static createMessage({
+        channel,
+        requestBody,
+    }: {
+        channel: string,
+        requestBody: UpdateMessageRequest,
+    }): CancelablePromise<{
+        data?: MessageTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/chat/channels/messaging/{channel}/message',
+            path: {
+                'channel': channel,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * Display a listing of the resource.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static updateMessage({
+        requestBody,
+    }: {
+        requestBody: UpdateMessageRequest,
+    }): CancelablePromise<{
+        data?: MessageTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/chat/messages/{messageId}',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * Display a listing of the resource.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static deleteMessage(): CancelablePromise<{
+        data?: MessageTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/chat/messages/{messageId}',
+        });
+    }
+    /**
+     * Display a listing of the resource.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static createReaction({
+        requestBody,
+    }: {
+        requestBody: UpdateReactionRequest,
+    }): CancelablePromise<{
+        data?: MessageTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/chat/messages/{messageId}/reaction',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * Display a listing of the resource.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static listReplies({
+        requestBody,
+    }: {
+        requestBody: ListRepliesQueryRequest,
+    }): CancelablePromise<{
+        data?: Array<MessageTransformer>;
+    }> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/chat/messages/{messageId}/replies',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * Display a listing of the resource.
+     * @throws ApiError
+     */
+    public static uploadImage({
+        channel,
+        requestBody,
+    }: {
+        channel: string,
+        requestBody: UploadAttachmentRequest,
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/chat/channels/messaging/{channel}/image',
+            path: {
+                'channel': channel,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * Display a listing of the resource.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static moderateChannel({
+        channel,
+        requestBody,
+    }: {
+        channel: string,
+        requestBody: ModerateChannelRequest,
+    }): CancelablePromise<{
+        data?: ChannelTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/chat/channels/messaging/{channel}',
+            path: {
+                'channel': channel,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * Display a listing of the resource.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static muteChannel({
+        requestBody,
+    }: {
+        requestBody: MuteChannelRequest,
+    }): CancelablePromise<{
+        data?: ChannelTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/chat/moderation/mute/channel',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * Display a listing of the resource.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static listUsers(): CancelablePromise<{
+        data?: Array<ChatUserTransformer>;
+        links?: {
+            first?: string;
+            last?: string;
+            prev?: string;
+            next?: string;
+        };
+        meta?: {
+            current_page?: number;
+            from?: number;
+            last_page?: number;
+            links?: Array<{
+                url?: string;
+                label?: string;
+                active?: boolean;
+            }>;
+            path?: string;
+            per_page?: number;
+            to?: number;
+            total?: number;
+        };
+    }> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/chat/users',
+        });
+    }
+}

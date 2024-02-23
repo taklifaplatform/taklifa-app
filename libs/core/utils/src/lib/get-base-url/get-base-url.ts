@@ -8,9 +8,9 @@ export function _getBaseUrl() {
     return "";
   }
 
-  if (process.env.EXPO_PUBLIC_URL) {
+  if (process.env.APP_PUBLIC_URL) {
     // overwrites the rest - set this on your native app deployment
-    return `${process.env.EXPO_PUBLIC_URL}`;
+    return `${process.env.APP_PUBLIC_URL}`;
   }
 
   if (process.env.VERCEL_URL) {

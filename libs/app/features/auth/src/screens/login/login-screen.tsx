@@ -1,11 +1,14 @@
+import { useMutation } from '@tanstack/react-query';
 import { Paragraph, Stack, Text, Theme } from '@zix/app/ui/core';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 import { useUserRedirect } from '../../hooks/useUserRedirect';
 
-import { SchemaForm, SubmitButton, formFields } from '@zix/app/ui/forms';
+import { AuthService } from '@zix/api';
+import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/app/ui/forms';
 import { CustomIcon } from '@zix/app/ui/icons';
-import { useSupabase } from '@zix/core/supabase';
+import { authAccessTokenStorage, authUserStorage } from '@zix/core/auth';
 import { t } from 'i18next';
+import { useAtom } from 'jotai';
 import React, { useEffect } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { createParam } from 'solito';
@@ -17,19 +20,38 @@ const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
 
 const LoginSchema = z
   .object({
-    phone: formFields.phone.describe(t('forms:phone_number').toString()),
+    phone_number: formFields.phone.describe(t('forms:phone_number').toString()),
     password: formFields.text.min(8).describe(t('forms:password'))
   })
   .required({
-    phone: true,
+    phone_number: true,
     password: true
   });
 
 export const LoginScreen: React.FC = () => {
-  const supabase = useSupabase();
+  const [, setAuthAccessToken] = useAtom(authAccessTokenStorage)
+  const [, setAuthUser] = useAtom(authUserStorage)
+
   const { params } = useParams();
   const updateParams = useUpdateParams();
   const { redirectUser } = useUserRedirect();
+  const form = useForm<z.infer<typeof LoginSchema>>();
+
+  const { mutate, isLoading } = useMutation({
+    mutationFn(requestBody: z.infer<typeof LoginSchema>) {
+      return AuthService.login({
+        requestBody
+      })
+    },
+    onSuccess({ data }) {
+      setAuthAccessToken(data?.plainTextToken)
+      setAuthUser(data?.user)
+      redirectUser(data?.user);
+    },
+    onError(error: any) {
+      handleFormErrors(form, error?.body?.errors);
+    }
+  })
 
   useEffect(() => {
     // remove the persisted email from the url, mostly to not leak user's email in case they share it
@@ -37,30 +59,7 @@ export const LoginScreen: React.FC = () => {
       updateParams({ phone: undefined }, { web: { replace: true } });
     }
   }, [params?.phone, updateParams]);
-  const form = useForm<z.infer<typeof LoginSchema>>();
 
-  async function signInWithEmail({
-    phone,
-    password
-  }: z.infer<typeof LoginSchema>) {
-    const { error, data } = await supabase.auth.signInWithPassword({
-      phone: phone,
-      password: password
-    });
-
-    if (error) {
-      const errorMessage = error?.message.toLowerCase();
-      if (errorMessage.includes('phone')) {
-        form.setError('phone', { type: 'custom', message: errorMessage });
-      } else if (errorMessage.includes('password')) {
-        form.setError('password', { type: 'custom', message: errorMessage });
-      } else {
-        form.setError('password', { type: 'custom', message: errorMessage });
-      }
-    } else {
-      redirectUser(data?.user);
-    }
-  }
 
   return (
     <FormProvider {...form}>
@@ -68,10 +67,10 @@ export const LoginScreen: React.FC = () => {
         form={form}
         schema={LoginSchema}
         defaultValues={{
-          phone: params?.phone || '+966',
+          phone_number: params?.phone || '+966',
           password: ''
         }}
-        onSubmit={signInWithEmail}
+        onSubmit={mutate}
         props={{
           password: {
             afterElement: <ForgotPasswordLink />,
@@ -85,7 +84,7 @@ export const LoginScreen: React.FC = () => {
           return (
             <Stack gap="$4">
               <Theme inverse>
-                <SubmitButton onPress={() => submit()} borderRadius="$10">
+                <SubmitButton isLoading={isLoading} onPress={() => submit()} borderRadius="$10">
                   {t('auth:sign_in')}
                 </SubmitButton>
               </Theme>
@@ -109,7 +108,7 @@ export const LoginScreen: React.FC = () => {
 };
 
 const SignUpLink = () => {
-  const phone = useWatch<z.infer<typeof LoginSchema>>({ name: 'phone' });
+  const phone = useWatch<z.infer<typeof LoginSchema>>({ name: 'phone_number' });
 
   return (
     <Link
@@ -140,7 +139,7 @@ const SignUpLink = () => {
 };
 
 const ForgotPasswordLink = () => {
-  const phone = useWatch<z.infer<typeof LoginSchema>>({ name: 'phone' });
+  const phone = useWatch<z.infer<typeof LoginSchema>>({ name: 'phone_number' });
 
   return (
     <Theme name="light">

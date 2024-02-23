@@ -1,11 +1,13 @@
+import { useMutation } from '@tanstack/react-query';
+
 import { Theme, useToastController } from '@zix/app/ui/core';
-import { SchemaForm, SubmitButton, formFields } from '@zix/app/ui/forms';
+import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/app/ui/forms';
 import moment from 'moment';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
 import { z } from 'zod';
 
-import { useSupabase } from '@zix/core/supabase';
+import { UserVerificationService } from '@zix/api';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 import { useRegisterStepsCounter } from '../../hooks/useRegisterStepsCounter';
 
@@ -28,63 +30,32 @@ const KYCFormSchema = z
   });
 
 export const KycVerificationScreen = () => {
-  const supabase = useSupabase();
   const router = useRouter();
   const toast = useToastController();
   const { user, totalSteps } = useRegisterStepsCounter();
 
   const form = useForm<z.infer<typeof KYCFormSchema>>();
-
-  async function onSubmit({
-    name,
-    birth_date,
-    nationality_id,
-    kyc_doc
-  }: z.infer<typeof KYCFormSchema>) {
-    if (!user) {
-      return;
+  const { mutate, isLoading } = useMutation({
+    mutationFn(requestBody: z.infer<typeof KYCFormSchema>) {
+      return UserVerificationService.storeUserVerification({
+        requestBody
+      })
+    },
+    onSuccess({ data }) {
+      router.push('/auth/verify-driver');
+    },
+    onError(error: any) {
+      handleFormErrors(form, error?.body?.errors);
     }
-
-    const { error } = await supabase.from('user_verifications').upsert({
-      id: user?.id,
-      name: name?.toString(),
-      birth_date: moment(birth_date).format('YYYY-MM-DD').toString(),
-      nationality_id: nationality_id
-    });
-
-    if (error) {
-      console.log('VerifyKYCScreen::update->user_verifications ERROR', error);
-      toast.show(error.message);
-      return;
-    }
-
-    const result = await supabase.storage
-      .from('users_verification')
-      .upload(
-        `${user.id}/kyc-doc.${kyc_doc.name.split('.').pop()}`,
-        kyc_doc.file,
-        {
-          upsert: true
-        }
-      );
-
-    if (result.error) {
-      console.log('VerifyKYCScreen::upload->kyc_doc ERROR', result.error);
-      toast.show(result.error.message);
-      return;
-    }
-
-    // TODO: we might need to save the file url to the database
-    // await supabase.from('user_verifications').update({ kyc_doc_url: result.data.path }).eq('id', user.id)
-    router.push('/auth/verify-driver');
-  }
+  })
 
   return (
     <FormProvider {...form}>
       <SchemaForm
+        form={form}
         schema={KYCFormSchema}
         defaultValues={{
-          name: user?.user_metadata.name || '',
+          name: user?.name || '',
           birth_date: moment().format('YYYY-MM-DD').toString(),
           nationality_id: 216,
           residence_country_id: '',
@@ -92,11 +63,11 @@ export const KycVerificationScreen = () => {
           // address: '',
         }}
         props={{}}
-        onSubmit={onSubmit}
+        onSubmit={mutate}
         renderAfter={({ submit }) => {
           return (
             <Theme inverse>
-              <SubmitButton onPress={() => submit()}>Confirm</SubmitButton>
+              <SubmitButton isLoading={isLoading} onPress={() => submit()}>Confirm</SubmitButton>
             </Theme>
           );
         }}

@@ -1,5 +1,5 @@
 import { CustomIcon, CustomIconName } from '@zix/app/ui/icons';
-import { Avatar, Button, Text, Theme, XStack } from '@zix/core/ui';
+import { Avatar, Button, Text, Theme, XStack } from 'tamagui';
 import React from 'react';
 
 export interface InlineItemSelectProps {

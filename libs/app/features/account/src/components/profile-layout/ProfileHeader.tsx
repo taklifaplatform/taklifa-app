@@ -1,16 +1,16 @@
-import { Linking } from 'react-native';
-import React from 'react';
-import { YStack, Text, XStack, Button, Separator, H4 } from '@zix/app/ui/core';
-import { CustomIcon } from '@zix/app/ui/icons';
+import { UserTransformer } from '@zix/api';
 import { UserAvatar } from '@zix/app/ui/common';
-import { Link, useLink } from 'solito/link';
+import { Button, H4, Separator, Text, XStack, YStack } from '@zix/app/ui/core';
+import { CustomIcon } from '@zix/app/ui/icons';
+import { Linking } from 'react-native';
+import { Link } from 'solito/link';
 
-export function ProfileHeader({ profile, name }) {
+export function ProfileHeader({ user }: { user: UserTransformer }) {
   const renderInformation = (title: string, icon: string) => (
     <XStack alignItems="center">
       <CustomIcon name={icon} size={20} color={'#FECA16'} />
       <Text paddingLeft="$2"
-      fontWeight='600'
+        fontWeight='600'
       >{title}</Text>
     </XStack>
   );
@@ -43,7 +43,7 @@ export function ProfileHeader({ profile, name }) {
         paddingTop="$6"
         marginBottom="$4"
       >
-      {/*  <Button
+        {/*  <Button
           position="absolute"
           left={0}
           size="$1"
@@ -54,11 +54,11 @@ export function ProfileHeader({ profile, name }) {
         </Button>*/}
         <YStack gap="$2" paddingBottom='$4'>
           <XStack gap="$2" justifyContent="center" $sm={{ marginTop: '$4' }}>
-            <UserAvatar user={profile} size="$9" borderColor={"#34C759"} borderWidth={"$1.5"}/>
+            <UserAvatar user={user} size="$9" borderColor={"#34C759"} borderWidth={"$1.5"} />
           </XStack>
           <YStack gap="$2">
-            {name ? (
-              <H4 textAlign="center">{name}</H4>
+            {user.name ? (
+              <H4 textAlign="center">{user.name}</H4>
             ) : (
               <Link href="/account/edit?edit_name=1">
                 <H4 textAlign="center" textDecorationLine="underline">
@@ -67,8 +67,8 @@ export function ProfileHeader({ profile, name }) {
               </Link>
             )}
             <Text textAlign="center"
-            fontWeight='bold'
-            color='$gray10'
+              fontWeight='bold'
+              color='$gray10'
             >Online now</Text>
           </YStack>
         </YStack>

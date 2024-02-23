@@ -1,3 +1,4 @@
+import { useMutation } from '@tanstack/react-query';
 import {
   Stack,
   Text,
@@ -5,23 +6,23 @@ import {
   XStack,
   useToastController
 } from '@zix/app/ui/core';
-import { SchemaForm, SubmitButton, formFields } from '@zix/app/ui/forms';
+
+import { AuthService, UserTransformer } from '@zix/api';
+import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/app/ui/forms';
 import { t } from 'i18next';
 import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { z } from 'zod';
-import { User } from '@supabase/supabase-js';
-import { useSupabase } from '@zix/core/supabase';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 
 const VerifyPhoneNumberFormSchema = z.object({
-  token: formFields.code
+  pin_code: formFields.code
 });
 const { useParams } = createParam<{ phone?: string }>();
 
 export type VerifyPhoneNumberFormProps = {
-  onSuccess: (user?: User) => void;
+  onSuccess: (user?: UserTransformer) => void;
   activeStep?: number;
   totalSteps?: number;
 };
@@ -31,7 +32,7 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
   activeStep = 1,
   totalSteps
 }) => {
-  const supabase = useSupabase();
+
   const toast = useToastController();
   const form = useForm<z.infer<typeof VerifyPhoneNumberFormSchema>>();
 
@@ -45,42 +46,35 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
     return `${phoneNumber.slice(0, 3)} **** ${phoneNumber.slice(-3)}`;
   }, [phoneNumber]);
 
-  async function onSubmit({
-    token
-  }: z.infer<typeof VerifyPhoneNumberFormSchema>) {
-    const { error, data } = await supabase.auth.verifyOtp({
-      phone: phoneNumber,
-      token: token.toString(),
-      type: 'sms'
-    });
-
-    if (error) {
-      toast.show(error.message, {
-        preset: 'error'
-      });
-      return;
+  const { mutate, isLoading } = useMutation({
+    mutationFn: (variables: z.infer<typeof VerifyPhoneNumberFormSchema>) => AuthService.verifyPhoneNumber({
+      requestBody: {
+        phone_number: phoneNumber,
+        pin_code: variables.pin_code?.toString()
+      }
+    }),
+    onSuccess({ data }) {
+      onSuccess(data?.user)
+    },
+    onError(error: any) {
+      alert('error')
+      handleFormErrors(form, error?.body?.errors);
     }
+  })
 
-    onSuccess(data?.user || undefined);
-  }
   async function resendCode() {
-    const { error, ...result } = await supabase.auth.resend({
-      phone: phoneNumber,
-      type: 'sms'
-    });
+    AuthService.sendPhoneNumberVerification({
+      requestBody: {
+        phone_number: phoneNumber
+      }
+    }).then(() => {
+      toast.show(t('auth:pin_code.code_sent'));
 
-    console.log('============');
-    console.log('error:', error);
-    console.log('result:', result);
-    console.log('============');
-
-    if (error) {
+    }).catch((error) => {
       toast.show(error.message, {
         preset: 'error'
       });
-      return;
-    }
-    toast.show(t('auth:pin_code.code_sent'));
+    });
   }
 
   const ResendCodeNumber = () => {
@@ -109,7 +103,7 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
     <FormProvider {...form}>
       <SchemaForm
         schema={VerifyPhoneNumberFormSchema}
-        onSubmit={onSubmit}
+        onSubmit={mutate}
         defaultValues={{
           pin_code: ''
         }}
@@ -121,7 +115,7 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
             <Stack>
               <ResendCodeNumber />
               <Theme inverse>
-                <SubmitButton onPress={() => submit()}>
+                <SubmitButton onPress={() => submit()} isLoading={isLoading}>
                   {t('common:confirm')}
                 </SubmitButton>
               </Theme>

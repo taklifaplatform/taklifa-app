@@ -6,9 +6,7 @@ export default function Screen() {
   return (
     <>
       <AppHeader
-        showBackButton
         title="Orders"
-        headerBackgroundColor="transparent"
       />
 
       <OrdersScreen />

@@ -59,8 +59,8 @@ const nextConfig = {
 const tamaguiPlugin = withTamagui({
   platform: 'web',
   themeBuilder: {
-    input: '../../libs/app/themes/shared/src/lib/sawaeed-theme/themes/theme.ts',
-    output: '../../libs/app/themes/shared/src/lib/sawaeed-theme/themes.ts',
+    input: '../../libs/app/theme/src/lib/sawaeed-theme/themes/theme.ts',
+    output: '../../libs/app/theme/src/lib/sawaeed-theme/themes.ts',
   },
 
   config: './tamagui.config.ts',

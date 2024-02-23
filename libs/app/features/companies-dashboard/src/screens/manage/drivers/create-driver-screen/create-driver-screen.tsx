@@ -1,16 +1,13 @@
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
+
 import { useToastController } from '@zix/app/ui/core';
-import {
-  useSupabase
-} from '@zix/core/supabase';
 import React from 'react';
 
-import { api } from '@zix/api';
+import { CompanyInvitationsService } from '@zix/api';
 import { Theme } from '@zix/app/ui/core';
 import { SchemaForm, SubmitButton, formFields } from '@zix/app/ui/forms';
 import { t } from 'i18next';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'solito/router';
 import { z } from 'zod';
 import { useCompanyManagerContext } from '../../../../context/UseCompanyManagerContext';
 
@@ -30,13 +27,16 @@ export const CreateDriverScreen: React.FC = () => {
   const form = useForm<z.infer<typeof InviteDriverFormSchema>>();
   const { activeCompany } = useCompanyManagerContext();
 
-  const supabase = useSupabase();
-  const queryClient = useQueryClient();
+
   const toast = useToastController();
 
-  const router = useRouter();
 
-  const { mutate } = api.companyInvitations.create.useMutation({
+  const { mutate } = useMutation({
+    mutationFn(requestBody: z.infer<typeof InviteDriverFormSchema>) {
+      return CompanyInvitationsService.create({
+        requestBody
+      });
+    },
     onSuccess(data, variables, context) {
       toast.show('Driver Invited Successfully!');
       // router.push(`/companies/${activeCompany?.id}`);

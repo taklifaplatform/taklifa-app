@@ -1,13 +1,11 @@
-import { useQueryClient } from '@tanstack/react-query';
-import { useToastController } from '@zix/app/ui/core';
-import {
-  useSupabase
-} from '@zix/core/supabase';
-import React from 'react';
-import { randomUUID } from 'expo-crypto';
+import { useMutation } from '@tanstack/react-query';
 
-import { api } from '@zix/api';
-import { Theme, Text } from '@zix/app/ui/core';
+import { useToastController } from '@zix/app/ui/core';
+import { randomUUID } from 'expo-crypto';
+import React from 'react';
+
+import { CompanyAdminService } from '@zix/api';
+import { Theme } from '@zix/app/ui/core';
 import { SchemaForm, SubmitButton, formFields } from '@zix/app/ui/forms';
 import { t } from 'i18next';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -40,14 +38,22 @@ export const CreateCompanyScreen: React.FC = () => {
 
   const router = useRouter();
 
-  const { mutate, error } = api.manageCompany.create.useMutation({
-    onSuccess(data, variables, context) {
-      toast.show('Company Created Successfully!');
-      console.log('====================');
-      console.log('onError::', JSON.stringify(data, null, 2));
-      console.log('====================');
-      switchCompany(data.id);
-      router.push(`/companies/${data.id}`);
+  const { mutate, error } = useMutation({
+    mutationFn(requestBody: z.infer<typeof CreateCompanyFormSchema>) {
+      return CompanyAdminService.create({
+        requestBody
+      });
+    },
+    onSuccess({ data }, variables, context) {
+      if (data) {
+        toast.show('Company Created Successfully!');
+        console.log('====================');
+        console.log('onError::', JSON.stringify(data, null, 2));
+        console.log('====================');
+        switchCompany(data.id);
+        router.push(`/companies/${data.id}`);
+      }
+
     },
     onError(error, variables, context) {
       console.log('====================');

@@ -15,14 +15,14 @@ const useIsSubmitting = () => {
  * created to be used in forms
  * will show loading spinners and disable submission when already submitting
  */
-export const SubmitButton: React.FC<ButtonProps> = (props) => {
+export const SubmitButton: React.FC<ButtonProps & { isLoading?: boolean }> = (props) => {
   const isSubmitting = useIsSubmitting();
 
   return (
     <Button
       iconAfter={
         <AnimatePresence>
-          {isSubmitting && (
+          {(isSubmitting || props?.isLoading) && (
             <Spinner
               color="$color"
               key="loading-spinner"

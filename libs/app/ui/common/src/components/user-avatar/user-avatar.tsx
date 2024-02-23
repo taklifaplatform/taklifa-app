@@ -1,12 +1,12 @@
+import { UserTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/app/ui/icons';
-import { Tables } from '@zix/core/supabase';
 import { useMemo } from 'react';
 import { SolitoImage } from 'solito/image';
 import { Avatar, SizeTokens, useStyle } from 'tamagui';
 
 export type UserAvatarProps = {
   size?: SizeTokens;
-  user?: Tables<'users'>;
+  user?: UserTransformer;
 };
 
 export const UserAvatar: React.FC<UserAvatarProps> = ({
@@ -20,12 +20,12 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
   });
 
   const avatarUrl = useMemo(() => {
-    if (user?.avatar_url) return user.avatar_url;
+    if (user?.avatar?.original_url) return user?.avatar?.original_url;
 
     if (!user?.name) return null;
 
     const params = new URLSearchParams();
-    const name = user?.name || user?.email || '';
+    const name = user?.name || user?.username || user?.email || '';
     params.append('name', name);
     params.append('size', '256'); // will be resized again by NextImage/SolitoImage
     return `https://ui-avatars.com/api.jpg?${params.toString()}`;

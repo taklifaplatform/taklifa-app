@@ -3,8 +3,8 @@ import { Languages } from '@tamagui/lucide-icons';
 import { ActionSheet, ActionSheetRef, Settings } from '@zix/app/ui/common';
 import { Paragraph, ScrollView, YStack, useMedia } from '@zix/app/ui/core';
 import { CustomIcon } from '@zix/app/ui/icons';
+import { useAuth } from '@zix/core/auth';
 import { useThemeSetting } from '@zix/core/providers';
-import { useSupabase } from '@zix/core/supabase';
 import { usePathname } from '@zix/core/utils';
 import { useMultiLang } from '@zix/i18n';
 import { t } from 'i18next';
@@ -178,7 +178,7 @@ const SettingsThemeAction = () => {
 };
 
 const SettingsItemLogoutAction = () => {
-  const supabase = useSupabase();
+  const { logout } = useAuth()
 
   return (
     <Settings.Item
@@ -186,7 +186,7 @@ const SettingsItemLogoutAction = () => {
         <CustomIcon name="logout" color="red" {...props} />
       )}
       accentColor="$red9"
-      onPress={() => supabase.auth.signOut()}
+      onPress={() => logout()}
     >
       {t('account:logout')}
     </Settings.Item>

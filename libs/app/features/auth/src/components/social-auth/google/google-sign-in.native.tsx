@@ -1,11 +1,9 @@
 import { Button } from '@zix/app/ui/core';
-import { useSupabase } from '@zix/core/supabase';
 import * as WebBrowser from 'expo-web-browser';
 import { useRouter } from 'solito/router';
 import { IconGoogle } from './icon-google';
 
 export const GoogleSignIn: React.FC = () => {
-  const supabase = useSupabase();
   const router = useRouter();
 
   async function signInWithGoogle() {
@@ -23,7 +21,7 @@ export const GoogleSignIn: React.FC = () => {
     });
     const token = userInfo?.idToken;
     if (!token) throw new Error("No id token");
-    const { error } = await supabase.auth.signInWithIdToken({
+    const { error } = await signInWithIdToken({
       provider: "google",
       token: token,
       nonce: rawNonce,
@@ -38,8 +36,7 @@ export const GoogleSignIn: React.FC = () => {
       const redirectUri = 'myapp://';
       const provider = 'google';
       const response = await WebBrowser.openAuthSessionAsync(
-        `${
-          process.env.EXPO_PUBLIC_SUPABASE_URL
+        `${process.env.EXPO_PUBLIC_SUPABASE_URL
         }/auth/v1/authorize?${new URLSearchParams({
           provider,
           redirect_to: redirectUri
@@ -56,15 +53,16 @@ export const GoogleSignIn: React.FC = () => {
         const refreshToken = paramsArray[2]?.split('=')[1];
 
         if (accessToken && refreshToken) {
+          alert('handled Google Sign in Session')
           // handle error
-          const { error } = await supabase.auth.setSession({
-            access_token: accessToken,
-            refresh_token: refreshToken
-          });
-          if (!error) authSuccessful = true;
-          if (error) {
-            // handle error
-          }
+          // const { error } = await setSession({
+          //   access_token: accessToken,
+          //   refresh_token: refreshToken
+          // });
+          // if (!error) authSuccessful = true;
+          // if (error) {
+          //   // handle error
+          // }
         }
       }
     } catch (error) {

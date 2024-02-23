@@ -22,20 +22,20 @@ export const SignUpSuccessScreen = () => {
   const { user } = useUser();
 
   const totalSteps = useMemo(() => {
-    if (user?.user_metadata.requested_user_type === 'service_requestor') {
+    if (user?.requested_user_type === 'service_requestor') {
       return 2;
     }
-    if (user?.user_metadata.requested_user_type === 'company') {
+    if (user?.requested_user_type === 'company') {
       return 3;
     }
-    if (user?.user_metadata.requested_user_type === 'individual') {
+    if (user?.requested_user_type === 'individual') {
       return 4;
     }
     return 1;
-  }, [user?.user_metadata.requested_user_type]);
+  }, [user?.requested_user_type]);
 
   const renderAccountVerificationProcessMessage = () =>
-    user?.user_metadata.requested_user_type === 'service_provider' && (
+    user?.requested_user_type === 'service_provider' && (
       <YStack>
         <Text textAlign="center">
           {t('auth:verification_in_progress.title')}

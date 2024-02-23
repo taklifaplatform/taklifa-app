@@ -1,4 +1,4 @@
-import { themeConfig as config } from "@zix/app/themes/mobile";
+import { themeConfig as config } from "@zix/app/theme";
 
 export type Conf = typeof config;
 

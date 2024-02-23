@@ -4,7 +4,7 @@ import {
   ThemeProviderProps,
   useThemeSetting as next_useThemeSetting
 } from '@tamagui/next-theme';
-import { useForceUpdate } from '@zix/core/ui';
+import { useForceUpdate } from 'tamagui';
 import { StatusBar } from 'expo-status-bar';
 import {
   createContext,

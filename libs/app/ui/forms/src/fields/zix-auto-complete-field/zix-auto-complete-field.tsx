@@ -9,6 +9,7 @@ import {
 import { NativeValue } from '@tamagui/toast/types/ToastImperative';
 import { useQuery } from '@tanstack/react-query';
 import { RecursiveErrorType } from '@ts-react/form/lib/src/zodObjectErrors';
+import { OpenAPI, request } from '@zix/api';
 import {
   Adapt,
   Button,
@@ -25,7 +26,6 @@ import {
   isWeb,
   useThemeName
 } from '@zix/app/ui/core';
-import { useSupabase, Database } from '@zix/core/supabase';
 import { useMultiLang } from '@zix/i18n';
 import { t } from 'i18next';
 import React, { useState } from 'react';
@@ -34,7 +34,7 @@ import React, { useState } from 'react';
  * TODO: implement load more logic
  */
 export type ZixAutoCompleteFieldProps = {
-  tableName: keyof Database['public']['Tables'];
+  api: string;
   // handle custom query
   // handle customer id, value
   itemKey?: string;
@@ -70,20 +70,18 @@ export type ZixAutoCompleteFieldProps = {
 export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
   props
 ) => {
-  const supabase = useSupabase();
   const themeName = useThemeName();
   const { activeLang, isRtl } = useMultiLang();
 
   const {
-    tableName,
+    api,
     itemKey = 'id',
     itemValue = 'name',
-    isMultiLang = false,
     numberOfItemsToShow = 50, // TODO: reduce
     native = true,
 
-    title = `Select ${tableName}`,
-    placeholder = `Please select ${tableName}`,
+    title = `Select ??`,
+    placeholder = `Please select ??`,
 
     error,
     isSubmitting,
@@ -94,54 +92,43 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
     selectTriggerProps = {}
   } = props;
 
-  if (!tableName) {
-    throw new Error('tableName is required');
+  if (!api) {
+    throw new Error('api is required');
   }
 
   const [search, setSearch] = useState<string>();
 
   const [open, setOpen] = useState(false);
 
-  const { data: selectedItems } = useQuery([tableName, value], {
+  const { data: selectedItem } = useQuery([api, value], {
     queryFn: async () => {
       if (!value) return null;
       return (
-        await supabase
-          .from(tableName)
-          .select(
-            props.selectQuery ? props.selectQuery : `${itemKey},${itemValue}`
-          )
-          .or(`id.eq.${value}`)
-      ).data;
+        await request(OpenAPI, {
+          method: 'GET',
+          url: `/api/${api}/${value}`,
+
+        })
+      )?.data
     }
   });
 
   const { data, isLoading, refetch } = useQuery(
-    [tableName, search, value, 'abc', numberOfItemsToShow, open],
+    [api, search, value, 'abc', numberOfItemsToShow, open],
     {
       queryFn: async () => {
-        const query = supabase
-          .from(tableName)
-          .select(
-            props.selectQuery ? props.selectQuery : `${itemKey},${itemValue}`
-          );
+        const result = await request(OpenAPI, {
+          method: 'GET',
+          url: `/api/${api}`,
+          query: {
+            search,
+            page: 1,
+            per_page: numberOfItemsToShow,
+            abc: 'abc'
+          }
+        })
 
-        if (search?.length) {
-          query.or(
-            `${itemValue}${isMultiLang ? '->>' + activeLang : ''}.ilike.${search
-              .split(' ')
-              .map((s) => `%${s}%`)
-              .join(',')}`
-            // .join(',')}` + (value?.length ? `,id.eq.${value}` : '')
-          );
-        }
-
-        // order by id
-        query.order(props.orderBy || 'id', { ascending: true });
-
-        const { data } = await query.limit(numberOfItemsToShow);
-
-        return data;
+        return result?.data;
       },
       keepPreviousData: true,
       staleTime: 1000 * 60 * 60 * 24
@@ -225,9 +212,9 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
         id={id}
         value={value}
         onValueChange={onValueChange}
-        // borderWidth="$0.25"
-        // borderColor="$color10"
-        // bc="$color2"
+      // borderWidth="$0.25"
+      // borderColor="$color10"
+      // bc="$color2"
       >
         <Select.Trigger
           height={props.size || '$5'}
@@ -300,11 +287,11 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
           <Select.Viewport minWidth={200}>
             <XStack alignItems="flex-start" flex={1} width="100%">
               <Select.Group disabled={isSubmitting} space="$0">
-                {selectedItems?.map(
-                  props?.renderItem ? props.renderItem : renderItem
-                )}
-                {selectedItems?.length && (
+
+                {!selectedItem ? (
                   <Stack height={1} backgroundColor="$borderColor" />
+                ) : (
+                  props.renderItem?.(selectedItem, 0)
                 )}
                 {open &&
                   data?.map(props?.renderItem ? props.renderItem : renderItem)}

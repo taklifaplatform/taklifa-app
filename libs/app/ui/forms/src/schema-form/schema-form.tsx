@@ -1,5 +1,5 @@
 import { createTsForm } from '@ts-react/form';
-import { Form, FormProps, Theme } from '@zix/core/ui';
+import { Form, FormProps, Theme } from 'tamagui';
 import { ComponentProps, ReactElement } from 'react';
 
 import { useFormContext } from 'react-hook-form';
@@ -24,16 +24,16 @@ type RenderWrapper = (children: ReactElement) => ReactElement;
 
 type SchemaFormProps = ComponentProps<typeof MappedSchemaForm> & {
   wrappers?:
-    | Record<string, RenderWrapper>
-    | Record<string, Record<string, RenderWrapper>>;
+  | Record<string, RenderWrapper>
+  | Record<string, Record<string, RenderWrapper>>;
 };
 
 export const SchemaForm = (props: SchemaFormProps) => {
   const renderAfter: ComponentProps<typeof MappedSchemaForm>['renderAfter'] =
     props.renderAfter
       ? (vars) => (
-          <FormWrapper.Footer>{props.renderAfter?.(vars)}</FormWrapper.Footer>
-        )
+        <FormWrapper.Footer>{props.renderAfter?.(vars)}</FormWrapper.Footer>
+      )
       : undefined;
 
   return (

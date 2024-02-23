@@ -1,58 +1,44 @@
 import { useQuery } from "@tanstack/react-query";
-import { useSessionContext, useSupabase } from "@zix/core/supabase";
+import { AuthenticatedUserTransformer, UserService } from "@zix/api";
+import { useAtom } from "jotai";
+import { authUserStorage } from "../atoms";
 
-function useProfile() {
-  const { session } = useSessionContext();
-  const user = session?.user;
-  const supabase = useSupabase();
-  const { data, isLoading, refetch } = useQuery(["profile", user?.id], {
+export const useUser = () => {
+  const [authUser, setAuthUser] = useAtom(authUserStorage);
+  const { data, refetch, isLoading } = useQuery({
+    queryKey: ["profile", authUser?.id],
     queryFn: async () => {
-      if (!user?.id) return null;
-      const { data, error } = await supabase.from("users").select("*").eq(
-        "id",
-        user.id,
-      ).single();
-      if (error) {
-        // no rows - edge case of user being deleted
-        if (error.code === "PGRST116") {
-          await supabase.auth.signOut();
-          return null;
-        }
-        throw new Error(error.message);
-      }
-      return data;
+      return authUser?.id
+        ? UserService.retrieveUser()
+        : { data: {} as AuthenticatedUserTransformer };
+    },
+    onSuccess(data) {
+      data?.data && setAuthUser(data?.data);
     },
   });
 
-  return { data, isLoading, refetch };
-}
-
-export const useUser = () => {
-  const { session, isLoading: isLoadingSession } = useSessionContext();
-  const user = session?.user;
-  const { data: profile, refetch, isLoading: isLoadingProfile } = useProfile();
+  const user = authUser?.id
+    ? {
+      ...(authUser || {}),
+      ...(data?.data || {}),
+    }
+    : null;
+  // const { data: profile, refetch, isLoading: isLoadingProfile } = useProfile();
 
   const avatarUrl = (function () {
-    if (profile?.avatar_url) return profile.avatar_url;
-    if (typeof user?.user_metadata.avatar_url === "string") {
-      return user.user_metadata.avatar_url;
-    }
+    if (user?.avatar_url) return user.avatar_url;
 
     const params = new URLSearchParams();
-    const name = profile?.name || user?.email || "";
+    const name = user?.name || user?.email || "";
     params.append("name", name);
     params.append("size", "256"); // will be resized again by NextImage/SolitoImage
     return `https://ui-avatars.com/api.jpg?${params.toString()}`;
   })();
 
   return {
-    session,
     user,
-    profile,
     avatarUrl,
     updateProfile: () => refetch(),
-    isLoadingSession,
-    isLoadingProfile,
-    isLoading: isLoadingSession || isLoadingProfile,
+    isLoading,
   };
 };

@@ -33,7 +33,7 @@ export const ZixPhoneField: React.FC<ZixPhoneFieldProps> = ({
 
   return (
     <Theme name={error ? 'red' : themeName} forceClassName>
-      <XStack f={1} width="100%" space="$2">
+      <XStack flex={1} width="100%" space="$2">
         <Stack width="30%">
           <ZixCountryField
             value={selectedCountry}
@@ -41,8 +41,8 @@ export const ZixPhoneField: React.FC<ZixPhoneFieldProps> = ({
           />
         </Stack>
         <Input
-          f={1}
-          h="$5"
+          flex={1}
+          height="$5"
           disabled={!defaultConfig.dial_code}
           value={phone}
           onChangeText={onChange}
@@ -51,7 +51,7 @@ export const ZixPhoneField: React.FC<ZixPhoneFieldProps> = ({
           inputMode="numeric"
           borderWidth="$0.25"
           borderColor="$color10"
-          bc="$color2"
+          backgroundColor="$color2"
           textAlign={isRtl ? 'right' : 'left'}
         />
       </XStack>

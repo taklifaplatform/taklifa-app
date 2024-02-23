@@ -17,8 +17,8 @@ export default function Layout() {
         name="index"
         options={{
           title: t('navigation:customer-dashboard.home'),
-          tabBarIcon: ({ size, color }) => (
-            <CustomIcon name="home" color={color} size={size} />
+          tabBarIcon: ({ size, focused }) => (
+            <CustomIcon name="home" color={focused ? '$color5' : '$gray6'} size={size} />
           )
         }}
       />
@@ -27,8 +27,8 @@ export default function Layout() {
         name="orders"
         options={{
           title: t('navigation:customer-dashboard.orders'),
-          tabBarIcon: ({ size, color }) => (
-            <CustomIcon name="orders" color={color} size={size} />
+          tabBarIcon: ({ size, focused }) => (
+            <CustomIcon name="orders" color={focused ? '$color5' : '$gray6'} size={size} />
           )
         }}
       />
@@ -40,11 +40,11 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="store"
         options={{
           title: t('navigation:customer-dashboard.store'),
-          tabBarIcon: ({ size, color }) => (
-            <CustomIcon name="notifications" color={color} size={size} />
+          tabBarIcon: ({ size, focused }) => (
+            <CustomIcon name="store" color={focused ? '$color5' : '$gray6'} size={size} />
           )
         }}
       />
@@ -52,8 +52,8 @@ export default function Layout() {
         name="chat"
         options={{
           title: t('navigation:customer-dashboard.chat'),
-          tabBarIcon: ({ size, color }) => (
-            <CustomIcon name="chat" color={color} size={size} />
+          tabBarIcon: ({ size, focused }) => (
+            <CustomIcon name="chat" color={focused ? '$color5' : '$gray6'} size={size} />
           )
         }}
       />

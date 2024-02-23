@@ -1,10 +1,9 @@
 
-import { YStack, Text } from '@zix/app/ui/core';
-import SearchBar from '../components/SearchBar';
-import empty_notifications from '../components/empty_notifications';
-import { SectionList, View } from 'react-native';
+import { Text, YStack } from '@zix/app/ui/core';
 import { useEffect, useState } from 'react';
+import { SectionList, View } from 'react-native';
 import NotificationCard from '../components/NotificationCard';
+import SearchBar from '../components/SearchBar';
 
 /* eslint-disable-next-line */
 export interface NotificationScreenProps {

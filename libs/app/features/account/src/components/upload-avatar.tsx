@@ -1,15 +1,12 @@
-import { YStack } from '@zix/app/ui/core'
 import { Upload } from '@tamagui/lucide-icons'
+import { YStack } from '@zix/app/ui/core'
 
-import { decode } from 'base64-arraybuffer'
+import { useUser } from '@zix/core/auth'
 import * as ImagePicker from 'expo-image-picker'
 import React from 'react'
-import { useUser } from '@zix/core/auth'
-import { useSupabase } from '@zix/core/supabase'
 
 export const UploadAvatar = ({ children }: { children: React.ReactNode }) => {
   const { user, updateProfile } = useUser()
-  const supabase = useSupabase()
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -35,40 +32,47 @@ export const UploadAvatar = ({ children }: { children: React.ReactNode }) => {
           throw new Error('No image provided.')
         }
 
-        const base64Image = image.base64
+        alert('UPLOAD IMAGE NOT SUPPORTED YET!')
 
-        if (!base64Image) {
-          throw new Error('No image provided.')
-        }
+        // temporary upload
+        // UserService.updateUser({
 
-        const base64Str = base64Image.includes('base64,')
-          ? base64Image.substring(base64Image.indexOf('base64,') + 'base64,'.length)
-          : base64Image
-        const res = decode(base64Str)
+        // })
 
-        if (!(res.byteLength > 0)) {
-          console.error('ArrayBuffer is null')
-          return null
-        }
-        const result = await supabase.storage
-          .from('avatars')
-          .upload(`${user.id}/${Number(new Date())}.jpeg`, res, {
-            contentType: 'image/jpeg',
-            upsert: true,
-          })
-        if (result.error) {
-          console.log(result.error)
-          throw new Error(result.error.message)
-        }
+        // const base64Image = image.base64
 
-        const publicUrlRes = await supabase.storage
-          .from('avatars')
-          .getPublicUrl(result.data.path.replace(`avatars/`, ''))
+        // if (!base64Image) {
+        //   throw new Error('No image provided.')
+        // }
 
-        await supabase
-          .from('users')
-          .update({ avatar_url: publicUrlRes.data.publicUrl })
-          .eq('id', user.id)
+        // const base64Str = base64Image.includes('base64,')
+        //   ? base64Image.substring(base64Image.indexOf('base64,') + 'base64,'.length)
+        //   : base64Image
+        // const res = decode(base64Str)
+
+        // if (!(res.byteLength > 0)) {
+        //   console.error('ArrayBuffer is null')
+        //   return null
+        // }
+        // const result = await .storage
+        //   .from('avatars')
+        //   .upload(`${user.id}/${Number(new Date())}.jpeg`, res, {
+        //     contentType: 'image/jpeg',
+        //     upsert: true,
+        //   })
+        // if (result.error) {
+        //   console.log(result.error)
+        //   throw new Error(result.error.message)
+        // }
+
+        // const publicUrlRes = await .storage
+        //   .from('avatars')
+        //   .getPublicUrl(result.data.path.replace(`avatars/`, ''))
+
+        // await
+        //   .from('users')
+        //   .update({ avatar_url: publicUrlRes.data.publicUrl })
+        //   .eq('id', user.id)
         await updateProfile()
       }
     } catch (e) {
@@ -76,9 +80,9 @@ export const UploadAvatar = ({ children }: { children: React.ReactNode }) => {
 
       alert(
         'Upload failed.' +
-          (process.env.NODE_ENV !== 'production'
-            ? ' NOTE: Make sure you have created a public bucket with name `avatars`. You can do it either from your Supabase dashboard (http://localhost:54323/project/default/storage/buckets/avatars) or using the seed.sql file.'
-            : '')
+        (process.env.NODE_ENV !== 'production'
+          ? ' NOTE: Make sure you have created a public bucket with name `avatars`. You can do it either from your Supabase dashboard (http://localhost:54323/project/default/storage/buckets/avatars) or using the seed.sql file.'
+          : '')
       )
     }
   }

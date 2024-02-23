@@ -1,13 +1,15 @@
+import { useMutation } from '@tanstack/react-query';
+
+import { UserVerificationService } from '@zix/api';
 import { Theme, useToastController } from '@zix/app/ui/core';
-import { SchemaForm, SubmitButton, formFields } from '@zix/app/ui/forms';
-import { useSupabase } from '@zix/core/supabase';
+import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/app/ui/forms';
 import { t } from 'i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
 import { z } from 'zod';
-import { useRegisterStepsCounter } from '../../hooks/useRegisterStepsCounter';
 import AcceptTermsLink from '../../components/accept-terms-link/accept-terms-link';
 import { AuthHeader } from '../../components/auth-header/auth-header';
+import { useRegisterStepsCounter } from '../../hooks/useRegisterStepsCounter';
 
 const DriverVerificationFormSchema = z
   .object({
@@ -27,96 +29,25 @@ const DriverVerificationFormSchema = z
   });
 
 export const AuthDriverVerificationScreen = () => {
-  const supabase = useSupabase();
-
   const toast = useToastController();
   const router = useRouter();
 
-  const { user, totalSteps } = useRegisterStepsCounter();
+  const { totalSteps } = useRegisterStepsCounter();
 
   const form = useForm<z.infer<typeof DriverVerificationFormSchema>>();
-
-  async function verifyDriver({
-    license_number,
-    vehicle_driving_license,
-    insurance_image,
-    avatar
-  }: z.infer<typeof DriverVerificationFormSchema>) {
-    if (!user) {
-      return;
+  const { mutate, isLoading } = useMutation({
+    mutationFn(requestBody: z.infer<typeof DriverVerificationFormSchema>) {
+      return UserVerificationService.storeDriverVerification({
+        requestBody
+      })
+    },
+    onSuccess({ data }) {
+      router.replace('/auth/register/success?redirect=/solo-driver');
+    },
+    onError(error: any) {
+      handleFormErrors(form, error?.body?.errors);
     }
-
-    const { error } = await supabase.from('user_verifications').upsert({
-      id: user?.id,
-      driving_license_number: license_number
-    });
-    if (error) {
-      console.log(
-        'VerifyDriverScreen::update->user_verifications ERROR',
-        error
-      );
-      toast.show(error.message);
-      return;
-    }
-
-    const uploadResults = await Promise.all([
-      supabase.storage
-        .from('users_verification')
-        .upload(
-          `${user.id}/driving-license.${vehicle_driving_license.name
-            .split('.')
-            .pop()}`,
-          vehicle_driving_license.file,
-          {
-            upsert: true
-          }
-        ),
-      supabase.storage
-        .from('users_verification')
-        .upload(
-          `${user.id}/insurance-image.${insurance_image.name.split('.').pop()}`,
-          insurance_image.file,
-          {
-            upsert: true
-          }
-        ),
-      supabase.storage
-        .from('avatars')
-        .upload(
-          `${user.id}/avatar.${avatar.name.split('.').pop()}`,
-          avatar.file,
-          {
-            upsert: true
-          }
-        )
-    ]);
-
-    if (uploadResults.some((result) => result.error)) {
-      console.log('VerifyDriverScreen::upload ERROR', uploadResults);
-      toast.show(
-        uploadResults.find((result) => result.error)?.error?.message ||
-          'Oops something went wrong!!'
-      );
-      return;
-    }
-
-    const uploadAvatarResult = uploadResults.find((result) =>
-      result?.data?.path.includes('avatar')
-    );
-
-    if (uploadAvatarResult?.data) {
-      const publicUrlRes = await supabase.storage
-        .from('avatars')
-        .getPublicUrl(uploadAvatarResult.data.path.replace(`avatars/`, ''));
-
-      await supabase
-        .from('users')
-        .update({ avatar_url: publicUrlRes.data.publicUrl })
-        .eq('id', user.id);
-    }
-
-    router.replace('/auth/register/success?redirect=/solo-driver');
-  }
+  })
 
   return (
     <FormProvider {...form}>
@@ -127,11 +58,11 @@ export const AuthDriverVerificationScreen = () => {
             prepend: <AcceptTermsLink />
           }
         }}
-        onSubmit={(values) => verifyDriver(values)}
+        onSubmit={mutate}
         renderAfter={({ submit }) => {
           return (
             <Theme inverse>
-              <SubmitButton onPress={() => submit()}>
+              <SubmitButton isLoading={isLoading} onPress={submit}>
                 {t('common:next')}
               </SubmitButton>
             </Theme>

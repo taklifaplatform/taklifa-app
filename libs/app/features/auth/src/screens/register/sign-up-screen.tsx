@@ -1,5 +1,7 @@
+import { useMutation } from '@tanstack/react-query';
+
 import { Theme, useToastController } from '@zix/app/ui/core';
-import { SchemaForm, SubmitButton, formFields } from '@zix/app/ui/forms';
+import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/app/ui/forms';
 import { t } from 'i18next';
 import { useAtom } from 'jotai';
 import { useEffect, useMemo } from 'react';
@@ -8,7 +10,8 @@ import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
 import { z } from 'zod';
 
-import { useSupabase } from '@zix/core/supabase';
+import { AuthService } from '@zix/api';
+import { authAccessTokenStorage, authUserStorage } from '@zix/core/auth';
 import { authAccountTypeAtom, authUserTypeAtom } from '../../atoms';
 import AcceptTermsLink from '../../components/accept-terms-link/accept-terms-link';
 import { AuthHeader } from '../../components/auth-header/auth-header';
@@ -18,8 +21,8 @@ const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
 const SignUpSchema = z
   .object({
     name: formFields.text.min(3).describe(t('forms:name')),
-    phone: formFields.phone.describe(t('forms:phone_number')),
-    is_whatsapp: formFields.boolean_switch.nullable().describe(t('forms:is_whatsapp')),
+    phone_number: formFields.phone.describe(t('forms:phone_number')),
+    phone_number_has_whatsapp: formFields.boolean_switch.optional().describe(t('forms:is_whatsapp')),
     password: formFields.text.min(6).describe(t('forms:password')),
     password_confirmation: formFields.text
       .min(6)
@@ -28,10 +31,10 @@ const SignUpSchema = z
   })
   .required({
     name: true,
-    phone: true,
+    phone_number: true,
     password: true,
     password_confirmation: true,
-    accept_terms: true
+    accept_terms: true,
   })
   .superRefine(({ password_confirmation, password }, ctx) => {
     if (password_confirmation !== password) {
@@ -44,10 +47,11 @@ const SignUpSchema = z
   });
 
 export const SignUpScreen = () => {
-  const supabase = useSupabase();
 
   const toast = useToastController();
   const router = useRouter();
+  const [, setAuthAccessToken] = useAtom(authAccessTokenStorage)
+  const [, setAuthUser] = useAtom(authUserStorage)
 
   const [userType] = useAtom(authUserTypeAtom);
   const [accountType] = useAtom(authAccountTypeAtom);
@@ -75,60 +79,31 @@ export const SignUpScreen = () => {
 
   const form = useForm<z.infer<typeof SignUpSchema>>();
 
-  async function onSubmit({
-    phone,
-    password,
-    name,
-    is_whatsapp
-  }: z.infer<typeof SignUpSchema>) {
-    const requested_user_type =
-      !accountType || accountType === 'service_requestor'
-        ? 'service_requestor'
-        : userType;
-    const { error, data } = await supabase.auth.signUp({
-      phone: phone,
-      password: password,
-      options: {
-        // To take user's name other info
-        data: {
-          name: name,
-          requested_user_type
-        },
-        channel: is_whatsapp ? 'whatsapp' : 'sms'
+  const requested_user_type =
+    !accountType || accountType === 'service_requestor'
+      ? 'service_requestor'
+      : userType;
+  const { mutate, isLoading } = useMutation({
+    mutationFn: (variables: z.infer<typeof SignUpSchema>) => AuthService.register({
+      requestBody: {
+        ...variables,
+        requested_user_type
       }
-    });
-
-    // update profile
-
-    if (error) {
-      toast.show(error.message);
-      const errorMessage = error?.message.toLowerCase();
-      if (errorMessage.includes('phone')) {
-        form.setError('phone', { type: 'custom', message: errorMessage });
-      } else if (errorMessage.includes('password')) {
-        form.setError('password', { type: 'custom', message: errorMessage });
-      } else {
-        form.setError('name', { type: 'custom', message: errorMessage });
-      }
-
-      return;
-    }
-
-    if (!data?.user?.identities?.length) {
-      form.setError('phone', {
-        type: 'custom',
-        message: 'This phone already been used'
+    }),
+    onSuccess({ data }) {
+      setAuthAccessToken(data?.plainTextToken)
+      setAuthUser(data?.user)
+      router.push({
+        pathname: '/auth/verify-phone-number',
+        query: {
+          phone: data?.user?.phone_number
+        }
       });
-      return;
+    },
+    onError(error: any) {
+      handleFormErrors(form, error?.body?.errors);
     }
-
-    router.push({
-      pathname: '/auth/verify-phone-number',
-      query: {
-        phone: phone
-      }
-    });
-  }
+  })
 
   return (
     <FormProvider {...form}>
@@ -137,10 +112,11 @@ export const SignUpScreen = () => {
         schema={SignUpSchema}
         defaultValues={{
           name: '',
-          phone: params?.phone ?? '+966',
+          phone_number: params?.phone ?? '+966',
           password: '',
           password_confirmation: '',
-          accept_terms: false
+          accept_terms: false,
+          phone_number_has_whatsapp: false
         }}
         props={{
           password: {
@@ -153,10 +129,10 @@ export const SignUpScreen = () => {
             prepend: <AcceptTermsLink />
           }
         }}
-        onSubmit={onSubmit}
+        onSubmit={mutate}
         renderAfter={({ submit }) => (
           <Theme inverse>
-            <SubmitButton onPress={() => submit()} borderRadius="$10">
+            <SubmitButton onPress={() => submit()} isLoading={isLoading} borderRadius="$10">
               {t('common:next')}
             </SubmitButton>
           </Theme>

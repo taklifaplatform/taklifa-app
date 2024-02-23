@@ -1,10 +1,10 @@
 
-import { Eye, MoreHorizontal, Pencil, Trash2 } from '@tamagui/lucide-icons';
-import { CompanyMemberTransformer, api } from '@zix/api';
+import { Eye, MoreHorizontal, Trash2 } from '@tamagui/lucide-icons';
+import { useMutation } from '@tanstack/react-query';
+import { CompanyMemberTransformer, CompanyMembersService } from '@zix/api';
 import { ActionSheet, ActionSheetRef, UserAvatar } from '@zix/app/ui/common';
 import { Button, Text, XStack, YStack, useToastController } from '@zix/app/ui/core';
 import { useUser } from '@zix/core/auth';
-import { Tables } from '@zix/core/supabase';
 import moment from 'moment';
 import { useRef } from 'react';
 import { Alert } from 'react-native';
@@ -21,11 +21,12 @@ export function TeamMemberCard({ member: { user, role, company_id } }: TeamMembe
   const router = useRouter()
   const { user: authUser } = useUser()
 
-  const utils = api.useUtils();
-  const { mutate } = api.companyManageMembers.delete.useMutation({
+  const { mutate } = useMutation({
+    mutationFn(variables) {
+      return CompanyMembersService.delete(variables);
+    },
     onSuccess: (data, variables, context) => {
       toast.show('Member removed successfully!')
-      utils.companyManageMembers.list.refetch()
     }
   })
 
@@ -62,8 +63,8 @@ export function TeamMemberCard({ member: { user, role, company_id } }: TeamMembe
                   onPress: () => {
                     actionSheetManagerRef.current?.close()
                     mutate({
-                      company_id,
-                      member_id: user.id,
+                      company: company_id,
+                      member: user.id,
                     })
                   },
                 },

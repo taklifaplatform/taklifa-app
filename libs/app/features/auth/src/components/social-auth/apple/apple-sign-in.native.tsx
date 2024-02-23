@@ -1,22 +1,21 @@
-import { useSupabase } from '@zix/core/supabase';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import { Platform } from 'react-native';
 import { useRouter } from 'solito/router';
 import { initiateAppleSignIn } from '../../../utils/social/initiateAppleSignIn';
 
 export const AppleSignIn: React.FC = () => {
-  const supabase = useSupabase();
   const router = useRouter();
   async function signInWithApple() {
     try {
       const { token, nonce } = await initiateAppleSignIn();
-      const { error } = await supabase.auth.signInWithIdToken({
+      alert(JSON.stringify({
+        name: 'signInWithIdToken',
         provider: 'apple',
         token,
         nonce
-      });
-      if (!error) router.replace('/');
-      if (error) throw error;
+      }));
+      // if (!error) router.replace('/');
+      // if (error) throw error;
     } catch (e) {
       if (e instanceof Error && 'code' in e) {
         if (e.code === 'ERR_REQUEST_CANCELED') {

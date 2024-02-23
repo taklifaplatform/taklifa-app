@@ -1,5 +1,6 @@
 import { ImagePlus } from '@tamagui/lucide-icons';
 import { useFieldInfo, useTsController } from '@ts-react/form';
+import { MediaTransformer } from '@zix/api';
 import { Shake } from '@zix/app/ui/common';
 import {
   Avatar,
@@ -13,7 +14,6 @@ import {
   useStyle,
   useThemeName
 } from '@zix/app/ui/core';
-import { IMediaFile } from '@zix/core/supabase';
 import { ImageStyle } from 'expo-image';
 import { useId } from 'react';
 import { FieldError } from '../../common';
@@ -24,7 +24,7 @@ export interface FileProps extends Pick<InputProps, 'size' | 'autoFocus'> {
 
 // this
 export const AvatarField = (props: FileProps) => {
-  const { field, error } = useTsController<IMediaFile>();
+  const { field, error } = useTsController<MediaTransformer>();
   const { label } = useFieldInfo();
   const themeName = useThemeName();
   const id = useId();

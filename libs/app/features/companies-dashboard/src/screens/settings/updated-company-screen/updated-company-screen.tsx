@@ -1,16 +1,10 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useToastController } from '@zix/app/ui/core';
-import {
-  companies_TABLE,
-  COMPANY_MEMBERSHIPS_TABLE,
-  Tables,
-  uploadMediaFile,
-  useSupabase
-} from '@zix/core/supabase';
 import React from 'react';
 
+import { CompanyAdminService } from '@zix/api';
 import { Theme } from '@zix/app/ui/core';
-import { SchemaForm, SubmitButton, formFields } from '@zix/app/ui/forms';
+import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/app/ui/forms';
 import { t } from 'i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
@@ -36,56 +30,24 @@ const UpdateCompanyFormSchema = z
 export const UpdateCompanyScreen: React.FC = () => {
   const form = useForm<z.infer<typeof UpdateCompanyFormSchema>>();
   const { activeCompany, refreshActiveCompany } = useCompanyManagerContext();
-  const supabase = useSupabase();
-  const queryClient = useQueryClient();
   const toast = useToastController();
 
   const router = useRouter();
 
   const { mutate } = useMutation({
-    mutationFn: async (values: z.infer<typeof UpdateCompanyFormSchema>) => {
-      if (!activeCompany?.id) {
-        throw new Error('No active company');
-      }
-
-      const updatedData = {
-        ...activeCompany,
-        name: values.name
-      };
-
-      if (values.logo) {
-        const uploadedAvatar = await uploadMediaFile({
-          file: values.logo,
-          bucket: 'companies',
-          path: `${activeCompany.id}/public`
-        });
-        if (uploadedAvatar) {
-          updatedData.logo = uploadedAvatar;
-        }
-      }
-
-      const { data, error } = await supabase
-        .from('companies')
-        .update(updatedData)
-        .eq('id', activeCompany?.id)
-        .select('*');
-
-      if (error) {
-        throw error;
-      }
-      refreshActiveCompany();
-
-      return data;
+    async mutationFn(values: z.infer<typeof UpdateCompanyFormSchema>) {
+      return CompanyAdminService.update({
+        company: activeCompany?.id,
+        requestBody: values
+      })
     },
-    onSuccess: (data: Tables<'companies'>) => {
-      queryClient.invalidateQueries([companies_TABLE, COMPANY_MEMBERSHIPS_TABLE]);
+    onSuccess() {
+      refreshActiveCompany()
       toast.show('Company Updated Successfully!');
       router.back();
     },
-    onError: (error) => {
-      console.log('====================');
-      console.log('onError::', error);
-      console.log('====================');
+    onError(error) {
+      handleFormErrors(form, error?.body?.errors);
     }
   });
 

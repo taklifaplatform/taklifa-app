@@ -93,7 +93,8 @@ const iconNames = [
   // vehicles
   'vehicle_a',
   'vehicle_b',
-  'vehicle_c'
+  'vehicle_c',
+  'store',
 ];
 
 export type CustomIconName = (typeof iconNames)[number];
