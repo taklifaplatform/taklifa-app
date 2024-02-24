@@ -1,5 +1,5 @@
-import { CreateDriverScreen } from '@zix/app/features/companies-dashboard';
-import { AppHeader } from '@zix/app/ui/common';
+import { CreateDriverScreen } from '@zix/features/companies-dashboard';
+import { AppHeader } from '@zix/ui/common';
 import React from 'react';
 
 export default function Screen() {

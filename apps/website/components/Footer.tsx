@@ -1,5 +1,5 @@
-import { XStack, YStack, Text } from '@zix/app/ui/core';
-import { CustomIcon } from '@zix/app/ui/icons';
+import { XStack, YStack, Text } from 'tamagui';
+import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
@@ -7,8 +7,11 @@ import { TouchableOpacity } from 'react-native';
 export function Footer() {
   return (
     <YStack
-    $sm={{ display: 'none' }}
-    bottom="-55%" position='absolute' w={'100%'}>
+      $sm={{ display: 'none' }}
+      bottom="-55%"
+      position="absolute"
+      w={'100%'}
+    >
       <YStack backgroundColor={'$color'} padding="$4" borderRadius="$4">
         <XStack justifyContent="flex-end">
           <CustomIcon name="weblogo" width={170} height={75} />
@@ -16,7 +19,7 @@ export function Footer() {
         <XStack justifyContent="space-between" padding="$4">
           <YStack gap="$4">
             <Text color={'$color1'} fontWeight={'bold'}>
-            {t('web-home:followus')}
+              {t('web-home:followus')}
             </Text>
             <XStack gap="$4">
               <TouchableOpacity>
@@ -54,7 +57,7 @@ export function Footer() {
           </YStack>
           <YStack gap="$4">
             <Text color={'$color5'} fontWeight={'bold'}>
-            {t('web-home:aboutfooter')}
+              {t('web-home:aboutfooter')}
             </Text>
             <TouchableOpacity>
               <Text color={'$color1'}>{t('web-home:investor')}</Text>
@@ -74,7 +77,7 @@ export function Footer() {
           </YStack>
           <YStack gap="$4">
             <Text color={'$color5'} fontWeight={'bold'}>
-            {t('web-home:legal')}
+              {t('web-home:legal')}
             </Text>
             <TouchableOpacity>
               <Text color={'$color1'}>{t('web-home:term')}</Text>
@@ -94,7 +97,7 @@ export function Footer() {
           </YStack>
           <YStack gap="$4">
             <Text color={'$color5'} fontWeight={'bold'}>
-            {t('web-home:contact')}
+              {t('web-home:contact')}
             </Text>
             <TouchableOpacity>
               <Text color={'$color1'}>{t('web-home:jobs')}</Text>

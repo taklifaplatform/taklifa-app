@@ -1,8 +1,8 @@
 import {
   AuthLayout,
   KycVerificationScreen,
-  userProtectedGetSSP
-} from '@zix/app/features/auth';
+  userProtectedGetSSP,
+} from '@zix/features/auth';
 import Head from 'next/head';
 import { NextPageWithLayout } from '../../_app';
 

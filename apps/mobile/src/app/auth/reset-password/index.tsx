@@ -1,4 +1,4 @@
-import { ResetPasswordScreen } from '@zix/app/features/auth';
+import { ResetPasswordScreen } from '@zix/features/auth';
 import React from 'react';
 
 export default function Screen() {

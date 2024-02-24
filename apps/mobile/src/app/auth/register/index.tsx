@@ -1,4 +1,4 @@
-import { SelectAccountTypeScreen } from '@zix/app/features/auth';
+import { SelectAccountTypeScreen } from '@zix/features/auth';
 
 export default function Screen() {
   return <SelectAccountTypeScreen />;

@@ -1,4 +1,4 @@
-import { CompaniesDashboardLayout } from '@zix/app/features/companies-dashboard';
+import { CompaniesDashboardLayout } from '@zix/features/companies-dashboard';
 import { Stack } from 'expo-router';
 
 export default function Layout() {

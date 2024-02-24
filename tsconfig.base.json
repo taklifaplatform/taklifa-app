@@ -16,36 +16,30 @@
     "baseUrl": ".",
     "paths": {
       "@zix/api": ["libs/api/src/index.ts"],
-      "@zix/app/features/account": ["libs/app/features/account/src/index.ts"],
-      "@zix/app/features/auth": ["libs/app/features/auth/src/index.ts"],
-      "@zix/app/features/chat": ["libs/app/features/chat/src/index.ts"],
-      "@zix/app/features/companies-dashboard": [
-        "libs/app/features/companies-dashboard/src/index.ts"
+      "@zix/app-providers": ["libs/app-providers/src/index.ts"],
+      "@zix/features/account": ["libs/features/account/src/index.ts"],
+      "@zix/features/auth": ["libs/features/auth/src/index.ts"],
+      "@zix/features/chat": ["libs/features/chat/src/index.ts"],
+      "@zix/features/companies-dashboard": [
+        "libs/features/companies-dashboard/src/index.ts"
       ],
-      "@zix/app/features/customer-dashboard": [
-        "libs/app/features/customer-dashboard/src/index.ts"
+      "@zix/features/customer-dashboard": [
+        "libs/features/customer-dashboard/src/index.ts"
       ],
-      "@zix/app/features/notification": [
-        "libs/app/features/notification/src/index.ts"
+      "@zix/features/notifications": [
+        "libs/features/notifications/src/index.ts"
       ],
-      "@zix/app/features/solo-driver-dashboard": [
-        "libs/app/features/solo-driver-dashboard/src/index.ts"
+      "@zix/features/solo-driver-dashboard": [
+        "libs/features/solo-driver-dashboard/src/index.ts"
       ],
-      "@zix/app/providers/main-app-provider": [
-        "libs/app/providers/main-app-provider/src/index.ts"
-      ],
-      "@zix/app/theme": ["libs/app/theme/src/index.ts"],
-      "@zix/app/ui/common": ["libs/app/ui/common/src/index.ts"],
-      "@zix/app/ui/core": ["libs/app/ui/core/src/index.ts"],
-      "@zix/app/ui/forms": ["libs/app/ui/forms/src/index.ts"],
-      "@zix/app/ui/icons": ["libs/app/ui/icons/src/index.ts"],
-      "@zix/app/ui/sawaeed": ["libs/app/ui/sawaeed/src/index.ts"],
-      "@zix/app/ui/widgets": ["libs/app/ui/widgets/src/index.ts"],
-      "@zix/core/auth": ["libs/core/auth/src/index.ts"],
-      "@zix/core/chat": ["libs/core/chat/src/index.ts"],
-      "@zix/core/providers": ["libs/core/providers/src/index.ts"],
-      "@zix/core/utils": ["libs/core/utils/src/index.ts"],
-      "@zix/i18n": ["libs/i18n/src/index.ts"]
+      "@zix/i18n": ["libs/i18n/src/index.ts"],
+      "@zix/theme": ["libs/theme/src/index.ts"],
+      "@zix/ui/common": ["libs/ui/common/src/index.ts"],
+      "@zix/ui/forms": ["libs/ui/forms/src/index.ts"],
+      "@zix/ui/icons": ["libs/ui/icons/src/index.ts"],
+      "@zix/ui/sawaeed": ["libs/ui/sawaeed/src/index.ts"],
+      "@zix/ui/widgets": ["libs/ui/widgets/src/index.ts"],
+      "@zix/utils": ["libs/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

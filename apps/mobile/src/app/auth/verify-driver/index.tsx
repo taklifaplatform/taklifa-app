@@ -1,4 +1,4 @@
-import { AuthDriverVerificationScreen } from '@zix/app/features/auth';
+import { AuthDriverVerificationScreen } from '@zix/features/auth';
 
 export default function Screen() {
   return <AuthDriverVerificationScreen />;

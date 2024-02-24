@@ -1,4 +1,4 @@
-import { SignUpScreen } from '@zix/app/features/auth';
+import { SignUpScreen } from '@zix/features/auth';
 import React from 'react';
 
 export default function Screen() {

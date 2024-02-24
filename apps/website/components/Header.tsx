@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button, XStack, Text } from '@zix/app/ui/core';
-import { CustomIcon } from '@zix/app/ui/icons';
+import { Button, XStack, Text } from 'tamagui';
+import { CustomIcon } from '@zix/ui/icons';
 
-import {t} from 'i18next'
+import { t } from 'i18next';
 
 export function Header() {
   return (
@@ -18,7 +18,7 @@ export function Header() {
       borderTopWidth={2}
       borderTopColor={'$gray7'}
     >
-      <XStack w={'45%'} space='$4' paddingHorizontal='$4'>
+      <XStack w={'45%'} space="$4" paddingHorizontal="$4">
         <Button
           backgroundColor="transparent"
           paddingVertical="$4"
@@ -28,7 +28,7 @@ export function Header() {
           <Text color="$white">{t('web-home:signup')}</Text>
         </Button>
         <Button
-         backgroundColor="transparent"
+          backgroundColor="transparent"
           paddingVertical="$4"
           onPress={() => {}}
           icon={<CustomIcon name={'rigning'} size="$2" />}
@@ -36,7 +36,7 @@ export function Header() {
           <Text color="$white">{t('web-home:call')}</Text>
         </Button>
         <Button
-         backgroundColor="transparent"
+          backgroundColor="transparent"
           paddingVertical="$4"
           onPress={() => {}}
           icon={<CustomIcon name={'search'} size="$2" />}
@@ -47,11 +47,17 @@ export function Header() {
       <XStack w={'10%'}>
         <CustomIcon name={'weblogo'} width="$15" height="$8" />
       </XStack>
-      <XStack w={'45%'} justifyContent="flex-end" space="$4" paddingHorizontal='$4'>
-        <Button 
-        backgroundColor={'transparent'}
-        paddingVertical="$4"
-         onPress={() => {}}>
+      <XStack
+        w={'45%'}
+        justifyContent="flex-end"
+        space="$4"
+        paddingHorizontal="$4"
+      >
+        <Button
+          backgroundColor={'transparent'}
+          paddingVertical="$4"
+          onPress={() => {}}
+        >
           <Text color="$white">{t('web-home:works')}</Text>
         </Button>
         <Button
@@ -68,10 +74,7 @@ export function Header() {
         >
           <Text color="$white">{t('web-home:payments')}</Text>
         </Button>
-        <Button
-          paddingVertical="$4"
-          onPress={() => {}}
-        >
+        <Button paddingVertical="$4" onPress={() => {}}>
           <Text color="$white">{t('web-home:home')}</Text>
         </Button>
       </XStack>

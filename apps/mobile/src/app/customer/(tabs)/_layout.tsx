@@ -1,7 +1,7 @@
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import { Plus } from '@tamagui/lucide-icons';
-import { Circle, Theme, YStack } from '@zix/app/ui/core';
-import { CustomIcon } from '@zix/app/ui/icons';
+import { Circle, Theme, YStack } from 'tamagui';
+import { CustomIcon } from '@zix/ui/icons';
 import { Tabs, useRouter } from 'expo-router';
 import { t } from 'i18next';
 import React from 'react';
@@ -18,8 +18,12 @@ export default function Layout() {
         options={{
           title: t('navigation:customer-dashboard.home'),
           tabBarIcon: ({ size, focused }) => (
-            <CustomIcon name="home" color={focused ? '$color5' : '$gray6'} size={size} />
-          )
+            <CustomIcon
+              name="home"
+              color={focused ? '$color5' : '$gray6'}
+              size={size}
+            />
+          ),
         }}
       />
 
@@ -28,15 +32,19 @@ export default function Layout() {
         options={{
           title: t('navigation:customer-dashboard.orders'),
           tabBarIcon: ({ size, focused }) => (
-            <CustomIcon name="orders" color={focused ? '$color5' : '$gray6'} size={size} />
-          )
+            <CustomIcon
+              name="orders"
+              color={focused ? '$color5' : '$gray6'}
+              size={size}
+            />
+          ),
         }}
       />
       <Tabs.Screen
         name="create-shipment"
         options={{
           title: '',
-          tabBarIcon: PlusButton
+          tabBarIcon: PlusButton,
         }}
       />
       <Tabs.Screen
@@ -44,8 +52,12 @@ export default function Layout() {
         options={{
           title: t('navigation:customer-dashboard.store'),
           tabBarIcon: ({ size, focused }) => (
-            <CustomIcon name="store" color={focused ? '$color5' : '$gray6'} size={size} />
-          )
+            <CustomIcon
+              name="store"
+              color={focused ? '$color5' : '$gray6'}
+              size={size}
+            />
+          ),
         }}
       />
       <Tabs.Screen
@@ -53,8 +65,12 @@ export default function Layout() {
         options={{
           title: t('navigation:customer-dashboard.chat'),
           tabBarIcon: ({ size, focused }) => (
-            <CustomIcon name="chat" color={focused ? '$color5' : '$gray6'} size={size} />
-          )
+            <CustomIcon
+              name="chat"
+              color={focused ? '$color5' : '$gray6'}
+              size={size}
+            />
+          ),
         }}
       />
     </Tabs>

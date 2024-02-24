@@ -1,5 +1,5 @@
 import React from 'react';
-import { YStack, Text, Image, XStack, Button } from '@zix/app/ui/core';
+import { YStack, Text, Image, XStack, Button } from 'tamagui';
 import { t } from 'i18next';
 import { useMultiLang } from '@zix/i18n';
 
@@ -23,7 +23,7 @@ export function TopBanner() {
           width: '100%',
           height: 476,
           borderRadius:10
-        
+
         }}
         resizeMode="cover"
       />

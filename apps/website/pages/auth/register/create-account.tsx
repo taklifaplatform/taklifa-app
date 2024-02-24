@@ -1,11 +1,7 @@
 import { t } from 'i18next';
 import Head from 'next/head';
 
-import {
-  AuthLayout,
-  SignUpScreen,
-  guestOnlyGetSSP
-} from '@zix/app/features/auth';
+import { AuthLayout, SignUpScreen, guestOnlyGetSSP } from '@zix/features/auth';
 import { NextPageWithLayout } from '../../_app';
 
 const Page: NextPageWithLayout = () => (

@@ -1,4 +1,4 @@
-import { ResetPasswordVerifyPhoneNumberScreen } from '@zix/app/features/auth';
+import { ResetPasswordVerifyPhoneNumberScreen } from '@zix/features/auth';
 import React from 'react';
 
 export default function Screen() {

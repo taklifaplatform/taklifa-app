@@ -193,7 +193,7 @@ var require_usePresence = __commonJS({
       const context = (0, import_react49.useContext)(import_PresenceContext2.PresenceContext);
       if (!context)
         return [true, null, context];
-      const { isPresent: isPresent22, onExitComplete, register } = context, id = (0, import_react49.useId)() || "";
+      const { id, isPresent: isPresent22, onExitComplete, register } = context;
       return (0, import_react49.useEffect)(() => register(id), []), !isPresent22 && onExitComplete ? [false, () => onExitComplete == null ? void 0 : onExitComplete(id), context] : [true, void 0, context];
     }
     __name(usePresence2, "usePresence");
@@ -268,48 +268,51 @@ var require_PresenceChild = __commonJS({
     var React43 = __toESM2(require("react"));
     var import_react49 = require("react");
     var import_jsx_runtime56 = require("react/jsx-runtime");
-    var PresenceChild2 = /* @__PURE__ */ __name(({
-      children,
-      initial,
-      isPresent: isPresent2,
-      onExitComplete,
-      exitVariant,
-      enterVariant,
-      enterExitVariant,
-      presenceAffectsLayout,
-      custom
-    }) => {
-      const presenceChildren = (0, import_use_constant3.useConstant)(newChildrenMap2), id = (0, import_react49.useId)() || "", context = React43.useMemo(
-        () => ({
-          id,
-          initial,
-          isPresent: isPresent2,
-          custom,
-          exitVariant,
-          enterVariant,
-          enterExitVariant,
-          onExitComplete: (id2) => {
-            presenceChildren.set(id2, true);
-            for (const isComplete of presenceChildren.values())
-              if (!isComplete)
-                return;
-            onExitComplete == null ? void 0 : onExitComplete();
-          },
-          register: (id2) => (presenceChildren.set(id2, false), () => presenceChildren.delete(id2))
-        }),
-        /**
-         * If the presence of a child affects the layout of the components around it,
-         * we want to make a new context value to ensure they get re-rendered
-         * so they can detect that layout change.
-         */
-        presenceAffectsLayout ? void 0 : [isPresent2, exitVariant, enterVariant]
-      );
-      return React43.useMemo(() => {
-        presenceChildren.forEach((_, key) => presenceChildren.set(key, false));
-      }, [isPresent2]), React43.useEffect(() => {
-        !isPresent2 && !presenceChildren.size && (onExitComplete == null ? void 0 : onExitComplete());
-      }, [isPresent2]), /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_use_presence2.PresenceContext.Provider, { value: context, children });
-    }, "PresenceChild");
+    var PresenceChild2 = React43.memo(
+      ({
+        children,
+        initial,
+        isPresent: isPresent2,
+        onExitComplete,
+        exitVariant,
+        enterVariant,
+        enterExitVariant,
+        presenceAffectsLayout,
+        custom
+      }) => {
+        const presenceChildren = (0, import_use_constant3.useConstant)(newChildrenMap2), id = (0, import_react49.useId)() || "", context = React43.useMemo(
+          () => ({
+            id,
+            initial,
+            isPresent: isPresent2,
+            custom,
+            exitVariant,
+            enterVariant,
+            enterExitVariant,
+            onExitComplete: () => {
+              presenceChildren.set(id, true);
+              for (const isComplete of presenceChildren.values())
+                if (!isComplete)
+                  return;
+              onExitComplete == null ? void 0 : onExitComplete();
+            },
+            register: () => (presenceChildren.set(id, false), () => presenceChildren.delete(id))
+          }),
+          /**
+           * If the presence of a child affects the layout of the components around it,
+           * we want to make a new context value to ensure they get re-rendered
+           * so they can detect that layout change.
+           */
+          // @ts-expect-error its ok
+          presenceAffectsLayout ? void 0 : [isPresent2, exitVariant, enterVariant]
+        );
+        return React43.useMemo(() => {
+          presenceChildren.forEach((_, key) => presenceChildren.set(key, false));
+        }, [isPresent2]), React43.useEffect(() => {
+          !isPresent2 && !presenceChildren.size && (onExitComplete == null ? void 0 : onExitComplete());
+        }, [isPresent2]), /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_use_presence2.PresenceContext.Provider, { value: context, children });
+      }
+    );
     function newChildrenMap2() {
       return /* @__PURE__ */ new Map();
     }
@@ -841,20 +844,12 @@ var require_validStyleProps = __commonJS({
       stylePropsView: () => stylePropsView2,
       tokenCategories: () => tokenCategories2,
       validPseudoKeys: () => validPseudoKeys2,
-      validStyles: () => validStyles2,
-      validStylesOnBaseProps: () => validStylesOnBaseProps2
+      validStyles: () => validStyles2
     });
     module2.exports = __toCommonJS2(validStyleProps_exports);
     var import_constants44 = require_cjs6();
-    var placeHolderTextColors2 = {
-      placeholderTextColor: true
-    };
-    var validStylesOnBaseProps2 = {
-      ...placeHolderTextColors2
-    };
     var textColors2 = {
       color: true,
-      ...placeHolderTextColors2,
       textDecorationColor: true,
       textShadowColor: true
     };
@@ -1021,7 +1016,6 @@ var require_validStyleProps = __commonJS({
       ...tokenCategories2.radius,
       ...tokenCategories2.size,
       ...tokenCategories2.radius,
-      ...validStylesOnBaseProps2,
       ...stylePropsTransform2,
       ...stylePropsUnitless2,
       // RN doesn't support specific border styles per-edge
@@ -1768,6 +1762,12 @@ var require_Stacks = __commonJS({
       right: 0,
       bottom: 0
     };
+    var getInset2 = /* @__PURE__ */ __name((val) => val && typeof val == "object" ? val : {
+      top: val,
+      left: val,
+      bottom: val,
+      right: val
+    }, "getInset");
     var variants3 = {
       fullscreen: {
         true: fullscreenStyle2
@@ -1775,7 +1775,8 @@ var require_Stacks = __commonJS({
       elevation: {
         "...size": import_getElevation3.getElevation,
         ":number": import_getElevation3.getElevation
-      }
+      },
+      inset: getInset2
     };
     var YStack2 = (0, import_core53.styled)(import_core53.View, {
       flexDirection: "column",
@@ -3227,19 +3228,24 @@ var require_FocusScope = __commonJS({
       React43.useEffect(() => {
         if (!enabled || !trapped)
           return;
+        const controller = new AbortController();
         function handleFocusIn(event) {
           if (focusScope.paused || !container)
             return;
           const target = event.target;
-          container.contains(target) ? lastFocusedElementRef.current = target : focus(lastFocusedElementRef.current, { select: true });
+          container.contains(target) ? (target == null ? void 0 : target.addEventListener("blur", handleBlur, { signal: controller.signal }), lastFocusedElementRef.current = target) : focus(lastFocusedElementRef.current, { select: true });
         }
         __name(handleFocusIn, "handleFocusIn");
         function handleFocusOut(event) {
-          focusScope.paused || !container || container.contains(event.relatedTarget) || focus(lastFocusedElementRef.current, { select: true });
+          controller.abort(), !(focusScope.paused || !container) && (container.contains(event.relatedTarget) || focus(lastFocusedElementRef.current, { select: true }));
         }
         __name(handleFocusOut, "handleFocusOut");
+        function handleBlur() {
+          lastFocusedElementRef.current = container;
+        }
+        __name(handleBlur, "handleBlur");
         return document.addEventListener("focusin", handleFocusIn), document.addEventListener("focusout", handleFocusOut), () => {
-          document.removeEventListener("focusin", handleFocusIn), document.removeEventListener("focusout", handleFocusOut);
+          controller.abort(), document.removeEventListener("focusin", handleFocusIn), document.removeEventListener("focusout", handleFocusOut);
         };
       }, [trapped, forceUnmount, container, focusScope.paused]), React43.useEffect(() => {
         if (!enabled || !container || forceUnmount)
@@ -27191,7 +27197,7 @@ var require_with_selector_development = __commonJS({
         __name(is, "is");
         var objectIs = typeof Object.is === "function" ? Object.is : is;
         var useSyncExternalStore3 = shim.useSyncExternalStore;
-        var useRef32 = React43.useRef, useEffect34 = React43.useEffect, useMemo23 = React43.useMemo, useDebugValue2 = React43.useDebugValue;
+        var useRef32 = React43.useRef, useEffect34 = React43.useEffect, useMemo22 = React43.useMemo, useDebugValue2 = React43.useDebugValue;
         function useSyncExternalStoreWithSelector2(subscribe2, getSnapshot, getServerSnapshot, selector, isEqual) {
           var instRef = useRef32(null);
           var inst;
@@ -27204,7 +27210,7 @@ var require_with_selector_development = __commonJS({
           } else {
             inst = instRef.current;
           }
-          var _useMemo = useMemo23(function() {
+          var _useMemo = useMemo22(function() {
             var hasMemo = false;
             var memoizedSnapshot;
             var memoizedSelection;
@@ -27717,7 +27723,7 @@ var require_Group = __commonJS({
     });
     function createGroup(verticalDefault) {
       return (0, import_helpers25.withStaticProperties)(
-        (0, import_react49.forwardRef)((props, ref) => {
+        GroupFrame.styleable((props, ref) => {
           const activeProps = (0, import_core53.useProps)(props), {
             __scopeGroup,
             children: childrenProp,
@@ -29114,15 +29120,8 @@ function composeEventHandlers(og, next, { checkDefaultPrevented = true } = {}) {
 __name(composeEventHandlers, "composeEventHandlers");
 
 // ../../node_modules/@tamagui/helpers/dist/esm/validStyleProps.js
-var placeHolderTextColors = {
-  placeholderTextColor: true
-};
-var validStylesOnBaseProps = {
-  ...placeHolderTextColors
-};
 var textColors = {
   color: true,
-  ...placeHolderTextColors,
   textDecorationColor: true,
   textShadowColor: true
 };
@@ -29289,7 +29288,6 @@ var stylePropsView = {
   ...tokenCategories.radius,
   ...tokenCategories.size,
   ...tokenCategories.radius,
-  ...validStylesOnBaseProps,
   ...stylePropsTransform,
   ...stylePropsUnitless,
   // RN doesn't support specific border styles per-edge
@@ -29565,7 +29563,7 @@ function usePresence() {
   const context = (0, import_react8.useContext)(PresenceContext);
   if (!context)
     return [true, null, context];
-  const { isPresent: isPresent2, onExitComplete, register } = context, id = (0, import_react8.useId)() || "";
+  const { id, isPresent: isPresent2, onExitComplete, register } = context;
   return (0, import_react8.useEffect)(() => register(id), []), !isPresent2 && onExitComplete ? [false, () => onExitComplete == null ? void 0 : onExitComplete(id), context] : [true, void 0, context];
 }
 __name(usePresence, "usePresence");
@@ -29582,48 +29580,51 @@ __name(isPresent, "isPresent");
 var React4 = __toESM(require("react"));
 var import_react9 = require("react");
 var import_jsx_runtime4 = require("react/jsx-runtime");
-var PresenceChild = /* @__PURE__ */ __name(({
-  children,
-  initial,
-  isPresent: isPresent2,
-  onExitComplete,
-  exitVariant,
-  enterVariant,
-  enterExitVariant,
-  presenceAffectsLayout,
-  custom
-}) => {
-  const presenceChildren = useConstant(newChildrenMap), id = (0, import_react9.useId)() || "", context = React4.useMemo(
-    () => ({
-      id,
-      initial,
-      isPresent: isPresent2,
-      custom,
-      exitVariant,
-      enterVariant,
-      enterExitVariant,
-      onExitComplete: (id2) => {
-        presenceChildren.set(id2, true);
-        for (const isComplete of presenceChildren.values())
-          if (!isComplete)
-            return;
-        onExitComplete == null ? void 0 : onExitComplete();
-      },
-      register: (id2) => (presenceChildren.set(id2, false), () => presenceChildren.delete(id2))
-    }),
-    /**
-     * If the presence of a child affects the layout of the components around it,
-     * we want to make a new context value to ensure they get re-rendered
-     * so they can detect that layout change.
-     */
-    presenceAffectsLayout ? void 0 : [isPresent2, exitVariant, enterVariant]
-  );
-  return React4.useMemo(() => {
-    presenceChildren.forEach((_, key) => presenceChildren.set(key, false));
-  }, [isPresent2]), React4.useEffect(() => {
-    !isPresent2 && !presenceChildren.size && (onExitComplete == null ? void 0 : onExitComplete());
-  }, [isPresent2]), /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(PresenceContext.Provider, { value: context, children });
-}, "PresenceChild");
+var PresenceChild = React4.memo(
+  ({
+    children,
+    initial,
+    isPresent: isPresent2,
+    onExitComplete,
+    exitVariant,
+    enterVariant,
+    enterExitVariant,
+    presenceAffectsLayout,
+    custom
+  }) => {
+    const presenceChildren = useConstant(newChildrenMap), id = (0, import_react9.useId)() || "", context = React4.useMemo(
+      () => ({
+        id,
+        initial,
+        isPresent: isPresent2,
+        custom,
+        exitVariant,
+        enterVariant,
+        enterExitVariant,
+        onExitComplete: () => {
+          presenceChildren.set(id, true);
+          for (const isComplete of presenceChildren.values())
+            if (!isComplete)
+              return;
+          onExitComplete == null ? void 0 : onExitComplete();
+        },
+        register: () => (presenceChildren.set(id, false), () => presenceChildren.delete(id))
+      }),
+      /**
+       * If the presence of a child affects the layout of the components around it,
+       * we want to make a new context value to ensure they get re-rendered
+       * so they can detect that layout change.
+       */
+      // @ts-expect-error its ok
+      presenceAffectsLayout ? void 0 : [isPresent2, exitVariant, enterVariant]
+    );
+    return React4.useMemo(() => {
+      presenceChildren.forEach((_, key) => presenceChildren.set(key, false));
+    }, [isPresent2]), React4.useEffect(() => {
+      !isPresent2 && !presenceChildren.size && (onExitComplete == null ? void 0 : onExitComplete());
+    }, [isPresent2]), /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(PresenceContext.Provider, { value: context, children });
+  }
+);
 function newChildrenMap() {
   return /* @__PURE__ */ new Map();
 }
@@ -29992,6 +29993,12 @@ var fullscreenStyle = {
   right: 0,
   bottom: 0
 };
+var getInset = /* @__PURE__ */ __name((val) => val && typeof val == "object" ? val : {
+  top: val,
+  left: val,
+  bottom: val,
+  right: val
+}, "getInset");
 var variants = {
   fullscreen: {
     true: fullscreenStyle
@@ -29999,7 +30006,8 @@ var variants = {
   elevation: {
     "...size": getElevation,
     ":number": getElevation
-  }
+  },
+  inset: getInset
 };
 var YStack = (0, import_core3.styled)(import_core3.View, {
   flexDirection: "column",
@@ -31378,6 +31386,7 @@ var [PortalProvider2, usePortalContext] = createDialogContext(
   }
 );
 var DialogPortalFrame = (0, import_core13.styled)(YStack, {
+  pointerEvents: "none",
   variants: {
     unstyled: {
       false: {
@@ -31422,15 +31431,9 @@ __name(DialogPortalItemContent, "DialogPortalItemContent");
 var DialogPortal = /* @__PURE__ */ __name((props) => {
   const { __scopeDialog, forceMount, children, ...frameProps } = props, context = useDialogContext(PORTAL_NAME, __scopeDialog), isShowing = forceMount || context.open, [isFullyHidden, setIsFullyHidden] = React11.useState(!isShowing);
   isShowing && isFullyHidden && setIsFullyHidden(false);
-  const contents = /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
-    AnimatePresence,
-    {
-      onExitComplete: () => {
-        setIsFullyHidden(true);
-      },
-      children: isShowing ? children : null
-    }
-  );
+  const handleExitComplete = React11.useCallback(() => {
+    setIsFullyHidden(true);
+  }, []), contents = /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(AnimatePresence, { onExitComplete: handleExitComplete, children: isShowing ? children : null });
   if (useShowDialogSheet(context))
     return children;
   if (context.modal) {
@@ -32957,8 +32960,9 @@ function Animate({ children, type, ...props }) {
       enterVariant: props.enterVariant,
       exitVariant: props.exitVariant,
       enterExitVariant: props.enterExitVariant,
-      presenceAffectsLayout: props.presenceAffectsLayout || true,
+      presenceAffectsLayout: false,
       isPresent: props.present,
+      custom: props.custom,
       children
     }
   ) : /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(AnimatePresence, { ...props, children: props.present ? children : null }) : /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_jsx_runtime25.Fragment, { children });
@@ -34718,7 +34722,8 @@ function Popper(props) {
     refs,
     middlewareData,
     // @ts-expect-error this comes from Tooltip for example
-    open
+    open,
+    floatingStyles
   } = floating;
   if (isWeb)
     useIsomorphicLayoutEffect(() => {
@@ -34798,7 +34803,18 @@ var PopperContentFrame = (0, import_core23.styled)(ThemeableStack, {
   }
 });
 var PopperContent = React19.forwardRef(function(props, forwardedRef) {
-  const { __scopePopper, enableAnimationForPositionChange, ...rest } = props, { strategy, placement, refs, x, y, getFloatingProps, size: size3, isMounted, update } = usePopperContext(__scopePopper), contentRefs = useComposedRefs(refs.setFloating, forwardedRef), contents = React19.useMemo(() => /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+  const { __scopePopper, enableAnimationForPositionChange, ...rest } = props, {
+    strategy,
+    placement,
+    refs,
+    x,
+    y,
+    getFloatingProps,
+    size: size3,
+    isMounted,
+    update,
+    floatingStyles
+  } = usePopperContext(__scopePopper), contentRefs = useComposedRefs(refs.setFloating, forwardedRef), contents = React19.useMemo(() => /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
     PopperContentFrame,
     {
       "data-placement": placement,
@@ -34830,7 +34846,8 @@ var PopperContent = React19.forwardRef(function(props, forwardedRef) {
     ...enableAnimationForPositionChange && !hasInitialPosition && {
       animation: rest.animation,
       animateOnly: rest.animateOnly
-    }
+    },
+    ...!isWeb && floatingStyles
   };
   return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_core23.Stack, { ...getFloatingProps ? getFloatingProps(frameProps) : frameProps, children: contents });
 });
@@ -35378,7 +35395,7 @@ function useFloatingId() {
 }
 __name(useFloatingId, "useFloatingId");
 var useReactId = React20[/* @__PURE__ */ "useId".toString()];
-var useId6 = useReactId || useFloatingId;
+var useId5 = useReactId || useFloatingId;
 function createPubSub() {
   const map = /* @__PURE__ */ new Map();
   return {
@@ -36072,7 +36089,7 @@ function useFloatingPortalNode(_temp) {
     root
   } = _temp === void 0 ? {} : _temp;
   const [portalNode, setPortalNode] = React20.useState(null);
-  const uniqueId = useId6();
+  const uniqueId = useId5();
   const portalContext = usePortalContext2();
   const portalNodeRef = React20.useRef(null);
   index2(() => {
@@ -36538,7 +36555,7 @@ var FloatingOverlay = /* @__PURE__ */ React20.forwardRef(/* @__PURE__ */ __name(
     lockScroll = false,
     ...rest
   } = _ref;
-  const lockId = useId6();
+  const lockId = useId5();
   index2(() => {
     if (!lockScroll)
       return;
@@ -36986,7 +37003,7 @@ function useFloating3(options) {
   const domReferenceRef = React20.useRef(null);
   const dataRef = React20.useRef({});
   const events = React20.useState(() => createPubSub())[0];
-  const floatingId = useId6();
+  const floatingId = useId5();
   const setPositionReference = React20.useCallback((node) => {
     const positionReference = isElement(node) ? {
       getBoundingClientRect: () => node.getBoundingClientRect(),
@@ -37766,7 +37783,7 @@ function useRole(context, props) {
     role = "dialog"
   } = props;
   const ariaRole = (_componentRoleToAriaR = componentRoleToAriaRoleMap.get(role)) != null ? _componentRoleToAriaR : role;
-  const referenceId = useId6();
+  const referenceId = useId5();
   const parentId = useFloatingParentNodeId();
   const isNested = parentId != null;
   return React20.useMemo(() => {
@@ -38437,19 +38454,20 @@ var PopoverContent = PopperContentFrame.extractable(
       zIndex,
       __scopePopover,
       ...contentImplProps
-    } = props, context = usePopoverContext(__scopePopover), contentRef = React21.useRef(null), composedRefs = useComposedRefs(forwardedRef, contentRef), isRightClickOutsideRef = React21.useRef(false);
-    return React21.useEffect(() => {
+    } = props, context = usePopoverContext(__scopePopover), contentRef = React21.useRef(null), composedRefs = useComposedRefs(forwardedRef, contentRef), isRightClickOutsideRef = React21.useRef(false), [isFullyHidden, setIsFullyHidden] = React21.useState(!context.open);
+    return context.open && isFullyHidden && setIsFullyHidden(false), React21.useEffect(() => {
       if (!context.open)
         return;
       const content = contentRef.current;
       if (content)
         return (0, import_aria_hidden2.hideOthers)(content);
-    }, [context.open]), /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(PopoverContentPortal, { __scopePopover, zIndex: props.zIndex, children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_core24.Stack, { pointerEvents: context.open ? "auto" : "none", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+    }, [context.open]), !context.keepChildrenMounted && isFullyHidden ? null : /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(PopoverContentPortal, { __scopePopover, zIndex: props.zIndex, children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_core24.Stack, { pointerEvents: context.open ? "auto" : "none", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
       PopoverContentImpl,
       {
         ...contentImplProps,
         disableRemoveScroll,
         ref: composedRefs,
+        setIsFullyHidden,
         __scopePopover,
         trapFocus: trapFocus ?? context.open,
         disableOutsidePointerEvents: true,
@@ -38516,31 +38534,31 @@ var PopoverContentImpl = React21.forwardRef(function(props, forwardedRef) {
     children,
     disableRemoveScroll,
     freezeContentsWhenHidden,
+    setIsFullyHidden,
     ...contentProps
-  } = props, context = usePopoverContext(__scopePopover), { open, keepChildrenMounted } = context, popperContext = usePopperContext(__scopePopover || POPOVER_SCOPE), [isFullyHidden, setIsFullyHidden] = React21.useState(!context.open), contents = React21.useMemo(() => isWeb ? /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { style: { display: "contents" }, children }) : children, [children]);
-  if (open && isFullyHidden && setIsFullyHidden(false), !keepChildrenMounted && isFullyHidden)
-    return null;
+  } = props, context = usePopoverContext(__scopePopover), { open, keepChildrenMounted } = context, popperContext = usePopperContext(__scopePopover || POPOVER_SCOPE), contents = isWeb ? /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { style: dspContentsStyle, children }) : children;
   if (context.breakpointActive) {
     const childrenWithoutScrollView = React21.Children.toArray(children).map((child) => React21.isValidElement(child) && child.type === import_react_native_web7.ScrollView ? child.props.children : child);
-    let content = childrenWithoutScrollView;
-    return import_react_native_web7.Platform.OS === "android" || import_react_native_web7.Platform.OS === "ios" ? content = /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+    let content = /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(ResetPresence, { children: childrenWithoutScrollView });
+    return (import_react_native_web7.Platform.OS === "android" || import_react_native_web7.Platform.OS === "ios") && (content = /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
       PopperContext.Provider,
       {
         scope: __scopePopover || POPOVER_SCOPE,
         ...popperContext,
-        children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(ResetPresence, { children: childrenWithoutScrollView })
+        children: childrenWithoutScrollView
       }
-    ) : content = /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(ResetPresence, { children: content }), /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(PortalItem, { hostName: `${context.id}PopoverContents`, children: content });
+    )), /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(PortalItem, { hostName: `${context.id}PopoverContents`, children: content });
   }
+  const handleExitComplete = React21.useCallback(() => {
+    setIsFullyHidden == null ? void 0 : setIsFullyHidden(true);
+  }, [setIsFullyHidden]);
   return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
     Animate,
     {
       type: "presence",
       present: !!open,
       keepChildrenMounted,
-      onExitComplete: () => {
-        setIsFullyHidden(true);
-      },
+      onExitComplete: handleExitComplete,
       children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
         PopperContent,
         {
@@ -38555,9 +38573,7 @@ var PopoverContentImpl = React21.forwardRef(function(props, forwardedRef) {
               enabled: disableRemoveScroll ? false : open,
               allowPinchZoom: true,
               removeScrollBar: false,
-              style: {
-                display: "contents"
-              },
+              style: dspContentsStyle,
               children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(ResetPresence, { children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
                 import_focus_scope2.FocusScope,
                 {
@@ -38577,6 +38593,9 @@ var PopoverContentImpl = React21.forwardRef(function(props, forwardedRef) {
     }
   );
 });
+var dspContentsStyle = {
+  display: "contents"
+};
 var PopoverClose = React21.forwardRef(function(props, forwardedRef) {
   const { __scopePopover, ...rest } = props, context = usePopoverContext(__scopePopover);
   return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
@@ -38627,11 +38646,11 @@ var Popover = withStaticProperties(
         onChange: (val) => {
           onOpenChange == null ? void 0 : onOpenChange(val, viaRef.current);
         }
+      }), handleOpenChange = (0, import_core24.useEvent)((val, via) => {
+        viaRef.current = via, setOpen(val);
       }), sheetActive = useSheetBreakpointActive2(sheetBreakpoint), floatingContext = useFloatingContext({
         open,
-        setOpen: (val, via) => {
-          viaRef.current = via, setOpen(val);
-        },
+        setOpen: handleOpenChange,
         disable: sheetActive,
         hoverable,
         disableFocus
@@ -38646,9 +38665,7 @@ var Popover = withStaticProperties(
         triggerRef,
         open,
         breakpointActive: sheetActive,
-        onOpenChange: (val, via) => {
-          viaRef.current = via, setOpen(val);
-        },
+        onOpenChange: handleOpenChange,
         onOpenToggle: (0, import_core24.useEvent)(() => {
           open && sheetActive || setOpen(!open);
         }),
@@ -40275,24 +40292,30 @@ var NativeSelectFrame = (0, import_core35.styled)(ThemeableStack, {
 });
 var SelectGroup = React32.forwardRef(
   (props, forwardedRef) => {
-    const { __scopeSelect, ...groupProps } = props, groupId = React32.useId(), context = useSelectContext(GROUP_NAME2, __scopeSelect), itemParentContext = useSelectItemParentContext(GROUP_NAME2, __scopeSelect), size3 = itemParentContext.size ?? "$true", nativeSelectRef = React32.useRef(null), content = itemParentContext.shouldRenderWebNative ? (
-      // @ts-expect-error until we support typing based on tag
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(NativeSelectFrame, { asChild: true, size: size3, value: context.value, children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
-        NativeSelectTextFrame,
-        {
-          onChange: (event) => {
-            itemParentContext.onChange(event.currentTarget.value);
-          },
-          size: size3,
-          ref: nativeSelectRef,
-          style: {
-            color: "var(--color)",
-            // @ts-ignore
-            appearance: "none"
-          },
-          children: props.children
-        }
-      ) })
+    const { __scopeSelect, ...groupProps } = props, groupId = React32.useId(), context = useSelectContext(GROUP_NAME2, __scopeSelect), itemParentContext = useSelectItemParentContext(GROUP_NAME2, __scopeSelect), size3 = itemParentContext.size ?? "$true", nativeSelectRef = React32.useRef(null), content = itemParentContext.shouldRenderWebNative ? /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+      NativeSelectFrame,
+      {
+        asChild: true,
+        size: size3,
+        value: context.value,
+        id: itemParentContext.id,
+        children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+          NativeSelectTextFrame,
+          {
+            onChange: (event) => {
+              itemParentContext.onChange(event.currentTarget.value);
+            },
+            size: size3,
+            ref: nativeSelectRef,
+            style: {
+              color: "var(--color)",
+              // @ts-ignore
+              appearance: "none"
+            },
+            children: props.children
+          }
+        )
+      }
     ) : /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
       SelectGroupFrame,
       {
@@ -41154,7 +41177,6 @@ var import_core39 = require("@tamagui/core");
 var import_get_token9 = __toESM(require_cjs13());
 var SwitchThumb = (0, import_core39.styled)(ThemeableStack, {
   name: "SwitchThumb",
-  context: SwitchStyledContext,
   variants: {
     unstyled: {
       false: {
@@ -41185,7 +41207,6 @@ var getSwitchWidth = /* @__PURE__ */ __name((val) => getSwitchHeight(val) * 2, "
 var SwitchFrame = (0, import_core39.styled)(YStack, {
   name: "Switch",
   tag: "button",
-  context: SwitchStyledContext,
   variants: {
     unstyled: {
       false: {
@@ -41232,7 +41253,7 @@ function createSwitch(createProps) {
     Frame: Frame2 = SwitchFrame,
     Thumb: Thumb2 = SwitchThumb
   } = createProps;
-  process.env.NODE_ENV === "development" && (Frame2 !== SwitchFrame && Frame2.staticConfig.context || Thumb2 !== SwitchThumb && Thumb2.staticConfig.context) && console.warn(
+  process.env.NODE_ENV === "development" && (Frame2 !== SwitchFrame && Frame2.staticConfig.context && Frame2.staticConfig.context !== SwitchStyledContext || Thumb2 !== SwitchThumb && Thumb2.staticConfig.context && Thumb2.staticConfig.context !== SwitchStyledContext) && console.warn(
     "Warning: createSwitch() needs to control context to pass checked state from Frame to Thumb, any custom context passed will be overridden."
   ), Frame2.staticConfig.context = SwitchStyledContext, Thumb2.staticConfig.context = SwitchStyledContext;
   const SwitchThumbComponent = Thumb2.styleable(
@@ -42324,9 +42345,6 @@ var EnsureFlexed = (0, import_core45.styled)(import_core45.Text, {
   display: "flex",
   fontSize: 200,
   children: "wwwwwwwwwwwwwwwwwww",
-  hoverStyle: {
-    backgroundColor: "red"
-  },
   pointerEvents: "none"
 });
 EnsureFlexed.isVisuallyHidden = true;
@@ -42435,7 +42453,8 @@ var InputFrame = (0, import_core48.styled)(
   {
     isInput: true,
     acceptTokens: {
-      placeholderTextColor: "color"
+      placeholderTextColor: "color",
+      selectionColor: "color"
     }
   }
 );

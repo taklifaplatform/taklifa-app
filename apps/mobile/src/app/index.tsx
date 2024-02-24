@@ -1,4 +1,4 @@
-import { Image, View } from '@zix/app/ui/core';
+import { Image, View } from 'tamagui';
 import { router } from 'expo-router';
 import React from 'react';
 

@@ -1,5 +1,5 @@
-import { TermsOfServiceScreen } from '@zix/app/features/auth';
-import { AppHeader } from '@zix/app/ui/common';
+import { TermsOfServiceScreen } from '@zix/features/auth';
+import { AppHeader } from '@zix/ui/common';
 import { t } from 'i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 

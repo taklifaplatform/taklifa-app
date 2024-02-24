@@ -1,7 +1,7 @@
 import { TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
-import { Button, XStack, YStack, Text, Stack } from '@zix/app/ui/core';
-import { CustomIcon } from '@zix/app/ui/icons';
+import { Button, XStack, YStack, Text, Stack } from 'tamagui';
+import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 export function TrackShipments() {
   const [selectedShipment, setSelectedShipment] = useState(0);
@@ -15,10 +15,11 @@ export function TrackShipments() {
       gap="$4"
       marginTop="$2"
     >
-      <XStack gap="$4"
+      <XStack
+        gap="$4"
         $sm={{
           width: '100%',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
         }}
       >
         <TouchableOpacity onPress={() => setSelectedShipment(0)}>
@@ -33,9 +34,10 @@ export function TrackShipments() {
               name="findtrack"
               color={selectedShipment === 0 ? null : '$gray9'}
             />
-            <Text color={selectedShipment === 0 ? null : '$gray9'}
+            <Text
+              color={selectedShipment === 0 ? null : '$gray9'}
               $sm={{
-                fontSize: '$3'
+                fontSize: '$3',
               }}
             >
               {t('web-home:findshipment')}
@@ -54,9 +56,10 @@ export function TrackShipments() {
               name="searchtrack"
               color={selectedShipment === 1 ? null : '$gray9'}
             />
-            <Text color={selectedShipment === 1 ? null : '$gray9'}
+            <Text
+              color={selectedShipment === 1 ? null : '$gray9'}
               $sm={{
-                fontSize: '$3'
+                fontSize: '$3',
               }}
             >
               {t('web-home:searchshipment')}
@@ -64,16 +67,19 @@ export function TrackShipments() {
           </XStack>
         </TouchableOpacity>
       </XStack>
-      <Stack w={'100%'} alignItems="center" justifyContent="space-evenly"
-        flexDirection='row'
+      <Stack
+        w={'100%'}
+        alignItems="center"
+        justifyContent="space-evenly"
+        flexDirection="row"
         $sm={{
-          flexDirection: 'column'
+          flexDirection: 'column',
         }}
       >
         <XStack
           w={'65%'}
           $sm={{
-            w: '100%'
+            w: '100%',
           }}
           padding="$3"
           borderWidth={1}
@@ -85,24 +91,28 @@ export function TrackShipments() {
             placeholder={t('web-home:shipmentplaceholder')}
             style={{
               width: '100%',
-              paddingLeft: 10
+              paddingLeft: 10,
             }}
           />
         </XStack>
 
-        <Stack flexDirection='row' gap='$4' $sm={{
-          flexDirection: 'row',
-          width: '100%',
-          justifyContent: 'center',
-          gap: '$4',
-          marginVertical: '$4',
-        }}>
+        <Stack
+          flexDirection="row"
+          gap="$4"
+          $sm={{
+            flexDirection: 'row',
+            width: '100%',
+            justifyContent: 'center',
+            gap: '$4',
+            marginVertical: '$4',
+          }}
+        >
           <Button
             backgroundColor="$color5"
             borderRadius="$4"
             padding="$2"
             $sm={{
-              width: '46%'
+              width: '46%',
             }}
             icon={<CustomIcon name="large_arrow_left" />}
           >
@@ -113,7 +123,7 @@ export function TrackShipments() {
             borderRadius="$4"
             padding="$2"
             $sm={{
-              width: '46%'
+              width: '46%',
             }}
             icon={<CustomIcon name="large_arrow_left" />}
             borderWidth={1}

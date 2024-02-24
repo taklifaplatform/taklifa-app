@@ -1,5 +1,5 @@
-import { EditAccountScreen } from '@zix/app/features/account';
-import { AppHeader } from '@zix/app/ui/common';
+import { EditAccountScreen } from '@zix/features/account';
+import { AppHeader } from '@zix/ui/common';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 

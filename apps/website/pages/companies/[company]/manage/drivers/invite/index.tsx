@@ -1,6 +1,6 @@
-import Head from 'next/head'
-import { NextPageWithLayout } from '../../../../../_app'
-import { userProtectedGetSSP } from '@zix/app/features/auth'
+import Head from 'next/head';
+import { NextPageWithLayout } from '../../../../../_app';
+import { userProtectedGetSSP } from '@zix/features/auth';
 
 export const Page: NextPageWithLayout = () => {
   return (
@@ -10,11 +10,11 @@ export const Page: NextPageWithLayout = () => {
       </Head>
       {/* <InviteScreen /> */}
     </>
-  )
-}
+  );
+};
 
 // Page.getLayout = (page) => <CompanyLayout>{page}</CompanyLayout>
 
-export const getServerSideProps = userProtectedGetSSP()
+export const getServerSideProps = userProtectedGetSSP();
 
-export default Page
+export default Page;

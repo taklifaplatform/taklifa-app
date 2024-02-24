@@ -1,7 +1,7 @@
 import React from 'react';
 import { t } from 'i18next';
 
-import { CustomIcon } from '@zix/app/ui/icons';
+import { CustomIcon } from '@zix/ui/icons';
 import { Tabs } from 'expo-router';
 
 export default function Layout() {
@@ -13,7 +13,7 @@ export default function Layout() {
           title: t('navigation:solo-driver-dashboard.home'),
           tabBarIcon: ({ size, color }) => (
             <CustomIcon name="home" color={color} size={size} />
-          )
+          ),
         }}
       />
 
@@ -23,7 +23,7 @@ export default function Layout() {
           title: t('navigation:solo-driver-dashboard.orders'),
           tabBarIcon: ({ size, color }) => (
             <CustomIcon name="orders" color={color} size={size} />
-          )
+          ),
         }}
       />
       <Tabs.Screen
@@ -32,7 +32,7 @@ export default function Layout() {
           title: t('navigation:solo-driver-dashboard.jobs'),
           tabBarIcon: ({ size, color }) => (
             <CustomIcon name="notifications" color={color} size={size} />
-          )
+          ),
         }}
       />
       <Tabs.Screen
@@ -41,7 +41,7 @@ export default function Layout() {
           title: t('navigation:solo-driver-dashboard.chat'),
           tabBarIcon: ({ size, color }) => (
             <CustomIcon name="chat" color={color} size={size} />
-          )
+          ),
         }}
       />
     </Tabs>

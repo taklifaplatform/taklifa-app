@@ -1,8 +1,8 @@
 // import { CompaniesScreen } from 'app/features/companies/companies-screen'
-import Head from 'next/head'
+import Head from 'next/head';
 
-import { userProtectedGetSSP } from '@zix/app/features/auth'
-import { NextPageWithLayout } from '../_app'
+import { userProtectedGetSSP } from '@zix/features/auth';
+import { NextPageWithLayout } from '../_app';
 
 export const Page: NextPageWithLayout = () => {
   return (
@@ -12,11 +12,11 @@ export const Page: NextPageWithLayout = () => {
       </Head>
       {/* <CompaniesScreen /> */}
     </>
-  )
-}
+  );
+};
 
 // Page.getLayout = (page) => <MainLayout>{page}</MainLayout>
 
-export const getServerSideProps = userProtectedGetSSP()
+export const getServerSideProps = userProtectedGetSSP();
 
-export default Page
+export default Page;

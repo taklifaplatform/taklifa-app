@@ -6,12 +6,12 @@ import {
   NextThemeProvider,
   useRootTheme
 } from '@tamagui/next-theme';
+import { MainAppProvider } from '@zix/app-providers';
 import { MultiLangAppProvider, bootMultiLang } from '@zix/i18n';
 
 import { NextPage } from 'next';
 import Head from 'next/head';
 
-import { MainAppProvider } from '@zix/app/providers/main-app-provider';
 import 'raf/polyfill';
 import { ReactElement, ReactNode } from 'react';
 import type { SolitoAppProps } from 'solito';

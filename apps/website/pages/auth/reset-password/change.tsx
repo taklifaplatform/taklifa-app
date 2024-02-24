@@ -1,8 +1,8 @@
 import {
   AuthLayout,
   ChangePasswordScreen,
-  guestOnlyGetSSP
-} from '@zix/app/features/auth';
+  guestOnlyGetSSP,
+} from '@zix/features/auth';
 import Head from 'next/head';
 import { NextPageWithLayout } from '../../_app';
 

@@ -189,7 +189,8 @@
     "react-native-reanimated-carousel": "*",
     "react-native-markdown-display": "*",
     "stream-chat-react": "*",
-    "@expo-google-fonts/almarai": "*"
+    "@expo-google-fonts/almarai": "*",
+    "isomorphic-ws": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",

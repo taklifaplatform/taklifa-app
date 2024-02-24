@@ -1,9 +1,9 @@
 import { Cog } from '@tamagui/lucide-icons';
 import {
   ManageTeamScreen,
-  useCompanyManagerContext
-} from '@zix/app/features/companies-dashboard';
-import { AppHeader } from '@zix/app/ui/common';
+  useCompanyManagerContext,
+} from '@zix/features/companies-dashboard';
+import { AppHeader } from '@zix/ui/common';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useRouter } from 'solito/router';

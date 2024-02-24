@@ -1,12 +1,5 @@
-import {
-  XStack,
-  Text,
-  Image,
-  AlertDialog,
-  Button,
-  YStack
-} from '@zix/app/ui/core';
-import { CustomIcon } from '@zix/app/ui/icons';
+import { XStack, Text, Image, AlertDialog, Button, YStack } from 'tamagui';
+import { CustomIcon } from '@zix/ui/icons';
 import { useMultiLang } from '@zix/i18n';
 import { t } from 'i18next';
 import React from 'react';
@@ -14,7 +7,7 @@ import { Alert, TouchableOpacity } from 'react-native';
 
 export function TopHeader() {
   const { changeLanguage } = useMultiLang();
- 
+
   return (
     <XStack
       $sm={{ display: 'none' }}
@@ -67,7 +60,7 @@ export function TopHeader() {
             source={{
               uri: '/images/flag.png',
               width: 20,
-              height: 20
+              height: 20,
             }}
             resizeMode="contain"
           />
@@ -76,9 +69,7 @@ export function TopHeader() {
       </XStack>
       <AlertDialog native>
         <AlertDialog.Trigger asChild>
-          <Button
-          unstyled
-          >{t('web-home:translate')}</Button>
+          <Button unstyled>{t('web-home:translate')}</Button>
         </AlertDialog.Trigger>
 
         <AlertDialog.Portal>
@@ -97,9 +88,9 @@ export function TopHeader() {
               'quick',
               {
                 opacity: {
-                  overshootClamping: true
-                }
-              }
+                  overshootClamping: true,
+                },
+              },
             ]}
             enterStyle={{ x: 0, y: -20, opacity: 0, scale: 0.9 }}
             exitStyle={{ x: 0, y: 10, opacity: 0, scale: 0.95 }}
@@ -139,7 +130,6 @@ export function TopHeader() {
           <CustomIcon name={'homeinfo'} />
         </XStack>
       </XStack>
-     
     </XStack>
   );
 }

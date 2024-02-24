@@ -1,15 +1,11 @@
-import { AppHeader } from '@zix/app/ui/common'
-import React from 'react'
-
+import { AppHeader } from '@zix/ui/common';
+import React from 'react';
 
 export default function Screen() {
   return (
     <>
-      <AppHeader
-        showBackButton
-        title='Orders'
-      />
+      <AppHeader showBackButton title="Orders" />
       {/* <OrdersScreen /> */}
     </>
-  )
+  );
 }

@@ -3,8 +3,8 @@ import Head from 'next/head';
 import {
   AuthLayout,
   SelectAccountTypeScreen,
-  guestOnlyGetSSP
-} from '@zix/app/features/auth';
+  guestOnlyGetSSP,
+} from '@zix/features/auth';
 import { NextPageWithLayout } from '../../_app';
 
 const Page: NextPageWithLayout = () => (

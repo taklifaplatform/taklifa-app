@@ -1,4 +1,4 @@
-import { ThreadScreen } from '@zix/app/features/chat';
+import { ThreadScreen } from '@zix/features/chat';
 import React from 'react';
 
 export default function Screen() {

@@ -1,4 +1,4 @@
-import { userProtectedGetSSP } from '@zix/app/features/auth';
+import { userProtectedGetSSP } from '@zix/features/auth';
 import Head from 'next/head';
 
 import { NextPageWithLayout } from '../../../_app';
