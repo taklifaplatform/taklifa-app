@@ -1,5 +1,4 @@
 import { createInterFont } from '@tamagui/font-inter';
-import { almaraiFace } from './font-face';
 
 export const headingFont = createInterFont(
   {
@@ -14,7 +13,7 @@ export const headingFont = createInterFont(
       3: '500',
       4: '700',
     },
-    face: almaraiFace,
+    // face: almaraiFace,
   },
   {
     sizeSize: (size) => size,
@@ -24,7 +23,7 @@ export const headingFont = createInterFont(
 
 export const bodyFont = createInterFont(
   {
-    face: almaraiFace,
+    // face: almaraiFace,
   },
   {
     sizeSize: (size) => Math.round(size * 1.1),
