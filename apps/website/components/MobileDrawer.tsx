@@ -75,15 +75,16 @@ export function MobileDrawer() {
         <CustomIcon name={'instagram'} />
         <CustomIcon name={'snapchat'} />
       </XStack>
-      <XStack gap="$2" alignItems="center">
+      <Separator width="100%" borderColor={'$gray7'} />
+      <YStack gap="$1">
         <Text fontWeight={'500'} fontSize="$2">
           {t('web-home:download')}
         </Text>
-        <XStack gap="$2">
-          <CustomIcon name={'appstore'} />
-          <CustomIcon name={'googleplay'} />
+        <XStack gap='$2'>
+          <CustomIcon name={'appstore'} size={'$8'} />
+          <CustomIcon name={'googleplay'} size={'$8'} />
         </XStack>
-      </XStack>
+      </YStack>
     </YStack>
   );
 }

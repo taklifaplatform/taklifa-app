@@ -50,7 +50,7 @@ export function Index() {
 
         </YStack>
         <Sheet
-        snapPoints={[85, 50]}
+        snapPoints={[90, 50]}
         open={drawer}>
           <Sheet.Overlay onPress={() => setDrawer(!drawer)} />
           <Sheet.Handle />

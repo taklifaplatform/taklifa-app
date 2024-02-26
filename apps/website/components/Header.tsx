@@ -3,12 +3,14 @@ import { Button, XStack, Text } from 'tamagui';
 import { CustomIcon } from '@zix/ui/icons';
 
 import { t } from 'i18next';
+import { Pressable } from 'react-native';
 
 export function Header() {
   return (
     <XStack
       $sm={{ display: 'none' }}
-      justifyContent="space-between"
+      flex={1}
+      justifyContent='space-around'
       backgroundColor={'$color1'}
       alignItems="center"
       borderBottomLeftRadius={20}
@@ -16,8 +18,6 @@ export function Header() {
       borderTopWidth={2}
       borderTopColor={'$gray7'}
       marginBottom="$4"
-      paddingHorizontal="$4"
-      paddingVertical="$0"
     >
       <XStack gap="$3">
         <Button
@@ -51,7 +51,7 @@ export function Header() {
         <Text>{t('web-home:payments')}</Text>
         </Button>
         <Button onPress={() => {}}><Text>{t('web-home:home')}</Text></Button>
-      </XStack>
+       </XStack>
     </XStack>
   );
 }
