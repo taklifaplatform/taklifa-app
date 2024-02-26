@@ -1,135 +1,166 @@
-import { XStack, Text, Image, AlertDialog, Button, YStack } from 'tamagui';
-import { CustomIcon } from '@zix/ui/icons';
+import { ChevronDown } from '@tamagui/lucide-icons';
 import { useMultiLang } from '@zix/i18n';
+import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
-import React from 'react';
-import { Alert, TouchableOpacity } from 'react-native';
+import { Pressable } from 'react-native';
+import {
+  Adapt,
+  AlertDialog,
+  Button,
+  Image,
+  Popover,
+  Select,
+  Text,
+  XStack,
+  YStack,
+} from 'tamagui';
 
 export function TopHeader() {
   const { changeLanguage } = useMultiLang();
 
-  return (
-    <XStack
-      $sm={{ display: 'none' }}
-      alignItems="center"
-      justifyContent="space-around"
-      paddingVertical="$5"
-      backgroundColor="$gray3"
-      borderTopLeftRadius={20}
-      borderTopRightRadius={20}
-    >
-      {/*<TouchableOpacity
-        onPress={() => {
-          changeLanguage('ar');
-        }}
-      >
-        Change Lang
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          changeLanguage('en');
-        }}
-      >
-        Change Lang en
-      </TouchableOpacity>*/}
-      <XStack gap="$2" alignItems="center">
-        <Text fontWeight={'500'} fontSize="$2">
-          {t('web-home:followus')}
-        </Text>
-        <XStack gap="$2">
-          <CustomIcon name={'facebook'} />
-          <CustomIcon name={'instagram'} />
-          <CustomIcon name={'snapchat'} />
-        </XStack>
-      </XStack>
-      <XStack gap="$2" alignItems="center">
-        <Text fontWeight={'500'} fontSize="$2">
-          {t('web-home:download')}
-        </Text>
-        <XStack gap="$2">
-          <CustomIcon name={'appstore'} />
-          <CustomIcon name={'googleplay'} />
-        </XStack>
-      </XStack>
-      <XStack gap="$2" alignItems="center">
-        <Text fontWeight={'500'} fontSize="$2">
-          saudi arabia
-        </Text>
-        <XStack gap="$2">
-          <Image
-            source={{
-              uri: '/images/flag.png',
-              width: 20,
-              height: 20,
-            }}
-            resizeMode="contain"
-          />
-          <CustomIcon name={'location'} />
-        </XStack>
-      </XStack>
-      <AlertDialog native>
-        <AlertDialog.Trigger asChild>
-          <Button unstyled>{t('web-home:translate')}</Button>
-        </AlertDialog.Trigger>
+  const language = [
+    { name: 'en', label: t('account:language:en') },
+    { name: 'ar', label: t('account:language:ar') },
+  ];
 
-        <AlertDialog.Portal>
-          <AlertDialog.Overlay
-            key="overlay"
-            animation="quick"
-            opacity={0.5}
+  const homeInfo = () => (
+    <Pressable onPress={() => {}}>
+    <XStack justifyContent="center" alignItems="center" gap="$3">
+      <Text fontWeight="500" fontSize="$2">
+        {t('web-home:about')}
+      </Text>
+      <CustomIcon name={'homeinfo'} size="$1" />
+    </XStack>
+    </Pressable>
+  );
+
+  const homeQuestion = () => (
+    <Pressable onPress={() => {}}>
+    <XStack justifyContent="center" alignItems="center" gap="$3">
+      <Text fontWeight="500" fontSize="$2">
+        {t('web-home:question')}
+      </Text>
+      <CustomIcon name={'help'} size="$1" />
+    </XStack>
+    </Pressable>
+  );
+
+  const onSelectTranslate = () => (
+    <XStack>
+    
+    
+      <Popover size="$3" allowFlip>
+        <Popover.Trigger asChild>
+        <Pressable onPress={() => {}}>
+        <XStack justifyContent="center" alignItems="center" gap="$3">
+        {t('web-home:translate')}
+        <CustomIcon name={'translate'} size="$1"/>
+        </XStack>
+        </Pressable>
+        </Popover.Trigger>
+        <Adapt when="sm" platform="touch">
+        <Popover.Sheet modal dismissOnSnapToBottom>
+          <Popover.Sheet.Frame padding="$4">
+            <Adapt.Contents />
+          </Popover.Sheet.Frame>
+          <Popover.Sheet.Overlay
+            animation="lazy"
             enterStyle={{ opacity: 0 }}
             exitStyle={{ opacity: 0 }}
           />
-          <AlertDialog.Content
-            bordered
-            elevate
-            key="content"
-            animation={[
-              'quick',
-              {
-                opacity: {
-                  overshootClamping: true,
-                },
-              },
-            ]}
-            enterStyle={{ x: 0, y: -20, opacity: 0, scale: 0.9 }}
-            exitStyle={{ x: 0, y: 10, opacity: 0, scale: 0.95 }}
-            x={0}
-            scale={1}
-            opacity={1}
-            y={0}
-          >
-            <YStack gap>
-              <AlertDialog.Description>Select Language</AlertDialog.Description>
+        </Popover.Sheet>
+      </Adapt>
+      <Popover.Content
+        borderWidth={1}
+        borderColor="$borderColor"
+        enterStyle={{ y: -10, opacity: 0 }}
+        exitStyle={{ y: -10, opacity: 0 }}
+        elevate
+        animation={[
+          'quick',
+          {
+            opacity: {
+              overshootClamping: true,
+            },
+          },
+        ]}
+      >
+        <YStack space="$3">
+          <Text fontWeight="500" fontSize="$2">
+            {t('account:language:select_language')}
+          </Text>
+          {language.map((item, index) => (
+            <Button key={index} size="$3" onPress={() => changeLanguage(item.name)}>
+              {item.label}
+            </Button>
+          ))}
+        </YStack>
+      </Popover.Content>
+      </Popover>
+    </XStack>
+  );
 
-              <XStack gap="$3" justifyContent="flex-end">
-                <AlertDialog.Cancel asChild>
-                  <Button onPress={() => changeLanguage('en')}>English</Button>
-                </AlertDialog.Cancel>
-                <AlertDialog.Action asChild>
-                  <Button onPress={() => changeLanguage('ar')}>Arabic</Button>
-                </AlertDialog.Action>
-              </XStack>
-            </YStack>
-          </AlertDialog.Content>
-        </AlertDialog.Portal>
-      </AlertDialog>
-      <XStack gap="$2" alignItems="center">
-        <Text fontWeight={'500'} fontSize="$2">
-          {t('web-home:question')}
-        </Text>
-        <XStack gap="$2">
-          <CustomIcon name={'help'} />
-        </XStack>
-      </XStack>
-      <XStack gap="$2" alignItems="center">
-        <Text fontWeight={'500'} fontSize="$2">
-          {t('web-home:home')}
-        </Text>
-        <XStack gap="$2">
-          <CustomIcon name={'homeinfo'} />
-        </XStack>
-      </XStack>
+  const location = () => (
+    <XStack justifyContent="center" alignItems="center" gap="$3">
+      <Text fontWeight={'500'} fontSize="$2">
+        saudi arabia
+      </Text>
+      <Image
+        source={{
+          uri: '/images/flag.png',
+          width: 20,
+          height: 20,
+        }}
+        resizeMode="contain"
+      />
+      <CustomIcon name={'location'} size="$1" />
+    </XStack>
+  );
+
+  const download = () => (
+    <XStack justifyContent="center" alignItems="center" gap="$3">
+      <Pressable onPress={() => {}}>
+      <CustomIcon name={'appstore'} size="$8" />
+      </Pressable>
+      <Pressable onPress={() => {}}>
+      <CustomIcon name={'googleplay'} size="$8" />
+      </Pressable>
+      <Text fontWeight={'500'} fontSize="$2">
+        {t('web-home:download')}
+      </Text>
+    </XStack>
+  );
+
+  const followUs = () => (
+    <XStack justifyContent="center" alignItems="center" gap="$3">
+      <Pressable onPress={() => {}}>
+      <CustomIcon name={'facebook'} />
+      </Pressable>
+      <Pressable onPress={() => {}}>
+      <CustomIcon name={'instagram'} />
+      </Pressable>
+      <Pressable onPress={() => {}}>
+      <CustomIcon name={'snapchat'} />
+      </Pressable>
+      <Text fontWeight={'500'} fontSize="$2">
+        {t('web-home:followus')}
+      </Text>
+    </XStack>
+  );
+
+  return (
+    <XStack
+      alignItems="center"
+      justifyContent="space-around"
+      backgroundColor="$gray3"
+    >
+      {followUs()}
+      {download()}
+      {location()}
+      {/* {translate()} */}
+      {onSelectTranslate()}
+      {homeQuestion()}
+      {homeInfo()}
     </XStack>
   );
 }

@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { I18nManager } from 'react-native'
 
 export function bootMultiLang() {
@@ -5,10 +6,8 @@ export function bootMultiLang() {
   // // const defaultLang = 'en';
   const defaultLang = "ar";
 
-  const isRtl = defaultLang === 'ar'
-  I18nManager.allowRTL(isRtl)
-  I18nManager.forceRTL(isRtl)
-
+  
+  
   return defaultLang;
 }
 

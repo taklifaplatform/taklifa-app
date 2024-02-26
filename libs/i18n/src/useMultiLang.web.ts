@@ -18,8 +18,8 @@ export function useMultiLang() {
   async function changeLanguage(lang: string) {
     await AsyncStorage.setItem('LANGUAGE', lang)
     const isNextRtl = lang === 'ar'
-    I18nManager.allowRTL(isNextRtl)
-    I18nManager.forceRTL(isNextRtl)
+    // I18nManager.allowRTL(isNextRtl)
+    // I18nManager.forceRTL(isNextRtl)
     if (Platform.OS == 'web') {
       window.location.reload()
     }

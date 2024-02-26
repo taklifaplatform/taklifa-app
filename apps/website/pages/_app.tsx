@@ -6,7 +6,7 @@ import '../public/styles/globals.css';
 import {
   ColorScheme,
   NextThemeProvider,
-  useRootTheme
+  useRootTheme,
 } from '@tamagui/next-theme';
 import { MainAppProvider } from '@zix/app-providers';
 import { MultiLangAppProvider, bootMultiLang } from '@zix/i18n';
@@ -26,19 +26,14 @@ export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
-
-
-
-
 const defaultLang = bootMultiLang();
-
 
 const ZixApp: React.FC<SolitoAppProps> = ({ Component, pageProps }) => {
   // reference: https://nextjs.org/docs/pages/building-your-application/routing/pages-and-layouts
   const getLayout = Component.getLayout || ((page) => page);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_theme, setTheme] = useRootTheme();
-  
+
 
   return (
     <>
@@ -54,7 +49,7 @@ const ZixApp: React.FC<SolitoAppProps> = ({ Component, pageProps }) => {
           }}
         >
           <MainAppProvider>
-            {getLayout(<Component {...pageProps}/>)}
+            {getLayout(<Component {...pageProps} />)}
           </MainAppProvider>
         </NextThemeProvider>
       </MultiLangAppProvider>
