@@ -150,6 +150,7 @@ export function TopHeader() {
 
   return (
     <XStack
+      $sm={{ display: 'none' }}
       alignItems="center"
       justifyContent="space-around"
       backgroundColor="$gray3"
