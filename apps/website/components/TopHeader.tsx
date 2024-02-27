@@ -36,7 +36,7 @@ export function TopHeader() {
       <Text fontWeight="500" fontSize="$2">
         {t('web-home:about')}
       </Text>
-      <CustomIcon name={'render'} size="$1" />
+      <CustomIcon name={'homeinfo'} size="$1" />
     </XStack>
     </Pressable>
   );
@@ -135,10 +135,10 @@ export function TopHeader() {
   const renderDownload = () => (
     <XStack justifyContent="center" alignItems="center" gap="$3">
       <Pressable onPress={() => {}}>
-      <CustomIcon name={'appstore'} size="$8" />
+      <CustomIcon name={'appstore'} size="$6" />
       </Pressable>
       <Pressable onPress={() => {}}>
-      <CustomIcon name={'googleplay'} size="$8" />
+      <CustomIcon name={'googleplay'} size="$6" />
       </Pressable>
       <Text fontWeight={'500'} fontSize="$2">
         {t('web-home:download')}
@@ -169,9 +169,11 @@ export function TopHeader() {
       alignItems="center"
       justifyContent="space-around"
       backgroundColor="$gray3"
+      borderTopLeftRadius={'$4'}
+      borderTopRightRadius={'$4'}
     >
       {renderFollowUs()}
-      {renderDownload()}
+       {renderDownload()}
       {renderLocation()}
       {renderSelectTranslate()}
       {renderHomeQuestion()}
