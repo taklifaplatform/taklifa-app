@@ -32,6 +32,8 @@ export type { CreateTemporaryUploadFromDirectS3UploadRequest } from './models/Cr
 export type { CurrencyTransformer } from './models/CurrencyTransformer';
 export type { DriverVerificationRequest } from './models/DriverVerificationRequest';
 export type { DrivingLicenseCardDriverVerificationRequest } from './models/DrivingLicenseCardDriverVerificationRequest';
+export type { FaqRequest } from './models/FaqRequest';
+export type { FaqTransformer } from './models/FaqTransformer';
 export type { FilterConditionsListChannelQueryRequest } from './models/FilterConditionsListChannelQueryRequest';
 export type { FormDataRequest } from './models/FormDataRequest';
 export type { FormRequest } from './models/FormRequest';
@@ -54,11 +56,11 @@ export type { ListItemRatingsQueryRequest } from './models/ListItemRatingsQueryR
 export type { ListLocationQueryRequest } from './models/ListLocationQueryRequest';
 export type { ListRepliesQueryRequest } from './models/ListRepliesQueryRequest';
 export type { ListServiceZoneRequest } from './models/ListServiceZoneRequest';
+export type { ListShipmentQueryRequest } from './models/ListShipmentQueryRequest';
 export type { ListStatesQueryRequest } from './models/ListStatesQueryRequest';
 export type { ListUserVerificationRequest } from './models/ListUserVerificationRequest';
 export type { ListVehicleQueryRequest } from './models/ListVehicleQueryRequest';
 export type { LocationTransformer } from './models/LocationTransformer';
-export type { LocationUpdateUserVerificationRequest } from './models/LocationUpdateUserVerificationRequest';
 export type { LoginRequest } from './models/LoginRequest';
 export type { MediaTransformer } from './models/MediaTransformer';
 export type { MembershipTransformer } from './models/MembershipTransformer';
@@ -85,6 +87,7 @@ export type { SendResetPasswordPinCodeRequest } from './models/SendResetPassword
 export type { ServiceAreaTransformer } from './models/ServiceAreaTransformer';
 export type { ServiceZoneTransformer } from './models/ServiceZoneTransformer';
 export type { SetPatchMessageRequest } from './models/SetPatchMessageRequest';
+export type { ShipmentTransformer } from './models/ShipmentTransformer';
 export type { SimpleMessageTransformer } from './models/SimpleMessageTransformer';
 export type { SortListChannelQueryRequest } from './models/SortListChannelQueryRequest';
 export type { StateTransformer } from './models/StateTransformer';
@@ -98,6 +101,7 @@ export type { UpdatePhoneNumberRequest } from './models/UpdatePhoneNumberRequest
 export type { UpdateRatingRequest } from './models/UpdateRatingRequest';
 export type { UpdateReactionRequest } from './models/UpdateReactionRequest';
 export type { UpdateServiceZoneRequest } from './models/UpdateServiceZoneRequest';
+export type { UpdateShipmentRequest } from './models/UpdateShipmentRequest';
 export type { UpdateUserRequest } from './models/UpdateUserRequest';
 export type { UpdateUserVerificationRequest } from './models/UpdateUserVerificationRequest';
 export type { UpdateVehicleRequest } from './models/UpdateVehicleRequest';
@@ -123,8 +127,10 @@ export { ChatService } from './services/ChatService';
 export { CompanyAdminService } from './services/CompanyAdminService';
 export { CompanyInvitationsService } from './services/CompanyInvitationsService';
 export { CompanyMembersService } from './services/CompanyMembersService';
+export { FaqsService } from './services/FaqsService';
 export { GeographyService } from './services/GeographyService';
 export { RatingService } from './services/RatingService';
+export { ShipmentsService } from './services/ShipmentsService';
 export { UserService } from './services/UserService';
 export { UserLocationsService } from './services/UserLocationsService';
 export { UserVerificationService } from './services/UserVerificationService';

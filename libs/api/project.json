@@ -11,7 +11,7 @@
     "generate": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "openapi --input http://sawaeed.test/api/api/docs/v1 --output ./libs/api/src/openapi --useOptions"
+        "command": "openapi --input https://admin-sawaeed.zixdev.com/api/api/docs/v1 --output ./libs/api/src/openapi --useOptions"
       }
     }
   },
