@@ -78,8 +78,6 @@ export function DriverTap() {
           <Accordion.Trigger
             flexDirection="row"
             justifyContent="space-between"
-            padding="0"
-            borderWidth="0"
             borderBlockEndColor={'transparent'}
             borderBlockStartColor={'transparent'}
             borderLeftColor={'transparent'}

@@ -268,11 +268,11 @@ export function HomeScreen(props: HomeScreenProps) {
   );
   //List
   const renderList = () => (
-    <YStack flex={1} backgroundColor={'$gray4'} alignItems="center">
+    <YStack flex={1} backgroundColor={'$color1'} alignItems="center">
       <ScrollView showsVerticalScrollIndicator={false} flex={1} marginTop="$11">
         {markers.map((marker, index) => (
           <YStack key={index} marginBottom="$2">
-            <DriverCard />
+            <DriverCard map={false}/>
           </YStack>
         ))}
       </ScrollView>
@@ -309,21 +309,32 @@ export function HomeScreen(props: HomeScreenProps) {
       }
     | any) => {
     return (
-      <View onPress={() => setShowModal(true)} padding="$2">
+      <View onPress={() => setShowModal(true)} padding="$3"
+      //backgroundColor={'$gray4'}
+      >
         <DriverCard
           item={item}
           setShowCarousel={setShowCarousel}
           setSelectedMarker={setSelectedMarker}
+          map={true}
         />
       </View>
     );
   };
   const renderCarousel = () => (
-    <YStack position="absolute" bottom={/*isMoving ? '-10%' :*/ 1}>
+    <YStack position="absolute" bottom={0} backgroundColor={'$color1'}
+    borderTopRightRadius={'$6'}
+    borderTopLeftRadius={'$6'}
+    shadowColor={'$black'}
+    shadowOffset={{ width: 0, height: 2 }}
+    shadowOpacity={0.25}
+    shadowRadius={3.84}
+    elevation={5}
+    >
       <Carousel
         loop={false}
         width={width}
-        height={width / 2}
+        height={width / 1.5}
         autoPlay={false}
         data={[...new Array(6).keys()]}
         scrollAnimationDuration={1000}
