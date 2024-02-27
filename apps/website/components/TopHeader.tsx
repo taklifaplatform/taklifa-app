@@ -1,26 +1,18 @@
-import { Check, ChevronDown, ChevronUp } from '@tamagui/lucide-icons';
+import { Check } from '@tamagui/lucide-icons';
 import { useMultiLang } from '@zix/i18n';
-import { ZixSelectField } from '@zix/ui/forms';
-import { LinearGradient } from '@tamagui/linear-gradient';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import { Pressable } from 'react-native';
 import {
   Adapt,
-  AlertDialog,
-  Button,
   Image,
   Popover,
-  ScrollView,
-  Select,
   Separator,
-  Sheet,
   Stack,
   Text,
   XStack,
-  YStack,
+  YStack
 } from 'tamagui';
-import { use, useEffect, useMemo, useState } from 'react';
 
 export function TopHeader() {
   const { changeLanguage, activeLang } = useMultiLang();

@@ -1,7 +1,6 @@
-import * as React from 'react';
-import { Text } from 'react-native';
-import { SizeTokens, ColorTokens, Stack, useStyle } from 'tamagui';
 import {
+  AlignLeft,
+  AlignRight,
   ArrowLeft,
   ArrowRight,
   ChevronLeft,
@@ -11,7 +10,10 @@ import {
   MoveLeft,
   MoveRight,
 } from '@tamagui/lucide-icons';
-import { I18nManager } from 'react-native';
+import { useMultiLang } from '@zix/i18n';
+import * as React from 'react';
+import { Text } from 'react-native';
+import { ColorTokens, SizeTokens, Stack, useStyle } from 'tamagui';
 
 import * as Icons from '../assets';
 
@@ -34,6 +36,8 @@ const iconNames = [
   'chat',
   'apps',
   'success',
+  'align-left',
+  'align-right',
   'arrow_left',
   'arrow_right',
   'chevron_left',
@@ -122,29 +126,46 @@ export const CustomIcon: React.FC<CustomIconProps> = ({
     height: $size,
     color: $color,
   });
+  const { isRtl } = useMultiLang();
 
-  if ($name === 'arrow_left' && I18nManager.isRTL) {
+  if ($name === 'arrow_left' && isRtl) {
     $name = 'arrow_right';
-  } else if ($name === 'arrow_right' && I18nManager.isRTL) {
+  } else if ($name === 'arrow_right' && isRtl) {
     $name = 'arrow_left';
   }
 
-  if ($name === 'chevron_left' && I18nManager.isRTL) {
+  if ($name === 'chevron_left' && isRtl) {
     $name = 'chevron_right';
-  } else if ($name === 'chevron_right' && I18nManager.isRTL) {
+  } else if ($name === 'chevron_right' && isRtl) {
     $name = 'chevron_left';
   }
 
-  if ($name === 'chevrons_left' && I18nManager.isRTL) {
+  if ($name === 'chevrons_left' && isRtl) {
     $name = 'chevrons_right';
-  } else if ($name === 'chevrons_right' && I18nManager.isRTL) {
+  } else if ($name === 'chevrons_right' && isRtl) {
     $name = 'chevrons_left';
   }
 
-  if ($name === 'large_arrow_left' && I18nManager.isRTL) {
+  if ($name === 'large_arrow_left' && isRtl) {
     $name = 'large_arrow_right';
-  } else if ($name === 'large_arrow_right' && I18nManager.isRTL) {
+  } else if ($name === 'large_arrow_right' && isRtl) {
     $name = 'large_arrow_left';
+  }
+
+  if ($name === 'align_right' && isRtl) {
+    $name = 'align_left';
+  } else if ($name === 'align_left' && isRtl) {
+    $name = 'align_right';
+  }
+
+
+
+  if ($name === 'align_right') {
+    return <AlignRight size={$size} color={style.color} />;
+  }
+
+  if ($name === 'align_left') {
+    return <AlignLeft size={$size} color={style.color} />;
   }
 
   if ($name === 'large_arrow_left') {

@@ -1,10 +1,13 @@
 import React from 'react';
-import { Button, XStack, Text, View, Sheet } from 'tamagui';
+import { Button, XStack, Text, View, Sheet, useTheme } from 'tamagui';
 import { CustomIcon } from '@zix/ui/icons';
-
+import { useMultiLang } from '@zix/i18n';
 import { t } from 'i18next';
+import { Pressable } from 'react-native';
 
 export function MobileHeader({ drawer, setDrawer }) {
+  const theme = useTheme();
+  const { isRtl } = useMultiLang();
   return (
     <XStack
       justifyContent="space-between"
@@ -36,11 +39,19 @@ export function MobileHeader({ drawer, setDrawer }) {
           {t('web-home:signup')}
         </Text>
       </Button>
-      <CustomIcon name={'weblogo'} width="$6" height="$2.5" color="$color5" />
+        {
+          !theme.dark ? (
+            <CustomIcon name={'web-dark-logo'} size={'$7'} />
+          ) : (
+            <CustomIcon name={'weblogo'} size={'$7'} />
+          ) 
+        }
 
-      <View onPress={() => setDrawer(!drawer)}>
-        <CustomIcon name={'drawer'} size="$1" />
-      </View>
+      <Pressable onPress={() => setDrawer(!drawer)}>
+
+        <CustomIcon name={'align_left'} size="$2" />
+       
+      </Pressable>
     </XStack>
   );
 }

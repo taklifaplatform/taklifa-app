@@ -61,6 +61,7 @@ import Translate from './icons/translate.svg';
 import View from './icons/view.svg';
 import Wallet from './icons/wallet.svg';
 import Weblogo from './icons/weblogo.svg';
+import WebDarkLogo from './icons/web-dark-logo.svg';
 
 // arts
 import CompanyCars from './arts/company-cars.svg';
@@ -143,4 +144,5 @@ export {
   View,
   Wallet,
   Weblogo,
+  WebDarkLogo,
 };

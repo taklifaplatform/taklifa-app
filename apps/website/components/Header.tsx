@@ -1,10 +1,11 @@
 import { CustomIcon } from '@zix/ui/icons';
-import { XStack } from 'tamagui';
+import { XStack, useTheme } from 'tamagui';
 
 import { t } from 'i18next';
 import { HeaderMenuItem } from './HeaderMenuItem';
 
 export function Header() {
+  const theme = useTheme();
   return (
     <XStack
       $sm={{ display: 'none' }}
@@ -24,7 +25,14 @@ export function Header() {
         <HeaderMenuItem name={t('web-home:search')} path={'/search'} icon={<CustomIcon name={'search'} size="$1" />} $lg={{ display: 'none'}}/>
       </XStack>
       {/* Logo */}
-        <CustomIcon name={'weblogo'} size={'$9'} />
+      {
+        !theme.dark ? (
+          <CustomIcon name={'web-dark-logo'} size={'$9'} />
+        ) : (
+          <CustomIcon name={'weblogo'} size={'$9'} />
+        )
+      }
+       
       
       <XStack gap="$1">
         <HeaderMenuItem name={t('web-home:works')} path={'/works'} $lg={{ display: 'none'}}/>
