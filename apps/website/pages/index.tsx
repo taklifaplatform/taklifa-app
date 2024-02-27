@@ -27,7 +27,7 @@ export function Index() {
           alignItems: 'center'
         }
       }>
-        <YStack flex={1} maxWidth={1296} width='100%' padding="$4"
+        <YStack  width='90%' padding="$4"
         >
           <TopHeader />
           <Header />

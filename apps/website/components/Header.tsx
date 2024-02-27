@@ -17,12 +17,12 @@ export function Header() {
       borderTopColor={'$gray7'}
       marginBottom="$4"
     >
-      <XStack gap="$1">
+      <XStack gap="$1" $lg={{ display: 'none' }}>
         <HeaderMenuItem name={t('web-home:signup')} path={'/login'} icon={<CustomIcon name={'account'} size="$1" />} />
         <HeaderMenuItem name={t('web-home:call')} path={'/call'} icon={<CustomIcon name={'rigning'} size="$1" />} />
         <HeaderMenuItem name={t('web-home:search')} path={'/search'} icon={<CustomIcon name={'search'} size="$1" />} />
       </XStack>
-      
+      {/* Logo */}
         <CustomIcon name={'weblogo'} size={'$9'} />
       
       <XStack gap="$1">
