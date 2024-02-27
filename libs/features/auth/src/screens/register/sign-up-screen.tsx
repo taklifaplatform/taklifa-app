@@ -89,7 +89,7 @@ export const SignUpScreen = () => {
     !accountType || accountType === 'service_requestor'
       ? 'service_requestor'
       : userType;
-  const { mutate, isLoading } = useMutation({
+  const { mutate, } = useMutation({
     mutationFn: (variables: z.infer<typeof SignUpSchema>) =>
       AuthService.register({
         requestBody: {
@@ -108,6 +108,7 @@ export const SignUpScreen = () => {
       });
     },
     onError(error: any) {
+      toast.show(error?.body?.message || t('common:unknown_error'))
       handleFormErrors(form, error?.body?.errors);
     },
   });
@@ -141,7 +142,6 @@ export const SignUpScreen = () => {
           <Theme inverse>
             <SubmitButton
               onPress={() => submit()}
-              isLoading={isLoading}
               borderRadius="$10"
             >
               {t('common:next')}

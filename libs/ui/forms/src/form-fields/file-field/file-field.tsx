@@ -2,7 +2,9 @@ import { PlusSquare } from '@tamagui/lucide-icons';
 import { useFieldInfo, useTsController } from '@ts-react/form';
 import { MediaTransformer } from '@zix/api';
 import { Shake } from '@zix/ui/common';
-import { useId, useMemo } from 'react';
+import { useId, useMemo, useState } from 'react';
+import { randomUUID } from 'expo-crypto'
+
 import {
   Fieldset,
   InputProps,
@@ -14,6 +16,7 @@ import {
 } from 'tamagui';
 import { FieldError } from '../../common';
 import { ZixMediaPickerField } from '../../fields';
+import { uploadMediaFile } from '../../utils';
 
 export interface FileProps extends Pick<InputProps, 'size' | 'autoFocus'> {
   isMultiple?: boolean;
@@ -36,29 +39,39 @@ export const FileField = (props: FileProps) => {
       : placeholder;
   }, [field.value, props.isMultiple, placeholder]);
 
-  async function handleFileChange(files: MediaTransformer[]) {
-    const uploadedFiles = await Promise.all(
-      files.map((file) => {
-        alert('handled FileField');
-        // uploadMediaFile({
-        //   file,
-        //   bucket: 'uploads',
-        //   path: `${user.id}/files/${file.file_name}`
-        // })
-      })
-    );
-    // field.onChange(uploadedFiles);
-    // for (const file of files) {
+  const [files, setFiles] = useState<MediaTransformer[]>(field.value || [])
+  const [uploadingFileStatus, setUploadingFileStatus] = useState<Record<string, boolean>>({})
 
-    //   const data = await uploadMediaFile({
-    //     file,
-    //     bucket: 'uploads',
-    //     path: `${user.id}/files/${file.file_name}`
-    //   });
-    //   console.log('=========')
-    //   console.log('handleFileChange::', JSON.stringify({ data, file }, null, 2));
-    //   console.log('=========')
-    // }
+
+  async function onAddMedia(media: any): Promise<MediaTransformer> {
+    const uuid = randomUUID()
+    setFiles((prev: any[]) => [
+      ...prev,
+      {
+        uuid,
+        url: media.uri,
+        original_url: media.uri,
+      },
+    ])
+    setUploadingFileStatus((prev) => ({ ...prev, [uuid]: true }))
+    const uploadedMedia = await uploadMediaFile(media)
+    setUploadingFileStatus((prev) => ({ ...prev, [uuid]: false }))
+    return uploadedMedia
+  }
+  async function handleFileChange(files: MediaTransformer[]) {
+    const uploadedMedias = await Promise.all(files.map(onAddMedia))
+    if (uploadedMedias?.length) {
+      if (props.isMultiple) {
+        field.onChange([...(field.value || []), ...uploadedMedias])
+      } else {
+        field.onChange(uploadedMedias[0])
+
+      }
+    }
+    // field.onChange([...(field.value || []), ...uploadedMedias])
+    console.log('===========')
+    console.log('uploadedMedias::', JSON.stringify(uploadedMedias, null, 2))
+    console.log('===========')
   }
 
   return (

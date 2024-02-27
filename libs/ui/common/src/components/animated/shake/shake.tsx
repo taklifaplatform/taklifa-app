@@ -57,8 +57,8 @@ export const Shake: React.FC<ShakeProps> = ({
               idx + 1 === arr.length
                 ? 0
                 : (idx + 1) % 2 === 0
-                ? -shakeDistance
-                : shakeDistance
+                  ? -shakeDistance
+                  : shakeDistance
             ),
           100 * idx
         )
@@ -75,6 +75,7 @@ export const Shake: React.FC<ShakeProps> = ({
     'worklet';
     return {
       transform: [{ translateX: val }],
+      flex: 1
     };
   });
 

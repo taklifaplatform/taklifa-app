@@ -1,1 +1,2 @@
-export * from './handleFormErrors';
+export * from "./handleFormErrors";
+export * from "./uploadMediaFile";

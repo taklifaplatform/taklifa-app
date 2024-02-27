@@ -11,6 +11,7 @@ export default function Screen() {
       backgroundColor="$color5"
       flex={1}
       onLayout={() => {
+        // router.replace('/auth/verify-kyc');
         if (Platform.OS === 'ios') {
           setTimeout(() => {
             router.replace('/customer');
@@ -18,7 +19,6 @@ export default function Screen() {
         } else {
           router.replace('/customer');
         }
-
       }}
     >
       <Image

@@ -1,15 +1,41 @@
-import React from 'react';
+import { useStringFieldInfo, useTsController } from '@ts-react/form';
+import { useId } from 'react';
+import { InputProps } from 'tamagui';
 
-import { View, Text } from 'react-native';
+import { FieldContainer, ZixAutoCompleteField, ZixAutoCompleteFieldProps } from '../../fields';
 
-/* eslint-disable-next-line */
-export interface AutoCompleteFieldProps {}
 
-export function AutoCompleteField(props: AutoCompleteFieldProps) {
+export type AutoCompleteFieldProps = ZixAutoCompleteFieldProps & Pick<InputProps, 'size' | 'autoFocus' | 'secureTextEntry'>
+
+
+export function AutoCompleteField({
+  api = 'geography/countries',
+}: AutoCompleteFieldProps) {
+  const {
+    field,
+    error,
+    formState: { isSubmitting },
+  } = useTsController<string>();
+  const { label, placeholder, isOptional } =
+    useStringFieldInfo();
+  const id = useId();
+
   return (
-    <View>
-      <Text>Welcome to auto-complete-field!</Text>
-    </View>
+    <FieldContainer
+      id={id}
+      error={!!error?.errorMessage}
+      errorMessage={error?.errorMessage}
+      required={!isOptional}
+      label={label}
+    >
+      <ZixAutoCompleteField
+        api={api}
+        title={label}
+        placeholder={placeholder}
+        value={field.value}
+        onValueChange={(value) => field.onChange(value)}
+      />
+    </FieldContainer>
   );
 }
 

@@ -1,4 +1,4 @@
-import {} from '@tamagui/lucide-icons';
+import {} from "@tamagui/lucide-icons";
 import {
   AutoCompleteField,
   BooleanCheckboxField,
@@ -6,16 +6,19 @@ import {
   BooleanSwitchField,
   CodeInputField,
   CountryField,
+  DatePickerField,
+  DatePickerFieldProps,
   FileField,
+  MediaPickerField,
   NumberField,
   PhoneField,
   SelectField,
   TextAreaField,
   TextField,
-} from '../form-fields';
+} from "../form-fields";
 
-import { formFields } from './form-fields-schemas';
-import AvatarField from '../form-fields/avatar-field/avatar-field';
+import AvatarField from "../form-fields/avatar-field/avatar-field";
+import { formFields } from "./form-fields-schemas";
 
 export const formFieldsMappings = [
   [formFields.text, TextField] as const,
@@ -30,7 +33,43 @@ export const formFieldsMappings = [
   /**
    * Date Fields
    */
-  // [formFields.row_date, RowDateSelectorField] as const,
+  [formFields.date_picker, (props: DatePickerFieldProps) =>
+    DatePickerField({
+      ...props,
+      type: "date_picker",
+    })] as const,
+  [formFields.day_selector, (props: DatePickerFieldProps) =>
+    DatePickerField({
+      ...props,
+      type: "day_selector",
+    })] as const,
+  [formFields.month_selector, (props: DatePickerFieldProps) =>
+    DatePickerField({
+      ...props,
+      type: "month_selector",
+    })] as const,
+  [formFields.year_selector, (props: DatePickerFieldProps) =>
+    DatePickerField({
+      ...props,
+      type: "year_selector",
+    })] as const,
+  [
+    formFields.row_time_range_picker,
+    (props: DatePickerFieldProps) =>
+      DatePickerField({
+        ...props,
+        type: "row_time_range_picker",
+      }),
+  ] as const,
+  [
+    formFields.row_date_picker,
+    (props: DatePickerFieldProps) =>
+      DatePickerField({
+        ...props,
+        type: "row_date_picker",
+      }),
+  ] as const,
+  // [formFields.time, TimePickerField] as const,
   // [formFields.row_time, RowTimeSelectorField] as const,
 
   // [formFields.address, AddressField] as const,
@@ -38,7 +77,7 @@ export const formFieldsMappings = [
   /**
    *  Multiple Media Selector Field
    */
-  // [formFields.medias, MultipleMediaSelectorField] as const,
+  [formFields.medias, MediaPickerField] as const,
 
   [formFields.phone, PhoneField] as const,
   [formFields.code, CodeInputField] as const,

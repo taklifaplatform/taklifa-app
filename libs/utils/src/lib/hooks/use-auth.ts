@@ -29,6 +29,8 @@ export function useAuth() {
     ...(data?.data || {}),
   }), [authUser, data]);
 
+  const isLoggedIn = useMemo(() => !!authAccessToken, [authAccessToken]);
+
   const avatarUrl = useMemo(() => {
     if (user?.avatar?.url) return user?.avatar?.url;
     const params = new URLSearchParams();
@@ -61,5 +63,6 @@ export function useAuth() {
     authAccessToken,
     setAuthAccessToken,
     setAuthUser,
+    isLoggedIn,
   };
 }

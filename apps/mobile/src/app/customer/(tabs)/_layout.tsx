@@ -41,7 +41,7 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
-        name="create-shipment"
+        name="shipments"
         options={{
           title: '',
           tabBarIcon: PlusButton,
@@ -87,7 +87,7 @@ const PlusButton = ({ size, focused, color }: TabBarIconProps) => {
   return (
     <Theme>
       <Circle
-        onPress={() => router.push('/customer/create-shipment')}
+        // onPress={() => router.push('/customer/create-shipment')}
         pos="absolute"
         backgroundColor={focused ? '$color' : '$color5'}
         width={size + 34}

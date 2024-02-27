@@ -28,7 +28,7 @@ export const ChangeEmailScreen = () => {
   const router = useRouter();
   const form = useForm<z.infer<typeof ChangeEmailSchema>>();
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: (requestBody: z.infer<typeof ChangeEmailSchema>) =>
       UserService.updateEmail({
         requestBody,
@@ -62,7 +62,7 @@ export const ChangeEmailScreen = () => {
       }}
       renderAfter={({ submit }) => (
         <Theme inverse>
-          <SubmitButton isLoading={isLoading} onPress={() => submit()}>
+          <SubmitButton onPress={() => submit()}>
             {t('common:confirm')}
           </SubmitButton>
         </Theme>

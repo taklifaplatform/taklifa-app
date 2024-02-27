@@ -40,7 +40,7 @@ export const LoginScreen: React.FC = () => {
   const { redirectUser } = useUserRedirect();
   const form = useForm<z.infer<typeof LoginSchema>>();
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate } = useMutation({
     mutationFn(requestBody: z.infer<typeof LoginSchema>) {
       return AuthService.login({
         requestBody,
@@ -87,7 +87,6 @@ export const LoginScreen: React.FC = () => {
             <Stack gap="$4">
               <Theme inverse>
                 <SubmitButton
-                  isLoading={isLoading}
                   onPress={() => submit()}
                   borderRadius="$10"
                 >

@@ -44,7 +44,7 @@ const EditProfileForm = ({
   const { params } = useParams();
   const toast = useToastController();
   const router = useRouter();
-  const { mutate, isLoading } = useMutation({
+  const { mutate } = useMutation({
     async mutationFn(requestBody: z.infer<typeof ProfileSchema>) {
       return UserService.updateUser({ requestBody });
     },
@@ -70,7 +70,7 @@ const EditProfileForm = ({
       onSubmit={mutate}
       renderAfter={({ submit }) => (
         <Theme inverse>
-          <SubmitButton isLoading={isLoading} onPress={() => submit()}>
+          <SubmitButton onPress={() => submit()}>
             Update Profile
           </SubmitButton>
         </Theme>

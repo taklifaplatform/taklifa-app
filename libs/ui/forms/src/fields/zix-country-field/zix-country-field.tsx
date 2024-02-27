@@ -1,8 +1,8 @@
 import { CheckCircle2 } from '@tamagui/lucide-icons';
 import { CountryTransformer } from '@zix/api';
-import { Select, SelectProps } from 'tamagui';
 import { t } from 'i18next';
 import React from 'react';
+import { Select, SelectProps } from 'tamagui';
 import {
   ZixAutoCompleteField,
   ZixAutoCompleteFieldProps,
@@ -21,21 +21,17 @@ export const ZixCountryField: React.FC<Partial<ZixCountryFieldProps>> = (
     <ZixAutoCompleteField
       api="geography/countries"
       title={t('common:select_country')}
-      isMultiLang
       numberOfItemsToShow={40}
-      orderBy="sort"
-      selectQuery={`id, name, flag, country_diallings (id, dial_code)`}
       renderItem={(item: CountryTransformer, index: number) => {
         const dial_code = item.dialling?.dial_code;
         const countryCode = dial_code ? `(+${dial_code})` : '';
 
-        const name = `${!props.hideFlag && item.flag ? item.flag : ''} ${
-          !props.hideCode ? countryCode : ''
-        } ${item.name}`;
+        const name = `${!props.hideFlag && item.flag ? item.flag : ''} ${!props.hideCode ? countryCode : ''
+          } ${item.name}`;
 
         return (
           <Select.Item
-            index={item.id}
+            index={index}
             key={`${item.id}-${index}`}
             value={`${item.id}`}
             margin="$2"

@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
+import { useToastController } from '@tamagui/toast';
 import { UserVerificationService } from '@zix/api';
-import { Theme, useToastController } from 'tamagui';
 import {
   SchemaForm,
   SubmitButton,
@@ -11,6 +11,7 @@ import {
 import { t } from 'i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
+import { Theme } from 'tamagui';
 import { z } from 'zod';
 import AcceptTermsLink from '../../components/accept-terms-link/accept-terms-link';
 import { AuthHeader } from '../../components/auth-header/auth-header';
@@ -40,7 +41,7 @@ export const AuthDriverVerificationScreen = () => {
   const { totalSteps } = useRegisterStepsCounter();
 
   const form = useForm<z.infer<typeof DriverVerificationFormSchema>>();
-  const { mutate, isLoading } = useMutation({
+  const { mutate } = useMutation({
     mutationFn(requestBody: z.infer<typeof DriverVerificationFormSchema>) {
       return UserVerificationService.storeDriverVerification({
         requestBody,
@@ -67,7 +68,7 @@ export const AuthDriverVerificationScreen = () => {
         renderAfter={({ submit }) => {
           return (
             <Theme inverse>
-              <SubmitButton isLoading={isLoading} onPress={submit}>
+              <SubmitButton onPress={submit}>
                 {t('common:next')}
               </SubmitButton>
             </Theme>

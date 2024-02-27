@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
-import { Stack, Text, Theme, XStack, useToastController } from 'tamagui';
+import { Stack, Text, Theme, XStack } from 'tamagui';
 
+import { useToastController } from '@tamagui/toast';
 import { AuthService, UserTransformer } from '@zix/api';
 import {
   SchemaForm,
@@ -44,7 +45,7 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
     return `${phoneNumber.slice(0, 3)} **** ${phoneNumber.slice(-3)}`;
   }, [phoneNumber]);
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: (variables: z.infer<typeof VerifyPhoneNumberFormSchema>) =>
       AuthService.verifyPhoneNumber({
         requestBody: {
@@ -115,7 +116,7 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
             <Stack>
               <ResendCodeNumber />
               <Theme inverse>
-                <SubmitButton onPress={() => submit()} isLoading={isLoading}>
+                <SubmitButton onPress={() => submit()}>
                   {t('common:confirm')}
                 </SubmitButton>
               </Theme>

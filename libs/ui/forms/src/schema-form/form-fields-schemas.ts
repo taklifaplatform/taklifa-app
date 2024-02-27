@@ -1,10 +1,10 @@
-import { createUniqueFieldSchema } from '@ts-react/form';
+import { createUniqueFieldSchema } from "@ts-react/form";
 
-import { z } from 'zod';
+import { z } from "zod";
 
 export const formFields = {
   text: z.string(),
-  textarea: createUniqueFieldSchema(z.string(), 'textarea'),
+  textarea: createUniqueFieldSchema(z.string(), "textarea"),
   /**
    * input that takes number
    */
@@ -16,67 +16,95 @@ export const formFields = {
   /**
    * switch field on all platforms
    */
-  boolean_switch: createUniqueFieldSchema(z.boolean(), 'boolean_switch'),
+  boolean_switch: createUniqueFieldSchema(z.boolean(), "boolean_switch"),
   /**
    * checkbox field on all platforms
    */
-  boolean_checkbox: createUniqueFieldSchema(z.boolean(), 'boolean_checkbox'),
+  boolean_checkbox: createUniqueFieldSchema(z.boolean(), "boolean_checkbox"),
   /**
    * make sure to pass options={} to props for this
    */
-  select: createUniqueFieldSchema(z.string(), 'select'),
+  select: createUniqueFieldSchema(z.string(), "select"),
 
   /**
    * make sure to pass tableName='' to props for this, default is states
    */
-  autocomplete: createUniqueFieldSchema(z.string(), 'autocomplete'),
+  autocomplete: createUniqueFieldSchema(z.string(), "autocomplete"),
 
   /**
    * File Fields
+   * TODO: should be all media transformers
    */
+  medias: createUniqueFieldSchema(
+    z.array(
+      z.object({
+        uuid: z.string(),
+        name: z.string(),
+        preview_url: z.string(),
+        size: z.number(),
+        mime_type: z.string(),
+        extension: z.string(),
+      }),
+    ),
+    "medias",
+  ),
   avatar: createUniqueFieldSchema(
     z.object({
-      id: z.string(),
-      uri: z.string(),
-      file_name: z.string(),
-      file_type: z.string(),
+      uuid: z.string(),
+      name: z.string(),
+      preview_url: z.string(),
+      size: z.number(),
+      mime_type: z.string(),
+      extension: z.string(),
     }),
-    'avatar'
+    "avatar",
   ),
   file: createUniqueFieldSchema(
     z.object({
-      id: z.string(),
-      uri: z.string(),
-      file_name: z.string(),
-      file_type: z.string(),
+      uuid: z.string(),
+      name: z.string(),
+      preview_url: z.string(),
+      size: z.number(),
+      mime_type: z.string(),
+      extension: z.string(),
     }),
-    'file'
+    "file",
   ),
   files: createUniqueFieldSchema(
     z.array(
       z.object({
-        id: z.string(),
-        uri: z.string(),
-        file_name: z.string(),
-        file_type: z.string(),
-      })
+        uuid: z.string(),
+        name: z.string(),
+        preview_url: z.string(),
+        size: z.number(),
+        mime_type: z.string(),
+        extension: z.string(),
+      }),
     ),
-    'files'
+    "files",
   ),
+
+  phone: createUniqueFieldSchema(
+    z.string().regex(/[0-9]{10}/, "Please enter a valid phone number"),
+    "phone",
+  ),
+  code: createUniqueFieldSchema(z.number(), "code"),
 
   /**
    * Date Fields
    */
+  date_picker: createUniqueFieldSchema(z.string(), "date_picker"),
+  day_selector: createUniqueFieldSchema(z.string(), "day_selector"),
+  month_selector: createUniqueFieldSchema(z.string(), "month_selector"),
+  year_selector: createUniqueFieldSchema(z.string(), "year_selector"),
+  row_time_range_picker: createUniqueFieldSchema(z.string(), "row_time_range_picker"),
+  row_date_picker: createUniqueFieldSchema(z.string(), "row_date_picker"),
+
+  // TODO:: remove
+  date: createUniqueFieldSchema(z.coerce.date(), 'date'),
   row_date: createUniqueFieldSchema(z.string(), 'row_date'),
   row_time: createUniqueFieldSchema(z.string(), 'row_time'),
 
-  phone: createUniqueFieldSchema(
-    z.string().regex(/[0-9]{10}/, 'Please enter a valid phone number'),
-    'phone'
-  ),
-  code: createUniqueFieldSchema(z.number(), 'code'),
-  date: createUniqueFieldSchema(z.coerce.date(), 'date'),
-
-  country: createUniqueFieldSchema(z.number(), 'nationality'),
-  image: createUniqueFieldSchema(z.string(), 'image'),
+  country: createUniqueFieldSchema(z.number(), "nationality"),
+  image: createUniqueFieldSchema(z.string(), "image"),
 };

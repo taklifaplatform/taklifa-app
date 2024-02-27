@@ -25,16 +25,16 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   title,
   headerBackgroundColor = '$color5',
 }) => {
-  const { user } = useAuth();
+  const { user, isLoggedIn } = useAuth();
   const router = useRouter();
 
   const onAvatarPress = useCallback(() => {
-    if (user) {
+    if (isLoggedIn) {
       router.push('/account');
     } else {
       router.push('/auth/login');
     }
-  }, [user, router]);
+  }, [isLoggedIn, router]);
 
   const renderSearchBar = () =>
     showSearchBar && (

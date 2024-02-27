@@ -1,13 +1,9 @@
 import { useStringFieldInfo, useTsController } from '@ts-react/form';
 import React from 'react';
-import { InputProps, SizeTokens } from 'tamagui';
+import { InputProps } from 'tamagui';
 import { ZixInput } from '../../fields';
 
-export interface TextFieldProps
-  extends Pick<InputProps, 'size' | 'autoFocus' | 'secureTextEntry'> {
-  leftIcon?: React.FC<{ isFocused: boolean; size: SizeTokens; color: string }>;
-  rightIcon?: React.FC<{ isFocused: boolean; size: SizeTokens; color: string }>;
-}
+export type TextFieldProps = Pick<InputProps, 'size' | 'autoFocus' | 'secureTextEntry'>
 
 /**
  * A text input field component.

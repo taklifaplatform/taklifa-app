@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { Theme, useToastController } from 'tamagui';
 import {
+  GroupFieldsSheet,
   SchemaForm,
   SubmitButton,
   formFields,
@@ -10,23 +10,31 @@ import {
 import moment from 'moment';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
+import { Theme } from 'tamagui';
 import { z } from 'zod';
 
+import { useToastController } from '@tamagui/toast';
 import { UserVerificationService } from '@zix/api';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 import { useRegisterStepsCounter } from '../../hooks/useRegisterStepsCounter';
 
 const KYCFormSchema = z
   .object({
-    name: formFields.text
-      .min(8, { message: 'Must be 8 or more characters long' })
-      .describe('Name: // Your name'),
-    birth_date: formFields.date.describe('Birth Date // Enter your birth date'),
-    nationality_id: formFields.country.describe(
+    name: formFields.text.describe('Name: // Your name'),
+    birth_date: formFields.date_picker.describe('Birth Date // Enter your birth date'),
+    nationality_id: formFields.autocomplete.describe(
       'Nationality // select your country'
     ),
-    kyc_doc: formFields.file.describe('ID Card // Upload your identity card'),
-    // address: formFields.text.describe('Address:'),
+    identity_card: formFields.file.describe('ID Card // Upload your identity card'),
+
+    location: z.object({
+      address: formFields.text.describe('Address // Enter your address'),
+      country_id: formFields.autocomplete.describe('Country // Select your country'),
+      city_id: formFields.autocomplete.describe('City // Select your city'),
+      state_id: formFields.autocomplete.describe('State // Select your state'),
+      address_complement: formFields.text.describe('Address Complement // Enter your address complement'),
+      postcode: formFields.text.describe('Postcode // Enter your postcode'),
+    })
   })
   .required({
     name: true,
@@ -40,8 +48,11 @@ export const KycVerificationScreen = () => {
   const { user, totalSteps } = useRegisterStepsCounter();
 
   const form = useForm<z.infer<typeof KYCFormSchema>>();
-  const { mutate, isLoading } = useMutation({
+  const { mutate } = useMutation({
     mutationFn(requestBody: z.infer<typeof KYCFormSchema>) {
+      console.log('============')
+      console.log('mutationFn::', JSON.stringify(requestBody, null, 2))
+      console.log('============')
       return UserVerificationService.storeUserVerification({
         requestBody,
       });
@@ -62,7 +73,7 @@ export const KycVerificationScreen = () => {
         defaultValues={{
           name: user?.name || '',
           birth_date: moment().format('YYYY-MM-DD').toString(),
-          nationality_id: 216,
+          nationality_id: '216',
           residence_country_id: '',
           residency_city_id: '',
           // address: '',
@@ -72,14 +83,14 @@ export const KycVerificationScreen = () => {
         renderAfter={({ submit }) => {
           return (
             <Theme inverse>
-              <SubmitButton isLoading={isLoading} onPress={() => submit()}>
+              <SubmitButton onPress={() => submit()}>
                 Confirm
               </SubmitButton>
             </Theme>
           );
         }}
       >
-        {(fields) => (
+        {({ location, ...fields }) => (
           <>
             <AuthHeader
               showIcon={false}
@@ -88,6 +99,13 @@ export const KycVerificationScreen = () => {
               title="Confirmation of KYC"
             />
             {Object.values(fields)}
+
+            <GroupFieldsSheet
+              title='Address Information'
+              activator={location.address}
+            >
+              {Object.values(location)}
+            </GroupFieldsSheet>
           </>
         )}
       </SchemaForm>

@@ -10,6 +10,9 @@ import { NativeValue } from '@tamagui/toast/types/ToastImperative';
 import { useQuery } from '@tanstack/react-query';
 import { RecursiveErrorType } from '@ts-react/form/lib/src/zodObjectErrors';
 import { OpenAPI, request } from '@zix/api';
+import { useMultiLang } from '@zix/i18n';
+import { t } from 'i18next';
+import React, { useState } from 'react';
 import {
   Adapt,
   Button,
@@ -26,9 +29,6 @@ import {
   isWeb,
   useThemeName,
 } from 'tamagui';
-import { useMultiLang } from '@zix/i18n';
-import { t } from 'i18next';
-import React, { useState } from 'react';
 
 /**
  * TODO: implement load more logic
@@ -39,7 +39,6 @@ export type ZixAutoCompleteFieldProps = {
   // handle customer id, value
   itemKey?: string;
   itemValue?: string;
-  isMultiLang?: boolean;
   // handle custom render
 
   numberOfItemsToShow?: number;
@@ -59,9 +58,6 @@ export type ZixAutoCompleteFieldProps = {
 
   selectTriggerProps?: SelectProps;
 
-  //
-  selectQuery?: string;
-  orderBy?: string;
 
   // handle custom render
   renderItem?: (item: any, index: number) => React.JSX.Element;
@@ -71,7 +67,7 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
   props
 ) => {
   const themeName = useThemeName();
-  const { activeLang, isRtl } = useMultiLang();
+  const { isRtl } = useMultiLang();
 
   const {
     api,
@@ -100,7 +96,7 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
 
   const [open, setOpen] = useState(false);
 
-  const { data: selectedItem } = useQuery([api, value], {
+  const { data: selectedItem } = useQuery({
     queryFn: async () => {
       if (!value) return null;
       return (
@@ -110,10 +106,10 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
         })
       )?.data;
     },
+    queryKey: [api, value],
   });
 
   const { data, isLoading, refetch } = useQuery(
-    [api, search, value, 'abc', numberOfItemsToShow, open],
     {
       queryFn: async () => {
         const result = await request(OpenAPI, {
@@ -129,6 +125,7 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
 
         return result?.data;
       },
+      queryKey: [api, search, value, 'abc', numberOfItemsToShow, open],
       keepPreviousData: true,
       staleTime: 1000 * 60 * 60 * 24,
     }
@@ -211,9 +208,9 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
         id={id}
         value={value}
         onValueChange={onValueChange}
-        // borderWidth="$0.25"
-        // borderColor="$color10"
-        // bc="$color2"
+      // borderWidth="$0.25"
+      // borderColor="$color10"
+      // bc="$color2"
       >
         <Select.Trigger
           height={props.size || '$5'}
