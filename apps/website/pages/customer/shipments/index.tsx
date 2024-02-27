@@ -1,11 +1,12 @@
-import { MainLayout } from 'apps/website/layouts/MainLayout';
-import { NextPageWithLayout } from '../_app';
+
 import { Text } from 'tamagui';
+import { NextPageWithLayout } from '../../_app';
+import MainLayout from 'apps/website/layouts/MainLayout';
 
 export const Page: NextPageWithLayout = () => {
   return (
     <>
-      <Text>About</Text>
+      <Text>shipment</Text>
     </>
   );
 };

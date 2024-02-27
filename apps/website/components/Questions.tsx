@@ -3,26 +3,17 @@ import { XStack, YStack, Text } from 'tamagui';
 import { CustomIcon } from '@zix/ui/icons';
 import { Plus } from '@tamagui/lucide-icons';
 import { t } from 'i18next';
+import { useQuery } from '@tanstack/react-query';
+import { FaqsService } from '@zix/api';
 
 export function Questions() {
-  const questions = [
-    {
-      title:
-        'Can I change or cancel a pickup after scheduling an appointment online?',
+  const { data } = useQuery({
+    queryKey: ['FaqsService.fetchListFaqs'],
+    queryFn: () => {
+      return FaqsService.fetchListFaqs();
     },
-    {
-      title:
-        'Can I change or cancel a pickup after scheduling an appointment online?',
-    },
-    {
-      title:
-        'Can I change or cancel a pickup after scheduling an appointment online?',
-    },
-    {
-      title:
-        'Can I change or cancel a pickup after scheduling an appointment online?',
-    },
-  ];
+  });
+
   return (
     <YStack
       bottom={'-35%'}
@@ -39,7 +30,7 @@ export function Questions() {
           {t('web-home:questiontitle')}
         </Text>
       </XStack>
-      {questions.map((item, index) => (
+      {data?.data?.map((item, index) => (
         <XStack
           key={index}
           marginTop="$2"

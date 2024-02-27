@@ -20,9 +20,9 @@ export function Header() {
       marginBottom="$4"
     >
       <XStack gap="$1">
-        <HeaderMenuItem name={t('web-home:signup')} path={'/login'} icon={<CustomIcon name={'account'} size="$1" />} />
-        <HeaderMenuItem name={t('web-home:call')} path={'/call'} icon={<CustomIcon name={'rigning'} size="$1" />} $md={{ display: 'none'}}/>
-        <HeaderMenuItem name={t('web-home:search')} path={'/search'} icon={<CustomIcon name={'search'} size="$1" />} $lg={{ display: 'none'}}/>
+        <HeaderMenuItem name={t('web-home:signup')} path={'/auth/login'} icon={<CustomIcon name={'account'} size="$1" />} />
+        <HeaderMenuItem name={t('web-home:call')} path={'/contact'} icon={<CustomIcon name={'rigning'} size="$1" />} $md={{ display: 'none'}}/>
+        <HeaderMenuItem name={t('web-home:search')} path={'/jobs'} icon={<CustomIcon name={'search'} size="$1" />} $lg={{ display: 'none'}}/>
       </XStack>
       {/* Logo */}
       {
@@ -35,9 +35,9 @@ export function Header() {
        
       
       <XStack gap="$1">
-        <HeaderMenuItem name={t('web-home:works')} path={'/works'} $lg={{ display: 'none'}}/>
-        <HeaderMenuItem name={t('web-home:followers')} path={'/followers'} $md={{ display: 'none'}}/>
-        <HeaderMenuItem name={t('web-home:payments')} path={'/payments'} />
+        <HeaderMenuItem name={t('web-home:works')} path={'/jobs'} $lg={{ display: 'none'}}/>
+        <HeaderMenuItem name={t('web-home:followers')} path={'/customer/orders'} $md={{ display: 'none'}}/>
+        <HeaderMenuItem name={t('web-home:payments')} path={'/customer/shipments'} />
         <HeaderMenuItem name={t('web-home:home')} path={'/'} />
       </XStack>
     </XStack>

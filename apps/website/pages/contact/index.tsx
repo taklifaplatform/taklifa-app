@@ -5,7 +5,7 @@ import { Text } from 'tamagui';
 export const Page: NextPageWithLayout = () => {
   return (
     <>
-      <Text>About</Text>
+      <Text>Contact</Text>
     </>
   );
 };

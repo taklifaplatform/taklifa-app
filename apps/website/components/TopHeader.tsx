@@ -2,6 +2,7 @@ import { Check } from '@tamagui/lucide-icons';
 import { useMultiLang } from '@zix/i18n';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
+import { useRouter } from 'next/router';
 import { Pressable } from 'react-native';
 import {
   Adapt,
@@ -16,6 +17,7 @@ import {
 
 export function TopHeader() {
   const { changeLanguage, activeLang } = useMultiLang();
+  const router = useRouter();
 
   const languages = [
     { name: 'en', label: t('account:language:en') },
@@ -23,7 +25,7 @@ export function TopHeader() {
   ];
 
   const renderHomeInfo = () => (
-    <Pressable onPress={() => {}}>
+    <Pressable onPress={() => router.push('/about')}>
       <XStack justifyContent="center" alignItems="center" gap="$3">
         <Text fontWeight="500" fontSize="$2">
           {t('web-home:about')}
@@ -34,7 +36,7 @@ export function TopHeader() {
   );
 
   const renderHomeQuestion = () => (
-    <Pressable onPress={() => {}}>
+    <Pressable onPress={() => router.push('/contact')}>
       <XStack justifyContent="center" alignItems="center" gap="$3">
         <Text fontWeight="500" fontSize="$2">
           {t('web-home:question')}
