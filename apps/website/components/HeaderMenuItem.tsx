@@ -9,6 +9,7 @@ export type HeaderMenuItemProps = {
   path: string;
   icon?: React.ReactNode;
   iconAfter?: React.ReactNode;
+  $md?: any;
 };
 
 export const HeaderMenuItem: React.FC<HeaderMenuItemProps> = ({
@@ -16,16 +17,18 @@ export const HeaderMenuItem: React.FC<HeaderMenuItemProps> = ({
   path,
   icon,
   iconAfter,
+  ...props
 }) => {
   const router = useRouter();
 
   const activePath = usePathname();
-
+  console.log("props", props)
   return (
     <Pressable onPress={() => router.push(path)}>
       <XStack
-      alignItems='center'
+        alignItems='center'
         paddingHorizontal="$6"
+        $md={{ paddingHorizontal:"$4" }}
         paddingVertical="$3"
         borderRadius={'$2'}
         backgroundColor={activePath == path ? '$color5' : 'transparent'}
@@ -35,6 +38,7 @@ export const HeaderMenuItem: React.FC<HeaderMenuItemProps> = ({
         hoverStyle={{
           cursor: 'pointer',
         }}
+        {...props}
       >
         {iconAfter ? iconAfter : null}
         <Text fontWeight={'bold'} fontSize="$5">
