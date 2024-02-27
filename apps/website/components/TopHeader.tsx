@@ -1,5 +1,7 @@
-import { ChevronDown } from '@tamagui/lucide-icons';
+import { Check, ChevronDown, ChevronUp } from '@tamagui/lucide-icons';
 import { useMultiLang } from '@zix/i18n';
+import { ZixSelectField } from '@zix/ui/forms';
+import { LinearGradient } from '@tamagui/linear-gradient';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import { Pressable } from 'react-native';
@@ -9,32 +11,37 @@ import {
   Button,
   Image,
   Popover,
+  ScrollView,
   Select,
+  Separator,
+  Sheet,
+  Stack,
   Text,
   XStack,
   YStack,
 } from 'tamagui';
+import { useMemo } from 'react';
 
 export function TopHeader() {
-  const { changeLanguage } = useMultiLang();
+  const { changeLanguage, activeLang } = useMultiLang();
 
-  const language = [
+  const languages = [
     { name: 'en', label: t('account:language:en') },
     { name: 'ar', label: t('account:language:ar') },
   ];
 
-  const homeInfo = () => (
+  const renderHomeInfo = () => (
     <Pressable onPress={() => {}}>
     <XStack justifyContent="center" alignItems="center" gap="$3">
       <Text fontWeight="500" fontSize="$2">
         {t('web-home:about')}
       </Text>
-      <CustomIcon name={'homeinfo'} size="$1" />
+      <CustomIcon name={'render'} size="$1" />
     </XStack>
     </Pressable>
   );
 
-  const homeQuestion = () => (
+  const renderHomeQuestion = () => (
     <Pressable onPress={() => {}}>
     <XStack justifyContent="center" alignItems="center" gap="$3">
       <Text fontWeight="500" fontSize="$2">
@@ -45,10 +52,8 @@ export function TopHeader() {
     </Pressable>
   );
 
-  const onSelectTranslate = () => (
-    <XStack>
-    
-    
+  const renderSelectTranslate = () => (
+    <XStack justifyContent="center" alignItems="center" gap="$3">
       <Popover size="$3" allowFlip>
         <Popover.Trigger asChild>
         <Pressable onPress={() => {}}>
@@ -71,8 +76,8 @@ export function TopHeader() {
         </Popover.Sheet>
       </Adapt>
       <Popover.Content
-        borderWidth={1}
-        borderColor="$borderColor"
+        borderWidth={0}
+        borderColor="transparent"
         enterStyle={{ y: -10, opacity: 0 }}
         exitStyle={{ y: -10, opacity: 0 }}
         elevate
@@ -85,22 +90,32 @@ export function TopHeader() {
           },
         ]}
       >
-        <YStack space="$3">
-          <Text fontWeight="500" fontSize="$2">
+        <Popover.Arrow borderWidth={1} borderColor="$borderColor" />
+        <YStack gap="$3" justifyContent='center'>
+          <Text fontWeight="500" fontSize="$2" textAlign='center'>
             {t('account:language:select_language')}
           </Text>
-          {language.map((item, index) => (
-            <Button key={index} size="$3" onPress={() => changeLanguage(item.name)}>
-              {item.label}
-            </Button>
+          {languages.map((item, index) => (
+            <Pressable key={index} size="$3" onPress={() => changeLanguage(item.name)}>
+               <Separator width="100%" borderColor={'$gray7'} />
+              <XStack gap="$3" justifyContent='space-between' padding='$2'>
+              {activeLang === item.name ? <Check size="$1" /> : <Stack width="$1" height="$1" />}
+                <Text fontSize="$2">{item.label}</Text>
+                
+              </XStack>
+            </Pressable>
           ))}
+          
         </YStack>
       </Popover.Content>
       </Popover>
     </XStack>
   );
+    
 
-  const location = () => (
+    
+
+  const renderLocation = () => (
     <XStack justifyContent="center" alignItems="center" gap="$3">
       <Text fontWeight={'500'} fontSize="$2">
         saudi arabia
@@ -117,7 +132,7 @@ export function TopHeader() {
     </XStack>
   );
 
-  const download = () => (
+  const renderDownload = () => (
     <XStack justifyContent="center" alignItems="center" gap="$3">
       <Pressable onPress={() => {}}>
       <CustomIcon name={'appstore'} size="$8" />
@@ -131,7 +146,7 @@ export function TopHeader() {
     </XStack>
   );
 
-  const followUs = () => (
+  const renderFollowUs = () => (
     <XStack justifyContent="center" alignItems="center" gap="$3">
       <Pressable onPress={() => {}}>
       <CustomIcon name={'facebook'} />
@@ -155,13 +170,12 @@ export function TopHeader() {
       justifyContent="space-around"
       backgroundColor="$gray3"
     >
-      {followUs()}
-      {download()}
-      {location()}
-      {/* {translate()} */}
-      {onSelectTranslate()}
-      {homeQuestion()}
-      {homeInfo()}
+      {renderFollowUs()}
+      {renderDownload()}
+      {renderLocation()}
+      {renderSelectTranslate()}
+      {renderHomeQuestion()}
+      {renderHomeInfo()}
     </XStack>
   );
 }
