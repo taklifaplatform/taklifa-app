@@ -7,7 +7,6 @@ export function TrackShipments() {
   const [selectedShipment, setSelectedShipment] = useState(0);
   return (
     <YStack
-      w={'100%'}
       alignItems="center"
       backgroundColor={'$color1'}
       borderRadius="$2"

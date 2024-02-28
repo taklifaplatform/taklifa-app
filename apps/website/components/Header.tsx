@@ -1,5 +1,5 @@
 import { CustomIcon } from '@zix/ui/icons';
-import { XStack, useTheme } from 'tamagui';
+import { Stack, XStack, useTheme } from 'tamagui';
 
 import { t } from 'i18next';
 import { HeaderMenuItem } from './HeaderMenuItem';
@@ -17,6 +17,7 @@ export function Header() {
       borderTopWidth={2}
       borderTopColor={'$gray7'}
       paddingHorizontal="$3"
+      paddingVertical="$4"
       marginBottom="$4"
     >
       <XStack gap="$1">
@@ -27,9 +28,9 @@ export function Header() {
       {/* Logo */}
       {
         !theme.dark ? (
-          <CustomIcon name={'web-dark-logo'} size={'$9'} />
+          <CustomIcon name={'weblogo'} width={'110px'} height={'52px'} />
         ) : (
-          <CustomIcon name={'weblogo'} size={'$9'} />
+          <CustomIcon name={'web-dark-logo'} width={'110px'} height={'52px'} />
         )
       }
        

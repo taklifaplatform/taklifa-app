@@ -210,7 +210,7 @@
     "certificates": "Certificates",
     "aboutsawaed": "About Sawaed Logistics",
     "legal": "Legal respionsibility",
-    "term": "Terms of use of the site",
+    "term": "Terms and Conditions",
     "customer": "Customer protection",
     "privacy": "Privacy policy",
     "cookie": "Cookie policy",
@@ -219,6 +219,7 @@
     "jobs": "Jobs",
     "aramex": "Aramex Press",
     "blogstix": "Blogstix",
-    "support": "Help and Support center"
+    "support": "Help and Support center",
+    "all-rights-reserved": "All rights reserved"
   }
 }

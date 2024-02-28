@@ -12,32 +12,34 @@ export type MainLayoutProps = {
 };
 
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  const [drawer, setDrawer] = useState(false);
+
   return (
     <Stack
-      flex={1}
       justifyContent="center"
       flexDirection="row"
+      paddingVertical="$4"
       $sm={{
         flexDirection: 'column',
         alignItems: 'center',
+        paddingTop: '$0'
       }}
     >
-      <YStack width="90%" padding="$4">
-        <TopHeader />
-        <Header />
-        <MobileHeader drawer={drawer} setDrawer={setDrawer} />
+      <YStack
+        flex={1}
+        maxWidth={'1296px'}
+        width={'100%'}
+        // padding="$4"
+        paddingHorizontal="$4"
+        justifyContent="space-between"
+      >
+        <YStack>
+          <TopHeader />
+          <Header />
+          <MobileHeader />
+        </YStack>
         {children}
         <Footer />
-        <MobileFooter />
       </YStack>
-      <Sheet snapPoints={[90, 50]} open={drawer}>
-        <Sheet.Overlay onPress={() => setDrawer(!drawer)} />
-        <Sheet.Handle />
-        <Sheet.Frame>
-          <MobileDrawer />
-        </Sheet.Frame>
-      </Sheet>
     </Stack>
   );
 };
