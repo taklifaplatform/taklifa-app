@@ -25,9 +25,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({
     if (!user?.id) {
       return;
     }
-    await client.connectUser({
-      user,
-    });
+    await client.connectUser(user);
   }
   React.useEffect(() => {
     if (user) {
