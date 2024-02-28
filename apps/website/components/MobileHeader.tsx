@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
-import { Button, XStack, Text, View, Sheet, useTheme } from 'tamagui';
 import { CustomIcon } from '@zix/ui/icons';
-import { useMultiLang } from '@zix/i18n';
 import { t } from 'i18next';
+import { useState } from 'react';
 import { Pressable } from 'react-native';
+import { Button, Sheet, Text, XStack, useTheme } from 'tamagui';
 import { MobileDrawer } from './MobileDrawer';
+import { useRouter } from 'next/router';
+import { ro } from 'date-fns/locale';
 
 export function MobileHeader() {
   const theme = useTheme();
-  const { isRtl } = useMultiLang();
   const [drawer, setDrawer] = useState(false);
+  const router = useRouter();
   const renderDrawer = () => (
     <Sheet 
     snapPoints={[90, 50]} 
@@ -38,9 +39,10 @@ export function MobileHeader() {
       // flex={1}
     >
       <Button
+      unstyled
         backgroundColor="transparent"
         paddingVertical="$4"
-        onPress={() => {}}
+        onPress={() => router.push('/auth/login')}
         $sm={{
           size: '$2',
           paddingVertical: '$1',
@@ -48,9 +50,6 @@ export function MobileHeader() {
         }}
         icon={<CustomIcon name={'account'} size="$1" />}
       >
-        <Text fontSize="$3" color="$white" $sm={{display: 'none'}}>
-          {t('web-home:signup')}
-        </Text>
       </Button>
      
       {
