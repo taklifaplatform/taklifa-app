@@ -1,7 +1,6 @@
 import { Cog } from '@tamagui/lucide-icons';
 import {
-  ManageTeamScreen,
-  useCompanyManagerContext,
+  ManageTeamScreen
 } from '@zix/features/companies-dashboard';
 import { AppHeader } from '@zix/ui/common';
 import React from 'react';
@@ -10,7 +9,6 @@ import { useRouter } from 'solito/router';
 
 export default function Screen() {
   const router = useRouter();
-  const { activeCompany } = useCompanyManagerContext();
   return (
     <>
       <AppHeader
@@ -19,7 +17,7 @@ export default function Screen() {
         headerRight={() => (
           <TouchableOpacity
             onPress={() =>
-              router.push(`/companies/${activeCompany?.id}/manage/settings`)
+              router.push(`/company/manage/settings`)
             }
           >
             <Cog size="$2" />

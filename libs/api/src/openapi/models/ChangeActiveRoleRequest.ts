@@ -2,10 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { MediaTransformer } from './MediaTransformer';
-export type ActiveCompanyTransformer = {
-    id?: string;
+export type ChangeActiveRoleRequest = {
     name?: string;
-    logo?: MediaTransformer;
 };
 

@@ -4,7 +4,7 @@ import React from 'react';
 export default function Screen() {
   return (
     <>
-      <AppHeader showBackButton title="Orders" />
+      <AppHeader title="Orders" />
       {/* <OrdersScreen /> */}
     </>
   );

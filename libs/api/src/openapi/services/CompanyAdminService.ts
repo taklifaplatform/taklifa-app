@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { AuthenticatedUserTransformer } from '../models/AuthenticatedUserTransformer';
 import type { CompanyTransformer } from '../models/CompanyTransformer';
 import type { UpdateCompanyRequest } from '../models/UpdateCompanyRequest';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -144,6 +145,26 @@ export class CompanyAdminService {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/api/admin/companies/{company}',
+            path: {
+                'company': company,
+            },
+        });
+    }
+    /**
+     * Active company.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static changeActiveCompany({
+        company,
+    }: {
+        company: string,
+    }): CancelablePromise<{
+        data?: AuthenticatedUserTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/admin/companies/{company}/change-active-company',
             path: {
                 'company': company,
             },

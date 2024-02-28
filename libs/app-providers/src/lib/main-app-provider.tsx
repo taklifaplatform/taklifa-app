@@ -1,12 +1,11 @@
 import { AuthProvider } from '@zix/features/auth';
-import { CompanyManagerProvider } from '@zix/features/companies-dashboard';
 import { themeConfig } from '@zix/theme';
 import { Provider as JotaiProvider } from 'jotai';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import {
   ProvidersComposer, QueryClientProvider, SafeAreaProvider, TamaguiProvider,
-  UniversalThemeProvider,
   ToastProvider,
+  UniversalThemeProvider,
 } from './providers';
 
 export interface MainAppProviderProps {
@@ -33,7 +32,6 @@ export const MainAppProvider: React.FC<MainAppProviderProps> = ({
         ToastProvider,
         QueryClientProvider,
         AuthProvider,
-        CompanyManagerProvider,
       ]}
     >
       {children}

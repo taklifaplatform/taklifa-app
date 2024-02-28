@@ -1,15 +1,15 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { useToastController } from 'tamagui';
 import React from 'react';
+import { useToastController } from 'tamagui';
 
 import { CompanyInvitationsService } from '@zix/api';
-import { Theme } from 'tamagui';
 import { SchemaForm, SubmitButton, formFields } from '@zix/ui/forms';
+import { useAuth } from '@zix/utils';
 import { t } from 'i18next';
 import { FormProvider, useForm } from 'react-hook-form';
+import { Theme } from 'tamagui';
 import { z } from 'zod';
-import { useCompanyManagerContext } from '../../../../context/UseCompanyManagerContext';
 
 const InviteDriverFormSchema = z
   .object({
@@ -25,7 +25,7 @@ const InviteDriverFormSchema = z
 
 export const CreateDriverScreen: React.FC = () => {
   const form = useForm<z.infer<typeof InviteDriverFormSchema>>();
-  const { activeCompany } = useCompanyManagerContext();
+  const { user } = useAuth();
 
   const toast = useToastController();
 
@@ -37,7 +37,7 @@ export const CreateDriverScreen: React.FC = () => {
     },
     onSuccess(data, variables, context) {
       toast.show('Driver Invited Successfully!');
-      // router.push(`/companies/${activeCompany?.id}`);
+      // router.push(`/company`);
     },
     onError(error, variables, context) {
       toast.show('Driver Invitation Failed!');
@@ -54,8 +54,8 @@ export const CreateDriverScreen: React.FC = () => {
         onSubmit={(values) =>
           mutate({
             ...values,
-            role: 'driver',
-            company_id: activeCompany?.id,
+            role: 'company_driver',
+            company_id: user?.active_company?.id,
           })
         }
         renderAfter={({ submit }) => {

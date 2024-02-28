@@ -9,6 +9,28 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class ShipmentsService {
     /**
+     * store a new shipment.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static storeShipment({
+        requestBody,
+    }: {
+        requestBody: UpdateShipmentRequest,
+    }): CancelablePromise<{
+        data?: ShipmentTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/customer/shipments',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation errors`,
+            },
+        });
+    }
+    /**
      * Fetch all shipments.
      * @returns any Successful response
      * @throws ApiError
@@ -52,33 +74,11 @@ export class ShipmentsService {
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/shipment',
+            url: '/api/customer/shipments',
             query: {
                 'page': page,
                 'per_page': perPage,
                 'search': search,
-            },
-        });
-    }
-    /**
-     * store a new shipment.
-     * @returns any Successful response
-     * @throws ApiError
-     */
-    public static storeShipment({
-        requestBody,
-    }: {
-        requestBody: UpdateShipmentRequest,
-    }): CancelablePromise<{
-        data?: ShipmentTransformer;
-    }> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/shipment',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                422: `Validation errors`,
             },
         });
     }
@@ -96,7 +96,7 @@ export class ShipmentsService {
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/shipment/{shipment}',
+            url: '/api/customer/shipments/{shipment}',
             path: {
                 'shipment': shipment,
             },
@@ -118,26 +118,32 @@ export class ShipmentsService {
     }> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/shipment/{shipment}',
+            url: '/api/customer/shipments/{shipment}',
             path: {
                 'shipment': shipment,
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                422: `Validation errors`,
+            },
         });
     }
     /**
      * destroy a shipment.
+     * @returns any Successful response
      * @throws ApiError
      */
     public static destroyShipment({
         shipment,
     }: {
         shipment: string,
-    }): CancelablePromise<void> {
+    }): CancelablePromise<{
+        data?: ShipmentTransformer;
+    }> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/shipment/{shipment}',
+            url: '/api/customer/shipments/{shipment}',
             path: {
                 'shipment': shipment,
             },

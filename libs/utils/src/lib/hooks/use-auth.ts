@@ -6,9 +6,14 @@ import {
   UserService,
 } from "@zix/api";
 import { useAtom } from "jotai";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useRouter } from "solito/router";
 import { authAccessTokenStorage, authUserStorage } from "../atoms";
+
+export type RedirectUserOptions = {
+  pushRoute?: boolean;
+  user?: AuthenticatedUserTransformer;
+};
 
 export function useAuth() {
   const [authAccessToken, setAuthAccessToken] = useAtom(authAccessTokenStorage);
@@ -40,6 +45,31 @@ export function useAuth() {
     return `https://ui-avatars.com/api.jpg?${params.toString()}`;
   }, [user]);
 
+  const redirectUserToActiveDashboard = useCallback(
+    (options: RedirectUserOptions = {
+      pushRoute: true,
+      user: {},
+    }) => {
+      const redirect = options.pushRoute ? router.push : router.replace;
+      const activeRoleName = options?.user?.active_role?.name ||
+        user?.active_role?.name;
+
+      if (activeRoleName === "solo_driver") {
+        redirect("/solo-driver");
+      } else if (
+        activeRoleName &&
+        ["company_owner", "company_manager", "company_driver"].includes(
+          activeRoleName,
+        )
+      ) {
+        redirect("/company");
+      } else {
+        redirect("/customer");
+      }
+    },
+    [router, user],
+  );
+
   function logout() {
     setAuthAccessToken("");
     setAuthUser({});
@@ -64,5 +94,6 @@ export function useAuth() {
     setAuthAccessToken,
     setAuthUser,
     isLoggedIn,
+    redirectUserToActiveDashboard,
   };
 }

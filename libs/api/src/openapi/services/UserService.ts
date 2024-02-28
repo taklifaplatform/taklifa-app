@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { AuthenticatedUserTransformer } from '../models/AuthenticatedUserTransformer';
+import type { ChangeActiveRoleRequest } from '../models/ChangeActiveRoleRequest';
 import type { UpdateEmailRequest } from '../models/UpdateEmailRequest';
 import type { UpdatePasswordRequest } from '../models/UpdatePasswordRequest';
 import type { UpdatePhoneNumberRequest } from '../models/UpdatePhoneNumberRequest';
@@ -105,19 +106,18 @@ export class UserService {
      * @returns any Successful response
      * @throws ApiError
      */
-    public static activateRole({
-        role,
+    public static changeActiveRole({
+        requestBody,
     }: {
-        role: string,
+        requestBody: ChangeActiveRoleRequest,
     }): CancelablePromise<{
         data?: AuthenticatedUserTransformer;
     }> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/user/roles/{role}/activate',
-            path: {
-                'role': role,
-            },
+            url: '/api/user/change-active-role',
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 }

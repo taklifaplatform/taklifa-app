@@ -18,6 +18,7 @@ export type { AuthTokenTransformer } from './models/AuthTokenTransformer';
 export type { AvatarUpdateUserRequest } from './models/AvatarUpdateUserRequest';
 export type { CapacityDimensionsUpdateVehicleRequest } from './models/CapacityDimensionsUpdateVehicleRequest';
 export type { CapacityWeightUpdateVehicleRequest } from './models/CapacityWeightUpdateVehicleRequest';
+export type { ChangeActiveRoleRequest } from './models/ChangeActiveRoleRequest';
 export type { ChannelTransformer } from './models/ChannelTransformer';
 export type { ChatUserTransformer } from './models/ChatUserTransformer';
 export type { CheckEmailExistRequest } from './models/CheckEmailExistRequest';
@@ -71,6 +72,7 @@ export type { MessageUpdateMessageRequest } from './models/MessageUpdateMessageR
 export type { ModerateChannelRequest } from './models/ModerateChannelRequest';
 export type { MuteChannelRequest } from './models/MuteChannelRequest';
 export type { PatchMessageRequest } from './models/PatchMessageRequest';
+export type { PriceTransformer } from './models/PriceTransformer';
 export type { QueryRequest } from './models/QueryRequest';
 export type { RatesUpdateRatingRequest } from './models/RatesUpdateRatingRequest';
 export type { RatingScoreTransformer } from './models/RatingScoreTransformer';
@@ -87,6 +89,10 @@ export type { SendResetPasswordPinCodeRequest } from './models/SendResetPassword
 export type { ServiceAreaTransformer } from './models/ServiceAreaTransformer';
 export type { ServiceZoneTransformer } from './models/ServiceZoneTransformer';
 export type { SetPatchMessageRequest } from './models/SetPatchMessageRequest';
+export type { ShipmentInvitationsUpdateShipmentRequest } from './models/ShipmentInvitationsUpdateShipmentRequest';
+export type { ShipmentInvitationTransformer } from './models/ShipmentInvitationTransformer';
+export type { ShipmentItemsUpdateShipmentRequest } from './models/ShipmentItemsUpdateShipmentRequest';
+export type { ShipmentItemTransformer } from './models/ShipmentItemTransformer';
 export type { ShipmentTransformer } from './models/ShipmentTransformer';
 export type { SimpleMessageTransformer } from './models/SimpleMessageTransformer';
 export type { SortListChannelQueryRequest } from './models/SortListChannelQueryRequest';

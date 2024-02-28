@@ -3,6 +3,7 @@ import { useAuth } from '@zix/utils';
 import { useCallback } from 'react';
 import { useRouter } from 'solito/router';
 
+// TODO:: replace with auth redirector
 export function useUserRedirect() {
   const { user } = useAuth();
   const router = useRouter();

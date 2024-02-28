@@ -1,46 +1,72 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
 import {
-  Building2,
-  CarFront,
   ChevronDown,
+  ChevronDownCircle,
+  Circle,
   PlusSquare,
-  User as UserIcon,
+  X
 } from '@tamagui/lucide-icons';
-import { CompanyAdminService } from '@zix/api';
-import { H3, ListItem, Sheet, Text, XStack, YGroup } from 'tamagui';
+import { useToastController } from '@tamagui/toast';
+import { ChangeActiveRoleRequest, CompanyAdminService, UserService } from '@zix/api';
+import { MediaAvatar, UserAvatar } from '@zix/ui/common';
 import { useAuth } from '@zix/utils';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useRouter } from 'solito/router';
-import { useCompanyManagerContext } from '../../context/UseCompanyManagerContext';
+import { Button, H4, ListItem, Sheet, Text, XStack, YGroup } from 'tamagui';
 
-export type DashboardSwitcherProps = {
-  //
-};
 
-export const DashboardSwitcher: React.FC<DashboardSwitcherProps> = () => {
+export const DashboardSwitcher: React.FC = () => {
   const [sheetOpen, setSheetOpen] = useState(false);
   const router = useRouter();
-  const { user } = useAuth();
-  const { switchCompany } = useCompanyManagerContext();
+  const { user, refetchUser, redirectUserToActiveDashboard } = useAuth();
+  const toast = useToastController()
 
-  const { data } = useQuery({
-    queryFn: () => CompanyAdminService.list({}),
-    queryKey: ['CompanyAdminService.list'],
-  });
 
-  const dashboard = [
-    {
-      name: 'Customer',
-      icon: UserIcon,
-      route: '/customer',
+  const { mutate: changeActiveRole } = useMutation({
+    mutationFn: (requestBody: ChangeActiveRoleRequest) => UserService.changeActiveRole({
+      requestBody
+    }),
+    onSuccess(data) {
+      toast.show('Account changed successfully');
+      refetchUser()
+      setSheetOpen(false)
+      redirectUserToActiveDashboard({
+        user: data.data
+      })
     },
-    {
-      name: 'Solo Driver',
-      icon: CarFront,
-      route: '/solo-driver',
+  })
+
+  const { mutate: changeActiveCompany } = useMutation({
+    mutationFn: (company: string) => CompanyAdminService.changeActiveCompany({
+      company
+    }),
+    onSuccess(data) {
+      toast.show('Company changed successfully');
+      refetchUser()
+      setSheetOpen(false)
+      redirectUserToActiveDashboard({
+        user: data.data
+      })
     },
-  ];
+  })
+
+  /**
+   * Exclude company roles from user roles
+   */
+  const userRoles = useMemo(() => {
+    return user?.roles?.filter(role => !role.name?.includes('company'))
+  }, [user])
+
+  const snapPoints = useMemo(() => {
+    const totalItems = (userRoles?.length ?? 1) + (user?.companies?.length ?? 1);
+    const sheetHeight = totalItems * 15 > 85 ? 85 : totalItems * 10;
+
+    return [
+      sheetHeight,
+      85
+    ]
+  }, [user, userRoles])
 
   function onNavigate(route: string, replace = true) {
     setSheetOpen(false);
@@ -65,39 +91,43 @@ export const DashboardSwitcher: React.FC<DashboardSwitcherProps> = () => {
         modal
         open={sheetOpen}
         onOpenChange={setSheetOpen}
-        snapPoints={[50, 85]}
+        snapPoints={snapPoints}
       >
         <Sheet.Overlay />
         <Sheet.Handle />
         <Sheet.Frame>
-          <Sheet.ScrollView>
+          <Sheet.ScrollView backgroundColor='$color1'>
             <YGroup marginBottom="$4">
-              <H3 padding="$4">Switch Dashboard</H3>
-              {dashboard.map((item) => (
-                <YGroup.Item key={item.name}>
+              <XStack alignItems='center' justifyContent='space-between'>
+                <H4 padding="$4">Change Account</H4>
+                <Button icon={X} scaleIcon={1.3} backgroundColor='$color1' onPress={() => setSheetOpen(false)} />
+              </XStack>
+              {userRoles?.map((role) => (
+                <YGroup.Item key={role.id}>
                   <ListItem
-                    onPress={() => onNavigate(item.route)}
-                    marginVertical="$2"
-                    paddingVertical="$4"
-                    hoverTheme
-                    icon={Building2}
-                    title={item.name}
+                    onPress={() => changeActiveRole({ name: role.name })}
+                    borderBottomColor='$gray5'
+                    borderBottomWidth={1}
+                    icon={<UserAvatar user={user} size='$4' />}
+                    iconAfter={user?.active_role?.name === role.name ? ChevronDownCircle : Circle}
+                    scaleIcon={1.3}
+                    title={user.name}
+                    subTitle={role.name}
                   />
                 </YGroup.Item>
               ))}
-              <H3 padding="$4">Companies</H3>
-              {data?.data?.map((company) => (
+              <H4 padding="$4">Change Companies</H4>
+              {user?.companies?.map((company) => (
                 <YGroup.Item key={company.name}>
                   <ListItem
-                    onPress={() => {
-                      company.id && switchCompany(company.id);
-                      onNavigate(`/companies/${company.id}`);
-                    }}
-                    marginVertical="$2"
-                    paddingVertical="$4"
-                    hoverTheme
-                    icon={Building2}
+                    onPress={() => company.id && changeActiveCompany(company.id)}
+                    borderBottomColor='$gray5'
+                    borderBottomWidth={1}
+                    icon={<MediaAvatar media={company.logo} size='$4' />}
+                    iconAfter={user?.active_company?.id === company.id ? ChevronDownCircle : Circle}
+                    scaleIcon={1.3}
                     title={company.name}
+                    subTitle='Company Account'
                   />
                 </YGroup.Item>
               ))}

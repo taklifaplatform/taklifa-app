@@ -1,16 +1,13 @@
 import { CarFront, Plus, Users, UsersRound } from '@tamagui/lucide-icons';
 import { ActionSheet, ActionSheetRef } from '@zix/ui/common';
-import { Button, Theme } from 'tamagui';
 import { useRef } from 'react';
+import { Button, Theme } from 'tamagui';
 
 import { useRouter } from 'solito/router';
-import { useCompanyManagerContext } from '../../context/UseCompanyManagerContext';
 
 export const ManageTeamFabButton: React.FC = () => {
   const router = useRouter();
   const actionSheetRef = useRef<ActionSheetRef>(null);
-
-  const { activeCompany } = useCompanyManagerContext();
 
   const renderFabButton = () => (
     <Theme>
@@ -43,7 +40,7 @@ export const ManageTeamFabButton: React.FC = () => {
           onPress: () => {
             actionSheetRef.current?.close();
             alert('UNDER DEVELOPMENT');
-            // router.push(`/companies/${activeCompany?.id}/admin/managers/create`);
+            // router.push(`/company/admin/managers/create`);
           },
         },
         {
@@ -52,7 +49,7 @@ export const ManageTeamFabButton: React.FC = () => {
           onPress: () => {
             actionSheetRef.current?.close();
             router.push(
-              `/companies/${activeCompany?.id}/manage/drivers/invite`
+              `/company/manage/drivers/invite`
             );
           },
         },
@@ -62,7 +59,7 @@ export const ManageTeamFabButton: React.FC = () => {
           onPress: () => {
             actionSheetRef.current?.close();
             alert('UNDER DEVELOPMENT');
-            // router.push(`/companies/${activeCompany?.id}/admin/vehicles/create`);
+            // router.push(`/company/admin/vehicles/create`);
           },
         },
       ]}

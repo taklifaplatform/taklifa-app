@@ -1,16 +1,17 @@
 import { ListFilter, MapPin, XCircle } from '@tamagui/lucide-icons';
-import { Button, SizableText, Tabs, XStack, YStack } from 'tamagui';
+import { useAuth } from '@zix/utils';
 import { ScrollView } from 'react-native-gesture-handler';
+import { Button, SizableText, Tabs, XStack, YStack } from 'tamagui';
 import ManageTeamFabButton from '../../../components/manage-team-fab-button/manage-team-fab-button';
-import { useCompanyManagerContext } from '../../../context/UseCompanyManagerContext';
 import MembersListScreen from '../members/members-list-screen/members-list-screen';
 import VehiclesListScreen from '../vehicles/vehicles-list-screen/vehicles-list-screen';
 
 /* eslint-disable-next-line */
-export interface ManageTeamScreenProps {}
+export interface ManageTeamScreenProps { }
 
 export function ManageTeamScreen(props: ManageTeamScreenProps) {
-  const { activeCompany } = useCompanyManagerContext();
+  const { user } = useAuth()
+
 
   // taps
   const renderFilters = () => {
@@ -76,20 +77,20 @@ export function ManageTeamScreen(props: ManageTeamScreenProps) {
         </Tabs.List>
         <Tabs.Content value="tab1" flex={1}>
           {renderFilters()}
-          {!!activeCompany?.id && (
+          {!!user?.active_company?.id && (
             <MembersListScreen
-              memberRole="manager"
-              company_id={activeCompany.id}
+              memberRole="company_manager"
+              company_id={user?.active_company.id}
             />
           )}
         </Tabs.Content>
 
         <Tabs.Content value="tab2" flex={1}>
           {renderFilters()}
-          {!!activeCompany?.id && (
+          {!!user?.active_company?.id && (
             <MembersListScreen
-              memberRole="driver"
-              company_id={activeCompany.id}
+              memberRole="company_driver"
+              company_id={user?.active_company.id}
             />
           )}
         </Tabs.Content>

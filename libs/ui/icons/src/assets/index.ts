@@ -62,17 +62,18 @@ import View from './icons/view.svg';
 import Wallet from './icons/wallet.svg';
 import Weblogo from './icons/weblogo.svg';
 import WebDarkLogo from './icons/web-dark-logo.svg';
+import Job from "./icons/job.svg";
 
 // arts
-import CompanyCars from './arts/company-cars.svg';
-import LookingForService from './arts/looking-for-service.svg';
-import ServiceProvider from './arts/service-provider.svg';
-import SoloTransporterCar from './arts/solo-transporter-car.svg';
+import CompanyCars from "./arts/company-cars.svg";
+import LookingForService from "./arts/looking-for-service.svg";
+import ServiceProvider from "./arts/service-provider.svg";
+import SoloTransporterCar from "./arts/solo-transporter-car.svg";
 
 // Vehicles
-import VehicleA from './vehicles/vehicle-a.svg';
-import VehicleB from './vehicles/vehicle-b.svg';
-import VehicleC from './vehicles/vehicle-c.svg';
+import VehicleA from "./vehicles/vehicle-a.svg";
+import VehicleB from "./vehicles/vehicle-b.svg";
+import VehicleC from "./vehicles/vehicle-c.svg";
 
 export {
   About,
@@ -104,6 +105,7 @@ export {
   Home,
   Homeinfo,
   Instagram,
+  Job,
   LargeArrowLeft,
   List,
   LocalShipping,

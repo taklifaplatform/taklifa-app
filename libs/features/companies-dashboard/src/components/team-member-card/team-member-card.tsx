@@ -2,12 +2,13 @@ import { Eye, MoreHorizontal, Trash2 } from '@tamagui/lucide-icons';
 import { useMutation } from '@tanstack/react-query';
 import { CompanyMemberTransformer, CompanyMembersService } from '@zix/api';
 import { ActionSheet, ActionSheetRef, UserAvatar } from '@zix/ui/common';
-import { Button, Text, XStack, YStack, useToastController } from 'tamagui';
+import { Button, Text, XStack, YStack } from 'tamagui';
 import { useAuth } from '@zix/utils';
 import moment from 'moment';
 import { useRef } from 'react';
 import { Alert } from 'react-native';
 import { useRouter } from 'solito/router';
+import { useToastController } from '@tamagui/toast';
 
 export interface TeamMemberCardProps {
   member: CompanyMemberTransformer;

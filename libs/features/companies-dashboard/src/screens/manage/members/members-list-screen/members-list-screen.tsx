@@ -8,7 +8,7 @@ import TeamMemberCard from '../../../../components/team-member-card/team-member-
 import TeamMemberInvitationCard from '../../../../components/team-member-invitation-card/team-member-invitation-card';
 
 export interface MembersListScreenProps {
-  memberRole: 'manager' | 'driver';
+  memberRole: 'company_manager' | 'company_driver';
   company_id: string;
 }
 

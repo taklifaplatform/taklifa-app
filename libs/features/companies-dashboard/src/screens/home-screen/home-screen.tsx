@@ -1,15 +1,15 @@
+import { useAuth } from '@zix/utils';
 import { Text, View } from 'tamagui';
-import { useCompanyManagerContext } from '../../context/UseCompanyManagerContext';
 
 /* eslint-disable-next-line */
-export interface HomeScreenProps {}
+export interface HomeScreenProps { }
 
 export function HomeScreen(props: HomeScreenProps) {
-  const { activeCompany } = useCompanyManagerContext();
+  const { user } = useAuth();
   return (
     <View>
       <Text>Welcome to home-screen!</Text>
-      <Text>{JSON.stringify(activeCompany, null, 2)}</Text>
+      <Text>{JSON.stringify(user?.active_company, null, 2)}</Text>
     </View>
   );
 }

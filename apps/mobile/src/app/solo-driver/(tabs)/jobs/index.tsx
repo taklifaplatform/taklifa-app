@@ -4,7 +4,7 @@ import React from 'react';
 export default function Screen() {
   return (
     <>
-      <AppHeader showBackButton title="Notifications" />
+      <AppHeader title="Jobs" />
       {/* <NotificationsScreen /> */}
     </>
   );

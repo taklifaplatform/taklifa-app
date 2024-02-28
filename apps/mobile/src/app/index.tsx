@@ -1,23 +1,25 @@
-import { Image, View } from 'tamagui';
-import { router } from 'expo-router';
 import React from 'react';
+import { Image, View } from 'tamagui';
 
+import { useAuth } from '@zix/utils';
 import { Dimensions, Platform } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
+
 export default function Screen() {
+  const { redirectUserToActiveDashboard } = useAuth()
+
   return (
     <View
       backgroundColor="$color5"
       flex={1}
       onLayout={() => {
-        // router.replace('/auth/verify-kyc');
         if (Platform.OS === 'ios') {
           setTimeout(() => {
-            router.replace('/customer');
+            redirectUserToActiveDashboard();
           }, 3000);
         } else {
-          router.replace('/customer');
+          redirectUserToActiveDashboard();
         }
       }}
     >

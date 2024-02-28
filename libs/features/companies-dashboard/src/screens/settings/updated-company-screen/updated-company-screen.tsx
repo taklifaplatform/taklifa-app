@@ -1,20 +1,20 @@
 import { useMutation } from '@tanstack/react-query';
-import { useToastController } from 'tamagui';
 import React from 'react';
+import { useToastController } from 'tamagui';
 
 import { CompanyAdminService } from '@zix/api';
-import { Theme } from 'tamagui';
 import {
   SchemaForm,
   SubmitButton,
   formFields,
   handleFormErrors,
 } from '@zix/ui/forms';
+import { useAuth } from '@zix/utils';
 import { t } from 'i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
+import { Theme } from 'tamagui';
 import { z } from 'zod';
-import { useCompanyManagerContext } from '../../../context/UseCompanyManagerContext';
 
 const UpdateCompanyFormSchema = z
   .object({
@@ -34,7 +34,7 @@ const UpdateCompanyFormSchema = z
 
 export const UpdateCompanyScreen: React.FC = () => {
   const form = useForm<z.infer<typeof UpdateCompanyFormSchema>>();
-  const { activeCompany, refreshActiveCompany } = useCompanyManagerContext();
+  const { user, refetchUser } = useAuth()
   const toast = useToastController();
 
   const router = useRouter();
@@ -42,12 +42,12 @@ export const UpdateCompanyScreen: React.FC = () => {
   const { mutate } = useMutation({
     async mutationFn(values: z.infer<typeof UpdateCompanyFormSchema>) {
       return CompanyAdminService.update({
-        company: activeCompany?.id,
+        company: user?.active_company?.id,
         requestBody: values,
       });
     },
     onSuccess() {
-      refreshActiveCompany();
+      refetchUser();
       toast.show('Company Updated Successfully!');
       router.back();
     },
@@ -56,7 +56,7 @@ export const UpdateCompanyScreen: React.FC = () => {
     },
   });
 
-  if (!activeCompany?.id) {
+  if (!user?.active_company?.id) {
     return null;
   }
 
@@ -64,7 +64,7 @@ export const UpdateCompanyScreen: React.FC = () => {
     <FormProvider {...form}>
       <SchemaForm
         schema={UpdateCompanyFormSchema}
-        defaultValues={activeCompany}
+        defaultValues={user?.active_company}
         onSubmit={mutate}
         renderAfter={({ submit }) => {
           return (

@@ -1,6 +1,5 @@
 import { AuthProvider } from '@zix/features/auth';
 import { ChatProvider } from '@zix/features/chat';
-import { CompanyManagerProvider } from '@zix/features/companies-dashboard';
 import { themeConfig } from '@zix/theme';
 import { Provider as JotaiProvider } from 'jotai';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -35,7 +34,6 @@ export const MainAppProvider: React.FC<MainAppProviderProps> = ({
         QueryClientProvider,
         AuthProvider,
         ChatProvider,
-        CompanyManagerProvider,
       ]}
     >
       {children}

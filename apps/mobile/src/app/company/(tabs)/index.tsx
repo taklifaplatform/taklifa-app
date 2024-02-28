@@ -1,13 +1,13 @@
-import { useCompanyManagerContext } from '@zix/features/companies-dashboard';
 import { HomeScreen } from '@zix/features/customer-dashboard';
 import { AppHeader } from '@zix/ui/common';
+import { useAuth } from '@zix/utils';
 import React from 'react';
 
 export default function Screen() {
-  const { activeCompany } = useCompanyManagerContext();
+  const { user } = useAuth()
   return (
     <>
-      <AppHeader title={activeCompany?.name || '...'} />
+      <AppHeader title={user?.active_company?.name || '...'} />
       <HomeScreen />
     </>
   );
