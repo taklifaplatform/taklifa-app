@@ -33,8 +33,9 @@ export function TrackShipments() {
           />
           <Text
             color={selectedShipment === 1 ? null : '$gray9'}
+            fontSize={20}
             $sm={{
-              fontSize: '$3',
+              fontSize: 12,
             }}
           >
             {t('web-home:searchshipment')}
@@ -55,8 +56,9 @@ export function TrackShipments() {
           />
           <Text
             color={selectedShipment === 0 ? null : '$gray9'}
+            fontSize={20}
             $sm={{
-              fontSize: '$3',
+              fontSize: 12,
             }}
           >
             {t('web-home:findshipment')}
@@ -133,9 +135,6 @@ export function TrackShipments() {
         justifyContent="space-evenly"
         flexDirection="row-reverse"
         flexWrap="wrap"
-        // $sm={{
-        //   flexDirection: 'column',
-        // }}
       >
         {renderReferenceShipment()}
         {renderButtonShipment()}
