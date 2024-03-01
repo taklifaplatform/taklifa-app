@@ -2,7 +2,7 @@ import { usePathname } from '@zix/utils';
 import React from 'react';
 import { Pressable } from 'react-native';
 import { useRouter } from 'solito/router';
-import { Button, Stack, Text, XStack } from 'tamagui';
+import { Text, XStack } from 'tamagui';
 
 export type HeaderMenuItemProps = {
   name: string;
@@ -22,13 +22,13 @@ export const HeaderMenuItem: React.FC<HeaderMenuItemProps> = ({
   const router = useRouter();
 
   const activePath = usePathname();
-  console.log("props", props)
+  console.log('props', props);
   return (
     <Pressable onPress={() => router.push(path)}>
       <XStack
-        alignItems='center'
+        alignItems="center"
         paddingHorizontal="$6"
-        $md={{ paddingHorizontal:"$4" }}
+        $md={{ paddingHorizontal: '$4' }}
         paddingVertical="$3"
         borderRadius={'$2'}
         backgroundColor={activePath == path ? '$color5' : 'transparent'}

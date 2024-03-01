@@ -1,11 +1,11 @@
-import { TextInput, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
-import { Button, XStack, YStack, Text, Stack, Input } from 'tamagui';
-import { CustomIcon } from '@zix/ui/icons';
-import { t } from 'i18next';
-import { ButtonItem } from './ButtonItem';
 import { useMultiLang } from '@zix/i18n';
 import { ZixInput } from '@zix/ui/forms';
+import { CustomIcon } from '@zix/ui/icons';
+import { t } from 'i18next';
+import { useState } from 'react';
+import { TouchableOpacity } from 'react-native';
+import { Stack, Text, XStack, YStack } from 'tamagui';
+import { ButtonItem } from '../../ButtonItem';
 
 export function TrackShipments() {
   const [selectedShipment, setSelectedShipment] = useState(0);
@@ -69,30 +69,30 @@ export function TrackShipments() {
   );
 
   const renderReferenceShipment = () => (
-    <Stack width="70%" 
-    $lg={{
-      marginBottom: '$4',
-    }}
-    $md={{
-      width: '100%',
-      marginBottom: '$4',
-    }}
+    <Stack
+      width="70%"
+      $lg={{
+        marginBottom: '$4',
+      }}
+      $md={{
+        width: '100%',
+        marginBottom: '$4',
+      }}
     >
-    <ZixInput
-      fullWidth={true}
-      placeholder={t('web-home:shipmentplaceholder')}
-      leftIcon={(props) => <CustomIcon {...props} name="flip" />}
-      
-    />
+      <ZixInput
+        fullWidth={true}
+        placeholder={t('web-home:shipmentplaceholder')}
+        leftIcon={(props) => <CustomIcon {...props} name="flip" />}
+      />
     </Stack>
   );
 
   const renderButtonShipment = () => (
     <Stack
-    flex={1}
+      flex={1}
       flexDirection="row"
       //flexWrap='wrap'
-      justifyContent='center'
+      justifyContent="center"
       gap="$4"
       $xs={{
         flexDirection: 'column',

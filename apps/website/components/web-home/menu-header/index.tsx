@@ -1,22 +1,16 @@
 import { CustomIcon } from '@zix/ui/icons';
-import { t } from 'i18next';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Pressable } from 'react-native';
-import { Button, Sheet, Text, XStack, useTheme } from 'tamagui';
+import { Button, Sheet, XStack, useTheme } from 'tamagui';
 import { MobileDrawer } from './MobileDrawer';
-import { useRouter } from 'next/router';
-import { ro } from 'date-fns/locale';
 
 export function MobileHeader() {
   const theme = useTheme();
   const [drawer, setDrawer] = useState(false);
   const router = useRouter();
   const renderDrawer = () => (
-    <Sheet 
-    snapPoints={[90, 50]} 
-    open={drawer}
-    modal={true}
-    >
+    <Sheet snapPoints={[90, 50]} open={drawer} modal={true}>
       <Sheet.Overlay onPress={() => setDrawer(!drawer)} />
       <Sheet.Handle />
       <Sheet.Frame>
@@ -39,7 +33,7 @@ export function MobileHeader() {
       // flex={1}
     >
       <Button
-      unstyled
+        unstyled
         backgroundColor="transparent"
         paddingVertical="$4"
         onPress={() => router.push('/auth/login')}
@@ -49,21 +43,16 @@ export function MobileHeader() {
           alignItems: 'center',
         }}
         icon={<CustomIcon name={'account'} size="$1" />}
-      >
-      </Button>
-     
-      {
-        !theme.dark ? (
-          <CustomIcon name={'weblogo'} width={'68px'} height={'32px'} />
-        ) : (
-          <CustomIcon name={'web-dark-logo'} width={'68px'} height={'32px'} />
-        )
-      }
+      ></Button>
+
+      {!theme.dark ? (
+        <CustomIcon name={'weblogo'} width={'68px'} height={'32px'} />
+      ) : (
+        <CustomIcon name={'web-dark-logo'} width={'68px'} height={'32px'} />
+      )}
 
       <Pressable onPress={() => setDrawer(!drawer)}>
-
         <CustomIcon name={'align_left'} size="$2" />
-       
       </Pressable>
       {renderDrawer()}
     </XStack>

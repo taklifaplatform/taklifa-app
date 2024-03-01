@@ -1,8 +1,7 @@
-import React from 'react';
-import { XStack, YStack, Text, Image } from 'tamagui';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import { Pressable } from 'react-native';
+import { Image, Text, XStack, YStack } from 'tamagui';
 
 export function Partner() {
   const renderPartnerLogos = () => (

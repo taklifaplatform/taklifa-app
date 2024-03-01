@@ -5,7 +5,7 @@ import { t } from 'i18next';
 import { useState } from 'react';
 import { Pressable } from 'react-native';
 import { Separator, Sheet, Stack, Text, XStack, YStack } from 'tamagui';
-import { FooterItem } from './FooterItem';
+import { FooterItem } from '../../FooterItem';
 import { MenuItem } from './MenuItem';
 
 export function MobileDrawer() {

@@ -1,10 +1,9 @@
-import React from 'react';
-import { YStack, Image, Button, Text, XStack, Stack } from 'tamagui';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
-import { Pressable } from 'react-native';
 import { useRouter } from 'next/router';
-import { ButtonItem } from './ButtonItem';
+import { Pressable } from 'react-native';
+import { Image, Stack, Text, XStack, YStack } from 'tamagui';
+import { ButtonItem } from '../../ButtonItem';
 
 export function WarningBanner() {
   const router = useRouter();
@@ -56,7 +55,7 @@ export function WarningBanner() {
   return (
     <YStack
       justifyContent="center"
-      alignItems='center'
+      alignItems="center"
       borderRadius={'$4'}
       height={181}
       marginBottom={'$3'}
@@ -97,8 +96,8 @@ export function WarningBanner() {
           width="100%"
           $xs={{
             width: '100%',
-            paddingVertical:"$2",
-            paddingHorizontal:"$10"
+            paddingVertical: '$2',
+            paddingHorizontal: '$10',
           }}
           iconAfter={
             <CustomIcon name="large_arrow_right" size="$1" color={'$color1'} />

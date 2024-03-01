@@ -1,8 +1,7 @@
-import { XStack, YStack, Text, Image, Stack, Theme } from 'tamagui';
-import { CustomIcon } from '@zix/ui/icons';
-import React from 'react';
-import { t } from 'i18next';
 import { useMultiLang } from '@zix/i18n';
+import { CustomIcon } from '@zix/ui/icons';
+import { t } from 'i18next';
+import { Image, Stack, Text, Theme, YStack } from 'tamagui';
 
 export function StartToday() {
   const { activeLang } = useMultiLang();
@@ -21,7 +20,6 @@ export function StartToday() {
       $sm={{
         gap: '$2',
         padding: '$2',
-        
       }}
       $xs={{
         width: '100%',
@@ -40,7 +38,6 @@ export function StartToday() {
           fontSize: 15,
           paddingBottom: '$1',
         }}
-        
       >
         {t('web-home:banner-5')}
       </Text>
@@ -79,7 +76,7 @@ export function StartToday() {
       >
         {t('web-home:download')}
       </Text>
-      <Stack flexDirection='row'  gap="$4" $md={{ flexDirection: 'column'}}>
+      <Stack flexDirection="row" gap="$4" $md={{ flexDirection: 'column' }}>
         <CustomIcon name="googleplay" height="46px" width="158px" />
         <CustomIcon name="appstore" height="46px" width="158px" />
       </Stack>
@@ -87,24 +84,23 @@ export function StartToday() {
   );
   return (
     <Theme name="light">
-    <Stack
-     height={'542px'}
-      $md={{ height: '400px' }}
-      $sm={{ height: '200px' }}
-
-       >
-      <Image
-        alt="Banner"
-        source={{
-          uri: `/images/banner-4-${activeLang}.png`,
-        }}
-        width="100%"
-        height="100%"
-        resizeMode="cover"
-        $xs={{display: 'none'}}
-      />
-      {renderTextStartToday()}
-    </Stack>
+      <Stack
+        height={'542px'}
+        $md={{ height: '400px' }}
+        $sm={{ height: '200px' }}
+      >
+        <Image
+          alt="Banner"
+          source={{
+            uri: `/images/banner-4-${activeLang}.png`,
+          }}
+          width="100%"
+          height="100%"
+          resizeMode="cover"
+          $xs={{ display: 'none' }}
+        />
+        {renderTextStartToday()}
+      </Stack>
     </Theme>
   );
 }
