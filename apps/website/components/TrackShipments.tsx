@@ -69,9 +69,15 @@ export function TrackShipments() {
   );
 
   const renderReferenceShipment = () => (
-    <Stack width="70%" $lg={{
+    <Stack width="70%" 
+    $lg={{
       marginBottom: '$4',
-    }}>
+    }}
+    $md={{
+      width: '100%',
+      marginBottom: '$4',
+    }}
+    >
     <ZixInput
       fullWidth={true}
       placeholder={t('web-home:shipmentplaceholder')}
@@ -85,10 +91,11 @@ export function TrackShipments() {
     <Stack
     flex={1}
       flexDirection="row"
-      flexWrap='wrap'
+      //flexWrap='wrap'
       justifyContent='center'
       gap="$4"
-      $lg={{
+      $xs={{
+        flexDirection: 'column',
         marginBottom: '$4',
       }}
     >
@@ -99,6 +106,10 @@ export function TrackShipments() {
         borderRadius="$4"
         paddingVertical="$4"
         paddingHorizontal="$6"
+        width="100%"
+        $sm={{
+          width: '100%',
+        }}
       />
 
       <ButtonItem
@@ -112,9 +123,10 @@ export function TrackShipments() {
         backgroundColor="transparent"
         borderRadius="$4"
         borderWidth={1}
+        paddingVertical="$4"
+        paddingHorizontal="$6"
         borderColor="$gray10"
-        width="164px"
-        height="55px"
+        width="100%"
       />
     </Stack>
   );
