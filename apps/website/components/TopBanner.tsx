@@ -3,6 +3,7 @@ import { YStack, Text, Image, XStack, Button, Stack } from 'tamagui';
 import { t } from 'i18next';
 import { useMultiLang } from '@zix/i18n';
 import { useRouter } from 'next/router';
+import { ButtonItem } from './ButtonItem';
 
 /**
  * /customer
@@ -90,43 +91,34 @@ export function TopBanner() {
       flexDirection="row" 
       flexWrap="wrap" 
       justifyContent="center"
-    gap="$4" paddingTop="$5">
-      <Button
-      unstyled
-      justifyContent="center"
-      alignItems="center"
+    gap="$6" paddingTop="$5" $sm={{ gap: '$3'}}>
+      <ButtonItem
+        name={t('web-home:company')}
+        path="/auth/login"
         backgroundColor={'$color'}
-        borderRadius={10}
-        width={'163px'}
-        height={'55px'}
-        hoverStyle={{
-          cursor: 'pointer',
+        color={'$color1'}
+        borderRadius="$4"
+        width="164px"
+        height="55px"
+        $sm={{
+          width:"122px",
+        height:"55px"
         }}
-        onPress={() => router.push('/auth/login')}
-      >
-        <Text color="$color1" fontWeight="600" fontSize="$4">
-          {t('web-home:company')}
-        </Text>
-      </Button>
-      <Button
-      unstyled
-      justifyContent="center"
-      alignItems="center"
-        backgroundColor={'transparent'}
-        borderRadius={10}
+      />
+      <ButtonItem
+        name={t('web-home:singlecarrier')}
+        path="/auth/login"
         borderColor={'$color'}
         borderWidth={2}
-        width={'163px'}
-        height={'55px'}
-        hoverStyle={{
-          cursor: 'pointer',
+        borderRadius="$4"
+        width="164px"
+        height="55px"
+        $sm={{
+          width:"122px",
+        height:"55px"
         }}
-        onPress={() => router.push('/auth/login')}
-      >
-        <Text color="$black" fontWeight="600" fontSize="$4">
-          {t('web-home:singlecarrier')}
-        </Text>
-      </Button>
+      />
+
     </Stack>
   );
 
