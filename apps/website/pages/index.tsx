@@ -19,8 +19,8 @@ export const Page: NextPageWithLayout = () => {
       <ManageShipments />
       <StartToday />
       <Partner />
-      {/*<WarningBanner />
-      <WarningMobileBanner />
+      <WarningBanner />
+      {/*<WarningMobileBanner />
       <Questions /> */}
     </>
   );
