@@ -5,14 +5,11 @@ import { z } from "zod";
 export const formFields = {
   text: z.string(),
   textarea: createUniqueFieldSchema(z.string(), "textarea"),
+  secure_text: createUniqueFieldSchema(z.string(), "secure_text"),
   /**
    * input that takes number
    */
   number: z.number(),
-  /**
-   * adapts to native switch on native, and native checkbox on web
-   */
-  boolean: z.boolean(),
   /**
    * switch field on all platforms
    */

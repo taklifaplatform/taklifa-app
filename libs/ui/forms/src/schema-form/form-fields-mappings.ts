@@ -16,6 +16,7 @@ import {
   SelectField,
   TextAreaField,
   TextField,
+  TextSecureField,
 } from "../form-fields";
 
 import AvatarField from "../form-fields/avatar-field/avatar-field";
@@ -24,8 +25,8 @@ import { formFields } from "./form-fields-schemas";
 export const formFieldsMappings = [
   [formFields.text, TextField] as const,
   [formFields.textarea, TextAreaField] as const,
+  [formFields.secure_text, TextSecureField] as const,
   [formFields.number, NumberField] as const,
-  [formFields.boolean, BooleanField] as const,
   [formFields.boolean_switch, BooleanSwitchField] as const,
   [formFields.boolean_checkbox, BooleanCheckboxField] as const,
   [formFields.accept_terms, AcceptTermsField] as const,

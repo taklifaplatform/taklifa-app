@@ -1,30 +1,40 @@
+import { Eye, EyeOff } from '@tamagui/lucide-icons';
 import { useFieldInfo, useTsController } from '@ts-react/form';
+import React, { useState } from 'react';
+
 import ZixFieldContainer from '../../common/zix-field-container/zix-field-container';
 import { ZixInput, ZixInputProps } from '../../fields';
 
 
-export const TextAreaField: React.FC<ZixInputProps> = (props) => {
+
+export const TextSecureField: React.FC<ZixInputProps> = (props) => {
   const {
     field,
     error,
-    formState: { isSubmitting },
   } = useTsController<string>();
   const { placeholder } = useFieldInfo();
+  const [showPassword, setShowPassword] = useState(false)
+
 
   return (
     <ZixFieldContainer>
       <ZixInput
+        hasError={!!error?.errorMessage}
         value={field.value}
         onChangeText={field.onChange}
         ref={field.ref}
-        disabled={isSubmitting}
-        hasError={!!error?.errorMessage}
+        secureTextEntry={!showPassword}
         placeholder={placeholder}
-        isMultiline
+        rightIcon={(props) => showPassword ? (
+          <EyeOff {...props} />
+        ) : (
+          <Eye {...props} />
+        )}
+        onRightIconPress={() => setShowPassword(!showPassword)}
         {...props}
       />
     </ZixFieldContainer>
-  );
+  )
 };
 
-export default TextAreaField;
+export default TextSecureField;

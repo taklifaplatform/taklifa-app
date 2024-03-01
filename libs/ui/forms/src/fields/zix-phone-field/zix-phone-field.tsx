@@ -1,7 +1,8 @@
-import { Input, Stack, Theme, XStack, useThemeName } from 'tamagui';
+import { Stack, Theme, XStack, useThemeName } from 'tamagui';
 
-import { useMultiLang } from '@zix/i18n';
-import ZixCountryField from '../zix-country-field/zix-country-field';
+import { CountryTransformer } from '@zix/api';
+import ZixAutoCompleteField from '../zix-auto-complete-field/zix-auto-complete-field';
+import ZixInput from '../zix-input/zix-input';
 import { usePhoneNumber } from './hooks/usePhoneNumber';
 
 export type ZixPhoneFieldProps = {
@@ -16,7 +17,6 @@ export const ZixPhoneField: React.FC<ZixPhoneFieldProps> = ({
   error,
 }) => {
   const themeName = useThemeName();
-  const { isRtl } = useMultiLang();
 
   const {
     selectedCountry,
@@ -31,26 +31,33 @@ export const ZixPhoneField: React.FC<ZixPhoneFieldProps> = ({
 
   return (
     <Theme name={error ? 'red' : themeName} forceClassName>
-      <XStack flex={1} width="100%" space="$2">
+      <XStack flex={1} width="100%" gap="$2">
         <Stack width="30%">
-          <ZixCountryField
+          <ZixAutoCompleteField
             value={selectedCountry}
-            onValueChange={setSelectedCountry}
+            onChange={setSelectedCountry}
+            api="geography/countries"
+            dataMapper={(item: CountryTransformer) => {
+              const dial_code = item.dialling?.dial_code;
+              const countryCode = dial_code ? `(+${dial_code}) ` : '';
+
+              const name = `${countryCode}${item.name}`;
+              return {
+                id: `${item.id}`,
+                name,
+                icon: item.flag,
+              }
+            }}
           />
         </Stack>
-        <Input
+        <ZixInput
           flex={1}
-          height="$5"
           disabled={!defaultConfig.dial_code}
           value={phone}
           onChangeText={onChange}
           placeholder={defaultConfig?.mask}
           keyboardType="name-phone-pad"
           inputMode="numeric"
-          borderWidth="$0.25"
-          borderColor="$color10"
-          backgroundColor="$color2"
-          textAlign={isRtl ? 'right' : 'left'}
         />
       </XStack>
     </Theme>

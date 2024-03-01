@@ -1,41 +1,36 @@
 import { useStringFieldInfo, useTsController } from '@ts-react/form';
-import { useId } from 'react';
-import { InputProps } from 'tamagui';
 
-import { FieldContainer, ZixAutoCompleteField, ZixAutoCompleteFieldProps } from '../../fields';
-
-
-export type AutoCompleteFieldProps = ZixAutoCompleteFieldProps & Pick<InputProps, 'size' | 'autoFocus' | 'secureTextEntry'>
+import ZixFieldContainer, { BaseZixFieldContainerProps } from '../../common/zix-field-container/zix-field-container';
+import { ZixAutoCompleteField } from '../../fields';
 
 
-export function AutoCompleteField({
+export type AutoCompleteFieldProps = {
+  api?: string;
+  containerProps?: BaseZixFieldContainerProps;
+};
+
+export const AutoCompleteField: React.FC<AutoCompleteFieldProps> = ({
   api = 'geography/countries',
-}: AutoCompleteFieldProps) {
+  containerProps = {},
+  ...props
+}) => {
   const {
     field,
-    error,
-    formState: { isSubmitting },
   } = useTsController<string>();
-  const { label, placeholder, isOptional } =
+  const { label, placeholder } =
     useStringFieldInfo();
-  const id = useId();
 
   return (
-    <FieldContainer
-      id={id}
-      error={!!error?.errorMessage}
-      errorMessage={error?.errorMessage}
-      required={!isOptional}
-      label={label}
-    >
+    <ZixFieldContainer {...containerProps}>
       <ZixAutoCompleteField
         api={api}
         title={label}
         placeholder={placeholder}
         value={field.value}
         onValueChange={(value) => field.onChange(value)}
+        {...props}
       />
-    </FieldContainer>
+    </ZixFieldContainer>
   );
 }
 
