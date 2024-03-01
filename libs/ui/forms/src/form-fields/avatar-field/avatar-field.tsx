@@ -18,7 +18,7 @@ import { ImageStyle } from 'expo-image';
 import { useId } from 'react';
 import { FieldError } from '../../common';
 import { ZixMediaPickerField } from '../../fields';
-export interface FileProps extends Pick<InputProps, 'size' | 'autoFocus'> {
+interface FileProps extends Pick<InputProps, 'size' | 'autoFocus'> {
   isMultiple?: boolean;
 }
 
