@@ -63,6 +63,7 @@ import Wallet from './icons/wallet.svg';
 import Weblogo from './icons/weblogo.svg';
 import WebDarkLogo from './icons/web-dark-logo.svg';
 import Job from "./icons/job.svg";
+import RadioButtonChecked from "./icons/radio-button-checked.svg";
 
 // arts
 import CompanyCars from "./arts/company-cars.svg";
@@ -147,4 +148,5 @@ export {
   Wallet,
   Weblogo,
   WebDarkLogo,
+  RadioButtonChecked,
 };

@@ -4,6 +4,7 @@ import {
   ChevronDown,
   ChevronDownCircle,
   Circle,
+  Plus,
   PlusSquare,
   X
 } from '@tamagui/lucide-icons';
@@ -13,7 +14,8 @@ import { MediaAvatar, UserAvatar } from '@zix/ui/common';
 import { useAuth } from '@zix/utils';
 import { useMemo, useState } from 'react';
 import { useRouter } from 'solito/router';
-import { Button, H4, ListItem, Sheet, Text, XStack, YGroup } from 'tamagui';
+import { Avatar, Button, H4, ListItem, Sheet, Text, XStack, YGroup } from 'tamagui';
+import { CustomIcon } from '@zix/ui/icons';
 
 
 export const DashboardSwitcher: React.FC = () => {
@@ -28,7 +30,7 @@ export const DashboardSwitcher: React.FC = () => {
       requestBody
     }),
     onSuccess(data) {
-      toast.show('Account changed successfully');
+      // toast.show('Account changed successfully');
       refetchUser()
       setSheetOpen(false)
       redirectUserToActiveDashboard({
@@ -42,7 +44,7 @@ export const DashboardSwitcher: React.FC = () => {
       company
     }),
     onSuccess(data) {
-      toast.show('Company changed successfully');
+      // toast.show('Company changed successfully');
       refetchUser()
       setSheetOpen(false)
       redirectUserToActiveDashboard({
@@ -60,10 +62,10 @@ export const DashboardSwitcher: React.FC = () => {
 
   const snapPoints = useMemo(() => {
     const totalItems = (userRoles?.length ?? 1) + (user?.companies?.length ?? 1);
-    const sheetHeight = totalItems * 15 > 85 ? 85 : totalItems * 10;
+    const sheetHeight = totalItems * 13 > 85 ? 85 : totalItems * 13;
 
     return [
-      sheetHeight,
+      Math.max(40, sheetHeight),
       85
     ]
   }, [user, userRoles])
@@ -99,24 +101,25 @@ export const DashboardSwitcher: React.FC = () => {
           <Sheet.ScrollView backgroundColor='$color1'>
             <YGroup marginBottom="$4">
               <XStack alignItems='center' justifyContent='space-between'>
-                <H4 padding="$4">Change Account</H4>
+                <H4 padding="$4">Switch Account</H4>
                 <Button icon={X} scaleIcon={1.3} backgroundColor='$color1' onPress={() => setSheetOpen(false)} />
               </XStack>
               {userRoles?.map((role) => (
                 <YGroup.Item key={role.id}>
                   <ListItem
+                    disabled={user?.active_role?.name === role.name}
                     onPress={() => changeActiveRole({ name: role.name })}
                     borderBottomColor='$gray5'
                     borderBottomWidth={1}
                     icon={<UserAvatar user={user} size='$4' />}
-                    iconAfter={user?.active_role?.name === role.name ? ChevronDownCircle : Circle}
+                    iconAfter={<CustomIcon name='radio_button_checked' color={user?.active_role?.name === role.name ? '$color5' : '$gray9'} />}
                     scaleIcon={1.3}
                     title={user.name}
                     subTitle={role.name}
                   />
                 </YGroup.Item>
               ))}
-              <H4 padding="$4">Change Companies</H4>
+              <H4 padding="$4">Switch Company</H4>
               {user?.companies?.map((company) => (
                 <YGroup.Item key={company.name}>
                   <ListItem
@@ -124,7 +127,7 @@ export const DashboardSwitcher: React.FC = () => {
                     borderBottomColor='$gray5'
                     borderBottomWidth={1}
                     icon={<MediaAvatar media={company.logo} size='$4' />}
-                    iconAfter={user?.active_company?.id === company.id ? ChevronDownCircle : Circle}
+                    iconAfter={<CustomIcon name='radio_button_checked' color={user?.active_company?.id === company.id ? '$color5' : '$gray9'} />}
                     scaleIcon={1.3}
                     title={company.name}
                     subTitle='Company Account'
@@ -134,11 +137,22 @@ export const DashboardSwitcher: React.FC = () => {
               <YGroup.Item>
                 <ListItem
                   onPress={() => onNavigate('/companies/create', false)}
-                  marginVertical="$2"
-                  paddingVertical="$4"
-                  hoverTheme
-                  icon={PlusSquare}
-                  title="Create New Company"
+                  borderBottomColor='$gray5'
+                  borderBottomWidth={1}
+                  icon={(props) => (
+                    <Avatar
+                      size="$4"
+                      circular
+                      backgroundColor="$gray5"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <Plus size="$2" />
+                    </Avatar>
+                  )}
+                  scaleIcon={1.3}
+                  title="Add Account"
+                  subTitle="Add new company or account"
                 />
               </YGroup.Item>
             </YGroup>
