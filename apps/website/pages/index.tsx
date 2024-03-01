@@ -20,8 +20,7 @@ export const Page: NextPageWithLayout = () => {
       <StartToday />
       <Partner />
       <WarningBanner />
-      {/*<WarningMobileBanner />
-      <Questions /> */}
+      <Questions />
     </>
   );
 };
