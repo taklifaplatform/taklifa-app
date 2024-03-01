@@ -6,8 +6,6 @@ import { t } from 'i18next';
 export function WarningMobileBanner() {
   return (
     <YStack
-      bottom="-15.5%"
-      position="absolute"
       justifyContent="center"
       alignItems="center"
       $gtSm={{ display: 'none' }}
@@ -15,7 +13,6 @@ export function WarningMobileBanner() {
       backgroundColor={'$red4'}
       paddingTop="$3"
       borderRadius="$3"
-      w={'96%'}
     >
       <Text fontWeight="bold" fontSize="$4">
         {t('web-home:warningtitle')}

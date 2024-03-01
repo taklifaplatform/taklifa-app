@@ -6,12 +6,10 @@ import { t } from 'i18next';
 export function Accredited() {
   return (
     <YStack
-      position="absolute"
       alignItems="center"
       //  w={'100%'}
       justifyContent="center"
       paddingVertical="$10"
-      bottom={'-13%'}
       backgroundColor={'$color1'}
       borderRadius="$4"
       $sm={{

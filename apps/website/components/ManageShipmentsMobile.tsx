@@ -11,7 +11,6 @@ export function ManageShipmentsMobile() {
       borderRadius={10}
       paddingVertical="$5"
       paddingHorizontal="$4"
-      w={'100%'}
       marginTop="$10"
     >
       <YStack

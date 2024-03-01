@@ -12,7 +12,7 @@ import {
   Stack,
   Text,
   XStack,
-  YStack
+  YStack,
 } from 'tamagui';
 
 export function TopHeader() {
@@ -47,7 +47,12 @@ export function TopHeader() {
   );
 
   const renderSelectTranslate = () => (
-    <XStack justifyContent="center" alignItems="center" gap="$3" $md={{ display: 'none' }}>
+    <XStack
+      justifyContent="center"
+      alignItems="center"
+      gap="$3"
+      $md={{ display: 'none' }}
+    >
       <Popover size="$3" allowFlip>
         <Popover.Trigger asChild>
           <Pressable onPress={() => {}}>
@@ -86,25 +91,24 @@ export function TopHeader() {
         >
           <Popover.Arrow borderWidth={1} borderColor="$borderColor" />
           <YStack gap="$3" justifyContent="center">
-            <Text fontWeight="500" fontSize="$2" textAlign="center">
-              {t('account:language:select_language')}
-            </Text>
             {languages.map((item, index) => (
-              <Pressable
-                key={index}
-                size="$3"
-                onPress={() => changeLanguage(item.name)}
-              >
+              <>
+                <Pressable
+                  key={index}
+                  size="$3"
+                  onPress={() => changeLanguage(item.name)}
+                >
+                  <XStack gap="$3" justifyContent="space-between" padding="$2">
+                    {activeLang === item.name ? (
+                      <Check size="$1" />
+                    ) : (
+                      <Stack width="$1" height="$1" />
+                    )}
+                    <Text fontSize="$2">{item.label}</Text>
+                  </XStack>
+                </Pressable>
                 <Separator width="100%" borderColor={'$gray7'} />
-                <XStack gap="$3" justifyContent="space-between" padding="$2">
-                  {activeLang === item.name ? (
-                    <Check size="$1" />
-                  ) : (
-                    <Stack width="$1" height="$1" />
-                  )}
-                  <Text fontSize="$2">{item.label}</Text>
-                </XStack>
-              </Pressable>
+              </>
             ))}
           </YStack>
         </Popover.Content>
@@ -113,7 +117,12 @@ export function TopHeader() {
   );
 
   const renderLocation = () => (
-    <XStack justifyContent="center" alignItems="center" gap="$3" $md={{ display: 'none' }}>
+    <XStack
+      justifyContent="center"
+      alignItems="center"
+      gap="$3"
+      $md={{ display: 'none' }}
+    >
       <Text fontWeight={'500'} fontSize="$2">
         saudi arabia
       </Text>
@@ -130,7 +139,7 @@ export function TopHeader() {
   );
 
   const renderDownload = () => (
-    <XStack justifyContent="center" alignItems="center" gap="$3" >
+    <XStack justifyContent="center" alignItems="center" gap="$3">
       <Pressable onPress={() => {}}>
         <CustomIcon name={'appstore'} size="$6" />
       </Pressable>
@@ -144,7 +153,12 @@ export function TopHeader() {
   );
 
   const renderFollowUs = () => (
-    <XStack justifyContent="center" alignItems="center" gap="$3" $lg={{ display: 'none' }}>
+    <XStack
+      justifyContent="center"
+      alignItems="center"
+      gap="$3"
+      $lg={{ display: 'none' }}
+    >
       <Pressable onPress={() => {}}>
         <CustomIcon name={'facebook'} />
       </Pressable>

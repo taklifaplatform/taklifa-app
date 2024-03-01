@@ -18,12 +18,12 @@ export const Page: NextPageWithLayout = () => {
       <TrackShipments />
       <SecondBanner />
       <ManageShipments />
-      <ManageShipmentsMobile />
+      {/* <ManageShipmentsMobile />
       <StartToday />
       <Accredited />
       <WarningBanner />
       <WarningMobileBanner />
-      <Questions />
+      <Questions /> */}
     </>
   );
 };

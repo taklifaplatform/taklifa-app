@@ -1,10 +1,10 @@
-import { Input, InputProps, Stack, TextArea } from 'tamagui';
+import { Input, InputProps, Stack, TextArea, XStack } from 'tamagui';
 import { IconProps } from '@tamagui/helpers-icon';
 import { Eye, EyeOff } from '@tamagui/lucide-icons';
 import FieldContainer, {
   FieldContainerProps,
 } from '../../common/field-container/field-container';
-import { Ref, forwardRef, useId, useState } from 'react';
+import React, { Ref, forwardRef, useId, useState } from 'react';
 import {
   NativeSyntheticEvent,
   Pressable,
@@ -19,6 +19,10 @@ export type ZixInputProps = InputProps &
     isPassword?: boolean;
     fullWidth?: boolean;
     passwordIconProps?: IconProps;
+    leftIcon?: React.FC<IconProps>;
+    onLeftIconPress?: () => void;
+    rightIcon?: React.FC<IconProps>;
+    onRightIconPress?: () => void;
   };
 
 /**
@@ -82,6 +86,10 @@ export const ZixInput = forwardRef(function ZixInputEl(
     isPassword,
     passwordIconProps,
     fullWidth,
+    leftIcon,
+    rightIcon,
+    onLeftIconPress,
+    onRightIconPress,
     ...rest
   }: ZixInputProps,
   ref: Ref<TextInput> | undefined
@@ -107,6 +115,16 @@ export const ZixInput = forwardRef(function ZixInputEl(
       setFocus(false);
     },
     textAlign: isRtl ? 'right' : 'left',
+    ...((leftIcon && !isRtl || isRtl && rightIcon)
+      ? {
+          paddingLeft: '$8',
+        }
+      : {}),
+    ...((rightIcon && !isRtl || isRtl && leftIcon)
+      ? {
+          paddingRight: '$8',
+        }
+      : {}),
     ...rest,
   };
   const currentPasswordIconProps = {
@@ -170,7 +188,7 @@ export const ZixInput = forwardRef(function ZixInputEl(
               top: '50%',
               transform: [{ translateY: -0.5 * 20 }],
               height: 20,
-              ...(rest?.direction === 'rtl'
+              ...(isRtl
                 ? {
                     left: 15,
                   }
@@ -190,7 +208,40 @@ export const ZixInput = forwardRef(function ZixInputEl(
           </Pressable>
         </Stack>
       ) : (
-        <Input {...currentInputProps} autoCapitalize="none" ref={ref} />
+        <XStack alignItems="center">
+          {leftIcon && (
+            <Stack
+              position="absolute"
+              left={isRtl ? 'auto' : '$3'}
+              right={isRtl ? '$3' : 'auto'}
+              onPress={() => {
+                onLeftIconPress?.();
+              }}
+            >
+              {leftIcon?.({
+                ...currentPasswordIconProps,
+                size: '$1.5',
+              })}
+            </Stack>
+          )}
+          <Input {...currentInputProps} autoCapitalize="none" ref={ref} />
+
+          {rightIcon && (
+            <Stack
+              position="absolute"
+              left={isRtl ? '$3' : 'auto'}
+              right={isRtl ? 'auto' : '$3'}
+              onPress={() => {
+                onRightIconPress?.();
+              }}
+            >
+              {rightIcon?.({
+                ...currentPasswordIconProps,
+                size: '$1.5',
+              })}
+            </Stack>
+          )}
+        </XStack>
       )}
     </FieldContainer>
   );

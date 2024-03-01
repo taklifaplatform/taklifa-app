@@ -1,57 +1,71 @@
-import React from 'react';
-import { Button, XStack, Text, View, Sheet, useTheme } from 'tamagui';
 import { CustomIcon } from '@zix/ui/icons';
-import { useMultiLang } from '@zix/i18n';
 import { t } from 'i18next';
+import { useState } from 'react';
 import { Pressable } from 'react-native';
+import { Button, Sheet, Text, XStack, useTheme } from 'tamagui';
+import { MobileDrawer } from './MobileDrawer';
+import { useRouter } from 'next/router';
+import { ro } from 'date-fns/locale';
 
-export function MobileHeader({ drawer, setDrawer }) {
+export function MobileHeader() {
   const theme = useTheme();
-  const { isRtl } = useMultiLang();
+  const [drawer, setDrawer] = useState(false);
+  const router = useRouter();
+  const renderDrawer = () => (
+    <Sheet 
+    snapPoints={[90, 50]} 
+    open={drawer}
+    modal={true}
+    >
+      <Sheet.Overlay onPress={() => setDrawer(!drawer)} />
+      <Sheet.Handle />
+      <Sheet.Frame>
+        <MobileDrawer />
+      </Sheet.Frame>
+    </Sheet>
+  );
   return (
     <XStack
       justifyContent="space-between"
-      width={'100%'}
       $gtSm={{ display: 'none' }}
       backgroundColor={'$color1'}
       alignItems="center"
-      paddingVertical="$4"
       borderRadius={20}
       borderTopColor={'$gray7'}
       paddingHorizontal="$4"
       marginVertical="$4"
+      paddingVertical="$2"
       overflow="hidden"
       // flex={1}
     >
       <Button
+      unstyled
         backgroundColor="transparent"
         paddingVertical="$4"
-        borderWidth={1}
-        borderColor="$color5"
-        onPress={() => {}}
+        onPress={() => router.push('/auth/login')}
         $sm={{
           size: '$2',
           paddingVertical: '$1',
+          alignItems: 'center',
         }}
         icon={<CustomIcon name={'account'} size="$1" />}
       >
-        <Text fontSize="$3" color="$white">
-          {t('web-home:signup')}
-        </Text>
       </Button>
-        {
-          !theme.dark ? (
-            <CustomIcon name={'web-dark-logo'} size={'$7'} />
-          ) : (
-            <CustomIcon name={'weblogo'} size={'$7'} />
-          ) 
-        }
+     
+      {
+        !theme.dark ? (
+          <CustomIcon name={'weblogo'} width={'68px'} height={'32px'} />
+        ) : (
+          <CustomIcon name={'web-dark-logo'} width={'68px'} height={'32px'} />
+        )
+      }
 
       <Pressable onPress={() => setDrawer(!drawer)}>
 
         <CustomIcon name={'align_left'} size="$2" />
        
       </Pressable>
+      {renderDrawer()}
     </XStack>
   );
 }

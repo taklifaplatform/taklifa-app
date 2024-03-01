@@ -7,7 +7,7 @@ import { useMultiLang } from '@zix/i18n';
 export function StartToday() {
   const { activeLang } = useMultiLang();
   return (
-    <YStack bottom="-7%">
+    <YStack >
       <Image
         alt="Banner"
         source={{

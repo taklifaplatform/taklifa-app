@@ -16,13 +16,7 @@ export function Questions() {
 
   return (
     <YStack
-      bottom={'-35%'}
       alignItems="center"
-      position="absolute"
-      w={'100%'}
-      $sm={{
-        bottom: '-32%',
-      }}
     >
       <XStack alignItems="center" paddingVertical="$6" gap="$4">
         <CustomIcon name="large_arrow_left" />

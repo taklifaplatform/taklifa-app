@@ -29355,6 +29355,11 @@ var require_createAnimations = __commonJS({
       borderTopStyle: true,
       boxSizing: true,
       contain: true,
+      margin: true,
+      marginTop: true,
+      marginLeft: true,
+      marginRight: true,
+      marginBottom: true,
       cursor: true,
       display: true,
       flexBasis: true,
@@ -29372,13 +29377,15 @@ var require_createAnimations = __commonJS({
       pointerEvents: true,
       position: true,
       shadowColor: true,
+      zIndex: true,
+      // text
+      userSelect: true,
+      fontFamily: true,
+      lineHeight: true,
       textAlign: true,
       textOverflow: true,
       whiteSpace: true,
-      wordWrap: true,
-      zIndex: true,
-      fontFamily: true,
-      lineHeight: true
+      wordWrap: true
     };
     function createAnimations2(animations2) {
       return {
@@ -31665,7 +31672,7 @@ var SheetImplementationCustom = (0, import_core9.themeable)(
         };
       }
     }, [open]);
-    const forcedContentHeight = hasFit ? void 0 : snapPointsMode === "percent" ? `${maxSnapPoint}%` : maxSnapPoint, contents = /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(ParentSheetContext.Provider, { value: nextParentContext, children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(SheetProvider, { ...providerProps, children: [
+    const forcedContentHeight = hasFit ? void 0 : snapPointsMode === "percent" ? `${maxSnapPoint}${isWeb ? "dvh" : "%"}` : maxSnapPoint, contents = /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(ParentSheetContext.Provider, { value: nextParentContext, children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(SheetProvider, { ...providerProps, children: [
       /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(AnimatePresence, { enterExitVariant: "open", children: shouldHideParentSheet || !open ? null : overlayComponent }),
       snapPointsMode !== "percent" && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
         import_react_native_web2.View,
@@ -31918,7 +31925,7 @@ function createSheet({ Handle: Handle2, Frame: Frame2, Overlay: Overlay2 }) {
               componentName: "SheetCover",
               children: null,
               position: "absolute",
-              bottom: "-50%",
+              bottom: "-100%",
               zIndex: -1,
               height: context.frameSize,
               left: 0,
@@ -32547,10 +32554,9 @@ var DialogClose = DialogCloseFrame.styleable(
         tag: isInsideButton ? "span" : "button",
         ...closeProps,
         ref: forwardedRef,
-        onPress: composeEventHandlers(
-          props.onPress,
-          () => context.onOpenChange(false)
-        )
+        onPress: composeEventHandlers(props.onPress, () => {
+          console.warn("??"), context.onOpenChange(false);
+        })
       }
     );
   }
@@ -35608,12 +35614,10 @@ __name(Popper, "Popper");
 var PopperAnchor = YStack.extractable(
   React19.forwardRef(
     function(props, forwardedRef) {
-      const { virtualRef, __scopePopper, ...anchorProps } = props, { getReferenceProps, refs } = usePopperContext(__scopePopper), ref = React19.useRef(null), composedRefs = useComposedRefs(
-        forwardedRef,
-        ref,
-        virtualRef ?? refs.setReference
-      );
-      if (virtualRef)
+      const { virtualRef, __scopePopper, ...anchorProps } = props, { getReferenceProps, refs } = usePopperContext(__scopePopper), ref = React19.useRef(null), composedRefs = useComposedRefs(forwardedRef, ref, refs.setReference);
+      if (React19.useEffect(() => {
+        virtualRef && refs.setReference(virtualRef.current);
+      }, [virtualRef]), virtualRef)
         return null;
       const stackProps = {
         ref: composedRefs,
@@ -35672,9 +35676,9 @@ var PopperContent = React19.forwardRef(function(props, forwardedRef) {
       ...rest
     },
     "popper-content-frame"
-  ), [placement, strategy, props]), [hasInitialPosition, setHasInitialPosition] = React19.useState(true);
+  ), [placement, strategy, props]), [needsMeasure, setNeedsMeasure] = React19.useState(true);
   if (React19.useEffect(() => {
-    (x || y) && setHasInitialPosition(false);
+    (x || y) && setNeedsMeasure(false);
   }, [x, y]), useIsomorphicLayoutEffect(() => {
     isMounted && update();
   }, [isMounted]), !isMounted)
@@ -35689,11 +35693,8 @@ var PopperContent = React19.forwardRef(function(props, forwardedRef) {
     ...enableAnimationForPositionChange && {
       // apply animation but disable it on initial render to avoid animating from 0 to the first position
       animation: rest.animation,
-      animateOnly: ["none"]
-    },
-    ...enableAnimationForPositionChange && !hasInitialPosition && {
-      animation: rest.animation,
-      animateOnly: rest.animateOnly
+      animateOnly: needsMeasure ? ["none"] : rest.animateOnly,
+      animatePresence: false
     },
     ...!isWeb && floatingStyles
   };
@@ -39384,7 +39385,7 @@ var PopoverContentImpl = React21.forwardRef(function(props, forwardedRef) {
     freezeContentsWhenHidden,
     setIsFullyHidden,
     ...contentProps
-  } = props, context = usePopoverContext(__scopePopover), { open, keepChildrenMounted } = context, popperContext = usePopperContext(__scopePopover || POPOVER_SCOPE), contents = isWeb ? /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { style: dspContentsStyle, children }) : children;
+  } = props, context = usePopoverContext(__scopePopover), { open, keepChildrenMounted } = context, popperContext = usePopperContext(__scopePopover || POPOVER_SCOPE);
   if (context.breakpointActive) {
     const childrenWithoutScrollView = React21.Children.toArray(children).map((child) => React21.isValidElement(child) && child.type === import_react_native_web7.ScrollView ? child.props.children : child);
     let content = /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(ResetPresence, { children: childrenWithoutScrollView });
@@ -39430,7 +39431,7 @@ var PopoverContentImpl = React21.forwardRef(function(props, forwardedRef) {
                   trapped: trapFocus,
                   onMountAutoFocus: onOpenAutoFocus,
                   onUnmountAutoFocus: onCloseAutoFocus,
-                  children: contents
+                  children: isWeb ? /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { style: dspContentsStyle, children }) : children
                 }
               ) })
             }
@@ -43441,22 +43442,6 @@ var animations = (0, import_animations_moti.createAnimations)({
 
 // ../../libs/theme/src/lib/sawaeed-theme/config/fonts.ts
 var import_font_inter = __toESM(require_cjs33());
-
-// ../../libs/theme/src/lib/sawaeed-theme/config/font-face.ts
-var almaraiFace = {
-  normal: { normal: "Almarai_400Regular", italic: "Almarai_400Regular" },
-  bold: { normal: "Almarai_800ExtraBold", italic: "Almarai_800ExtraBold" },
-  100: { normal: "Almarai_300Light", italic: "Almarai_300Light" },
-  200: { normal: "Almarai_300Light", italic: "Almarai_300Light" },
-  300: { normal: "Almarai_300Light", italic: "Almarai_300Light" },
-  500: { normal: "Almarai_400Regular", italic: "Almarai_400Regular" },
-  600: { normal: "Almarai_400Regular", italic: "Almarai_400Regular" },
-  700: { normal: "Almarai_700Bold", italic: "Almarai_700Bold" },
-  800: { normal: "Almarai_700Bold", italic: "Almarai_700Bold" },
-  900: { normal: "Almarai_800ExtraBold", italic: "Almarai_800ExtraBold" }
-};
-
-// ../../libs/theme/src/lib/sawaeed-theme/config/fonts.ts
 var headingFont = (0, import_font_inter.createInterFont)(
   {
     size: {
@@ -43469,8 +43454,8 @@ var headingFont = (0, import_font_inter.createInterFont)(
     weight: {
       3: "500",
       4: "700"
-    },
-    face: almaraiFace
+    }
+    // face: almaraiFace,
   },
   {
     sizeSize: (size4) => size4,
@@ -43479,7 +43464,7 @@ var headingFont = (0, import_font_inter.createInterFont)(
 );
 var bodyFont = (0, import_font_inter.createInterFont)(
   {
-    face: almaraiFace
+    // face: almaraiFace,
   },
   {
     sizeSize: (size4) => Math.round(size4 * 1.1),
