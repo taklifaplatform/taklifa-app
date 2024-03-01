@@ -1,8 +1,6 @@
-import React from 'react';
-import { YStack, Text, Image, XStack, Button, Stack } from 'tamagui';
-import { t } from 'i18next';
 import { useMultiLang } from '@zix/i18n';
-import { useRouter } from 'next/router';
+import { t } from 'i18next';
+import { Image, Stack, Text, Theme } from 'tamagui';
 import { ButtonItem } from './ButtonItem';
 
 /**
@@ -13,7 +11,6 @@ import { ButtonItem } from './ButtonItem';
  */
 export function TopBanner() {
   const { activeLang } = useMultiLang();
-  const router = useRouter();
 
   const renderImageBackground = () => (
     <>
@@ -29,7 +26,7 @@ export function TopBanner() {
           resizeMode="contain"
         />
       </Stack>
-      {/* version tablette */}
+
       <Stack $gtLg={{ display: 'none' }}>
         <Image
           alt="Banner"
@@ -51,35 +48,30 @@ export function TopBanner() {
         flexDirection="column"
         flexWrap="wrap"
         paddingHorizontal="$5"
-        $lg={{ display: 'none' }}
+        $sm={{
+          paddingHorizontal: '$2',
+        }}
       >
         <Text
           fontWeight="800"
-          fontSize="50px"
+          fontSize={36}
           paddingVertical="$4"
           textAlign="center"
+          
+          $sm={{
+            fontSize: 20,
+          }}
         >
           {t('web-home:banner-1')}
         </Text>
-        <Text fontWeight="700" fontSize="14px" textAlign="center">
-          {t('web-home:content-1')}
-        </Text>
-      </Stack>
-      <Stack
-        flexDirection="column"
-        flexWrap="wrap"
-        paddingHorizontal="$5"
-        $gtLg={{ display: 'none' }}
-      >
         <Text
-          fontWeight="800"
-          fontSize="18px"
-          paddingVertical="$4"
-          textAlign="center"
-        >
-          {t('web-home:banner-1')}
-        </Text>
-        <Text fontWeight="700" fontSize="12px" textAlign="center">
+         fontWeight="700"
+          fontSize={14}
+           textAlign="center"
+           $xs={{
+            fontSize: 10,
+          }}
+           >
           {t('web-home:content-1')}
         </Text>
       </Stack>
@@ -87,11 +79,14 @@ export function TopBanner() {
   );
 
   const renderButton = () => (
-    <Stack 
-      flexDirection="row" 
-      flexWrap="wrap" 
+    <Stack
+      flexDirection="row"
+      flexWrap="wrap"
       justifyContent="center"
-    gap="$6" paddingTop="$5" $sm={{ gap: '$3'}}>
+      gap="$6"
+      paddingTop="$5"
+      $sm={{ gap: '$3', paddingTop: '$3'}}
+    >
       <ButtonItem
         name={t('web-home:company')}
         path="/auth/login"
@@ -101,8 +96,8 @@ export function TopBanner() {
         width="164px"
         height="55px"
         $sm={{
-          width:"122px",
-        height:"55px"
+          width: '122px',
+          height: '45px',
         }}
       />
       <ButtonItem
@@ -114,11 +109,10 @@ export function TopBanner() {
         width="164px"
         height="55px"
         $sm={{
-          width:"122px",
-        height:"55px"
+          width: '122px',
+          height: '45px',
         }}
       />
-
     </Stack>
   );
 
@@ -141,11 +135,11 @@ export function TopBanner() {
     </Stack>
   );
   return (
-    <Stack
-    marginBottom="$3"
-    >
-      {renderImageBackground()}
-      {renderContainer()}
-    </Stack>
+    <Theme name="light">
+      <Stack marginBottom="$3">
+        {renderImageBackground()}
+        {renderContainer()}
+      </Stack>
+    </Theme>
   );
 }
