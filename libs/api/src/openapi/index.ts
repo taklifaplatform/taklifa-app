@@ -31,6 +31,7 @@ export type { CountryDialingTransformer } from './models/CountryDialingTransform
 export type { CountryTransformer } from './models/CountryTransformer';
 export type { CreateTemporaryUploadFromDirectS3UploadRequest } from './models/CreateTemporaryUploadFromDirectS3UploadRequest';
 export type { CurrencyTransformer } from './models/CurrencyTransformer';
+export type { DeleteTemporaryRequest } from './models/DeleteTemporaryRequest';
 export type { DriverVerificationRequest } from './models/DriverVerificationRequest';
 export type { DrivingLicenseCardDriverVerificationRequest } from './models/DrivingLicenseCardDriverVerificationRequest';
 export type { FaqRequest } from './models/FaqRequest';
@@ -135,6 +136,7 @@ export { CompanyInvitationsService } from './services/CompanyInvitationsService'
 export { CompanyMembersService } from './services/CompanyMembersService';
 export { FaqsService } from './services/FaqsService';
 export { GeographyService } from './services/GeographyService';
+export { MediaService } from './services/MediaService';
 export { RatingService } from './services/RatingService';
 export { ShipmentsService } from './services/ShipmentsService';
 export { UserService } from './services/UserService';

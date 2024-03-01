@@ -2,10 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type UploadRequest = {
+export type DeleteTemporaryRequest = {
     uuid?: string;
-    name?: string;
-    custom_properties?: string;
-    file?: string;
 };
 

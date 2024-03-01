@@ -1,30 +1,37 @@
-import { MediaTransformer, OpenAPI } from '@zix/api'
-import { randomUUID } from 'expo-crypto'
-import type { ImagePickerAsset } from 'expo-image-picker'
-import { Platform } from 'react-native'
+import { MediaTransformer, OpenAPI } from "@zix/api";
+import { randomUUID } from "expo-crypto";
+import { Platform } from "react-native";
 
-const re: any = /(?:\.([^.]+))?$/
+export type UploadableMediaFile = {
+  uri: string;
+  type: string;
+  file_name: string;
+  mime_type: string;
+  uuid: string;
+};
 
 export const uploadMediaFile = async (
-  file: ImagePickerAsset,
-  onProgressUpdate: (progress: number) => void = () => {}
+  file: UploadableMediaFile,
+  onProgressUpdate: (progress: number) => void = () => null,
 ): Promise<MediaTransformer> =>
   new Promise(function (resolve, reject) {
-    const UPLOAD_URL = `${OpenAPI.BASE}/api/media/uploads`
+    const UPLOAD_URL = `${OpenAPI.BASE}/api/media/uploads`;
 
     if (!file) {
       reject({
         status: 400,
-        statusText: 'No file provided',
-      })
+        statusText: "No file provided",
+      });
     }
-    const xhr = new XMLHttpRequest()
-    xhr.open('POST', UPLOAD_URL, true)
-    xhr.setRequestHeader('Accept', 'application/json')
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", UPLOAD_URL, true);
+    xhr.setRequestHeader("Accept", "application/json");
+    // auth token
+    xhr.setRequestHeader("Authorization", `Bearer ${OpenAPI.TOKEN}`);
 
-    xhr.upload.addEventListener('progress', (event) => {
+    xhr.upload.addEventListener("progress", (event) => {
       console.info(
-        'UPLOAD PROGRESS::',
+        "UPLOAD PROGRESS::",
         JSON.stringify(
           {
             loaded: event.loaded,
@@ -32,42 +39,59 @@ export const uploadMediaFile = async (
             progress: event.loaded / event.total,
           },
           null,
-          2
-        )
-      )
-      onProgressUpdate(event.loaded / event.total)
-    })
+          2,
+        ),
+      );
+      onProgressUpdate(event.loaded / event.total);
+    });
     xhr.onload = async function () {
       if (this.status >= 200 && this.status < 300) {
-        const data = JSON.parse(xhr.response)
-        resolve(data)
+        const data = JSON.parse(xhr.response);
+        resolve(data);
       } else {
         reject({
           status: this.status,
           statusText: xhr.statusText,
-        })
+        });
       }
-    }
+    };
     xhr.onerror = function (error) {
       reject({
         status: this.status,
         statusText: xhr.statusText,
         error,
-      })
-    }
+      });
+    };
 
     // Create a FormData object
-    const formData = new FormData()
+    const formData = new FormData();
 
     // Append the file to the FormData object
-    formData.append('file', {
-      uri: Platform.OS == 'ios' ? file.uri.replace('file://', '') : file.uri,
-      name: `file.${re.exec(file.uri)[1]}`,
-      type: file.type,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } as any)
+    if (file?.uri?.includes("base64,")) {
+      // Remove metadata from base64 string
+      const base64Data = file.uri.split(",")[1];
+      // Convert base64 to binary
+      const binaryData = atob(base64Data);
+      // Convert binary to ArrayBuffer
+      const arrayBuffer = new ArrayBuffer(binaryData.length);
+      const uint8Array = new Uint8Array(arrayBuffer);
+      for (let i = 0; i < binaryData.length; i++) {
+        uint8Array[i] = binaryData.charCodeAt(i);
+      }
+      // Create Blob from ArrayBuffer
+      const blob = new Blob([arrayBuffer], { type: file.mime_type }); // Change type accordingly
+      // Create FormData
+      formData.append("file", blob, file.file_name);
+    } else {
+      formData.append("file", {
+        uri: Platform.OS === "ios" ? file.uri.replace("file://", "") : file.uri,
+        name: file.file_name,
+        type: file.type,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any);
+    }
 
-    formData.append('uuid', randomUUID())
+    formData.append("uuid", file.uuid || randomUUID());
 
-    xhr.send(formData)
-  })
+    xhr.send(formData);
+  });

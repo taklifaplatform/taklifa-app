@@ -14,7 +14,7 @@ import { z } from 'zod';
 
 const CreateCompanyFormSchema = z
   .object({
-    // logo: formFields.avatar.optional().describe('Add Company Logo'),
+    logo: formFields.image.optional().describe('Logo // Add Company Logo'),
     name: formFields.text.min(2).max(150).describe(t('forms:company_name')),
     company_documents: formFields.files.describe(
       t('Company Documents // Attach documents...')

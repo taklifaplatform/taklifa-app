@@ -2,11 +2,13 @@ import React from 'react';
 
 import { useAuth } from '@zix/utils';
 import { Dimensions, Image, Platform, View } from 'react-native';
+import { useRouter } from 'solito/router';
 
 
 export default function Screen() {
   const { redirectUserToActiveDashboard } = useAuth()
   const { width, height } = Dimensions.get('window');
+  const router = useRouter()
 
   return (
     <View
@@ -16,6 +18,7 @@ export default function Screen() {
 
       }}
       onLayout={() => {
+        // router.push('/auth/login')
         if (Platform.OS === 'ios') {
           setTimeout(() => {
             redirectUserToActiveDashboard();

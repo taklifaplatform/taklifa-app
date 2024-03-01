@@ -31,7 +31,7 @@ export class CompanyMembersService {
         perPage?: number,
         search?: string,
         status?: 'online' | 'busy' | 'offline',
-        role?: 'driver' | 'manager',
+        role?: 'company_driver' | 'company_manager',
     }): CancelablePromise<{
         data?: Array<CompanyMemberTransformer>;
         links?: {

@@ -18,11 +18,11 @@ import { z } from 'zod';
 
 const UpdateCompanyFormSchema = z
   .object({
-    logo: formFields.avatar.describe('Add Company Logo'),
+    logo: formFields.image.describe('Logo // Add Company Logo'),
     name: formFields.text.min(2).max(150).describe(t('forms:company_name')),
-    // documents: formFields.file.describe(
-    //   t('Company Documents // Attach documents...')
-    // ),
+    documents: formFields.files.describe(
+      t('Company Documents // Attach documents...')
+    ),
     // location: formFields.text
     //   .min(2)
     //   .max(25)

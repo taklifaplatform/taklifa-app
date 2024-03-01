@@ -55,7 +55,7 @@ export type BaseZixFieldContainerProps = ThemeableStackProps & {
   fieldInfo?: typeof useFieldInfo;
   containerProps?: ThemeableStackProps;
   fieldContainerProps?: ThemeableStackProps;
-  // proper name this
+  labelHidden?: boolean;
   labelInline?: boolean;
   labelBold?: boolean;
   labelPrepend?: React.ReactNode;
@@ -66,6 +66,7 @@ export type BaseZixFieldContainerProps = ThemeableStackProps & {
 export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
   children,
   size,
+  labelHidden,
   labelInline,
   labelBold,
   collapsible,
@@ -90,7 +91,7 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
 
 
   const renderLabel = () =>
-    label && (
+    (label && !labelHidden) && (
       <XStack alignItems='center' gap='$2'>
         <Label
           htmlFor={id}

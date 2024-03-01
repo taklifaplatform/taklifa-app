@@ -1,7 +1,7 @@
-import { YStack } from 'tamagui';
 import { t } from 'i18next';
 import { useAtom } from 'jotai';
 import { useRouter } from 'solito/router';
+import { YStack } from 'tamagui';
 
 import { authUserTypeAtom } from '../../atoms';
 import { AuthHeader } from '../../components/auth-header/auth-header';

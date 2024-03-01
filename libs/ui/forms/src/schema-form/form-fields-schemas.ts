@@ -2,6 +2,14 @@ import { createUniqueFieldSchema } from "@ts-react/form";
 
 import { z } from "zod";
 
+export const mediaSchema = z.object({
+  id: z.string(),
+  uuid: z.string(),
+  url: z.string(),
+  original_url: z.string(),
+  local_url: z.string(),
+});
+
 export const formFields = {
   text: z.string(),
   textarea: createUniqueFieldSchema(z.string(), "textarea"),
@@ -30,56 +38,31 @@ export const formFields = {
   autocomplete: createUniqueFieldSchema(z.string(), "autocomplete"),
 
   /**
-   * File Fields
-   * TODO: should be all media transformers
+   * Medias (images, videos, audios, etc.)
    */
   medias: createUniqueFieldSchema(
-    z.array(
-      z.object({
-        uuid: z.string(),
-        name: z.string(),
-        preview_url: z.string(),
-        size: z.number(),
-        mime_type: z.string(),
-        extension: z.string(),
-      }),
-    ),
+    z.array(mediaSchema),
     "medias",
   ),
-  avatar: createUniqueFieldSchema(
-    z.object({
-      uuid: z.string(),
-      name: z.string(),
-      preview_url: z.string(),
-      size: z.number(),
-      mime_type: z.string(),
-      extension: z.string(),
-    }),
-    "avatar",
+
+  /**
+   * Files (pdf, doc, etc.)
+   */
+  files: createUniqueFieldSchema(
+    z.array(mediaSchema),
+    "files",
   ),
   file: createUniqueFieldSchema(
-    z.object({
-      uuid: z.string(),
-      name: z.string(),
-      preview_url: z.string(),
-      size: z.number(),
-      mime_type: z.string(),
-      extension: z.string(),
-    }),
+    mediaSchema,
     "file",
   ),
-  files: createUniqueFieldSchema(
-    z.array(
-      z.object({
-        uuid: z.string(),
-        name: z.string(),
-        preview_url: z.string(),
-        size: z.number(),
-        mime_type: z.string(),
-        extension: z.string(),
-      }),
-    ),
-    "files",
+
+  /**
+   * Image
+   */
+  image: createUniqueFieldSchema(
+    mediaSchema,
+    "image",
   ),
 
   phone: createUniqueFieldSchema(
@@ -95,14 +78,11 @@ export const formFields = {
   day_selector: createUniqueFieldSchema(z.string(), "day_selector"),
   month_selector: createUniqueFieldSchema(z.string(), "month_selector"),
   year_selector: createUniqueFieldSchema(z.string(), "year_selector"),
-  row_time_range_picker: createUniqueFieldSchema(z.string(), "row_time_range_picker"),
+  row_time_range_picker: createUniqueFieldSchema(
+    z.string(),
+    "row_time_range_picker",
+  ),
   row_date_picker: createUniqueFieldSchema(z.string(), "row_date_picker"),
 
-  // TODO:: remove
-  date: createUniqueFieldSchema(z.coerce.date(), 'date'),
-  row_date: createUniqueFieldSchema(z.string(), 'row_date'),
-  row_time: createUniqueFieldSchema(z.string(), 'row_time'),
-
   country: createUniqueFieldSchema(z.number(), "nationality"),
-  image: createUniqueFieldSchema(z.string(), "image"),
 };
