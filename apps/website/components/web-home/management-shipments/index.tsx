@@ -1,13 +1,16 @@
-import React from 'react';
-import { YStack, Image, Button, Text, Stack, Theme } from 'tamagui';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import { useRouter } from 'next/router';
+import { Button, Image, Text, Theme, YStack } from 'tamagui';
 export function ManageShipments() {
   const router = useRouter();
   return (
-    <Theme name='light'>
-      <YStack $md={{ display: 'none' }} justifyContent="center" marginBottom='$3'>
+    <Theme name="light">
+      <YStack
+        $md={{ display: 'none' }}
+        justifyContent="center"
+        marginBottom="$3"
+      >
         <Image
           alt="Banner"
           source={{
@@ -19,8 +22,8 @@ export function ManageShipments() {
         />
         <YStack
           pos={'absolute'}
-          flexDirection='column'
-          flexWrap='wrap'
+          flexDirection="column"
+          flexWrap="wrap"
           alignItems="center"
           justifyContent="center"
           w={'100%'}
@@ -53,7 +56,7 @@ export function ManageShipments() {
       <YStack
         $gtMd={{ display: 'none' }}
         justifyContent="center"
-        alignItems='center'
+        alignItems="center"
         backgroundColor={'$color5'}
         borderRadius={10}
         paddingVertical="$5"
@@ -75,7 +78,7 @@ export function ManageShipments() {
             {t('web-home:content-4')}
           </Text>
           <Button
-          onPress={() => router.push('/auth/login')}
+            onPress={() => router.push('/auth/login')}
             backgroundColor="transparent"
             borderRadius={10}
             padding="$2"

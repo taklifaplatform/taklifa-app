@@ -1,18 +1,15 @@
-import React, { useState } from 'react';
-import { Sheet, Stack, View, YStack } from 'tamagui';
-import { TopHeader } from '../components/TopHeader';
-import { Header } from '../components/Header';
-import { MobileHeader } from '../components/MobileHeader';
-import { Footer } from '../components/Footer';
-import { MobileFooter } from '../components/MobileFooter';
-import { MobileDrawer } from '../components/MobileDrawer';
+import React from 'react';
+import { Stack, YStack } from 'tamagui';
+import { MobileHeader } from '../components/web-home/menu-header';
+import { Footer } from '../components/web-home/footer';
+import { Header } from '../components/web-home/header';
+import { TopHeader } from '../components/web-home/top-header';
 
 export type MainLayoutProps = {
   children: React.ReactNode;
 };
 
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-
   return (
     <Stack
       justifyContent="center"
@@ -21,7 +18,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       $sm={{
         flexDirection: 'column',
         alignItems: 'center',
-        paddingTop: '$0'
+        paddingTop: '$0',
       }}
     >
       <YStack

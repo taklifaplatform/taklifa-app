@@ -2,9 +2,9 @@ import { usePathname } from '@zix/utils';
 import React from 'react';
 import { Pressable } from 'react-native';
 import { useRouter } from 'solito/router';
-import { Button, Stack, Text, XStack } from 'tamagui';
+import { Text } from 'tamagui';
 
-export type MenuItemProps = {
+export type FooterItemProps = {
   name: string;
   path: string;
   icon?: React.ReactNode;
@@ -12,7 +12,7 @@ export type MenuItemProps = {
   $md?: any;
 };
 
-export const MenuItem: React.FC<MenuItemProps> = ({
+export const FooterItem: React.FC<FooterItemProps> = ({
   name,
   path,
   icon,
@@ -21,27 +21,17 @@ export const MenuItem: React.FC<MenuItemProps> = ({
 }) => {
   const router = useRouter();
 
-
+  const activePath = usePathname();
   console.log("props", props)
   return (
     <Pressable onPress={() => router.push(path)}>
-      <XStack
-        alignItems='center'
-        paddingVertical="$2"
-        backgroundColor={'transparent'}
-        borderBottomWidth={0}
-        gap="$3"
-        hoverStyle={{
-          cursor: 'pointer',
-        }}
-        {...props}
-      >
+      
         {iconAfter ? iconAfter : null}
-        <Text fontWeight={'bold'} fontSize="$5">
+        <Text {...props} fontSize="$5">
           {name}
         </Text>
         {icon ? icon : null}
-      </XStack>
+      
     </Pressable>
   );
 };

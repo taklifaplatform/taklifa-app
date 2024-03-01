@@ -1,12 +1,11 @@
-import { Partner } from '../components/Partner';
-import { ManageShipments } from '../components/ManageShipments';
-import { Questions } from '../components/Questions';
-import { SecondBanner } from '../components/SecondBanner';
-import { StartToday } from '../components/StartToday';
-import { TopBanner } from '../components/TopBanner';
-import { TrackShipments } from '../components/TrackShipments';
-import { WarningBanner } from '../components/Warning';
-import { WarningMobileBanner } from '../components/WarningMobile';
+import { Partner } from '../components/web-home/partner';
+import { ManageShipments } from '../components/web-home/management-shipments';
+import { Questions } from '../components/web-home/questions';
+import { SecondBanner } from '../components/web-home/second-banner';
+import { StartToday } from '../components/web-home/start-today';
+import { TopBanner } from '../components/web-home/top-banner';
+import { TrackShipments } from '../components/web-home/track-shipments';
+import { WarningBanner } from '../components/web-home/warning-banner';
 import MainLayout from '../layouts/MainLayout';
 import { NextPageWithLayout } from './_app';
 

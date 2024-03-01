@@ -1,10 +1,9 @@
-import React from 'react';
-import { YStack, Text, XStack, Button, Stack } from 'tamagui';
+import { useMultiLang } from '@zix/i18n';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
-import { Image, Pressable } from 'react-native';
-import { useMultiLang } from '@zix/i18n';
 import { useRouter } from 'next/router';
+import { Image, Pressable } from 'react-native';
+import { Stack, Text, XStack, YStack } from 'tamagui';
 
 export function SecondBanner() {
   const { activeLang } = useMultiLang();
@@ -169,8 +168,6 @@ export function SecondBanner() {
           display: 'none',
         }}
       >
-        
-        
         <YStack alignItems="center" gap="$2">
           <CustomIcon name="companyshipping" size="$6" />
           <Text
