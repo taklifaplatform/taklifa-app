@@ -1,5 +1,6 @@
 import {} from "@tamagui/lucide-icons";
 import {
+  AcceptTermsField,
   AutoCompleteField,
   BooleanCheckboxField,
   BooleanField,
@@ -27,6 +28,7 @@ export const formFieldsMappings = [
   [formFields.boolean, BooleanField] as const,
   [formFields.boolean_switch, BooleanSwitchField] as const,
   [formFields.boolean_checkbox, BooleanCheckboxField] as const,
+  [formFields.accept_terms, AcceptTermsField] as const,
   [formFields.select, SelectField] as const,
   [formFields.autocomplete, AutoCompleteField] as const,
 

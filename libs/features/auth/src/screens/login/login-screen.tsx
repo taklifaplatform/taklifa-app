@@ -18,7 +18,6 @@ import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { createParam } from 'solito';
 import { Link } from 'solito/link';
 import { z } from 'zod';
-import AcceptTermsLink from '../../components/accept-terms-link/accept-terms-link';
 
 const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
 
@@ -77,9 +76,6 @@ export const LoginScreen: React.FC = () => {
           password: {
             afterElement: <ForgotPasswordLink />,
             secureTextEntry: true,
-          },
-          accept_terms: {
-            prepend: <AcceptTermsLink />,
           },
         }}
         renderAfter={({ submit }) => {

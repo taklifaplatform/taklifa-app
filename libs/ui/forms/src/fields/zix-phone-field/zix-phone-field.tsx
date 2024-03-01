@@ -8,14 +8,12 @@ export type ZixPhoneFieldProps = {
   value: string;
   onValueChange: (value: string) => void;
   error?: { errorMessage: string };
-  placeholder?: string;
 };
 
 export const ZixPhoneField: React.FC<ZixPhoneFieldProps> = ({
   onValueChange,
   value,
   error,
-  placeholder,
 }) => {
   const themeName = useThemeName();
   const { isRtl } = useMultiLang();
@@ -46,7 +44,7 @@ export const ZixPhoneField: React.FC<ZixPhoneFieldProps> = ({
           disabled={!defaultConfig.dial_code}
           value={phone}
           onChangeText={onChange}
-          placeholder={defaultConfig?.mask || placeholder}
+          placeholder={defaultConfig?.mask}
           keyboardType="name-phone-pad"
           inputMode="numeric"
           borderWidth="$0.25"

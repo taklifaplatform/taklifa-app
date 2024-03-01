@@ -1,6 +1,6 @@
 
 import { ChevronDown } from '@tamagui/lucide-icons';
-import { useStringFieldInfo, useTsController } from '@ts-react/form';
+import { useFieldInfo, useTsController } from '@ts-react/form';
 import { Shake } from '@zix/ui/common';
 import { useEffect, useId, useState } from 'react';
 import {
@@ -12,6 +12,8 @@ import {
   Theme,
   ThemeableStack,
   ThemeableStackProps,
+  View,
+  XStack,
   styled,
   useThemeName
 } from 'tamagui';
@@ -48,9 +50,16 @@ const Label = styled(TGLabel, {
 
 export type BaseZixFieldContainerProps = ThemeableStackProps & {
   size?: SizeTokens;
+
+  collapsible?: boolean;
+  fieldInfo?: typeof useFieldInfo;
+  containerProps?: ThemeableStackProps;
+  fieldContainerProps?: ThemeableStackProps;
+  // proper name this
   labelInline?: boolean;
   labelBold?: boolean;
-  collapsible?: boolean;
+  labelPrepend?: React.ReactNode;
+  labelShowRequiredAsterisk?: boolean;
 };
 
 
@@ -60,11 +69,16 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
   labelInline,
   labelBold,
   collapsible,
+  fieldInfo = useFieldInfo,
+  containerProps = {},
+  fieldContainerProps = {},
+  labelPrepend = null,
+  labelShowRequiredAsterisk = true,
   ...rest
 }) => {
   const id = useId()
   const { error } = useTsController()
-  const { label, isOptional } = useStringFieldInfo()
+  const { label, isOptional } = fieldInfo()
   const themeName = useThemeName();
   const [activeAccordions, setActiveAccordions] = useState([id as string]);
 
@@ -77,21 +91,26 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
 
   const renderLabel = () =>
     label && (
-      <Label
-        htmlFor={id}
-        size={size || '$3'}
-        textAlign="left"
-        theme="alt1"
-        labelBold={labelBold}
-      >
-        {label} {!isOptional && `*`}
-      </Label>
+      <XStack alignItems='center' gap='$2'>
+        <Label
+          htmlFor={id}
+          size={size || '$3'}
+          textAlign="left"
+          theme="alt1"
+          labelBold={labelBold}
+        >
+          {label} {(!isOptional && labelShowRequiredAsterisk) && `*`}
+        </Label>
+        {labelPrepend}
+      </XStack>
     );
 
   const renderField = () => (
-    <Shake shakeKey={error?.errorMessage}>
-      {children}
-    </Shake>
+    <View flex={1} {...fieldContainerProps}>
+      <Shake shakeKey={error?.errorMessage}>
+        {children}
+      </Shake>
+    </View>
   )
 
   const renderAccordion = () => (
@@ -141,7 +160,7 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
         {
           collapsible ? renderAccordion() : (
             <>
-              <StackContainer labelInline={labelInline}>
+              <StackContainer labelInline={labelInline} {...containerProps}>
                 {renderLabel()}
                 {renderField()}
               </StackContainer>

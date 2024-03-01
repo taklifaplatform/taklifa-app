@@ -1,24 +1,19 @@
 import { useNumberFieldInfo, useTsController } from '@ts-react/form';
-import { Shake } from '@zix/ui/common';
-import {
-  Fieldset,
-  InputProps,
-  Label,
-  Text,
-  Theme,
-  XStack,
-  useStyle,
-  useTheme,
-  useThemeName,
-} from 'tamagui';
-import { useId, useMemo, useState } from 'react';
+import { useMemo } from 'react';
+import { Text } from 'react-native';
 import {
   CodeField,
   Cursor,
   useBlurOnFulfill,
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
-import { FieldError } from '../../common';
+import {
+  InputProps,
+  XStack,
+  useStyle,
+  useTheme
+} from 'tamagui';
+import ZixFieldContainer from '../../common/zix-field-container/zix-field-container';
 
 const CELL_COUNT = 6;
 const CELL_WIDTH = 40;
@@ -28,8 +23,6 @@ export const CodeInputField = (
   propsCode: Pick<InputProps, 'size' | 'autoFocus'>
 ) => {
   const { field, error } = useTsController<number>();
-  const { label, defaultValue, minValue, maxValue } = useNumberFieldInfo();
-  const themeName = useThemeName();
   const theme = useTheme();
 
   const cellStyle = useMemo(
@@ -45,7 +38,7 @@ export const CodeInputField = (
       textAlign: 'center',
       padding: (CELL_WIDTH + CELL_HEIGHT) * 0.1,
     }),
-    [error?.errorMessage]
+    [error?.errorMessage, theme.borderColor]
   );
 
   const rootStyle = useStyle({
@@ -54,68 +47,39 @@ export const CodeInputField = (
   const focusStyle = useStyle({
     borderColor: '$borderColorFocus',
   });
-  const id = useId();
-  const [value, setValue] = useState('');
-  const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
+
+  const ref = useBlurOnFulfill({ value: String(field.value), cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
-    value,
-    setValue,
+    value: String(field.value),
+    setValue: (value) => field.onChange(Number(value)),
   });
 
   return (
-    <Theme name={error ? 'red' : themeName} forceClassName>
-      <Fieldset>
-        {!!label && (
-          <Label textAlign="center" size={propsCode.size || '$3'} htmlFor={id}>
-            {label}
-          </Label>
-        )}
-        <XStack justifyContent="space-around">
-          <Shake shakeKey={error?.errorMessage}>
-            <CodeField
-              ref={ref}
-              {...props}
-              value={value}
-              onChangeText={(text) => {
-                const num = Number(text);
-                if (isNaN(num)) {
-                  if (!field.value) {
-                    field.onChange(defaultValue || 0);
-                  }
-                  return;
-                }
-                if (typeof maxValue !== 'undefined' && num > maxValue) {
-                  field.onChange(minValue);
-                  return;
-                }
-                if (typeof minValue !== 'undefined' && num < minValue) {
-                  field.onChange(minValue);
-                  return;
-                }
-                field.onChange(num);
-                setValue(text);
-              }}
-              cellCount={CELL_COUNT}
-              keyboardType="number-pad"
-              textContentType="oneTimeCode"
-              renderCell={({ index, symbol, isFocused }) => (
-                <Text
-                  key={index}
-                  style={[cellStyle, isFocused && focusStyle]}
-                  onLayout={getCellOnLayoutHandler(index)}
-                >
-                  {symbol || (isFocused ? <Cursor /> : null)}
-                </Text>
-              )}
-              rootStyle={rootStyle}
-              {...propsCode}
-            />
-          </Shake>
-        </XStack>
-        <FieldError message={error?.errorMessage} />
-      </Fieldset>
-    </Theme>
-  );
+    <ZixFieldContainer fieldInfo={useNumberFieldInfo}>
+      <XStack justifyContent='space-around'>
+        <CodeField
+          ref={ref}
+          {...props}
+          value={String(field.value)}
+          onChangeText={(text) => field.onChange(Number(text))}
+          cellCount={CELL_COUNT}
+          keyboardType="number-pad"
+          textContentType="oneTimeCode"
+          renderCell={({ index, symbol, isFocused }) => (
+            <Text
+              key={index}
+              style={[cellStyle as any, isFocused && focusStyle]}
+              onLayout={getCellOnLayoutHandler(index)}
+            >
+              {symbol || (isFocused ? <Cursor /> : null)}
+            </Text>
+          )}
+          rootStyle={rootStyle}
+          {...propsCode}
+        />
+      </XStack>
+    </ZixFieldContainer>
+  )
 };
 
 export default CodeInputField;

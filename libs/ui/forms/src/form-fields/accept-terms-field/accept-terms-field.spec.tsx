@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import AcceptTermsLink from './accept-terms-link';
+import AcceptTermsField from './accept-terms-field';
 
-describe('AcceptTermsLink', () => {
+describe('AcceptTermsField', () => {
   it('should render successfully', () => {
-    const { root } = render(<AcceptTermsLink />);
+    const { root } = render(<AcceptTermsField />);
     expect(root).toBeTruthy();
   });
 });

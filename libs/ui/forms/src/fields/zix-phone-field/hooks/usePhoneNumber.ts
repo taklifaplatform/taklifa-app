@@ -49,6 +49,7 @@ export function usePhoneNumber({ value, onValueChange }: UsePhoneNumberProps) {
         mask: '##-####-#####',
         mask_char: '#',
         charAfterDialCode: ' ',
+        trimNonDigitsEnd: true,
         ...(defaultConfigData?.data?.dialling || {}),
       } as FormatPhoneConfig),
     [defaultConfigData]

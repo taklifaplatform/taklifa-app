@@ -21,6 +21,7 @@ export const formFields = {
    * checkbox field on all platforms
    */
   boolean_checkbox: createUniqueFieldSchema(z.boolean(), "boolean_checkbox"),
+  accept_terms: createUniqueFieldSchema(z.boolean(), "accept_terms"),
   /**
    * make sure to pass options={} to props for this
    */

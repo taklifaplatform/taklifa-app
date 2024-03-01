@@ -75,7 +75,6 @@ export const Shake: React.FC<ShakeProps> = ({
     'worklet';
     return {
       transform: [{ translateX: val }],
-      flex: 1
     };
   });
 

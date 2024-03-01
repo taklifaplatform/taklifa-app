@@ -1,5 +1,6 @@
 export * from './auto-complete-field/auto-complete-field';
 export * from './boolean-checkbox-field/boolean-checkbox-field';
+export * from './accept-terms-field/accept-terms-field';
 export * from './boolean-field/boolean-field';
 export * from './boolean-switch-field/boolean-switch-field';
 export * from './code-input-field/code-input-field';

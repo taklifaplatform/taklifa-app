@@ -1,6 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { Theme } from 'tamagui';
 import { useToastController } from '@tamagui/toast';
 import {
   SchemaForm,
@@ -14,12 +13,12 @@ import { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
+import { Theme } from 'tamagui';
 import { z } from 'zod';
 
 import { AuthService } from '@zix/api';
 import { useAuth } from '@zix/utils';
 import { authAccountTypeAtom, authUserTypeAtom } from '../../atoms';
-import AcceptTermsLink from '../../components/accept-terms-link/accept-terms-link';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 
 const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
@@ -35,7 +34,7 @@ const SignUpSchema = z
     password_confirmation: formFields.text
       .min(6)
       .describe(t('forms:password_confirmation')),
-    accept_terms: formFields.boolean_checkbox.describe(t('forms:accept_terms')),
+    accept_terms: formFields.accept_terms.describe(t('forms:accept_terms')),
   })
   .required({
     name: true,
@@ -132,10 +131,7 @@ export const SignUpScreen = () => {
           },
           password_confirmation: {
             secureTextEntry: true,
-          },
-          accept_terms: {
-            prepend: <AcceptTermsLink />,
-          },
+          }
         }}
         onSubmit={mutate}
         renderAfter={({ submit }) => (

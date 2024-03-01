@@ -8,7 +8,11 @@ import {
 import { useAtom } from "jotai";
 import { useCallback, useMemo } from "react";
 import { useRouter } from "solito/router";
-import { authAccessTokenStorage, authUserStorage } from "../atoms";
+import {
+  authAccessTokenStorage,
+  authRequestedAccountTypeStorage,
+  authUserStorage,
+} from "../atoms";
 
 export type RedirectUserOptions = {
   pushRoute?: boolean;
@@ -18,6 +22,9 @@ export type RedirectUserOptions = {
 export function useAuth() {
   const [authAccessToken, setAuthAccessToken] = useAtom(authAccessTokenStorage);
   const [authUser, setAuthUser] = useAtom(authUserStorage);
+  const [requestedAccountType, setRequestedAccountType] = useAtom(
+    authRequestedAccountTypeStorage,
+  );
   const router = useRouter();
 
   const { data, refetch, isLoading } = useQuery({
@@ -95,5 +102,8 @@ export function useAuth() {
     setAuthUser,
     isLoggedIn,
     redirectUserToActiveDashboard,
+
+    requestedAccountType,
+    setRequestedAccountType,
   };
 }

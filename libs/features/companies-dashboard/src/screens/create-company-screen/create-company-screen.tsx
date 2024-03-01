@@ -23,7 +23,7 @@ const CreateCompanyFormSchema = z
     //   .min(2)
     //   .max(25)
     //   .describe('Company Location // Enter company location'),
-    accept_terms: formFields.boolean_checkbox.describe(t('forms:accept_terms')),
+    accept_terms: formFields.accept_terms.describe(t('forms:accept_terms')),
   })
   .required({
     name: true,
