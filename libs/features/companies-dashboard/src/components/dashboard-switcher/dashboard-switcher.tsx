@@ -2,20 +2,17 @@ import { useMutation } from '@tanstack/react-query';
 
 import {
   ChevronDown,
-  ChevronDownCircle,
-  Circle,
   Plus,
-  PlusSquare,
   X
 } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
 import { ChangeActiveRoleRequest, CompanyAdminService, UserService } from '@zix/api';
 import { MediaAvatar, UserAvatar } from '@zix/ui/common';
+import { CustomIcon } from '@zix/ui/icons';
 import { useAuth } from '@zix/utils';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useRouter } from 'solito/router';
 import { Avatar, Button, H4, ListItem, Sheet, Text, XStack, YGroup } from 'tamagui';
-import { CustomIcon } from '@zix/ui/icons';
 
 
 export const DashboardSwitcher: React.FC = () => {
@@ -30,7 +27,7 @@ export const DashboardSwitcher: React.FC = () => {
       requestBody
     }),
     onSuccess(data) {
-      // toast.show('Account changed successfully');
+      toast.show('Account changed successfully');
       refetchUser()
       setSheetOpen(false)
       redirectUserToActiveDashboard({
@@ -44,7 +41,7 @@ export const DashboardSwitcher: React.FC = () => {
       company
     }),
     onSuccess(data) {
-      // toast.show('Company changed successfully');
+      toast.show('Company changed successfully');
       refetchUser()
       setSheetOpen(false)
       redirectUserToActiveDashboard({
@@ -60,6 +57,10 @@ export const DashboardSwitcher: React.FC = () => {
     return user?.roles?.filter(role => !role.name?.includes('company'))
   }, [user])
 
+  const roleNames = useMemo(() => {
+    return userRoles?.map(role => role.name)
+  }, [userRoles])
+
   const snapPoints = useMemo(() => {
     const totalItems = (userRoles?.length ?? 1) + (user?.companies?.length ?? 1);
     const sheetHeight = totalItems * 13 > 85 ? 85 : totalItems * 13;
@@ -70,14 +71,15 @@ export const DashboardSwitcher: React.FC = () => {
     ]
   }, [user, userRoles])
 
-  function onNavigate(route: string, replace = true) {
+  const onAddAccount = useCallback(() => {
     setSheetOpen(false);
-    if (replace) {
-      router.replace(route);
-      return;
+    if (roleNames?.includes('customer')) {
+      router.push('/auth/register/user-type');
+    } else {
+      router.push('/auth/register');
     }
-    router.push(route);
-  }
+
+  }, [roleNames, router])
 
   return (
     <>
@@ -136,7 +138,7 @@ export const DashboardSwitcher: React.FC = () => {
               ))}
               <YGroup.Item>
                 <ListItem
-                  onPress={() => onNavigate('/companies/create', false)}
+                  onPress={() => onAddAccount()}
                   borderBottomColor='$gray5'
                   borderBottomWidth={1}
                   icon={(props) => (

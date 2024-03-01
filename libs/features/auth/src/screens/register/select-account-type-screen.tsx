@@ -33,7 +33,7 @@ export const SelectAccountTypeScreen: React.FC = () => {
         title={t('auth:create_new_account')}
       />
 
-      <YStack space="$4" marginHorizontal="$4" marginTop="$10">
+      <YStack gap="$4" marginHorizontal="$4" marginTop="$10">
         <InlineItemSelect
           icon="looking_for_service"
           title={t('common:account_types.seek.service_requestor')}

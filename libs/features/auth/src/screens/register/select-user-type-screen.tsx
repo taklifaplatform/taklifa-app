@@ -28,7 +28,7 @@ export const SelectUserTypeScreen = () => {
         title={t('auth:create_new_account')}
       />
 
-      <YStack space="$4" marginHorizontal="$4" marginTop="$10">
+      <YStack gap="$4" marginHorizontal="$4" marginTop="$10">
         <InlineItemSelect
           icon="solo_transporter_car"
           title={t('common:user_types.individual')}
