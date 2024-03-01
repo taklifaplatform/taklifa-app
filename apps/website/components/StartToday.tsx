@@ -89,7 +89,6 @@ export function StartToday() {
     <Theme name="light">
     <Stack
      height={'542px'}
-      marginBottom="$3"
       $md={{ height: '400px' }}
       $sm={{ height: '200px' }}
 
