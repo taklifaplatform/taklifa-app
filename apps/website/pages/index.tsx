@@ -1,4 +1,4 @@
-import { Accredited } from '../components/Accredited';
+import { Partner } from '../components/Partner';
 import { ManageShipments } from '../components/ManageShipments';
 import { Questions } from '../components/Questions';
 import { SecondBanner } from '../components/SecondBanner';
@@ -18,8 +18,8 @@ export const Page: NextPageWithLayout = () => {
       <SecondBanner />
       <ManageShipments />
       <StartToday />
-      {/*<Accredited />
-      <WarningBanner />
+      <Partner />
+      {/*<WarningBanner />
       <WarningMobileBanner />
       <Questions /> */}
     </>
