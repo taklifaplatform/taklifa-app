@@ -17,6 +17,7 @@ import Head from 'next/head';
 import 'raf/polyfill';
 import { ReactElement, ReactNode } from 'react';
 import type { SolitoAppProps } from 'solito';
+import { OpenAPI } from '@zix/api';
 
 if (process.env.NODE_ENV === 'production') {
   require('../public/tamagui.css');
@@ -27,6 +28,7 @@ export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
 };
 
 const defaultLang = bootMultiLang();
+OpenAPI.BASE = `https://admin-sawaeed.zixdev.com`;
 
 const ZixApp: React.FC<SolitoAppProps> = ({ Component, pageProps }) => {
   // reference: https://nextjs.org/docs/pages/building-your-application/routing/pages-and-layouts

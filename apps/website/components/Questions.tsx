@@ -1,12 +1,16 @@
 import React from 'react';
-import { XStack, YStack, Text } from 'tamagui';
+import { XStack, YStack, Text, Accordion, Square, Paragraph } from 'tamagui';
 import { CustomIcon } from '@zix/ui/icons';
-import { Plus } from '@tamagui/lucide-icons';
+import { ChevronDown, Plus } from '@tamagui/lucide-icons';
 import { t } from 'i18next';
 import { useQuery } from '@tanstack/react-query';
 import { FaqsService } from '@zix/api';
+import { Pressable } from 'react-native';
+import { useRouter } from 'next/router';
 
 export function Questions() {
+  const router = useRouter();
+
   const { data } = useQuery({
     queryKey: ['FaqsService.fetchListFaqs'],
     queryFn: () => {
@@ -14,45 +18,73 @@ export function Questions() {
     },
   });
 
+  const renderZixAccordion = ({ item, index }) => (
+    <Accordion
+      overflow="hidden"
+      width="70%"
+      type="multiple"
+      marginBottom="-40px"
+      $sm={{ width: '100%', marginBottom: '-10px'}}
+    >
+      <Accordion.Item value='a1' key={index}>
+        <Accordion.Trigger
+          flexDirection="row"
+          justifyContent="space-between"
+          borderColor={'transparent'}
+          backgroundColor={'$gray4'}
+          borderRadius={'$4'}
+        >
+          {({ open }) => (
+            <>
+            <Square animation="quick" rotate={open ? '180deg' : '0deg'}>
+                <ChevronDown size="$1" />
+              </Square>
+              <Paragraph numberOfLines={1}>{item.title}</Paragraph>
+              
+            </>
+          )}
+        </Accordion.Trigger>
+        <Accordion.Content>
+        <div dangerouslySetInnerHTML={{ __html: `<div class="ignore-css">${item.content}</div>` }} />
+          {/* <Paragraph>{item.content}</Paragraph> */}
+        </Accordion.Content>
+      </Accordion.Item>
+    </Accordion>
+  );
+
   return (
     <YStack
       alignItems="center"
+      justifyContent="center"
+      borderRadius="$4"
+      marginTop="$10"
+      marginBottom="$10"
+      gap="$8"
+      $sm={{ gap: '$4', marginTop: '$2', marginBottom: '$4'}}
     >
-      <XStack alignItems="center" paddingVertical="$6" gap="$4">
-        <CustomIcon name="large_arrow_left" />
-        <Text fontWeight="bold" fontSize="$6">
+      <XStack
+        alignItems="center"
+        gap="$2"
+        paddingVertical="$4"
+        $md={{ gap: '$4', paddingVertical: '$1'}}
+        $xs={{ gap: '$2' }}
+      >
+        <Pressable onPress={() => router.push('/client')}>
+          <CustomIcon name="large_arrow_right" size="$1" color="$gray10" />
+        </Pressable>
+        <Text
+          fontWeight="800"
+          fontSize={30}
+          textAlign="center"
+          $xs={{
+            fontSize: 15,
+          }}
+        >
           {t('web-home:questiontitle')}
         </Text>
       </XStack>
-      {data?.data?.map((item, index) => (
-        <XStack
-          key={index}
-          marginTop="$2"
-          w={'70%'}
-          justifyContent="space-between"
-          paddingHorizontal="$2"
-          paddingVertical="$4"
-          backgroundColor={'$gray4'}
-          borderRadius={'$2'}
-          alignItems="center"
-          $sm={{
-            w: '90%',
-            paddingHorizontal: '$1',
-            paddingVertical: '$2',
-            marginTop: '$1',
-          }}
-        >
-          <Text
-            $sm={{
-              fontSize: '$2',
-              fontWeight: '600',
-            }}
-          >
-            {item.title}
-          </Text>
-          <Plus size="$2" />
-        </XStack>
-      ))}
+
+      {data?.data?.map((item, index) => renderZixAccordion({ item, index }))}
     </YStack>
   );
 }
