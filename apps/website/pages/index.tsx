@@ -1,6 +1,5 @@
 import { Accredited } from '../components/Accredited';
 import { ManageShipments } from '../components/ManageShipments';
-import { ManageShipmentsMobile } from '../components/ManageShipmentsMobile';
 import { Questions } from '../components/Questions';
 import { SecondBanner } from '../components/SecondBanner';
 import { StartToday } from '../components/StartToday';
@@ -18,9 +17,8 @@ export const Page: NextPageWithLayout = () => {
       <TrackShipments />
       <SecondBanner />
       <ManageShipments />
-      {/* <ManageShipmentsMobile />
       <StartToday />
-      <Accredited />
+      {/*<Accredited />
       <WarningBanner />
       <WarningMobileBanner />
       <Questions /> */}

@@ -1,12 +1,12 @@
 import React from 'react';
-import { YStack, Image, Button, Text, Stack } from 'tamagui';
+import { YStack, Image, Button, Text, Stack, Theme } from 'tamagui';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import { useRouter } from 'next/router';
 export function ManageShipments() {
   const router = useRouter();
   return (
-    <>
+    <Theme name='light'>
       <YStack $md={{ display: 'none' }} justifyContent="center" marginBottom='$3'>
         <Image
           alt="Banner"
@@ -90,6 +90,6 @@ export function ManageShipments() {
           </Button>
         </YStack>
       </YStack>
-    </>
+    </Theme>
   );
 }

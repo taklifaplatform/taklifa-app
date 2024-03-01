@@ -39,7 +39,7 @@ export const ButtonItem: React.FC<ButtonItemProps> = ({
         {...props}
       >
         {iconAfter ? iconAfter : null}
-        <Text fontWeight='700' fontSize="12px">
+        <Text color={props?.color} fontWeight='700' fontSize="12px">
           {name}
         </Text>
         {icon ? icon : null}
