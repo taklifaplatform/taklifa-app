@@ -1,23 +1,25 @@
 import React from 'react';
-import { Image, View } from 'tamagui';
 
 import { useAuth } from '@zix/utils';
-import { Dimensions, Platform } from 'react-native';
+import { Dimensions, Image, Platform, View } from 'react-native';
 
-const { width, height } = Dimensions.get('window');
 
 export default function Screen() {
   const { redirectUserToActiveDashboard } = useAuth()
+  const { width, height } = Dimensions.get('window');
 
   return (
     <View
-      backgroundColor="$color5"
-      flex={1}
+      style={{
+        flex: 1,
+        backgroundColor: '#333333',
+
+      }}
       onLayout={() => {
         if (Platform.OS === 'ios') {
           setTimeout(() => {
             redirectUserToActiveDashboard();
-          }, 3000);
+          }, 4000);
         } else {
           redirectUserToActiveDashboard();
         }
@@ -25,9 +27,9 @@ export default function Screen() {
     >
       <Image
         source={require('../../assets/splash.gif')}
-        resizeMode="stretch"
-        width={width}
-        height={height}
+        resizeMode="cover"
+        resizeMethod="resize"
+        style={{ width, height }}
       />
     </View>
   );

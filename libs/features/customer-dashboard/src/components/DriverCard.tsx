@@ -16,7 +16,7 @@ export const DriverCard: React.FC<DriverCardProps> = ({
   setSelectedMarker,
   map
 }) => {
-  const onCancell = () => {
+  const onCancel = () => {
     setShowCarousel && setShowCarousel(false);
     setSelectedMarker && setSelectedMarker({});
   };
@@ -78,7 +78,7 @@ export const DriverCard: React.FC<DriverCardProps> = ({
           size={'$3'}
           borderRadius={'$5'}
           icon={<X size="$1" />}
-          onPress={() => onCancell()}
+          onPress={() => onCancel()}
         />)}
         <Image
           source={{
@@ -126,8 +126,9 @@ export const DriverCard: React.FC<DriverCardProps> = ({
           data={TruckData}
           horizontal
           showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <YStack
+              key={`key-${index}`}
               borderRadius="$4"
               width={62}
               height={43}
