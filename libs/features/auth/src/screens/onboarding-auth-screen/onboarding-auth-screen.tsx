@@ -27,7 +27,7 @@ export const OnboardingAuthScreen = () => {
   ];
 
   const renderWelcomeText = () => (
-    <YStack gap={'$2'} justifyContent="flex-start" alignItems="flex-end" $md={{
+    <YStack gap={'$2'} justifyContent="flex-start" alignItems="flex-end" $lg={{
       gap: '$2',
       alignItems: 'center',
       justifyContent: 'center'
@@ -38,7 +38,7 @@ export const OnboardingAuthScreen = () => {
         fontWeight="800"
         textAlign={activeLang === 'en' ? 'left' : 'right'}
         color={'$gray10'}
-        $md={{
+        $lg={{
           fontSize: 18,
         }}
       >
@@ -48,7 +48,7 @@ export const OnboardingAuthScreen = () => {
         fontSize={35}
         fontWeight="800"
         textAlign={activeLang === 'en' ? 'left' : 'right'}
-        $md={{
+        $lg={{
           fontSize: 25,
         }}
       >
@@ -60,7 +60,7 @@ export const OnboardingAuthScreen = () => {
         fontSize={15}
         lineHeight={25}
         marginTop="$3"
-        $md={{
+        $lg={{
           fontSize: 13,
           marginTop: '$2',
           textAlign: 'center',
@@ -72,7 +72,7 @@ export const OnboardingAuthScreen = () => {
   );
 
   const renderOptions = () => (
-    <YStack gap={'$6'} justifyContent="flex-start" alignItems="flex-end" $md={{ 
+    <YStack gap={'$6'} justifyContent="flex-start" alignItems="flex-end" $lg={{ 
       gap:'$4',
       alignItems: 'center',
       justifyContent: 'center'
@@ -84,7 +84,7 @@ export const OnboardingAuthScreen = () => {
       >
         {t('web-home:banner-3')}
       </Text>
-      <YStack gap={'$8'} justifyContent="flex-start" alignItems="flex-end" $md={{ gap:'$2'}}>
+      <YStack gap={'$8'} justifyContent="flex-start" alignItems="flex-end" $lg={{ gap:'$2'}}>
         {options.map((option, index) => (
           <Stack
             flexDirection='row'
@@ -92,7 +92,7 @@ export const OnboardingAuthScreen = () => {
             gap={'$4'}
             justifyContent="flex-start"
             alignItems="flex-start"
-            $md={{
+            $lg={{
               flexDirection: 'column-reverse',
               alignItems: 'center',
               justifyContent: 'center',
@@ -100,12 +100,12 @@ export const OnboardingAuthScreen = () => {
             
             }}
           >
-            <YStack gap={'$4'} justifyContent="flex-start" $md={{ gap: '$2' , justifyContent: 'center'}}>
+            <YStack gap={'$4'} justifyContent="flex-start" $lg={{ gap: '$2' , justifyContent: 'center'}}>
               <Text
                 fontSize={20}
                 fontWeight="700"
                 textAlign={activeLang === 'en' ? 'left' : 'right'}
-                $md={{
+                $lg={{
                   textAlign: 'center',
                   fontSize: 18,
                 }}
@@ -118,7 +118,7 @@ export const OnboardingAuthScreen = () => {
                 fontSize={15}
                 lineHeight={25}
                 textAlign={activeLang === 'en' ? 'left' : 'right'}
-                $md={{
+                $lg={{
                   textAlign: 'center',
                   fontSize: 13,
                 }}
