@@ -48,6 +48,11 @@ export const ZixPhoneField: React.FC<ZixPhoneFieldProps> = ({
                 icon: item.flag,
               }
             }}
+            selectTriggerProps={{
+              padding: '$2.5',
+              gap: '$0',
+              scaleIcon: 0.5,
+            }}
           />
         </Stack>
         <ZixInput

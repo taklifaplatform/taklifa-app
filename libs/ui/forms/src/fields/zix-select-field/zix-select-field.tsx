@@ -8,6 +8,7 @@ import {
   Adapt,
   Select,
   SelectProps,
+  SelectTriggerProps,
   Sheet,
   Theme,
   YStack,
@@ -22,7 +23,7 @@ export type BaseSelectFieldItem = {
   description?: string
   icon?: React.ReactNode
 }
-export type ZixSelectFieldProps = {
+export type ZixSelectFieldProps = SelectProps &{
   options: BaseSelectFieldItem[]
   onChange?: (value: string) => void
   value?: string
@@ -32,7 +33,7 @@ export type ZixSelectFieldProps = {
 
   disabled?: boolean
   hasError?: boolean
-  selectTriggerProps?: SelectProps
+  selectTriggerProps?: SelectTriggerProps
   width?: number | string
 
   search?: string

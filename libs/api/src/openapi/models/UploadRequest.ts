@@ -6,6 +6,6 @@ export type UploadRequest = {
     uuid?: string;
     name?: string;
     custom_properties?: string;
-    file?: string;
+    file?: Blob;
 };
 

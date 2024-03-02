@@ -69,6 +69,7 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
       search={search}
       onSearch={setSearch}
       options={mappedData}
+      {...props}
     />
   )
 };
