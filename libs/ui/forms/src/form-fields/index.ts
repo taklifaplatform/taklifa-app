@@ -5,12 +5,10 @@ export * from "./boolean-switch-field/boolean-switch-field";
 export * from "./code-input-field/code-input-field";
 export * from "./country-field/country-field";
 export * from "./date-picker-field/date-picker-field";
-export * from "./file-field/file-field";
 export * from "./media-picker-field/media-picker-field";
 export * from "./phone-field/phone-field";
 export * from "./select-field/select-field";
 export * from "./text-area-field/text-area-field";
 export * from "./text-field/text-field";
 export * from "./text-secure-field/text-secure-field";
-export * from "./avatar-field/avatar-field";
 

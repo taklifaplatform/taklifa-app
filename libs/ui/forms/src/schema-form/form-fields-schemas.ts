@@ -3,11 +3,10 @@ import { createUniqueFieldSchema } from "@ts-react/form";
 import { z } from "zod";
 
 export const mediaSchema = z.object({
-  id: z.string(),
-  uuid: z.string(),
-  url: z.string(),
-  original_url: z.string(),
-  local_url: z.string(),
+  // id: z.number(),
+  uuid: z.string().optional(),
+  // url: z.string().optional(),
+  // original_url: z.string(),
 });
 
 export const formFields = {

@@ -1,6 +1,6 @@
 import { randomUUID } from 'expo-crypto';
 
-import { Alert, Platform } from 'react-native';
+import { Alert, Platform, Text } from 'react-native';
 
 import { Camera, Image } from '@tamagui/lucide-icons';
 import { MediaService, MediaTransformer } from '@zix/api';
@@ -11,7 +11,7 @@ import {
   launchCameraAsync,
   launchImageLibraryAsync,
 } from 'expo-image-picker';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { UploadableMediaFile, uploadMediaFile } from '../../utils';
 import { ZixFilesInputMediaPickerPreviewer, ZixImageMediaPickerPreviewer, ZixRowMediaPickerPreviewer } from './previewers';
 import { ZixMediaPickerTransformer } from './types';
@@ -53,19 +53,30 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
 
   const actionRef = useRef<ActionSheetRef>(null);
 
-  const files = !value ? [] : Array.isArray(value) ? value : [value];
+  const [previews, setPreviews] = useState<Record<string | number, ZixMediaPickerTransformer>>({});
 
-  const [previews, setPreviews] = useState<Record<string, ZixMediaPickerTransformer>>(
-    (() => {
-      const map: Record<string, ZixMediaPickerTransformer> = {};
+  useEffect(() => {
+    console.log('==== ZixMediaPickerField =========')
+    console.log('value::', JSON.stringify(value, null, 2))
+    console.log('isArray::', Array.isArray(value))
+    console.log('=============')
+    if (value) {
+      const files = Array.isArray(value) ? value : [value];
       files.forEach((file) => {
         if (file.uuid) {
-          map[file.uuid] = file as ZixMediaPickerTransformer;
+          setPreviews((prev) => ({
+            ...prev,
+            [file.uuid]: file as ZixMediaPickerTransformer,
+          }));
+        } else if (file.id) {
+          setPreviews((prev) => ({
+            ...prev,
+            [file.id]: file as ZixMediaPickerTransformer,
+          }));
         }
       });
-      return map;
-    })()
-  );
+    }
+  }, [value]);
 
   const renderImagePicker = () => (
     <ActionSheet
@@ -121,10 +132,10 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
             uploadProgress: 1
           },
         }))
-        onChange?.([
+        onChange?.(isMultiple ? [
           ...files,
           result,
-        ])
+        ] : result)
       })
     })
   }
@@ -284,6 +295,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
   return (
     <>
       {renderImagePicker()}
+      {/* <Text>{JSON.stringify(value)}</Text> */}
       <Previewer
         onPress={onOpenMediaPicker}
         previews={Object.values(previews)}

@@ -1,8 +1,7 @@
 import { SettingsScreen } from '@zix/features/account';
 import { AppHeader } from '@zix/ui/common';
-import React from 'react';
 import { t } from 'i18next';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React from 'react';
 
 export default function Screen() {
   return (
@@ -12,9 +11,7 @@ export default function Screen() {
         title={t('account:settings.title')}
         headerBackgroundColor="transparent"
       />
-      <SafeAreaView style={{ flex: 1 }} edges={['bottom', 'left', 'right']}>
-        <SettingsScreen />
-      </SafeAreaView>
+      <SettingsScreen />
     </>
   );
 }

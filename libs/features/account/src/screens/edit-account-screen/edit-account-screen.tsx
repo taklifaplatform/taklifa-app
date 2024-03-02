@@ -1,62 +1,64 @@
 import { useMutation } from '@tanstack/react-query';
-import { Avatar, Theme, YStack } from 'tamagui';
-import { SchemaForm, SubmitButton, formFields } from '@zix/ui/forms';
+import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/ui/forms';
+import { Theme } from 'tamagui';
 
 import { useToastController } from '@tamagui/toast';
-import { UpdateUserRequest, UserService } from '@zix/api';
+import { UserService } from '@zix/api';
 import { FullScreenSpinner } from '@zix/ui/common';
 import { useAuth } from '@zix/utils';
+import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
-import { SolitoImage } from 'solito/image';
 import { useRouter } from 'solito/router';
 import { z } from 'zod';
-import { UploadAvatar } from '../../components/upload-avatar';
+import { t } from 'i18next';
 
 const { useParams } = createParam<{ edit_name?: '1'; edit_about?: '1' }>();
-export const EditAccountScreen = () => {
-  const { user, refetchUser } = useAuth();
-
-  if (!user?.id) {
-    return <FullScreenSpinner />;
-  }
-  return (
-    <EditProfileForm
-      user={user as UpdateUserRequest}
-      refetchUser={refetchUser}
-    />
-  );
-};
 
 const ProfileSchema = z.object({
+  avatar: formFields.image.describe('Avatar // Upload avatar'),
   name: formFields.text.describe('Name // John Doe'),
+  phone_number: formFields.phone.describe('Phone Number // 1234567890'),
   about: formFields.textarea
+    .describe('About // Tell us a bit about yourself')
     .optional()
-    .describe('About // Tell us a bit about yourself'),
+
+}).required({
+  name: true
 });
 
-const EditProfileForm = ({
-  user,
-  refetchUser,
-}: {
-  user: UpdateUserRequest;
-  refetchUser: () => void;
-}) => {
+export const EditAccountScreen = () => {
+  const { user, refetchUser } = useAuth();
   const { params } = useParams();
+
+  const form = useForm();
   const toast = useToastController();
   const router = useRouter();
+
   const { mutate } = useMutation({
-    async mutationFn(requestBody: z.infer<typeof ProfileSchema>) {
+    mutationFn(requestBody: z.infer<typeof ProfileSchema>) {
       return UserService.updateUser({ requestBody });
     },
-    async onSuccess({ data }) {
+    onSuccess() {
       refetchUser();
       toast.show('Successfully updated!');
       router.back();
     },
+    onError(error: any) {
+      toast.show(error.message);
+      handleFormErrors(form, error?.body?.errors);
+      console.log('========')
+      console.log('onError::', JSON.stringify(error, null, 2))
+      console.log('========')
+    },
   });
+
+  if (!user?.id) {
+    return <FullScreenSpinner />;
+  }
 
   return (
     <SchemaForm
+      form={form}
       schema={ProfileSchema}
       props={{
         name: {
@@ -71,31 +73,11 @@ const EditProfileForm = ({
       renderAfter={({ submit }) => (
         <Theme inverse>
           <SubmitButton onPress={() => submit()}>
-            Update Profile
+            {t('common:confirm')}
           </SubmitButton>
         </Theme>
       )}
-    >
-      {(fields) => (
-        <>
-          <YStack marginBottom="$10">
-            <UploadAvatar>
-              <UserAvatar />
-            </UploadAvatar>
-          </YStack>
-          {Object.values(fields)}
-        </>
-      )}
-    </SchemaForm>
-  );
-};
-
-const UserAvatar = () => {
-  const { avatarUrl } = useAuth();
-  return (
-    <Avatar circular size={128} overflow="hidden">
-      <SolitoImage src={avatarUrl} alt="your avatar" width={128} height={128} />
-    </Avatar>
+    />
   );
 };
 
