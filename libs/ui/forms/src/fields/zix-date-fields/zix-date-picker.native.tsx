@@ -1,9 +1,10 @@
-import { Calendar } from '@tamagui/lucide-icons'
+import { CalendarDays } from '@tamagui/lucide-icons'
 import moment from 'moment'
 import { useState } from 'react'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
-import { Button, Input, XGroup } from 'tamagui'
+import { View } from 'tamagui'
 
+import ZixInput from '../zix-input/zix-input'
 import { ZixDateFieldProps } from './types'
 
 export const ZixDatePicker: React.FC<ZixDateFieldProps> = ({
@@ -14,29 +15,23 @@ export const ZixDatePicker: React.FC<ZixDateFieldProps> = ({
   const size = '$5'
   return (
     <>
-      <XGroup flex={1}>
-        <XGroup.Item>
-          <Input
-            flex={1}
-            size={size}
-            value={value}
-            onFocus={() => startOpenChange((state) => !state)}
-          />
-        </XGroup.Item>
-        <XGroup.Item>
-          <Button
-            size={size}
-            icon={Calendar}
-            onPress={() => startOpenChange((state) => !state)}
-            borderColor="$color10"
-            borderWidth="$0.25"
-            borderLeftWidth={0}
-            borderTopLeftRadius={0}
-            borderBottomLeftRadius={0}
-            backgroundColor="$color2"
-          />
-        </XGroup.Item>
-      </XGroup>
+      <View position='relative' flex={1}>
+        <ZixInput
+          flex={1}
+          size={size}
+          value={value}
+          rightIcon={(props) => <CalendarDays {...props} />}
+        />
+        <View
+          position='absolute'
+          top={0}
+          bottom={0}
+          right={0}
+          left={0}
+          onPress={() => startOpenChange((state) => !state)}
+        />
+      </View>
+
       {startOpen && (
         <DateTimePickerModal
           date={moment(value ?? undefined).toDate()}
