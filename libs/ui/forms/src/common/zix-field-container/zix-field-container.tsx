@@ -1,6 +1,6 @@
 
 import { ChevronDown } from '@tamagui/lucide-icons';
-import { useFieldInfo, useTsController } from '@ts-react/form';
+import { RecursiveErrorType } from '@ts-react/form/lib/src/zodObjectErrors';
 import { Shake } from '@zix/ui/common';
 import { useEffect, useId, useState } from 'react';
 import {
@@ -50,9 +50,7 @@ const Label = styled(TGLabel, {
 
 export type BaseZixFieldContainerProps = ThemeableStackProps & {
   size?: SizeTokens;
-
   collapsible?: boolean;
-  fieldInfo?: typeof useFieldInfo;
   containerProps?: ThemeableStackProps;
   fieldContainerProps?: ThemeableStackProps;
   labelHidden?: boolean;
@@ -60,6 +58,10 @@ export type BaseZixFieldContainerProps = ThemeableStackProps & {
   labelBold?: boolean;
   labelPrepend?: React.ReactNode;
   labelShowRequiredAsterisk?: boolean;
+
+  error?: RecursiveErrorType<any>;
+  label?: string
+  isOptional?: boolean
 };
 
 
@@ -70,16 +72,16 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
   labelInline,
   labelBold,
   collapsible,
-  fieldInfo = useFieldInfo,
   containerProps = {},
   fieldContainerProps = {},
   labelPrepend = null,
   labelShowRequiredAsterisk = true,
+  error,
+  label,
+  isOptional,
   ...rest
 }) => {
   const id = useId()
-  const { error } = useTsController()
-  const { label, isOptional } = fieldInfo()
   const themeName = useThemeName();
   const [activeAccordions, setActiveAccordions] = useState([id as string]);
 

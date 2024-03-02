@@ -1,6 +1,7 @@
 import { createUniqueFieldSchema } from "@ts-react/form";
 
 import { z } from "zod";
+import { AddressSchema } from "../form-fields";
 
 export const mediaSchema = z.object({
   // id: z.number(),
@@ -68,7 +69,7 @@ export const formFields = {
     z.string().regex(/[0-9]{10}/, "Please enter a valid phone number"),
     "phone",
   ),
-  code: createUniqueFieldSchema(z.number(), "code"),
+  code: createUniqueFieldSchema(z.string(), "code"),
 
   /**
    * Date Fields
@@ -83,5 +84,7 @@ export const formFields = {
   ),
   row_date_picker: createUniqueFieldSchema(z.string(), "row_date_picker"),
 
-  country: createUniqueFieldSchema(z.number(), "nationality"),
+  country: createUniqueFieldSchema(z.number(), "country"),
+
+  address: createUniqueFieldSchema(AddressSchema, "address"),
 };

@@ -3,11 +3,16 @@ import {
   Switch,
   SwitchProps
 } from 'tamagui';
-import ZixFieldContainer from '../../common/zix-field-container/zix-field-container';
+import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common';
 
-export const BooleanSwitchField = (
-  props: Pick<SwitchProps, 'size' | 'native'>
-) => {
+export type BooleanSwitchFieldProps = SwitchProps & {
+  containerProps?: BaseFormFieldContainerProps;
+}
+
+export const BooleanSwitchField: React.FC<BooleanSwitchFieldProps> = ({
+  containerProps = {},
+  ...props
+}) => {
   const {
     field,
     formState: { isSubmitting },
@@ -15,7 +20,7 @@ export const BooleanSwitchField = (
   const disabled = isSubmitting;
 
   return (
-    <ZixFieldContainer
+    <FormFieldContainer
       fieldInfo={useFieldInfo}
       labelInline
       containerProps={{
@@ -26,20 +31,19 @@ export const BooleanSwitchField = (
         flex: 0
       }}
       labelShowRequiredAsterisk={false}
-      {...props}
+      {...containerProps}
     >
       <Switch
+        {...props}
         disabled={disabled}
         native
         checked={field.value}
         onCheckedChange={(checked) => field.onChange(checked)}
         ref={field.ref}
-        {...props}
       >
         <Switch.Thumb animation="100ms" />
       </Switch>
-
-    </ZixFieldContainer>
+    </FormFieldContainer>
   )
 };
 

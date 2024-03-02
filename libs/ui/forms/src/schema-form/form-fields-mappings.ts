@@ -1,11 +1,10 @@
-import {} from "@tamagui/lucide-icons";
 import {
   AcceptTermsField,
+  AddressField,
   AutoCompleteField,
   BooleanCheckboxField,
   BooleanSwitchField,
   CodeInputField,
-  CountryField,
   DatePickerField,
   DatePickerFieldProps,
   MediaPickerField,
@@ -90,8 +89,8 @@ export const formFieldsMappings = [
         ...props,
         type: "image",
         containerProps: {
-          labelHidden: true
-        }
+          labelHidden: true,
+        },
       }),
   ] as const,
   [
@@ -115,6 +114,5 @@ export const formFieldsMappings = [
   [formFields.phone, PhoneField] as const,
   [formFields.code, CodeInputField] as const,
 
-  // [formFields.avatar, AvatarField] as const,
-  [formFields.country, CountryField] as const,
+  [formFields.address, AddressField] as const,
 ] as const;

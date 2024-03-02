@@ -43,6 +43,22 @@ export function useAuth() {
 
   const isLoggedIn = useMemo(() => !!authAccessToken, [authAccessToken]);
 
+  /**
+   * The number of steps in the registration process.
+   */
+  const registerSteps = useMemo(() => {
+    if (requestedAccountType === 'customer') {
+      return 2;
+    }
+    if (requestedAccountType === 'company_owner') {
+      return 3;
+    }
+    if (requestedAccountType === 'solo_driver') {
+      return 4;
+    }
+    return 0;
+  }, [requestedAccountType]);
+
   const avatarUrl = useMemo(() => {
     if (user?.avatar?.url) return user?.avatar?.url;
     const params = new URLSearchParams();
@@ -105,5 +121,6 @@ export function useAuth() {
 
     requestedAccountType,
     setRequestedAccountType,
+    registerSteps,
   };
 }

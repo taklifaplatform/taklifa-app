@@ -1,11 +1,11 @@
 import { useFieldInfo, useTsController } from '@ts-react/form'
-
 import { MediaTransformer } from '@zix/api'
-import ZixFieldContainer, { BaseZixFieldContainerProps } from '../../common/zix-field-container/zix-field-container'
-import ZixMediaPickerField, { ZixMediaPickerFieldProps } from '../../fields/zix-media-picker-field/zix-media-picker-field'
+
+import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common'
+import { ZixMediaPickerField, ZixMediaPickerFieldProps } from '../../fields'
 
 export type MediaPickerFieldProps = ZixMediaPickerFieldProps & {
-  containerProps?: BaseZixFieldContainerProps
+  containerProps?: BaseFormFieldContainerProps
 }
 
 export const MediaPickerField: React.FC<MediaPickerFieldProps> = ({
@@ -15,7 +15,7 @@ export const MediaPickerField: React.FC<MediaPickerFieldProps> = ({
   const { field, error } = useTsController<MediaTransformer | MediaTransformer[]>()
   const { placeholder } = useFieldInfo();
   return (
-    <ZixFieldContainer {...containerProps}>
+    <FormFieldContainer {...containerProps}>
       <ZixMediaPickerField
         {...props}
         value={field.value}
@@ -23,7 +23,7 @@ export const MediaPickerField: React.FC<MediaPickerFieldProps> = ({
         hasError={!!error?.errorMessage}
         placeholder={placeholder}
       />
-    </ZixFieldContainer>
+    </FormFieldContainer>
   )
 }
 

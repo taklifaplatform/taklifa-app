@@ -33,7 +33,6 @@ export const ZixInput = forwardRef(function ZixInputEl(
   }: ZixInputProps,
   ref: Ref<TextInput> | undefined
 ) {
-  const [show, setShow] = useState<boolean>(false);
   const [focus, setFocus] = useState<boolean>(false);
   const { isRtl } = useMultiLang();
 
@@ -50,8 +49,6 @@ export const ZixInput = forwardRef(function ZixInputEl(
         paddingRight: '$8',
       }
       : {}),
-
-
     onFocus: () => {
       setFocus(true);
     },
@@ -78,6 +75,7 @@ export const ZixInput = forwardRef(function ZixInputEl(
 
   return (
     <XStack alignItems="center" flex={1}>
+      {renderInput()}
       {leftIcon && (
         <Stack
           position="absolute"
@@ -93,7 +91,6 @@ export const ZixInput = forwardRef(function ZixInputEl(
           })}
         </Stack>
       )}
-      {renderInput()}
       {rightIcon && (
         <Stack
           position="absolute"

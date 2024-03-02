@@ -20,8 +20,8 @@ export const authUserStorage = atomWithStorage<UserTransformer | undefined>(
   storage,
 );
 
-export const authRequestedAccountTypeStorage = atomWithStorage<string | undefined>(
+export const authRequestedAccountTypeStorage = atomWithStorage<'customer' | 'solo_driver' | 'company_owner'>(
   AUTH_REQUESTED_ACCOUNT_TYPE,
-  undefined,
+  'customer',
   storage,
 );

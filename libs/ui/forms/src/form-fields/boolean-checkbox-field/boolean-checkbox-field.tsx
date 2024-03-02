@@ -4,16 +4,23 @@ import {
   Checkbox,
   CheckedState
 } from 'tamagui';
-import ZixFieldContainer, { BaseZixFieldContainerProps } from '../../common/zix-field-container/zix-field-container';
+import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common';
 
-export const BooleanCheckboxField = (props: BaseZixFieldContainerProps) => {
+export type BooleanCheckboxFieldProps = BaseFormFieldContainerProps & {
+  containerProps?: BaseFormFieldContainerProps;
+}
+
+export const BooleanCheckboxField: React.FC<BooleanCheckboxFieldProps> = ({
+  containerProps = {},
+  ...props
+}) => {
   const {
     field,
     formState: { isSubmitting },
   } = useTsController<CheckedState>();
 
   return (
-    <ZixFieldContainer
+    <FormFieldContainer
       fieldInfo={useFieldInfo}
       labelInline
       containerProps={{
@@ -24,9 +31,10 @@ export const BooleanCheckboxField = (props: BaseZixFieldContainerProps) => {
         flex: 0
       }}
       labelShowRequiredAsterisk={false}
-      {...props}
+      {...containerProps}
     >
       <Checkbox
+        {...props}
         size={props.size || '$5'}
         disabled={isSubmitting}
         checked={field.value}
@@ -37,7 +45,7 @@ export const BooleanCheckboxField = (props: BaseZixFieldContainerProps) => {
           <Check color={'$color1'} size={'$1'} />
         </Checkbox.Indicator>
       </Checkbox>
-    </ZixFieldContainer>
+    </FormFieldContainer>
   )
 };
 

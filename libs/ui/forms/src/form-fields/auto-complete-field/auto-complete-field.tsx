@@ -1,12 +1,11 @@
 import { useStringFieldInfo, useTsController } from '@ts-react/form';
 
-import ZixFieldContainer, { BaseZixFieldContainerProps } from '../../common/zix-field-container/zix-field-container';
-import { ZixAutoCompleteField } from '../../fields';
+import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common';
+import { ZixAutoCompleteField, ZixAutoCompleteFieldProps } from '../../fields';
 
 
-export type AutoCompleteFieldProps = {
-  api?: string;
-  containerProps?: BaseZixFieldContainerProps;
+export type AutoCompleteFieldProps = ZixAutoCompleteFieldProps & {
+  containerProps?: BaseFormFieldContainerProps;
 };
 
 export const AutoCompleteField: React.FC<AutoCompleteFieldProps> = ({
@@ -14,23 +13,19 @@ export const AutoCompleteField: React.FC<AutoCompleteFieldProps> = ({
   containerProps = {},
   ...props
 }) => {
-  const {
-    field,
-  } = useTsController<string>();
-  const { label, placeholder } =
-    useStringFieldInfo();
+  const { field } = useTsController<string>();
+  const { placeholder } = useStringFieldInfo();
 
   return (
-    <ZixFieldContainer {...containerProps}>
+    <FormFieldContainer {...containerProps}>
       <ZixAutoCompleteField
+        {...props}
         api={api}
-        title={label}
         placeholder={placeholder}
         value={field.value}
         onValueChange={(value) => field.onChange(value)}
-        {...props}
       />
-    </ZixFieldContainer>
+    </FormFieldContainer>
   );
 }
 

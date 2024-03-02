@@ -1,10 +1,16 @@
 import { useFieldInfo, useStringFieldInfo, useTsController } from '@ts-react/form';
 import React from 'react';
-import ZixFieldContainer from '../../common/zix-field-container/zix-field-container';
+import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common';
 import { ZixInput, ZixInputProps } from '../../fields';
 
+export type TextFieldProps = ZixInputProps & {
+  containerProps?: BaseFormFieldContainerProps;
+}
 
-export const TextField: React.FC<ZixInputProps> = (props) => {
+export const TextField: React.FC<TextFieldProps> = ({
+  containerProps = {},
+  ...props
+}) => {
   const {
     field,
     error,
@@ -14,8 +20,9 @@ export const TextField: React.FC<ZixInputProps> = (props) => {
   const { placeholder } = useFieldInfo();
 
   return (
-    <ZixFieldContainer>
+    <FormFieldContainer {...containerProps}>
       <ZixInput
+        {...props}
         value={field.value}
         onChangeText={field.onChange}
         ref={field.ref}
@@ -26,9 +33,8 @@ export const TextField: React.FC<ZixInputProps> = (props) => {
         hasError={!!error?.errorMessage}
         maxLength={maxLength}
         placeholder={placeholder}
-        {...props}
       />
-    </ZixFieldContainer>
+    </FormFieldContainer>
   )
 };
 

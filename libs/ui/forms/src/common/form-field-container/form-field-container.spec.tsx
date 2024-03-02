@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import CountryField from './country-field';
+import FormFieldContainer from './form-field-container';
 
-describe('CountryField', () => {
+describe('FormFieldContainer', () => {
   it('should render successfully', () => {
-    const { root } = render(<CountryField />);
+    const { root } = render(<FormFieldContainer />);
     expect(root).toBeTruthy();
   });
 });

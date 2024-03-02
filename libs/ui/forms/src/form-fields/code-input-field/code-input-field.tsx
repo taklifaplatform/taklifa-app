@@ -1,25 +1,27 @@
 import { useNumberFieldInfo, useTsController } from '@ts-react/form';
-import {
-  Input,
-  InputProps
-} from 'tamagui';
-import ZixFieldContainer from '../../common/zix-field-container/zix-field-container';
+import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common';
+import { ZixInput, ZixInputProps } from '../../fields';
 
-export const CodeInputField = (
-  propsCode: Pick<InputProps, 'size' | 'autoFocus'>
-) => {
+export type CodeInputFieldProps = ZixInputProps & {
+  containerProps?: BaseFormFieldContainerProps;
+}
+
+export const CodeInputField: React.FC<CodeInputFieldProps> = ({
+  containerProps = {},
+  ...props
+}) => {
   const { field } = useTsController<number>();
 
   return (
-    <ZixFieldContainer fieldInfo={useNumberFieldInfo}>
-      <Input
+    <FormFieldContainer {...containerProps} fieldInfo={useNumberFieldInfo}>
+      <ZixInput
+        {...props}
         value={String(field.value)}
         onChangeText={(text) => field.onChange(Number(text))}
         keyboardType="number-pad"
         textContentType="oneTimeCode"
-        {...propsCode}
       />
-    </ZixFieldContainer>
+    </FormFieldContainer>
   );
 };
 

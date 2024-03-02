@@ -1,4 +1,4 @@
-import { useNumberFieldInfo, useTsController } from '@ts-react/form';
+import { useStringFieldInfo, useTsController } from '@ts-react/form';
 import { useMemo } from 'react';
 import { Text } from 'react-native';
 import {
@@ -8,21 +8,22 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 import {
-  InputProps,
   XStack,
   useStyle,
   useTheme
 } from 'tamagui';
-import ZixFieldContainer from '../../common/zix-field-container/zix-field-container';
+import { FormFieldContainer } from '../../common';
+import { CodeInputFieldProps } from './code-input-field';
 
 const CELL_COUNT = 6;
 const CELL_WIDTH = 40;
 const CELL_HEIGHT = 54;
 
-export const CodeInputField = (
-  propsCode: Pick<InputProps, 'size' | 'autoFocus'>
-) => {
-  const { field, error } = useTsController<number>();
+export const CodeInputField: React.FC<CodeInputFieldProps> = ({
+  containerProps = {},
+  ...props
+}) => {
+  const { field, error } = useTsController<string>();
   const theme = useTheme();
 
   const cellStyle = useMemo(
@@ -48,20 +49,20 @@ export const CodeInputField = (
     borderColor: '$borderColorFocus',
   });
 
-  const ref = useBlurOnFulfill({ value: String(field.value), cellCount: CELL_COUNT });
-  const [props, getCellOnLayoutHandler] = useClearByFocusCell({
-    value: String(field.value),
-    setValue: (value) => field.onChange(Number(value)),
+  const ref = useBlurOnFulfill({ value: field.value, cellCount: CELL_COUNT });
+  const [propsCode, getCellOnLayoutHandler] = useClearByFocusCell({
+    value: field.value,
+    setValue: (value) => field.onChange(value),
   });
 
   return (
-    <ZixFieldContainer fieldInfo={useNumberFieldInfo}>
+    <FormFieldContainer {...containerProps} fieldInfo={useStringFieldInfo}>
       <XStack justifyContent='space-around'>
         <CodeField
           ref={ref}
-          {...props}
-          value={String(field.value)}
-          onChangeText={(text) => field.onChange(Number(text))}
+          {...propsCode}
+          value={field.value}
+          onChangeText={field.onChange}
           cellCount={CELL_COUNT}
           keyboardType="number-pad"
           textContentType="oneTimeCode"
@@ -75,10 +76,9 @@ export const CodeInputField = (
             </Text>
           )}
           rootStyle={rootStyle}
-          {...propsCode}
         />
       </XStack>
-    </ZixFieldContainer>
+    </FormFieldContainer>
   )
 };
 

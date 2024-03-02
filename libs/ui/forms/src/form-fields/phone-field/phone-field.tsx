@@ -1,20 +1,27 @@
 import { useTsController } from '@ts-react/form';
 
-import { SelectProps } from 'tamagui';
-import ZixFieldContainer from '../../common/zix-field-container/zix-field-container';
-import { ZixPhoneField } from '../../fields';
+import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common';
+import { ZixPhoneField, ZixPhoneFieldProps } from '../../fields';
 
-export const PhoneField = (props: Pick<SelectProps, 'size' | 'native'>) => {
+export type PhoneFieldProps = ZixPhoneFieldProps & {
+  containerProps?: BaseFormFieldContainerProps;
+}
+
+export const PhoneField: React.FC<PhoneFieldProps> = ({
+  containerProps = {},
+  ...props
+}) => {
   const { field, error } = useTsController<string>();
 
   return (
-    <ZixFieldContainer>
+    <FormFieldContainer {...containerProps}>
       <ZixPhoneField
+        {...props}
         error={error}
         value={field.value || ''}
         onValueChange={field.onChange}
       />
-    </ZixFieldContainer>
+    </FormFieldContainer>
   )
 };
 
