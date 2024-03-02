@@ -111,10 +111,16 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
         uuid,
         uploadProgress: 0.2,
       }
-      setPreviews((prev) => ({
-        ...prev,
-        [uuid]: media,
-      }))
+      if (isMultiple) {
+        setPreviews((prev) => ({
+          ...prev,
+          [uuid]: media,
+        }))
+      } else {
+        setPreviews({
+          [uuid]: media,
+        })
+      }
       uploadMediaFile(media as UploadableMediaFile, (progress) => {
         setPreviews((prev) => ({
           ...prev,
@@ -123,20 +129,24 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
             uploadProgress: progress,
           },
         }))
-      }).then((result) => {
-        setPreviews((prev) => ({
-          ...prev,
-          [uuid]: {
-            ...media,
-            ...result,
-            uploadProgress: 1
-          },
-        }))
-        onChange?.(isMultiple ? [
-          ...files,
-          result,
-        ] : result)
       })
+        .then((result) => {
+          setPreviews((prev) => ({
+            ...prev,
+            [uuid]: {
+              ...media,
+              ...result,
+              uploadProgress: 1
+            },
+          }))
+          onChange?.(isMultiple ? [
+            ...files,
+            result,
+          ] : result)
+        })
+        .catch((error) => {
+          alert('Oops, Failed to upload file. Please try again later!!')
+        })
     })
   }
 
