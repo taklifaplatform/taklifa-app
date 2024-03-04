@@ -4,24 +4,20 @@ import {
   ZixAutoCompleteField, ZixAutoCompleteFieldProps
 } from '../zix-auto-complete-field/zix-auto-complete-field';
 
+export type ZixCountryFieldProps = Partial<ZixAutoCompleteFieldProps>;
 
-export const ZixCountryField: React.FC<ZixAutoCompleteFieldProps> = (
+export const ZixCountryField: React.FC<ZixCountryFieldProps> = (
   props
 ) => {
   return (
     <ZixAutoCompleteField
       {...props}
       api="geography/countries"
-      dataMapper={(item: CountryTransformer) => {
-        const dial_code = item.dialling?.dial_code;
-        const countryCode = dial_code ? ` (+${dial_code})` : '';
-
-        const name = `${item.name}${countryCode}`;
-        return {
-          id: `${item.id}`,
-          name,
-        }
-      }}
+      dataMapper={(item: CountryTransformer) => ({
+        id: `${item.id}`,
+        name: item.name,
+        icon: item.flag,
+      })}
     />
   );
 };

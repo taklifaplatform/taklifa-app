@@ -5,6 +5,7 @@ import {
   BooleanCheckboxField,
   BooleanSwitchField,
   CodeInputField,
+  CountryField,
   DatePickerField,
   DatePickerFieldProps,
   MediaPickerField,
@@ -114,5 +115,6 @@ export const formFieldsMappings = [
   [formFields.phone, PhoneField] as const,
   [formFields.code, CodeInputField] as const,
 
+  [formFields.country, CountryField] as const,
   [formFields.address, AddressField] as const,
 ] as const;

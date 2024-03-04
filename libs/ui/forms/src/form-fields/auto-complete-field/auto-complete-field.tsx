@@ -1,4 +1,4 @@
-import { useStringFieldInfo, useTsController } from '@ts-react/form';
+import { useFieldInfo, useStringFieldInfo, useTsController } from '@ts-react/form';
 
 import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common';
 import { ZixAutoCompleteField, ZixAutoCompleteFieldProps } from '../../fields';
@@ -14,7 +14,7 @@ export const AutoCompleteField: React.FC<AutoCompleteFieldProps> = ({
   ...props
 }) => {
   const { field } = useTsController<string>();
-  const { placeholder } = useStringFieldInfo();
+  const { placeholder } = useFieldInfo();
 
   return (
     <FormFieldContainer {...containerProps}>
@@ -23,7 +23,7 @@ export const AutoCompleteField: React.FC<AutoCompleteFieldProps> = ({
         api={api}
         placeholder={placeholder}
         value={field.value}
-        onValueChange={(value) => field.onChange(value)}
+        onValueChange={field.onChange}
       />
     </FormFieldContainer>
   );

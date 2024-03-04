@@ -1,34 +1,35 @@
-import { Theme, useStyle } from 'tamagui';
-import { BaseZixFieldContainerProps } from '../../common/zix-field-container/zix-field-container';
-import BooleanCheckboxField from '../boolean-checkbox-field/boolean-checkbox-field';
-import { TextLink } from 'solito/link';
 import { t } from 'i18next';
+import { useRouter } from 'solito/router';
+import { Button, Theme } from 'tamagui';
+import BooleanCheckboxField, { BooleanCheckboxFieldProps } from '../boolean-checkbox-field/boolean-checkbox-field';
 
 
 const AcceptTermsLink: React.FC = () => {
+  const router = useRouter()
   return (
-    <Theme inverse>
-      <TextLink
-        href={`/terms-conditions`}
-        textProps={{
-          style: useStyle({
-            color: '$color5',
-          }),
-        }}
+    <Theme>
+      <Button
+        unstyled
+        color='$color5'
+        onPress={() => router.push('/terms-conditions')}
       >
         {t('auth:terms_and_conditions')}
-      </TextLink>
+      </Button>
     </Theme>
   );
 };
 
-export const AcceptTermsField = (props: BaseZixFieldContainerProps) => {
+export const AcceptTermsField: React.FC<BooleanCheckboxFieldProps> = (props) => {
   return (
     <BooleanCheckboxField
-      labelPrepend={
-        <AcceptTermsLink />
-      }
       {...props}
+      containerProps={{
+        labelPrepend: < AcceptTermsLink />,
+        ...(props.containerProps || {}),
+        stackContainerProps: {
+          paddingTop: '$4',
+        }
+      }}
     />
   )
 };

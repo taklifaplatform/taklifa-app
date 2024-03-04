@@ -23,15 +23,16 @@ export const BooleanCheckboxField: React.FC<BooleanCheckboxFieldProps> = ({
     <FormFieldContainer
       fieldInfo={useFieldInfo}
       labelInline
-      containerProps={{
-        flexDirection: 'row-reverse',
-        justifyContent: 'flex-end',
-      }}
       fieldContainerProps={{
         flex: 0
       }}
       labelShowRequiredAsterisk={false}
       {...containerProps}
+      stackContainerProps={{
+        flexDirection: 'row-reverse',
+        justifyContent: 'flex-end',
+        ...(containerProps?.stackContainerProps || {}),
+      }}
     >
       <Checkbox
         {...props}

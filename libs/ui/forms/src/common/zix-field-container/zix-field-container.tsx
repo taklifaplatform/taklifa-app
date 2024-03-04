@@ -51,7 +51,7 @@ const Label = styled(TGLabel, {
 export type BaseZixFieldContainerProps = ThemeableStackProps & {
   size?: SizeTokens;
   collapsible?: boolean;
-  containerProps?: ThemeableStackProps;
+  stackContainerProps?: ThemeableStackProps;
   fieldContainerProps?: ThemeableStackProps;
   labelHidden?: boolean;
   labelInline?: boolean;
@@ -72,7 +72,7 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
   labelInline,
   labelBold,
   collapsible,
-  containerProps = {},
+  stackContainerProps = {},
   fieldContainerProps = {},
   labelPrepend = null,
   labelShowRequiredAsterisk = true,
@@ -163,7 +163,7 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
         {
           collapsible ? renderAccordion() : (
             <>
-              <StackContainer labelInline={labelInline} {...containerProps}>
+              <StackContainer labelInline={labelInline} {...stackContainerProps}>
                 {renderLabel()}
                 {renderField()}
               </StackContainer>

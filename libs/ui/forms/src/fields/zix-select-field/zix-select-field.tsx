@@ -16,6 +16,7 @@ import {
 } from 'tamagui';
 import { SHARED_FIELDS_STYLE } from '../fields-config';
 import ZixInput from '../zix-input/zix-input';
+import { useMultiLang } from '@zix/i18n';
 
 export type BaseSelectFieldItem = {
   id: string
@@ -23,7 +24,7 @@ export type BaseSelectFieldItem = {
   description?: string
   icon?: React.ReactNode
 }
-export type ZixSelectFieldProps = SelectProps &{
+export type ZixSelectFieldProps = SelectProps & {
   options: BaseSelectFieldItem[]
   onChange?: (value: string) => void
   value?: string
@@ -57,6 +58,7 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
   ...props
 }) => {
   const themeName = useThemeName()
+  const { isRtl } = useMultiLang()
 
   const renderSearchBar = () => onSearch && (
     <YStack width='100%' padding='$4' marginVertical='$4'>
@@ -72,7 +74,10 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
 
   return (
     <Theme name={hasError ? 'red' : themeName} forceClassName>
-      <Select {...props} value={`${value}`} onValueChange={onChange} >
+      <Select {...props} value={`${value}`} onValueChange={val => {
+        console.log('====:: val', val)
+        onChange?.(String(val))
+      }} >
         <Select.Trigger
           width={width}
           iconAfter={ChevronDown}
@@ -131,9 +136,9 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
                       width="100%"
                     >
                       <Select.ItemText>
-                        {item.icon}
-                        {item?.icon && '  '}
+                        {(!isRtl && item.icon) && `${item.icon} `}
                         {item.name}
+                        {(isRtl && item.icon) && ` ${item.icon}`}
                       </Select.ItemText>
                       <Select.ItemIndicator marginLeft="auto">
                         <CustomIcon name='radio_button_checked' color='$color5' />
@@ -141,7 +146,7 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
                     </Select.Item>
                   )
                 }),
-                [options,]
+                [options, isRtl]
               )}
             </Select.Group>
           </Select.Viewport>

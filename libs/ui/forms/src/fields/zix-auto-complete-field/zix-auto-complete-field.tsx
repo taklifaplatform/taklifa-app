@@ -38,8 +38,8 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
 
   const { data } = useQuery(
     {
-      queryFn: async () => {
-        const result = await request(OpenAPI, {
+      queryFn() {
+        return request<any>(OpenAPI, {
           method: 'GET',
           url: `/api/${api}`,
           query: {
@@ -48,8 +48,6 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
             per_page: perPage,
           },
         });
-
-        return result?.data;
       },
       queryKey: [api, search, perPage, props.value],
       staleTime: 1000 * 60 * 60 * 24,
@@ -57,11 +55,11 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
   );
 
   const mappedData = useMemo<BaseSelectFieldItem[]>(() => {
-    return data?.map(dataMapper ? dataMapper : (item: any) => ({
+    return data?.data?.map(dataMapper ? dataMapper : (item: any) => ({
       id: item[itemKey || 'id'],
       name: item[itemValue || 'name'],
     })) || [];
-  }, [data, itemKey, itemValue, dataMapper])
+  }, [data?.data, itemKey, itemValue, dataMapper])
 
 
   return (

@@ -18,12 +18,12 @@ export interface AddressFieldProps {
 export const AddressSchema = z.object({
   address: z.string(),
   country_id: z.string(),
-  city_id: z.string(),
-  state_id: z.string(),
-  address_complement: z.string(),
-  postcode: z.string(),
-  latitude: z.number(),
-  longitude: z.number(),
+  // city_id: z.string(),
+  // state_id: z.string(),
+  // address_complement: z.string(),
+  // postcode: z.string(),
+  // latitude: z.number(),
+  // longitude: z.number(),
 })
 
 export function AddressField(props: AddressFieldProps) {
