@@ -18,7 +18,7 @@ export default function Screen() {
 
       }}
       onLayout={() => {
-        // router.push('/auth/login')
+        // router.push('/auth/register/create-account')
         if (Platform.OS === 'ios') {
           setTimeout(() => {
             redirectUserToActiveDashboard();

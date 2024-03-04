@@ -3,10 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { MediaTransformer } from './MediaTransformer';
-import type { ShipmentTransformer } from './ShipmentTransformer';
 export type ShipmentItemTransformer = {
     id?: number;
-    shipment_id?: ShipmentTransformer;
     medias?: Array<MediaTransformer>;
     notes?: string | null;
     dim_width?: number | null;
