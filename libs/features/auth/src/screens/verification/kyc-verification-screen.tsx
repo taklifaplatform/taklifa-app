@@ -17,6 +17,7 @@ import { useToastController } from '@tamagui/toast';
 import { UserVerificationService } from '@zix/api';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 import { useRegisterStepsCounter } from '../../hooks/useRegisterStepsCounter';
+import { useAuth } from '@zix/utils';
 
 const KYCFormSchema = z
   .object({
@@ -45,6 +46,7 @@ const KYCFormSchema = z
 export const KycVerificationScreen = () => {
   const router = useRouter();
   const toast = useToastController();
+  const { registerSteps } = useAuth()
   const { user, totalSteps } = useRegisterStepsCounter();
 
   const form = useForm<z.infer<typeof KYCFormSchema>>();
@@ -95,7 +97,7 @@ export const KycVerificationScreen = () => {
             <AuthHeader
               showIcon={false}
               activeStep={3}
-              totalSteps={totalSteps || 1}
+              totalSteps={registerSteps || 1}
               title="Confirmation of KYC"
             />
             {Object.values(fields)}

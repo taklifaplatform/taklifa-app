@@ -1,9 +1,8 @@
 import { t } from 'i18next';
-import { useAtom } from 'jotai';
 import { useRouter } from 'solito/router';
 import { YStack } from 'tamagui';
 
-import { authUserTypeAtom } from '../../atoms';
+import { useAuth } from '@zix/utils';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 import InlineItemSelect from '../../components/inline-item-select/inline-item-select';
 
@@ -13,9 +12,9 @@ import InlineItemSelect from '../../components/inline-item-select/inline-item-se
  */
 export const SelectUserTypeScreen = () => {
   const router = useRouter();
-  const [userType, setUserType] = useAtom(authUserTypeAtom);
+  const { requestedAccountType, setRequestedAccountType } = useAuth()
 
-  function onRedirectUser(type: string) {
+  function onRedirectUser() {
     router.push('/auth/register/create-account');
   }
 
@@ -23,8 +22,8 @@ export const SelectUserTypeScreen = () => {
     <YStack flex={1}>
       <AuthHeader
         iconName="avatar"
-        canGoNext={!!userType}
-        onGoNext={() => userType && onRedirectUser(userType)}
+        canGoNext={!!requestedAccountType}
+        onGoNext={() => requestedAccountType && onRedirectUser()}
         title={t('auth:create_new_account')}
       />
 
@@ -32,21 +31,21 @@ export const SelectUserTypeScreen = () => {
         <InlineItemSelect
           icon="solo_transporter_car"
           title={t('common:user_types.individual')}
-          value="individual"
-          selectedValue={userType}
+          value="solo_driver"
+          selectedValue={requestedAccountType}
           onSelect={(value) => {
-            setUserType(value);
-            onRedirectUser(value);
+            setRequestedAccountType(value);
+            onRedirectUser();
           }}
         />
         <InlineItemSelect
           icon="company_cars"
           title={t('common:user_types.company')}
-          value="company"
-          selectedValue={userType}
+          value="company_owner"
+          selectedValue={requestedAccountType}
           onSelect={(value) => {
-            setUserType(value);
-            onRedirectUser(value);
+            setRequestedAccountType(value);
+            onRedirectUser();
           }}
         />
       </YStack>
