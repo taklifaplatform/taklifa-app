@@ -39,12 +39,12 @@ export const ZixInput = forwardRef(function ZixInputEl(
   const currentInputProps = {
     ...SHARED_FIELDS_STYLE,
     textAlign: isRtl ? 'right' : 'left',
-    ...((leftIcon && !isRtl || isRtl && rightIcon)
+    ...(leftIcon
       ? {
         paddingLeft: '$8',
       }
       : {}),
-    ...((rightIcon && !isRtl || isRtl && leftIcon)
+    ...(rightIcon
       ? {
         paddingRight: '$8',
       }
@@ -79,8 +79,7 @@ export const ZixInput = forwardRef(function ZixInputEl(
       {leftIcon && (
         <Stack
           position="absolute"
-          left={isRtl ? 'auto' : '$3'}
-          right={isRtl ? '$3' : 'auto'}
+          left='$3'
           onPress={() => {
             onLeftIconPress?.();
           }}
@@ -94,8 +93,7 @@ export const ZixInput = forwardRef(function ZixInputEl(
       {rightIcon && (
         <Stack
           position="absolute"
-          left={isRtl ? '$3' : 'auto'}
-          right={isRtl ? 'auto' : '$3'}
+          right='$3'
           onPress={() => {
             onRightIconPress?.();
           }}
