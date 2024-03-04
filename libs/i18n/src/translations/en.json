@@ -211,6 +211,9 @@
     "content-5": "Go with “Sawaed Logistics” and enjoy the best experience in sending parcels. Download the application now and start your journey with us ",
     "banner-6": "Accredited to",
     "content-6": "Join the 'Sawaeed Logistics' family today and enjoy a unique experience in the world of sending parcels. Whether you want to send a surprise gift or move large goods, we are here to make the process easy and efficient.",
+    "client-desc": "We understand that your needs vary, which is why we offer a wide range of services.",
+    "driver-desc": "We understand that your needs vary, which is why we offer a wide range of services.",
+    "company-desc": "We understand that your needs vary, which is why we offer a wide range of services.",
     "warningtitle": "Fraud detection and reporting",
     "warningcontent": "Common warning signs of fraudulent attempts via mail, text or online,...",
     "warningbtn": "Report Problem",
@@ -233,5 +236,9 @@
     "blogstix": "Blogstix",
     "support": "Help and Support center",
     "all-rights-reserved": "All rights reserved"
+  },
+  "job": {
+    "job-title": "Get the best guaranteed and freelance jobs",
+    "job-description": "Browse jobs posted on Sawaed Logistics, or go directly and create a free profile to find work you love doing."
   }
 }

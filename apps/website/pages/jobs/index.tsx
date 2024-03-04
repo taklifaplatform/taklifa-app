@@ -1,12 +1,12 @@
+import { JobsListScreen } from '@zix/features/jobs';
+import { ManageJobs } from 'apps/website/components/jobs/ManageJobs';
 import { MainLayout } from 'apps/website/layouts/MainLayout';
 import { NextPageWithLayout } from '../_app';
-import { Text } from 'tamagui';
-import { JobsListScreen } from '@zix/features/jobs';
 
 export const Page: NextPageWithLayout = () => {
   return (
     <>
-      <Text>Jobs</Text>
+      <ManageJobs />
       <JobsListScreen />
     </>
   );
