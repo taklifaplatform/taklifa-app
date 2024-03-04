@@ -1,14 +1,5 @@
-import { useCallback } from 'react';
-import { I18nManager } from 'react-native'
-
 export function bootMultiLang() {
-  // // TODO: enable this line
-  // // const defaultLang = 'en';
-  const defaultLang = "ar";
-
-  
-  
-  return defaultLang;
+  return "ar";
 }
 
 export default bootMultiLang;

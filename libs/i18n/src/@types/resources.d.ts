@@ -45,8 +45,8 @@ interface Resources {
     "terms_and_conditions": "Terms and Conditions",
     "create_new_account": "Create New Account",
     "verification_in_progress": {
-      "title": "Verification in Progress",
-      "description": "You can use the app after the verification process is completed"
+      "title": "It might take few day to verify your account",
+      "description": "But you can start using the app now"
     },
     "account_created": {
       "title": "Account Created",
@@ -56,7 +56,7 @@ interface Resources {
       "resend": "Resend Code",
       "didnt_receive_code": "Didn't receive code?",
       "enter_pin_code_we_sent": "Enter the 6-digit confirmation code we sent",
-      "has_sent_to_your_mobile_number": "To your mobile number",
+      "has_sent_to_your_mobile_number": "Enter the 6-digit confirmation code we sent to your mobile number",
       "code_sent": "PIN Code has been sent to your mobile number"
     },
     "phone_number": {
@@ -75,6 +75,9 @@ interface Resources {
     "change_password": {
       "title": "Change Password",
       "description": "Enter your new password and confirm it to reset your password"
+    },
+    "kyc": {
+      "title": "Confirmation of KYC"
     }
   },
   "common": {
@@ -114,12 +117,20 @@ interface Resources {
     "company_legal_document": "Company Legal Document // Upload your company legal document",
     "company_location": "Company Location // Enter your company location",
     "is_whatsapp": "Is Whatsapp // Is whatsapp available",
+    "email": "Email // Enter your email",
+    "new_email": "New Email // Enter your new email",
+    "current_email": "Current Email // Enter your current email",
+    "birth_date": "Birth Date // Enter your birth date",
+    "select_nationality": "Nationality // Select your nationality",
+    "kyc_name": "Name (The name should be same in your identity) // Enter your full name",
+    "id_card": "ID Card // Upload your ID card",
+    "living_address": "Living Address // Enter your living address",
     "labels": {
       "code": "Code"
     }
   },
   "invite": {
-    "company-member": "Hello, {{name}}! {{company}} has invited you to join their team. \n\n To accept the invitation, click the link below: \n\n {{link}} \n\n If you have any questions, please contact {{company}} directly. \n\n Thanks, \n\n The {{company}} Team"
+    "company-member": "Hello, {{name}}! \n\n{{company}} has invited you to join their team. \n\nTo accept the invitation, click the link below: \n\n{{link}} \n\n"
   },
   "navigation": {
     "customer-dashboard": {
@@ -162,7 +173,6 @@ interface Resources {
     }
   },
   "vehicle": {
-    "forms": {},
     "verification": "Vehicle verification"
   },
   "web-home": {
@@ -175,7 +185,7 @@ interface Resources {
     "signup": "Sign up",
     "followus": "Follow Us",
     "download": "Download App",
-    "trnaslate": "Translate",
+    "translate": "Translate",
     "question": "Questions",
     "about": "About",
     "banner-1": "Seamless delivery solutions for your business",
@@ -187,6 +197,8 @@ interface Resources {
     "shipmentplaceholder": "Enter your tracking number",
     "track": "Track",
     "realtrack": "Real Track",
+    "send": "Send",
+    "realsend": "Real Send",
     "banner-2": "Welcome to Sawaed Logistics",
     "content-2": "Welcome to “Sawaed Logistics”, the application that embodies the spirit of progress and ease in the world of shipping and delivery. We take pride in offering an advanced and efficient platform that combines ease of use and distinguished logistical service...",
     "client": "Client",
@@ -196,7 +208,7 @@ interface Resources {
     "banner-4": "Manage all your shipments in one place",
     "content-4": "Take advantage of our services and solutions designed to meet all your shipping needs.",
     "banner-5": "Start Today!",
-    "content-5": "Go with “Sawaed Logistics” and enjoy the best experience in sending parcels. Download the application now and start your journey with us.",
+    "content-5": "Go with “Sawaed Logistics” and enjoy the best experience in sending parcels. Download the application now and start your journey with us ",
     "banner-6": "Accredited to",
     "content-6": "Join the 'Sawaeed Logistics' family today and enjoy a unique experience in the world of sending parcels. Whether you want to send a surprise gift or move large goods, we are here to make the process easy and efficient.",
     "warningtitle": "Fraud detection and reporting",
@@ -210,7 +222,7 @@ interface Resources {
     "certificates": "Certificates",
     "aboutsawaed": "About Sawaed Logistics",
     "legal": "Legal respionsibility",
-    "term": "Terms of use of the site",
+    "term": "Terms and Conditions",
     "customer": "Customer protection",
     "privacy": "Privacy policy",
     "cookie": "Cookie policy",
@@ -219,7 +231,8 @@ interface Resources {
     "jobs": "Jobs",
     "aramex": "Aramex Press",
     "blogstix": "Blogstix",
-    "support": "Help and Support center"
+    "support": "Help and Support center",
+    "all-rights-reserved": "All rights reserved"
   }
 }
 

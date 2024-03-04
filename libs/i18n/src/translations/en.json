@@ -45,8 +45,8 @@
     "terms_and_conditions": "Terms and Conditions",
     "create_new_account": "Create New Account",
     "verification_in_progress": {
-      "title": "Verification in Progress",
-      "description": "You can use the app after the verification process is completed"
+      "title": "It might take few day to verify your account",
+      "description": "But you can start using the app now"
     },
     "account_created": {
       "title": "Account Created",
@@ -56,7 +56,7 @@
       "resend": "Resend Code",
       "didnt_receive_code": "Didn't receive code?",
       "enter_pin_code_we_sent": "Enter the 6-digit confirmation code we sent",
-      "has_sent_to_your_mobile_number": "To your mobile number",
+      "has_sent_to_your_mobile_number": "Enter the 6-digit confirmation code we sent to your mobile number",
       "code_sent": "PIN Code has been sent to your mobile number"
     },
     "phone_number": {
@@ -75,6 +75,9 @@
     "change_password": {
       "title": "Change Password",
       "description": "Enter your new password and confirm it to reset your password"
+    },
+    "kyc": {
+      "title": "Confirmation of KYC"
     }
   },
   "common": {
@@ -114,12 +117,20 @@
     "company_legal_document": "Company Legal Document // Upload your company legal document",
     "company_location": "Company Location // Enter your company location",
     "is_whatsapp": "Is Whatsapp // Is whatsapp available",
+    "email": "Email // Enter your email",
+    "new_email": "New Email // Enter your new email",
+    "current_email": "Current Email // Enter your current email",
+    "birth_date": "Birth Date // Enter your birth date",
+    "select_nationality": "Nationality // Select your nationality",
+    "kyc_name": "Name (The name should be same in your identity) // Enter your full name",
+    "id_card": "ID Card // Upload your ID card",
+    "living_address": "Living Address // Enter your living address",
     "labels": {
       "code": "Code"
     }
   },
   "invite": {
-    "company-member": "Hello, {{name}}! {{company}} has invited you to join their team. \n\n To accept the invitation, click the link below: \n\n {{link}} \n\n If you have any questions, please contact {{company}} directly. \n\n Thanks, \n\n The {{company}} Team"
+    "company-member": "Hello, {{name}}! \n\n{{company}} has invited you to join their team. \n\nTo accept the invitation, click the link below: \n\n{{link}} \n\n"
   },
   "navigation": {
     "customer-dashboard": {
@@ -162,7 +173,6 @@
     }
   },
   "vehicle": {
-    "forms": {},
     "verification": "Vehicle verification"
   },
   "web-home": {

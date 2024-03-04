@@ -17,6 +17,14 @@
   "company_legal_document": "Company Legal Document // Upload your company legal document",
   "company_location": "Company Location // Enter your company location",
   "is_whatsapp": "Is Whatsapp // Is whatsapp available",
+  "email": "Email // Enter your email",
+  "new_email": "New Email // Enter your new email",
+  "current_email": "Current Email // Enter your current email",
+  "birth_date": "Birth Date // Enter your birth date",
+  "select_nationality": "Nationality // Select your nationality",
+  "kyc_name": "Name (The name should be same in your identity) // Enter your full name",
+  "id_card": "ID Card // Upload your ID card",
+  "living_address": "Living Address // Enter your living address",
   "labels": {
     "code": "Code"
   }
