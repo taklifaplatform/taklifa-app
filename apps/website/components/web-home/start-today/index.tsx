@@ -1,10 +1,13 @@
 import { useMultiLang } from '@zix/i18n';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
+import { useRouter } from 'next/router';
+import { Pressable } from 'react-native';
 import { Image, Stack, Text, Theme, YStack } from 'tamagui';
 
 export function StartToday() {
   const { activeLang } = useMultiLang();
+  const router = useRouter();
 
   const renderTextStartToday = () => (
     <YStack
@@ -76,9 +79,21 @@ export function StartToday() {
       >
         {t('web-home:download')}
       </Text>
-      <Stack flexDirection="row" gap="$4" $md={{ flexDirection: 'column' }}>
-        <CustomIcon name="googleplay" height="46px" width="158px" />
-        <CustomIcon name="appstore" height="46px" width="158px" />
+      <Stack flexDirection="row" gap="$4" $gtSm={{ display: 'none' }}>
+        <Pressable onPress={() => router.push('/')}>
+          <CustomIcon name="googleplay" size={'$11'} />
+        </Pressable>
+        <Pressable onPress={() => router.push('/')}>
+          <CustomIcon name="appstore" size={'$11'} />
+        </Pressable>
+      </Stack>
+      <Stack flexDirection="row" gap="$4" $sm={{ display: 'none' }}>
+        <Pressable onPress={() => router.push('/')}>
+          <CustomIcon name="googleplay" size={'$14'} />
+        </Pressable>
+        <Pressable onPress={() => router.push('/')}>
+          <CustomIcon name="appstore" size={'$14'} />
+        </Pressable>
       </Stack>
     </YStack>
   );
