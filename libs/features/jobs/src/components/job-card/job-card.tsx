@@ -6,6 +6,7 @@ import { View, Text } from 'react-native';
 
 export type JobCardProps = {
   job: ShipmentTransformer
+  urlPrefix?: string;
 }
 
 

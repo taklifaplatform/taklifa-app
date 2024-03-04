@@ -3,12 +3,14 @@ import React from 'react';
 
 import { View, Text } from 'react-native';
 
-/* eslint-disable-next-line */
-export interface JobsListScreenProps {
+export type JobsListScreenProps = {
+  urlPrefix?: string;
 }
 
 
-export function JobsListScreen(props: JobsListScreenProps) {
+export const JobsListScreen: React.FC<JobsListScreenProps> = ({
+  urlPrefix = '/jobs'
+}) => {
   return (
     <View>
       <Text>Welcome to jobs-list-screen!</Text>
