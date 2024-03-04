@@ -1,9 +1,8 @@
-import { YStack } from 'tamagui';
 import { t } from 'i18next';
-import { useAtom } from 'jotai';
 import { useRouter } from 'solito/router';
+import { YStack } from 'tamagui';
 
-import { authAccountTypeAtom } from '../../atoms';
+import { useAuth } from '@zix/utils';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 import InlineItemSelect from '../../components/inline-item-select/inline-item-select';
 
@@ -13,13 +12,12 @@ import InlineItemSelect from '../../components/inline-item-select/inline-item-se
  */
 export const SelectAccountTypeScreen: React.FC = () => {
   const router = useRouter();
-  const [accountType, setAccountType] = useAtom(authAccountTypeAtom);
+  const { requestedAccountType, setRequestedAccountType } = useAuth()
 
-  function onRedirectUser(type: string) {
-    if (type === 'service_requestor') {
+  function onRedirectUser(role: string) {
+    if (role === 'customer') {
       router.push('/auth/register/create-account');
-    }
-    if (type === 'service_provider') {
+    } else {
       router.push('/auth/register/user-type');
     }
   }
@@ -28,29 +26,29 @@ export const SelectAccountTypeScreen: React.FC = () => {
     <YStack flex={1}>
       <AuthHeader
         iconName="avatar"
-        canGoNext={!!accountType}
-        onGoNext={() => accountType && onRedirectUser(accountType)}
+        canGoNext={!!requestedAccountType}
+        onGoNext={() => requestedAccountType && onRedirectUser(requestedAccountType)}
         title={t('auth:create_new_account')}
       />
 
-      <YStack space="$4" marginHorizontal="$4" marginTop="$10">
+      <YStack gap="$4" marginHorizontal="$4" marginTop="$10">
         <InlineItemSelect
           icon="looking_for_service"
           title={t('common:account_types.seek.service_requestor')}
-          value="service_requestor"
-          selectedValue={accountType}
+          value="customer"
+          selectedValue={requestedAccountType}
           onSelect={(value) => {
-            setAccountType(value);
+            setRequestedAccountType(value);
             onRedirectUser(value);
           }}
         />
         <InlineItemSelect
           icon="service_provider"
           title={t('common:account_types.seek.service_provider')}
-          value="service_provider"
-          selectedValue={accountType}
+          value="solo_driver"
+          selectedValue={requestedAccountType}
           onSelect={(value) => {
-            setAccountType(value);
+            setRequestedAccountType(value);
             onRedirectUser(value);
           }}
         />

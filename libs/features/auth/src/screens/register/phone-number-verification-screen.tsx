@@ -1,40 +1,21 @@
-import { useAtom } from 'jotai';
-import { useMemo } from 'react';
 import { useRouter } from 'solito/router';
 
 import { UserTransformer } from '@zix/api';
-import { authAccountTypeAtom, authUserTypeAtom } from '../../atoms';
+import { useAuth } from '@zix/utils';
 import VerifyPhoneNumberForm from '../../forms/verify-phone-number-form/verify-phone-number-form';
 
 export const SignUpPhoneNumberVerificationScreen = () => {
   const router = useRouter();
-
-  const [userType] = useAtom(authUserTypeAtom);
-  const [accountType] = useAtom(authAccountTypeAtom);
-
-  const totalSteps = useMemo(() => {
-    if (accountType === 'service_requestor') {
-      return 2;
-    }
-    if (userType === 'company') {
-      return 3;
-    }
-    if (userType === 'individual') {
-      return 4;
-    }
-    return 0;
-  }, [userType, accountType]);
+  const { registerSteps, requestedAccountType } = useAuth()
 
   async function onSuccess(user?: UserTransformer) {
-    if (user?.requested_user_type === 'service_requestor') {
+    if (requestedAccountType === 'customer') {
       router.replace('/auth/register/success?redirect=/customer');
     }
-    if (user?.requested_user_type === 'company') {
-      alert('Company creation flow still under development');
-      router.replace('/companies/create');
-      // router.replace('/auth/create-company')
+    if (requestedAccountType === 'company_owner') {
+      router.replace('/company/create');
     }
-    if (user?.requested_user_type === 'individual') {
+    if (requestedAccountType === 'solo_driver') {
       router.replace('/auth/verify-kyc');
     }
   }
@@ -42,7 +23,7 @@ export const SignUpPhoneNumberVerificationScreen = () => {
   return (
     <VerifyPhoneNumberForm
       activeStep={2}
-      totalSteps={totalSteps || 1}
+      totalSteps={registerSteps || 1}
       onSuccess={onSuccess}
     />
   );

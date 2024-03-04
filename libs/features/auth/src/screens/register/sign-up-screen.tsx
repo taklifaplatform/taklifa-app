@@ -1,6 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { Theme } from 'tamagui';
 import { useToastController } from '@tamagui/toast';
 import {
   SchemaForm,
@@ -9,17 +8,15 @@ import {
   handleFormErrors,
 } from '@zix/ui/forms';
 import { t } from 'i18next';
-import { useAtom } from 'jotai';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
+import { Theme } from 'tamagui';
 import { z } from 'zod';
 
 import { AuthService } from '@zix/api';
 import { useAuth } from '@zix/utils';
-import { authAccountTypeAtom, authUserTypeAtom } from '../../atoms';
-import AcceptTermsLink from '../../components/accept-terms-link/accept-terms-link';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 
 const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
@@ -31,11 +28,10 @@ const SignUpSchema = z
     phone_number_has_whatsapp: formFields.boolean_switch
       .optional()
       .describe(t('forms:is_whatsapp')),
-    password: formFields.text.min(6).describe(t('forms:password')),
-    password_confirmation: formFields.text
-      .min(6)
+    password: formFields.secure_text.describe(t('forms:password')),
+    password_confirmation: formFields.secure_text
       .describe(t('forms:password_confirmation')),
-    accept_terms: formFields.boolean_checkbox.describe(t('forms:accept_terms')),
+    accept_terms: formFields.accept_terms.describe(t('forms:accept_terms')),
   })
   .required({
     name: true,
@@ -57,25 +53,10 @@ const SignUpSchema = z
 export const SignUpScreen = () => {
   const toast = useToastController();
   const router = useRouter();
-  const { setAuthAccessToken, setAuthUser } = useAuth();
-
-  const [userType] = useAtom(authUserTypeAtom);
-  const [accountType] = useAtom(authAccountTypeAtom);
   const updateParams = useUpdateParams();
-  const { params } = useParams();
 
-  const totalSteps = useMemo(() => {
-    if (accountType === 'service_requestor') {
-      return 2;
-    }
-    if (userType === 'company') {
-      return 3;
-    }
-    if (userType === 'individual') {
-      return 4;
-    }
-    return 0;
-  }, [userType, accountType]);
+  const { setAuthAccessToken, setAuthUser, registerSteps } = useAuth();
+  const { params } = useParams();
 
   useEffect(() => {
     if (params?.phone) {
@@ -85,17 +66,10 @@ export const SignUpScreen = () => {
 
   const form = useForm<z.infer<typeof SignUpSchema>>();
 
-  const requested_user_type =
-    !accountType || accountType === 'service_requestor'
-      ? 'service_requestor'
-      : userType;
   const { mutate, } = useMutation({
-    mutationFn: (variables: z.infer<typeof SignUpSchema>) =>
+    mutationFn: (requestBody: z.infer<typeof SignUpSchema>) =>
       AuthService.register({
-        requestBody: {
-          ...variables,
-          requested_user_type,
-        },
+        requestBody,
       }),
     onSuccess({ data }) {
       setAuthAccessToken(data?.plainTextToken);
@@ -132,10 +106,7 @@ export const SignUpScreen = () => {
           },
           password_confirmation: {
             secureTextEntry: true,
-          },
-          accept_terms: {
-            prepend: <AcceptTermsLink />,
-          },
+          }
         }}
         onSubmit={mutate}
         renderAfter={({ submit }) => (
@@ -154,10 +125,9 @@ export const SignUpScreen = () => {
             <AuthHeader
               showIcon={false}
               activeStep={1}
-              totalSteps={totalSteps || 1}
+              totalSteps={registerSteps || 1}
               title={t('auth:create_new_account')}
             />
-
             {Object.values(fields)}
           </>
         )}

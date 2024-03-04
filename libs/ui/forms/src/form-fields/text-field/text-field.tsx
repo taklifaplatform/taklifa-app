@@ -1,52 +1,41 @@
-import { useStringFieldInfo, useTsController } from '@ts-react/form';
+import { useFieldInfo, useStringFieldInfo, useTsController } from '@ts-react/form';
 import React from 'react';
-import { InputProps } from 'tamagui';
-import { ZixInput } from '../../fields';
+import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common';
+import { ZixInput, ZixInputProps } from '../../fields';
 
-export type TextFieldProps = Pick<InputProps, 'size' | 'autoFocus' | 'secureTextEntry'>
+export type TextFieldProps = ZixInputProps & {
+  containerProps?: BaseFormFieldContainerProps;
+}
 
-/**
- * A text input field component.
- *
- * @component
- * @example
- * // Usage:
- * <TextField
- *   secureTextEntry={true}
- * />
- *
- * @param {TextFieldProps} props - The props for the TextField component.
- * @returns {React.ReactElement} The rendered TextField component.
- */
-export const TextField = (props: TextFieldProps) => {
+export const TextField: React.FC<TextFieldProps> = ({
+  containerProps = {},
+  ...props
+}) => {
   const {
     field,
     error,
     formState: { isSubmitting },
   } = useTsController<string>();
-  const { label, placeholder, isOptional, maxLength, isEmail } =
-    useStringFieldInfo();
+  const { maxLength, isEmail } = useStringFieldInfo();
+  const { placeholder } = useFieldInfo();
 
   return (
-    <ZixInput
-      ref={field.ref}
-      required={!isOptional}
-      label={label}
-      placeholder={placeholder}
-      error={!!error?.errorMessage}
-      errorMessage={error?.errorMessage}
-      isPassword={props.secureTextEntry}
-      spellCheck={isEmail ? false : undefined}
-      autoCapitalize={isEmail ? 'none' : undefined}
-      keyboardType={isEmail ? 'email-address' : undefined}
-      disabled={isSubmitting}
-      maxLength={maxLength}
-      value={field.value}
-      onChangeText={field.onChange}
-      onBlur={field.onBlur}
-      {...props}
-    />
-  );
+    <FormFieldContainer {...containerProps}>
+      <ZixInput
+        {...props}
+        value={field.value}
+        onChangeText={field.onChange}
+        ref={field.ref}
+        spellCheck={isEmail ? false : undefined}
+        autoCapitalize={isEmail ? 'none' : undefined}
+        keyboardType={isEmail ? 'email-address' : undefined}
+        disabled={isSubmitting}
+        hasError={!!error?.errorMessage}
+        maxLength={maxLength}
+        placeholder={placeholder}
+      />
+    </FormFieldContainer>
+  )
 };
 
 export default TextField;

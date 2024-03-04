@@ -48,6 +48,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
           width={style.width as number}
           height={style.height as number}
           style={{ backgroundColor: 'white' }}
+          contentFit='fill'
         />
       ) : (
         <CustomIcon name="avatar" size={size} color="$color2" />

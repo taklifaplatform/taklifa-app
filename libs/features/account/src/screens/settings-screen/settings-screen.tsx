@@ -20,16 +20,16 @@ const brandColors = {
 export const SettingsScreen = () => {
   const media = useMedia();
   const pathname = usePathname();
-  //
+
   return (
     <YStack flex={1} gap="$2" justifyContent="space-between">
       <ScrollView>
-        <Settings marginTop="$6">
+        <Settings>
           <Settings.Items>
             <Settings.Group $gtSm={{ space: '$2' }}>
               <Settings.Item
                 icon={(props: IconProps) => (
-                  <CustomIcon name="settings" color="$color5" {...props} />
+                  <CustomIcon {...props} name="settings" color="$color5" />
                 )}
                 isActive={pathname === '/account/settings/general'}
                 {...useLink({

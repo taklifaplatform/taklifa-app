@@ -13,7 +13,6 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
 import { Theme } from 'tamagui';
 import { z } from 'zod';
-import AcceptTermsLink from '../../components/accept-terms-link/accept-terms-link';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 import { useRegisterStepsCounter } from '../../hooks/useRegisterStepsCounter';
 
@@ -25,7 +24,7 @@ const DriverVerificationFormSchema = z
     ),
     insurance_image: formFields.file.describe(t('forms:insurance_image')),
     avatar: formFields.file.describe(t('forms:photo')),
-    accept_terms: formFields.boolean_checkbox.describe(t('forms:accept_terms')),
+    accept_terms: formFields.accept_terms.describe(t('forms:accept_terms')),
   })
   .required({
     license_number: true,
@@ -59,11 +58,6 @@ export const AuthDriverVerificationScreen = () => {
     <FormProvider {...form}>
       <SchemaForm
         schema={DriverVerificationFormSchema}
-        props={{
-          accept_terms: {
-            prepend: <AcceptTermsLink />,
-          },
-        }}
         onSubmit={mutate}
         renderAfter={({ submit }) => {
           return (

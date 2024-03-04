@@ -99,7 +99,8 @@ const iconNames = [
   'vehicle_b',
   'vehicle_c',
   'store',
-  'job'
+  'job',
+  'radio_button_checked',
 ];
 
 export type CustomIconName = (typeof iconNames)[number];

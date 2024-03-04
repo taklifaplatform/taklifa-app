@@ -1,32 +1,31 @@
-import {} from "@tamagui/lucide-icons";
 import {
+  AcceptTermsField,
+  AddressField,
   AutoCompleteField,
   BooleanCheckboxField,
-  BooleanField,
   BooleanSwitchField,
   CodeInputField,
-  CountryField,
   DatePickerField,
   DatePickerFieldProps,
-  FileField,
   MediaPickerField,
-  NumberField,
+  MediaPickerFieldProps,
   PhoneField,
   SelectField,
   TextAreaField,
   TextField,
+  TextSecureField,
 } from "../form-fields";
 
-import AvatarField from "../form-fields/avatar-field/avatar-field";
 import { formFields } from "./form-fields-schemas";
 
 export const formFieldsMappings = [
   [formFields.text, TextField] as const,
   [formFields.textarea, TextAreaField] as const,
-  [formFields.number, NumberField] as const,
-  [formFields.boolean, BooleanField] as const,
+  [formFields.secure_text, TextSecureField] as const,
+  // [formFields.number, NumberField] as const,
   [formFields.boolean_switch, BooleanSwitchField] as const,
   [formFields.boolean_checkbox, BooleanCheckboxField] as const,
+  [formFields.accept_terms, AcceptTermsField] as const,
   [formFields.select, SelectField] as const,
   [formFields.autocomplete, AutoCompleteField] as const,
 
@@ -69,21 +68,51 @@ export const formFieldsMappings = [
         type: "row_date_picker",
       }),
   ] as const,
-  // [formFields.time, TimePickerField] as const,
-  // [formFields.row_time, RowTimeSelectorField] as const,
-
-  // [formFields.address, AddressField] as const,
 
   /**
    *  Multiple Media Selector Field
    */
-  [formFields.medias, MediaPickerField] as const,
+  // [formFields.media, MediaPickerField] as const,
+  [
+    formFields.medias,
+    (props: MediaPickerFieldProps) =>
+      MediaPickerField({
+        ...props,
+        type: "medias",
+        isMultiple: true,
+      }),
+  ] as const,
+  [
+    formFields.image,
+    (props: MediaPickerFieldProps) =>
+      MediaPickerField({
+        ...props,
+        type: "image",
+        containerProps: {
+          labelHidden: true,
+        },
+      }),
+  ] as const,
+  [
+    formFields.files,
+    (props: MediaPickerFieldProps) =>
+      MediaPickerField({
+        ...props,
+        type: "files",
+        isMultiple: true,
+      }),
+  ] as const,
+  [
+    formFields.file,
+    (props: MediaPickerFieldProps) =>
+      MediaPickerField({
+        ...props,
+        type: "file",
+      }),
+  ] as const,
 
   [formFields.phone, PhoneField] as const,
   [formFields.code, CodeInputField] as const,
-  // [formFields.date, DateField] as const,
-  [formFields.file, FileField] as const,
-  [formFields.files, FileField] as const,
-  [formFields.avatar, AvatarField] as const,
-  [formFields.country, CountryField] as const,
+
+  [formFields.address, AddressField] as const,
 ] as const;

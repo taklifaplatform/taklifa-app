@@ -1,74 +1,93 @@
 import React, { useMemo } from 'react';
 
 import { LinearGradient } from '@tamagui/linear-gradient';
-import { Check, ChevronDown, ChevronUp } from '@tamagui/lucide-icons';
-import { NativeValue } from '@tamagui/toast/types/ToastImperative';
-import { RecursiveErrorType } from '@ts-react/form/lib/src/zodObjectErrors';
+import { ChevronDown, ChevronUp } from '@tamagui/lucide-icons';
+import { CustomIcon } from '@zix/ui/icons';
+import { t } from 'i18next';
 import {
   Adapt,
   Select,
   SelectProps,
+  SelectTriggerProps,
   Sheet,
   Theme,
   YStack,
-  getFontSize,
-  isWeb,
   useThemeName
 } from 'tamagui';
+import { SHARED_FIELDS_STYLE } from '../fields-config';
+import ZixInput from '../zix-input/zix-input';
+
 export type BaseSelectFieldItem = {
   id: string
   name: string
+  description?: string
+  icon?: React.ReactNode
 }
-/* eslint-disable-next-line */
-export type ZixSelectFieldProps = {
+export type ZixSelectFieldProps = SelectProps &{
   options: BaseSelectFieldItem[]
-  native?: NativeValue<'web'>
   onChange?: (value: string) => void
   value?: string
   placeholder?: string
   prependPlaceHolder?: React.ReactNode
   appendPlaceHolder?: React.ReactNode
-  isSubmitting?: boolean
-  error?: RecursiveErrorType<any>
-  id?: string
-  selectTriggerProps?: SelectProps
+
+  disabled?: boolean
+  hasError?: boolean
+  selectTriggerProps?: SelectTriggerProps
   width?: number | string
-} & Pick<SelectProps, 'size' | 'native'>
+
+  search?: string
+  onSearch?: (value: string) => void
+
+}
 
 export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
-  options,
-  native = true,
+  options = [],
   onChange,
   value,
   placeholder,
   prependPlaceHolder,
   appendPlaceHolder,
-  isSubmitting,
-  error,
-  id,
+  disabled,
+  hasError,
   selectTriggerProps = {},
   width = '100%',
+  search,
+  onSearch,
   ...props
 }) => {
   const themeName = useThemeName()
 
+  const renderSearchBar = () => onSearch && (
+    <YStack width='100%' padding='$4' marginVertical='$4'>
+      <ZixInput
+        placeholder={t('common:search')}
+        value={search}
+        onChangeText={onSearch}
+        height='$3'
+        rightIcon={(props) => <CustomIcon name='search' {...props} />}
+      />
+    </YStack>
+  );
+
   return (
-    <Theme name={error ? 'red' : themeName} forceClassName>
-      <Select native={native} id={id} value={`${value}`} onValueChange={onChange} {...props}>
+    <Theme name={hasError ? 'red' : themeName} forceClassName>
+      <Select {...props} value={`${value}`} onValueChange={onChange} >
         <Select.Trigger
           width={width}
-          borderRadius="$6"
           iconAfter={ChevronDown}
+          {...SHARED_FIELDS_STYLE}
           {...selectTriggerProps}
         >
           {prependPlaceHolder}
-          <Select.Value fontSize="$1" placeholder={placeholder} />
+          <Select.Value flex={1} fontSize="$1" placeholder={placeholder} />
           {appendPlaceHolder}
         </Select.Trigger>
 
         <Adapt when="sm" platform="touch">
           <Sheet native modal dismissOnSnapToBottom>
             <Sheet.Frame>
+              {renderSearchBar()}
               <Sheet.ScrollView>
                 <Adapt.Contents />
               </Sheet.ScrollView>
@@ -98,36 +117,33 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
           </Select.ScrollUpButton>
 
           <Select.Viewport minWidth={200}>
-            <Select.Group disabled={isSubmitting} space="$0">
+            <Select.Group disabled={disabled}>
               {useMemo(
                 () => options.map((item, i) => {
                   return (
-                    <Select.Item index={i} key={item.name} value={`${item.id}`} m="$2">
-                      <Select.ItemText>{item.name}</Select.ItemText>
+                    <Select.Item
+                      index={i}
+                      key={`${item.id}-${i}`}
+                      value={`${item.id}`}
+                      padding="$4"
+                      borderBottomWidth={1}
+                      borderColor='$gray5'
+                      width="100%"
+                    >
+                      <Select.ItemText>
+                        {item.icon}
+                        {item?.icon && '  '}
+                        {item.name}
+                      </Select.ItemText>
                       <Select.ItemIndicator marginLeft="auto">
-                        <Check size="$2" color="$color11" />
+                        <CustomIcon name='radio_button_checked' color='$color5' />
                       </Select.ItemIndicator>
                     </Select.Item>
                   )
                 }),
-                [options]
+                [options,]
               )}
             </Select.Group>
-            {/* special icon treatment for native */}
-            {native && isWeb && (
-              <YStack
-                position="absolute"
-                right={0}
-                top={0}
-                bottom={0}
-                alignItems="center"
-                justifyContent="center"
-                width={'$4'}
-                pointerEvents="none"
-              >
-                <ChevronDown size={getFontSize((props.size ?? '$true') as number)} />
-              </YStack>
-            )}
           </Select.Viewport>
 
           <Select.ScrollDownButton
@@ -150,7 +166,7 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
           </Select.ScrollDownButton>
         </Select.Content>
       </Select>
-    </Theme>
+    </Theme >
   )
 }
 

@@ -1,12 +1,8 @@
 
 import { useTsController } from '@ts-react/form';
 
-import ZixFieldContainer, { BaseZixFieldContainerProps } from '../../common/zix-field-container/zix-field-container';
-import { ZixDatePicker, ZixDaySelection, ZixMonthSelection, ZixRowDatePicker, ZixRowTimeRangePicker, ZixYearSelection } from '../../fields/zix-date-fields';
-
-export type DatePickerFieldProps = BaseZixFieldContainerProps & {
-  type: 'date_picker' | 'day_selector' | 'month_selector' | 'year_selector' | 'row_time_range_picker' | 'row_date_picker'
-}
+import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common';
+import { ZixDateFieldProps, ZixDatePicker, ZixDaySelection, ZixMonthSelection, ZixRowDatePicker, ZixRowTimeRangePicker, ZixYearSelection } from '../../fields';
 
 export const DateComponents = {
   date_picker: ZixDatePicker,
@@ -17,8 +13,16 @@ export const DateComponents = {
   row_date_picker: ZixRowDatePicker,
 }
 
+export type DatePickerFieldProps = ZixDateFieldProps & {
+  containerProps?: BaseFormFieldContainerProps;
+  type: 'date_picker' | 'day_selector' | 'month_selector' | 'year_selector' | 'row_time_range_picker' | 'row_date_picker'
+}
 
-export function DatePickerField({ type = 'date_picker', ...props }: DatePickerFieldProps) {
+export const DatePickerField: React.FC<DatePickerFieldProps> = ({
+  type = 'date_picker',
+  containerProps = {},
+  ...props
+}) => {
   const {
     field,
     error,
@@ -27,16 +31,16 @@ export function DatePickerField({ type = 'date_picker', ...props }: DatePickerFi
   const Component = DateComponents[type]
 
   return (
-    <ZixFieldContainer>
+    <FormFieldContainer {...containerProps}>
       <Component
+        {...props}
         value={field.value}
         onChange={field.onChange}
         onBlur={field.onBlur}
         hasError={!!error?.errorMessage}
       />
-    </ZixFieldContainer>
+    </FormFieldContainer>
   )
 }
-
 
 export default DatePickerField;

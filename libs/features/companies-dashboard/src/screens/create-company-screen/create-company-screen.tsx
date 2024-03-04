@@ -14,7 +14,7 @@ import { z } from 'zod';
 
 const CreateCompanyFormSchema = z
   .object({
-    // logo: formFields.avatar.optional().describe('Add Company Logo'),
+    logo: formFields.image.optional().describe('Logo // Add Company Logo'),
     name: formFields.text.min(2).max(150).describe(t('forms:company_name')),
     company_documents: formFields.files.describe(
       t('Company Documents // Attach documents...')
@@ -23,7 +23,7 @@ const CreateCompanyFormSchema = z
     //   .min(2)
     //   .max(25)
     //   .describe('Company Location // Enter company location'),
-    accept_terms: formFields.boolean_checkbox.describe(t('forms:accept_terms')),
+    accept_terms: formFields.accept_terms.describe(t('forms:accept_terms')),
   })
   .required({
     name: true,

@@ -1,15 +1,32 @@
+import { useTsController } from '@ts-react/form';
 import React from 'react';
 
-import { View, Text } from 'react-native';
+import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common';
+import { ZixSelectField, ZixSelectFieldProps } from '../../fields';
 
-/* eslint-disable-next-line */
-export interface SelectFieldProps {}
+export type SelectFieldProps = ZixSelectFieldProps & {
+  containerProps?: BaseFormFieldContainerProps;
+}
 
-export function SelectField(props: SelectFieldProps) {
+export const SelectField: React.FC<SelectFieldProps> = ({
+  containerProps = {},
+  ...props
+}) => {
+  const {
+    field,
+    error,
+    formState: { isSubmitting },
+  } = useTsController<string>();
   return (
-    <View>
-      <Text>Welcome to select-field!</Text>
-    </View>
+    <FormFieldContainer {...containerProps}>
+      <ZixSelectField
+        {...props}
+        disabled={isSubmitting}
+        hasError={!!error?.errorMessage}
+        value={field.value}
+        onChange={field.onChange}
+      />
+    </FormFieldContainer>
   );
 }
 

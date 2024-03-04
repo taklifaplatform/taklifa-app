@@ -1,32 +1,35 @@
 import { useFieldInfo, useTsController } from '@ts-react/form';
-import { TextAreaProps } from 'tamagui';
-import { ZixInput } from '../../fields';
+import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common';
+import { ZixInput, ZixInputProps } from '../../fields';
 
-export type TextAreaFieldProps = Pick<TextAreaProps, 'size' | 'autoFocus'>;
+export type TextAreaFieldProps = ZixInputProps & {
+  containerProps?: BaseFormFieldContainerProps;
+}
 
-export const TextAreaField = (props: TextAreaFieldProps) => {
+export const TextAreaField: React.FC<TextAreaFieldProps> = ({
+  containerProps = {},
+  ...props
+}) => {
   const {
     field,
     error,
     formState: { isSubmitting },
   } = useTsController<string>();
-  const { label, isOptional, placeholder } = useFieldInfo();
+  const { placeholder } = useFieldInfo();
 
   return (
-    <ZixInput
-      multiline={true}
-      ref={field.ref}
-      required={!isOptional}
-      label={label}
-      placeholder={placeholder}
-      error={!!error?.errorMessage}
-      helperText={error?.errorMessage}
-      disabled={isSubmitting}
-      value={field.value}
-      onChangeText={field.onChange}
-      onBlur={field.onBlur}
-      {...props}
-    />
+    <FormFieldContainer {...containerProps}>
+      <ZixInput
+        {...props}
+        value={field.value}
+        onChangeText={field.onChange}
+        ref={field.ref}
+        disabled={isSubmitting}
+        hasError={!!error?.errorMessage}
+        placeholder={placeholder}
+        isMultiline
+      />
+    </FormFieldContainer>
   );
 };
 

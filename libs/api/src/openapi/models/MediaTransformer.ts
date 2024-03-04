@@ -4,7 +4,7 @@
 /* eslint-disable */
 export type MediaTransformer = {
     id?: number;
-    uuid?: number;
+    uuid?: string;
     url?: string;
     original_url?: string;
 };

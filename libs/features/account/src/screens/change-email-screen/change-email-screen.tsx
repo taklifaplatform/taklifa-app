@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { UserService } from '@zix/api';
-import { H2, Theme, YStack, isWeb, useToastController } from 'tamagui';
+import { H2, Theme, YStack, isWeb } from 'tamagui';
 import {
   SchemaForm,
   SubmitButton,
@@ -13,6 +13,7 @@ import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
 import { z } from 'zod';
+import { useToastController } from '@tamagui/toast';
 
 const ChangeEmailSchema = z.object({
   current_email: formFields.text

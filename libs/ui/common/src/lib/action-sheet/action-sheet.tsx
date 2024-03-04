@@ -1,5 +1,4 @@
 import { X } from '@tamagui/lucide-icons';
-import { Button, Sheet, Text, XStack, YStack } from 'tamagui';
 import {
   FunctionComponent,
   forwardRef,
@@ -7,14 +6,15 @@ import {
   useState,
 } from 'react';
 import { Dimensions } from 'react-native';
+import { Button, ListItem, Sheet, Text, XStack, YStack } from 'tamagui';
 
 export interface IAction {
   name: string;
   disabled?: boolean;
   icon?:
-    | JSX.Element
-    | FunctionComponent<{ color?: string; size?: number }>
-    | null;
+  | JSX.Element
+  | FunctionComponent<{ color?: string; size?: number }>
+  | null;
   onPress?: () => void;
 }
 
@@ -39,8 +39,6 @@ export const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
       Number(SCREEN_HEIGHT / (ACTION_HEIGHT * 2)) + (props.modal ? 0 : 1);
     const SNAP_POINTS = [ACTION_HEIGHT_POINTS * (props.actions.length + 1)];
 
-    // const onToggle =
-
     useImperativeHandle(ref, () => ({
       open: () => setIsOpen(true),
       close: () => setIsOpen(false),
@@ -63,45 +61,33 @@ export const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
           exitStyle={{ opacity: 0 }}
         />
 
-        <Sheet.Frame>
-          <XStack
-            justifyContent="space-between"
-            alignItems="center"
-            padding="$4"
-          >
-            <Text fontSize="$5" fontWeight="600">
-              {props.title}
-            </Text>
-            <Button
-              unstyled
-              icon={(props) => <X {...props} size="$1" />}
-              onPress={() => setIsOpen(false)}
-            />
-          </XStack>
-          <YStack>
-            {props.actions.map((action, index) => (
+        <Sheet.Frame backgroundColor='$color1'>
+          <YStack flex={1}>
+            <XStack
+              justifyContent="space-between"
+              alignItems="center"
+              padding="$4"
+            >
+              <Text fontSize="$5" fontWeight="600">
+                {props.title}
+              </Text>
               <Button
-                opacity={action.disabled ? 0.5 : 1}
-                disabled={action.disabled}
-                justifyContent={'flex-start'}
-                backgroundColor="$color2"
-                height={ACTION_HEIGHT}
-                borderTopWidth="$0.25"
-                borderTopColor="$color9"
-                borderRadius="$0"
+                unstyled
+                icon={(props: any) => <X {...props} size="$1" />}
+                onPress={() => setIsOpen(false)}
+              />
+            </XStack>
+            {props.actions.map((action, index) => (
+              <ListItem
                 key={index}
-                pressStyle={{
-                  backgroundColor: 'transparent',
-                  borderWidth: 0,
-                  borderColor: '$color9',
-                }}
-                icon={action.icon}
                 onPress={action.onPress}
-              >
-                <Text fontSize="$2" fontWeight="800" color="$color10">
-                  {action.name}
-                </Text>
-              </Button>
+                title={action.name}
+                icon={action.icon}
+                disabled={action.disabled}
+                padding="$4"
+                borderTopWidth={1}
+                borderColor='$gray5'
+              />
             ))}
           </YStack>
           <Sheet.Handle />

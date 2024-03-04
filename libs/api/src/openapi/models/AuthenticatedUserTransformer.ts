@@ -14,7 +14,6 @@ export type AuthenticatedUserTransformer = {
     email?: string;
     email_verified_at?: string;
     about?: string;
-    requested_user_type?: string;
     roles?: Array<UserSimpleRoleTransformer>;
     active_role?: UserSimpleRoleTransformer;
     companies?: Array<ActiveCompanyTransformer>;

@@ -1,43 +1,28 @@
-import { useStringFieldInfo, useTsController } from '@ts-react/form';
-import { useId } from 'react';
+import { useTsController } from '@ts-react/form';
 
-import { Fieldset, Label, SelectProps, Theme, useThemeName } from 'tamagui';
-import { Shake } from '@zix/ui/common';
-import { ZixPhoneField } from '../../fields';
-import { FieldError } from '../../common';
+import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common';
+import { ZixPhoneField, ZixPhoneFieldProps } from '../../fields';
 
-export const PhoneField = (props: Pick<SelectProps, 'size' | 'native'>) => {
+export type PhoneFieldProps = ZixPhoneFieldProps & {
+  containerProps?: BaseFormFieldContainerProps;
+}
+
+export const PhoneField: React.FC<PhoneFieldProps> = ({
+  containerProps = {},
+  ...props
+}) => {
   const { field, error } = useTsController<string>();
 
-  const { label, placeholder } = useStringFieldInfo();
-  const themeName = useThemeName();
-  const id = useId();
-
   return (
-    <Theme name={error ? 'red' : themeName} forceClassName>
-      <Fieldset>
-        {!!label && (
-          <Label
-            textAlign="left"
-            theme="alt1"
-            size={props.size || '$3'}
-            htmlFor={id}
-          >
-            {label}
-          </Label>
-        )}
-        <Shake shakeKey={error?.errorMessage}>
-          <ZixPhoneField
-            error={error}
-            placeholder={placeholder}
-            value={field.value || ''}
-            onValueChange={field.onChange}
-          />
-        </Shake>
-        <FieldError message={error?.errorMessage} />
-      </Fieldset>
-    </Theme>
-  );
+    <FormFieldContainer {...containerProps}>
+      <ZixPhoneField
+        {...props}
+        error={error}
+        value={field.value || ''}
+        onValueChange={field.onChange}
+      />
+    </FormFieldContainer>
+  )
 };
 
 export default PhoneField;

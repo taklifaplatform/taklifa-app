@@ -270,9 +270,9 @@ export function HomeScreen(props: HomeScreenProps) {
   const renderList = () => (
     <YStack flex={1} backgroundColor={'$color1'} alignItems="center">
       <ScrollView showsVerticalScrollIndicator={false} flex={1} marginTop="$11">
-        {markers.map((marker, index) => (
-          <YStack key={index} marginBottom="$2">
-            <DriverCard map={false}/>
+        {markers?.map((marker, index) => (
+          <YStack key={`stack-${index}`} marginBottom="$2">
+            <DriverCard key={`stack-d-${index}`} map={false}/>
           </YStack>
         ))}
       </ScrollView>
@@ -309,7 +309,7 @@ export function HomeScreen(props: HomeScreenProps) {
       }
     | any) => {
     return (
-      <View onPress={() => setShowModal(true)} padding="$3"
+      <View key={`view-d-${index}`} onPress={() => setShowModal(true)} padding="$3"
       //backgroundColor={'$gray4'}
       >
         <DriverCard

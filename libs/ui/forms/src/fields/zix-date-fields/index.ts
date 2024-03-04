@@ -5,3 +5,4 @@ export * from "./zix-month-selection";
 export * from "./zix-year-selection";
 export * from "./zix-row-time-range-picker";
 export * from "./zix-row-date-picker";
+export * from "./types";

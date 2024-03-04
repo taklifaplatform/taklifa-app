@@ -1,56 +1,50 @@
 import { useFieldInfo, useTsController } from '@ts-react/form';
-import { useId } from 'react';
 import {
-  Fieldset,
-  Label,
   Switch,
-  SwitchProps,
-  Theme,
-  useThemeName,
-  XStack,
+  SwitchProps
 } from 'tamagui';
-import { FieldError } from '../../common';
+import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common';
 
-export const BooleanSwitchField = (
-  props: Pick<SwitchProps, 'size' | 'native'>
-) => {
+export type BooleanSwitchFieldProps = SwitchProps & {
+  containerProps?: BaseFormFieldContainerProps;
+}
+
+export const BooleanSwitchField: React.FC<BooleanSwitchFieldProps> = ({
+  containerProps = {},
+  ...props
+}) => {
   const {
     field,
-    error,
     formState: { isSubmitting },
   } = useTsController<boolean>();
-  const { label, isOptional } = useFieldInfo();
-  const id = useId();
-  const themeName = useThemeName();
   const disabled = isSubmitting;
 
   return (
-    <Theme name={error ? 'red' : themeName} forceClassName>
-      <Fieldset alignItems="flex-start">
-        <XStack gap="$3" marginTop={'$4'} alignItems="center">
-          <Switch
-            disabled={disabled}
-            native
-            checked={field.value}
-            onCheckedChange={(checked) => field.onChange(checked)}
-            ref={field.ref}
-            id={id}
-            {...props}
-          >
-            <Switch.Thumb animation="100ms" />
-          </Switch>
-
-          {!!label && (
-            <Label theme="alt1" size={props.size || '$3'} htmlFor={id}>
-              {label} {isOptional && `(Optional)`}
-            </Label>
-          )}
-        </XStack>
-
-        <FieldError message={error?.errorMessage} />
-      </Fieldset>
-    </Theme>
-  );
+    <FormFieldContainer
+      fieldInfo={useFieldInfo}
+      labelInline
+      containerProps={{
+        flexDirection: 'row-reverse',
+        justifyContent: 'flex-end',
+      }}
+      fieldContainerProps={{
+        flex: 0
+      }}
+      labelShowRequiredAsterisk={false}
+      {...containerProps}
+    >
+      <Switch
+        {...props}
+        disabled={disabled}
+        native
+        checked={field.value}
+        onCheckedChange={(checked) => field.onChange(checked)}
+        ref={field.ref}
+      >
+        <Switch.Thumb animation="100ms" />
+      </Switch>
+    </FormFieldContainer>
+  )
 };
 
 export default BooleanSwitchField;

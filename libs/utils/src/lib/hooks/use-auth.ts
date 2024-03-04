@@ -8,7 +8,11 @@ import {
 import { useAtom } from "jotai";
 import { useCallback, useMemo } from "react";
 import { useRouter } from "solito/router";
-import { authAccessTokenStorage, authUserStorage } from "../atoms";
+import {
+  authAccessTokenStorage,
+  authRequestedAccountTypeStorage,
+  authUserStorage,
+} from "../atoms";
 
 export type RedirectUserOptions = {
   pushRoute?: boolean;
@@ -18,6 +22,9 @@ export type RedirectUserOptions = {
 export function useAuth() {
   const [authAccessToken, setAuthAccessToken] = useAtom(authAccessTokenStorage);
   const [authUser, setAuthUser] = useAtom(authUserStorage);
+  const [requestedAccountType, setRequestedAccountType] = useAtom(
+    authRequestedAccountTypeStorage,
+  );
   const router = useRouter();
 
   const { data, refetch, isLoading } = useQuery({
@@ -35,6 +42,22 @@ export function useAuth() {
   }), [authUser, data]);
 
   const isLoggedIn = useMemo(() => !!authAccessToken, [authAccessToken]);
+
+  /**
+   * The number of steps in the registration process.
+   */
+  const registerSteps = useMemo(() => {
+    if (requestedAccountType === 'customer') {
+      return 2;
+    }
+    if (requestedAccountType === 'company_owner') {
+      return 3;
+    }
+    if (requestedAccountType === 'solo_driver') {
+      return 4;
+    }
+    return 0;
+  }, [requestedAccountType]);
 
   const avatarUrl = useMemo(() => {
     if (user?.avatar?.url) return user?.avatar?.url;
@@ -95,5 +118,9 @@ export function useAuth() {
     setAuthUser,
     isLoggedIn,
     redirectUserToActiveDashboard,
+
+    requestedAccountType,
+    setRequestedAccountType,
+    registerSteps,
   };
 }

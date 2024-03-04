@@ -82,6 +82,26 @@ export class GeographyService {
         });
     }
     /**
+     * Display the specified country.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static getCountryByDialCode({
+        dialCode,
+    }: {
+        dialCode: string,
+    }): CancelablePromise<{
+        data?: CountryTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/geography/countries/dial-code/{dialCode}',
+            path: {
+                'dialCode': dialCode,
+            },
+        });
+    }
+    /**
      * Display a listing of the states.
      * @returns any Successful response
      * @throws ApiError
