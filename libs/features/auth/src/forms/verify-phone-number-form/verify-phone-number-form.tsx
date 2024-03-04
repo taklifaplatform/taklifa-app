@@ -114,12 +114,12 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
         renderAfter={({ submit }) => {
           return (
             <Stack>
-              <ResendCodeNumber />
               <Theme inverse>
                 <SubmitButton onPress={() => submit()}>
                   {t('common:confirm')}
                 </SubmitButton>
               </Theme>
+              <ResendCodeNumber />
             </Stack>
           );
         }}
