@@ -17,7 +17,7 @@ export function Header() {
       borderTopWidth={2}
       borderTopColor={'$gray7'}
       paddingHorizontal="$3"
-      paddingVertical="$4"
+      paddingVertical="$1"
       marginBottom="$4"
     >
       <XStack gap="$1">
@@ -27,10 +27,16 @@ export function Header() {
       </XStack>
       {/* Logo */}
       {
-        !theme.dark ? (
-          <CustomIcon name={'weblogo'} width={'110px'} height={'52px'} />
+      //   !theme.dark ? (
+      //     <CustomIcon name={'weblogo'} width={'110px'} height={'52px'} />
+      //   ) : (
+      //     <CustomIcon name={'web-dark-logo'} width={'110px'} height={'52px'} />
+      //   )
+      // }
+      !theme.dark ? (
+          <CustomIcon name={'weblogo'} size={'$10'} />
         ) : (
-          <CustomIcon name={'web-dark-logo'} width={'110px'} height={'52px'} />
+          <CustomIcon name={'web-dark-logo'} size={'$10'} />
         )
       }
        

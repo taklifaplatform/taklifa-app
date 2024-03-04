@@ -140,7 +140,7 @@ export function MobileDrawer() {
           <XStack gap="$4">
             <FooterItem
               icon={
-                <CustomIcon name={'appstore'} width={'123px'} height={'35px'} />
+                <CustomIcon name={'appstore'} size={'$8'} />
               }
               path={'/'}
             />
@@ -148,8 +148,7 @@ export function MobileDrawer() {
               icon={
                 <CustomIcon
                   name={'googleplay'}
-                  width={'123px'}
-                  height={'35px'}
+                  size={'$8'}
                 />
               }
               path={'/'}

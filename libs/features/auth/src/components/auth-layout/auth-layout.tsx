@@ -1,5 +1,6 @@
 import { XStack, YStack } from 'tamagui';
 import OnboardingScreen from '../../screens/onboarding-screen/onboarding-screen';
+import OnboardingAuthScreen from '../../screens/onboarding-auth-screen/onboarding-auth-screen';
 
 export type AuthLayoutProps = {
   children?: React.ReactNode;
@@ -8,13 +9,17 @@ export type AuthLayoutProps = {
 export const AuthLayout = ({ children }: AuthLayoutProps) => {
   return (
     <XStack flex={1}>
-      <YStack flex={2} paddingVertical="$4" justifyContent="center">
+      
+      
+      <YStack $sm={{ display: 'none' }} width={'50%'}>
+        {/* <OnboardingScreen /> */}
+        <OnboardingAuthScreen />
+
+      </YStack>
+      <YStack width={'50%'} $sm={{ width: '100%' }} paddingVertical="$4" justifyContent="center">
         {children}
       </YStack>
-
-      <YStack $sm={{ display: 'none' }} flex={3}>
-        <OnboardingScreen />
-      </YStack>
+      
     </XStack>
   );
 };

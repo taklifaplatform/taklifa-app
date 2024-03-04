@@ -8,17 +8,17 @@ export function Footer() {
     <>
       <XStack
         justifyContent="flex-end"
-        paddingHorizontal="$4"
+        paddingHorizontal="$3"
         $md={{ display: 'none' }}
       >
-        <CustomIcon name={'web-dark-logo'} width={'134px'} height={'68px'} />
+        <CustomIcon name={'web-dark-logo'} size={'$10'} />
       </XStack>
       <XStack
         justifyContent="flex-end"
-        paddingHorizontal="$4"
+        paddingHorizontal="$3"
         $gtMd={{ display: 'none' }}
       >
-        <CustomIcon name={'web-dark-logo'} width={'78px'} height={'38px'} />
+        <CustomIcon name={'web-dark-logo'} size={'$8'} />
       </XStack>
     </>
   );
@@ -98,13 +98,13 @@ export function Footer() {
         >
           <FooterItem
             icon={
-              <CustomIcon name="appstore" width={'123px'} height={'35px'} />
+              <CustomIcon name="appstore" size={'$13'} />
             }
             path={'/'}
           />
           <FooterItem
             icon={
-              <CustomIcon name="googleplay" width={'123px'} height={'35px'} />
+              <CustomIcon name="googleplay" size={'$13'} />
             }
             path={'/'}
           />
@@ -116,12 +116,12 @@ export function Footer() {
           }}
         >
           <FooterItem
-            icon={<CustomIcon name="appstore" width={'99px'} height={'29px'} />}
+            icon={<CustomIcon name="appstore" size={'$10'} />}
             path={'/'}
           />
           <FooterItem
             icon={
-              <CustomIcon name="googleplay" width={'99px'} height={'29px'} />
+              <CustomIcon name="googleplay" size={'$10'} />
             }
             path={'/'}
           />

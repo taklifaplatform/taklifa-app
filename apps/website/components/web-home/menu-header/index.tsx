@@ -28,14 +28,13 @@ export function MobileHeader() {
       borderTopColor={'$gray7'}
       paddingHorizontal="$4"
       marginVertical="$4"
-      paddingVertical="$2"
+      paddingVertical="$1"
       overflow="hidden"
-      // flex={1}
     >
       <Button
         unstyled
         backgroundColor="transparent"
-        paddingVertical="$4"
+        paddingVertical="$2"
         onPress={() => router.push('/auth/login')}
         $sm={{
           size: '$2',
@@ -46,9 +45,9 @@ export function MobileHeader() {
       ></Button>
 
       {!theme.dark ? (
-        <CustomIcon name={'weblogo'} width={'68px'} height={'32px'} />
+        <CustomIcon name={'weblogo'} size={'$6'} />
       ) : (
-        <CustomIcon name={'web-dark-logo'} width={'68px'} height={'32px'} />
+        <CustomIcon name={'web-dark-logo'} size={'$6'} />
       )}
 
       <Pressable onPress={() => setDrawer(!drawer)}>

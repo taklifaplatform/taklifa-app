@@ -2,6 +2,7 @@
 import React from 'react';
 
 import { View, Text } from 'react-native';
+import MapView from 'react-native-maps';
 
 export type Location = {
   latitude: number
@@ -16,9 +17,9 @@ export type ZixMapPointerFieldProps = {
 
 export const ZixMapPointerField: React.FC<ZixMapPointerFieldProps> = (props) => {
   return (
-    <View style={{ flex: 1 }}>
+    <MapView style={{ flex: 1 }}>
 
-    </View>
+    </MapView>
   );
 }
 
