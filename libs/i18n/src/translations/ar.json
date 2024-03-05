@@ -44,6 +44,7 @@
     "dont_have_account": "ليس لديك حساب؟",
     "terms_and_conditions": "الشروط والأحكام الخاصة بسواعد",
     "create_new_account": "إنشاء حساب جديد",
+    "add_new_account": "إضافة حساب جديد",
     "verification_in_progress": {
       "title": "قد يستغرق الأمر بضعة أيام للتحقق من حسابك",
       "description": "يمكنك البدء باستخدام تطبيق سواعد الطريق الآن"

@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { Stack, Text, Theme, XStack } from 'tamagui';
 
 import { useToastController } from '@tamagui/toast';
-import { AuthService, UserTransformer } from '@zix/api';
+import { AuthService } from '@zix/api';
 import {
   SchemaForm,
   SubmitButton,
@@ -22,7 +22,7 @@ const VerifyPhoneNumberFormSchema = z.object({
 const { useParams } = createParam<{ phone?: string }>();
 
 export type VerifyPhoneNumberFormProps = {
-  onSuccess: (user?: UserTransformer) => void;
+  onSuccess: (data?: any) => void;
   activeStep?: number;
   totalSteps?: number;
 };
@@ -54,7 +54,7 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
         },
       }),
     onSuccess({ data }) {
-      onSuccess(data?.user);
+      onSuccess(data);
     },
     onError(error: any) {
       alert('error');

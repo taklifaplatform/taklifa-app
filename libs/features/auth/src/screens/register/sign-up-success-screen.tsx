@@ -2,12 +2,9 @@ import { SubmitButton } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
 import { useAuth } from '@zix/utils';
 import { t } from 'i18next';
-import { createParam } from 'solito';
-import { useRouter } from 'solito/router';
 import { H2, Text, Theme, YStack } from 'tamagui';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 
-const { useParam } = createParam<{ redirect: string }>();
 
 /**
  * Renders the sign-up success screen.
@@ -16,14 +13,8 @@ const { useParam } = createParam<{ redirect: string }>();
  * and a button to proceed to the next step or redirect to a specified page.
  */
 export const SignUpSuccessScreen = () => {
-  const router = useRouter();
-  const [redirect] = useParam('redirect');
-  const { registerSteps, requestedAccountType } = useAuth();
+  const { registerSteps, requestedAccountType, redirectUserToActiveDashboard } = useAuth();
 
-
-  function onComplete() {
-    router.replace(redirect || '/customer')
-  }
 
   const renderAccountVerificationProcessMessage = () =>
     requestedAccountType !== 'customer' && (
@@ -63,7 +54,7 @@ export const SignUpSuccessScreen = () => {
         <SubmitButton
           marginHorizontal="$4"
           borderRadius="$10"
-          onPress={() => onComplete()}
+          onPress={() => redirectUserToActiveDashboard()}
         >
           {t('common:next')}
         </SubmitButton>

@@ -44,6 +44,7 @@
     "dont_have_account": "Don't have an account?",
     "terms_and_conditions": "Terms and Conditions",
     "create_new_account": "Create New Account",
+    "add_new_account": "Add New Account",
     "verification_in_progress": {
       "title": "It might take few day to verify your account",
       "description": "But you can start using the app now"

@@ -5,10 +5,11 @@ import React from 'react';
 
 import { useToastController } from '@tamagui/toast';
 import { CompanyAdminService } from '@zix/api';
-import { SchemaForm, SubmitButton, formFields } from '@zix/ui/forms';
+import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/ui/forms';
 import { useAuth } from '@zix/utils';
 import { t } from 'i18next';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useRouter } from 'solito/router';
 import { Theme } from 'tamagui';
 import { z } from 'zod';
 import { AuthHeader } from '../../components/auth-header/auth-header';
@@ -31,8 +32,9 @@ const CreateCompanyFormSchema = z
 
 export const CreateCompanyScreen: React.FC = () => {
   const form = useForm<z.infer<typeof CreateCompanyFormSchema>>();
-  const { refetchUser, redirectUserToActiveDashboard, registerSteps } = useAuth()
+  const { refetchUser, registerSteps } = useAuth()
   const toast = useToastController();
+  const router = useRouter()
 
   const { mutate } = useMutation({
     mutationFn(requestBody: z.infer<typeof CreateCompanyFormSchema>) {
@@ -40,21 +42,14 @@ export const CreateCompanyScreen: React.FC = () => {
         requestBody,
       });
     },
-    async onSuccess({ data }, variables, context) {
-      if (data) {
-        toast.show('Company Created Successfully!');
-        console.log('====================');
-        console.log('onError::', JSON.stringify(data, null, 2));
-        console.log('====================');
-        await refetchUser()
-        redirectUserToActiveDashboard();
-      }
+    onSuccess() {
+      toast.show('Company Created Successfully!');
+      refetchUser()
+      router.push('/auth/register/success')
     },
-    onError(error, variables, context) {
-      console.log('====================');
-      console.log('onError::', JSON.stringify(error, null, 2));
-      console.log('====================');
-      toast.show('Company Creation Failed!');
+    onError(error: any) {
+      handleFormErrors(form, error?.body?.errors);
+      error?.body?.message && toast.show(error?.body?.message);
     },
   });
 

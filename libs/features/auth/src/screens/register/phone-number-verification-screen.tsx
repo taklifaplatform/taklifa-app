@@ -10,7 +10,7 @@ export const SignUpPhoneNumberVerificationScreen = () => {
 
   async function onSuccess(user?: UserTransformer) {
     if (requestedAccountType === 'customer') {
-      router.replace('/auth/register/success?redirect=/customer');
+      router.replace('/auth/register/success');
     }
     if (requestedAccountType === 'company_owner') {
       router.replace('/company/create');
