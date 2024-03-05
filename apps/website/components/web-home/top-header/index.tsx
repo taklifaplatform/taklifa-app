@@ -27,10 +27,10 @@ export function TopHeader() {
   const renderHomeInfo = () => (
     <Pressable onPress={() => router.push('/about')}>
       <XStack justifyContent="center" alignItems="center" gap="$3">
+        <CustomIcon name={'homeinfo'} size="$1" />
         <Text fontWeight="500" fontSize="$2">
           {t('web-home:about')}
         </Text>
-        <CustomIcon name={'homeinfo'} size="$1" />
       </XStack>
     </Pressable>
   );
@@ -38,10 +38,10 @@ export function TopHeader() {
   const renderHomeQuestion = () => (
     <Pressable onPress={() => router.push('/contact')}>
       <XStack justifyContent="center" alignItems="center" gap="$3">
+        <CustomIcon name={'help'} size="$1" />
         <Text fontWeight="500" fontSize="$2">
           {t('web-home:question')}
         </Text>
-        <CustomIcon name={'help'} size="$1" />
       </XStack>
     </Pressable>
   );
@@ -55,10 +55,10 @@ export function TopHeader() {
     >
       <Popover size="$3" allowFlip>
         <Popover.Trigger asChild>
-          <Pressable onPress={() => {}}>
+          <Pressable onPress={() => { }}>
             <XStack justifyContent="center" alignItems="center" gap="$3">
-              {t('web-home:translate')}
               <CustomIcon name={'translate'} size="$1" />
+              {t('web-home:translate')}
             </XStack>
           </Pressable>
         </Popover.Trigger>
@@ -123,9 +123,8 @@ export function TopHeader() {
       gap="$3"
       $md={{ display: 'none' }}
     >
-      <Text fontWeight={'500'} fontSize="$2">
-        saudi arabia
-      </Text>
+      <CustomIcon name={'location'} size="$1" />
+
       <Image
         source={{
           uri: '/images/flag.png',
@@ -134,21 +133,24 @@ export function TopHeader() {
         }}
         resizeMode="contain"
       />
-      <CustomIcon name={'location'} size="$1" />
+      <Text fontWeight={'500'} fontSize="$2">
+        saudi arabia
+      </Text>
     </XStack>
   );
 
   const renderDownload = () => (
     <XStack justifyContent="center" alignItems="center" gap="$3">
-      <Pressable onPress={() => {}}>
-        <CustomIcon name={'appstore'} size="$6" />
-      </Pressable>
-      <Pressable onPress={() => {}}>
-        <CustomIcon name={'googleplay'} size="$6" />
-      </Pressable>
       <Text fontWeight={'500'} fontSize="$2">
         {t('web-home:download')}
       </Text>
+      <Pressable onPress={() => { }}>
+        <CustomIcon name={'appstore'} size="$6" />
+      </Pressable>
+      <Pressable onPress={() => { }}>
+        <CustomIcon name={'googleplay'} size="$6" />
+      </Pressable>
+
     </XStack>
   );
 
@@ -159,18 +161,21 @@ export function TopHeader() {
       gap="$3"
       $lg={{ display: 'none' }}
     >
-      <Pressable onPress={() => {}}>
-        <CustomIcon name={'facebook'} />
-      </Pressable>
-      <Pressable onPress={() => {}}>
-        <CustomIcon name={'instagram'} />
-      </Pressable>
-      <Pressable onPress={() => {}}>
-        <CustomIcon name={'snapchat'} />
-      </Pressable>
       <Text fontWeight={'500'} fontSize="$2">
         {t('web-home:followus')}
       </Text>
+
+
+      <Pressable onPress={() => { }}>
+        <CustomIcon name={'snapchat'} />
+      </Pressable>
+      <Pressable onPress={() => { }}>
+        <CustomIcon name={'instagram'} />
+      </Pressable>
+      <Pressable onPress={() => { }}>
+        <CustomIcon name={'facebook'} />
+      </Pressable>
+
     </XStack>
   );
 
@@ -183,12 +188,13 @@ export function TopHeader() {
       borderTopLeftRadius={'$4'}
       borderTopRightRadius={'$4'}
     >
-      {renderFollowUs()}
-      {renderDownload()}
-      {renderLocation()}
-      {renderSelectTranslate()}
-      {renderHomeQuestion()}
       {renderHomeInfo()}
+      {renderHomeQuestion()}
+      {renderSelectTranslate()}
+      {renderLocation()}
+      {renderDownload()}
+      {renderFollowUs()}
+
     </XStack>
   );
 }

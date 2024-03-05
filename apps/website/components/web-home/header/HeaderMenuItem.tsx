@@ -40,11 +40,12 @@ export const HeaderMenuItem: React.FC<HeaderMenuItemProps> = ({
         }}
         {...props}
       >
-        {iconAfter ? iconAfter : null}
+        {icon ? icon : null}
+
         <Text fontWeight={'bold'} fontSize="$5">
           {name}
         </Text>
-        {icon ? icon : null}
+        {iconAfter ? iconAfter : null}
       </XStack>
     </Pressable>
   );

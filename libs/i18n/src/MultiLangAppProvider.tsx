@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
-import { I18nManager, Platform } from 'react-native';
+import { I18nManager, Platform, View } from 'react-native';
 
 import { MultiLangContext } from './MultiLangContext';
 import i18n from './i18n';
@@ -16,7 +16,7 @@ async function getActiveLanguage(defaultLang: string) {
   const isRtl = language === 'ar';
   I18nManager.allowRTL(isRtl);
   I18nManager.forceRTL(isRtl);
-  document.documentElement.dir = isRtl ? 'ltr' : 'rtl';
+  document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
   return language;
 }
 

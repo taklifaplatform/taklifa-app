@@ -14,10 +14,10 @@ import { MultiLangAppProvider, bootMultiLang } from '@zix/i18n';
 import { NextPage } from 'next';
 import Head from 'next/head';
 
+import { OpenAPI } from '@zix/api';
 import 'raf/polyfill';
 import { ReactElement, ReactNode } from 'react';
 import type { SolitoAppProps } from 'solito';
-import { OpenAPI } from '@zix/api';
 
 if (process.env.NODE_ENV === 'production') {
   require('../public/tamagui.css');

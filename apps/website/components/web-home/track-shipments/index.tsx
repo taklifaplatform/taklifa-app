@@ -1,15 +1,14 @@
-import { useMultiLang } from '@zix/i18n';
 import { ZixInput } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
-import { Stack, Text, XStack, YStack } from 'tamagui';
-import { ButtonItem } from '../../ButtonItem';
+import { useRouter } from 'solito/router';
+import { Button, Stack, Text, XStack, YStack } from 'tamagui';
 
 export function TrackShipments() {
   const [selectedShipment, setSelectedShipment] = useState(0);
-  const { isRtl } = useMultiLang();
+  const router = useRouter()
 
   const renderMethodShipment = () => (
     <XStack
@@ -68,68 +67,6 @@ export function TrackShipments() {
     </XStack>
   );
 
-  const renderReferenceShipment = () => (
-    <Stack
-      width="70%"
-      $lg={{
-        marginBottom: '$4',
-      }}
-      $md={{
-        width: '100%',
-        marginBottom: '$4',
-      }}
-    >
-      <ZixInput
-        fullWidth={true}
-        placeholder={t('web-home:shipmentplaceholder')}
-        leftIcon={(props) => <CustomIcon {...props} name="flip" />}
-      />
-    </Stack>
-  );
-
-  const renderButtonShipment = () => (
-    <Stack
-      flex={1}
-      flexDirection="row"
-      //flexWrap='wrap'
-      justifyContent="center"
-      gap="$4"
-      $xs={{
-        flexDirection: 'column',
-        marginBottom: '$4',
-      }}
-    >
-      <ButtonItem
-        name={selectedShipment === 0 ? t('web-home:track') : t('web-home:send')}
-        path="/"
-        iconAfter={<CustomIcon name="large_arrow_right" size={'$1'} />}
-        borderRadius="$4"
-        paddingVertical="$4"
-        paddingHorizontal="$6"
-        width="100%"
-        $sm={{
-          width: '100%',
-        }}
-      />
-
-      <ButtonItem
-        name={
-          selectedShipment === 0
-            ? t('web-home:realtrack')
-            : t('web-home:realsend')
-        }
-        path="/"
-        iconAfter={<CustomIcon name="large_arrow_right" size={'$1'} />}
-        backgroundColor="transparent"
-        borderRadius="$4"
-        borderWidth={1}
-        paddingVertical="$4"
-        paddingHorizontal="$6"
-        borderColor="$gray10"
-        width="100%"
-      />
-    </Stack>
-  );
   return (
     <YStack
       alignItems="center"
@@ -142,14 +79,53 @@ export function TrackShipments() {
       {renderMethodShipment()}
 
       <Stack
-        w={'100%'}
+        width='100%'
         alignItems="center"
         justifyContent="space-evenly"
-        flexDirection="row-reverse"
+        flexDirection="row"
         flexWrap="wrap"
+        gap="$4"
+        $sm={{
+          flexDirection: 'column',
+          flexGrow: 1
+        }}
       >
-        {renderReferenceShipment()}
-        {renderButtonShipment()}
+        <ZixInput
+          placeholder={t('web-home:shipmentplaceholder')}
+          leftIcon={(props) => <CustomIcon {...props} name="flip" />}
+          containerProps={{
+            $sm: {
+              width: '100%'
+            }
+          }}
+        />
+
+        <Button
+          size='$5'
+          onPress={() => router.push('/')}
+          iconAfter={<CustomIcon name="large_arrow_right" size={'$1'} />}
+          $sm={{
+            width: '100%'
+          }}
+        >
+          {t('web-home:track')}
+        </Button>
+
+        <Button
+          variant="outlined"
+          borderColor="$gray9"
+          size='$5'
+          onPress={() => router.push('/')}
+          iconAfter={<CustomIcon name="large_arrow_right" size={'$1'} />}
+
+          $sm={{
+            width: '100%'
+          }}
+        >
+          {t('web-home:realtrack')}
+          {/* ? t('web-home:realtrack')
+            : t('web-home:realsend') */}
+        </Button>
       </Stack>
     </YStack>
   );

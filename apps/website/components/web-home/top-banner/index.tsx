@@ -57,7 +57,7 @@ export function TopBanner() {
           fontSize={36}
           paddingVertical="$4"
           textAlign="center"
-          
+
           $sm={{
             fontSize: 20,
           }}

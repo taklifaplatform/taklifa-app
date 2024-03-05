@@ -3,10 +3,11 @@ import { useMultiLang } from '@zix/i18n';
 import React, { Ref, forwardRef, useState } from 'react';
 import {
   NativeSyntheticEvent,
+  Platform,
   TextInput,
   TextInputFocusEventData
 } from 'react-native';
-import { Input, InputProps, Stack, TextArea, XStack } from 'tamagui';
+import { Input, InputProps, Stack, TextArea, ThemeableStackProps, XStack } from 'tamagui';
 import { SHARED_FIELDS_STYLE } from '../fields-config';
 
 export type ZixInputProps = InputProps & {
@@ -17,6 +18,7 @@ export type ZixInputProps = InputProps & {
   onLeftIconPress?: () => void;
   rightIcon?: React.FC<IconProps>;
   onRightIconPress?: () => void;
+  containerProps?: ThemeableStackProps
 };
 
 export const ZixInput = forwardRef(function ZixInputEl(
@@ -29,6 +31,7 @@ export const ZixInput = forwardRef(function ZixInputEl(
     onRightIconPress,
 
     onBlur,
+    containerProps = {},
     ...rest
   }: ZixInputProps,
   ref: Ref<TextInput> | undefined
@@ -36,15 +39,17 @@ export const ZixInput = forwardRef(function ZixInputEl(
   const [focus, setFocus] = useState<boolean>(false);
   const { isRtl } = useMultiLang();
 
+  const shouldFlip = isRtl && Platform.OS === 'web'
+
   const currentInputProps = {
     ...SHARED_FIELDS_STYLE,
-    textAlign: isRtl ? 'right' : 'left',
-    ...(leftIcon
+    textAlign: shouldFlip ? 'right' : 'left',
+    ...((leftIcon && !shouldFlip || shouldFlip && rightIcon)
       ? {
         paddingLeft: '$8',
       }
       : {}),
-    ...(rightIcon
+    ...((rightIcon && !shouldFlip || shouldFlip && leftIcon)
       ? {
         paddingRight: '$8',
       }
@@ -74,12 +79,13 @@ export const ZixInput = forwardRef(function ZixInputEl(
   )
 
   return (
-    <XStack alignItems="center" flex={1}>
+    <XStack alignItems="center" flex={1} {...containerProps}>
       {renderInput()}
       {leftIcon && (
         <Stack
           position="absolute"
-          left='$3'
+          left={shouldFlip ? 'auto' : '$3'}
+          right={shouldFlip ? '$3' : 'auto'}
           onPress={() => {
             onLeftIconPress?.();
           }}
@@ -93,7 +99,8 @@ export const ZixInput = forwardRef(function ZixInputEl(
       {rightIcon && (
         <Stack
           position="absolute"
-          right='$3'
+          left={shouldFlip ? '$3' : 'auto'}
+          right={shouldFlip ? 'auto' : '$3'}
           onPress={() => {
             onRightIconPress?.();
           }}

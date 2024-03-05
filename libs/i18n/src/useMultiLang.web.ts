@@ -1,14 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import Constants from 'expo-constants'
 
 import { useContext } from 'react'
-import { I18nManager, Platform } from 'react-native'
-import i18n from './i18n'
+import { Platform } from 'react-native'
 import { MultiLangContext } from './MultiLangContext'
+import i18n from './i18n'
 
 export function useMultiLang() {
   const activeLang = useContext(MultiLangContext)
-
   const isRtl = activeLang === 'ar'
 
   function updateDefaultLanguage() {
@@ -17,10 +15,7 @@ export function useMultiLang() {
 
   async function changeLanguage(lang: string) {
     await AsyncStorage.setItem('LANGUAGE', lang)
-    const isNextRtl = lang === 'ar'
-    // I18nManager.allowRTL(isNextRtl)
-    // I18nManager.forceRTL(isNextRtl)
-    if (Platform.OS == 'web') {
+    if (Platform.OS === 'web') {
       window.location.reload()
     }
   }
