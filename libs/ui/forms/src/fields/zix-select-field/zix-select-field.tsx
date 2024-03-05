@@ -85,7 +85,7 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
           {...selectTriggerProps}
         >
           {prependPlaceHolder}
-          <Select.Value flex={1} fontSize="$1" placeholder={placeholder} />
+          <Select.Value flex={1} fontSize="$1" placeholder={placeholder} {...props} />
           {appendPlaceHolder}
         </Select.Trigger>
 

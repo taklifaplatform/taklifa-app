@@ -50,6 +50,9 @@ const nextConfig = {
       {
         hostname: '192.168.0.23',
       },
+      {
+        hostname: 'admin-sawaeed.zixdev.com'
+      }
     ],
   },
 };

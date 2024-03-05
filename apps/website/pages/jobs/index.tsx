@@ -1,12 +1,12 @@
 import { JobsListScreen } from '@zix/features/jobs';
-import { ManageJobs } from 'apps/website/components/jobs/ManageJobs';
+import { FindJobsBanner } from 'apps/website/components/jobs/FindJobsBanner';
 import { MainLayout } from 'apps/website/layouts/MainLayout';
 import { NextPageWithLayout } from '../_app';
 
 export const Page: NextPageWithLayout = () => {
   return (
     <>
-      <ManageJobs />
+      <FindJobsBanner />
       <JobsListScreen />
     </>
   );

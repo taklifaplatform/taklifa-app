@@ -28,3 +28,5 @@ export * from "./components/animated/shake/shake";
 export * from "./components/inline-stepper/inline-stepper";
 
 export * from "./hooks/usePopoverState";
+
+export * from "./components/data-not-found/data-not-found";

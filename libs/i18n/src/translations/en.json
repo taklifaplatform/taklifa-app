@@ -239,6 +239,19 @@
   },
   "job": {
     "job-title": "Get the best guaranteed and freelance jobs",
-    "job-description": "Browse jobs posted on Sawaed Logistics, or go directly and create a free profile to find work you love doing."
+    "job-description": "Browse jobs posted on Sawaed Logistics, or go directly and create a free profile to find work you love doing.",
+    "search": "search here",
+    "job-not-found": "Job not found",
+    "job-not-found-description": "We couldn't find any job matching your search",
+    "job-found": "Job found",
+    "job-filter": "sort by",
+    "job-demand": "Delivery request",
+    "job-published": "Published ago",
+    "number-of-box": "Number of packages",
+    "deliver_time": "Delivery duration",
+    "Suggestions": "Suggestions",
+    "budget": "Budget",
+    "from_location": "From location",
+    "to_location": "To location"
   }
 }

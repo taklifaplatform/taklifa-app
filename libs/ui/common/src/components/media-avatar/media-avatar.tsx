@@ -8,6 +8,7 @@ export type MediaAvatarProps = {
   media?: MediaTransformer;
 };
 
+// TODO: remove or merge with UserAvatar
 export const MediaAvatar: React.FC<MediaAvatarProps> = ({
   media,
   size = '$4',

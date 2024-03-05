@@ -6,6 +6,7 @@ import Account from './icons/account.svg';
 import Apps from './icons/apps.svg';
 import Appstore from './icons/appstore.svg';
 import Avatar from './icons/avatar.svg';
+import assistantnavigation from './icons/assistantnavigation.svg';
 import Book from './icons/book.svg';
 import Call from './icons/call.svg';
 import Car from './icons/car.svg';
@@ -59,6 +60,7 @@ import Tiktok from './icons/tiktok.svg';
 import Time from './icons/time.svg';
 import Translate from './icons/translate.svg';
 import View from './icons/view.svg';
+import Vector from './icons/vector.svg';
 import Wallet from './icons/wallet.svg';
 import Weblogo from './icons/weblogo.svg';
 import WebDarkLogo from './icons/web-dark-logo.svg';
@@ -82,6 +84,7 @@ export {
   Apps,
   Appstore,
   Avatar,
+  assistantnavigation,
   Book,
   Call,
   Car,
@@ -145,6 +148,7 @@ export {
   VehicleB,
   VehicleC,
   View,
+  Vector,
   Wallet,
   Weblogo,
   WebDarkLogo,
