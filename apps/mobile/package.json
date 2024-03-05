@@ -191,7 +191,6 @@
     "stream-chat-react": "*",
     "@expo-google-fonts/almarai": "*",
     "isomorphic-ws": "*",
-    "react-native-modal-datetime-picker": "*",
     "@tamagui/sheet": "*",
     "@datepicker-react/hooks": "*"
   },
