@@ -47,6 +47,7 @@ export type { ImageUpdateVehicleRequest } from './models/ImageUpdateVehicleReque
 export type { InformationUpdateVehicleRequest } from './models/InformationUpdateVehicleRequest';
 export type { ItemRatingTransformer } from './models/ItemRatingTransformer';
 export type { JsonTransformer } from './models/JsonTransformer';
+export type { LegalDocumentsUpdateCompanyRequest } from './models/LegalDocumentsUpdateCompanyRequest';
 export type { ListChannelQueryRequest } from './models/ListChannelQueryRequest';
 export type { ListChatUsersQueryRequest } from './models/ListChatUsersQueryRequest';
 export type { ListCitiesQueryRequest } from './models/ListCitiesQueryRequest';
@@ -64,8 +65,10 @@ export type { ListStatesQueryRequest } from './models/ListStatesQueryRequest';
 export type { ListUserVerificationRequest } from './models/ListUserVerificationRequest';
 export type { ListVehicleQueryRequest } from './models/ListVehicleQueryRequest';
 export type { LocationTransformer } from './models/LocationTransformer';
+export type { LocationUpdateCompanyRequest } from './models/LocationUpdateCompanyRequest';
 export type { LocationUpdateUserVerificationRequest } from './models/LocationUpdateUserVerificationRequest';
 export type { LoginRequest } from './models/LoginRequest';
+export type { LogoUpdateCompanyRequest } from './models/LogoUpdateCompanyRequest';
 export type { MediaTransformer } from './models/MediaTransformer';
 export type { MembershipTransformer } from './models/MembershipTransformer';
 export type { MemberTransformer } from './models/MemberTransformer';

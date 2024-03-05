@@ -1,6 +1,6 @@
 import { useMultiLang } from '@zix/i18n';
 import { t } from 'i18next';
-import { Image, Stack, Text, Theme } from 'tamagui';
+import { Button, Image, Stack, Text, Theme } from 'tamagui';
 import { ButtonItem } from '../../ButtonItem';
 
 /**
@@ -13,33 +13,16 @@ export function TopBanner() {
   const { activeLang } = useMultiLang();
 
   const renderImageBackground = () => (
-    <>
-      <Stack $lg={{ display: 'none' }}>
-        <Image
-          alt="Banner"
-          source={{
-            uri: `/images/banner-1-${activeLang}.png`,
-          }}
-          width="100%"
-          height={'632px'}
-          borderRadius={'$4'}
-          resizeMode="contain"
-        />
-      </Stack>
-
-      <Stack $gtLg={{ display: 'none' }}>
-        <Image
-          alt="Banner"
-          source={{
-            uri: `/images/banner-1-${activeLang}.png`,
-          }}
-          width="100%"
-          height={'360px'}
-          borderRadius={'$4'}
-          resizeMode="cover"
-        />
-      </Stack>
-    </>
+    <Image
+      alt="Banner"
+      source={{
+        uri: `/images/banner-1-${activeLang}.png`,
+      }}
+      width="100%"
+      borderRadius='$4'
+      resizeMode="cover"
+      height={400}
+    />
   );
 
   const renderText = () => (
@@ -65,13 +48,13 @@ export function TopBanner() {
           {t('web-home:banner-1')}
         </Text>
         <Text
-         fontWeight="700"
+          fontWeight="700"
           fontSize={14}
-           textAlign="center"
-           $xs={{
+          textAlign="center"
+          $xs={{
             fontSize: 10,
           }}
-           >
+        >
           {t('web-home:content-1')}
         </Text>
       </Stack>
@@ -84,35 +67,11 @@ export function TopBanner() {
       flexWrap="wrap"
       justifyContent="center"
       gap="$6"
-      paddingTop="$5"
-      $sm={{ gap: '$3', paddingTop: '$3'}}
+      padding="$5"
+      $sm={{ gap: '$3', padding: '$3', flexDirection: 'column', width: '100%', flexGrow: 1 }}
     >
-      <ButtonItem
-        name={t('web-home:company')}
-        path="/auth/login"
-        backgroundColor={'$color'}
-        color={'$color1'}
-        borderRadius="$4"
-        width="164px"
-        height="55px"
-        $sm={{
-          width: '122px',
-          height: '45px',
-        }}
-      />
-      <ButtonItem
-        name={t('web-home:singlecarrier')}
-        path="/auth/login"
-        borderColor={'$color'}
-        borderWidth={2}
-        borderRadius="$4"
-        width="164px"
-        height="55px"
-        $sm={{
-          width: '122px',
-          height: '45px',
-        }}
-      />
+      <Button size="$5" themeInverse> {t('web-home:company')}</Button>
+      <Button size="$5" themeInverse variant="outlined" borderColor="$color1"> {t('web-home:singlecarrier')}</Button>
     </Stack>
   );
 

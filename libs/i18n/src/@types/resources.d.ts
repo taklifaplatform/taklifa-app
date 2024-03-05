@@ -64,7 +64,7 @@ interface Resources {
       "description": "Enter your phone number to continue"
     },
     "formation_of_company": {
-      "title": "Formation of Company",
+      "title": "Company Info",
       "description": "Enter your company information"
     },
     "reset_password": {
@@ -114,7 +114,7 @@ interface Resources {
     "pin_code": "Pin Code // Enter your pin code",
     "company_logo": "Company Logo // Upload your company logo",
     "company_name": "Company Name // Enter your company name",
-    "company_legal_document": "Company Legal Document // Upload your company legal document",
+    "company_legal_documents": "Company Legal Documents // Upload documents...",
     "company_location": "Company Location // Enter your company location",
     "is_whatsapp": "Is Whatsapp // Is whatsapp available",
     "email": "Email // Enter your email",

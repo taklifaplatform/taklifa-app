@@ -167,8 +167,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     const result = await launchImageLibraryAsync({
       mediaTypes,
       allowsEditing: !isMultiple,
-      aspect: [4, 3],
-      quality: 1,
+      quality: 0.8,
       allowsMultipleSelection: isMultiple,
     });
 

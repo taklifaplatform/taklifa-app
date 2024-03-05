@@ -11,18 +11,17 @@ import { t } from 'i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Theme } from 'tamagui';
 import { z } from 'zod';
+import { AuthHeader } from '../../components/auth-header/auth-header';
 
 const CreateCompanyFormSchema = z
   .object({
     logo: formFields.image.optional().describe('Logo // Add Company Logo'),
     name: formFields.text.min(2).max(150).describe(t('forms:company_name')),
-    company_documents: formFields.files.describe(
-      t('Company Documents // Attach documents...')
+    legal_documents: formFields.files.describe(
+      t('forms:company_legal_documents')
     ),
-    // location: formFields.text
-    //   .min(2)
-    //   .max(25)
-    //   .describe('Company Location // Enter company location'),
+
+    location: formFields.address.describe(t('forms:company_location')),
     accept_terms: formFields.accept_terms.describe(t('forms:accept_terms')),
   })
   .required({
@@ -32,7 +31,7 @@ const CreateCompanyFormSchema = z
 
 export const CreateCompanyScreen: React.FC = () => {
   const form = useForm<z.infer<typeof CreateCompanyFormSchema>>();
-  const { refetchUser, redirectUserToActiveDashboard } = useAuth()
+  const { refetchUser, redirectUserToActiveDashboard, registerSteps } = useAuth()
   const toast = useToastController();
 
   const { mutate } = useMutation({
@@ -81,7 +80,19 @@ export const CreateCompanyScreen: React.FC = () => {
             </Theme>
           );
         }}
-      />
+      >
+        {(fields) => (
+          <>
+            <AuthHeader
+              showIcon={false}
+              activeStep={2}
+              totalSteps={registerSteps || 1}
+              title={t('auth:formation_of_company.title')}
+            />
+            {Object.values(fields)}
+          </>
+        )}
+      </SchemaForm>
     </FormProvider>
   );
 };

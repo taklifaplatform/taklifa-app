@@ -3,7 +3,6 @@ export * from './screens/manage/manage-team-screen/manage-team-screen';
 export * from './components/dashboard-switcher/dashboard-switcher';
 
 export * from './screens/settings/updated-company-screen/updated-company-screen';
-export * from './screens/create-company-screen/create-company-screen';
 
 export * from './screens/manage/vehicles/update-vehicle-screen/update-vehicle-screen';
 

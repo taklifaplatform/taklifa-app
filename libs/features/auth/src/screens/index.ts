@@ -12,3 +12,4 @@ export * from './verification/kyc-verification-screen';
 export * from './onboarding-screen/onboarding-screen';
 export * from './terms-of-service-screen';
 export * from './privacy-policy-screen';
+export * from './create-company-screen/create-company-screen';
