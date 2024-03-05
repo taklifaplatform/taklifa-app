@@ -89,7 +89,7 @@ export const OnboardingAuthScreen = () => {
   );
 
   return (
-    <Theme>
+    <Theme name='light'>
       <YStack
         flex={1}
         backgroundColor="$color3"
