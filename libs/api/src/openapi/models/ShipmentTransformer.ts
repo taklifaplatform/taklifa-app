@@ -22,5 +22,7 @@ export type ShipmentTransformer = {
     min_budget?: PriceTransformer;
     max_budget?: PriceTransformer;
     items?: Array<ShipmentItemTransformer>;
+    created_at?: string;
+    updated_at?: string;
 };
 
