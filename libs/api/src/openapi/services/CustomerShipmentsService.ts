@@ -7,29 +7,7 @@ import type { UpdateShipmentRequest } from '../models/UpdateShipmentRequest';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-export class ShipmentsService {
-    /**
-     * store a new shipment.
-     * @returns any Successful response
-     * @throws ApiError
-     */
-    public static storeShipment({
-        requestBody,
-    }: {
-        requestBody: UpdateShipmentRequest,
-    }): CancelablePromise<{
-        data?: ShipmentTransformer;
-    }> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/customer/shipments',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                422: `Validation errors`,
-            },
-        });
-    }
+export class CustomerShipmentsService {
     /**
      * Fetch all shipments.
      * @returns any Successful response
@@ -79,6 +57,28 @@ export class ShipmentsService {
                 'page': page,
                 'per_page': perPage,
                 'search': search,
+            },
+        });
+    }
+    /**
+     * store a new shipment.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static storeShipment({
+        requestBody,
+    }: {
+        requestBody: UpdateShipmentRequest,
+    }): CancelablePromise<{
+        data?: ShipmentTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/customer/shipments',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation errors`,
             },
         });
     }

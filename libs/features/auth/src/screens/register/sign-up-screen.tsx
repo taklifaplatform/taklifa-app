@@ -23,7 +23,7 @@ const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
 
 const SignUpSchema = z
   .object({
-    name: formFields.text.min(3).describe(t('forms:name')),
+    username: formFields.text.min(3).describe(t('forms:username')),
     phone_number: formFields.phone.describe(t('forms:phone_number')),
     phone_number_has_whatsapp: formFields.boolean_switch
       .optional()
@@ -34,7 +34,7 @@ const SignUpSchema = z
     accept_terms: formFields.accept_terms.describe(t('forms:accept_terms')),
   })
   .required({
-    name: true,
+    username: true,
     phone_number: true,
     password: true,
     password_confirmation: true,
@@ -67,9 +67,12 @@ export const SignUpScreen = () => {
   const form = useForm<z.infer<typeof SignUpSchema>>();
 
   const { mutate, } = useMutation({
-    mutationFn: (requestBody: z.infer<typeof SignUpSchema>) =>
+    mutationFn: (variables: z.infer<typeof SignUpSchema>) =>
       AuthService.register({
-        requestBody,
+        requestBody: {
+          ...variables,
+          name: variables.username,
+        },
       }),
     onSuccess({ data }) {
       setAuthAccessToken(data?.plainTextToken);
@@ -93,20 +96,13 @@ export const SignUpScreen = () => {
         form={form}
         schema={SignUpSchema}
         defaultValues={{
+          username: '',
           name: '',
           phone_number: params?.phone ?? '+966',
           password: '',
           password_confirmation: '',
           accept_terms: false,
           phone_number_has_whatsapp: false,
-        }}
-        props={{
-          password: {
-            secureTextEntry: true,
-          },
-          password_confirmation: {
-            secureTextEntry: true,
-          }
         }}
         onSubmit={mutate}
         renderAfter={({ submit }) => (
