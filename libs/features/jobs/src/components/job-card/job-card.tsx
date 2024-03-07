@@ -6,7 +6,7 @@ import { t } from 'i18next';
 import moment from 'moment';
 import React, { useMemo } from 'react';
 
-import { Button, Separator, Stack, Text, XStack, YStack } from 'tamagui';
+import { Separator, Stack, Text, XStack, YStack } from 'tamagui';
 import JobItemDetails from './JobItemDetails';
 
 export type JobCardProps = {
@@ -67,56 +67,19 @@ export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
           item={`${job.min_budget?.value} - ${job.max_budget?.value} ${job.min_budget?.currency?.code}`}
         />
       </XStack>
-      <YStack gap="$2"  $sm={{ gap:'$4'}}>
-        <XStack alignItems="center" gap="$2">
+
+      <JobItemDetails
+        icon={
           <CustomIcon name="assistant-navigation" size="$1" color={'$gray9'} />
-          <Text
-            fontSize={12}
-            fontWeight={'600'}
-            color={'$gray9'}
-            $sm={{
-              fontSize: 8,
-              fontWeight: '600',
-            }}
-          >
-            {t('job:from_location')}
-          </Text>
-          <Text
-            fontSize={12}
-            fontWeight={'600'}
-            $sm={{
-              fontSize: 8,
-              fontWeight: '600',
-            }}
-          >
-            {job?.from_location?.address}
-          </Text>
-        </XStack>
-        <XStack alignItems="center" gap="$2">
-          <CustomIcon name="location" size="$1" color={'$gray9'} />
-          <Text
-            fontSize={12}
-            fontWeight={'600'}
-            color={'$gray9'}
-            $sm={{
-              fontSize: 8,
-              fontWeight: '600',
-            }}
-          >
-            {t('job:to_location')}
-          </Text>
-          <Text
-            fontSize={12}
-            fontWeight={'600'}
-            $sm={{
-              fontSize: 8,
-              fontWeight: '600',
-            }}
-          >
-            {job.to_location?.address}
-          </Text>
-        </XStack>
-      </YStack>
+        }
+        title="job:from_location"
+        item={job?.from_location?.address}
+      />
+      <JobItemDetails
+        icon={<CustomIcon name="location" size="$1" color={'$gray9'} />}
+        title="job:to_location"
+        item={job.to_location?.address}
+      />
     </YStack>
   );
 
@@ -145,16 +108,6 @@ export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
         $sm={{ width: '100%' }}
       >
         <YStack gap="$3" justifyContent="flex-start" alignItems="flex-start">
-          {/* <Text
-            fontSize={15}
-            fontWeight={'600'}
-            $sm={{
-              fontSize: 12,
-              fontWeight: '600',
-            }}
-          >
-            {job.id}
-          </Text> */}
           <Text
             fontSize={25}
             fontWeight={'400'}
@@ -176,10 +129,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
             <XStack gap="$2" alignItems="center">
               {/* TODO change to UserAvatar */}
 
-              <UserAvatar
-                size={'$1'}
-                user={job.user}
-              />
+              <UserAvatar size={'$1'} user={job.user} />
               <Text
                 fontSize={12}
                 fontWeight={'600'}
@@ -189,7 +139,6 @@ export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
                   fontWeight: '600',
                 }}
               >
-                
                 {job.user?.name}
               </Text>
             </XStack>
@@ -229,13 +178,12 @@ export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
 
         <Separator borderColor={'$gray7'} width={'100%'} />
         {renderDetailShipment()}
-        
       </YStack>
       <Separator
-          borderColor={'$gray7'}
-          width={'100%'}
-          $gtSm={{ display: 'none' }}
-        />
+        borderColor={'$gray7'}
+        width={'100%'}
+        $gtSm={{ display: 'none' }}
+      />
       <XStack
         width={'30%'}
         justifyContent="flex-end"

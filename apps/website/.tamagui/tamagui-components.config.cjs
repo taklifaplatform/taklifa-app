@@ -679,7 +679,9 @@ var require_concatClassName = __commonJS({
     var pseudoInvert = {
       hover: "hoverStyle",
       focus: "focusStyle",
-      press: "pressStyle"
+      press: "pressStyle",
+      focusVisible: "focusVisibleStyle",
+      disabled: "disabledStyle"
     };
   }
 });
@@ -1074,7 +1076,9 @@ var require_validStyleProps = __commonJS({
       exitStyle: true,
       hoverStyle: true,
       pressStyle: true,
-      focusStyle: true
+      focusStyle: true,
+      disabledStyle: true,
+      focusVisibleStyle: true
     };
     var validStyles2 = {
       ...validPseudoKeys2,
@@ -4856,29 +4860,36 @@ var require_component2 = __commonJS({
   "../../node_modules/react-remove-scroll-bar/dist/es5/component.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.RemoveScrollBar = void 0;
+    exports2.RemoveScrollBar = exports2.lockAttribute = void 0;
     var tslib_1 = (init_tslib_es6(), __toCommonJS(tslib_es6_exports));
     var React43 = tslib_1.__importStar(require("react"));
     var react_style_singleton_1 = require_es55();
     var constants_1 = require_constants2();
     var utils_1 = require_utils();
     var Style = (0, react_style_singleton_1.styleSingleton)();
+    exports2.lockAttribute = "data-scroll-locked";
     var getStyles = /* @__PURE__ */ __name(function(_a, allowRelative, gapMode, important) {
       var left = _a.left, top = _a.top, right = _a.right, gap = _a.gap;
       if (gapMode === void 0) {
         gapMode = "margin";
       }
-      return "\n  .".concat(constants_1.noScrollbarsClassName, " {\n   overflow: hidden ").concat(important, ";\n   padding-right: ").concat(gap, "px ").concat(important, ";\n  }\n  body {\n    overflow: hidden ").concat(important, ";\n    overscroll-behavior: contain;\n    ").concat([
+      return "\n  .".concat(constants_1.noScrollbarsClassName, " {\n   overflow: hidden ").concat(important, ";\n   padding-right: ").concat(gap, "px ").concat(important, ";\n  }\n  body[").concat(exports2.lockAttribute, "] {\n    overflow: hidden ").concat(important, ";\n    overscroll-behavior: contain;\n    ").concat([
         allowRelative && "position: relative ".concat(important, ";"),
         gapMode === "margin" && "\n    padding-left: ".concat(left, "px;\n    padding-top: ").concat(top, "px;\n    padding-right: ").concat(right, "px;\n    margin-left:0;\n    margin-top:0;\n    margin-right: ").concat(gap, "px ").concat(important, ";\n    "),
         gapMode === "padding" && "padding-right: ".concat(gap, "px ").concat(important, ";")
-      ].filter(Boolean).join(""), "\n  }\n  \n  .").concat(constants_1.zeroRightClassName, " {\n    right: ").concat(gap, "px ").concat(important, ";\n  }\n  \n  .").concat(constants_1.fullWidthClassName, " {\n    margin-right: ").concat(gap, "px ").concat(important, ";\n  }\n  \n  .").concat(constants_1.zeroRightClassName, " .").concat(constants_1.zeroRightClassName, " {\n    right: 0 ").concat(important, ";\n  }\n  \n  .").concat(constants_1.fullWidthClassName, " .").concat(constants_1.fullWidthClassName, " {\n    margin-right: 0 ").concat(important, ";\n  }\n  \n  body {\n    ").concat(constants_1.removedBarSizeVariable, ": ").concat(gap, "px;\n  }\n");
+      ].filter(Boolean).join(""), "\n  }\n  \n  .").concat(constants_1.zeroRightClassName, " {\n    right: ").concat(gap, "px ").concat(important, ";\n  }\n  \n  .").concat(constants_1.fullWidthClassName, " {\n    margin-right: ").concat(gap, "px ").concat(important, ";\n  }\n  \n  .").concat(constants_1.zeroRightClassName, " .").concat(constants_1.zeroRightClassName, " {\n    right: 0 ").concat(important, ";\n  }\n  \n  .").concat(constants_1.fullWidthClassName, " .").concat(constants_1.fullWidthClassName, " {\n    margin-right: 0 ").concat(important, ";\n  }\n  \n  body[").concat(exports2.lockAttribute, "] {\n    ").concat(constants_1.removedBarSizeVariable, ": ").concat(gap, "px;\n  }\n");
     }, "getStyles");
     var RemoveScrollBar = /* @__PURE__ */ __name(function(props) {
       var noRelative = props.noRelative, noImportant = props.noImportant, _a = props.gapMode, gapMode = _a === void 0 ? "margin" : _a;
       var gap = React43.useMemo(function() {
         return (0, utils_1.getGapWidth)(gapMode);
       }, [gapMode]);
+      React43.useEffect(function() {
+        document.body.setAttribute(exports2.lockAttribute, "");
+        return function() {
+          document.body.removeAttribute(exports2.lockAttribute);
+        };
+      }, []);
       return React43.createElement(Style, { styles: getStyles(gap, !noRelative, gapMode, !noImportant ? "!important" : "") });
     }, "RemoveScrollBar");
     exports2.RemoveScrollBar = RemoveScrollBar;
@@ -29345,7 +29356,9 @@ var validPseudoKeys = {
   exitStyle: true,
   hoverStyle: true,
   pressStyle: true,
-  focusStyle: true
+  focusStyle: true,
+  disabledStyle: true,
+  focusVisibleStyle: true
 };
 var validStyles = {
   ...validPseudoKeys,
@@ -30895,15 +30908,23 @@ __name(getYPositions, "getYPositions");
 // ../../node_modules/@tamagui/scroll-view/dist/esm/ScrollView.js
 var import_web = require("@tamagui/core");
 var import_react_native_web3 = __toESM(require_cjs22());
-var ScrollView = (0, import_web.styled)(import_react_native_web3.ScrollView, {
-  name: "ScrollView",
-  scrollEnabled: true,
-  variants: {
-    fullscreen: {
-      true: fullscreenStyle
+var ScrollView = (0, import_web.styled)(
+  import_react_native_web3.ScrollView,
+  {
+    name: "ScrollView",
+    scrollEnabled: true,
+    variants: {
+      fullscreen: {
+        true: fullscreenStyle
+      }
+    }
+  },
+  {
+    accept: {
+      contentContainerStyle: "style"
     }
   }
-});
+);
 
 // ../../node_modules/@tamagui/sheet/dist/esm/SheetScrollView.js
 var import_react23 = require("react");
@@ -32166,7 +32187,7 @@ var ButtonFrame = (0, import_web7.styled)(ThemeableStack, {
         backgrounded: true,
         borderWidth: 1,
         borderColor: "transparent",
-        focusStyle: {
+        focusVisibleStyle: {
           outlineColor: "$outlineColor",
           outlineStyle: "solid",
           outlineWidth: 2
@@ -32186,14 +32207,15 @@ var ButtonFrame = (0, import_web7.styled)(ThemeableStack, {
           backgroundColor: "transparent",
           borderColor: "$borderColorPress"
         },
-        focusStyle: {
+        focusVisibleStyle: {
           backgroundColor: "transparent",
           borderColor: "$borderColorFocus"
         }
       }
     },
     size: {
-      "...size": import_get_button_sized2.getButtonSized
+      "...size": import_get_button_sized2.getButtonSized,
+      ":number": import_get_button_sized2.getButtonSized
     },
     disabled: {
       true: {
@@ -32306,8 +32328,8 @@ function useButton({ textProps, ...propsIn }, { Text: Text4 = Button2.Text } = {
     ...propsIn.disabled && {
       // in rnw - false still has keyboard tabIndex, undefined = not actually focusable
       focusable: void 0,
-      // even with tabIndex unset, it will keep focusStyle on web so disable it here
-      focusStyle: {
+      // even with tabIndex unset, it will keep focusVisibleStyle on web so disable it here
+      focusVisibleStyle: {
         borderColor: "$background"
       }
     },
@@ -32462,7 +32484,9 @@ var CheckboxFrame = (0, import_core17.styled)(ThemeableStack, {
           borderColor: "$borderColorHover"
         },
         focusStyle: {
-          borderColor: "$borderColorFocus",
+          borderColor: "$borderColorFocus"
+        },
+        focusVisibleStyle: {
           outlineStyle: "solid",
           outlineWidth: 2,
           outlineColor: "$outlineColor"
@@ -33914,8 +33938,9 @@ function getBoundingClientRect(element, includeScale, isFixedStrategy, offsetPar
   if (domElement) {
     const win = getWindow(domElement);
     const offsetWin = offsetParent && isElement(offsetParent) ? getWindow(offsetParent) : offsetParent;
-    let currentIFrame = win.frameElement;
-    while (currentIFrame && offsetParent && offsetWin !== win) {
+    let currentWin = win;
+    let currentIFrame = currentWin.frameElement;
+    while (currentIFrame && offsetParent && offsetWin !== currentWin) {
       const iframeScale = getScale(currentIFrame);
       const iframeRect = currentIFrame.getBoundingClientRect();
       const css = getComputedStyle2(currentIFrame);
@@ -33927,7 +33952,8 @@ function getBoundingClientRect(element, includeScale, isFixedStrategy, offsetPar
       height *= iframeScale.y;
       x += left;
       y += top;
-      currentIFrame = getWindow(currentIFrame).frameElement;
+      currentWin = getWindow(currentIFrame);
+      currentIFrame = currentWin.frameElement;
     }
   }
   return rectToClientRect({
@@ -33939,31 +33965,16 @@ function getBoundingClientRect(element, includeScale, isFixedStrategy, offsetPar
 }
 __name(getBoundingClientRect, "getBoundingClientRect");
 var topLayerSelectors = [":popover-open", ":modal"];
-function topLayer(floating) {
-  let isTopLayer = false;
-  let x = 0;
-  let y = 0;
-  function setIsTopLayer(selector) {
+function isTopLayer(floating) {
+  return topLayerSelectors.some((selector) => {
     try {
-      isTopLayer = isTopLayer || floating.matches(selector);
+      return floating.matches(selector);
     } catch (e) {
+      return false;
     }
-  }
-  __name(setIsTopLayer, "setIsTopLayer");
-  topLayerSelectors.forEach((selector) => {
-    setIsTopLayer(selector);
   });
-  if (isTopLayer) {
-    const containingBlock = getContainingBlock(floating);
-    if (containingBlock) {
-      const rect = containingBlock.getBoundingClientRect();
-      x = rect.x;
-      y = rect.y;
-    }
-  }
-  return [isTopLayer, x, y];
 }
-__name(topLayer, "topLayer");
+__name(isTopLayer, "isTopLayer");
 function convertOffsetParentRelativeRectToViewportRelativeRect(_ref) {
   let {
     elements,
@@ -33971,9 +33982,10 @@ function convertOffsetParentRelativeRectToViewportRelativeRect(_ref) {
     offsetParent,
     strategy
   } = _ref;
+  const isFixed = strategy === "fixed";
   const documentElement = getDocumentElement(offsetParent);
-  const [isTopLayer] = elements ? topLayer(elements.floating) : [false];
-  if (offsetParent === documentElement || isTopLayer) {
+  const topLayer = elements ? isTopLayer(elements.floating) : false;
+  if (offsetParent === documentElement || topLayer && isFixed) {
     return rect;
   }
   let scroll = {
@@ -33983,7 +33995,7 @@ function convertOffsetParentRelativeRectToViewportRelativeRect(_ref) {
   let scale = createCoords(1);
   const offsets = createCoords(0);
   const isOffsetParentAnElement = isHTMLElement(offsetParent);
-  if (isOffsetParentAnElement || !isOffsetParentAnElement && strategy !== "fixed") {
+  if (isOffsetParentAnElement || !isOffsetParentAnElement && !isFixed) {
     if (getNodeName(offsetParent) !== "body" || isOverflowElement(documentElement)) {
       scroll = getNodeScroll(offsetParent);
     }
@@ -34162,7 +34174,7 @@ function getDimensions(element) {
   };
 }
 __name(getDimensions, "getDimensions");
-function getRectRelativeToOffsetParent(element, offsetParent, strategy, floating) {
+function getRectRelativeToOffsetParent(element, offsetParent, strategy) {
   const isOffsetParentAnElement = isHTMLElement(offsetParent);
   const documentElement = getDocumentElement(offsetParent);
   const isFixed = strategy === "fixed";
@@ -34184,17 +34196,8 @@ function getRectRelativeToOffsetParent(element, offsetParent, strategy, floating
       offsets.x = getWindowScrollBarX(documentElement);
     }
   }
-  let x = rect.left + scroll.scrollLeft - offsets.x;
-  let y = rect.top + scroll.scrollTop - offsets.y;
-  const [isTopLayer, topLayerX, topLayerY] = topLayer(floating);
-  if (isTopLayer) {
-    x += topLayerX;
-    y += topLayerY;
-    if (isOffsetParentAnElement) {
-      x += offsetParent.clientLeft;
-      y += offsetParent.clientTop;
-    }
-  }
+  const x = rect.left + scroll.scrollLeft - offsets.x;
+  const y = rect.top + scroll.scrollTop - offsets.y;
   return {
     x,
     y,
@@ -34215,7 +34218,7 @@ function getTrueOffsetParent(element, polyfill) {
 __name(getTrueOffsetParent, "getTrueOffsetParent");
 function getOffsetParent(element, polyfill) {
   const window2 = getWindow(element);
-  if (!isHTMLElement(element)) {
+  if (!isHTMLElement(element) || isTopLayer(element)) {
     return window2;
   }
   let offsetParent = getTrueOffsetParent(element, polyfill);
@@ -34232,7 +34235,7 @@ var getElementRects = /* @__PURE__ */ __name(async function(data) {
   const getOffsetParentFn = this.getOffsetParent || getOffsetParent;
   const getDimensionsFn = this.getDimensions;
   return {
-    reference: getRectRelativeToOffsetParent(data.reference, await getOffsetParentFn(data.floating), data.strategy, data.floating),
+    reference: getRectRelativeToOffsetParent(data.reference, await getOffsetParentFn(data.floating), data.strategy),
     floating: {
       x: 0,
       y: 0,
@@ -38648,7 +38651,9 @@ var Popover = withStaticProperties(
         disable: sheetActive,
         hoverable,
         disableFocus
-      }), [anchorTo, setAnchorTo] = React21.useState();
+      }), [anchorTo, setAnchorToRaw] = React21.useState(), setAnchorTo = (0, import_core24.createShallowSetState)(
+        setAnchorToRaw
+      );
       React21.useImperativeHandle(forwardedRef, () => ({
         anchorTo: setAnchorTo
       }));
@@ -39189,7 +39194,9 @@ var RadioGroupItemFrame = (0, import_core28.styled)(ThemeableStack, {
         },
         focusStyle: {
           borderColor: "$borderColorHover",
-          backgroundColor: "$backgroundHover",
+          backgroundColor: "$backgroundHover"
+        },
+        focusVisibleStyle: {
           outlineStyle: "solid",
           outlineWidth: 2,
           outlineColor: "$outlineColor"
@@ -39213,7 +39220,7 @@ var RadioGroupItemFrame = (0, import_core28.styled)(ThemeableStack, {
           borderColor: "$borderColor",
           backgroundColor: "$backgroundColor"
         },
-        focusStyle: {
+        focusVisibleStyle: {
           outlineWidth: 0
         }
       }
@@ -39886,7 +39893,7 @@ var SelectItem = import_list_item.ListItemFrame.styleable(
               cursor: "default",
               size: size3,
               outlineOffset: -0.5,
-              focusStyle: {
+              focusVisibleStyle: {
                 outlineColor: "$outlineColor",
                 outlineWidth: 1,
                 outlineStyle: "solid"
@@ -40054,7 +40061,7 @@ var SelectTrigger = React31.forwardRef(
           hoverTheme: true,
           pressTheme: true,
           focusable: true,
-          focusStyle: {
+          focusVisibleStyle: {
             outlineStyle: "solid",
             outlineWidth: 2,
             outlineColor: "$outlineColor"
@@ -41208,7 +41215,7 @@ var SwitchFrame = (0, import_core39.styled)(YStack, {
         backgroundColor: "$background",
         borderWidth: 2,
         borderColor: "$background",
-        focusStyle: {
+        focusVisibleStyle: {
           outlineColor: "$outlineColor",
           outlineStyle: "solid",
           outlineWidth: 2
@@ -41659,7 +41666,9 @@ var ToggleFrame = (0, import_web11.styled)(ThemeableStack, {
           backgroundColor: "$backgroundPress"
         },
         focusStyle: {
-          borderColor: "$borderColorFocus",
+          borderColor: "$borderColorFocus"
+        },
+        focusVisibleStyle: {
           outlineColor: "$outlineColor",
           outlineWidth: 2,
           outlineStyle: "solid"
@@ -42419,10 +42428,12 @@ var defaultStyles = {
     borderColor: "$borderColorHover"
   },
   focusStyle: {
+    borderColor: "$borderColorFocus"
+  },
+  focusVisibleStyle: {
     outlineColor: "$outlineColor",
     outlineWidth: 2,
-    outlineStyle: "solid",
-    borderColor: "$borderColorFocus"
+    outlineStyle: "solid"
   }
 };
 var InputFrame = (0, import_core48.styled)(
@@ -42446,7 +42457,7 @@ var InputFrame = (0, import_core48.styled)(
   },
   {
     isInput: true,
-    acceptTokens: {
+    accept: {
       placeholderTextColor: "color",
       selectionColor: "color"
     }
