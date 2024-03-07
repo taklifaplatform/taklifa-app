@@ -4,6 +4,10 @@ body {
     font-family: 'Almarai', sans-serif;
 }
 
+.ignore-css,
+.ignore-css * {
+  all: revert-layer;
+}
 
 
 

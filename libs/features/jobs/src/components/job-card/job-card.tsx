@@ -1,11 +1,13 @@
+import { Eye, Inbox, Settings2, X } from '@tamagui/lucide-icons';
 import { ShipmentTransformer } from '@zix/api';
-import { useMultiLang } from '@zix/i18n';
-import { MediaAvatar, UserAvatar } from '@zix/ui/common';
+import { UserAvatar, ZixLinkButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
-import React from 'react';
+import moment from 'moment';
+import React, { useMemo } from 'react';
 
-import { YStack, Text, XStack, Separator, Stack } from 'tamagui';
+import { Button, Separator, Stack, Text, XStack, YStack } from 'tamagui';
+import JobItemDetails from './JobItemDetails';
 
 export type JobCardProps = {
   job: ShipmentTransformer;
@@ -13,152 +15,254 @@ export type JobCardProps = {
 };
 
 export const JobCard: React.FC<JobCardProps> = ({ job }) => {
-  const {isRtl} = useMultiLang()
-  const renderDetailUserMobile = () => (
-    <XStack flex={1} justifyContent="space-between" alignItems="center">
-      <CustomIcon name="account" size="$1" />
-      <XStack gap="$2" alignItems="center">
-        <YStack gap="$2" alignItems="flex-end">
-          <Text fontSize={12} fontWeight={'600'} color={'$gray9'}>
-            {job.user?.name}
-          </Text>
-          <XStack gap="$1" alignItems="center">
-            <Text fontSize={12} fontWeight={'400'} color={'$gray9'}>
-              {job.user?.phone_number}
-            </Text>
-            <CustomIcon name="account" size="$0.75" color={'$gray9'} />
-          </XStack>
-        </YStack>
-        <UserAvatar size={'$3'} user={job.user} />
-      </XStack>
-    </XStack>
+  const description = useMemo(
+    () => job.items?.map((item) => item.notes).join(', '),
+    [job.items]
   );
-  const renderDetailShipmentMobile = () => (
-    <YStack gap="$2" alignItems="flex-end" paddingVertical="$1">
-          <XStack gap="$1" alignItems="center">
-            <Text color={'$color5'} fontSize={10}>
-              Detais Shipment
-            </Text>
-            <CustomIcon name="account" size="$0.75" color={'$color5'} />
-          </XStack>
-          <XStack gap="$2" alignItems="center">
-            <Separator vertical borderColor={'$gray7'} height={'20px'} />
-            <Text fontSize={10} fontWeight={'600'} color={'$gray9'}>
-              {t('job:job-published')} 26 mn
-            </Text>
-            <CustomIcon name="account" size="$0.75" />
-            <Separator vertical borderColor={'$gray7'} height={'20px'} />
 
-            <Text fontSize={10} fontWeight={'600'} color={'$gray9'}>
-              {job.items_type}
-            </Text>
-            <CustomIcon name="account" size="$0.75" />
-          </XStack>
-        </YStack>
-  )
-  const renderDetailDeliveryMobile = () => (
-    <YStack flex={1} width={'100%'} paddingVertical='$4' gap='$6'>
-      <XStack gap='$2' justifyContent='flex-end'>
-      <Text fontSize={12} fontWeight={'600'} color={'$gray9'}>
-          {job?.pick_date } 
-        </Text>
-        <YStack gap="$2" alignItems="flex-end" width={'50%'}>
-        <Text fontSize={12} fontWeight={'600'} color={'$gray9'} >
-          {t('job:from_location')}
-        </Text>
-        <Text fontSize={12} fontWeight={'800'} textAlign='left'>
-          Rue Gabes km 6 thyna
-        </Text>
-        </YStack>
-        
-        <CustomIcon name="home" size="$1" color={'$gray9'}/>
-      </XStack>
-      <XStack gap='$2' justifyContent='flex-end'>
-      <Text fontSize={12} fontWeight={'600'} color={'$gray9'}>
-          {job?.pick_date } 
-        </Text>
-        <YStack gap="$2" alignItems="flex-end" width={'50%'}>
-        <Text fontSize={12} fontWeight={'600'} color={'$gray9'} >
-          {t('job:from_location')}
-        </Text>
-        <Text fontSize={12} fontWeight={'600'} textAlign='left'>
-          Rue Gabes km 6 thyna
-        </Text>
-        </YStack>
-        
-        <CustomIcon name="location" size="$1" color={'$gray9'}/>
-      </XStack>
-<Stack
+  const deliveryTime = useMemo(() => {
+    return moment.duration(
+      moment(job.deliver_date).diff(moment(job.pick_date))
+    );
+  }, [job.pick_date, job.deliver_date]);
 
-position='absolute'
-top={'40px'}
-right={isRtl ? '-15px' : 'auto'}
-left={isRtl ? 'auto' : '-15px'}
->
-<CustomIcon name="vector" size="$5" color={'$gray9'}/>
-</Stack>
+  const renderDetailShipment = () => (
+    <YStack gap="$4">
+      <XStack justifyContent="space-between">
+        <JobItemDetails
+          icon={<Inbox size="$1" color={'$gray9'} $sm={{ display: 'none' }} />}
+          title="job:number-of-box"
+          item={job.items?.length}
+        />
+        <JobItemDetails
+          icon={
+            <CustomIcon
+              name="time-pace"
+              size="$1"
+              color={'$gray9'}
+              $sm={{ display: 'none' }}
+            />
+          }
+          title="job:deliver_time"
+          item={deliveryTime.humanize()}
+        />
+
+        <JobItemDetails
+          icon={
+            <Settings2 size="$1" color={'$gray9'} $sm={{ display: 'none' }} />
+          }
+          title="job:Suggestions"
+          item="TODO"
+        />
+        <JobItemDetails
+          icon={
+            <CustomIcon
+              name="budget"
+              size="$1"
+              color={'$gray9'}
+              $sm={{ display: 'none' }}
+            />
+          }
+          title="job:budget"
+          item={`${job.min_budget?.value} - ${job.max_budget?.value} ${job.min_budget?.currency?.code}`}
+        />
+      </XStack>
+      <YStack gap="$2"  $sm={{ gap:'$4'}}>
+        <XStack alignItems="center" gap="$2">
+          <CustomIcon name="assistant-navigation" size="$1" color={'$gray9'} />
+          <Text
+            fontSize={12}
+            fontWeight={'600'}
+            color={'$gray9'}
+            $sm={{
+              fontSize: 8,
+              fontWeight: '600',
+            }}
+          >
+            {t('job:from_location')}
+          </Text>
+          <Text
+            fontSize={12}
+            fontWeight={'600'}
+            $sm={{
+              fontSize: 8,
+              fontWeight: '600',
+            }}
+          >
+            {job?.from_location?.address}
+          </Text>
+        </XStack>
+        <XStack alignItems="center" gap="$2">
+          <CustomIcon name="location" size="$1" color={'$gray9'} />
+          <Text
+            fontSize={12}
+            fontWeight={'600'}
+            color={'$gray9'}
+            $sm={{
+              fontSize: 8,
+              fontWeight: '600',
+            }}
+          >
+            {t('job:to_location')}
+          </Text>
+          <Text
+            fontSize={12}
+            fontWeight={'600'}
+            $sm={{
+              fontSize: 8,
+              fontWeight: '600',
+            }}
+          >
+            {job.to_location?.address}
+          </Text>
+        </XStack>
+      </YStack>
     </YStack>
-  )
+  );
+
   return (
-    <>
+    <Stack
+      flexDirection="row"
+      justifyContent="space-between"
+      paddingHorizontal="$6"
+      paddingVertical="$4"
+      backgroundColor={'$color1'}
+      borderRadius={'$4'}
+      marginBottom={'$4'}
+      $sm={{
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: '$6',
+        padding: '$4',
+      }}
+    >
       <YStack
-        $lg={{ display: 'none' }}
-        width={'100%'}
-        justifyContent="flex-start"
-        alignItems="flex-end"
-        paddingHorizontal="$6"
-        paddingVertical="$4"
-        gap="$3"
         backgroundColor={'$color1'}
         borderRadius={'$4'}
-        marginBottom={'$6'}
+        gap="$4"
+        width={'70%'}
+        $sm={{ width: '100%' }}
       >
-        <YStack
-          width={'40%'}
-          gap="$3"
-          justifyContent="flex-end"
-          alignItems="flex-end"
-        >
-          <Text fontSize={15} fontWeight={'600'}>
+        <YStack gap="$3" justifyContent="flex-start" alignItems="flex-start">
+          {/* <Text
+            fontSize={15}
+            fontWeight={'600'}
+            $sm={{
+              fontSize: 12,
+              fontWeight: '600',
+            }}
+          >
             {job.id}
-          </Text>
-          <Text fontSize={25} fontWeight={'400'} color={'$color5'}>
+          </Text> */}
+          <Text
+            fontSize={25}
+            fontWeight={'400'}
+            color={'$color5'}
+            $sm={{
+              fontSize: 18,
+              fontWeight: '400',
+              color: '$color',
+            }}
+          >
             {t('job:job-demand')} {job.items_type}
           </Text>
-          <XStack gap="$8">
-            <XStack gap="$2" alignItems="center">
-              <Text fontSize={12} fontWeight={'600'} color={'$gray9'}>
-                {t('job:job-published')} 26 mn
-              </Text>
-              <CustomIcon name="account" size="$1" />
-            </XStack>
+          <Stack
+            flexDirection="row"
+            gap="$8"
+            marginBottom="$3"
+            $sm={{ flexDirection: 'column', gap: '$2' }}
+          >
             <XStack gap="$2" alignItems="center">
               {/* TODO change to UserAvatar */}
-              <Text fontSize={12} fontWeight={'600'} color={'$gray9'}>
+
+              <UserAvatar
+                size={'$1'}
+                user={job.user}
+              />
+              <Text
+                fontSize={12}
+                fontWeight={'600'}
+                color={'$gray9'}
+                $sm={{
+                  fontSize: 12,
+                  fontWeight: '600',
+                }}
+              >
+                
                 {job.user?.name}
               </Text>
-              <UserAvatar size={'$1'} user={job.user} />
             </XStack>
-          </XStack>
+            <XStack gap="$2" alignItems="center">
+              <CustomIcon
+                name="chronic"
+                size="$1"
+                $sm={{
+                  display: 'none',
+                }}
+              />
+              <Text
+                fontSize={12}
+                fontWeight={'600'}
+                color={'$gray9'}
+                $sm={{
+                  fontSize: 9,
+                  fontWeight: '600',
+                }}
+              >
+                {t('job:job-published')} {moment(job.created_at).fromNow()}
+              </Text>
+            </XStack>
+          </Stack>
+          <Text
+            fontSize={15}
+            fontWeight={'400'}
+            color={'$gray9'}
+            $sm={{
+              fontSize: 13,
+              fontWeight: '400',
+            }}
+          >
+            {description}
+          </Text>
         </YStack>
+
+        <Separator borderColor={'$gray7'} width={'100%'} />
+        {renderDetailShipment()}
+        
       </YStack>
-      <YStack
-        $gtLg={{ display: 'none' }}
-        width={'100%'}
-        paddingHorizontal="$6"
-        paddingVertical="$4"
-        gap="$3"
-        backgroundColor={'$color1'}
-        borderRadius={'$4'}
-        marginBottom={'$6'}
+      <Separator
+          borderColor={'$gray7'}
+          width={'100%'}
+          $gtSm={{ display: 'none' }}
+        />
+      <XStack
+        width={'30%'}
+        justifyContent="flex-end"
+        gap="$2"
+        $sm={{
+          flex: 1,
+          justifyContent: 'center',
+        }}
       >
-        {renderDetailUserMobile()}
-        <Separator width="100%" borderColor={'$gray7'} />
-        {renderDetailShipmentMobile()}
-        <Separator width="100%" borderColor={'$gray7'} />
-        {renderDetailDeliveryMobile()}
-      </YStack>
-    </>
+        <ZixLinkButton
+          href={`/jobs/${job.id}`}
+          icon={<Eye />}
+          themeInverse
+        >
+          {t('job:see-more')}
+        </ZixLinkButton>
+        <ZixLinkButton
+          href={`/jobs/${job.id}`}
+          icon={<X size="$1" />}
+          backgroundColor={'red'}
+          color={'$color1'}
+          $gtSm={{ display: 'none' }}
+        >
+          Remove
+        </ZixLinkButton>
+      </XStack>
+    </Stack>
   );
 };
 

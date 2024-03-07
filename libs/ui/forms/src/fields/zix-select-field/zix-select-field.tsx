@@ -75,7 +75,7 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
   return (
     <Theme name={hasError ? 'red' : themeName} forceClassName>
       <Select {...props} value={`${value}`} onValueChange={val => {
-        console.log('====:: val', val)
+        // console.log('====:: val', val)
         onChange?.(String(val))
       }} >
         <Select.Trigger

@@ -3,7 +3,7 @@ import { t } from 'i18next';
 import { useRouter } from 'next/router';
 import { Pressable } from 'react-native';
 import { Image, Stack, Text, XStack, YStack } from 'tamagui';
-import { ButtonItem } from '../../ButtonItem';
+import { ZixLinkButton } from '@zix/ui/common';
 
 export function WarningBanner() {
   const router = useRouter();
@@ -22,9 +22,6 @@ export function WarningBanner() {
         gap="$6"
         $md={{ gap: '$2', alignItems: 'center' }}
       >
-        <Pressable onPress={() => router.push('/client')}>
-          <CustomIcon name="large_arrow_right" size="$1" color="$gray10" />
-        </Pressable>
         <Text
           fontWeight="800"
           fontSize={20}
@@ -35,6 +32,9 @@ export function WarningBanner() {
         >
           {t('web-home:warningtitle')}
         </Text>
+        <Pressable onPress={() => router.push('/client')}>
+          <CustomIcon name="large_arrow_right" size="$1" color="$gray10" />
+        </Pressable>
       </XStack>
       <Text
         fontWeight="400"
@@ -44,7 +44,7 @@ export function WarningBanner() {
         $sm={{
           fontSize: 10,
           lineHeight: 25,
-          paddingTop: '$3',
+          paddingTop: '$1',
           textAlign: 'center',
         }}
       >
@@ -57,12 +57,10 @@ export function WarningBanner() {
       justifyContent="center"
       alignItems="center"
       borderRadius={'$4'}
-      height={181}
+      height={'$14'}
       marginBottom={'$3'}
       $sm={{
-        height: '200px',
         justifyContent: 'flex-start',
-        marginBottom: '0',
       }}
     >
       <Image
@@ -70,13 +68,13 @@ export function WarningBanner() {
         source={{
           uri: '/images/cheating.png',
           width: '100%',
-          height: '180px',
+          height: '100%',
         }}
         resizeMode="cover"
         borderRadius={'$4'}
       />
       <Stack
-        flexDirection="row-reverse"
+        flexDirection="row"
         position="absolute"
         width={'100%'}
         justifyContent="space-around"
@@ -84,27 +82,18 @@ export function WarningBanner() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '$3',
-          gap: '$3',
+          padding: '$4',
+          gap: '$2',
         }}
       >
         {renderOptionText()}
-        <ButtonItem
-          backgroundColor="red"
-          paddingVertical="$3"
-          paddingHorizontal="$6"
-          width="100%"
-          $xs={{
-            width: '100%',
-            paddingVertical: '$2',
-            paddingHorizontal: '$10',
-          }}
-          iconAfter={
-            <CustomIcon name="large_arrow_right" size="$1" color={'$color1'} />
-          }
-          name={t('web-home:warningbtn')}
-          color="$color1"
-        />
+        <ZixLinkButton
+          display="warningItem"
+          href={'/client'}
+          iconAfter={<CustomIcon name="large_arrow_right" size="$1" />}
+        >
+          {t('web-home:warningbtn')}
+        </ZixLinkButton>
       </Stack>
     </YStack>
   );

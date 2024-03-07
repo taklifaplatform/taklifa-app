@@ -12,11 +12,6 @@ export function StartToday() {
   const renderTextStartToday = () => (
     <YStack
       pos={'absolute'}
-      flexDirection="column"
-      flexWrap="wrap"
-      left={activeLang === 'en' ? '0' : 'auto'}
-      right={activeLang === 'en' ? 'auto' : '0'}
-      alignItems="flex-end"
       width={'70%'}
       gap="$4"
       padding="$4"
@@ -41,6 +36,7 @@ export function StartToday() {
           fontSize: 15,
           paddingBottom: '$1',
         }}
+        
       >
         {t('web-home:banner-5')}
       </Text>
@@ -60,6 +56,7 @@ export function StartToday() {
           fontSize: 10,
           lineHeight: 15,
           paddingBottom: '$1',
+          
         }}
         $xs={{
           textAlign: 'center',
@@ -81,28 +78,30 @@ export function StartToday() {
       </Text>
       <Stack flexDirection="row" gap="$4" $gtSm={{ display: 'none' }}>
         <Pressable onPress={() => router.push('/')}>
-          <CustomIcon name="googleplay" size={'$11'} />
+          <CustomIcon name="google_play" size={'$11'} />
         </Pressable>
         <Pressable onPress={() => router.push('/')}>
-          <CustomIcon name="appstore" size={'$11'} />
+          <CustomIcon name="app_store" size={'$11'} />
         </Pressable>
       </Stack>
       <Stack flexDirection="row" gap="$4" $sm={{ display: 'none' }}>
         <Pressable onPress={() => router.push('/')}>
-          <CustomIcon name="googleplay" size={'$14'} />
+          <CustomIcon name="google_play" size={'$14'} />
         </Pressable>
         <Pressable onPress={() => router.push('/')}>
-          <CustomIcon name="appstore" size={'$14'} />
+          <CustomIcon name="app_store" size={'$14'} />
         </Pressable>
       </Stack>
     </YStack>
   );
   return (
-    <Theme name="light">
+    <Theme name='light'>
       <Stack
-        height={'542px'}
-        $md={{ height: '400px' }}
-        $sm={{ height: '200px' }}
+         height={560}
+        $md={{ height: 400 }}
+        $sm={{ height: 200 }}
+        backgroundColor={'$color5'}
+        borderRadius={'$4'}
       >
         <Image
           alt="Banner"

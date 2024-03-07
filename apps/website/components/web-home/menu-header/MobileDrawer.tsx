@@ -1,175 +1,136 @@
-import { Check } from '@tamagui/lucide-icons';
 import { useMultiLang } from '@zix/i18n';
+import { ZixLinkButton } from '@zix/ui/common';
+import { ZixSelectField } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import { useState } from 'react';
-import { Pressable } from 'react-native';
-import { Separator, Sheet, Stack, Text, XStack, YStack } from 'tamagui';
-import { FooterItem } from '../../FooterItem';
-import { MenuItem } from './MenuItem';
+import { Separator, Text, XStack, YStack } from 'tamagui';
 
 export function MobileDrawer() {
   const { changeLanguage, activeLang } = useMultiLang();
-  const [drawer, setDrawer] = useState(false);
   const languages = [
-    { name: 'en', label: t('account:language:en') },
-    { name: 'ar', label: t('account:language:ar') },
+    { id: 'en', name: t('account:language:en') },
+    { id: 'ar', name: t('account:language:ar') },
+    { id: 'ur', name: t('account:language:ur') },
   ];
 
-  const renderSelectTranslate = () => (
-    <YStack gap="$3" padding="$2" justifyContent="center">
-      {languages.map((item, index) => (
-        <>
-          <Pressable
-            key={index}
-            size="$3"
-            onPress={() => changeLanguage(item.name)}
-          >
-            <XStack gap="$3" justifyContent="space-between" padding="$2">
-              {activeLang === item.name ? (
-                <Check size="$1" />
-              ) : (
-                <Stack width="$1" height="$1" />
-              )}
-              <Text fontSize="$2">{item.label}</Text>
-            </XStack>
-          </Pressable>
-          <Separator width="100%" borderColor={'$gray7'} />
-        </>
-      ))}
-    </YStack>
-  );
-
-  const renderSheet = () => (
-    <Sheet snapPoints={[40, 50]} open={drawer} modal={true}>
-      <Sheet.Overlay onPress={() => setDrawer(!drawer)} />
-      <Sheet.Handle />
-      <Sheet.Frame>{renderSelectTranslate()}</Sheet.Frame>
-    </Sheet>
-  );
-
   const renderTranslate = () => (
-    <Pressable
-      onPress={() => {
-        setDrawer(!drawer);
-      }}
-    >
-      <XStack
-        alignItems="center"
-        paddingVertical="$2"
-        backgroundColor={'transparent'}
-        borderBottomWidth={0}
-        gap="$3"
-        hoverStyle={{
-          cursor: 'pointer',
+    
+      <ZixSelectField
+        selectTriggerProps={{
+          backgroundColor: 'transparent',
+          borderWidth: 0,
+          gap: '$3',
+          iconAfter: null,
         }}
-      >
-        <Text fontWeight={'bold'} fontSize="$5">
-          {t('web-home:translate')}
-        </Text>
-        <CustomIcon name={'translate'} size="$1" />
-      </XStack>
-    </Pressable>
+        prependPlaceHolder={<CustomIcon name={'translate'} size="$1" />}
+        fontSize="$5"
+        fontWeight="500"
+        options={languages}
+        onChange={(value) => changeLanguage(value)}
+        value={activeLang}
+      />
+    
   );
 
   const renderHome = () => (
-    <MenuItem
-      name={t('web-home:home')}
-      path={'/'}
-      icon={<CustomIcon name={'homeinfo'} size="$1" />}
-    />
+    <ZixLinkButton
+      display="linkItem"
+      href={'/'}
+      icon={<CustomIcon name={'home_info'} size="$1" />}
+    >
+      {t('web-home:home')}
+    </ZixLinkButton>
   );
   const renderQuestion = () => (
-    <MenuItem
-      name={t('web-home:question')}
-      path={'/jobs'}
+    <ZixLinkButton
+      display="linkItem"
+      href={'/jobs'}
       icon={<CustomIcon name={'help'} size="$1" />}
-    />
+    >
+      {t('web-home:question')}
+    </ZixLinkButton>
   );
   const renderCall = () => (
-    <MenuItem
-      name={t('web-home:call')}
-      path={'/customer/contact'}
-      icon={<CustomIcon name={'rigning'} size="$1" />}
-    />
+    <ZixLinkButton
+      display="linkItem"
+      href={'/customer/contact'}
+      icon={<CustomIcon name={'ringing'} size="$1" />}
+    >
+      {t('web-home:call')}
+    </ZixLinkButton>
   );
   const renderSearch = () => (
-    <MenuItem
-      name={t('web-home:search')}
-      path={'/jobs'}
+    <ZixLinkButton
+      display="linkItem"
+      href={'/jobs'}
       icon={<CustomIcon name={'search'} size="$1" />}
-    />
+    >
+      {t('web-home:search')}
+    </ZixLinkButton>
   );
   const renderFollows = () => (
-    <>
-      <MenuItem name={t('web-home:followus')} />
-      <MenuItem
-        path={'/jobs'}
-        iconAfter={
-          <XStack gap="$4">
-            <FooterItem
-              icon={
-                <CustomIcon name="facebook" size={'$1.5'} color={'$color'} />
-              }
-              path={'/'}
-            />
-            <FooterItem
-              icon={
-                <CustomIcon name="instagram" size={'$1.5'} color={'$color'} />
-              }
-              path={'/'}
-            />
-            <FooterItem
-              icon={
-                <CustomIcon name="snapchat" size={'$1.5'} color={'$color'} />
-              }
-              path={'/'}
-            />
-          </XStack>
-        }
-      />
-    </>
+    <YStack gap="$4" paddingVertical="$2">
+      <Text fontWeight="600">{t('web-home:followus')}</Text>
+
+      <XStack gap="$4">
+        <ZixLinkButton
+          display="menuItem"
+          href={'/'}
+          icon={<CustomIcon name="facebook" size={'$1.5'} color={'$color'} />}
+          path={'/'}
+        />
+        <ZixLinkButton
+          display="menuItem"
+          href={'/'}
+          icon={<CustomIcon name="instagram" size={'$1.5'} color={'$color'} />}
+          path={'/'}
+        />
+        <ZixLinkButton
+          display="menuItem"
+          href={'/'}
+          icon={<CustomIcon name="snapchat" size={'$1.5'} color={'$color'} />}
+          path={'/'}
+        />
+      </XStack>
+    </YStack>
   );
 
   const renderDownload = () => (
-    <>
-      <MenuItem name={t('web-home:download')} />
-      <MenuItem
-        path={'/jobs'}
-        iconAfter={
-          <XStack gap="$4">
-            <FooterItem
-              icon={
-                <CustomIcon name={'appstore'} size={'$8'} />
-              }
-              path={'/'}
-            />
-            <FooterItem
-              icon={
-                <CustomIcon
-                  name={'googleplay'}
-                  size={'$8'}
-                />
-              }
-              path={'/'}
-            />
-          </XStack>
-        }
-      />
-    </>
+    <YStack gap="$2">
+      <Text fontWeight="600">{t('web-home:download')}</Text>
+      <XStack gap="$4">
+        <ZixLinkButton
+          display="menuItem"
+          href={'/'}
+          icon={<CustomIcon name={'app_store'} size={'$8'} />}
+        />
+        <ZixLinkButton
+          display="menuItem"
+          href={'/'}
+          icon={<CustomIcon name={'google_play'} size={'$8'} />}
+        />
+      </XStack>
+    </YStack>
   );
   const renderJob = () => (
-    <MenuItem name={t('web-home:works')} path={'/jobs'} />
+    <ZixLinkButton display="linkItem" href={'/jobs'}>
+      {t('web-home:works')}
+    </ZixLinkButton>
   );
   const renderShipment = () => (
-    <MenuItem name={t('web-home:payments')} path={'/customer/shipments'} />
+    <ZixLinkButton display="linkItem" href={'/customer/shipments'}>
+      {t('web-home:payments')}
+    </ZixLinkButton>
   );
   const renderOrder = () => (
-    <MenuItem name={t('web-home:followers')} path={'/customer/orders'} />
+    <ZixLinkButton display="linkItem" href={'/customer/orders'}>
+      {t('web-home:followers')}
+    </ZixLinkButton>
   );
 
   return (
-    <YStack gap="$2" padding="$4" alignItems="flex-end">
+    <YStack gap="$2" padding="$4" alignItems="flex-start">
       {renderHome()}
       <Separator width="100%" borderColor={'$gray7'} />
       {renderQuestion()}
@@ -189,7 +150,6 @@ export function MobileDrawer() {
       {renderFollows()}
       <Separator width="100%" borderColor={'$gray7'} />
       {renderDownload()}
-      {renderSheet()}
     </YStack>
   );
 }

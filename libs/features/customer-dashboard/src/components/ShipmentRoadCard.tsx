@@ -38,7 +38,7 @@ export function ShipmentRoadCard() {
           paddingBottom="$4"
         >
           <XStack gap="$2">
-            <CustomIcon name="starlocation" color="$color5" />
+            <CustomIcon name="star_location" color="$color5" />
             <Text fontWeight="bold" fontSize="$4" color="$color5">
               من
             </Text>

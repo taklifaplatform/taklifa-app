@@ -17,7 +17,7 @@ export const OnboardingAuthScreen = () => {
       description: t('web-home:driver-desc'),
     },
     {
-      icon: <CustomIcon name="companyshipping" size="$6" />,
+      icon: <CustomIcon name="company_shipping" size="$6" />,
       title: t('web-home:company'),
       description: t('web-home:company-desc'),
     },

@@ -4,13 +4,14 @@ import { useState } from 'react';
 import { Pressable } from 'react-native';
 import { Button, Sheet, XStack, useTheme } from 'tamagui';
 import { MobileDrawer } from './MobileDrawer';
+import { useMultiLang } from '@zix/i18n';
 
 export function MobileHeader() {
-  const theme = useTheme();
+  const {  activeLang } = useMultiLang();
   const [drawer, setDrawer] = useState(false);
   const router = useRouter();
   const renderDrawer = () => (
-    <Sheet snapPoints={[90, 50]} open={drawer} modal={true}>
+    <Sheet snapPoints={[100, 50]} open={drawer} modal={true}>
       <Sheet.Overlay onPress={() => setDrawer(!drawer)} />
       <Sheet.Handle />
       <Sheet.Frame>
@@ -31,6 +32,10 @@ export function MobileHeader() {
       paddingVertical="$1"
       overflow="hidden"
     >
+      <Pressable onPress={() => setDrawer(!drawer)}>
+        <CustomIcon name={'align_left'} size="$2" />
+      </Pressable>
+      <CustomIcon name={`web_logo_${activeLang}`} size={'$9'} />
       <Button
         unstyled
         backgroundColor="transparent"
@@ -44,15 +49,6 @@ export function MobileHeader() {
         icon={<CustomIcon name={'account'} size="$1" />}
       ></Button>
 
-      {!theme.dark ? (
-        <CustomIcon name={'weblogo'} size={'$6'} />
-      ) : (
-        <CustomIcon name={'web-dark-logo'} size={'$6'} />
-      )}
-
-      <Pressable onPress={() => setDrawer(!drawer)}>
-        <CustomIcon name={'align_left'} size="$2" />
-      </Pressable>
       {renderDrawer()}
     </XStack>
   );

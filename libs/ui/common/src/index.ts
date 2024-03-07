@@ -1,4 +1,7 @@
+
+export * from './components/debug-object/debug-object';
 export * from "./components/zix-button/zix-button";
+export * from "./components/zix-link-button/zix-link-button";
 
 export * from "./components/zix-dialog/zix-dialog";
 

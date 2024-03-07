@@ -1,15 +1,12 @@
 import { ChevronDown } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { FaqsService } from '@zix/api';
+import { ZixLinkButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
-import { useRouter } from 'next/router';
-import { Pressable } from 'react-native';
 import { Accordion, Paragraph, Square, Text, XStack, YStack } from 'tamagui';
 
 export function Questions() {
-  const router = useRouter();
-
   const { data } = useQuery({
     queryKey: ['FaqsService.fetchListFaqs'],
     queryFn: () => {
@@ -22,8 +19,8 @@ export function Questions() {
       overflow="hidden"
       width="70%"
       type="multiple"
-      marginBottom="-40px"
-      $sm={{ width: '100%', marginBottom: '-10px' }}
+      marginBottom={-40}
+      $sm={{ width: '100%', marginBottom: -10 }}
     >
       <Accordion.Item value="a1" key={index}>
         <Accordion.Trigger
@@ -35,10 +32,10 @@ export function Questions() {
         >
           {({ open }) => (
             <>
+              <Paragraph numberOfLines={1}>{item.title}</Paragraph>
               <Square animation="quick" rotate={open ? '180deg' : '0deg'}>
                 <ChevronDown size="$1" />
               </Square>
-              <Paragraph numberOfLines={1}>{item.title}</Paragraph>
             </>
           )}
         </Accordion.Trigger>
@@ -48,7 +45,6 @@ export function Questions() {
               __html: `<div class="ignore-css">${item.content}</div>`,
             }}
           />
-          {/* <Paragraph>{item.content}</Paragraph> */}
         </Accordion.Content>
       </Accordion.Item>
     </Accordion>
@@ -68,22 +64,26 @@ export function Questions() {
         alignItems="center"
         gap="$2"
         paddingVertical="$4"
-        $md={{ gap: '$4', paddingVertical: '$1' }}
-        $xs={{ gap: '$2' }}
+        $md={{ gap: '$1', paddingVertical: '$1' }}
       >
-        <Pressable onPress={() => router.push('/client')}>
-          <CustomIcon name="large_arrow_right" size="$1" color="$gray10" />
-        </Pressable>
         <Text
           fontWeight="800"
           fontSize={30}
           textAlign="center"
-          $xs={{
+          $md={{
             fontSize: 15,
           }}
         >
           {t('web-home:questiontitle')}
         </Text>
+        <ZixLinkButton
+          display="linkItem"
+          href={'/'}
+          iconAfter={
+            <CustomIcon name="large_arrow_right" size="$1" color="$gray10" />
+          }
+          alignItems="center"
+        />
       </XStack>
 
       {data?.data?.map((item, index) => renderZixAccordion({ item, index }))}

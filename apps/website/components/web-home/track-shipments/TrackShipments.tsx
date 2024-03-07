@@ -8,7 +8,7 @@ import { Button, Stack, Text, XStack, YStack } from 'tamagui';
 
 export function TrackShipments() {
   const [selectedShipment, setSelectedShipment] = useState(0);
-  const router = useRouter()
+  const router = useRouter();
 
   const renderMethodShipment = () => (
     <XStack
@@ -27,7 +27,7 @@ export function TrackShipments() {
           paddingBottom="$2"
         >
           <CustomIcon
-            name="searchtrack"
+            name="search_track"
             color={selectedShipment === 1 ? null : '$gray9'}
           />
           <Text
@@ -50,7 +50,7 @@ export function TrackShipments() {
           paddingBottom="$2"
         >
           <CustomIcon
-            name="findtrack"
+            name="find_track"
             color={selectedShipment === 0 ? null : '$gray9'}
           />
           <Text
@@ -79,7 +79,7 @@ export function TrackShipments() {
       {renderMethodShipment()}
 
       <Stack
-        width='100%'
+        width="100%"
         alignItems="center"
         justifyContent="space-evenly"
         flexDirection="row"
@@ -87,7 +87,7 @@ export function TrackShipments() {
         gap="$4"
         $sm={{
           flexDirection: 'column',
-          flexGrow: 1
+          flexGrow: 1,
         }}
       >
         <ZixInput
@@ -95,36 +95,35 @@ export function TrackShipments() {
           leftIcon={(props) => <CustomIcon {...props} name="flip" />}
           containerProps={{
             $sm: {
-              width: '100%'
-            }
+              width: '100%',
+            },
           }}
         />
 
         <Button
-          size='$5'
+          size="$5"
           onPress={() => router.push('/')}
           iconAfter={<CustomIcon name="large_arrow_right" size={'$1'} />}
           $sm={{
-            width: '100%'
+            width: '100%',
           }}
         >
-          {t('web-home:track')}
+          {selectedShipment === 0 ? t('web-home:track') : t('web-home:send')}
         </Button>
 
         <Button
           variant="outlined"
           borderColor="$gray9"
-          size='$5'
+          size="$5"
           onPress={() => router.push('/')}
           iconAfter={<CustomIcon name="large_arrow_right" size={'$1'} />}
-
           $sm={{
-            width: '100%'
+            width: '100%',
           }}
         >
-          {t('web-home:realtrack')}
-          {/* ? t('web-home:realtrack')
-            : t('web-home:realsend') */}
+          {selectedShipment === 0
+            ? t('web-home:realtrack')
+            : t('web-home:realsend')}
         </Button>
       </Stack>
     </YStack>

@@ -1,7 +1,6 @@
 import { useMultiLang } from '@zix/i18n';
 import { t } from 'i18next';
 import { Button, Image, Stack, Text, Theme } from 'tamagui';
-import { ButtonItem } from '../../ButtonItem';
 
 /**
  * /customer

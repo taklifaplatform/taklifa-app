@@ -1,6 +1,6 @@
+import { ZixLinkButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
-import { Pressable } from 'react-native';
 import { Image, Text, XStack, YStack } from 'tamagui';
 
 export function Partner() {
@@ -87,22 +87,27 @@ export function Partner() {
       <XStack
         alignItems="center"
         gap="$2"
-        $md={{ gap: '$4' }}
-        $xs={{ gap: '$2' }}
+        paddingVertical="$4"
+        $md={{ gap: '$1', paddingVertical: '$1' }}
       >
-        <Pressable onPress={() => router.push('/client')}>
-          <CustomIcon name="large_arrow_right" size="$1" color="$gray10" />
-        </Pressable>
         <Text
           fontWeight="800"
           fontSize={30}
           textAlign="center"
-          $xs={{
+          $md={{
             fontSize: 15,
           }}
         >
           {t('web-home:banner-6')}
         </Text>
+        <ZixLinkButton
+          display="linkItem"
+          href={'/'}
+          iconAfter={
+            <CustomIcon name="large_arrow_right" size="$1" color="$gray10" />
+          }
+          alignItems="center"
+        />
       </XStack>
       <Text
         fontWeight="400"
