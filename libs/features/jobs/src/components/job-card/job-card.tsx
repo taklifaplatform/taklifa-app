@@ -14,7 +14,7 @@ export type JobCardProps = {
   urlPrefix?: string;
 };
 
-export const JobCard: React.FC<JobCardProps> = ({ job }) => {
+export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
   const description = useMemo(
     () => job.items?.map((item) => item.notes).join(', '),
     [job.items]
@@ -246,7 +246,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job }) => {
         }}
       >
         <ZixLinkButton
-          href={`/jobs/${job.id}`}
+          href={`/${urlPrefix}/${job.id}`}
           icon={<Eye />}
           themeInverse
         >
