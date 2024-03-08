@@ -159,7 +159,20 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
           ] : result)
         })
         .catch((error) => {
-          alert('Oops, Failed to upload file. Please try again later!!')
+          Alert.alert(
+            error?.message || 'Oops!!',
+            error?.errors?.file?.join(', ') || 'Failed to upload file',
+            [
+              {
+                text: 'OK',
+                style: 'cancel',
+              },
+            ],
+            {
+              cancelable: true,
+            },
+          );
+          onRemoveMedia(media)
         })
     })
   }
