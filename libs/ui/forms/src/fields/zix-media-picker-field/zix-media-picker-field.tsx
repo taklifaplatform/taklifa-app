@@ -2,7 +2,7 @@ import { randomUUID } from 'expo-crypto';
 
 import { Alert, Platform, Text } from 'react-native';
 
-import { Camera, Image } from '@tamagui/lucide-icons';
+import { Camera, Image, Paperclip } from '@tamagui/lucide-icons';
 import { MediaService, MediaTransformer } from '@zix/api';
 import { ActionSheet, ActionSheetRef } from '@zix/ui/common';
 import { getDocumentAsync } from 'expo-document-picker';
@@ -15,6 +15,7 @@ import { useEffect, useRef, useState } from 'react';
 import { UploadableMediaFile, uploadMediaFile } from '../../utils';
 import { ZixFilesInputMediaPickerPreviewer, ZixImageMediaPickerPreviewer, ZixRowMediaPickerPreviewer } from './previewers';
 import { ZixMediaPickerTransformer } from './types';
+import { t } from 'i18next';
 
 /**
  * Previewers Specifications:
@@ -78,24 +79,37 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     }
   }, [value]);
 
-  const renderImagePicker = () => (
-    <ActionSheet
-      title="Add Media"
-      actions={[
-        {
-          name: 'Take Photo',
-          icon: <Camera size="$2" color="$color10" />,
-          onPress: launchCamera,
-        },
-        {
-          name: 'Select Media',
-          icon: <Image size="$2" color="$color10" />,
-          onPress: launchMediaPicker,
-        },
-      ]}
-      ref={actionRef}
-    />
-  );
+  const renderImagePicker = () => {
+    const actions = [
+      {
+        name: t(`core:media_picker.camera`),
+        icon: <Camera size="$1.5" color="$color10" />,
+        onPress: launchCamera,
+      },
+      {
+        name: t(`core:media_picker.select_media`),
+        icon: <Image size="$1.5" color="$color10" />,
+        onPress: launchMediaPicker,
+      },
+    ]
+
+    if (type === 'files' || type === 'file') {
+      actions.push({
+        name: t(`core:media_picker.select_document`),
+        icon: <Paperclip size="$1.5" color="$color10" />,
+        onPress: launchDocumentPicker,
+      });
+    }
+
+
+    return (
+      <ActionSheet
+        title={t(`core:media_picker.title`)}
+        actions={actions}
+        ref={actionRef}
+      />
+    )
+  };
 
   /**
    * Handles the selection of files in the media picker.
@@ -270,9 +284,6 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
    * Otherwise, it opens the action sheet using the ref.
    */
   function onOpenMediaPicker() {
-    if (type === 'files' || type === 'file') {
-      return launchDocumentPicker();
-    }
     if (Platform.OS === 'web') {
       launchMediaPicker()
     } else {
@@ -304,7 +315,6 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
   return (
     <>
       {renderImagePicker()}
-      {/* <Text>{JSON.stringify(value)}</Text> */}
       <Previewer
         onPress={onOpenMediaPicker}
         previews={Object.values(previews)}

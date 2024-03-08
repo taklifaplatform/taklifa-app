@@ -99,6 +99,14 @@ interface Resources {
     "select_country": "Select country",
     "search": "Search..."
   },
+  "core": {
+    "media_picker": {
+      "title": "Select a media picker",
+      "select_document": "Select Document",
+      "select_media": "Select Media",
+      "camera": "Camera"
+    }
+  },
   "forms": {
     "name": "Name // Enter your full name",
     "username": "Username // Enter your username",

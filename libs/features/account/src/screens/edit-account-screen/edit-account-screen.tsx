@@ -21,7 +21,6 @@ const ProfileSchema = z.object({
   about: formFields.textarea
     .describe('About // Tell us a bit about yourself')
     .optional()
-
 }).required({
   name: true
 });
