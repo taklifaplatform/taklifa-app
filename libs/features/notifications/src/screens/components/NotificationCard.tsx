@@ -1,63 +1,45 @@
-import { View, TouchableOpacity, Image } from 'react-native';
-import React from 'react';
-import { XStack, YStack, Text } from 'tamagui';
+import { NotificationTransformer } from '@zix/api';
+import { UserAvatar } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
-import { MoreHorizontal } from '@tamagui/lucide-icons';
+import moment from 'moment';
+import React from 'react';
+import { ListItem, View } from 'tamagui';
 
-export default function NotificationCard({
-  item = {
-    avatar: '',
-    icon: '',
-    title: '',
-    time: '',
-  },
-}) {
-  return (
-    <TouchableOpacity
-      style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 20,
-        backgroundColor:
-          item.icon === 'notifications' ? '#FFFBED' : 'transparent',
-        padding: 10,
-      }}
-    >
-      <XStack space="$3" width={'80%'}>
-        {item.avatar ? (
-          <Image
-            source={{ uri: item.avatar }}
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 50,
-            }}
-          />
-        ) : (
-          <View
-            style={{
-              backgroundColor: '#FFEEB2',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: 100,
-              width: 40,
-              height: 40,
-            }}
-          >
-            <CustomIcon name={item.icon} size={28} color={'#FECA16'} />
-          </View>
-        )}
 
-        <YStack space="$1">
-          <Text textAlign="left" fontWeight={'500'}>
-            {item.title}
-          </Text>
-          <Text color={'$gray9'} fontWeight={'500'}>
-            {item.time}
-          </Text>
-        </YStack>
-      </XStack>
-      <MoreHorizontal size="$1" />
-    </TouchableOpacity>
-  );
+export type NotificationCardProps = {
+  notification: NotificationTransformer
 }
+
+export const NotificationCard: React.FC<NotificationCardProps> = ({
+  notification,
+}) => {
+
+  return (
+    <ListItem
+      backgroundColor={notification.read_at ? 'transparent' : '$color3'}
+      title={notification.data?.title}
+      subTitle={moment(notification.created_at).fromNow()}
+
+      icon={notification.sender ? (
+        <UserAvatar
+          user={notification.sender}
+          size="$3"
+        />
+      ) : (
+        <View
+          width="$3"
+          height="$3"
+          borderRadius="$10"
+          alignItems='center'
+          justifyContent='center'
+          backgroundColor="$color2"
+        >
+          <CustomIcon name={notification.data?.icon} size="$1.5" color='$color5' />
+        </View>
+      )}
+    />
+  )
+}
+
+
+export default NotificationCard

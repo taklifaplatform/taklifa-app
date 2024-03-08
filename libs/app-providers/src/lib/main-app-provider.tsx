@@ -3,7 +3,7 @@ import { themeConfig } from '@zix/theme';
 import { Provider as JotaiProvider } from 'jotai';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import {
-  ProvidersComposer, QueryClientProvider, SafeAreaProvider, TamaguiProvider,
+  ProvidersComposer, PushNotification, QueryClientProvider, SafeAreaProvider, TamaguiProvider,
   ToastProvider,
   UniversalThemeProvider,
 } from './providers';
@@ -32,6 +32,7 @@ export const MainAppProvider: React.FC<MainAppProviderProps> = ({
         ToastProvider,
         QueryClientProvider,
         AuthProvider,
+        PushNotification
       ]}
     >
       {children}

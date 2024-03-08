@@ -2,22 +2,23 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { LocationTransformer } from './LocationTransformer';
 import type { MediaTransformer } from './MediaTransformer';
 import type { SimpleCompanyTransformer } from './SimpleCompanyTransformer';
-import type { UserSimpleRoleTransformer } from './UserSimpleRoleTransformer';
-export type AuthenticatedUserTransformer = {
+import type { VehicleTransformer } from './VehicleTransformer';
+export type DriverTransformer = {
     id?: number;
     username?: string;
     name?: string;
     phone_number?: string;
-    phone_number_has_whatsapp?: boolean;
-    email?: string;
-    email_verified_at?: string;
     about?: string;
-    roles?: Array<UserSimpleRoleTransformer>;
-    active_role?: UserSimpleRoleTransformer;
-    companies?: Array<SimpleCompanyTransformer>;
-    active_company?: SimpleCompanyTransformer;
     avatar?: MediaTransformer;
+    companies?: Array<SimpleCompanyTransformer>;
+    location?: LocationTransformer;
+    rating_stats?: {
+        score?: number;
+        count?: number;
+    };
+    vehicle?: VehicleTransformer;
 };
 
