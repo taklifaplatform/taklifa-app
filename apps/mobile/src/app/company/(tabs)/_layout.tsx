@@ -36,11 +36,15 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
-        name="notifications"
+        name="jobs"
         options={{
-          title: t('navigation:company-dashboard.jobs'),
-          tabBarIcon: ({ size, color }) => (
-            <CustomIcon name="notifications" color={color} size={size} />
+          title: t('navigation:solo-driver-dashboard.jobs'),
+          tabBarIcon: ({ size, focused }) => (
+            <CustomIcon
+              name="job"
+              color={focused ? '$color5' : '$gray6'}
+              size={size}
+            />
           ),
         }}
       />

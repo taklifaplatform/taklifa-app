@@ -134,11 +134,12 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
           focusStyle={{
             backgroundColor: 'transparent',
           }}
+          {...rest}
         >
           {({ open }: { open: boolean }) => (
             <>
               {renderLabel()}
-              <Square
+               <Square
                 theme="alt1"
                 animation="quick"
                 rotate={open ? '180deg' : '0deg'}

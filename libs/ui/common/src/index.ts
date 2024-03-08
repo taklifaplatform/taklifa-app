@@ -1,4 +1,7 @@
+
+export * from './components/debug-object/debug-object';
 export * from "./components/zix-button/zix-button";
+export * from "./components/zix-link-button/zix-link-button";
 
 export * from "./components/zix-dialog/zix-dialog";
 
@@ -28,3 +31,5 @@ export * from "./components/animated/shake/shake";
 export * from "./components/inline-stepper/inline-stepper";
 
 export * from "./hooks/usePopoverState";
+
+export * from "./components/data-not-found/data-not-found";

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Stack, YStack } from 'tamagui';
-import { MobileHeader } from '../components/web-home/menu-header';
-import { Footer } from '../components/web-home/footer';
-import { Header } from '../components/web-home/header';
-import { TopHeader } from '../components/web-home/top-header';
+import { MobileHeader } from '../components/web-home/menu-header/MobileHeader';
+import { TopHeader } from '../components/web-home/top-header/TopHeader';
+import { Footer } from '../components/web-home/footer/Footer';
+import { Header } from '../components/web-home/header/Header';
 
 export type MainLayoutProps = {
   children: React.ReactNode;

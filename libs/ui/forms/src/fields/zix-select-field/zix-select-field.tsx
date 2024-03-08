@@ -75,7 +75,7 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
   return (
     <Theme name={hasError ? 'red' : themeName} forceClassName>
       <Select {...props} value={`${value}`} onValueChange={val => {
-        console.log('====:: val', val)
+        // console.log('====:: val', val)
         onChange?.(String(val))
       }} >
         <Select.Trigger
@@ -85,7 +85,7 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
           {...selectTriggerProps}
         >
           {prependPlaceHolder}
-          <Select.Value flex={1} fontSize="$1" placeholder={placeholder} />
+          <Select.Value flex={1} fontSize="$1" placeholder={placeholder} {...props} />
           {appendPlaceHolder}
         </Select.Trigger>
 

@@ -1,8 +1,7 @@
 import { UserTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
 import { useMemo } from 'react';
-import { SolitoImage } from 'solito/image';
-import { Avatar, SizeTokens, useStyle } from 'tamagui';
+import { Avatar, SizeTokens, useStyle, Image } from 'tamagui';
 
 export type UserAvatarProps = {
   size?: SizeTokens;
@@ -42,13 +41,11 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
       {...props}
     >
       {avatarUrl ? (
-        <SolitoImage
-          src={avatarUrl}
-          alt="your avatar"
-          width={style.width as number}
-          height={style.height as number}
-          style={{ backgroundColor: 'white' }}
-          contentFit='fill'
+        <Image
+          source={{ uri: avatarUrl }}
+          alt={user?.name ?? ''}
+          style={style}
+          resizeMode='contain'
         />
       ) : (
         <CustomIcon name="avatar" size={size} color="$color2" />
