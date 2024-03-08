@@ -12,7 +12,19 @@ export class DriversService {
      * @returns any Successful response
      * @throws ApiError
      */
-    public static fetchAllDrivers(): CancelablePromise<{
+    public static fetchAllDrivers({
+        page,
+        perPage,
+    }: {
+        /**
+         * Page number
+         */
+        page?: number,
+        /**
+         * Number of items per page
+         */
+        perPage?: number,
+    }): CancelablePromise<{
         data?: Array<DriverTransformer>;
         links?: {
             first?: string;
@@ -38,6 +50,10 @@ export class DriversService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/drivers',
+            query: {
+                'page': page,
+                'per_page': perPage,
+            },
         });
     }
     /**
