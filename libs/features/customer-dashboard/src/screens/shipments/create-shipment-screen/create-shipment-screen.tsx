@@ -1,6 +1,8 @@
+import { useToastController } from '@tamagui/toast';
 import { useMutation } from '@tanstack/react-query';
+import { CustomerShipmentsService } from '@zix/api';
 import { InlineStepper } from '@zix/ui/common';
-import { SchemaForm, SubmitButton, formFields } from '@zix/ui/forms';
+import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/ui/forms';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
 import { FormProvider, Theme, XStack } from 'tamagui';
@@ -11,31 +13,34 @@ export interface CreateShipmentScreenProps {
   shipment: any
 }
 
-const SendFromSchema = z.object({
-  location: formFields.text.describe('Pick From ').min(5),
-  // date: formFields.date.describe('Pick Date '),
-  // time: formFields.time.describe('Pick Time '),
-
-  notes: formFields.textarea.describe('Notes // Leave a note for the driver'),
-
-
+const CreateShipmentSchema = z.object({
+  from_location: formFields.address.describe('Shipping from // Enter the address of the pickup location'),
+  pick_date: formFields.row_date_picker.describe('Date // Pick Date'),
+  pick_time: formFields.row_time_range_picker.describe('Time // Pick Time'),
 })
 
-
 export const CreateShipmentScreen: React.FC<CreateShipmentScreenProps> = ({ shipment }) => {
-  const form = useForm<z.infer<typeof SendFromSchema>>()
+  const form = useForm<z.infer<typeof CreateShipmentSchema>>()
   const router = useRouter()
+  const toast = useToastController()
 
   const { mutate } = useMutation({
-    mutationFn(variables) {
-      return Promise.resolve(variables)
+    mutationFn(requestBody: z.infer<typeof CreateShipmentSchema>) {
+      return CustomerShipmentsService.storeShipment({
+        requestBody
+      })
     },
     onSuccess(data, variables, context) {
-      router.push('/customer/shipments/1235/recipient')
-      //
+      if (!data.data?.id) {
+        toast.show('An error occurred', { preset: 'error' })
+        return
+      }
+      router.push(`/customer/shipments/${data.data.id}`)
+      router.push(`/customer/shipments/${data.data.id}/recipient`)
     },
-    onError(error, variables, context) {
-      //
+    onError(error: any) {
+      toast.show(error?.body?.message || 'An error occurred', { preset: 'error' })
+      handleFormErrors(form, error?.body?.errors);
     },
   })
 
@@ -43,7 +48,7 @@ export const CreateShipmentScreen: React.FC<CreateShipmentScreenProps> = ({ ship
     <FormProvider {...form}>
       <SchemaForm
         form={form}
-        schema={SendFromSchema}
+        schema={CreateShipmentSchema}
         props={{}}
         defaultValues={shipment}
         onSubmit={mutate}

@@ -50,7 +50,7 @@ export const ZixDatePicker: React.FC<ZixDateFieldProps> = ({
               value={moment(value ?? undefined).toDate()}
               mode={'date'}
               display='inline'
-              onChange={(date) => {
+              onChange={(_, date) => {
                 onChange?.(moment(date).format('YYYY-MM-DD'))
               }}
             />

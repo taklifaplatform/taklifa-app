@@ -2,9 +2,15 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { ShipmentInvitationsUpdateShipmentRequest } from './ShipmentInvitationsUpdateShipmentRequest';
-import type { ShipmentItemsUpdateShipmentRequest } from './ShipmentItemsUpdateShipmentRequest';
+import type { FromLocationUpdateShipmentRequest } from './FromLocationUpdateShipmentRequest';
+import type { InvitationsUpdateShipmentRequest } from './InvitationsUpdateShipmentRequest';
+import type { ItemsUpdateShipmentRequest } from './ItemsUpdateShipmentRequest';
+import type { MaxBudgetUpdateShipmentRequest } from './MaxBudgetUpdateShipmentRequest';
+import type { MinBudgetUpdateShipmentRequest } from './MinBudgetUpdateShipmentRequest';
+import type { ToLocationUpdateShipmentRequest } from './ToLocationUpdateShipmentRequest';
 export type UpdateShipmentRequest = {
+    from_location?: FromLocationUpdateShipmentRequest;
+    to_location?: ToLocationUpdateShipmentRequest;
     pick_date?: string;
     pick_time?: string;
     deliver_date?: string;
@@ -12,10 +18,9 @@ export type UpdateShipmentRequest = {
     recipient_name?: string;
     recipient_phone?: string;
     items_type?: string;
-    status?: string;
-    min_budget_id?: string;
-    max_budget_id?: string;
-    shipmentItems?: ShipmentItemsUpdateShipmentRequest;
-    shipmentInvitations?: ShipmentInvitationsUpdateShipmentRequest;
+    min_budget?: MinBudgetUpdateShipmentRequest;
+    max_budget?: MaxBudgetUpdateShipmentRequest;
+    items?: Array<ItemsUpdateShipmentRequest>;
+    invitations?: Array<InvitationsUpdateShipmentRequest>;
 };
 

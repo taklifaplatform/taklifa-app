@@ -2,4 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type FaqRequest = Record<string, any>;
+export type SupportCategoryTransformer = {
+    id?: number;
+    name?: string;
+};
+

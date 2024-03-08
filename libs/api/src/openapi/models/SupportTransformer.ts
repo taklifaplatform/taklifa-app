@@ -2,10 +2,13 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { ShipmentTransformer } from './ShipmentTransformer';
-export type ShipmentInvitationTransformer = {
+export type SupportTransformer = {
     id?: number;
-    shipment?: ShipmentTransformer;
+    category_id?: number | null;
+    email?: string;
+    phone_number?: string | null;
+    subject?: string;
+    message?: string;
     status?: string;
 };
 

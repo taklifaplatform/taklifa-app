@@ -6,21 +6,13 @@ import { useRouter } from 'solito/router';
 import { FormProvider, Theme, XStack } from 'tamagui';
 import { z } from 'zod';
 
-/* eslint-disable-next-line */
-export interface SetRecipientShipmentScreenProps {
-  shipment: any
-}
-
 const SendFromSchema = z.object({
-  location: formFields.text.describe('Pick From ').min(5),
-  // date: formFields.date_picker.describe('Pick Date '),
-  // time: formFields.time.describe('Pick Time '),
-
-  notes: formFields.textarea.describe('Notes // Leave a note for the driver'),
+  from_location: formFields.address.describe('Shipping from // Enter the address of the pickup location'),
+  pick_date: formFields.row_date_picker.describe('Date // Pick Date'),
+  pick_time: formFields.row_time_range_picker.describe('Time // Pick Time'),
 })
 
-
-export const SetRecipientShipmentScreen: React.FC<SetRecipientShipmentScreenProps> = ({ shipment }) => {
+export const SetRecipientShipmentScreen: React.FC = () => {
   const form = useForm<z.infer<typeof SendFromSchema>>()
   const router = useRouter()
 
@@ -43,7 +35,6 @@ export const SetRecipientShipmentScreen: React.FC<SetRecipientShipmentScreenProp
         form={form}
         schema={SendFromSchema}
         props={{}}
-        defaultValues={shipment}
         onSubmit={mutate}
         renderBefore={() => (
           <XStack alignItems="center" >
