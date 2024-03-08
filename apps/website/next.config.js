@@ -72,8 +72,6 @@ const tamaguiPlugin = withTamagui({
   // we recommend only using this for production so you get reloading during dev mode
   outputCSS: process.env.NODE_ENV === 'production' ? './public/tamagui.css' : null,
 
-
-  disableExtraction: true
 })
 
 const plugins = [
