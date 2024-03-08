@@ -6,14 +6,14 @@ import VerifyPhoneNumberForm from '../../forms/verify-phone-number-form/verify-p
 
 export const SignUpPhoneNumberVerificationScreen = () => {
   const router = useRouter();
-  const { registerSteps, requestedAccountType } = useAuth()
+  const { registerSteps, requestedAccountType, } = useAuth()
 
   async function onSuccess(user?: UserTransformer) {
     if (requestedAccountType === 'customer') {
       router.replace('/auth/register/success');
     }
     if (requestedAccountType === 'company_owner') {
-      router.replace('/company/create');
+      router.replace('/auth/create-company');
     }
     if (requestedAccountType === 'solo_driver') {
       router.replace('/auth/verify-kyc');

@@ -15,10 +15,8 @@ export default function Screen() {
       style={{
         flex: 1,
         backgroundColor: '#333333',
-
       }}
       onLayout={() => {
-        // router.push('/auth/company')
         if (Platform.OS === 'ios') {
           setTimeout(() => {
             redirectUserToActiveDashboard();
