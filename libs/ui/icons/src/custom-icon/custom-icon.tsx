@@ -28,6 +28,7 @@ const IconsMap = Object.keys(Icons).reduce((acc: Record<string, any>, name) => {
 const iconNames = [
   'web_logo_en',
   'web_logo_ar',
+  'aspect_ratio',
   'logo',
   'avatar',
   'circle_avatar',

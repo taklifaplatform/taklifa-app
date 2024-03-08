@@ -7,6 +7,7 @@ import Apps from './icons/apps.svg';
 import AppStore from './icons/app-store.svg';
 import Avatar from './icons/avatar.svg';
 import AssistantNavigation from './icons/assistant-navigation.svg';
+import AspectRatio from './icons/aspect-ratio.svg';
 import Book from './icons/book.svg';
 import Budget from './icons/budget.svg';
 import Call from './icons/call.svg';
@@ -89,6 +90,7 @@ export {
   AppStore,
   Avatar,
   AssistantNavigation,
+  AspectRatio,
   Book,
   Budget,
   Call,

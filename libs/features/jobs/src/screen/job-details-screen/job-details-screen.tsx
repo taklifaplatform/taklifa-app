@@ -1,27 +1,27 @@
-import { Check, Eye, X } from '@tamagui/lucide-icons';
+import { CalendarDays, Check, Inbox, Package, PackageOpen, Route, Timer, Weight, X } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { JobService } from '@zix/api';
 import { UserAvatar, ZixLinkButton } from '@zix/ui/common';
-import { ZixFieldContainer } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
-import { ZixWidgetContainer } from '@zix/ui/widgets';
+import { ZixVariantOptionsWidget, ZixWidgetContainer } from '@zix/ui/widgets';
 import { t } from 'i18next';
 import moment from 'moment';
 import { useMemo } from 'react';
 import { createParam } from 'solito';
-import { Stack, XStack, Text, YStack, Separator } from 'tamagui';
+import { Stack, Text, XStack, YStack } from 'tamagui';
 
-/* eslint-disable-next-line */
-export interface JobDetailsScreenProps {}
+const { useParam } = createParam<{ job: string }>();
 
-const { useParams } = createParam();
-export function JobDetailsScreen(props: JobDetailsScreenProps) {
-  const { params } = useParams();
+export function JobDetailsScreen() {
+  const [jobId] = useParam('job');
+
   const { data } = useQuery({
-    queryKey: ['JobService.retrieveJob', { id: params.job }],
-    queryFn: () => JobService.retrieveJob({ job: params.job }),
+    queryKey: ['JobService.retrieveJob', { id: jobId }],
+    queryFn: () => JobService.retrieveJob({ job: jobId || '' }),
   });
+
   const job = data?.data;
+
   const description = useMemo(
     () => job?.items?.map((item) => item.notes).join(', '),
     [job?.items]
@@ -43,16 +43,6 @@ export function JobDetailsScreen(props: JobDetailsScreenProps) {
       }}
     >
       <YStack gap="$3">
-        {/* <Text
-          fontSize={15}
-          fontWeight={'600'}
-          $sm={{
-            fontSize: 12,
-            fontWeight: '600',
-          }}
-        >
-          {job?.id}
-        </Text> */}
         <Text
           fontSize={25}
           fontWeight={'400'}
@@ -119,43 +109,121 @@ export function JobDetailsScreen(props: JobDetailsScreenProps) {
       flexDirection="column"
       paddingHorizontal="$6"
       paddingVertical="$4"
-      // backgroundColor={'$color1'}
       borderRadius={'$4'}
       marginBottom={'$4'}
       gap="$4"
       $sm={{
-        justifyContent: 'center',
-        alignItems: 'center',
         gap: '$6',
         padding: '$4',
       }}
     >
       {renderHeaderCard()}
-      <ZixWidgetContainer
-        label={t('job:service-description')} 
-      >
-        <YStack paddingVertical='$4'>
-        <Text
-          fontSize={15}
-          fontWeight={'400'}
-          color={'$gray9'}
-          $sm={{
-            fontSize: 13,
-            fontWeight: '400',
-          }}
-        >
-          {description}
-        </Text>
+      <ZixWidgetContainer label={t('job:service-description')}>
+        <YStack marginTop="$4">
+          <Text
+            fontSize={15}
+            fontWeight={'400'}
+            color={'$gray9'}
+            $sm={{
+              fontSize: 13,
+              fontWeight: '400',
+            }}
+          >
+            {description}
+          </Text>
+        </YStack>
+      </ZixWidgetContainer>
+      <ZixWidgetContainer label={t('job:shipment-details')}>
+        <YStack gap="$6" marginTop="$4">
+          <ZixVariantOptionsWidget
+            icon={<Inbox size="$1" color={'$color5'} />}
+            label={t('job:shipment')}
+            optionVariant="details"
+            variant="details"
+            options={[
+              {
+                icons: <Package size="$1" color={'$gray9'} />,
+                name: t('job:number-of-packages'),
+                value: `${job?.items?.length}`,
+              },
+              {
+                icons: <PackageOpen size="$1" color={'$gray9'} />,
+                name: t('job:shipment-type'),
+                value: `${job?.items_type}`,
+              },
+              {
+                icons: <CustomIcon name='aspect_ratio' size="$1" color='$gray3' />,
+                name: t('job:package-size'),
+                value: 'TODO',
+              },
+              {
+                icons: <Weight size="$1" color={'$gray9'} />,
+                name: t('job:package-weight'),
+                value: 'TODO',
+              },
+            ]}
+          />
+          <ZixVariantOptionsWidget
+            // icon={<Timer size="$1" color={'$color5'} />}
+            icon={<CustomIcon name='time' size="$1" color='$color5' />}
+            label={t('job:time-and-distance')}
+            optionVariant="details"
+            variant="details"
+            options={[
+              {
+                icons: <Inbox size="$1" color={'$gray9'} />,
+                name: t('job:deliver_duration'),
+                value: `${deliveryTime.humanize()}`,
+              },
+              {
+                icons: <CustomIcon
+                name="time-pace"
+                size="$1"
+                color={'$gray9'}
+              />,
+                name: t('job:estimated-distance'),
+                value: 'TODO',
+              },
+              {
+                icons: <CalendarDays size="$1" color={'$gray9'} />,
+                name: t('job:estimated-time'),
+                value: 'TODO',
+              },
+              {
+                icons: <CustomIcon
+                name="time-pace"
+                size="$1"
+                color={'$gray9'}
+              />,
+                name: t('job:deliver_time'),
+                value: 'TODO',
+              },
+              {
+                icons: <CalendarDays size="$1" color={'$gray9'} />,
+                name: t('job:deliver-date'),
+                value: `${job?.deliver_date}`,
+              },
+              {
+                icons: <Timer size="$1" color={'$gray9'} />,
+                name: t('job:delivery-time'),
+                value: `${job?.deliver_time}`,
+              },
+              {
+                icons: <Route size="$1" color={'$gray9'} />,
+                name: t('job:delivery-date'),
+                value: 'TODO',
+              },
+            ]}
+          />
         </YStack>
       </ZixWidgetContainer>
 
       <XStack
-        width={'30%'}
-        justifyContent="flex-end"
         gap="$2"
         $sm={{
           flex: 1,
           justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
         <ZixLinkButton
@@ -169,7 +237,7 @@ export function JobDetailsScreen(props: JobDetailsScreenProps) {
           {t('job:shipment-accept')}
         </ZixLinkButton>
         <ZixLinkButton
-          href={`/jobs/${job?.id}`}
+          href={`/`}
           icon={<X size="$1" />}
           backgroundColor={'red'}
           color={'$color1'}
