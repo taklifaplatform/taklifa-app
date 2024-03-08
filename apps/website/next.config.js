@@ -61,10 +61,10 @@ const nextConfig = {
 
 const tamaguiPlugin = withTamagui({
   platform: 'web',
-  // themeBuilder: {
-  //   input: '../../libs/theme/src/lib/sawaeed-theme/themes/theme.ts',
-  //   output: '../../libs/theme/src/lib/sawaeed-theme/themes.ts',
-  // },
+  themeBuilder: {
+    input: '../../libs/theme/src/lib/sawaeed-theme/themes/theme.ts',
+    output: '../../libs/theme/src/lib/sawaeed-theme/themes.ts',
+  },
 
   config: './tamagui.config.ts',
   components: ['tamagui'],
@@ -72,8 +72,6 @@ const tamaguiPlugin = withTamagui({
   // we recommend only using this for production so you get reloading during dev mode
   outputCSS: process.env.NODE_ENV === 'production' ? './public/tamagui.css' : null,
 
-
-  // disableExtraction: true
 })
 
 const plugins = [
