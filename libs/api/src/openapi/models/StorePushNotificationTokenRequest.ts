@@ -2,9 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type ListShipmentQueryRequest = {
-    search?: string;
-    status?: string;
-    items_type?: string;
+export type StorePushNotificationTokenRequest = {
+    token?: string;
 };
 

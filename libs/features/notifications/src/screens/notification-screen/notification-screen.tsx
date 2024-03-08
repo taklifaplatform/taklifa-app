@@ -1,119 +1,99 @@
-import { Text, YStack } from 'tamagui';
-import { useEffect, useState } from 'react';
-import { SectionList, View } from 'react-native';
-import NotificationCard from '../components/NotificationCard';
+import { useQuery } from '@tanstack/react-query';
+import { NotificationService, NotificationTransformer } from '@zix/api';
+import moment from 'moment';
+import { useMemo, useState } from 'react';
+import { SectionList, SectionListData, } from 'react-native';
+import { Text, XStack, YStack, View, H4 } from 'tamagui';
+import { NotificationCard } from '../components/NotificationCard';
 import SearchBar from '../components/SearchBar';
+import { CustomIcon } from '@zix/ui/icons';
 
 /* eslint-disable-next-line */
-export interface NotificationScreenProps {}
+export interface NotificationScreenProps { }
 export function NotificationScreen(props: NotificationScreenProps) {
-  const data = [
-    {
-      title: 'Today',
-      data: [
-        {
-          id: 1,
-          title: 'Shipment No. 23558 arrived to me from Abu So-and-so',
-          time: 'Now',
-          icon: 'notifications',
-          avatar: null,
-        },
-        {
-          id: 2,
-          title:
-            'Payment completed successfully! 125 riyals were paid from so-and-so',
-          time: '1 hr ago',
-          icon: 'wallet',
-          avatar: null,
-        },
-        {
-          id: 3,
-          title: 'John Doe Commented on your post',
-          time: '2hr ago',
-          avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        },
-        {
-          id: 4,
-          title: 'John Doe Liked your post',
-          time: 'Now',
-          avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        },
-      ],
-    },
-    {
-      title: 'Old',
-      data: [
-        {
-          id: 5,
-          title:
-            'Payment completed successfully! 125 riyals were paid from so-and-so',
-          time: '1 hr ago',
-          icon: 'wallet',
-          avatar: null,
-        },
-        {
-          id: 6,
-          title: 'Shipment No. 23558 arrived to me from Abu So-and-so',
-          time: '1hr ago',
-          avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        },
-        {
-          id: 7,
-          title: 'Shipment No. 23558 arrived to me from Abu So-and-so',
-          time: '2hr ago',
-          avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        },
-        {
-          id: 8,
-          title:
-            'Payment completed successfully! 125 riyals were paid from so-and-so',
-          time: '1 hr ago',
-          icon: 'wallet',
-          avatar: null,
-        },
-      ],
-    },
-  ];
-  const [search, setSearch] = useState('');
-  const [filteredData, setFilteredData] = useState([]);
-  useEffect(() => {
-    // search filter
-    const _data: Section[] = data
-      .map((section) => ({
-        title: section.title,
-        data: section.data.filter((item) =>
-          item.title.toLowerCase().includes(search.toLowerCase())
-        ),
-      }))
-      .filter((section) => section.data.length > 0);
 
-    setFilteredData(_data);
-  }, [search]);
+  const [search, setSearch] = useState('');
+
+
+  const { data: apiData } = useQuery({
+    queryFn() {
+      return NotificationService.listNotifications({ perPage: 50, search });
+    },
+    queryKey: ['NotificationService.listNotifications', search]
+  });
+
+  const listViewDateFormat = (date: string) => {
+    return moment(date).calendar(null, {
+      sameDay: '[Today]',
+      nextDay: 'DD MMMM',
+      nextWeek: '[Next] dddd',
+      lastDay: '[Yesterday]',
+      lastWeek: '[Last] dddd',
+      sameElse: 'DD MMMM'
+    });
+  }
+
+  const sections = useMemo(() => {
+    const _notifications: Record<string, {
+      date: string;
+      title: string;
+      data: NotificationTransformer[];
+    }> = {};
+
+    apiData?.data?.forEach(notification => {
+      const date = moment(notification.created_at).format('YYYY-MM-DD');
+
+      if (_notifications[date]) {
+        _notifications[date].data.push(notification);
+      } else if (notification.created_at) {
+        _notifications[date] = {
+          date,
+          title: listViewDateFormat(notification.created_at),
+          data: [notification]
+        };
+      }
+    });
+
+    const finalData: SectionListData<NotificationTransformer>[] = [];
+    Object.keys(_notifications).forEach(key => {
+      finalData.push(_notifications[key])
+    });
+
+    return finalData;
+  }, [apiData])
+
+
 
   return (
     <YStack flex={1} gap="$2" backgroundColor={'#FAFAFA'}>
       <SearchBar setSearch={setSearch} search={search} />
 
-      <YStack padding="$4" flex={1}>
-        <SectionList
-          showsVerticalScrollIndicator={false}
-          ListEmptyComponent={() => (
-            <View style={{ height: 600, width: '100%' }}>
-              <empty_notifications />
-            </View>
-          )}
-          renderItem={({ item }) => <NotificationCard item={item} />}
-          renderSectionHeader={({ section: { title } }) => {
-            return (
-              <Text fontWeight={'bold'} fontSize={'$3'} marginBottom="$4">
+      {/* <DebugObject object={sections} /> */}
+      <SectionList
+        style={{ flex: 1 }}
+        contentContainerStyle={{ flexGrow: 1 }}
+        showsVerticalScrollIndicator={false}
+        ListEmptyComponent={() => (
+          <View flex={1} alignItems='center' gap="$8">
+            <CustomIcon name="empty_notification" size="$18" color="$color5" />
+            <H4>No Notification Found!</H4>
+          </View>
+        )}
+        renderItem={({ item, index }) => <NotificationCard key={`${item.id}-${index}`} notification={item} />}
+        renderSectionHeader={({ section: { title, data } }) => {
+          return (
+            <XStack padding="$4" alignItems='center' justifyContent='space-between' backgroundColor="$background">
+              <Text fontWeight={'bold'} fontSize={'$3'} >
                 {title}
               </Text>
-            );
-          }}
-          sections={filteredData}
-          stickySectionHeadersEnabled
-        />
-      </YStack>
+
+              <Text>({data?.length})</Text>
+            </XStack>
+          );
+        }}
+        sections={sections}
+        stickySectionHeadersEnabled
+      />
     </YStack>
   );
 }

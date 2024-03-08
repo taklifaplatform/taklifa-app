@@ -3,23 +3,24 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ShipmentTransformer } from '../models/ShipmentTransformer';
-import type { UpdateShipmentRequest } from '../models/UpdateShipmentRequest';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-export class CustomerShipmentsService {
+export class CompanyShipmentsService {
     /**
      * Fetch all shipments.
      * @returns any Successful response
      * @throws ApiError
      */
     public static fetchAllShipment({
+        company,
         page,
         perPage,
         search,
         status,
         itemsType,
     }: {
+        company: string,
         /**
          * Page number
          */
@@ -56,7 +57,10 @@ export class CustomerShipmentsService {
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/customer/shipments',
+            url: '/api/company/{company}/shipments',
+            path: {
+                'company': company,
+            },
             query: {
                 'page': page,
                 'per_page': perPage,
@@ -67,90 +71,24 @@ export class CustomerShipmentsService {
         });
     }
     /**
-     * store a new shipment.
-     * @returns any Successful response
-     * @throws ApiError
-     */
-    public static storeShipment({
-        requestBody,
-    }: {
-        requestBody: UpdateShipmentRequest,
-    }): CancelablePromise<{
-        data?: ShipmentTransformer;
-    }> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/customer/shipments',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                422: `Validation errors`,
-            },
-        });
-    }
-    /**
      * Retrieve a shipment.
      * @returns any Successful response
      * @throws ApiError
      */
     public static retrieveShipment({
+        company,
         shipment,
     }: {
+        company: string,
         shipment: string,
     }): CancelablePromise<{
         data?: ShipmentTransformer;
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/customer/shipments/{shipment}',
+            url: '/api/company/{company}/shipments/{shipment}',
             path: {
-                'shipment': shipment,
-            },
-        });
-    }
-    /**
-     * update a shipment.
-     * @returns any Successful response
-     * @throws ApiError
-     */
-    public static updateShipment({
-        shipment,
-        requestBody,
-    }: {
-        shipment: string,
-        requestBody: UpdateShipmentRequest,
-    }): CancelablePromise<{
-        data?: ShipmentTransformer;
-    }> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/api/customer/shipments/{shipment}',
-            path: {
-                'shipment': shipment,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                422: `Validation errors`,
-            },
-        });
-    }
-    /**
-     * destroy a shipment.
-     * @returns any Successful response
-     * @throws ApiError
-     */
-    public static destroyShipment({
-        shipment,
-    }: {
-        shipment: string,
-    }): CancelablePromise<{
-        data?: ShipmentTransformer;
-    }> {
-        return __request(OpenAPI, {
-            method: 'DELETE',
-            url: '/api/customer/shipments/{shipment}',
-            path: {
+                'company': company,
                 'shipment': shipment,
             },
         });
