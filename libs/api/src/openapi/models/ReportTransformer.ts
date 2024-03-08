@@ -2,4 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type FaqRequest = Record<string, any>;
+export type ReportTransformer = {
+    id?: number;
+    reason_id?: number;
+    message?: string;
+    status?: string;
+};
+

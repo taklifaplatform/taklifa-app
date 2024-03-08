@@ -7,6 +7,7 @@ import {
   ProvidersComposer, QueryClientProvider, SafeAreaProvider, TamaguiProvider,
   UniversalThemeProvider,
   ToastProvider,
+  PushNotification,
 } from './providers';
 
 export interface MainAppProviderProps {
@@ -34,6 +35,7 @@ export const MainAppProvider: React.FC<MainAppProviderProps> = ({
         QueryClientProvider,
         AuthProvider,
         ChatProvider,
+        PushNotification,
       ]}
     >
       {children}

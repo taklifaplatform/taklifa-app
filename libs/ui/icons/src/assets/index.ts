@@ -22,7 +22,7 @@ import Edit from './icons/edit.svg';
 import EmptyChat from './icons/empty-chat.svg';
 import EmptyData from './icons/empty-data.svg';
 import EmptyFolder from './icons/empty-folder.svg';
-import empty_notification from './icons/empty-notification.svg';
+import EmptyNotification from './icons/empty-notification.svg';
 import Facebook from './icons/facebook.svg';
 import FindTrack from './icons/find-track.svg';
 import Flip from './icons/flip.svg';
@@ -103,7 +103,7 @@ export {
   Delivery,
   Drawer,
   Edit,
-  empty_notification,
+  EmptyNotification,
   EmptyChat,
   EmptyData,
   EmptyFolder,

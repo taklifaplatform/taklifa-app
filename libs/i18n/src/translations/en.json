@@ -44,6 +44,7 @@
     "dont_have_account": "Don't have an account?",
     "terms_and_conditions": "Terms and Conditions",
     "create_new_account": "Create New Account",
+    "add_new_account": "Add New Account",
     "verification_in_progress": {
       "title": "It might take few day to verify your account",
       "description": "But you can start using the app now"
@@ -97,6 +98,14 @@
     },
     "select_country": "Select country",
     "search": "Search..."
+  },
+  "core": {
+    "media_picker": {
+      "title": "Select a media picker",
+      "select_document": "Select Document",
+      "select_media": "Select Media",
+      "camera": "Camera"
+    }
   },
   "forms": {
     "name": "Name // Enter your full name",
@@ -211,9 +220,6 @@
     "content-5": "Go with “Sawaed Logistics” and enjoy the best experience in sending parcels. Download the application now and start your journey with us ",
     "banner-6": "Accredited to",
     "content-6": "Join the 'Sawaeed Logistics' family today and enjoy a unique experience in the world of sending parcels. Whether you want to send a surprise gift or move large goods, we are here to make the process easy and efficient.",
-    "client-desc": "We understand that your needs vary, which is why we offer a wide range of services.",
-    "driver-desc": "We understand that your needs vary, which is why we offer a wide range of services.",
-    "company-desc": "We understand that your needs vary, which is why we offer a wide range of services.",
     "warningtitle": "Fraud detection and reporting",
     "warningcontent": "Common warning signs of fraudulent attempts via mail, text or online,...",
     "warningbtn": "Report Problem",

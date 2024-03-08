@@ -11,7 +11,7 @@ const AcceptTermsLink: React.FC = () => {
       <Button
         unstyled
         color='$color5'
-        onPress={() => router.push('/terms-conditions')}
+        onPress={() => router.push('/terms-of-service')}
       >
         {t('auth:terms_and_conditions')}
       </Button>

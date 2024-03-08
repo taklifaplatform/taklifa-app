@@ -4,5 +4,7 @@
 /* eslint-disable */
 export type ListShipmentQueryRequest = {
     search?: string;
+    status?: string;
+    items_type?: string;
 };
 

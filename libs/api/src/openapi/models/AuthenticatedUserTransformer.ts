@@ -2,8 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { ActiveCompanyTransformer } from './ActiveCompanyTransformer';
 import type { MediaTransformer } from './MediaTransformer';
+import type { SimpleCompanyTransformer } from './SimpleCompanyTransformer';
 import type { UserSimpleRoleTransformer } from './UserSimpleRoleTransformer';
 export type AuthenticatedUserTransformer = {
     id?: number;
@@ -16,8 +16,8 @@ export type AuthenticatedUserTransformer = {
     about?: string;
     roles?: Array<UserSimpleRoleTransformer>;
     active_role?: UserSimpleRoleTransformer;
-    companies?: Array<ActiveCompanyTransformer>;
-    active_company?: ActiveCompanyTransformer;
+    companies?: Array<SimpleCompanyTransformer>;
+    active_company?: SimpleCompanyTransformer;
     avatar?: MediaTransformer;
 };
 

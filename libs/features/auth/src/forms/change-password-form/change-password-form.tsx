@@ -15,11 +15,9 @@ import { useToastController } from '@tamagui/toast';
 
 const ChangePasswordSchema = z
   .object({
-    password: formFields.text
-      .min(6)
+    password: formFields.secure_text
       .describe(t('forms:new_password').toString()),
-    password_confirmation: formFields.text
-      .min(6)
+    password_confirmation: formFields.secure_text
       .describe(t('forms:new_password_confirmation').toString()),
   })
   .superRefine(({ password_confirmation, password }, ctx) => {

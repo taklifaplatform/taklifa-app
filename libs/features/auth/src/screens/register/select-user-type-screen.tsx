@@ -12,10 +12,18 @@ import InlineItemSelect from '../../components/inline-item-select/inline-item-se
  */
 export const SelectUserTypeScreen = () => {
   const router = useRouter();
-  const { requestedAccountType, setRequestedAccountType } = useAuth()
+  const { isLoggedIn, requestedAccountType, setRequestedAccountType, user } = useAuth()
 
-  function onRedirectUser() {
-    router.push('/auth/register/create-account');
+  function onRedirectUser(value: string) {
+    if (isLoggedIn) {
+      if (value === 'company_owner') {
+        router.push('/auth/create-company');
+      } else {
+        router.push('/auth/verify-kyc');
+      }
+    } else {
+      router.push('/auth/register/create-account');
+    }
   }
 
   return (
@@ -23,21 +31,25 @@ export const SelectUserTypeScreen = () => {
       <AuthHeader
         iconName="avatar"
         canGoNext={!!requestedAccountType}
-        onGoNext={() => requestedAccountType && onRedirectUser()}
-        title={t('auth:create_new_account')}
+        onGoNext={() => requestedAccountType && onRedirectUser(requestedAccountType)}
+        title={isLoggedIn ? t('auth:add_new_account') : t('auth:create_new_account')}
       />
 
       <YStack gap="$4" marginHorizontal="$4" marginTop="$10">
-        <InlineItemSelect
-          icon="solo_transporter_car"
-          title={t('common:user_types.individual')}
-          value="solo_driver"
-          selectedValue={requestedAccountType}
-          onSelect={(value) => {
-            setRequestedAccountType(value);
-            onRedirectUser();
-          }}
-        />
+        {
+          !user?.roles?.find(role => role.name === 'solo_driver') && (
+            <InlineItemSelect
+              icon="solo_transporter_car"
+              title={t('common:user_types.individual')}
+              value="solo_driver"
+              selectedValue={requestedAccountType}
+              onSelect={(value) => {
+                setRequestedAccountType(value);
+                onRedirectUser(value);
+              }}
+            />
+          )
+        }
         <InlineItemSelect
           icon="company_cars"
           title={t('common:user_types.company')}
@@ -45,7 +57,7 @@ export const SelectUserTypeScreen = () => {
           selectedValue={requestedAccountType}
           onSelect={(value) => {
             setRequestedAccountType(value);
-            onRedirectUser();
+            onRedirectUser(value);
           }}
         />
       </YStack>

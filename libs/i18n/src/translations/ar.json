@@ -44,6 +44,7 @@
     "dont_have_account": "ليس لديك حساب؟",
     "terms_and_conditions": "الشروط والأحكام الخاصة بسواعد",
     "create_new_account": "إنشاء حساب جديد",
+    "add_new_account": "إضافة حساب جديد",
     "verification_in_progress": {
       "title": "قد يستغرق الأمر بضعة أيام للتحقق من حسابك",
       "description": "يمكنك البدء باستخدام تطبيق سواعد الطريق الآن"
@@ -97,6 +98,14 @@
     },
     "select_country": "اختر الدولة",
     "search": "بحث..."
+  },
+  "core": {
+    "media_picker": {
+      "title": "اختر أداة اختيار الوسائط",
+      "select_document": "اختر مستند",
+      "select_media": "اختر وسائط",
+      "camera": "الكاميرا"
+    }
   },
   "forms": {
     "name": "الاسم // أدخل اسمك الكامل",
@@ -173,7 +182,7 @@
   },
   "web-home": {
     "home": "الرئيسية",
-    "works": "الوظائف",
+    "works": "الوضائف",
     "followers": "التتبع",
     "payments": "الشحن ",
     "search": "ابحث",

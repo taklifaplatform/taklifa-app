@@ -45,14 +45,11 @@ export const uploadMediaFile = async (
       onProgressUpdate(event.loaded / event.total);
     });
     xhr.onload = async function () {
+      const data = JSON.parse(xhr.response);
       if (this.status >= 200 && this.status < 300) {
-        const data = JSON.parse(xhr.response);
         resolve(data);
       } else {
-        reject({
-          status: this.status,
-          statusText: xhr.statusText,
-        });
+        reject(data);
       }
     };
     xhr.onerror = function (error) {
