@@ -1,6 +1,6 @@
 import { BaseZixFieldContainerProps, ZixFieldContainer } from '@zix/ui/forms';
 import React from 'react';
-import { isWeb } from 'tamagui';
+import {currentPlatform} from '@tamagui/constants';
 
 export type ZixWidgetContainerProps = BaseZixFieldContainerProps;
 
@@ -11,7 +11,7 @@ export const ZixWidgetContainer: React.FC<ZixWidgetContainerProps> = ({
   return (
     <ZixFieldContainer
       labelBold
-      collapsible={!isWeb}
+      collapsible={currentPlatform !== 'web'}
       labelShowRequiredAsterisk={false}
       gap="$18"
       {...props}

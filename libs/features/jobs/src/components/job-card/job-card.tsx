@@ -6,8 +6,9 @@ import { t } from 'i18next';
 import moment from 'moment';
 import React, { useMemo } from 'react';
 
+import { ZixVariantOptionsWidget } from '@zix/ui/widgets';
 import { Separator, Stack, Text, XStack, YStack } from 'tamagui';
-import JobItemDetails from './JobItemDetails';
+import { useMultiLang } from '@zix/i18n';
 
 export type JobCardProps = {
   job: ShipmentTransformer;
@@ -15,6 +16,7 @@ export type JobCardProps = {
 };
 
 export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
+  const {isRtl} = useMultiLang();
   const description = useMemo(
     () => job.items?.map((item) => item.notes).join(', '),
     [job.items]
@@ -28,57 +30,72 @@ export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
 
   const renderDetailShipment = () => (
     <YStack gap="$4">
-      <XStack justifyContent="space-between">
-        <JobItemDetails
-          icon={<Inbox size="$1" color={'$gray9'} $sm={{ display: 'none' }} />}
-          title="job:number-of-box"
-          item={job.items?.length}
-        />
-        <JobItemDetails
-          icon={
-            <CustomIcon
-              name="time-pace"
-              size="$1"
-              color={'$gray9'}
-              $sm={{ display: 'none' }}
-            />
-          }
-          title="job:deliver_time"
-          item={deliveryTime.humanize()}
-        />
-
-        <JobItemDetails
-          icon={
-            <Settings2 size="$1" color={'$gray9'} $sm={{ display: 'none' }} />
-          }
-          title="job:Suggestions"
-          item="TODO"
-        />
-        <JobItemDetails
-          icon={
-            <CustomIcon
-              name="budget"
-              size="$1"
-              color={'$gray9'}
-              $sm={{ display: 'none' }}
-            />
-          }
-          title="job:budget"
-          item={`${job.min_budget?.value} - ${job.max_budget?.value} ${job.min_budget?.currency?.code}`}
-        />
-      </XStack>
-
-      <JobItemDetails
-        icon={
-          <CustomIcon name="assistant-navigation" size="$1" color={'$gray9'} />
-        }
-        title="job:from_location"
-        item={job?.from_location?.address}
+      <ZixVariantOptionsWidget
+        variant="card"
+        optionVariant="card"
+        options={[
+          {
+            icons: (
+              <Inbox size="$1" color={'$gray9'} $sm={{ display: 'none' }} />
+            ),
+            name: t('job:number-of-packages'),
+            value: `${job.items?.length}`,
+          },
+          {
+            icons: (
+              <CustomIcon
+                name="time-pace"
+                size="$1"
+                color={'$gray9'}
+                $sm={{ display: 'none' }}
+              />
+            ),
+            name: t('job:deliver_time'),
+            value: `${deliveryTime.humanize()}`,
+          },
+          {
+            icons: (
+              <Settings2 size="$1" color={'$gray9'} $sm={{ display: 'none' }} />
+            ),
+            name: t('job:Suggestions'),
+            value: 'TODO',
+          },
+          {
+            icons: (
+              <CustomIcon
+                name="budget"
+                size="$1"
+                color={'$gray9'}
+                $sm={{ display: 'none' }}
+              />
+            ),
+            name: t('job:budget'),
+            value: `${job.min_budget?.value} - ${job.max_budget?.value} ${job.min_budget?.currency?.code}`,
+          },
+        ]}
       />
-      <JobItemDetails
-        icon={<CustomIcon name="location" size="$1" color={'$gray9'} />}
-        title="job:to_location"
-        item={job.to_location?.address}
+      <ZixVariantOptionsWidget
+        variant="location"
+        optionVariant="location"
+        options={[
+          {
+            icons: (
+              <CustomIcon
+                name="assistant-navigation"
+                size="$1"
+                color={'$gray9'}
+                {...!isRtl && {rotate: '180deg'}}
+              />
+            ),
+            name: t('job:from_location'),
+            value: `${job?.from_location?.address}`,
+          },
+          {
+            icons: <CustomIcon name="location" size="$1" color={'$gray9'} />,
+            name: t('job:to_location'),
+            value: `${job.to_location?.address}`,
+          },
+        ]}
       />
     </YStack>
   );
@@ -201,7 +218,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
           {t('job:see-more')}
         </ZixLinkButton>
         <ZixLinkButton
-          href={`/jobs/${job.id}`}
+          href={`/`}
           icon={<X size="$1" />}
           backgroundColor={'red'}
           color={'$color1'}
