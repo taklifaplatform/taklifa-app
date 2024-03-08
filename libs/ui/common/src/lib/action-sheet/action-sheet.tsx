@@ -87,6 +87,7 @@ export const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
                 padding="$4"
                 borderTopWidth={1}
                 borderColor='$gray5'
+                alignItems='center'
               />
             ))}
           </YStack>

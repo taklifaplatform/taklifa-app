@@ -1,0 +1,8 @@
+{
+  "media_picker": {
+    "title": "Select a media picker",
+    "select_document": "Select Document",
+    "select_media": "Select Media",
+    "camera": "Camera"
+  }
+}
