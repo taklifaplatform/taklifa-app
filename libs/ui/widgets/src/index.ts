@@ -1,4 +1,6 @@
 
+export * from './components/zix-medias-list/zix-medias-list';
+
 export * from './components/zix-variant-options-widget/zix-variant-options-widget';
 
 export * from './components/zix-map-direction-widget/zix-map-direction-widget';

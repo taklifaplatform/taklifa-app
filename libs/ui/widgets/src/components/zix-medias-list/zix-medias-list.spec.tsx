@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import UserRatingsTab from './user-ratings-tab';
+import ZixMediasList from './zix-medias-list';
 
-describe('UserRatingsTab', () => {
+describe('ZixMediasList', () => {
   it('should render successfully', () => {
-    const { root } = render(<UserRatingsTab />);
+    const { root } = render(< ZixMediasList />);
     expect(root).toBeTruthy();
   });
 });

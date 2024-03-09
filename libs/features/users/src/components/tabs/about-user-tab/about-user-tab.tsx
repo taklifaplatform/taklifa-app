@@ -1,15 +1,48 @@
-import React from 'react';
+import { DriverTransformer, MediaTransformer } from '@zix/api';
+import { ZixMediasList, ZixWidgetContainer } from '@zix/ui/widgets';
+import React, { useMemo } from 'react';
 
-import { View, Text } from 'react-native';
+import { Text, YStack } from 'tamagui';
 
-/* eslint-disable-next-line */
-export interface AboutUserTabProps {}
+export type AboutUserTabProps = {
+  user: DriverTransformer
+}
 
-export function AboutUserTab(props: AboutUserTabProps) {
+export const AboutUserTab: React.FC<AboutUserTabProps> = ({
+  user
+}) => {
+
+  const companiesLogos = useMemo<MediaTransformer[]>(() => {
+    const medias: MediaTransformer[] = []
+
+    user?.companies?.forEach(company => {
+      if (company?.logo) {
+        medias.push(company.logo)
+      }
+    })
+
+    return medias;
+  }, [user.companies])
+
+  const renderAbout = () => !!user.about && (
+    <ZixWidgetContainer label='About Driver'>
+      <Text>
+        {user.about}
+      </Text>
+    </ZixWidgetContainer>
+  )
+
+  const renderCompanies = () => !!companiesLogos?.length && (
+    <ZixWidgetContainer label='Works With'>
+      <ZixMediasList medias={companiesLogos || []}/>
+    </ZixWidgetContainer>
+  )
+
   return (
-    <View>
-      <Text>Welcome to about-driver-tab!</Text>
-    </View>
+    <YStack>
+      {renderAbout()}
+      {renderCompanies()}
+    </YStack>
   );
 }
 

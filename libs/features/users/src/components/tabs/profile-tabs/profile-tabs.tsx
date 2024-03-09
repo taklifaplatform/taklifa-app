@@ -1,15 +1,42 @@
+import { DriverTransformer } from '@zix/api';
 import React from 'react';
 
-import { View, Text } from 'react-native';
+import { HorizontalTabs } from './tabs';
+import { ZixTab } from '@zix/ui/common';
+import AboutUserTab from '../about-user-tab/about-user-tab';
+import UserVehicleTab from '../user-vehicle-tab/user-vehicle-tab';
+import UserReviewsTab from '../user-reviews-tab/user-reviews-tab';
 
-/* eslint-disable-next-line */
-export interface ProfileTabsProps {}
+export type ProfileTabsProps = {
+  user: DriverTransformer
+}
 
-export function ProfileTabs(props: ProfileTabsProps) {
+export const ProfileTabs: React.FC<ProfileTabsProps> = ({
+  user
+}) => {
+
   return (
-    <View>
-      <Text>Welcome to driver-profile-tabs!</Text>
-    </View>
+    <ZixTab
+      defaultActiveTab='about'
+      tabs={[
+        {
+          key: 'about',
+          title: 'About',
+          content: <AboutUserTab user={user} />
+        },
+        {
+          key: 'vehicle',
+          title: 'Vehicle',
+          content: <UserVehicleTab user={user} />
+        },
+        {
+          key: 'reviews',
+          title: 'Reviews',
+          content: <UserReviewsTab user={user} />
+        }
+      ]}
+
+    />
   );
 }
 

@@ -3,9 +3,9 @@ import React from 'react';
 import { View, Text } from 'react-native';
 
 /* eslint-disable-next-line */
-export interface UserRatingsTabProps {}
+export interface UserReviewsTabProps {}
 
-export function UserRatingsTab(props: UserRatingsTabProps) {
+export function UserReviewsTab(props: UserReviewsTabProps) {
   return (
     <View>
       <Text>Welcome to driver-ratings-tab!</Text>
@@ -13,4 +13,4 @@ export function UserRatingsTab(props: UserRatingsTabProps) {
   );
 }
 
-export default UserRatingsTab;
+export default UserReviewsTab;

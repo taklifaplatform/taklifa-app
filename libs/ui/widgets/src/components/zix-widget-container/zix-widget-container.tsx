@@ -13,7 +13,7 @@ export const ZixWidgetContainer: React.FC<ZixWidgetContainerProps> = ({
       labelBold
       collapsible={currentPlatform !== 'web'}
       labelShowRequiredAsterisk={false}
-      gap="$18"
+      width='100%'
       {...props}
     >
       {children}

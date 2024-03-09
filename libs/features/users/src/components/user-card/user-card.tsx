@@ -1,11 +1,11 @@
 import { DriverTransformer } from '@zix/api';
 import { UserAvatar } from '@zix/ui/common';
+import { ZixMediasList } from '@zix/ui/widgets';
 import { useMemo } from 'react';
 import { useRouter } from 'solito/router';
 import { Image, Separator, Text, ThemeableStackProps, XStack, YStack } from 'tamagui';
 import { UserContactActions } from '../user-contact-actions/user-contact-actions';
 import { UserInfoRow } from '../user-info-row/user-info-row';
-import { VehicleImagesRow } from '../vehicle-images-row/vehicle-images-row';
 
 export type UserCardProps = ThemeableStackProps & {
   user: DriverTransformer;
@@ -67,7 +67,7 @@ export const UserCard: React.FC<UserCardProps> = ({
       </XStack>
 
       <UserInfoRow user={user} paddingHorizontal={padding} />
-      <VehicleImagesRow medias={user?.vehicle?.images || []} paddingHorizontal={padding} />
+      <ZixMediasList medias={user?.vehicle?.images || []} paddingHorizontal={padding} />
       <Separator borderColor="$gray6" />
       <UserContactActions user={user} paddingHorizontal={padding} />
     </YStack>
