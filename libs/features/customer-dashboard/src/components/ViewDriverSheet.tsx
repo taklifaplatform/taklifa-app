@@ -5,7 +5,7 @@ import { RatingTap } from 'libs/features/account/src/components/profile-layout/R
 import { TruckTap } from 'libs/features/account/src/components/profile-layout/TruckTap';
 import { useRef, useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-import { DriverCard } from '@zix/features/drivers';
+import { DriverCard } from '@zix/features/users';
 
 export function ViewDriverSheet({
   setShowModal,
