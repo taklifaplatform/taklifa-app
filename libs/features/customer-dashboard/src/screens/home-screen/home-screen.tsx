@@ -10,8 +10,6 @@ import MapView from 'react-native-maps';
 import Carousel from 'react-native-reanimated-carousel';
 import { Button, YStack } from 'tamagui';
 
-/* eslint-disable-next-line */
-export interface HomeScreenProps {}
 
 const initialCamera = {
   center: {
@@ -24,8 +22,12 @@ const initialCamera = {
   zoom: 20,
 };
 
-export function HomeScreen(props: HomeScreenProps) {
+export function HomeScreen() {
   const { width } = Dimensions.get('window');
+  const USER_CARD_WIDTH = width;
+  // const USER_CARD_HEIGHT = 210;
+  const USER_CARD_HEIGHT = width / 1.5;
+
   const [showMap, setShowMap] = useState(true);
 
   const { data, ...driversQuery } = useQuery({
@@ -63,7 +65,12 @@ export function HomeScreen(props: HomeScreenProps) {
         style={{ flex: 1 }}
         data={data?.data || []}
         renderItem={({ item, index }) => (
-          <UserCard key={`stack-${item.id}-${index}`} user={item} />
+          <UserCard
+            key={`stack-${item.id}-${index}`}
+            user={item}
+            marginHorizontal='$4'
+            marginVertical='$2'
+          />
         )}
       />
     );
@@ -97,6 +104,8 @@ export function HomeScreen(props: HomeScreenProps) {
         key={`view-${item.id}-${index}`}
         user={item}
         onClose={() => setShowCarousel(false)}
+        height={USER_CARD_HEIGHT}
+        marginHorizontal='$4'
       />
     );
   };
@@ -107,11 +116,11 @@ export function HomeScreen(props: HomeScreenProps) {
         backgroundColor={'$color1'}
         borderTopRightRadius={'$6'}
         borderTopLeftRadius={'$6'}
-        paddingBottom="$4"
+        paddingVertical="$5"
       >
         <Carousel
-          width={width}
-          height={width / 1.5}
+          width={USER_CARD_WIDTH}
+          height={USER_CARD_HEIGHT}
           data={data?.data || []}
           renderItem={renderCarouselItem}
         />
