@@ -4,16 +4,16 @@ import { DriversService } from '@zix/api';
 import { createParam } from 'solito';
 
 import { FullScreenSpinner } from '@zix/ui/common';
-import DriverProfileLayout from '../../layouts/driver-profile-layout/driver-profile-layout';
+import UserProfileLayout from '../../layouts/user-profile-layout/user-profile-layout';
 
 import { YStack } from 'tamagui';
-import DriverContactActions from '../../components/driver-contact-actions/driver-contact-actions';
-import DriverStatsRow from '../../components/driver-stats-row/driver-stats-row';
+import { UserContactActions } from '../../components/user-contact-actions/user-contact-actions';
+import { UserInfoRow } from '../../components/user-info-row/user-info-row';
 import { ProfileHeader } from '../../components/profile-header/profile-header';
 
 const { useParam } = createParam<{ user: string }>();
 
-export function DriverProfileScreen() {
+export function UserProfileScreen() {
   const [userId] = useParam('user');
 
   const { data } = useQuery({
@@ -31,19 +31,19 @@ export function DriverProfileScreen() {
     data?.data && (
       <YStack flex={1} padding="$4" gap="$4">
         <ProfileHeader user={data?.data} />
-        <DriverStatsRow driver={data?.data} />
-        <DriverContactActions driver={data?.data} />
+        <UserInfoRow user={data?.data} />
+        <UserContactActions user={data?.data} />
       </YStack>
     );
 
   return (
-    <DriverProfileLayout driver={data?.data}>
+    <UserProfileLayout user={data?.data}>
       <>
         {renderLoadingSpinner()}
         {renderDriverProfile()}
       </>
-    </DriverProfileLayout>
+    </UserProfileLayout>
   );
 }
 
-export default DriverProfileScreen;
+export default UserProfileScreen;

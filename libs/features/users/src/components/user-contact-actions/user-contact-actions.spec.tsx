@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import DriverProfileScreen from './driver-profile-screen';
+import UserContactActions from './user-contact-actions';
 
-describe('DriverProfileScreen', () => {
+describe('UserContactActions', () => {
   it('should render successfully', () => {
-    const { root } = render(<DriverProfileScreen />);
+    const { root } = render(<UserContactActions user={{}} />);
     expect(root).toBeTruthy();
   });
 });

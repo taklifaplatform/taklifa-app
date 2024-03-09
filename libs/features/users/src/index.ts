@@ -1,9 +1,9 @@
 export * from './components/profile-header/profile-header';
 
-export * from './components/tabs/driver-ratings-tab/driver-ratings-tab';
+export * from './components/tabs/user-ratings-tab/user-ratings-tab';
 
-export * from './components/tabs/driver-profile-tabs/driver-profile-tabs';
+export * from './components/tabs/profile-tabs/profile-tabs';
 
-export * from './components/driver-card/driver-card';
+export * from './components/user-card/user-card';
 
-export * from './screens/driver-profile-screen/driver-profile-screen';
+export * from './screens/user-profile-screen/user-profile-screen';

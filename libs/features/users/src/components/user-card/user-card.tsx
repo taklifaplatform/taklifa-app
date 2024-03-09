@@ -4,24 +4,24 @@ import { UserAvatar } from '@zix/ui/common';
 import { useMemo } from 'react';
 import { useRouter } from 'solito/router';
 import { Button, Image, Text, View, XStack, YStack } from 'tamagui';
-import DriverContactActions from '../driver-contact-actions/driver-contact-actions';
-import DriverStatsRow from '../driver-stats-row/driver-stats-row';
-import DriverVehicleImagesRow from '../driver-vehicle-images-row/driver-vehicle-images-row';
+import { UserContactActions } from '../user-contact-actions/user-contact-actions';
+import { UserInfoRow } from '../user-info-row/user-info-row';
+import { VehicleImagesRow } from '../vehicle-images-row/vehicle-images-row';
 
-export type DriverCardProps = {
-  driver: DriverTransformer;
+export type UserCardProps = {
+  user: DriverTransformer;
   onClose?: () => void;
 };
 
-export const DriverCard: React.FC<DriverCardProps> = ({ driver, onClose }) => {
+export const UserCard: React.FC<UserCardProps> = ({ user, onClose }) => {
   const router = useRouter();
 
   const activeCompany = useMemo(() => {
-    return driver?.companies?.filter((company) => company?.logo?.url).shift();
-  }, [driver?.companies]);
+    return user?.companies?.filter((company) => company?.logo?.url).shift();
+  }, [user?.companies]);
 
   function onPress() {
-    router.push(`/users/${driver.id}`);
+    router.push(`/users/${user.id}`);
   }
 
   const renderCloseButton = () =>
@@ -44,10 +44,10 @@ export const DriverCard: React.FC<DriverCardProps> = ({ driver, onClose }) => {
       <YStack backgroundColor={'$color2'} borderRadius={'$5'} gap="$2">
         <XStack justifyContent="space-between" padding="$4" alignItems="center">
           <XStack alignItems="center" gap="$2">
-            <UserAvatar user={driver} size="$5" />
+            <UserAvatar user={user} size="$5" />
             <YStack alignItems="flex-start">
               <Text color={'$black'} fontWeight="bold">
-                {driver?.name}
+                {user?.name}
               </Text>
               <Text color={'$gray10'}>متواجد الان</Text>
             </YStack>
@@ -65,14 +65,14 @@ export const DriverCard: React.FC<DriverCardProps> = ({ driver, onClose }) => {
           )}
         </XStack>
         <YStack paddingBottom="$4">
-          <DriverStatsRow driver={driver} />
-          <DriverVehicleImagesRow medias={driver?.vehicle?.images || []} />
+          <UserInfoRow user={user} />
+          <VehicleImagesRow medias={user?.vehicle?.images || []} />
         </YStack>
 
-        <DriverContactActions driver={driver} />
+        <UserContactActions user={user} />
       </YStack>
     </View>
   );
 };
 
-export default DriverCard;
+export default UserCard;

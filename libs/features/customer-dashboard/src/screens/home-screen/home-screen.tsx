@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { DriverTransformer, DriversService } from '@zix/api';
-import { DriverCard } from '@zix/features/users';
+import { UserCard } from '@zix/features/users';
 import { CustomIcon } from '@zix/ui/icons';
 import { MapDriverMarker } from '@zix/ui/sawaeed';
 import { useState } from 'react';
@@ -63,7 +63,7 @@ export function HomeScreen(props: HomeScreenProps) {
         style={{ flex: 1 }}
         data={data?.data || []}
         renderItem={({ item, index }) => (
-          <DriverCard key={`stack-${item.id}-${index}`} driver={item} />
+          <UserCard key={`stack-${item.id}-${index}`} user={item} />
         )}
       />
     );
@@ -93,9 +93,9 @@ export function HomeScreen(props: HomeScreenProps) {
     item: DriverTransformer;
   }) => {
     return (
-      <DriverCard
+      <UserCard
         key={`view-${item.id}-${index}`}
-        driver={item}
+        user={item}
         onClose={() => setShowCarousel(false)}
       />
     );

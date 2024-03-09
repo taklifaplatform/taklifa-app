@@ -3,9 +3,9 @@ import React from 'react';
 import { View, Text } from 'react-native';
 
 /* eslint-disable-next-line */
-export interface AboutDriverTabProps {}
+export interface AboutUserTabProps {}
 
-export function AboutDriverTab(props: AboutDriverTabProps) {
+export function AboutUserTab(props: AboutUserTabProps) {
   return (
     <View>
       <Text>Welcome to about-driver-tab!</Text>
@@ -13,4 +13,4 @@ export function AboutDriverTab(props: AboutDriverTabProps) {
   );
 }
 
-export default AboutDriverTab;
+export default AboutUserTab;

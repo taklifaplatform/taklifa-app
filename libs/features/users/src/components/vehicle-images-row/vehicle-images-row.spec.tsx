@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import DriverStatsRow from './driver-stats-row';
+import VehicleImagesRow from './vehicle-images-row';
 
-describe('DriverStatsRow', () => {
+describe('VehicleImagesRow', () => {
   it('should render successfully', () => {
-    const { root } = render(<DriverStatsRow />);
+    const { root } = render(<VehicleImagesRow />);
     expect(root).toBeTruthy();
   });
 });

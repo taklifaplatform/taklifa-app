@@ -7,20 +7,20 @@ import { TouchableOpacity } from 'react-native';
 import { useRouter } from 'solito/router';
 import { View } from 'tamagui';
 
-export type DriverProfileLayoutProps = {
-  driver?: DriverTransformer;
+export type UserProfileLayoutProps = {
+  user?: DriverTransformer;
   children: React.ReactNode;
 };
 
-export const DriverProfileLayout: React.FC<DriverProfileLayoutProps> = ({
-  driver,
+export const UserProfileLayout: React.FC<UserProfileLayoutProps> = ({
+  user,
   children,
 }) => {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user: authUser } = useAuth();
 
   const renderCurrentAuthUserHeader = () =>
-    driver?.id === user?.id && (
+    user?.id === authUser?.id && (
       <AppHeader
         showBackButton
         headerTitle={() => <DashboardSwitcher />}
@@ -40,10 +40,10 @@ export const DriverProfileLayout: React.FC<DriverProfileLayoutProps> = ({
     );
 
   const renderUserHeader = () =>
-    driver?.id !== user?.id && (
+    user?.id !== authUser?.id && (
       <AppHeader
         showBackButton
-        title={driver?.name || '...'}
+        title={user?.name || '...'}
         headerBackgroundColor="transparent"
       />
     );
@@ -57,4 +57,4 @@ export const DriverProfileLayout: React.FC<DriverProfileLayoutProps> = ({
   );
 };
 
-export default DriverProfileLayout;
+export default UserProfileLayout;

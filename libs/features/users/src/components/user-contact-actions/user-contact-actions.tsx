@@ -3,12 +3,12 @@ import { CustomIcon } from '@zix/ui/icons';
 import { Linking } from 'react-native';
 import { Button, XStack } from 'tamagui';
 
-export type DriverContactActionsProps = {
-  driver: DriverTransformer;
+export type UserContactActionsProps = {
+  user: DriverTransformer;
 };
 
-export const DriverContactActions: React.FC<DriverContactActionsProps> = ({
-  driver,
+export const UserContactActions: React.FC<UserContactActionsProps> = ({
+  user,
 }) => {
   const onCallPress = () => {
     console.log('call');
@@ -58,4 +58,4 @@ export const DriverContactActions: React.FC<DriverContactActionsProps> = ({
   );
 };
 
-export default DriverContactActions;
+export default UserContactActions;

@@ -3,9 +3,9 @@ import React from 'react';
 import { View, Text } from 'react-native';
 
 /* eslint-disable-next-line */
-export interface DriverProfileTabsProps {}
+export interface ProfileTabsProps {}
 
-export function DriverProfileTabs(props: DriverProfileTabsProps) {
+export function ProfileTabs(props: ProfileTabsProps) {
   return (
     <View>
       <Text>Welcome to driver-profile-tabs!</Text>
@@ -13,4 +13,4 @@ export function DriverProfileTabs(props: DriverProfileTabsProps) {
   );
 }
 
-export default DriverProfileTabs;
+export default ProfileTabs;

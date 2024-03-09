@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import DriverRatingsTab from './driver-ratings-tab';
+import UserInfoRow from './user-info-row';
 
-describe('DriverRatingsTab', () => {
+describe('UserInfoRow', () => {
   it('should render successfully', () => {
-    const { root } = render(<DriverRatingsTab />);
+    const { root } = render(<UserInfoRow user={{}} />);
     expect(root).toBeTruthy();
   });
 });

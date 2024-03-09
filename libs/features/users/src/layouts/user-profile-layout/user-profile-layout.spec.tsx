@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import DriverProfileTabs from './driver-profile-tabs';
+import UserProfileLayout from './user-profile-layout';
 
-describe('DriverProfileTabs', () => {
+describe('UserProfileLayout', () => {
   it('should render successfully', () => {
-    const { root } = render(<DriverProfileTabs />);
+    const { root } = render(<UserProfileLayout />);
     expect(root).toBeTruthy();
   });
 });

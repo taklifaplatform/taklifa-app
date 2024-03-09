@@ -2,11 +2,11 @@ import { MediaTransformer } from '@zix/api';
 import { FlatList } from 'react-native';
 import { Image, YStack } from 'tamagui';
 
-export type DriverVehicleImagesRowProps = {
+export type VehicleImagesRowProps = {
   medias?: MediaTransformer[];
 };
 
-export const DriverVehicleImagesRow: React.FC<DriverVehicleImagesRowProps> = ({
+export const VehicleImagesRow: React.FC<VehicleImagesRowProps> = ({
   medias = [],
 }) => {
   return (
@@ -36,4 +36,4 @@ export const DriverVehicleImagesRow: React.FC<DriverVehicleImagesRowProps> = ({
   );
 };
 
-export default DriverVehicleImagesRow;
+export default VehicleImagesRow;

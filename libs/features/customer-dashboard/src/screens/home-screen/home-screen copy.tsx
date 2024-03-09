@@ -8,7 +8,7 @@ import Carousel from 'react-native-reanimated-carousel';
 import { Button, ScrollView, View, YStack } from 'tamagui';
 import { CategorieButton } from '../../components/CategorieButton';
 import { CategoriesSheet } from '../../components/CategoriesSheet';
-import { DriverCard } from '../../components/DriverCard';
+import { UserCard } from '../../components/UserCard';
 import { ViewDriverSheet } from '../../components/ViewDriverSheet';
 import { useQuery } from '@tanstack/react-query';
 import { DriversService } from '@zix/api';
@@ -228,7 +228,7 @@ export function HomeScreen(props: HomeScreenProps) {
       <ScrollView showsVerticalScrollIndicator={false} flex={1} marginTop="$11">
         {markers?.map((marker, index) => (
           <YStack key={`stack-${index}`} marginBottom="$2">
-            <DriverCard key={`stack-d-${index}`} map={false} />
+            <UserCard key={`stack-d-${index}`} map={false} />
           </YStack>
         ))}
       </ScrollView>
@@ -268,7 +268,7 @@ export function HomeScreen(props: HomeScreenProps) {
       <View key={`view-d-${index}`} onPress={() => setShowModal(true)} padding="$3"
       //backgroundColor={'$gray4'}
       >
-        <DriverCard
+        <UserCard
           item={item}
           setShowCarousel={setShowCarousel}
           setSelectedMarker={setSelectedMarker}

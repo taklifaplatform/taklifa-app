@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import DriverContactActions from './driver-contact-actions';
+import ProfileTabs from './profile-tabs';
 
-describe('DriverContactActions', () => {
+describe('ProfileTabs', () => {
   it('should render successfully', () => {
-    const { root } = render(<DriverContactActions />);
+    const { root } = render(<ProfileTabs />);
     expect(root).toBeTruthy();
   });
 });

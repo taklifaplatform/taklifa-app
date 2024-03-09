@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import DriverProfileLayout from './driver-profile-layout';
+import UserProfileScreen from './user-profile-screen';
 
-describe('DriverProfileLayout', () => {
+describe('UserProfileScreen', () => {
   it('should render successfully', () => {
-    const { root } = render(<DriverProfileLayout />);
+    const { root } = render(<UserProfileScreen />);
     expect(root).toBeTruthy();
   });
 });

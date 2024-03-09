@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import AboutDriverVehicleTab from './about-driver-vehicle-tab';
+import AboutUserTab from './about-user-tab';
 
-describe('AboutDriverVehicleTab', () => {
+describe('AboutUserTab', () => {
   it('should render successfully', () => {
-    const { root } = render(<AboutDriverVehicleTab />);
+    const { root } = render(<AboutUserTab />);
     expect(root).toBeTruthy();
   });
 });
