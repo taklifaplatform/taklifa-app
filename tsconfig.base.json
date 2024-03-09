@@ -26,6 +26,7 @@
       "@zix/features/customer-dashboard": [
         "libs/features/customer-dashboard/src/index.ts"
       ],
+      "@zix/features/drivers": ["libs/features/drivers/src/index.ts"],
       "@zix/features/jobs": ["libs/features/jobs/src/index.ts"],
       "@zix/features/notifications": [
         "libs/features/notifications/src/index.ts"
