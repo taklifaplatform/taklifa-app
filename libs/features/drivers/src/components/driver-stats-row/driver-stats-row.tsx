@@ -13,11 +13,7 @@ export const DriverStatsRow: React.FC<DriverStatsRowProps> = ({
   driver
 }) => {
   return (
-    <XStack
-      justifyContent="space-between"
-      paddingHorizontal="$4"
-      paddingBottom="$4"
-    >
+    <XStack justifyContent="space-between">
       <XStack alignItems="center" gap="$2">
         <CustomIcon name="car" size={15} color="$color5" />
         <Text color={'$black'} fontWeight="600" fontSize="$1">

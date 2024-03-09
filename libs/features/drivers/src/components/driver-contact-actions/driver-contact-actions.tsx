@@ -1,6 +1,7 @@
 
 import { DriverTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
+import { Linking } from 'react-native';
 import { Button, XStack } from 'tamagui';
 
 
@@ -11,6 +12,12 @@ export type DriverContactActionsProps = {
 export const DriverContactActions: React.FC<DriverContactActionsProps> = ({
   driver
 }) => {
+  const onCallPress = () => {
+    console.log('call');
+    // call
+    Linking.openURL('tel:1196546546');
+  };
+
   return (
     <XStack justifyContent="space-between" padding="$2"
       backgroundColor='$color2'

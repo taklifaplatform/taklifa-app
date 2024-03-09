@@ -1,18 +1,52 @@
 
-import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { DriversService } from '@zix/api';
 
-import { View, Text } from 'react-native';
+import { createParam } from 'solito';
 
-/* eslint-disable-next-line */
-export interface DriverProfileScreenProps {
-}
+import { FullScreenSpinner } from '@zix/ui/common';
+import DriverProfileLayout from '../../layouts/driver-profile-layout/driver-profile-layout';
+
+import { ProfileHeader } from '../../components/profile-header/profile-header';
+import DriverContactActions from '../../components/driver-contact-actions/driver-contact-actions';
+import DriverStatsRow from '../../components/driver-stats-row/driver-stats-row';
+import { View, YStack } from 'tamagui';
+
+const { useParam } = createParam<{ driver: string }>();
 
 
-export function DriverProfileScreen(props: DriverProfileScreenProps) {
+export function DriverProfileScreen() {
+  const [driverId] = useParam('driver');
+
+  const { data } = useQuery({
+    queryFn() {
+      return DriversService.retrieveDriver({
+        driver: driverId,
+      });
+    },
+    queryKey: ['DriversService.retrieveDriver', driverId]
+  })
+
+  const renderLoadingSpinner = () => !data?.data && (
+    <FullScreenSpinner />
+  )
+
+  const renderDriverProfile = () => data?.data && (
+    <YStack flex={1} padding='$4' gap='$4'>
+      <ProfileHeader user={data?.data} />
+      <DriverStatsRow driver={data?.data} />
+      <DriverContactActions driver={data?.data} />
+
+    </YStack>
+  )
+
   return (
-    <View>
-      <Text>Welcome to driver-profile-screen!</Text>
-    </View>
+    <DriverProfileLayout driver={data?.data}>
+      <>
+        {renderLoadingSpinner()}
+        {renderDriverProfile()}
+      </>
+    </DriverProfileLayout>
   );
 }
 
