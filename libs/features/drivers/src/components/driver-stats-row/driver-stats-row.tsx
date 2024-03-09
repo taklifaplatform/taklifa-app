@@ -1,18 +1,46 @@
 
+import { DriverTransformer } from '@zix/api';
+import { CustomIcon } from '@zix/ui/icons';
 import React from 'react';
 
-import { View, Text } from 'react-native';
+import { Separator, Text, XStack } from 'tamagui';
 
-/* eslint-disable-next-line */
-export interface DriverStatsRowProps {
+export type DriverStatsRowProps = {
+  driver: DriverTransformer
 }
 
-
-export function DriverStatsRow(props: DriverStatsRowProps) {
+export const DriverStatsRow: React.FC<DriverStatsRowProps> = ({
+  driver
+}) => {
   return (
-    <View>
-      <Text>Welcome to driver-stats-row!</Text>
-    </View>
+    <XStack
+      justifyContent="space-between"
+      paddingHorizontal="$4"
+      paddingBottom="$4"
+    >
+      <XStack alignItems="center" gap="$2">
+        <CustomIcon name="car" size={15} color="$color5" />
+        <Text color={'$black'} fontWeight="600" fontSize="$1">
+          {driver?.vehicle?.plate_number}
+        </Text>
+      </XStack>
+      <Separator vertical borderColor="$gray10" borderWidth={0.3} />
+      <XStack alignItems="center" gap="$2">
+        <CustomIcon name="star" size={15} color="$color5" />
+        <Text color={'$black'} fontWeight="600" fontSize="$1">
+          {/* الرياض - 12 كم */}
+          {driver?.location?.country?.name}
+        </Text>
+      </XStack>
+      <Separator vertical borderColor="$gray10" borderWidth={0.3} />
+      <XStack alignItems="center" gap="$2">
+        <CustomIcon name="star" size={15} color="$color5" />
+        <Text color={'$black'} fontWeight="600" fontSize="$1">
+          ({driver.rating_stats?.count}) {driver.rating_stats?.score}
+        </Text>
+      </XStack>
+
+    </XStack>
   );
 }
 

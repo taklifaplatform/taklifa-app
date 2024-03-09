@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { DriverTransformer, DriversService } from '@zix/api';
+import { DriverCard } from '@zix/features/drivers';
 import { CustomIcon } from '@zix/ui/icons';
 import { MapDriverMarker } from '@zix/ui/sawaeed';
 import { useState } from 'react';
@@ -8,7 +9,6 @@ import { FlatList } from 'react-native-gesture-handler';
 import MapView from 'react-native-maps';
 import Carousel from 'react-native-reanimated-carousel';
 import { Button, YStack } from 'tamagui';
-import { DriverCard } from '../../components/DriverCard';
 
 /* eslint-disable-next-line */
 export interface HomeScreenProps { }

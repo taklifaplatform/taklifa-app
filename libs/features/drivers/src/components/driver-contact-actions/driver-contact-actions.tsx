@@ -1,18 +1,53 @@
 
-import React from 'react';
+import { DriverTransformer } from '@zix/api';
+import { CustomIcon } from '@zix/ui/icons';
+import { Button, XStack } from 'tamagui';
 
-import { View, Text } from 'react-native';
 
-/* eslint-disable-next-line */
-export interface DriverContactActionsProps {
+export type DriverContactActionsProps = {
+  driver: DriverTransformer
 }
 
-
-export function DriverContactActions(props: DriverContactActionsProps) {
+export const DriverContactActions: React.FC<DriverContactActionsProps> = ({
+  driver
+}) => {
   return (
-    <View>
-      <Text>Welcome to driver-contact-actions!</Text>
-    </View>
+    <XStack justifyContent="space-between" padding="$2"
+      backgroundColor='$color2'
+      borderTopWidth={0.3}
+      borderColor={'$gray8'}
+    >
+      <Button
+        backgroundColor={'$color5'}
+        size={'$3'}
+        borderRadius={'$3'}
+        fontWeight="400"
+        icon={<CustomIcon name="followed" size="$1" />}
+      >
+        ارسال الدعوة
+      </Button>
+      <Button
+        backgroundColor={'$gray7'}
+        size={'$3'}
+        borderRadius={'$3'}
+        paddingVertical="$2"
+        width="28%"
+        fontWeight="400"
+        icon={<CustomIcon name="chat" size="$1" />}
+      >
+        محادثة
+      </Button>
+      <Button
+        backgroundColor={'$gray7'}
+        size={'$3'}
+        borderRadius={'$3'}
+        width="28%"
+        fontWeight="400"
+        icon={<CustomIcon name="call" size="$1" />}
+      >
+        اتصل
+      </Button>
+    </XStack>
   );
 }
 
