@@ -5,7 +5,7 @@ import { RatingTap } from 'libs/features/account/src/components/profile-layout/R
 import { TruckTap } from 'libs/features/account/src/components/profile-layout/TruckTap';
 import { useRef, useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-import { DriverCard } from './DriverCard';
+import { UserCard } from '@zix/features/users';
 
 export function ViewDriverSheet({
   setShowModal,
@@ -67,7 +67,7 @@ export function ViewDriverSheet({
 
   const renderCard = () => (
     <YStack padding="$4" backgroundColor={'$color1'} flex={1}>
-      <DriverCard item={null} setShowCarousel={setShowModal} />
+      <UserCard item={null} setShowCarousel={setShowModal} />
       <ScrollView ref={scrollViewRef} showsVerticalScrollIndicator={false}>
         {renderTaps()}
         <YStack flex={1}>

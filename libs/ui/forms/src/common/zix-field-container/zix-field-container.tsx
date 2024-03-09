@@ -18,6 +18,7 @@ import {
   useThemeName
 } from 'tamagui';
 import FieldError from '../field-error/field-error';
+import { useMultiLang } from '@zix/i18n';
 
 
 const StackContainer = styled(ThemeableStack, {
@@ -83,6 +84,7 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
 }) => {
   const id = useId()
   const themeName = useThemeName();
+  const { isRtl } = useMultiLang()
   const [activeAccordions, setActiveAccordions] = useState([id as string]);
 
   useEffect(() => {
@@ -124,22 +126,22 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
     >
       <Accordion.Item value={id as string}>
         <Accordion.Trigger
-          flexDirection="row"
+          unstyled
+          flexDirection={isRtl ? 'row-reverse' : 'row'}
           justifyContent="space-between"
-          padding="0"
-          borderWidth="0"
+          paddingVertical="$2"
           hoverStyle={{
-            backgroundColor: 'transparent',
+            backgroundColor: '$color2',
           }}
           focusStyle={{
-            backgroundColor: 'transparent',
+            backgroundColor: '$color2',
           }}
           {...rest}
         >
           {({ open }: { open: boolean }) => (
             <>
               {renderLabel()}
-               <Square
+              <Square
                 theme="alt1"
                 animation="quick"
                 rotate={open ? '180deg' : '0deg'}

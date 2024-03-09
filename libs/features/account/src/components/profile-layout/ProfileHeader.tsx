@@ -1,11 +1,10 @@
-import { UserTransformer } from '@zix/api';
+import { DriverTransformer } from '@zix/api';
 import { UserAvatar } from '@zix/ui/common';
-import { Button, H4, Separator, Text, XStack, YStack } from 'tamagui';
 import { CustomIcon } from '@zix/ui/icons';
 import { Linking } from 'react-native';
-import { Link } from 'solito/link';
+import { Button, H4, Separator, Text, XStack, YStack } from 'tamagui';
 
-export function ProfileHeader({ user }: { user: UserTransformer }) {
+export function ProfileHeader({ user }: { user: DriverTransformer }) {
   const renderInformation = (title: string, icon: string) => (
     <XStack alignItems="center">
       <CustomIcon name={icon} size={20} color={'#FECA16'} />
@@ -48,45 +47,26 @@ export function ProfileHeader({ user }: { user: UserTransformer }) {
         paddingTop="$6"
         marginBottom="$4"
       >
-        {/*  <Button
-          position="absolute"
-          left={0}
-          size="$1"
-          marginHorizontal="$4"
-          {...useLink({ href: '/account/edit' })}
-        >
-          Edit Profile
-        </Button>*/}
         <YStack gap="$2" paddingBottom="$4">
           <XStack gap="$2" justifyContent="center" $sm={{ marginTop: '$4' }}>
             <UserAvatar
               user={user}
               size="$9"
-              borderColor={'#34C759'}
-              borderWidth={'$1.5'}
             />
           </XStack>
           <YStack gap="$2">
-            {user.name ? (
-              <H4 textAlign="center">{user.name}</H4>
-            ) : (
-              <Link href="/account/edit?edit_name=1">
-                <H4 textAlign="center" textDecorationLine="underline">
-                  No Name
-                </H4>
-              </Link>
-            )}
+            <H4 textAlign="center">{user.name}</H4>
             <Text textAlign="center" fontWeight="bold" color="$gray10">
               Online now
             </Text>
           </YStack>
         </YStack>
-        <XStack justifyContent="space-between" space="$4" paddingVertical="$4">
-          {renderInformation('Harley davidson', 'car')}
+        <XStack justifyContent="space-around" gap="$4" paddingVertical="$4">
+          {renderInformation(user.vehicle?.plate_number || 'N/A', 'car')}
           <Separator vertical borderColor={'$gray7'} />
-          {renderInformation('Riyadh', 'location')}
+          {renderInformation(user.location?.country?.name || 'N/A', 'location')}
           <Separator vertical borderColor={'$gray7'} />
-          {renderInformation('(188) 4.8', 'star')}
+          {renderInformation(`(${user.rating_stats?.count}) ${user.rating_stats?.score}`, 'star')}
         </XStack>
       </YStack>
       <XStack justifyContent="space-around" width={'100%'}>

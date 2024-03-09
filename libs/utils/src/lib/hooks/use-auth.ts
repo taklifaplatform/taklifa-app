@@ -47,13 +47,13 @@ export function useAuth() {
    * The number of steps in the registration process.
    */
   const registerSteps = useMemo(() => {
-    if (requestedAccountType === 'customer') {
+    if (requestedAccountType === "customer") {
       return 2;
     }
-    if (requestedAccountType === 'company_owner') {
+    if (requestedAccountType === "company_owner") {
       return 3;
     }
-    if (requestedAccountType === 'solo_driver') {
+    if (requestedAccountType === "solo_driver") {
       return 4;
     }
     return 0;
@@ -107,9 +107,15 @@ export function useAuth() {
     router.push("/auth/login");
   }
 
+  function refetchUser() {
+    refetch().then(() => {
+      data?.data && setAuthUser(data.data);
+    });
+  }
+
   return {
     user,
-    refetchUser: () => refetch(),
+    refetchUser,
     avatarUrl,
     isLoading,
     logout,

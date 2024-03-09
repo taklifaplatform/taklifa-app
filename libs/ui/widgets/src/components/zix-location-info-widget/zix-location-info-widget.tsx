@@ -1,18 +1,22 @@
 
+import { LocationTransformer } from '@zix/api';
 import React from 'react';
 
-import { View, Text } from 'react-native';
+import { Text, YStack } from 'tamagui';
 
-/* eslint-disable-next-line */
-export interface ZixLocationInfoWidgetProps {
+export type ZixLocationInfoWidgetProps = {
+  location: LocationTransformer
 }
 
-
-export function ZixLocationInfoWidget(props: ZixLocationInfoWidgetProps) {
+export const ZixLocationInfoWidget: React.FC<ZixLocationInfoWidgetProps> = ({
+  location
+}) => {
   return (
-    <View>
-      <Text>Welcome to zix-location-info-widget!</Text>
-    </View>
+    <YStack gap='$4'>
+      <Text>
+        {location?.address}
+      </Text>
+    </YStack>
   );
 }
 
