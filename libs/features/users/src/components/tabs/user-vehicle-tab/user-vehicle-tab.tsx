@@ -1,15 +1,30 @@
+import { DriverTransformer } from '@zix/api';
+import { ZixMediasListWidget, ZixWidgetContainer } from '@zix/ui/widgets';
 import React from 'react';
 
-import { View, Text } from 'react-native';
+import { YStack } from 'tamagui';
 
-/* eslint-disable-next-line */
-export interface UserVehicleTabProps {}
+export type UserVehicleTabProps = {
+  user: DriverTransformer
+}
 
-export function UserVehicleTab(props: UserVehicleTabProps) {
+export const UserVehicleTab: React.FC<UserVehicleTabProps> = ({
+  user
+}) => {
+  const renderVehicleImages = () => !!user.vehicle?.images?.length && (
+    <ZixWidgetContainer label='Vehicle Images'>
+      <ZixMediasListWidget
+        medias={user.vehicle.images}
+        imageHeight={70}
+        imageWidth={120}
+      />
+    </ZixWidgetContainer>
+  )
+
   return (
-    <View>
-      <Text>Welcome to about-driver-vehicle-tab!</Text>
-    </View>
+    <YStack>
+      {renderVehicleImages()}
+    </YStack>
   );
 }
 
