@@ -100,7 +100,6 @@ export function HomeScreen(props: HomeScreenProps) {
         key={`view-${item.id}-${index}`}
         driver={item}
         onClose={() => setShowCarousel(false)}
-        onPress={() => setShowCarousel(true)}
       />
     );
   };

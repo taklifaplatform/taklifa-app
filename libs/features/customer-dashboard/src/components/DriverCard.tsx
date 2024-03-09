@@ -4,27 +4,30 @@ import { UserAvatar } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { useMemo } from 'react';
 import { FlatList } from 'react-native';
+import { useRouter } from 'solito/router';
 import { Button, Image, Separator, View, Text, XStack, YStack } from 'tamagui';
 
 export type DriverCardProps = {
   driver: DriverTransformer
   onClose?: () => void;
-  onPress?: () => void;
-
 };
 
 export const DriverCard: React.FC<DriverCardProps> = ({
   driver,
   onClose,
-  onPress
 }) => {
+  const router = useRouter()
 
   const activeCompany = useMemo(() => {
     return driver?.companies?.filter(company => company?.logo?.url).shift()
   }, [driver?.companies])
 
+  function onPress() {
+    router.push(`/users/${driver.id}`)
+  }
+
   return (
-    <View padding="$3" onPress={() => onPress?.()}>
+    <View padding="$3" onPress={onPress}>
       <YStack backgroundColor={'$color2'} borderRadius={'$5'} gap="$2">
         <XStack justifyContent="space-between" padding="$4" alignItems='center'>
           <XStack alignItems="center" gap="$2">
