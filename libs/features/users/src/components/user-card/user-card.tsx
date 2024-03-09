@@ -1,6 +1,6 @@
 import { DriverTransformer } from '@zix/api';
 import { UserAvatar } from '@zix/ui/common';
-import { ZixMediasList } from '@zix/ui/widgets';
+import { ZixMediasListWidget } from '@zix/ui/widgets';
 import { useMemo } from 'react';
 import { useRouter } from 'solito/router';
 import { Image, Separator, Text, ThemeableStackProps, XStack, YStack } from 'tamagui';
@@ -67,7 +67,7 @@ export const UserCard: React.FC<UserCardProps> = ({
       </XStack>
 
       <UserInfoRow user={user} paddingHorizontal={padding} />
-      <ZixMediasList medias={user?.vehicle?.images || []} paddingHorizontal={padding} />
+      <ZixMediasListWidget medias={user?.vehicle?.images || []} paddingHorizontal={padding} />
       <Separator borderColor="$gray6" />
       <UserContactActions user={user} paddingHorizontal={padding} />
     </YStack>

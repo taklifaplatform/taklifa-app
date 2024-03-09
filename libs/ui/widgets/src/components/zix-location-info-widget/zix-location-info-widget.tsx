@@ -1,18 +1,41 @@
 
+import { LocationTransformer } from '@zix/api';
 import React from 'react';
+import MapView, { Marker } from 'react-native-maps';
 
-import { View, Text } from 'react-native';
+import { Text, YStack } from 'tamagui';
 
-/* eslint-disable-next-line */
-export interface ZixLocationInfoWidgetProps {
+export type ZixLocationInfoWidgetProps = {
+  location: LocationTransformer
 }
 
-
-export function ZixLocationInfoWidget(props: ZixLocationInfoWidgetProps) {
+export const ZixLocationInfoWidget: React.FC<ZixLocationInfoWidgetProps> = ({
+  location
+}) => {
   return (
-    <View>
-      <Text>Welcome to zix-location-info-widget!</Text>
-    </View>
+    <YStack gap='$4'>
+      <Text>
+        {location?.address}
+      </Text>
+      <MapView
+        style={{ flex: 1, height: 200, borderRadius: 14 }}
+        initialRegion={{
+          latitude: location?.latitude,
+          longitude: location?.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      >
+        <Marker
+          coordinate={{
+            latitude: location?.latitude,
+            longitude: location?.longitude
+          }}
+          title={location?.address}
+          description={location?.address}
+        />
+      </MapView>
+    </YStack>
   );
 }
 

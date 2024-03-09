@@ -1,11 +1,10 @@
 import { DriverTransformer } from '@zix/api';
 import React from 'react';
 
-import { HorizontalTabs } from './tabs';
 import { ZixTab } from '@zix/ui/common';
 import AboutUserTab from '../about-user-tab/about-user-tab';
-import UserVehicleTab from '../user-vehicle-tab/user-vehicle-tab';
 import UserReviewsTab from '../user-reviews-tab/user-reviews-tab';
+import UserVehicleTab from '../user-vehicle-tab/user-vehicle-tab';
 
 export type ProfileTabsProps = {
   user: DriverTransformer

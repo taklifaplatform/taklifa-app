@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import ZixMediasList from './zix-medias-list';
+import ZixMediasListWidget from './zix-medias-list-widget';
 
-describe('ZixMediasList', () => {
+describe('ZixMediasListWidget', () => {
   it('should render successfully', () => {
-    const { root } = render(< ZixMediasList />);
+    const { root } = render(< ZixMediasListWidget />);
     expect(root).toBeTruthy();
   });
 });

@@ -1,5 +1,5 @@
 import { DriverTransformer, MediaTransformer } from '@zix/api';
-import { ZixMediasList, ZixWidgetContainer } from '@zix/ui/widgets';
+import { ZixLocationInfoWidget, ZixMediasListWidget, ZixWidgetContainer, ZixWorkingHoursWidget } from '@zix/ui/widgets';
 import React, { useMemo } from 'react';
 
 import { Text, YStack } from 'tamagui';
@@ -24,9 +24,9 @@ export const AboutUserTab: React.FC<AboutUserTabProps> = ({
     return medias;
   }, [user.companies])
 
-  const renderAbout = () => !!user.about && (
+  const renderAbout = () => !!user.about?.length && (
     <ZixWidgetContainer label='About Driver'>
-      <Text>
+      <Text flex={1} color='black'>
         {user.about}
       </Text>
     </ZixWidgetContainer>
@@ -34,14 +34,28 @@ export const AboutUserTab: React.FC<AboutUserTabProps> = ({
 
   const renderCompanies = () => !!companiesLogos?.length && (
     <ZixWidgetContainer label='Works With'>
-      <ZixMediasList medias={companiesLogos || []}/>
+      <ZixMediasListWidget medias={companiesLogos || []} />
+    </ZixWidgetContainer>
+  )
+
+  const renderLocation = () => !!user.location && (
+    <ZixWidgetContainer label='Location'>
+      <ZixLocationInfoWidget location={user.location} />
+    </ZixWidgetContainer>
+  )
+
+  const renderWorkingHours = () => (
+    <ZixWidgetContainer label='Working Hours'>
+      <ZixWorkingHoursWidget />
     </ZixWidgetContainer>
   )
 
   return (
-    <YStack>
+    <YStack gap='$2'>
       {renderAbout()}
       {renderCompanies()}
+      {renderLocation()}
+      {renderWorkingHours()}
     </YStack>
   );
 }

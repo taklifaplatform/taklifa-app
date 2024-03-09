@@ -6,13 +6,13 @@ import { FlatList } from 'react-native';
 import { Image, ThemeableStackProps, View } from 'tamagui';
 
 
-export type ZixMediasListProps = ThemeableStackProps & {
+export type ZixMediasListWidgetProps = ThemeableStackProps & {
   medias?: MediaTransformer[];
   imageWidth?: number;
   imageHeight?: number;
 }
 
-export const ZixMediasList: React.FC<ZixMediasListProps> = ({
+export const ZixMediasListWidget: React.FC<ZixMediasListWidgetProps> = ({
   medias = [],
   imageWidth = 62,
   imageHeight = 43,
@@ -44,4 +44,4 @@ export const ZixMediasList: React.FC<ZixMediasListProps> = ({
   );
 }
 
-export default ZixMediasList;
+export default ZixMediasListWidget;

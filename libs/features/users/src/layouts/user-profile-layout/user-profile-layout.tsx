@@ -4,8 +4,8 @@ import { AppHeader } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { useAuth } from '@zix/utils';
 import { TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'solito/router';
-import { View } from 'tamagui';
 
 export type UserProfileLayoutProps = {
   user?: DriverTransformer;
@@ -49,11 +49,11 @@ export const UserProfileLayout: React.FC<UserProfileLayoutProps> = ({
     );
 
   return (
-    <View flex={1}>
+    <SafeAreaView style={{ flex: 1 }} edges={['bottom', 'left', 'right']}>
       {renderCurrentAuthUserHeader()}
       {renderUserHeader()}
       {children}
-    </View>
+    </SafeAreaView>
   );
 };
 

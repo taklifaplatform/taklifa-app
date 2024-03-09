@@ -6,11 +6,11 @@ import { createParam } from 'solito';
 import { FullScreenSpinner } from '@zix/ui/common';
 import UserProfileLayout from '../../layouts/user-profile-layout/user-profile-layout';
 
-import { Stack, YStack } from 'tamagui';
-import { UserContactActions } from '../../components/user-contact-actions/user-contact-actions';
-import { UserInfoRow } from '../../components/user-info-row/user-info-row';
+import { ScrollView, YStack } from 'tamagui';
 import { ProfileHeader } from '../../components/profile-header/profile-header';
 import ProfileTabs from '../../components/tabs/profile-tabs/profile-tabs';
+import { UserContactActions } from '../../components/user-contact-actions/user-contact-actions';
+import { UserInfoRow } from '../../components/user-info-row/user-info-row';
 
 const { useParam } = createParam<{ user: string }>();
 
@@ -30,16 +30,22 @@ export function UserProfileScreen() {
 
   const renderUserProfile = () =>
     data?.data && (
-      <YStack flex={1} gap="$4">
-        <YStack padding="$4" gap="$4">
-          <YStack backgroundColor='$color2' borderRadius='$5' padding='$4' gap='$6'>
+      <ScrollView flex={1}>
+        <YStack padding="$4" marginBottom='$4' gap="$4">
+          <YStack
+            backgroundColor='$color2'
+            borderRadius='$5'
+            paddingHorizontal='$4'
+            paddingBottom='$4'
+            gap='$6'
+          >
             <ProfileHeader user={data.data} />
             <UserInfoRow user={data.data} />
           </YStack>
           <UserContactActions user={data.data} />
         </YStack>
         <ProfileTabs user={data.data} />
-      </YStack>
+      </ScrollView>
     );
 
   return (
