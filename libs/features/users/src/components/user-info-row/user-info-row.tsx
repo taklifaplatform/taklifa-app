@@ -16,8 +16,8 @@ export const UserInfoRow: React.FC<UserInfoRowProps> = ({
   const renderVehicleInfo = () => !!user?.vehicle && (
     <>
       <XStack alignItems="center" gap="$2">
-        <CustomIcon name="car" size={15} color="$color5" />
-        <Text color={'$black'} fontWeight="600" fontSize="$1">
+        <CustomIcon name="car" size='$1' color="$color5" />
+        <Text color='$color12' fontWeight="600" fontSize="$1">
           {user?.vehicle?.plate_number}
         </Text>
       </XStack>
@@ -33,8 +33,8 @@ export const UserInfoRow: React.FC<UserInfoRowProps> = ({
   const renderLocationInfo = () => !!user?.location?.id && (
     <>
       <XStack alignItems="center" gap="$2">
-        <CustomIcon name="star" size={15} color="$color5" />
-        <Text color={'$black'} fontWeight="600" fontSize="$1">
+        <CustomIcon name="location" size='$1' color="$color5" />
+        <Text color='$color12' fontWeight="600" fontSize="$1">
           {user?.location?.country?.name}
         </Text>
       </XStack>
@@ -48,8 +48,8 @@ export const UserInfoRow: React.FC<UserInfoRowProps> = ({
 
   const renderRatingsInfo = () => !!user.rating_stats?.count && (
     <XStack alignItems="center" gap="$2">
-      <CustomIcon name="star" size={15} color="$color5" />
-      <Text color={'$black'} fontWeight="600" fontSize="$1">
+      <CustomIcon name="star" size='$1' color="$color5" />
+      <Text color='$color12' fontWeight="600" fontSize="$1">
         ({user.rating_stats?.count}) {user.rating_stats?.score}
       </Text>
     </XStack>

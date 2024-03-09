@@ -1,3 +1,4 @@
+import { X } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { DriverTransformer, DriversService } from '@zix/api';
 import { UserCard } from '@zix/features/users';
@@ -103,7 +104,6 @@ export function HomeScreen() {
       <UserCard
         key={`view-${item.id}-${index}`}
         user={item}
-        onClose={() => setShowCarousel(false)}
         height={USER_CARD_HEIGHT}
         marginHorizontal='$4'
       />
@@ -118,6 +118,17 @@ export function HomeScreen() {
         borderTopLeftRadius={'$6'}
         paddingVertical="$5"
       >
+        <Button
+          icon={X}
+          scaleIcon={1.5}
+          backgroundColor='$gray1'
+          size='$3'
+          width='$6'
+          position='absolute'
+          top='$-6'
+          left='$4'
+          onPress={() => setShowCarousel(false)}
+        />
         <Carousel
           width={USER_CARD_WIDTH}
           height={USER_CARD_HEIGHT}
