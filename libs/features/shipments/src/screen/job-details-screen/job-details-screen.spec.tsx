@@ -5,7 +5,7 @@ import JobDetailsScreen from './job-details-screen';
 
 describe('JobDetailsScreen', () => {
   it('should render successfully', () => {
-    const { root } = render(< JobDetailsScreen />);
+    const { root } = render(<JobDetailsScreen />);
     expect(root).toBeTruthy();
   });
 });

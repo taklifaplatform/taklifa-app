@@ -1,4 +1,4 @@
-import { JobsListScreen } from '@zix/features/jobs';
+import { JobsListScreen } from '@zix/features/shipments';
 import { AppHeader } from '@zix/ui/common';
 import React from 'react';
 

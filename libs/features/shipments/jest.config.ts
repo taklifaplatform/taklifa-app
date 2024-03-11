@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'features-jobs',
+  displayName: 'features-shipments',
   resolver: '@nx/jest/plugins/resolver',
   preset: 'jest-expo',
   moduleFileExtensions: ['ts', 'js', 'html', 'tsx', 'jsx'],

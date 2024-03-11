@@ -1,4 +1,4 @@
-import { JobsListScreen } from '@zix/features/jobs';
+import { JobsListScreen } from '@zix/features/shipments';
 import { FindJobsBanner } from 'apps/website/components/jobs/FindJobsBanner';
 import { MainLayout } from 'apps/website/layouts/MainLayout';
 import { NextPageWithLayout } from '../_app';

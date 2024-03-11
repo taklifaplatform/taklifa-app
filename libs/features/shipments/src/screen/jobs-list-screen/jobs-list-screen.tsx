@@ -24,7 +24,6 @@ export const JobsListScreen: React.FC<JobsListScreenProps> = ({
     queryFn: () => JobService.listJobs({}),
   });
   return (
-    
     <YStack flex={1} marginBottom="$6">
       <YStack flex={1} gap="$6" marginHorizontal="$3" marginBottom="$6">
         <ZixInput
@@ -68,7 +67,9 @@ export const JobsListScreen: React.FC<JobsListScreenProps> = ({
       <FlatList
         onEndReachedThreshold={0.5}
         data={data?.data}
-        renderItem={({ item, index }) => <JobCard key={index} urlPrefix={urlPrefix} job={item} />}
+        renderItem={({ item, index }) => (
+          <JobCard key={index} urlPrefix={urlPrefix} job={item} />
+        )}
         ListEmptyComponent={() => (
           <DataNotFound
             message={t('job:job-not-found')}

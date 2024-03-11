@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import JobCard from './job-card';
+import JobsListScreen from './jobs-list-screen';
 
-describe('JobCard', () => {
+describe('JobsListScreen', () => {
   it('should render successfully', () => {
-    const { root } = render(< JobCard />);
+    const { root } = render(<JobsListScreen />);
     expect(root).toBeTruthy();
   });
 });

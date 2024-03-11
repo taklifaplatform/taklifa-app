@@ -16,15 +16,15 @@ export type JobCardProps = {
 };
 
 export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
-  const {isRtl} = useMultiLang();
+  const { isRtl } = useMultiLang();
   const description = useMemo(
     () => job.items?.map((item) => item.notes).join(', '),
-    [job.items]
+    [job.items],
   );
 
   const deliveryTime = useMemo(() => {
     return moment.duration(
-      moment(job.deliver_date).diff(moment(job.pick_date))
+      moment(job.deliver_date).diff(moment(job.pick_date)),
     );
   }, [job.pick_date, job.deliver_date]);
 
@@ -84,7 +84,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
                 name="assistant-navigation"
                 size="$1"
                 color={'$gray9'}
-                {...!isRtl && {rotate: '180deg'}}
+                {...(!isRtl && { rotate: '180deg' })}
               />
             ),
             name: t('job:from_location'),

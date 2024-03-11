@@ -1,6 +1,6 @@
-import { MainLayout } from 'apps/website/layouts/MainLayout';
+import { MainLayout } from '../../../layouts/MainLayout';
 import { NextPageWithLayout } from '../_app';
-import { JobDetailsScreen } from '@zix/features/jobs'
+import { JobDetailsScreen } from '@zix/features/shipments';
 
 export const Page: NextPageWithLayout = () => {
   return (

@@ -51,17 +51,16 @@ export function JobDetailsScreen() {
 
   const deliveryTime = useMemo(() => {
     return moment.duration(
-      moment(job?.deliver_date).diff(moment(job?.pick_date))
+      moment(job?.deliver_date).diff(moment(job?.pick_date)),
     );
   }, [job?.pick_date, job?.deliver_date]);
 
-
   const duration = useMemo(() => {
     return moment.duration(
-      moment(job?.deliver_time).diff(moment(job?.pick_time)), 'minute'
+      moment(job?.deliver_time).diff(moment(job?.pick_time)),
+      'minute',
     );
-  },
-  [job?.pick_time, job?.deliver_time]);
+  }, [job?.pick_time, job?.deliver_time]);
 
   const distance = useMemo(() => {
     const lat1 = job?.from_location?.latitude || 0;
@@ -245,9 +244,7 @@ export function JobDetailsScreen() {
                 value: `${duration.asMinutes()}`,
               },
               {
-                icons: (
-                  <CustomIcon name="time" size="$1" color={'$gray9'} />
-                ),
+                icons: <CustomIcon name="time" size="$1" color={'$gray9'} />,
                 name: t('job:deliver_time'),
                 value: `${job?.pick_time}`,
               },
