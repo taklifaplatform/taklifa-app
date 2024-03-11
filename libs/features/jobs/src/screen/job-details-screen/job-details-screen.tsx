@@ -1,4 +1,13 @@
-import { CalendarDays, Check, Inbox, Package, PackageOpen, Route, Timer, Weight, X } from '@tamagui/lucide-icons';
+import {
+  CalendarDays,
+  Check,
+  Inbox,
+  Package,
+  PackageOpen,
+  Route,
+  Weight,
+  X,
+} from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { JobService } from '@zix/api';
 import { UserAvatar, ZixLinkButton } from '@zix/ui/common';
@@ -24,7 +33,20 @@ export function JobDetailsScreen() {
 
   const description = useMemo(
     () => job?.items?.map((item) => item.notes).join(', '),
-    [job?.items]
+    [job?.items],
+  );
+
+  const weight = useMemo(
+    () => job?.items?.map((item) => item.cap_weight + ' ' + item.cap_unit),
+    [job?.items],
+  );
+
+  const size = useMemo(
+    () =>
+      job?.items?.map(
+        (item) => `${item.dim_width}x${item.dim_height}x${item.dim_length}cm `,
+      ),
+    [job?.items],
   );
 
   const deliveryTime = useMemo(() => {
@@ -32,6 +54,41 @@ export function JobDetailsScreen() {
       moment(job?.deliver_date).diff(moment(job?.pick_date))
     );
   }, [job?.pick_date, job?.deliver_date]);
+
+
+  const duration = useMemo(() => {
+    return moment.duration(
+      moment(job?.deliver_time).diff(moment(job?.pick_time)), 'minute'
+    );
+  },
+  [job?.pick_time, job?.deliver_time]);
+
+  const distance = useMemo(() => {
+    const lat1 = job?.from_location?.latitude || 0;
+    const lon1 = job?.from_location?.longitude || 0;
+    const lat2 = job?.to_location?.latitude || 0;
+    const lon2 = job?.to_location?.longitude || 0;
+    // calculate distance
+    const R = 6371e3; // metres
+    const φ1 = (lat1 * Math.PI) / 180; // φ, λ in radians
+    const φ2 = (lat2 * Math.PI) / 180;
+    const Δφ = ((lat2 - lat1) * Math.PI) / 180;
+    const Δλ = ((lon2 - lon1) * Math.PI) / 180;
+
+    const a =
+      Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    const d = R * c; // in metres
+    // convert to km
+    return d / 1000;
+  }, [
+    job?.from_location?.latitude,
+    job?.from_location?.longitude,
+    job?.to_location?.latitude,
+    job?.to_location?.longitude,
+  ]);
 
   const renderHeaderCard = () => (
     <Stack
@@ -152,20 +209,22 @@ export function JobDetailsScreen() {
                 value: `${job?.items_type}`,
               },
               {
-                icons: <CustomIcon name='aspect_ratio' size="$1" color='$gray3' />,
+                icons: (
+                  <CustomIcon name="aspect_ratio" size="$1" color="$gray3" />
+                ),
                 name: t('job:package-size'),
-                value: 'TODO',
+                value: `${size}`,
               },
               {
                 icons: <Weight size="$1" color={'$gray9'} />,
                 name: t('job:package-weight'),
-                value: 'TODO',
+                value: `${weight}`,
               },
             ]}
           />
           <ZixVariantOptionsWidget
             // icon={<Timer size="$1" color={'$color5'} />}
-            icon={<CustomIcon name='time' size="$1" color='$color5' />}
+            icon={<CustomIcon name="time" size="$1" color="$color5" />}
             label={t('job:time-and-distance')}
             optionVariant="details"
             variant="details"
@@ -176,42 +235,36 @@ export function JobDetailsScreen() {
                 value: `${deliveryTime.humanize()}`,
               },
               {
-                icons: <CustomIcon
-                name="time-pace"
-                size="$1"
-                color={'$gray9'}
-              />,
+                icons: <Route size="$1" color={'$gray9'} rotate="90deg" />,
                 name: t('job:estimated-distance'),
-                value: 'TODO',
+                value: `${distance} km`,
               },
               {
-                icons: <CalendarDays size="$1" color={'$gray9'} />,
+                icons: <CustomIcon name="chronic" size="$1" color={'$gray9'} />,
                 name: t('job:estimated-time'),
-                value: 'TODO',
+                value: `${duration.asMinutes()}`,
               },
               {
-                icons: <CustomIcon
-                name="time-pace"
-                size="$1"
-                color={'$gray9'}
-              />,
+                icons: (
+                  <CustomIcon name="time" size="$1" color={'$gray9'} />
+                ),
                 name: t('job:deliver_time'),
-                value: 'TODO',
+                value: `${job?.pick_time}`,
               },
               {
                 icons: <CalendarDays size="$1" color={'$gray9'} />,
                 name: t('job:deliver-date'),
-                value: `${job?.deliver_date}`,
+                value: `${job?.pick_date}`,
               },
               {
-                icons: <Timer size="$1" color={'$gray9'} />,
+                icons: <CustomIcon name="time" size="$1" color={'$gray9'} />,
                 name: t('job:delivery-time'),
                 value: `${job?.deliver_time}`,
               },
               {
-                icons: <Route size="$1" color={'$gray9'} />,
+                icons: <CalendarDays size="$1" color={'$gray9'} />,
                 name: t('job:delivery-date'),
-                value: 'TODO',
+                value: `${job?.deliver_date}`,
               },
             ]}
           />

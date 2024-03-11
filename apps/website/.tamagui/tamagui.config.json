@@ -23,6 +23,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -192,6 +194,7 @@
               "display": "inline",
               "boxSizing": "border-box",
               "wordWrap": "break-word",
+              "whiteSpace": "pre-wrap",
               "margin": 0
             },
             "inlineWhenUnflattened": {},
@@ -204,9 +207,6 @@
                   "whiteSpace": "nowrap"
                 },
                 ":number": "Function"
-              },
-              "ellipsizeMode": {
-                "...": "Function"
               },
               "selectable": {
                 "true": {
@@ -241,6 +241,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -438,6 +440,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -609,6 +613,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -830,6 +836,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -1130,6 +1138,7 @@
               "display": "inline",
               "boxSizing": "border-box",
               "wordWrap": "break-word",
+              "whiteSpace": "pre-wrap",
               "margin": 0,
               "unstyled": false,
               "tag": "a",
@@ -1145,9 +1154,6 @@
                   "whiteSpace": "nowrap"
                 },
                 ":number": "Function"
-              },
-              "ellipsizeMode": {
-                "...": "Function"
               },
               "selectable": {
                 "true": {
@@ -1192,6 +1198,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -1395,6 +1403,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -1580,6 +1590,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -1766,6 +1778,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -1970,6 +1984,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -2172,6 +2188,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -2470,6 +2488,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -2746,7 +2766,7 @@
                   "backgrounded": true,
                   "borderWidth": 1,
                   "borderColor": "transparent",
-                  "focusStyle": {
+                  "focusVisibleStyle": {
                     "outlineColor": "$outlineColor",
                     "outlineStyle": "solid",
                     "outlineWidth": 2
@@ -2766,14 +2786,15 @@
                     "backgroundColor": "transparent",
                     "borderColor": "$borderColorPress"
                   },
-                  "focusStyle": {
+                  "focusVisibleStyle": {
                     "backgroundColor": "transparent",
                     "borderColor": "$borderColorFocus"
                   }
                 }
               },
               "size": {
-                "...size": "Function"
+                "...size": "Function",
+                ":number": "Function"
               },
               "disabled": {
                 "true": {
@@ -2817,6 +2838,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -3093,7 +3116,7 @@
                   "backgrounded": true,
                   "borderWidth": 1,
                   "borderColor": "transparent",
-                  "focusStyle": {
+                  "focusVisibleStyle": {
                     "outlineColor": "$outlineColor",
                     "outlineStyle": "solid",
                     "outlineWidth": 2
@@ -3113,14 +3136,15 @@
                     "backgroundColor": "transparent",
                     "borderColor": "$borderColorPress"
                   },
-                  "focusStyle": {
+                  "focusVisibleStyle": {
                     "backgroundColor": "transparent",
                     "borderColor": "$borderColorFocus"
                   }
                 }
               },
               "size": {
-                "...size": "Function"
+                "...size": "Function",
+                ":number": "Function"
               },
               "disabled": {
                 "true": {
@@ -3148,6 +3172,7 @@
               "display": "inline",
               "boxSizing": "border-box",
               "wordWrap": "break-word",
+              "whiteSpace": "pre-wrap",
               "margin": 0,
               "unstyled": false
             },
@@ -3161,9 +3186,6 @@
                   "whiteSpace": "nowrap"
                 },
                 ":number": "Function"
-              },
-              "ellipsizeMode": {
-                "...": "Function"
               },
               "selectable": {
                 "true": {
@@ -3213,6 +3235,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -3419,6 +3443,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -3725,6 +3751,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -4028,6 +4056,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -4335,6 +4365,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -4641,6 +4673,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -4948,6 +4982,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -5225,7 +5261,9 @@
                     "borderColor": "$borderColorHover"
                   },
                   "focusStyle": {
-                    "borderColor": "$borderColorFocus",
+                    "borderColor": "$borderColorFocus"
+                  },
+                  "focusVisibleStyle": {
                     "outlineStyle": "solid",
                     "outlineWidth": 2,
                     "outlineColor": "$outlineColor"
@@ -5288,6 +5326,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -5565,7 +5605,9 @@
                     "borderColor": "$borderColorHover"
                   },
                   "focusStyle": {
-                    "borderColor": "$borderColorFocus",
+                    "borderColor": "$borderColorFocus"
+                  },
+                  "focusVisibleStyle": {
                     "outlineStyle": "solid",
                     "outlineWidth": 2,
                     "outlineColor": "$outlineColor"
@@ -5626,6 +5668,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -5926,6 +5970,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -6221,6 +6267,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -6410,6 +6458,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -6708,6 +6758,7 @@
               "display": "inline",
               "boxSizing": "border-box",
               "wordWrap": "break-word",
+              "whiteSpace": "pre-wrap",
               "margin": 0,
               "unstyled": false,
               "tag": "p",
@@ -6725,9 +6776,6 @@
                   "whiteSpace": "nowrap"
                 },
                 ":number": "Function"
-              },
-              "ellipsizeMode": {
-                "...": "Function"
               },
               "selectable": {
                 "true": {
@@ -6772,6 +6820,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -6975,6 +7025,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -7287,6 +7339,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -7598,6 +7652,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -7799,6 +7855,7 @@
               "display": "inline",
               "boxSizing": "border-box",
               "wordWrap": "break-word",
+              "whiteSpace": "pre-wrap",
               "margin": 0,
               "unstyled": false,
               "tag": "h2",
@@ -7817,9 +7874,6 @@
                   "whiteSpace": "nowrap"
                 },
                 ":number": "Function"
-              },
-              "ellipsizeMode": {
-                "...": "Function"
               },
               "selectable": {
                 "true": {
@@ -7864,6 +7918,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -8066,6 +8122,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -8241,6 +8299,7 @@
               "display": "flex",
               "boxSizing": "border-box",
               "wordWrap": "break-word",
+              "whiteSpace": "pre-wrap",
               "margin": 0,
               "opacity": 0,
               "lineHeight": 0,
@@ -8259,9 +8318,6 @@
                   "whiteSpace": "nowrap"
                 },
                 ":number": "Function"
-              },
-              "ellipsizeMode": {
-                "...": "Function"
               },
               "selectable": {
                 "true": {
@@ -8296,6 +8352,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -8497,6 +8555,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -8704,6 +8764,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -8889,6 +8951,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -9076,6 +9140,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -9260,6 +9326,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -9447,6 +9515,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -9650,6 +9720,7 @@
               "display": "inline",
               "boxSizing": "border-box",
               "wordWrap": "break-word",
+              "whiteSpace": "pre-wrap",
               "margin": 0,
               "unstyled": false,
               "tag": "h1",
@@ -9668,9 +9739,6 @@
                   "whiteSpace": "nowrap"
                 },
                 ":number": "Function"
-              },
-              "ellipsizeMode": {
-                "...": "Function"
               },
               "selectable": {
                 "true": {
@@ -9715,6 +9783,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -9904,6 +9974,7 @@
               "display": "inline",
               "boxSizing": "border-box",
               "wordWrap": "break-word",
+              "whiteSpace": "pre-wrap",
               "margin": 0,
               "unstyled": false,
               "tag": "h2",
@@ -9922,9 +9993,6 @@
                   "whiteSpace": "nowrap"
                 },
                 ":number": "Function"
-              },
-              "ellipsizeMode": {
-                "...": "Function"
               },
               "selectable": {
                 "true": {
@@ -9969,6 +10037,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -10158,6 +10228,7 @@
               "display": "inline",
               "boxSizing": "border-box",
               "wordWrap": "break-word",
+              "whiteSpace": "pre-wrap",
               "margin": 0,
               "unstyled": false,
               "tag": "h3",
@@ -10176,9 +10247,6 @@
                   "whiteSpace": "nowrap"
                 },
                 ":number": "Function"
-              },
-              "ellipsizeMode": {
-                "...": "Function"
               },
               "selectable": {
                 "true": {
@@ -10223,6 +10291,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -10412,6 +10482,7 @@
               "display": "inline",
               "boxSizing": "border-box",
               "wordWrap": "break-word",
+              "whiteSpace": "pre-wrap",
               "margin": 0,
               "unstyled": false,
               "tag": "h4",
@@ -10430,9 +10501,6 @@
                   "whiteSpace": "nowrap"
                 },
                 ":number": "Function"
-              },
-              "ellipsizeMode": {
-                "...": "Function"
               },
               "selectable": {
                 "true": {
@@ -10477,6 +10545,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -10666,6 +10736,7 @@
               "display": "inline",
               "boxSizing": "border-box",
               "wordWrap": "break-word",
+              "whiteSpace": "pre-wrap",
               "margin": 0,
               "unstyled": false,
               "tag": "h5",
@@ -10684,9 +10755,6 @@
                   "whiteSpace": "nowrap"
                 },
                 ":number": "Function"
-              },
-              "ellipsizeMode": {
-                "...": "Function"
               },
               "selectable": {
                 "true": {
@@ -10731,6 +10799,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -10920,6 +10990,7 @@
               "display": "inline",
               "boxSizing": "border-box",
               "wordWrap": "break-word",
+              "whiteSpace": "pre-wrap",
               "margin": 0,
               "unstyled": false,
               "tag": "h6",
@@ -10938,9 +11009,6 @@
                   "whiteSpace": "nowrap"
                 },
                 ":number": "Function"
-              },
-              "ellipsizeMode": {
-                "...": "Function"
               },
               "selectable": {
                 "true": {
@@ -10985,6 +11053,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -11186,6 +11256,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -11414,6 +11486,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -11587,6 +11661,7 @@
               "display": "inline",
               "boxSizing": "border-box",
               "wordWrap": "break-word",
+              "whiteSpace": "pre-wrap",
               "margin": 0,
               "unstyled": false,
               "tag": "span",
@@ -11605,9 +11680,6 @@
                   "whiteSpace": "nowrap"
                 },
                 ":number": "Function"
-              },
-              "ellipsizeMode": {
-                "...": "Function"
               },
               "selectable": {
                 "true": {
@@ -11652,6 +11724,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -11835,7 +11909,7 @@
         "Input": {
           "staticConfig": {
             "isInput": true,
-            "acceptTokens": {
+            "accept": {
               "placeholderTextColor": "color",
               "selectionColor": "color"
             },
@@ -11855,10 +11929,12 @@
                     "borderColor": "$borderColorHover"
                   },
                   "focusStyle": {
+                    "borderColor": "$borderColorFocus"
+                  },
+                  "focusVisibleStyle": {
                     "outlineColor": "$outlineColor",
                     "outlineWidth": 2,
-                    "outlineStyle": "solid",
-                    "borderColor": "$borderColorFocus"
+                    "outlineStyle": "solid"
                   }
                 }
               },
@@ -11887,7 +11963,7 @@
         "InputFrame": {
           "staticConfig": {
             "isInput": true,
-            "acceptTokens": {
+            "accept": {
               "placeholderTextColor": "color",
               "selectionColor": "color"
             },
@@ -11907,10 +11983,12 @@
                     "borderColor": "$borderColorHover"
                   },
                   "focusStyle": {
+                    "borderColor": "$borderColorFocus"
+                  },
+                  "focusVisibleStyle": {
                     "outlineColor": "$outlineColor",
                     "outlineWidth": 2,
-                    "outlineStyle": "solid",
-                    "borderColor": "$borderColorFocus"
+                    "outlineStyle": "solid"
                   }
                 }
               },
@@ -11943,6 +12021,7 @@
               "display": "inline",
               "boxSizing": "border-box",
               "wordWrap": "break-word",
+              "whiteSpace": "pre-wrap",
               "margin": 0,
               "unstyled": false,
               "tag": "label"
@@ -11957,9 +12036,6 @@
                   "whiteSpace": "nowrap"
                 },
                 ":number": "Function"
-              },
-              "ellipsizeMode": {
-                "...": "Function"
               },
               "selectable": {
                 "true": {
@@ -12014,6 +12090,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -12208,6 +12286,7 @@
               "display": "inline",
               "boxSizing": "border-box",
               "wordWrap": "break-word",
+              "whiteSpace": "pre-wrap",
               "margin": 0,
               "unstyled": false,
               "tag": "label"
@@ -12222,9 +12301,6 @@
                   "whiteSpace": "nowrap"
                 },
                 ":number": "Function"
-              },
-              "ellipsizeMode": {
-                "...": "Function"
               },
               "selectable": {
                 "true": {
@@ -12279,6 +12355,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -12483,6 +12561,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -12668,6 +12748,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -12853,6 +12935,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -13154,6 +13238,7 @@
               "display": "inline",
               "boxSizing": "border-box",
               "wordWrap": "break-word",
+              "whiteSpace": "pre-wrap",
               "margin": 0,
               "unstyled": false,
               "tag": "p",
@@ -13171,9 +13256,6 @@
                   "whiteSpace": "nowrap"
                 },
                 ":number": "Function"
-              },
-              "ellipsizeMode": {
-                "...": "Function"
               },
               "selectable": {
                 "true": {
@@ -13218,6 +13300,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -13419,6 +13503,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -13632,6 +13718,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -13938,6 +14026,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -14140,6 +14230,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -14353,6 +14445,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -14658,6 +14752,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -14964,6 +15060,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -15268,6 +15366,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -15571,6 +15671,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -15871,6 +15973,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -16155,6 +16259,9 @@
         },
         "ScrollView": {
           "staticConfig": {
+            "accept": {
+              "contentContainerStyle": "style"
+            },
             "variants": {
               "fullscreen": {
                 "true": {
@@ -16198,6 +16305,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -16383,6 +16492,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -16585,6 +16696,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -16793,6 +16906,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -16998,6 +17113,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -17197,6 +17314,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -17424,6 +17543,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -17736,6 +17857,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -17972,6 +18095,7 @@
               "display": "inline",
               "boxSizing": "border-box",
               "wordWrap": "break-word",
+              "whiteSpace": "pre-wrap",
               "margin": 0,
               "unstyled": false
             },
@@ -17985,9 +18109,6 @@
                   "whiteSpace": "nowrap"
                 },
                 ":number": "Function"
-              },
-              "ellipsizeMode": {
-                "...": "Function"
               },
               "selectable": {
                 "true": {
@@ -18032,6 +18153,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -18235,6 +18358,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -18440,6 +18565,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -18748,6 +18875,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -18954,6 +19083,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -19163,6 +19294,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -19378,6 +19511,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -19580,6 +19715,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -19874,6 +20011,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -20056,6 +20195,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -20235,7 +20376,7 @@
                   "backgroundColor": "$background",
                   "borderWidth": 2,
                   "borderColor": "$background",
-                  "focusStyle": {
+                  "focusVisibleStyle": {
                     "outlineColor": "$outlineColor",
                     "outlineStyle": "solid",
                     "outlineWidth": 2
@@ -20283,6 +20424,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -20462,7 +20605,7 @@
                   "backgroundColor": "$background",
                   "borderWidth": 2,
                   "borderColor": "$background",
-                  "focusStyle": {
+                  "focusVisibleStyle": {
                     "outlineColor": "$outlineColor",
                     "outlineStyle": "solid",
                     "outlineWidth": 2
@@ -20507,6 +20650,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -20814,6 +20959,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -21052,6 +21199,7 @@
               "display": "inline",
               "boxSizing": "border-box",
               "wordWrap": "break-word",
+              "whiteSpace": "pre-wrap",
               "margin": 0,
               "unstyled": false
             },
@@ -21065,9 +21213,6 @@
                   "whiteSpace": "nowrap"
                 },
                 ":number": "Function"
-              },
-              "ellipsizeMode": {
-                "...": "Function"
               },
               "selectable": {
                 "true": {
@@ -21107,6 +21252,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -21292,7 +21439,7 @@
         "TextArea": {
           "staticConfig": {
             "isInput": true,
-            "acceptTokens": {
+            "accept": {
               "placeholderTextColor": "color",
               "selectionColor": "color"
             },
@@ -21312,10 +21459,12 @@
                     "borderColor": "$borderColorHover"
                   },
                   "focusStyle": {
+                    "borderColor": "$borderColorFocus"
+                  },
+                  "focusVisibleStyle": {
                     "outlineColor": "$outlineColor",
                     "outlineWidth": 2,
-                    "outlineStyle": "solid",
-                    "borderColor": "$borderColorFocus"
+                    "outlineStyle": "solid"
                   },
                   "height": "auto"
                 }
@@ -21347,7 +21496,7 @@
         "TextAreaFrame": {
           "staticConfig": {
             "isInput": true,
-            "acceptTokens": {
+            "accept": {
               "placeholderTextColor": "color",
               "selectionColor": "color"
             },
@@ -21367,10 +21516,12 @@
                     "borderColor": "$borderColorHover"
                   },
                   "focusStyle": {
+                    "borderColor": "$borderColorFocus"
+                  },
+                  "focusVisibleStyle": {
                     "outlineColor": "$outlineColor",
                     "outlineWidth": 2,
-                    "outlineStyle": "solid",
-                    "borderColor": "$borderColorFocus"
+                    "outlineStyle": "solid"
                   },
                   "height": "auto"
                 }
@@ -21417,6 +21568,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -21706,6 +21859,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -21893,6 +22048,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -22097,6 +22254,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -22296,6 +22455,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -22495,6 +22656,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -22697,6 +22860,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -22999,6 +23164,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -23299,6 +23466,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -23601,6 +23770,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -23917,6 +24088,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -24244,6 +24417,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -24556,6 +24731,7 @@
               "display": "inline",
               "boxSizing": "border-box",
               "wordWrap": "break-word",
+              "whiteSpace": "pre-wrap",
               "margin": 0,
               "unstyled": false
             },
@@ -24569,9 +24745,6 @@
                   "whiteSpace": "nowrap"
                 },
                 ":number": "Function"
-              },
-              "ellipsizeMode": {
-                "...": "Function"
               },
               "selectable": {
                 "true": {
@@ -24624,6 +24797,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -24816,6 +24991,7 @@
               "display": "inline",
               "boxSizing": "border-box",
               "wordWrap": "break-word",
+              "whiteSpace": "pre-wrap",
               "margin": 0,
               "unstyled": false
             },
@@ -24829,9 +25005,6 @@
                   "whiteSpace": "nowrap"
                 },
                 ":number": "Function"
-              },
-              "ellipsizeMode": {
-                "...": "Function"
               },
               "selectable": {
                 "true": {
@@ -24880,6 +25053,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -25072,6 +25247,7 @@
               "display": "inline",
               "boxSizing": "border-box",
               "wordWrap": "break-word",
+              "whiteSpace": "pre-wrap",
               "margin": 0,
               "unstyled": false
             },
@@ -25085,9 +25261,6 @@
                   "whiteSpace": "nowrap"
                 },
                 ":number": "Function"
-              },
-              "ellipsizeMode": {
-                "...": "Function"
               },
               "selectable": {
                 "true": {
@@ -25136,6 +25309,8 @@
               "hoverStyle": true,
               "pressStyle": true,
               "focusStyle": true,
+              "disabledStyle": true,
+              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
