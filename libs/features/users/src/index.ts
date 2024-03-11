@@ -1,6 +1,6 @@
 export * from './components/profile-header/profile-header';
 
-export * from './components/tabs/user-ratings-tab/user-ratings-tab';
+export * from './components/tabs/user-reviews-tab/user-reviews-tab';
 
 export * from './components/tabs/profile-tabs/profile-tabs';
 
