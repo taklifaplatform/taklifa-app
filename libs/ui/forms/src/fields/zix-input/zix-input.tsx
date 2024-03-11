@@ -39,7 +39,8 @@ export const ZixInput = forwardRef(function ZixInputEl(
   const [focus, setFocus] = useState<boolean>(false);
   const { isRtl } = useMultiLang();
 
-  const shouldFlip = isRtl && Platform.OS === 'web'
+  const shouldFlip = isRtl
+  // const shouldFlip = isRtl && Platform.OS === 'web'
 
   const currentInputProps = {
     ...SHARED_FIELDS_STYLE,

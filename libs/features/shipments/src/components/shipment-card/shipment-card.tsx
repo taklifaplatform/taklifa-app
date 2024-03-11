@@ -1,32 +1,44 @@
 import { Eye, Inbox, Settings2, X } from '@tamagui/lucide-icons';
 import { ShipmentTransformer } from '@zix/api';
-import { UserAvatar, ZixLinkButton } from '@zix/ui/common';
+import { DebugObject, UserAvatar, ZixLinkButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import moment from 'moment';
 import React, { useMemo } from 'react';
 
 import { ZixVariantOptionsWidget } from '@zix/ui/widgets';
-import { Separator, Stack, Text, XStack, YStack } from 'tamagui';
+import {
+  Separator,
+  Stack,
+  Text,
+  ThemeableStackProps,
+  XStack,
+  YStack,
+} from 'tamagui';
 import { useMultiLang } from '@zix/i18n';
 
-export type JobCardProps = {
-  job: ShipmentTransformer;
+export type ShipmentCardProps = ThemeableStackProps & {
+  shipment: ShipmentTransformer; // TODO: change to shipment, and add
   urlPrefix?: string;
+  // todo add variants: 'shipment' | 'shipment'
 };
 
-export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
+export const ShipmentCard: React.FC<ShipmentCardProps> = ({
+  shipment,
+  urlPrefix,
+  ...props
+}) => {
   const { isRtl } = useMultiLang();
   const description = useMemo(
-    () => job.items?.map((item) => item.notes).join(', '),
-    [job.items],
+    () => shipment.items?.map((item) => item.notes).join(', '),
+    [shipment.items],
   );
 
   const deliveryTime = useMemo(() => {
     return moment.duration(
-      moment(job.deliver_date).diff(moment(job.pick_date)),
+      moment(shipment.deliver_date).diff(moment(shipment.pick_date)),
     );
-  }, [job.pick_date, job.deliver_date]);
+  }, [shipment.pick_date, shipment.deliver_date]);
 
   const renderDetailShipment = () => (
     <YStack gap="$4">
@@ -39,7 +51,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
               <Inbox size="$1" color={'$gray9'} $sm={{ display: 'none' }} />
             ),
             name: t('job:number-of-packages'),
-            value: `${job.items?.length}`,
+            value: `${shipment.items?.length}`,
           },
           {
             icons: (
@@ -70,7 +82,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
               />
             ),
             name: t('job:budget'),
-            value: `${job.min_budget?.value} - ${job.max_budget?.value} ${job.min_budget?.currency?.code}`,
+            value: `${shipment.min_budget?.value} - ${shipment.max_budget?.value} ${shipment.min_budget?.currency?.code}`,
           },
         ]}
       />
@@ -88,12 +100,12 @@ export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
               />
             ),
             name: t('job:from_location'),
-            value: `${job?.from_location?.address}`,
+            value: `${shipment?.from_location?.address}`,
           },
           {
             icons: <CustomIcon name="location" size="$1" color={'$gray9'} />,
             name: t('job:to_location'),
-            value: `${job.to_location?.address}`,
+            value: `${shipment.to_location?.address}`,
           },
         ]}
       />
@@ -108,7 +120,6 @@ export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
       paddingVertical="$4"
       backgroundColor={'$color1'}
       borderRadius={'$4'}
-      marginBottom={'$4'}
       $sm={{
         flexDirection: 'column',
         justifyContent: 'center',
@@ -116,6 +127,8 @@ export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
         gap: '$6',
         padding: '$4',
       }}
+
+      {...props}
     >
       <YStack
         backgroundColor={'$color1'}
@@ -135,7 +148,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
               color: '$color',
             }}
           >
-            {t('job:job-demand')} {job.items_type}
+            {t('job:job-demand')} {shipment.items_type}
           </Text>
           <Stack
             flexDirection="row"
@@ -146,7 +159,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
             <XStack gap="$2" alignItems="center">
               {/* TODO change to UserAvatar */}
 
-              <UserAvatar size={'$1'} user={job.user} />
+              <UserAvatar size={'$1'} user={shipment.user} />
               <Text
                 fontSize={12}
                 fontWeight={'600'}
@@ -156,7 +169,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
                   fontWeight: '600',
                 }}
               >
-                {job.user?.name}
+                {shipment.user?.name}
               </Text>
             </XStack>
             <XStack gap="$2" alignItems="center">
@@ -176,7 +189,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
                   fontWeight: '600',
                 }}
               >
-                {t('job:job-published')} {moment(job.created_at).fromNow()}
+                {t('job:job-published')} {moment(shipment.created_at).fromNow()}
               </Text>
             </XStack>
           </Stack>
@@ -206,12 +219,12 @@ export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
         justifyContent="flex-end"
         gap="$2"
         $sm={{
-          flex: 1,
+          width: '100%',
           justifyContent: 'center',
         }}
       >
         <ZixLinkButton
-          href={`/${urlPrefix}/${job.id}`}
+          href={`/${urlPrefix}/${shipment.id}`}
           icon={<Eye />}
           themeInverse
         >
@@ -231,4 +244,4 @@ export const JobCard: React.FC<JobCardProps> = ({ job, urlPrefix }) => {
   );
 };
 
-export default JobCard;
+export default ShipmentCard;

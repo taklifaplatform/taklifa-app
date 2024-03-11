@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import JobCard from './job-card';
+import ShipmentCard from './shipment-card';
 
-describe('JobCard', () => {
+describe('ShipmentCard', () => {
   it('should render successfully', () => {
-    const { root } = render(<JobCard />);
+    const { root } = render(<ShipmentCard />);
     expect(root).toBeTruthy();
   });
 });

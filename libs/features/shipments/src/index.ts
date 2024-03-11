@@ -1,4 +1,4 @@
-export * from './components/job-card/job-card';
+export * from './components/shipment-card/shipment-card';
 
 export * from './screen/job-details-screen/job-details-screen';
 
