@@ -7,6 +7,7 @@ import {
   ToastProvider,
   UniversalThemeProvider,
 } from './providers';
+import { ChatProvider } from '@zix/features/chat';
 
 export interface MainAppProviderProps {
   children: React.ReactNode;
@@ -32,6 +33,7 @@ export const MainAppProvider: React.FC<MainAppProviderProps> = ({
         ToastProvider,
         QueryClientProvider,
         AuthProvider,
+        ChatProvider,
         PushNotification
       ]}
     >
