@@ -177,8 +177,9 @@ const renderFilterShipment = () => (
       ListHeaderComponentStyle={{ marginBottom: 10 }}
       ListEmptyComponent={() => (
         <DataNotFound
-          message={t('job:job-not-found')}
-          description={t('job:job-not-found-description')}
+          message={t('shipment:shipment-not-found')}
+          description={t('shipment:shipment-not-found-description')}
+          imageUrl='/assests/shipmentNotFound.png'
         />
       )}
     />

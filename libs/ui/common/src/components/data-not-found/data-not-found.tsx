@@ -3,15 +3,16 @@ import { Image, YStack,Text } from 'tamagui';
 export interface DataNotFoundProps {
     message?: string;
     description?: string;
+    imageUrl: string;
   }
 
-  export const DataNotFound: React.FC<DataNotFoundProps> = ({message, description}) => {
+  export const DataNotFound: React.FC<DataNotFoundProps> = ({message, description, imageUrl}) => {
   return (
     <YStack flex={1}  justifyContent='center' alignItems='center' gap='$3'>
         <Image
         alt="data not found"
         source={{
-          uri: '/images/notFound.png',
+          uri: imageUrl,
           width: '256px',
           height: '229px',
         }}

@@ -15,7 +15,7 @@ export type JobsListScreenProps = {
 };
 
 export const JobsListScreen: React.FC<JobsListScreenProps> = ({
-  urlPrefix = '/jobs',
+  urlPrefix,
 }) => {
   const [status, setStatus] = useState('plus');
   const [search, setSearch] = useState('');
@@ -89,6 +89,7 @@ export const JobsListScreen: React.FC<JobsListScreenProps> = ({
         <DataNotFound
           message={t('job:job-not-found')}
           description={t('job:job-not-found-description')}
+          imageUrl='/assets/jobNotFound.png'
         />
       )}
     />
