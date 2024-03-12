@@ -280,5 +280,8 @@
     "time-and-distance": "الوقت والمسافة",
     "activity-in-this-presentation": "النشاط في هذا العرض",
     "shipment-code": "رمز الشحنة"
+  },
+  "shipment": {
+    "search": "أدخل رقم الإيصال او الاسم"
   }
 }

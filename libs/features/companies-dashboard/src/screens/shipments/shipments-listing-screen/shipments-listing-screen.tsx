@@ -1,26 +1,29 @@
+
 import { useQuery } from '@tanstack/react-query';
 import { DriverShipmentsService } from '@zix/api';
 import { DataNotFound, ZixButton } from '@zix/ui/common';
 import { ZixInput } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
-import { ShipmentCard } from '@zix/features/shipments';
+import { ShipmentCard } from '@zix/ui/sawaeed';
 import { t } from 'i18next';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { FlatList } from 'react-native';
+import {  FlatList } from 'react-native';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
-import { Circle, YStack, Text, View } from 'tamagui';
+import { Circle, YStack, View , Text} from 'tamagui';
 
-export interface OrdersScreenProps {
+/* eslint-disable-next-line */
+export interface ShipmentsListingScreenProps {
   urlPrefix?: string;
 }
+
 const PAGE_WIDTH = 150;
 const PAGE_HEIGHT = 50;
 
-export const OrdersScreen: React.FC<OrdersScreenProps> = ({
+
+export const ShipmentsListingScreen: React.FC<ShipmentsListingScreenProps> = ({
   urlPrefix = '/orders',
 }) => {
-
   const [status, setStatus] = useState('pending');
   const [search, setSearch] = useState('');
   const [activeFilterIndex, setActiveFilterIndex] = useState(0);
@@ -182,4 +185,6 @@ const renderFilterShipment = () => (
   );
 }
 
-export default OrdersScreen;
+
+export default ShipmentsListingScreen;
+

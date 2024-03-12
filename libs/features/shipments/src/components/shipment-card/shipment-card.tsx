@@ -1,11 +1,12 @@
 import { Eye, Inbox, Settings2, X } from '@tamagui/lucide-icons';
 import { ShipmentTransformer } from '@zix/api';
-import { DebugObject, UserAvatar, ZixLinkButton } from '@zix/ui/common';
+import { UserAvatar, ZixLinkButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import moment from 'moment';
 import React, { useMemo } from 'react';
 
+import { useMultiLang } from '@zix/i18n';
 import { ZixVariantOptionsWidget } from '@zix/ui/widgets';
 import {
   Separator,
@@ -15,12 +16,11 @@ import {
   XStack,
   YStack,
 } from 'tamagui';
-import { useMultiLang } from '@zix/i18n';
 
 export type ShipmentCardProps = ThemeableStackProps & {
   shipment: ShipmentTransformer; // TODO: change to shipment, and add
   urlPrefix?: string;
-  // todo add variants: 'shipment' | 'shipment'
+  variants: 'shipment' | 'job'
 };
 
 export const ShipmentCard: React.FC<ShipmentCardProps> = ({
