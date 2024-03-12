@@ -18,7 +18,7 @@ export default function Layout() {
       />
 
       <Tabs.Screen
-        name="orders"
+        name="shipments"
         options={{
           title: t('navigation:company-dashboard.orders'),
           tabBarIcon: ({ size, color }) => (

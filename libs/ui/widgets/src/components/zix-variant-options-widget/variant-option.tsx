@@ -37,7 +37,7 @@ const VariantStack = styled(Stack, {
       true: {
         $sm: {
           backgroundColor: 'transparent',
-          gap: '$2',
+          gap: '$3',
         },
       }
     },
@@ -65,7 +65,7 @@ const VariantText = styled(Text, {
         fontWeight:'600',
         color:'$gray9',
         $sm: {
-          fontSize: 8,
+          fontSize: 10,
           fontWeight: '400',
         },
       },
@@ -76,9 +76,9 @@ const VariantText = styled(Text, {
         fontWeight:'600',
         color:'$gray9',
         $sm: {
-          fontSize: 8,
+          fontSize: 10,
           fontWeight: '400',
-          width: 60
+          //width: 60
         },
       }
     }
@@ -101,7 +101,7 @@ const VariantValueText = styled(Text, {
         fontSize:12,
         fontWeight:'600',
         $sm: {
-          fontSize: 8,
+          fontSize: 10,
           fontWeight: '600',
         },
       },
@@ -111,7 +111,7 @@ const VariantValueText = styled(Text, {
         fontSize:12,
         fontWeight:'600',
         $sm: {
-          fontSize: 8,
+          fontSize: 10,
           fontWeight: '600',
         }
       }
