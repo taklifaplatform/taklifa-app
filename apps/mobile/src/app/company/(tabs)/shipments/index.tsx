@@ -5,8 +5,8 @@ import React from 'react';
 export default function Screen() {
   return (
     <>
-      <AppHeader showBackButton title="Orders" />
-      <OrdersListScreen />
+      <AppHeader showBackButton title="Shipments" />
+      <OrdersListScreen urlPrefix='company/shipments' />
     </>
   );
 }

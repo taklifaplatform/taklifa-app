@@ -28,7 +28,7 @@ export default function Layout() {
       />
 
       <Tabs.Screen
-        name="orders"
+        name="shipments"
         options={{
           title: t('navigation:customer-dashboard.orders'),
           tabBarIcon: ({ size, focused }) => (
@@ -41,7 +41,7 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
-        name="shipments"
+        name="shipment-manager"
         options={{
           title: '',
           tabBarIcon: PlusButton,

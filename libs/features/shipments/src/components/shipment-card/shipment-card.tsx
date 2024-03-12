@@ -237,7 +237,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
           color={'$color1'}
           $gtSm={{ display: 'none' }}
         >
-          Remove
+          Remove 
         </ZixLinkButton>
       </XStack>
     </Stack>
