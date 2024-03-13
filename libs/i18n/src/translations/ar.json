@@ -279,7 +279,10 @@
     "shipment-image": "صورة الشحنة",
     "time-and-distance": "الوقت والمسافة",
     "activity-in-this-presentation": "النشاط في هذا العرض",
-    "shipment-code": "رمز الشحنة"
+    "shipment-code": "رمز الشحنة",
+    "conducting-interviews": "إجراء المقابلات",
+    "invitation-have-been-sent": "تم إرسال الدعوة",
+    "unanswered-invitations": "دعوات لم يتم الرد عليها"
   },
   "shipment": {
     "search": "أدخل رقم الإيصال او الاسم"

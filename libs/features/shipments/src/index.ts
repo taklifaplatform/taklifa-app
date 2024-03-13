@@ -1,4 +1,6 @@
 
+export * from './components/shipment-code/shipment-code';
+
 export * from './components/shipment-card-location/shipment-card-location';
 
 export * from './components/budget-shipment/budget-shipment';

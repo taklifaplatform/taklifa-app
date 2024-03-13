@@ -1,4 +1,16 @@
 {
     "shipment-not-found": "لا توجد طلبات ",
-    "shipment-not-found-description": "لا توجد طلبات متاحة حاليًا."
+    "shipment-not-found-description": "لا توجد طلبات متاحة حاليًا.",
+    "shipment-accept": "قبول العرض",
+    "service-description": "وصف الخدمة",
+    "shipment-path": "مسار الشحنة",
+    "shipping-from": "الشحن من",
+    "shipping-to": "الشحن الى",
+    "shipment-details": "تفاصيل الشحنة",
+    "shipment": "الشحنة",
+    "shipment-image": "صورة الشحنة",
+    "time-and-distance": "الوقت والمسافة",
+    "activity-in-this-presentation": "النشاط في هذا العرض",
+    "shipment-code": "رمز الشحنة",
+    "budget": "الميزانية"
 }

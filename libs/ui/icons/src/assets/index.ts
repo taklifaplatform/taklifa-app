@@ -16,6 +16,7 @@ import Chat from './icons/chat.svg';
 import Client from './icons/client.svg';
 import CompanyShipping from './icons/company-shipping.svg';
 import Chronic from './icons/chronic.svg';
+import Comment from './icons/comment.svg';
 import Delivery from './icons/delivery.svg';
 import Drawer from './icons/drawer.svg';
 import Edit from './icons/edit.svg';
@@ -99,6 +100,7 @@ export {
   Client,
   CompanyCars,
   CompanyShipping,
+  Comment,
   Chronic,
   Delivery,
   Drawer,

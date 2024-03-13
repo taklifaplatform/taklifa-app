@@ -1,17 +1,20 @@
+import { Check, X } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { JobService } from '@zix/api';
 import {
   BudgetShipment,
+  DefinitionSender,
   HeaderShipment,
   OrderDescription,
+  ShipmentCode,
   ShipmentDetails,
   ShipmentDirection,
-  TotalCostOfShipment,
 } from '@zix/features/shipments';
+import { ZixLinkButton } from '@zix/ui/common';
 import { t } from 'i18next';
-import { SectionList } from 'react-native';
+import { RefreshControl } from 'react-native';
 import { createParam } from 'solito';
-import { ScrollView, Separator, YStack } from 'tamagui';
+import { ScrollView, Separator, XStack, YStack } from 'tamagui';
 
 /* eslint-disable-next-line */
 export interface JobDetailsScreenProps {}
@@ -21,135 +24,63 @@ const { useParam } = createParam<{ job: string }>();
 export const JobDetailsScreen: React.FC<JobDetailsScreenProps> = () => {
   const [jobId] = useParam('job');
 
-  const { data } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ['JobService.retrieveJob', { id: jobId }],
     queryFn: () => JobService.retrieveJob({ job: jobId || '' }),
   });
 
   const job = data?.data;
   return (
-    // <ScrollView gap='$3' padding='$4'
-    // style={{
-    //   flex: 1,
-    //   marginHorizontal: 16,
-    //   marginVertical: 16,
-    // }}
-    // }}>
-    //   <HeaderShipment
-    //   shipment={job || {}}
-    //   demandJob={`${t('job:job-demand')}`}
-    //   publishedJob={`${t('job:job-published')}`}
-    //    />
-    //    <TotalCostOfShipment
-    //     TotalShipment={`${t('job:total-cost-of-shipment')}`}
-    //     shipment={job || {}}
-    //     />
-    //     <Separator borderColor={'$gray7'} width={'100%'} />
-    //     <OrderDescription
-    //     items={job?.items}
-    //     />
-    //     <Separator borderColor={'$gray7'} width={'100%'} />
-    //     <ShipmentDirection />
-    //     <Separator borderColor={'$gray7'} width={'100%'} />
-    //     <ShipmentDetails
-    //     shipment={job || {}}
-    //     />
-    // </ScrollView>
-    <SectionList
+    <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={isLoading} onRefresh={refetch} />
+      }
       style={{
         flex: 1,
         marginHorizontal: 16,
         marginVertical: 16,
       }}
-      sections={[
-        {
-          key: 'Header',
-          data: [job],
-          renderItem: ({ item }) => (
-            <HeaderShipment
-              shipment={item || {}}
-              demandJob={`${t('job:job-demand')}`}
-              publishedJob={`${t('job:job-published')}`}
-            />
-          ),
-        },
-        {
-          key: 'TotalCost',
-          data: [job],
-          renderItem: ({ item }) => (
-            <TotalCostOfShipment
-              TotalShipment={`${t('job:total-cost-of-shipment')}`}
-              shipment={item || {}}
-            />
-          ),
-        },
-        {
-          key: 'Separator',
-          data: [job],
-          renderItem: () => (
-            <Separator
-              marginVertical="$4"
-              borderColor={'$gray7'}
-              width={'100%'}
-            />
-          ),
-        },
-        {
-          key: 'OrderDescription',
-          data: [job],
-          renderItem: ({ item }) => <OrderDescription items={item?.items} />,
-        },
-        {
-          key: 'Separator',
-          data: [job],
-          renderItem: () => (
-            <Separator
-              marginVertical="$4"
-              borderColor={'$gray7'}
-              width={'100%'}
-            />
-          ),
-        },
-        {
-          key: 'ShipmentDirection',
-          data: [job],
-          renderItem: ({ item }) => <ShipmentDirection shipment={item || {}} />,
-        },
-        {
-          key: 'Separator',
-          data: [job],
-          renderItem: () => (
-            <Separator
-              marginVertical="$4"
-              borderColor={'$gray7'}
-              width={'100%'}
-            />
-          ),
-        },
-        {
-          key: 'ShipmentDetails',
-          data: [job],
-          renderItem: ({ item }) => <ShipmentDetails shipment={item || {}} />,
-        },
-        {
-          key: 'Separator',
-          data: [job],
-          renderItem: () => (
-            <Separator
-              marginVertical="$4"
-              borderColor={'$gray7'}
-              width={'100%'}
-            />
-          ),
-        },
-        {
-          key: 'Budget',
-          data: [job],
-          renderItem: ({ item }) => <BudgetShipment shipment={item || {}} />,
-        },
-      ]}
-      keyExtractor={(item, index) => index.toString()}
-    />
+    >
+      <YStack gap="$3">
+        <HeaderShipment
+          shipment={job || {}}
+          demandJob={`${t('job:job-demand')}`}
+          publishedJob={`${t('job:job-published')}`}
+        />
+        <Separator borderColor={'$gray7'} width={'100%'} />
+        <OrderDescription items={job?.items} />
+        <Separator borderColor={'$gray7'} width={'100%'} />
+        <ShipmentDirection shipment={job || {}} />
+        <Separator borderColor={'$gray7'} width={'100%'} />
+        <ShipmentDetails shipment={job || {}} paddingVertical="$4"/>
+        <Separator borderColor={'$gray7'} width={'100%'} />
+        <BudgetShipment shipment={job || {}} />
+        <ShipmentCode codeId={job?.id || ''} marginVertical="$4" />
+        <DefinitionSender shipment={job || {}} />
+        <XStack width={'100%'} gap="$2" justifyContent="space-between">
+          <ZixLinkButton
+            href={`/`}
+            icon={<Check size="$1" />}
+            fontSize={15}
+            fontWeight={'600'}
+            paddingHorizontal="$8"
+          >
+            {t('job:shipment-accept')}
+          </ZixLinkButton>
+          <ZixLinkButton
+            href={`/`}
+            icon={<X size="$1" />}
+            backgroundColor={'red'}
+            color={'$color1'}
+            fontSize={15}
+            fontWeight={'600'}
+            paddingHorizontal="$8"
+          >
+            Remove
+          </ZixLinkButton>
+        </XStack>
+      </YStack>
+    </ScrollView>
   );
 };
 

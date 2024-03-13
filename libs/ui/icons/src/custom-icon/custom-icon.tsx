@@ -35,6 +35,7 @@ const iconNames = [
   'home',
   'orders',
   'create',
+  'comment',
   'notifications',
   'chat',
   'apps',

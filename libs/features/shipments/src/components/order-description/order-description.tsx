@@ -1,5 +1,6 @@
 import { ShipmentTransformer } from '@zix/api';
 import { ZixWidgetContainer } from '@zix/ui/widgets';
+import { t } from 'i18next';
 import React, { useMemo } from 'react';
 import { YStack, Text } from 'tamagui';
 
@@ -16,8 +17,7 @@ export const OrderDescription: React.FC<OrderDescriptionProps> = ({
     [items],
   );
   return (
-    // <ZixWidgetContainer label={t('job:service-description')}>
-    <YStack marginTop="$4">
+    <ZixWidgetContainer label={t('job:service-description')}>
       <Text
         fontSize={15}
         fontWeight={'400'}
@@ -29,8 +29,7 @@ export const OrderDescription: React.FC<OrderDescriptionProps> = ({
       >
         {description}
       </Text>
-    </YStack>
-    // </ZixWidgetContainer>
+    </ZixWidgetContainer>
   );
 };
 

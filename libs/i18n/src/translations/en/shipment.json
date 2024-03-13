@@ -1,4 +1,22 @@
 {
     "shipment-not-found": "Shipment not found",
     "shipment-not-found-description": "We couldn't find any shipment matching your search",
+    "shipment-accept": "Accept shipment",
+    "service-description": "Service description",
+    "shipment-path": "Shipment path",
+    "shipping-from": "Shipping from",
+    "shipping-to": "Shipping to",
+    "shipment-details": "Shipment details",
+    "shipment": "Shipment",
+    "shipment-image": "Shipment image",
+    "time-and-distance": "Time and distance",
+    "activity-in-this-presentation": "Activity in this presentation",
+    "shipment-code": "Shipment code",
+    "budget": "Budget",
+    "type": {
+        "document": "Document"
+    },
+    "status": {
+        "draft": "Draft"
+    }
 }

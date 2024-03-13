@@ -281,6 +281,9 @@
     "shipment-image": "Shipment image",
     "time-and-distance": "Time and distance",
     "activity-in-this-presentation": "Activity in this presentation",
-    "shipment-code": "Shipment code"
+    "shipment-code": "Shipment code",
+    "conducting-interviews": "Conducting interviews",
+    "invitation-have-been-sent": "Invitation have been sent",
+    "unanswered-invitations": "Unanswered invitations"
   }
 }

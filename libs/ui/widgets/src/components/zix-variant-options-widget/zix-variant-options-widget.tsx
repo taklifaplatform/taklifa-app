@@ -54,11 +54,11 @@ const ZixVariantOptionsWidgetText = styled(Text, {
   variants: {
     details: {
       true: {
-        fontSize: 15,
+        fontSize: 18,
         fontWeight:'600',
         color:'$color5',
         $sm:{
-          fontSize: 12,
+          fontSize: 18,
           fontWeight: '600',
           color: '$color5',
         }
