@@ -1,4 +1,4 @@
-import { ChannelLayout } from '@zix/features/chat';
+import { ChannelLayout } from '@zix/features/old-chat';
 import { Stack } from 'expo-router';
 import React from 'react';
 

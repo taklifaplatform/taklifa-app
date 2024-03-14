@@ -19,7 +19,6 @@
       "@zix/app-providers": ["libs/app-providers/src/index.ts"],
       "@zix/features/account": ["libs/features/account/src/index.ts"],
       "@zix/features/auth": ["libs/features/auth/src/index.ts"],
-      "@zix/features/chat": ["libs/features/chat/src/index.ts"],
       "@zix/features/companies-dashboard": [
         "libs/features/companies-dashboard/src/index.ts"
       ],
@@ -31,6 +30,7 @@
       "@zix/features/notifications": [
         "libs/features/notifications/src/index.ts"
       ],
+      "@zix/features/old-chat": ["libs/features/old-chat/src/index.ts"],
       "@zix/features/shipments": ["libs/features/shipments/src/index.ts"],
       "@zix/features/solo-driver-dashboard": [
         "libs/features/solo-driver-dashboard/src/index.ts"

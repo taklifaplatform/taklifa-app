@@ -1,4 +1,4 @@
-import { ChatChannelScreen } from '@zix/features/chat';
+import { ChatChannelScreen } from '@zix/features/old-chat';
 import React from 'react';
 
 export default function Screen() {

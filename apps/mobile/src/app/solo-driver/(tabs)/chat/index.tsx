@@ -1,4 +1,4 @@
-import { ChannelListScreen } from '@zix/features/chat';
+import { ChannelListScreen } from '@zix/features/old-chat';
 
 export default function Screen() {
   return <ChannelListScreen />;

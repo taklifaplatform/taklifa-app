@@ -1,10 +1,13 @@
 import { AuthProvider } from '@zix/features/auth';
-import { ChatProvider } from '@zix/features/chat';
+import { ChatProvider } from '@zix/features/old-chat';
 import { themeConfig } from '@zix/theme';
 import { Provider as JotaiProvider } from 'jotai';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import {
-  ProvidersComposer, QueryClientProvider, SafeAreaProvider, TamaguiProvider,
+  ProvidersComposer,
+  QueryClientProvider,
+  SafeAreaProvider,
+  TamaguiProvider,
   UniversalThemeProvider,
   ToastProvider,
   PushNotification,

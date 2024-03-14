@@ -1,4 +1,4 @@
-import { ChatLayout } from '@zix/features/chat';
+import { ChatLayout } from '@zix/features/old-chat';
 import { Stack } from 'expo-router';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
