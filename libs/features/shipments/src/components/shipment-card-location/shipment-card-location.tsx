@@ -6,13 +6,17 @@ import { XStack, YStack, Text, Stack } from 'tamagui';
 
 /* eslint-disable-next-line */
 export interface ShipmentCardLocationProps {
-  location: LocationTransformer
+  location: LocationTransformer;
   date: string;
+  phone_number: string;
+  userName: string;
 }
 
 export const ShipmentCardLocation: React.FC<ShipmentCardLocationProps> = ({
   date,
-  location
+  location,
+  phone_number,
+  userName,
 }) => {
   return (
     <YStack
@@ -23,26 +27,32 @@ export const ShipmentCardLocation: React.FC<ShipmentCardLocationProps> = ({
       borderColor={'$gray9'}
       borderRadius={'$6'}
     >
-      <XStack justifyContent='space-between'>
+      <XStack justifyContent="space-between">
         <Text color={'$color'}>{date}</Text>
-        <Stack paddingHorizontal="$3" backgroundColor={'$color5'} borderRadius={'$3'}>
+        <Stack
+          paddingHorizontal="$3"
+          backgroundColor={'$color5'}
+          borderRadius={'$3'}
+        >
           <Text fontSize={15} fontWeight={500}>
             {location.is_primary ? 'Primary' : 'Secondary'}
           </Text>
         </Stack>
       </XStack>
-      <Stack width={'100%'} alignItems='flex-start'>
-      <Text fontSize={15} fontWeight={600}>{location.address}</Text>
+      <Stack width={'100%'} alignItems="flex-start">
+        <Text fontSize={15} fontWeight={600}>
+          {location.address}
+        </Text>
       </Stack>
-      
+
       <XStack gap="$4">
         <XStack gap="$2" alignItems="center">
           <User size="$1" color={'$gray9'} />
-          <Text>{location.name}</Text>
+          <Text>{userName}</Text>
         </XStack>
         <XStack gap="$2" alignItems="center">
           <PhoneCall size="$1" color={'$gray9'} />
-          <Text>{location.phone_number}</Text>
+          <Text>{phone_number}</Text>
         </XStack>
       </XStack>
     </YStack>

@@ -1,7 +1,8 @@
 import { LocationTransformer } from '@zix/api';
 import React from 'react';
 import { Dimensions } from 'react-native';
-import { Stack } from 'tamagui';
+import MapView, { Polyline, Marker } from 'react-native-maps';
+import { Stack, View } from 'tamagui';
 
 /* eslint-disable-next-line */
 export type ZixMapDirectionWidgetProps = {
@@ -54,7 +55,31 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
       backgroundColor="$gray6"
       borderRadius="$5"
     >
+      <MapView
       
+        style={{
+          flex: 1,
+          borderRadius: 10,
+        }}
+        initialRegion={mapRegion as any}
+        
+      >
+        <Marker
+          coordinate={start as any}
+          title={startLocation.address}
+          description={startLocation.address}
+        ><View justifyContent='center' alignItems='center' width={1} height={1} backgroundColor={'$gray6'} padding="$3" borderRadius="50%">
+        <View width={1} height={1} backgroundColor={'$gray9'} padding='$2' borderRadius="50%" />
+      </View>
+      </Marker>
+
+        <Polyline coordinates={polyline} strokeColor="red" strokeWidth={6} />
+        <Marker coordinate={end as any} title={endLocation.address}>
+          <View justifyContent='center' alignItems='center' width={1} height={1} backgroundColor={'$color3'} padding="$3" borderRadius="50%">
+            <View width={1} height={1} backgroundColor={'$color5'} padding='$2' borderRadius="50%" />
+          </View>
+        </Marker>
+      </MapView>
     </Stack>
   );
 };

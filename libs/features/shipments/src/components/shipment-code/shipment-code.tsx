@@ -1,9 +1,9 @@
 import { t } from 'i18next';
 import React from 'react';
-import { XStack, YStack, Text, Image, View } from 'tamagui';
+import QRCode from 'react-native-qrcode-svg';
+import { Stack, Text, ThemeableStackProps, View, XStack, YStack } from 'tamagui';
 
-/* eslint-disable-next-line */
-export interface ShipmentCodeProps {
+export type ShipmentCodeProps = ThemeableStackProps & {
   codeId: number | string;
 }
 
@@ -26,16 +26,13 @@ export const ShipmentCode: React.FC<ShipmentCodeProps> = ({
         </Text>
         <View width={150}>
           <Text fontSize={18} fontWeight={'600'} numberOfLines={1}>
-            {codeId}
+            {codeId} {' '}
           </Text>
         </View>
       </XStack>
-      <Image
-        source={require('../../../../../../apps/mobile/assets/code.png')}
-        width={200}
-        height={200}
-        resizeMode="contain"
-      />
+      <Stack padding="$3" backgroundColor={'white'} borderRadius={'$2'}>
+        {!!codeId && <QRCode value={String(codeId)} size={200} />}
+      </Stack>
     </YStack>
   );
 };

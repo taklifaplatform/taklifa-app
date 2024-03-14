@@ -5,7 +5,7 @@ import { t } from 'i18next';
 import React from 'react';
 import { XStack, YStack, Text } from 'tamagui';
 import ShipmentCardLocation from '../shipment-card-location/shipment-card-location';
-import {  ZixMapDirectionWidget, ZixWidgetContainer } from '@zix/ui/widgets';
+import { ZixMapDirectionWidget, ZixWidgetContainer } from '@zix/ui/widgets';
 
 /* eslint-disable-next-line */
 export interface ShipmentDirectionProps {
@@ -33,6 +33,8 @@ export const ShipmentDirection: React.FC<ShipmentDirectionProps> = ({
         <ShipmentCardLocation
           location={shipment.from_location || {}}
           date={shipment.pick_date || ''}
+          phone_number={shipment.recipient_phone || ''}
+          userName={shipment.recipient_name || ''}
         />
         <XStack gap="$2" alignItems="center">
           <CustomIcon name="location" size="$1.5" color={'$color5'} />
@@ -43,12 +45,13 @@ export const ShipmentDirection: React.FC<ShipmentDirectionProps> = ({
         <ShipmentCardLocation
           location={shipment.to_location || {}}
           date={shipment.pick_date || ''}
+          phone_number={shipment.recipient_phone || ''}
+          userName={shipment.recipient_name || ''}
         />
         <ZixMapDirectionWidget
           startLocation={shipment.from_location || {}}
           endLocation={shipment.to_location || {}}
         />
-        
       </YStack>
     </ZixWidgetContainer>
   );
