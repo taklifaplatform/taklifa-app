@@ -1,7 +1,7 @@
 import { t } from 'i18next';
 import React from 'react';
-import QRCode from 'react-native-qrcode-svg';
 import { Stack, Text, ThemeableStackProps, View, XStack, YStack } from 'tamagui';
+import { CustomQRCode } from './custom-qr-code';
 
 export type ShipmentCodeProps = ThemeableStackProps & {
   codeId: number | string;
@@ -31,7 +31,7 @@ export const ShipmentCode: React.FC<ShipmentCodeProps> = ({
         </View>
       </XStack>
       <Stack padding="$3" backgroundColor={'white'} borderRadius={'$2'}>
-        {!!codeId && <QRCode value={String(codeId)} size={200} />}
+        {!!codeId && <CustomQRCode value={String(codeId)} size={200} />}
       </Stack>
     </YStack>
   );
