@@ -19,6 +19,7 @@
       "@zix/app-providers": ["libs/app-providers/src/index.ts"],
       "@zix/features/account": ["libs/features/account/src/index.ts"],
       "@zix/features/auth": ["libs/features/auth/src/index.ts"],
+      "@zix/features/chat": ["libs/features/chat/src/index.ts"],
       "@zix/features/companies-dashboard": [
         "libs/features/companies-dashboard/src/index.ts"
       ],

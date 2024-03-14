@@ -11,7 +11,7 @@ import {
   ToastProvider,
   UniversalThemeProvider,
 } from './providers';
-import { ChatProvider } from '@zix/features/old-chat';
+import { ChatProvider } from '@zix/features/chat';
 
 export interface MainAppProviderProps {
   children: React.ReactNode;
