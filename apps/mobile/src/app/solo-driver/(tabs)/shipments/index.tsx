@@ -6,7 +6,7 @@ export default function Screen() {
   return (
     <>
       <AppHeader title="Orders" />
-      <ShipmentsListingScreen />
+      <ShipmentsListingScreen urlPrefix='solo-driver/shipments' />
     </>
   );
 }

@@ -1,8 +1,15 @@
 {
+    "search": "أدخل رقم الإيصال او الاسم",
     "shipment-not-found": "لا توجد طلبات ",
     "shipment-not-found-description": "لا توجد طلبات متاحة حاليًا.",
     "shipment-accept": "قبول العرض",
+    "shipment-reject": "رفض العرض",
+    "start-delivring": "بدء التوصيل",
+    "cancel-service": "الغاء الخدمة",
+    "leave-feedback": "اترك تقييم للخدمة",
+    "reject": "رفض",
     "service-description": "وصف الخدمة",
+    "share-with-receiver": "مشاركة مع المستلم",
     "shipment-path": "مسار الشحنة",
     "shipping-from": "الشحن من",
     "shipping-to": "الشحن الى",
@@ -12,5 +19,40 @@
     "time-and-distance": "الوقت والمسافة",
     "activity-in-this-presentation": "النشاط في هذا العرض",
     "shipment-code": "رمز الشحنة",
-    "budget": "الميزانية"
+    "budget": "الميزانية",
+    "from_location": "الانطلاق من",
+    "to_location": "الوصول الى",
+    "see-more": "شاهد المزيد ",
+    "conducting-interviews": "إجراء المقابلات",
+    "invitation-have-been-sent": "تم إرسال الدعوة",
+    "unanswered-invitations": "دعوات لم يتم الرد عليها",
+    "primary": "الأولوية",
+    "secondary": "الثانوية",
+    "higher": "أعلى",
+    "lower": "أقل",
+    "medium": "متوسط",
+    "type": {
+        "document": "مستند",
+        "box": "صندوق",
+        "multiple_boxes": "صناديق متعددة",
+        "other": "أخرى"
+
+    },
+    "status": {
+        "draft": "مسودة",
+        "searching": "البحث",
+        "delivering": "توصيل",
+        "delivered": "تم التوصيل",
+        "cancelled": "تم الالغاء",
+        "pending": "قيد الانتظار",
+        "expired": "منتهي الصلاحية",
+        "rejected": "مرفوض",
+        "completed": "مكتمل",
+        "failed": "فشل",
+        "returned": "مرتجع",
+        "lost": "مفقود",
+        "damaged": "تالف",
+        "stolen": "مسروق",
+        "other": "أخرى"
+    }
 }

@@ -1,7 +1,13 @@
 {
+    "search": "Enter receipt number or name",
     "shipment-not-found": "Shipment not found",
     "shipment-not-found-description": "We couldn't find any shipment matching your search",
     "shipment-accept": "Accept shipment",
+    "shipment-reject": "Reject shipment",
+    "start-delivring": "Start delivering",
+    "cancel-service": "Cancel service",
+    "leave-feedback": "Leave feedback",
+    "reject": "Reject",
     "service-description": "Service description",
     "shipment-path": "Shipment path",
     "shipping-from": "Shipping from",
@@ -13,10 +19,39 @@
     "activity-in-this-presentation": "Activity in this presentation",
     "shipment-code": "Shipment code",
     "budget": "Budget",
+    "from_location": "From location",
+    "to_location": "To location",
+    "see-more": "See more",
+    "conducting-interviews": "Conducting interviews",
+    "invitation-have-been-sent": "Invitation have been sent",
+    "unanswered-invitations": "Unanswered invitations",
+    "primary": "Primary",
+    "secondary": "Secondary",
+    "higher": "Higher",
+    "lower": "Lower",
+    "medium": "Medium",
     "type": {
-        "document": "Document"
+        "document": "Document",
+        "box": "Box",
+        "multiple_boxes": "Multiple boxes",
+        "other": "Other"
+
     },
     "status": {
-        "draft": "Draft"
+        "draft": "Draft",
+        "searching": "Searching",
+        "delivering": "Delivering",
+        "delivered": "Delivered",
+        "cancelled": "Cancelled",
+        "pending": "Pending",
+        "expired": "Expired",
+        "rejected": "Rejected",
+        "completed": "Completed",
+        "failed": "Failed",
+        "returned": "Returned",
+        "lost": "Lost",
+        "damaged": "Damaged",
+        "stolen": "Stolen",
+        "other": "Other"
     }
 }

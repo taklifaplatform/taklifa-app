@@ -1,6 +1,7 @@
 import { PhoneCall, User } from '@tamagui/lucide-icons';
 import { LocationTransformer, ShipmentTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
+import { t } from 'i18next';
 import React from 'react';
 import { XStack, YStack, Text, Stack } from 'tamagui';
 
@@ -35,7 +36,7 @@ export const ShipmentCardLocation: React.FC<ShipmentCardLocationProps> = ({
           borderRadius={'$3'}
         >
           <Text fontSize={15} fontWeight={500}>
-            {location.is_primary ? 'Primary' : 'Secondary'}
+            {location.is_primary ? t('shipment:primary') : t('shipment:secondary')}
           </Text>
         </Stack>
       </XStack>

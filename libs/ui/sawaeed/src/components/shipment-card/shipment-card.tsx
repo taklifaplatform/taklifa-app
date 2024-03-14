@@ -8,7 +8,8 @@ export interface ShipmentCardProps {}
 
 const progress = true;
 
-export function ShipmentCard(props: ShipmentCardProps) {
+export function 
+ShipmentCard(props: ShipmentCardProps) {
   const {
     theme: {
       colors: { black, white },

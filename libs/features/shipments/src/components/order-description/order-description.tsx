@@ -17,7 +17,7 @@ export const OrderDescription: React.FC<OrderDescriptionProps> = ({
     [items],
   );
   return (
-    <ZixWidgetContainer label={t('job:service-description')}>
+    <ZixWidgetContainer label={t('shipment:service-description')}>
       <Text
         fontSize={15}
         fontWeight={'400'}

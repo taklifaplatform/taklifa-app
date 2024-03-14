@@ -17,7 +17,7 @@ export const ShipmentDirection: React.FC<ShipmentDirectionProps> = ({
 }) => {
   const { isRtl } = useMultiLang();
   return (
-    <ZixWidgetContainer label={t('job:shipment-path')}>
+    <ZixWidgetContainer label={t('shipment:shipment-path')}>
       <YStack gap="$4" marginTop="$4">
         <XStack gap="$2" alignItems="center">
           <CustomIcon
@@ -27,7 +27,7 @@ export const ShipmentDirection: React.FC<ShipmentDirectionProps> = ({
             {...(!isRtl && { rotate: '180deg' })}
           />
           <Text fontSize={20} fontWeight={600} color={'$color5'}>
-            {t('job:from_location')}
+            {t('shipment:from_location')}
           </Text>
         </XStack>
         <ShipmentCardLocation
@@ -39,7 +39,7 @@ export const ShipmentDirection: React.FC<ShipmentDirectionProps> = ({
         <XStack gap="$2" alignItems="center">
           <CustomIcon name="location" size="$1.5" color={'$color5'} />
           <Text fontSize={20} fontWeight={600} color={'$color5'}>
-            {t('job:to_location')}
+            {t('shipment:to_location')}
           </Text>
         </XStack>
         <ShipmentCardLocation

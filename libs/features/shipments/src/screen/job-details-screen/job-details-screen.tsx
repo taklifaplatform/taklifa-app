@@ -174,7 +174,7 @@ export function JobDetailsScreen() {
       }}
     >
       {renderHeaderCard()}
-      <ZixWidgetContainer label={t('job:service-description')}>
+      <ZixWidgetContainer label={t('shipment:service-description')}>
         <YStack marginTop="$4">
           <Text
             fontSize={15}
@@ -189,7 +189,7 @@ export function JobDetailsScreen() {
           </Text>
         </YStack>
       </ZixWidgetContainer>
-      <ZixWidgetContainer label={t('job:shipment-details')}>
+      <ZixWidgetContainer label={t('shipment:shipment-details')}>
         <YStack gap="$6" marginTop="$4">
           <ZixVariantOptionsWidget
             icon={<Inbox size="$1" color={'$color5'} />}
@@ -224,7 +224,7 @@ export function JobDetailsScreen() {
           <ZixVariantOptionsWidget
             // icon={<Timer size="$1" color={'$color5'} />}
             icon={<CustomIcon name="time" size="$1" color="$color5" />}
-            label={t('job:time-and-distance')}
+            label={t('shipment:time-and-distance')}
             optionVariant="details"
             variant="details"
             options={[

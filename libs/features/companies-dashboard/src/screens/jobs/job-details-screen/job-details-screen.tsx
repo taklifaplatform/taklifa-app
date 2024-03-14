@@ -43,7 +43,8 @@ export const JobDetailsScreen: React.FC<JobDetailsScreenProps> = () => {
     >
       <YStack gap="$3">
         <HeaderShipment
-          shipment={job || {}}
+          shipmentType={`${t('shipment:type:'+job?.items_type)}` || ''}
+          shipmentCreatedAt={job?.created_at || ''}
           demandJob={`${t('job:job-demand')}`}
           publishedJob={`${t('job:job-published')}`}
         />
@@ -65,7 +66,7 @@ export const JobDetailsScreen: React.FC<JobDetailsScreenProps> = () => {
             fontWeight={'600'}
             paddingHorizontal="$8"
           >
-            {t('job:shipment-accept')}
+            {t('shipment:shipment-accept')}
           </ZixLinkButton>
           <ZixLinkButton
             href={`/`}
@@ -74,9 +75,9 @@ export const JobDetailsScreen: React.FC<JobDetailsScreenProps> = () => {
             color={'$color1'}
             fontSize={15}
             fontWeight={'600'}
-            paddingHorizontal="$8"
+            paddingHorizontal="$6"
           >
-            Remove
+            {t('shipment:shipment-reject')}
           </ZixLinkButton>
         </XStack>
       </YStack>

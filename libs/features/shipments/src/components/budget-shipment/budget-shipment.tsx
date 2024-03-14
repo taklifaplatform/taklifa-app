@@ -24,7 +24,7 @@ export const BudgetShipment: React.FC<BudgetShipmentProps> = ({ shipment, ...pro
 
         >
           <Text color={'$gray9'} fontWeight={'400'}>
-            الأعلى
+            {t('shipment:higher')}
           </Text>
           <Text fontSize={20} fontWeight={'800'}>
             {shipment.max_budget?.value}
@@ -43,7 +43,7 @@ export const BudgetShipment: React.FC<BudgetShipmentProps> = ({ shipment, ...pro
           alignItems="center"
         >
           <Text color={'$gray9'} fontWeight={'400'}>
-            متوسط
+            {t('shipment:medium')}
           </Text>
           <Text fontSize={20} fontWeight={'800'}>
             {(shipment.max_budget?.value + shipment.min_budget?.value) / 2}
@@ -62,7 +62,7 @@ export const BudgetShipment: React.FC<BudgetShipmentProps> = ({ shipment, ...pro
           alignItems="center"
         >
           <Text color={'$gray9'} fontWeight={'400'}>
-            الأقل
+            {t('shipment:lower')}
           </Text>
           <Text fontSize={20} fontWeight={'800'}>
             {shipment.min_budget?.value}
@@ -75,7 +75,7 @@ export const BudgetShipment: React.FC<BudgetShipmentProps> = ({ shipment, ...pro
       <YStack width="100%" gap="$3" marginTop="$3" paddingVertical='$4'>
         <Stack alignItems="flex-start" marginBottom="$3">
           <Text fontSize={20} color={'$color'} fontWeight={'600'}>
-            {t('job:activity-in-this-presentation')}
+            {t('shipment:activity-in-this-presentation')}
           </Text>
         </Stack>
 
@@ -94,7 +94,7 @@ export const BudgetShipment: React.FC<BudgetShipmentProps> = ({ shipment, ...pro
         </XStack>
         <XStack justifyContent="space-between">
           <Text fontSize={15} color={'$color'} fontWeight={'400'}>
-            {t('job:conducting-interviews')}:
+            {t('shipment:conducting-interviews')}:
           </Text>
           <View width={50} alignItems="flex-start">
             <Text
@@ -110,7 +110,7 @@ export const BudgetShipment: React.FC<BudgetShipmentProps> = ({ shipment, ...pro
         <XStack justifyContent="space-between">
           <View>
             <Text fontSize={15} color={'$color'} fontWeight={'400'}>
-              {t('job:invitation-have-been-sent')}:
+              {t('shipment:invitation-have-been-sent')}:
             </Text>
           </View>
           <View width={50} alignItems="flex-start">
@@ -121,7 +121,7 @@ export const BudgetShipment: React.FC<BudgetShipmentProps> = ({ shipment, ...pro
         </XStack>
         <XStack justifyContent="space-between">
           <Text fontSize={15} color={'$color'} fontWeight={'400'}>
-            {t('job:unanswered-invitations')}:
+            {t('shipment:unanswered-invitations')}:
           </Text>
           <View width={50} alignItems="flex-start">
             <Text fontSize={15} color={'$color'} fontWeight={'400'}>

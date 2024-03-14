@@ -1,6 +1,6 @@
 
 import { useQuery } from '@tanstack/react-query';
-import { DriverShipmentsService, JobService } from '@zix/api';
+import { CustomerShipmentsService, DriverShipmentsService, JobService } from '@zix/api';
 import { ShipmentCard } from '@zix/features/shipments';
 import { DataNotFound, ZixButton } from '@zix/ui/common';
 import { ZixInput } from '@zix/ui/forms';
@@ -22,14 +22,14 @@ const PAGE_HEIGHT = 50;
 
 
 export const ShipmentsListingScreen: React.FC<ShipmentsListingScreenProps> = ({
-  urlPrefix = '/orders',
+  urlPrefix,
 }) => {
   const [status, setStatus] = useState('pending');
   const [search, setSearch] = useState('');
   const [activeFilterIndex, setActiveFilterIndex] = useState(0);
   const { data } = useQuery({
-    queryKey: ['JobService.fetchAllShipment'],
-    queryFn: () => JobService.listJobs({}),
+    queryKey: ['CustomerShipmentsService.fetchAllShipment'],
+    queryFn: () => CustomerShipmentsService.fetchAllShipment({}),
   });
   const filters = [
     {
@@ -162,7 +162,7 @@ const renderFilterShipment = () => (
             leftIcon={() => (
               <CustomIcon name="flip" size="$1" color={'$gray9'} />
             )}
-            placeholder={t('job:search')}
+            placeholder={t('shipment:search')}
             borderColor={'$gray10'}
             hoverStyle={{ borderColor: '$gray10' }}
             width={'100%'}
@@ -179,7 +179,7 @@ const renderFilterShipment = () => (
         <DataNotFound
           message={t('shipment:shipment-not-found')}
           description={t('shipment:shipment-not-found-description')}
-          imageUrl='/images/shipmentNotFound.png'
+          imageUrl='/assets/shipmentNotFound.png'
         />
       )}
     />

@@ -65,7 +65,6 @@ const VariantText = styled(Text, {
         fontWeight:'600',
         color:'$gray9',
         $sm: {
-          fontSize: 10,
           fontWeight: '400',
         },
       },
@@ -103,10 +102,6 @@ const VariantValueText = styled(Text, {
       true: {
         fontSize:12,
         fontWeight:'600',
-        $sm: {
-          fontSize: 10,
-          fontWeight: '600',
-        },
       },
     },
     location: {

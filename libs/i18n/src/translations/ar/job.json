@@ -19,20 +19,5 @@
     "delivery-date": "تاريخ التسليم",
     "estimated-distance": "المسافة المقدرة",
     "estimated-time": "الوقت المقدر",
-    "Suggestions": "اقتراحات",
-    "budget": "الميزانية",
-    "from_location": "الانطلاق من",
-    "to_location": "الوصول الى",
-    "see-more": "شاهد المزيد ",
-    "shipment-accept": "قبول العرض",
-    "service-description": "وصف الخدمة",
-    "shipment-path": "مسار الشحنة",
-    "shipping-from": "الشحن من",
-    "shipping-to": "الشحن الى",
-    "shipment-details": "تفاصيل الشحنة",
-    "shipment": "الشحنة",
-    "shipment-image": "صورة الشحنة",
-    "time-and-distance": "الوقت والمسافة",
-    "activity-in-this-presentation": "النشاط في هذا العرض",
-    "shipment-code": "رمز الشحنة"
+    "Suggestions": "اقتراحات"
   }

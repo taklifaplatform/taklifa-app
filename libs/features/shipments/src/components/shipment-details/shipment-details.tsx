@@ -14,10 +14,9 @@ import { ZixMediasListWidget, ZixVariantOptionsWidget, ZixWidgetContainer } from
 import { t } from 'i18next';
 import moment from 'moment';
 import React, { useMemo } from 'react';
-import { XStack, YStack, Text } from 'tamagui';
+import { XStack, YStack, Text, ThemeableStackProps } from 'tamagui';
 
-/* eslint-disable-next-line */
-export interface ShipmentDetailsProps {
+export type ShipmentDetailsProps = ThemeableStackProps & {
   shipment: ShipmentTransformer;
 }
 
@@ -51,11 +50,11 @@ export const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
     );
   }, [shipment?.pick_time, shipment?.deliver_time]);
   return (
-    <ZixWidgetContainer label={t('job:shipment-details')}>
+    <ZixWidgetContainer label={t('shipment:shipment-details')}>
       <YStack gap="$6" marginTop="$4" {...props}>
         <ZixVariantOptionsWidget
           icon={<Inbox size="$1" color={'$color5'} />}
-          label={t('job:shipment')}
+          label={t('shipment:shipment')}
           optionVariant="details"
           variant="details"
           options={[
@@ -85,7 +84,7 @@ export const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
         />
         <ZixVariantOptionsWidget
           icon={<CustomIcon name="time" size="$1" color="$color5" />}
-          label={t('job:time-and-distance')}
+          label={t('shipment:time-and-distance')}
           optionVariant="details"
           variant="details"
           options={[
@@ -130,7 +129,7 @@ export const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
           <XStack gap="$3" alignItems="center">
             <Image size="$1.5" color={'$color5'} />
             <Text fontSize={18} fontWeight={600} color={'$color5'}>
-              {t('job:shipment-image')}
+              {t('shipment:shipment-image')}
             </Text>
           </XStack>
           {shipment?.items?.map((item) =>

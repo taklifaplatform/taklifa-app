@@ -162,7 +162,7 @@ const renderFilterShipment = () => (
             leftIcon={() => (
               <CustomIcon name="flip" size="$1" color={'$gray9'} />
             )}
-            placeholder={t('job:search')}
+            placeholder={t('shipment:search')}
             borderColor={'$gray10'}
             hoverStyle={{ borderColor: '$gray10' }}
             width={'100%'}

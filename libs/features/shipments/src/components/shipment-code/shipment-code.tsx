@@ -22,7 +22,7 @@ export const ShipmentCode: React.FC<ShipmentCodeProps> = ({
     >
       <XStack gap="$6" alignItems="center">
         <Text color={'$color'} fontSize={18} fontWeight={'600'}>
-          {t('job:shipment-code')}
+          {t('shipment:shipment-code')}
         </Text>
         <View width={150}>
           <Text fontSize={18} fontWeight={'600'} numberOfLines={1}>
