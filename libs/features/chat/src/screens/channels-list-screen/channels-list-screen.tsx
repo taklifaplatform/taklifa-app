@@ -1,18 +1,19 @@
 
-import React from 'react';
 
-import { View, Text } from 'react-native';
-
-/* eslint-disable-next-line */
-export interface ChannelsListScreenProps {
-}
+import { AppHeader } from '@zix/ui/common';
+import { ChannelList } from 'stream-chat-react';
 
 
-export function ChannelsListScreen(props: ChannelsListScreenProps) {
+
+
+export function ChannelsListScreen() {
   return (
-    <View>
-      <Text>Welcome to channels-list-screen!</Text>
-    </View>
+    <>
+      <AppHeader
+        headerBackgroundColor='transparent'
+      />
+      <ChannelList />
+    </>
   );
 }
 

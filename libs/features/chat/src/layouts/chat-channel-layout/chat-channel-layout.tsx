@@ -1,20 +1,15 @@
-
 import React from 'react';
 
-import { View, Text } from 'react-native';
+export type ChatChannelLayoutProps = {
+  children: React.ReactNode;
+};
 
-/* eslint-disable-next-line */
-export interface ChatChannelLayoutProps {
-}
-
-
-export function ChatChannelLayout(props: ChatChannelLayoutProps) {
-  return (
-    <View>
-      <Text>Welcome to chat-channel-layout!</Text>
-    </View>
-  );
-}
-
+/**
+ * Renders the layout for a chat channel.
+ * @param children - The child components to render within the channel layout.
+ */
+export const ChatChannelLayout: React.FC<ChatChannelLayoutProps> = ({ children }) => {
+  return children;
+};
 
 export default ChatChannelLayout;

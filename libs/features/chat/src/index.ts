@@ -1,4 +1,6 @@
 
+export * from './components/channel-header/channel-header';
+
 export * from './layouts/chat-channel-thread-layout/chat-channel-thread-layout';
 
 export * from './layouts/chat-channel-layout/chat-channel-layout';
