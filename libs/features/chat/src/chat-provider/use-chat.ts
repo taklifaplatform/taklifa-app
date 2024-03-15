@@ -2,10 +2,10 @@ import { useAuth } from "@zix/utils";
 import { ZixChat } from "./ZixChat";
 import { useEffect } from "react";
 import { DevToken } from "stream-chat";
+import { OpenAPI } from "@zix/api";
 
 const client = ZixChat.getInstance("000000");
-client.baseURL = "http://sawaeed.test/api/chat";
-// client.wsBaseURL = "ws://sawaeed.test:8080/app";
+client.baseURL = `${OpenAPI.BASE}/api/chat`;
 
 export function useChat() {
   const { user, authAccessToken } = useAuth();

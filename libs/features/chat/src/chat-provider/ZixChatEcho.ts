@@ -5,18 +5,14 @@ import {
   postInsights,
 } from 'stream-chat/src/insights';
 import {
-  addConnectionEventListeners,
-  chatCodes,
   convertErrorToJson,
-  randomId,
-  removeConnectionEventListeners,
-  retryInterval,
-  sleep,
+  randomId
 } from 'stream-chat/src/utils';
 
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 import { DefaultGenerics, ExtendableGenerics } from 'stream-chat/src/types';
+import { OpenAPI } from '@zix/api';
 
 global.Pusher = Pusher;
 
@@ -61,10 +57,12 @@ export class ZixChatEcho<
         requestID: this.requestID,
       });
 
+      const wsHost = OpenAPI.BASE?.replace('http://', '').replace('https://', '').split(':')[0]
+
       const echo = new Echo({
         broadcaster: 'reverb',
         key: 'connect',
-        wsHost: 'sawaeed.test',
+        wsHost: wsHost,
         wsPort: 8080,
         wssPort: 443,
         forceTLS: false,
