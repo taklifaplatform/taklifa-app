@@ -1,17 +1,42 @@
 
-import { AppHeader } from '@zix/ui/common';
+import { AppHeader, AppHeaderProps } from '@zix/ui/common';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useRouter } from 'solito/router';
 
-import { useChannelContext, useChannelPreviewDisplayName } from 'stream-chat-expo';
+import { ChannelAvatar, useAttachmentPickerContext, useChannelContext, useChannelPreviewDisplayName } from 'stream-chat-expo';
+import { H4, Text, YStack } from 'tamagui';
+import { useChannelMembersStatus } from '../../hooks/useChannelMembersStatus';
 
 
-export const ChannelHeader = () => {
+export const ChannelHeader: React.FC<AppHeaderProps> = (props) => {
+  const router = useRouter();
   const { channel } = useChannelContext();
   const displayName = useChannelPreviewDisplayName(channel, 30);
+  const { closePicker } = useAttachmentPickerContext();
+  const membersStatus = useChannelMembersStatus(channel);
 
   return (
     <AppHeader
-      title={displayName}
+      headerTitle={() => (
+        <YStack alignItems='center'>
+          <H4 fontSize='$1.5' numberOfLines={1}>
+            {displayName}
+          </H4>
+          <Text fontSize='$1' numberOfLines={1}>
+            {membersStatus}
+          </Text>
+        </YStack>
+      )}
       showBackButton
+      headerRight={() => (
+        <TouchableOpacity onPress={() => {
+          closePicker();
+          router.push(`/chat/channels/${channel.id}/details`);
+        }}>
+          <ChannelAvatar channel={channel} />
+        </TouchableOpacity>
+      )}
+      {...props}
     />
   );
 }

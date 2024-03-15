@@ -1,14 +1,11 @@
 
-import { AppHeader } from '@zix/ui/common';
+import { AppHeader, AppHeaderProps } from '@zix/ui/common';
 
-
-
-export const ChannelHeader = () => {
-
+// TODO:: need to implement channel header if this component gonna be used for web
+export const ChannelHeader: React.FC<AppHeaderProps> = (props) => {
   return (
-    <AppHeader />
+    <AppHeader {...props} />
   );
 }
-
 
 export default ChannelHeader;

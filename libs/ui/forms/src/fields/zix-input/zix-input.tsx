@@ -80,7 +80,7 @@ export const ZixInput = forwardRef(function ZixInputEl(
   )
 
   return (
-    <XStack alignItems="center" flex={1} {...containerProps}>
+    <XStack alignItems="center" {...containerProps}>
       {renderInput()}
       {leftIcon && (
         <Stack

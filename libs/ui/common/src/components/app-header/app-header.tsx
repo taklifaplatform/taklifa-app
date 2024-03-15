@@ -1,14 +1,16 @@
-import { Bell, ScanBarcode, Search } from '@tamagui/lucide-icons';
-import { Button, ColorTokens, H4, Input, XStack, YStack } from 'tamagui';
+import { Bell, Search } from '@tamagui/lucide-icons';
+import { ZixInput, ZixInputProps } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
 import { useAuth } from '@zix/utils';
 import { t } from 'i18next';
 import { useCallback } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'solito/router';
+import { Button, ColorTokens, H4, View, XStack, YStack } from 'tamagui';
 import UserAvatar from '../user-avatar/user-avatar';
 
 export type AppHeaderProps = {
+  searchProps?: ZixInputProps
   showSearchBar?: boolean;
   showBackButton?: boolean;
   headerTitle?: () => React.ReactNode;
@@ -18,6 +20,7 @@ export type AppHeaderProps = {
 };
 
 export const AppHeader: React.FC<AppHeaderProps> = ({
+  searchProps = {},
   showSearchBar,
   showBackButton,
   headerRight,
@@ -36,40 +39,17 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
     }
   }, [isLoggedIn, router]);
 
-  const renderSearchBar = () =>
-    showSearchBar && (
-      <XStack
-        padding="$4"
-        paddingVertical="$2"
-        alignItems="center"
-        justifyContent="space-between"
-      >
-        <XStack alignItems="center" flex={1}>
-          <Button
-            size="$3"
-            icon={<Search size="$1.5" />}
-            color="$color5"
-            marginRight="$-4"
-            backgroundColor="white"
-          />
-          <Input
-            size="$3"
-            placeholder={'Search here'}
-            flex={1}
-            borderColor="transparent"
-            keyboardType="numeric"
-          />
-          <Button
-            size="$3"
-            icon={<ScanBarcode size="$1.5" />}
-            marginLeft="$-4"
-            borderTopLeftRadius="$0"
-            borderBottomLeftRadius="$0"
-            backgroundColor="white"
-          />
-        </XStack>
-      </XStack>
-    );
+  const renderSearchBar = () => showSearchBar && (
+    <View paddingHorizontal="$4" paddingVertical='$2'>
+      <ZixInput
+        height="$4"
+        leftIcon={() => <Search size="$1.5" />}
+        // rightIcon={() => <ScanBarcode size="$1.5" />}
+        placeholder={'Search here'}
+        {...searchProps}
+      />
+    </View>
+  )
 
   const renderUserAvatar = () =>
     !showBackButton && (
