@@ -3,10 +3,10 @@ import { LocationTransformer, ShipmentTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import React from 'react';
-import { XStack, YStack, Text, Stack } from 'tamagui';
+import { XStack, YStack, Text, Stack, ThemeableStackProps } from 'tamagui';
 
 /* eslint-disable-next-line */
-export interface ShipmentCardLocationProps {
+export type ShipmentCardLocationProps = ThemeableStackProps & {
   location: LocationTransformer;
   date: string;
   phone_number: string;
@@ -18,6 +18,7 @@ export const ShipmentCardLocation: React.FC<ShipmentCardLocationProps> = ({
   location,
   phone_number,
   userName,
+  ...props
 }) => {
   return (
     <YStack
@@ -25,8 +26,9 @@ export const ShipmentCardLocation: React.FC<ShipmentCardLocationProps> = ({
       width={'100%'}
       padding={'$4'}
       borderWidth="$0.5"
-      borderColor={'$gray9'}
+      borderColor={'$gray9' }
       borderRadius={'$6'}
+      {...props}
     >
       <XStack justifyContent="space-between">
         <Text color={'$color'}>{date}</Text>

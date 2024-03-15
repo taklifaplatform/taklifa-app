@@ -15,6 +15,7 @@ import Car from './icons/car.svg';
 import Chat from './icons/chat.svg';
 import Client from './icons/client.svg';
 import CompanyShipping from './icons/company-shipping.svg';
+import Company from './icons/company.svg';
 import Chronic from './icons/chronic.svg';
 import Comment from './icons/comment.svg';
 import Delivery from './icons/delivery.svg';
@@ -72,6 +73,10 @@ import WebDarkLogo from './icons/web-dark-logo.svg';
 import WebLogoEn from './icons/web-logo-en.svg';
 import Job from "./icons/job.svg";
 import RadioButtonChecked from "./icons/radio-button-checked.svg";
+import Garage from "./icons/garage.svg";
+import Opacity from "./icons/opacity.svg";
+import Matricule from "./icons/matricule.svg";
+import UserInfo from "./icons/user-info.svg";
 
 // arts
 import CompanyCars from "./arts/company-cars.svg";
@@ -102,6 +107,7 @@ export {
   CompanyShipping,
   Comment,
   Chronic,
+  Company,
   Delivery,
   Drawer,
   Edit,
@@ -165,4 +171,8 @@ export {
   WebDarkLogo,
   WebLogoEn,
   RadioButtonChecked,
+  Garage,
+  Opacity,
+  Matricule,
+  UserInfo
 };

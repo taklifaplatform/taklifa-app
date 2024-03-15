@@ -1,12 +1,12 @@
 import { AppHeader } from '@zix/ui/common';
-import { ShipmentDetailsScreen } from 'libs/features/solo-driver-dashboard/src/screens/shipments/shipment-details-screen/shipment-details-screen';
+import { ShipmentDetailsScreen } from '@zix/features/solo-driver-dashboard';
 import React from 'react';
 
 export default function Screen() {
   return (
     <>
       <AppHeader showBackButton title="Shipment Detail" />
-     <ShipmentDetailsScreen />
+      <ShipmentDetailsScreen />
       
       
     </>

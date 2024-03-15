@@ -40,6 +40,9 @@ const iconNames = [
   'chat',
   'apps',
   'success',
+  'company',
+  'garage',
+  'opacity',
   'align-left',
   'align-right',
   'arrow_left',
@@ -98,6 +101,8 @@ const iconNames = [
   'edit',
   'star_location',
   'drawer',
+  'matricule',
+  'user_info',
   // vehicles
   'vehicle_a',
   'vehicle_b',

@@ -8,17 +8,20 @@ import {
   Weight,
 } from '@tamagui/lucide-icons';
 import { ShipmentTransformer } from '@zix/api';
-import { DebugObject } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
-import { ZixMediasListWidget, ZixVariantOptionsWidget, ZixWidgetContainer } from '@zix/ui/widgets';
+import {
+  ZixMediasListWidget,
+  ZixVariantOptionsWidget,
+  ZixWidgetContainer,
+} from '@zix/ui/widgets';
 import { t } from 'i18next';
 import moment from 'moment';
 import React, { useMemo } from 'react';
-import { XStack, YStack, Text, ThemeableStackProps } from 'tamagui';
+import { Text, ThemeableStackProps, XStack, YStack } from 'tamagui';
 
 export type ShipmentDetailsProps = ThemeableStackProps & {
   shipment: ShipmentTransformer;
-}
+};
 
 export const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
   shipment,
@@ -132,11 +135,9 @@ export const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
               {t('shipment:shipment-image')}
             </Text>
           </XStack>
-          {shipment?.items?.map((item) =>
-          <ZixMediasListWidget
-            medias= {item.medias}
-           />
-          )}
+          {shipment?.items?.map((item) => (
+            <ZixMediasListWidget medias={item.medias} />
+          ))}
         </YStack>
       </YStack>
     </ZixWidgetContainer>

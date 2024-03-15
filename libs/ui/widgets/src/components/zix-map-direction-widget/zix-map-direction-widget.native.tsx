@@ -1,13 +1,14 @@
 import { LocationTransformer } from '@zix/api';
 import React from 'react';
 import { Dimensions } from 'react-native';
-import MapView, { Polyline, Marker } from 'react-native-maps';
+import MapView, { Marker, Polyline } from 'react-native-maps';
 import { Stack, View } from 'tamagui';
 
 /* eslint-disable-next-line */
 export type ZixMapDirectionWidgetProps = {
   startLocation: LocationTransformer;
   endLocation: LocationTransformer;
+  status: string;
 };
 const { width, height } = Dimensions.get('window');
 //const height = 400;
@@ -16,6 +17,7 @@ const ASPECT_RATIO = width / height;
 export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
   startLocation,
   endLocation,
+  status,
 }) => {
   const start = {
     latitude: Number(startLocation.latitude) || 0,
@@ -56,27 +58,70 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
       borderRadius="$5"
     >
       <MapView
-      
         style={{
           flex: 1,
           borderRadius: 10,
         }}
         initialRegion={mapRegion as any}
-        
       >
         <Marker
           coordinate={start as any}
           title={startLocation.address}
           description={startLocation.address}
-        ><View justifyContent='center' alignItems='center' width={1} height={1} backgroundColor={'$gray6'} padding="$3" borderRadius="50%">
-        <View width={1} height={1} backgroundColor={'$gray9'} padding='$2' borderRadius="50%" />
-      </View>
-      </Marker>
+        >
+          <View
+            justifyContent="center"
+            alignItems="center"
+            width={1}
+            height={1}
+            backgroundColor={
+              status === 'cancelled'
+                ? '$red3'
+                : status === 'delivered'
+                  ? '$color3'
+                  : '$gray6'
+            }
+            padding="$3"
+            borderRadius="50%"
+          >
+            <View
+              width={1}
+              height={1}
+              backgroundColor={
+                status === 'cancelled'
+                  ? '$red9'
+                  : status === 'delivered'
+                    ? '$color5'
+                    : '$gray9'
+              }
+              padding="$2"
+              borderRadius="50%"
+            />
+          </View>
+        </Marker>
 
-        <Polyline coordinates={polyline} strokeColor="red" strokeWidth={6} />
+        <Polyline
+          coordinates={polyline}
+          strokeColor={status === 'cancelled' ? 'red' : 'yellow'}
+          strokeWidth={6}
+        />
         <Marker coordinate={end as any} title={endLocation.address}>
-          <View justifyContent='center' alignItems='center' width={1} height={1} backgroundColor={'$color3'} padding="$3" borderRadius="50%">
-            <View width={1} height={1} backgroundColor={'$color5'} padding='$2' borderRadius="50%" />
+          <View
+            justifyContent="center"
+            alignItems="center"
+            width={1}
+            height={1}
+            backgroundColor={'$color3'}
+            padding="$3"
+            borderRadius="50%"
+          >
+            <View
+              width={1}
+              height={1}
+              backgroundColor={'$color5'}
+              padding="$2"
+              borderRadius="50%"
+            />
           </View>
         </Marker>
       </MapView>

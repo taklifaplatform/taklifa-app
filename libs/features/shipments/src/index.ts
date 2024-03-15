@@ -1,4 +1,12 @@
 
+export * from './components/offer-description/offer-description';
+
+export * from './components/shipment-canceled-detail/shipment-canceled-detail';
+
+export * from './components/shipment-delivering-detail/shipment-delivering-detail';
+
+export * from './components/information-about-driver/information-about-driver';
+
 export * from './components/shipment-code/shipment-code';
 
 export * from './components/shipment-card-location/shipment-card-location';

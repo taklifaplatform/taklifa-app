@@ -1,7 +1,7 @@
 import { Check, X } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
-import { CustomerShipmentsService, JobService } from '@zix/api';
-import { BudgetShipment, DefinitionSender, HeaderShipment, OrderDescription, ShipmentCode, ShipmentDetails, ShipmentDirection, TotalCostOfShipment } from '@zix/features/shipments';
+import { CustomerShipmentsService, DriversService } from '@zix/api';
+import { BudgetShipment, DefinitionSender, HeaderShipment, InformationAboutDriver, OfferDescription, OrderDescription, ShipmentCanceledDetail, ShipmentCode, ShipmentDeliveringDetail, ShipmentDetails, ShipmentDirection, TotalCostOfShipment } from '@zix/features/shipments';
 import { ZixLinkButton } from '@zix/ui/common';
 import { t } from 'i18next';
 import { RefreshControl } from 'react-native';
@@ -22,11 +22,22 @@ export const ShipmentDetailsScreen: React.FC<ShipmentDetailsScreenProps> = () =>
     queryFn: () => CustomerShipmentsService.retrieveShipment({ shipment: shipmentId || '' }),
   });
   const shipment = data?.data;
+   // TODO:: remove this once it's been added to shipment
+   const driverQuery = useQuery({
+    queryKey: ['DriverShipmentsService.retrieveShipment', shipment?.user?.id],
+    queryFn: () =>
+      DriversService.retrieveDriver({
+        driver: shipment?.user?.id || '',
+      }),
+  });
 
+  // const driver = shipment.driver;
+  const driver = driverQuery.data?.data || {};
   
+  ///
+  const status = 'delivering';
+  // const status = shipment?.status
 
-
-  
   return (
     <ScrollView
       refreshControl={
@@ -39,26 +50,33 @@ export const ShipmentDetailsScreen: React.FC<ShipmentDetailsScreenProps> = () =>
       }}
     >
       <YStack gap="$3">
+        {status === 'cancelled' && <ShipmentCanceledDetail />}
         <HeaderShipment
-          shipmentType={`${t('shipment:type:'+shipment?.items_type)}` || ''}
+          shipmentType={`${t('shipment:type:' + shipment?.items_type)}` || ''}
           shipmentCreatedAt={shipment?.created_at || ''}
           demandJob={`${t('job:job-demand')}`}
           publishedJob={`${t('job:job-published')}`}
         />
         <TotalCostOfShipment shipment={shipment || {}} />
+        {status === 'delivering' && <ShipmentDeliveringDetail />}
+        {status === 'delivering' && (
+          <OfferDescription shipment={shipment || {}} />
+        )}
         <Separator borderColor={'$gray7'} width={'100%'} />
         <OrderDescription items={shipment?.items} />
         <Separator borderColor={'$gray7'} width={'100%'} />
-        <ShipmentDirection shipment={shipment || {}} />
+        <ShipmentDirection shipment={shipment || {}} status={status} />
         <Separator borderColor={'$gray7'} width={'100%'} />
-        <ShipmentDetails shipment={shipment || {}} paddingVertical="$4"/>
+        <ShipmentDetails shipment={shipment || {}} paddingVertical="$4" />
         <Separator borderColor={'$gray7'} width={'100%'} />
-        <BudgetShipment shipment={shipment || {}} />
+        {status === 'draft' && <BudgetShipment shipment={shipment || {}} />}
+        {status === 'delivering' && <InformationAboutDriver driver={driver} />}
+
         <ShipmentCode codeId={shipment?.id || ''} marginVertical="$4" />
         <DefinitionSender shipment={shipment || {}} />
         <XStack width={'100%'} gap="$2" justifyContent="space-between">
           <ZixLinkButton
-            href={`/`}
+            href={`/solo-driver/shipments/${shipment?.id}/accept-shipment`}
             icon={<Check size="$1" />}
             fontSize={15}
             fontWeight={'600'}
@@ -67,7 +85,7 @@ export const ShipmentDetailsScreen: React.FC<ShipmentDetailsScreenProps> = () =>
             {t('shipment:shipment-accept')}
           </ZixLinkButton>
           <ZixLinkButton
-            href={`/`}
+            href={`/solo-driver/shipments/${shipment?.id}/reject-shipment`}
             icon={<X size="$1" />}
             backgroundColor={'red'}
             color={'$color1'}
@@ -81,7 +99,6 @@ export const ShipmentDetailsScreen: React.FC<ShipmentDetailsScreenProps> = () =>
       </YStack>
     </ScrollView>
   );
-}
-
+};
 
 export default ShipmentDetailsScreen;
