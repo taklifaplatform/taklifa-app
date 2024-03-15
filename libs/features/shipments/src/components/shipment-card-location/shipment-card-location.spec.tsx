@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import OrdersListScreen from './orders-list-screen';
+import ShipmentCardLocation from './shipment-card-location';
 
-describe('OrdersListScreen', () => {
+describe('ShipmentCardLocation', () => {
   it('should render successfully', () => {
-    const { root } = render(<OrdersListScreen />);
+    const { root } = render(< ShipmentCardLocation />);
     expect(root).toBeTruthy();
   });
 });

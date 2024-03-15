@@ -9,6 +9,7 @@
     "@expo-google-fonts/almarai": "^0.2.3",
     "@expo/metro-config": "0.17.4",
     "@react-native-async-storage/async-storage": "1.21.0",
+    "@react-native-community/datetimepicker": "7.6.1",
     "@react-native-community/netinfo": "11.1.0",
     "@react-native-masked-view/masked-view": "0.3.0",
     "@react-native/babel-preset": "^0.73.21",
@@ -83,6 +84,7 @@
     "react-native-gesture-handler": "~2.14.0",
     "react-native-maps": "1.10.0",
     "react-native-markdown-display": "^7.0.2",
+    "react-native-qrcode-svg": "^6.3.0",
     "react-native-reanimated": "~3.6.2",
     "react-native-reanimated-carousel": "^3.5.1",
     "react-native-safe-area-context": "4.8.2",
@@ -100,8 +102,7 @@
     "tamagui": "^1.91.3",
     "text-encoding": "^0.7.0",
     "tslib": "^2.6.2",
-    "zod-i18n-map": "^2.27.0",
-    "@react-native-community/datetimepicker": "7.6.1"
+    "zod-i18n-map": "^2.27.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.5",
@@ -176,4 +177,3 @@
     "@storybook/builder-webpack5": "^7.6.8"
   }
 }
-

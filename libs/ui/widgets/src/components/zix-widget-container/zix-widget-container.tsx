@@ -14,6 +14,7 @@ export const ZixWidgetContainer: React.FC<ZixWidgetContainerProps> = ({
       collapsible={currentPlatform !== 'web'}
       labelShowRequiredAsterisk={false}
       width='100%'
+      backgroundColor='transparent'
       {...props}
     >
       {children}

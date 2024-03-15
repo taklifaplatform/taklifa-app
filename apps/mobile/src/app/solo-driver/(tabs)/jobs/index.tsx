@@ -6,7 +6,7 @@ export default function Screen() {
   return (
     <>
       <AppHeader title="Jobs" headerBackgroundColor="transparent" />
-      <JobsListScreen />
+      <JobsListScreen urlPrefix='solo-driver/jobs' />
     </>
   );
 }

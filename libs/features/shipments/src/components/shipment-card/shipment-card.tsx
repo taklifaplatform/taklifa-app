@@ -81,7 +81,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
                 $sm={{ display: 'none' }}
               />
             ),
-            name: t('job:budget'),
+            name: t('shipment:budget'),
             value: `${shipment.min_budget?.value} - ${shipment.max_budget?.value} ${shipment.min_budget?.currency?.code}`,
           },
         ]}
@@ -99,12 +99,12 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
                 {...(!isRtl && { rotate: '180deg' })}
               />
             ),
-            name: t('job:from_location'),
+            name: t('shipment:from_location'),
             value: `${shipment?.from_location?.address}`,
           },
           {
             icons: <CustomIcon name="location" size="$1" color={'$gray9'} />,
-            name: t('job:to_location'),
+            name: t('shipment:to_location'),
             value: `${shipment.to_location?.address}`,
           },
         ]}
@@ -148,7 +148,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
               color: '$color',
             }}
           >
-            {t('job:job-demand')} {shipment.items_type}
+            {t('job:job-demand')} {`${t('shipment:type:'+shipment?.items_type)}`}
           </Text>
           <Stack
             flexDirection="row"
@@ -215,30 +215,38 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
         $gtSm={{ display: 'none' }}
       />
       <XStack
-        width={'30%'}
-        justifyContent="flex-end"
+      flex={1}
+        alignItems="center"
         gap="$2"
+        width={'30%'}
         $sm={{
-          width: '100%',
+          width: '70%',
           justifyContent: 'center',
+          alignItems:"center"
         }}
       >
         <ZixLinkButton
           href={`/${urlPrefix}/${shipment.id}`}
           icon={<Eye />}
           themeInverse
+          width={'100%'}
+          fontWeight={600}
         >
-          {t('job:see-more')}
+          {t('shipment:see-more')}
         </ZixLinkButton>
+{shipment.status === 'pending' &&
         <ZixLinkButton
           href={`/`}
           icon={<X size="$1" />}
+          width={'100%'}
           backgroundColor={'red'}
           color={'$color1'}
+          fontWeight={600}
           $gtSm={{ display: 'none' }}
         >
-          Remove 
+          {t('shipment:reject')}
         </ZixLinkButton>
+        }
       </XStack>
     </Stack>
   );

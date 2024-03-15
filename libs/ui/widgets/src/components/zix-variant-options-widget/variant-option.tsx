@@ -48,11 +48,11 @@ const VariantText = styled(Text, {
   variants: {
     details: {
       true: {
-        fontSize:12,
+        fontSize:15,
         fontWeight:'600',
         color:'$gray9',
         $sm: {
-          fontSize: 12,
+          fontSize: 15,
           fontWeight: '400',
           width: 100,
           marginRight: 20,
@@ -65,7 +65,6 @@ const VariantText = styled(Text, {
         fontWeight:'600',
         color:'$gray9',
         $sm: {
-          fontSize: 10,
           fontWeight: '400',
         },
       },
@@ -88,11 +87,14 @@ const VariantValueText = styled(Text, {
   variants: {
     details: {
       true: {
-        fontSize:12,
+        fontSize:15,
         fontWeight:'600',
         $sm: {
-          fontSize: 12,
+          width: 220,
+          textAlign: 'left',
+          fontSize: 15,
           fontWeight: '600',
+          flexWrap: 'wrap',
         },
       },
     },
@@ -100,10 +102,6 @@ const VariantValueText = styled(Text, {
       true: {
         fontSize:12,
         fontWeight:'600',
-        $sm: {
-          fontSize: 10,
-          fontWeight: '600',
-        },
       },
     },
     location: {

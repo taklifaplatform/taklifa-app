@@ -162,7 +162,7 @@ const renderFilterShipment = () => (
             leftIcon={() => (
               <CustomIcon name="flip" size="$1" color={'$gray9'} />
             )}
-            placeholder={t('job:search')}
+            placeholder={t('shipment:search')}
             borderColor={'$gray10'}
             hoverStyle={{ borderColor: '$gray10' }}
             width={'100%'}
@@ -177,8 +177,9 @@ const renderFilterShipment = () => (
       ListHeaderComponentStyle={{ marginBottom: 10 }}
       ListEmptyComponent={() => (
         <DataNotFound
-          message={t('job:job-not-found')}
-          description={t('job:job-not-found-description')}
+          message={t('shipment:shipment-not-found')}
+          description={t('shipment:shipment-not-found-description')}
+          imageUrl='/assests/shipmentNotFound.png'
         />
       )}
     />

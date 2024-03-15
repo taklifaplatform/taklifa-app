@@ -1,0 +1,147 @@
+import {
+  CalendarDays,
+  Image,
+  Inbox,
+  Package,
+  PackageOpen,
+  Route,
+  Weight,
+} from '@tamagui/lucide-icons';
+import { ShipmentTransformer } from '@zix/api';
+import { CustomIcon } from '@zix/ui/icons';
+import {
+  ZixMediasListWidget,
+  ZixVariantOptionsWidget,
+  ZixWidgetContainer,
+} from '@zix/ui/widgets';
+import { t } from 'i18next';
+import moment from 'moment';
+import React, { useMemo } from 'react';
+import { Text, ThemeableStackProps, XStack, YStack } from 'tamagui';
+
+export type ShipmentDetailsProps = ThemeableStackProps & {
+  shipment: ShipmentTransformer;
+};
+
+export const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
+  shipment,
+  ...props
+}) => {
+  const weight = useMemo(
+    () => shipment?.items?.map((item) => item.cap_weight + ' ' + item.cap_unit),
+    [shipment?.items],
+  );
+
+  const size = useMemo(
+    () =>
+      shipment?.items?.map(
+        (item) => `${item.dim_width}x${item.dim_height}x${item.dim_length}cm `,
+      ),
+    [shipment?.items],
+  );
+
+  const deliveryTime = useMemo(() => {
+    return moment.duration(
+      moment(shipment?.deliver_date).diff(moment(shipment?.pick_date)),
+    );
+  }, [shipment?.pick_date, shipment?.deliver_date]);
+
+  const duration = useMemo(() => {
+    return moment.duration(
+      moment(shipment?.deliver_time).diff(moment(shipment?.pick_time)),
+      'minute',
+    );
+  }, [shipment?.pick_time, shipment?.deliver_time]);
+  return (
+    <ZixWidgetContainer label={t('shipment:shipment-details')}>
+      <YStack gap="$6" marginTop="$4" {...props}>
+        <ZixVariantOptionsWidget
+          icon={<Inbox size="$1" color={'$color5'} />}
+          label={t('shipment:shipment')}
+          optionVariant="details"
+          variant="details"
+          options={[
+            {
+              icons: <Package size="$1" color={'$gray9'} />,
+              name: t('job:number-of-packages'),
+              value: `${shipment?.items?.length}`,
+            },
+            {
+              icons: <PackageOpen size="$1" color={'$gray9'} />,
+              name: t('job:shipment-type'),
+              value: `${shipment?.items_type}`,
+            },
+            {
+              icons: (
+                <CustomIcon name="aspect_ratio" size="$1" color="$gray3" />
+              ),
+              name: t('job:package-size'),
+              value: `${size}`,
+            },
+            {
+              icons: <Weight size="$1" color={'$gray9'} />,
+              name: t('job:package-weight'),
+              value: `${weight}`,
+            },
+          ]}
+        />
+        <ZixVariantOptionsWidget
+          icon={<CustomIcon name="time" size="$1" color="$color5" />}
+          label={t('shipment:time-and-distance')}
+          optionVariant="details"
+          variant="details"
+          options={[
+            {
+              icons: <Inbox size="$1" color={'$gray9'} />,
+              name: t('job:deliver_duration'),
+              value: `${deliveryTime.humanize()}`,
+            },
+            {
+              icons: <Route size="$1" color={'$gray9'} rotate="90deg" />,
+              name: t('job:estimated-distance'),
+              value: `ToDooo km`,
+            },
+            {
+              icons: <CustomIcon name="chronic" size="$1" color={'$gray9'} />,
+              name: t('job:estimated-time'),
+              value: `${duration.asMinutes()}`,
+            },
+            {
+              icons: <CustomIcon name="time" size="$1" color={'$gray9'} />,
+              name: t('job:deliver_time'),
+              value: `${shipment?.pick_time}`,
+            },
+            {
+              icons: <CalendarDays size="$1" color={'$gray9'} />,
+              name: t('job:deliver-date'),
+              value: `${shipment?.pick_date}`,
+            },
+            {
+              icons: <CustomIcon name="time" size="$1" color={'$gray9'} />,
+              name: t('job:delivery-time'),
+              value: `${shipment?.deliver_time}`,
+            },
+            {
+              icons: <CalendarDays size="$1" color={'$gray9'} />,
+              name: t('job:delivery-date'),
+              value: `${shipment?.deliver_date}`,
+            },
+          ]}
+        />
+        <YStack gap="$6" marginTop="$4">
+          <XStack gap="$3" alignItems="center">
+            <Image size="$1.5" color={'$color5'} />
+            <Text fontSize={18} fontWeight={600} color={'$color5'}>
+              {t('shipment:shipment-image')}
+            </Text>
+          </XStack>
+          {shipment?.items?.map((item) => (
+            <ZixMediasListWidget medias={item.medias} />
+          ))}
+        </YStack>
+      </YStack>
+    </ZixWidgetContainer>
+  );
+};
+
+export default ShipmentDetails;

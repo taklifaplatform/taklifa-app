@@ -194,7 +194,8 @@
     "@tamagui/sheet": "*",
     "@datepicker-react/hooks": "*",
     "@react-native-community/datetimepicker": "*",
-    "@tamagui/constants": "*"
+    "@tamagui/constants": "*",
+    "react-native-qrcode-svg": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",
