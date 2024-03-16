@@ -40,6 +40,12 @@
       "@zix/features/support": ["libs/features/support/src/index.ts"],
       "@zix/features/users": ["libs/features/users/src/index.ts"],
       "@zix/i18n": ["libs/i18n/src/index.ts"],
+      "@zix/services/auth": ["libs/services/auth/src/index.ts"],
+      "@zix/services/chat": ["libs/services/chat/src/index.ts"],
+      "@zix/services/laravel-echo": ["libs/services/laravel-echo/src/index.ts"],
+      "@zix/services/push-notification": [
+        "libs/services/push-notification/src/index.ts"
+      ],
       "@zix/theme": ["libs/theme/src/index.ts"],
       "@zix/ui/common": ["libs/ui/common/src/index.ts"],
       "@zix/ui/forms": ["libs/ui/forms/src/index.ts"],

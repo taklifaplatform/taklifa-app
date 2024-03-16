@@ -12,6 +12,7 @@ import {
   UniversalThemeProvider,
 } from './providers';
 import { ChatProvider } from '@zix/features/chat';
+import { LaravelEchoProvider } from '@zix/services/laravel-echo';
 
 export interface MainAppProviderProps {
   children: React.ReactNode;
@@ -37,6 +38,7 @@ export const MainAppProvider: React.FC<MainAppProviderProps> = ({
         ToastProvider,
         QueryClientProvider,
         AuthProvider,
+        LaravelEchoProvider,
         ChatProvider,
         PushNotification,
       ]}
