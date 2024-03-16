@@ -7,6 +7,7 @@ import { Text, XStack, YStack, View, H4 } from 'tamagui';
 import { NotificationCard } from '../components/NotificationCard';
 import SearchBar from '../components/SearchBar';
 import { CustomIcon } from '@zix/ui/icons';
+import { AppHeader } from '@zix/ui/layouts';
 
 /* eslint-disable-next-line */
 export interface NotificationScreenProps { }
@@ -65,36 +66,43 @@ export function NotificationScreen(props: NotificationScreenProps) {
 
 
   return (
-    <YStack flex={1} gap="$2" backgroundColor={'#FAFAFA'}>
-      <SearchBar setSearch={setSearch} search={search} />
-
-      {/* <DebugObject object={sections} /> */}
-      <SectionList
-        style={{ flex: 1 }}
-        contentContainerStyle={{ flexGrow: 1 }}
-        showsVerticalScrollIndicator={false}
-        ListEmptyComponent={() => (
-          <View flex={1} alignItems='center' gap="$8">
-            <CustomIcon name="empty_notification" size="$18" color="$color5" />
-            <H4>No Notification Found!</H4>
-          </View>
-        )}
-        renderItem={({ item, index }) => <NotificationCard key={`${item.id}-${index}`} notification={item} />}
-        renderSectionHeader={({ section: { title, data } }) => {
-          return (
-            <XStack padding="$4" alignItems='center' justifyContent='space-between' backgroundColor="$background">
-              <Text fontWeight={'bold'} fontSize={'$3'} >
-                {title}
-              </Text>
-
-              <Text>({data?.length})</Text>
-            </XStack>
-          );
-        }}
-        sections={sections}
-        stickySectionHeadersEnabled
+    <>
+      <AppHeader
+        showBackButton
+        title="Notifications"
+        headerBackgroundColor="transparent"
       />
-    </YStack>
+      <YStack flex={1} gap="$2">
+        <SearchBar setSearch={setSearch} search={search} />
+
+        {/* <DebugObject object={sections} /> */}
+        <SectionList
+          style={{ flex: 1 }}
+          contentContainerStyle={{ flexGrow: 1 }}
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={() => (
+            <View flex={1} alignItems='center' gap="$8">
+              <CustomIcon name="empty_notification" size="$18" color="$color5" />
+              <H4>No Notification Found!</H4>
+            </View>
+          )}
+          renderItem={({ item, index }) => <NotificationCard key={`${item.id}-${index}`} notification={item} />}
+          renderSectionHeader={({ section: { title, data } }) => {
+            return (
+              <XStack padding="$4" alignItems='center' justifyContent='space-between' backgroundColor="$background">
+                <Text fontWeight={'bold'} fontSize={'$3'} >
+                  {title}
+                </Text>
+
+                <Text>({data?.length})</Text>
+              </XStack>
+            );
+          }}
+          sections={sections}
+          stickySectionHeadersEnabled
+        />
+      </YStack>
+    </>
   );
 }
 

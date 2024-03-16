@@ -1,10 +1,10 @@
-import { UserProfileScreen } from '@zix/features/users';
 import { DashboardLayout } from '@zix/ui/layouts';
 import { NextPageWithLayout } from '../_app';
+import { NotificationScreen } from '@zix/features/notifications';
 
 export const Page: NextPageWithLayout = () => {
   return (
-    <UserProfileScreen />
+    <NotificationScreen />
   );
 };
 

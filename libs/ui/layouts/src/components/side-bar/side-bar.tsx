@@ -30,7 +30,7 @@ export const SideBar: React.FC<SideBarProps> = () => {
           Home
         </ZixLinkButton>
 
-        <ZixLinkButton display='headerMenu' icon={Bell} href='/customer/notifications' >
+        <ZixLinkButton display='headerMenu' icon={Bell} href='/notifications' >
           Notifications
         </ZixLinkButton>
 
