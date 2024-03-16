@@ -1,7 +1,8 @@
 
 import React from 'react';
 
-import { AppHeader, UserAvatar } from '@zix/ui/common';
+import { UserAvatar } from '@zix/ui/common';
+import { AppHeader } from '@zix/ui/layouts';
 import { Channel, Thread, ThreadContextValue, useChannelContext, useThreadContext, useTypingString } from 'stream-chat-expo';
 import { H4, Text, View, YStack } from 'tamagui';
 
