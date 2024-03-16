@@ -166,7 +166,7 @@ export const ShipmentsListingScreen: React.FC<ShipmentsListingScreenProps> = ({
               shipment={item}
               variants="shipment"
               marginHorizontal="$4"
-              marginVertical='$2'
+              marginBottom='$2'
             />
           )}
           // ListHeaderComponent={() => (
