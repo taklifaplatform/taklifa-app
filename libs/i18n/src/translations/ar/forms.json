@@ -29,6 +29,11 @@
   "message-to-customer": "رسالة للعميل // اكتب ملاحضات",
   "confirmation": "تأكيد",
   "cancel-service": "إلغاء الخدمة",
+  "message": "الرسالة",
+  "subject": "الموضوع",
+  "send-message": "ارسل الرسالة",
+  "write-here": "اكتب هنا",
+  "complain-send": "ارسل شكوى",
   "labels": {
     "code": "الرمز"
   }

@@ -23,6 +23,8 @@
       "@zix/features/companies-dashboard": [
         "libs/features/companies-dashboard/src/index.ts"
       ],
+      "@zix/features/complain": ["libs/features/complain/src/index.ts"],
+      "@zix/features/contact-us": ["libs/features/contact-us/src/index.ts"],
       "@zix/features/customer-dashboard": [
         "libs/features/customer-dashboard/src/index.ts"
       ],
@@ -33,6 +35,7 @@
       "@zix/features/solo-driver-dashboard": [
         "libs/features/solo-driver-dashboard/src/index.ts"
       ],
+      "@zix/features/support": ["libs/features/support/src/index.ts"],
       "@zix/features/users": ["libs/features/users/src/index.ts"],
       "@zix/i18n": ["libs/i18n/src/index.ts"],
       "@zix/theme": ["libs/theme/src/index.ts"],
