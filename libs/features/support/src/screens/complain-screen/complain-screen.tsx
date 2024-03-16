@@ -10,13 +10,14 @@ import {
 } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
+
 import { useRouter } from 'solito/router';
-import { FormProvider, Text, Theme, View, XStack, YStack } from 'tamagui';
+import { Theme, XStack, YStack, Text, View } from 'tamagui';
 import { z } from 'zod';
 
-const ContactUsSchema = z.object({
-  support_category_id: formFields.autocomplete.describe('Support Category // دعم'),
+const ComplainSchema = z.object({
+  //support_category_id: formFields.autocomplete.describe('Support Category // دعم'),
   email: formFields.text.describe(t('forms:email')),
   phone_number: formFields.phone.describe(t('forms:phone_number')),
   subject: formFields.text.describe(
@@ -26,13 +27,12 @@ const ContactUsSchema = z.object({
     `${t('forms:message')} // ${t('forms:message')}`,
   ),
 });
-
-export const ContactScreen = () => {
+export const ComplainScreen = () => {
   const toast = useToastController();
   const router = useRouter();
-  const form = useForm<z.infer<typeof ContactUsSchema>>();
+  const form = useForm<z.infer<typeof ComplainSchema>>();
   const { mutate } = useMutation({
-    mutationFn: (requestBody: z.infer<typeof ContactUsSchema>) =>
+    mutationFn: (requestBody: z.infer<typeof ComplainSchema>) =>
       SupportService.storeSupportRequest({
         requestBody,
       }),
@@ -53,16 +53,15 @@ export const ContactScreen = () => {
       paddingVertical="$8"
       gap="$2"
     >
+      <CustomIcon name="alert" size={'$9'} color={'$red9'} />
       <Text
         fontSize={25}
-        fontWeight="bold"
+        fontWeight={'bold'}
         textAlign="center"
+        color={'$red9'}
         $sm={{ fontSize: 18 }}
       >
-        {t('web-home:contact-welcome')}
-      </Text>
-      <Text fontSize={18} fontWeight="bold" $sm={{ fontSize: 15 }}>
-        {t('web-home:contact-question')}
+        {t('web-home:complain-text')}
       </Text>
       <View
         width={'70%'}
@@ -75,18 +74,13 @@ export const ContactScreen = () => {
         <FormProvider {...form}>
           <SchemaForm
             form={form}
-            schema={ContactUsSchema}
+            schema={ComplainSchema}
             defaultValues={{
               username: '',
               name: '',
               phone_number: '+966',
               subject: '',
               message: '',
-            }}
-            props={{
-              support_category_id: {
-                api: 'geography/cities',
-              }
             }}
             onSubmit={mutate}
             renderBefore={() => (
@@ -96,13 +90,13 @@ export const ContactScreen = () => {
                     gap="$2"
                     justifyContent="center"
                     alignItems="center"
-                    backgroundColor={'$color3'}
+                    backgroundColor={'$red3'}
                     borderRadius={'$4'}
                     width="30%"
                     paddingVertical="$2"
                   >
-                    <CustomIcon name="call" size={'$1'} color={'$color5'} />
-                    <Text fontSize={12} $sm={{ fontSize: 8 }}>
+                    <CustomIcon name="call" size={'$1'} color={'$red9'} />
+                    <Text fontSize={12} $sm={{ fontSize: 8 }} color={'$red9'}>
                       +966655 55 55
                     </Text>
                   </YStack>
@@ -110,13 +104,13 @@ export const ContactScreen = () => {
                     gap="$2"
                     justifyContent="center"
                     alignItems="center"
-                    backgroundColor={'$color3'}
+                    backgroundColor={'$red3'}
                     borderRadius={'$4'}
                     width="30%"
                     paddingVertical="$2"
                   >
-                    <CustomIcon name="location" size={'$1'} color={'$color5'} />
-                    <Text fontSize={12} $sm={{ fontSize: 8 }}>
+                    <CustomIcon name="location" size={'$1'} color={'$red9'} />
+                    <Text fontSize={12} $sm={{ fontSize: 8 }} color={'$red9'}>
                       Saudi Arabi
                     </Text>
                   </YStack>
@@ -124,13 +118,13 @@ export const ContactScreen = () => {
                     gap="$2"
                     justifyContent="center"
                     alignItems="center"
-                    backgroundColor={'$color3'}
+                    backgroundColor={'$red3'}
                     borderRadius={'$4'}
                     width="30%"
                     paddingVertical="$2"
                   >
-                    <CustomIcon name="mail" size={'$1'} color={'$color5'} />
-                    <Text fontSize={12} $sm={{ fontSize: 8 }}>
+                    <CustomIcon name="mail" size={'$1'} color={'$red9'} />
+                    <Text fontSize={12} $sm={{ fontSize: 8 }} color={'$red9'}>
                       +966655 55 55
                     </Text>
                   </YStack>
@@ -140,11 +134,13 @@ export const ContactScreen = () => {
             renderAfter={({ submit }) => (
               <Theme>
                 <SubmitButton
+                  backgroundColor={'$red9'}
+                  color={'$color1'}
                   onPress={() => submit()}
                   borderRadius="$10"
                   icon={<SendHorizontal size={'$1'} />}
                 >
-                  {t('forms:send-message')}
+                  {t('forms:complain-send')}
                 </SubmitButton>
               </Theme>
             )}
@@ -155,4 +151,4 @@ export const ContactScreen = () => {
   );
 };
 
-export default ContactScreen;
+export default ComplainScreen;
