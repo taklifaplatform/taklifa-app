@@ -134,6 +134,10 @@ interface Resources {
     "kyc_name": "Name (The name should be same in your identity) // Enter your full name",
     "id_card": "ID Card // Upload your ID card",
     "living_address": "Living Address // Enter your living address",
+    "reason-for-cancel": "Reason for Cancellation // Choose a reason from here",
+    "message-to-customer": "Message to Customer // Write notes",
+    "confirmation": "Confirmation",
+    "cancel-service": "Cancel Service",
     "labels": {
       "code": "Code"
     }

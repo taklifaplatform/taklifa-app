@@ -102,6 +102,7 @@ const iconNames = [
   'star_location',
   'drawer',
   'matricule',
+  'alert_cercle',
   'user_info',
   // vehicles
   'vehicle_a',
