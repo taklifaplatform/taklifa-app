@@ -1,4 +1,6 @@
 
+export * from './screens/shipments/cancel-shipment-screen/cancel-shipment-screen';
+
 export * from './screens/shipments/shipment-details-screen/shipment-details-screen';
 
 export * from './screens/shipments/shipments-listing-screen/shipments-listing-screen';

@@ -103,7 +103,7 @@ export const ShipmentDetailsScreen: React.FC<
             {t('shipment:shipment-accept')}
           </ZixLinkButton>
           <ZixLinkButton
-            href={`/solo-driver/shipments/${shipment?.id}/reject-shipment`}
+            href={`/solo-driver/shipments/${shipment?.id}/cancel`}
             icon={<X size="$1" />}
             backgroundColor={'red'}
             color={'$color1'}

@@ -77,6 +77,7 @@ import Garage from "./icons/garage.svg";
 import Opacity from "./icons/opacity.svg";
 import Matricule from "./icons/matricule.svg";
 import UserInfo from "./icons/user-info.svg";
+import AlertCercle from "./icons/alert-cercle.svg";
 
 // arts
 import CompanyCars from "./arts/company-cars.svg";
@@ -137,6 +138,7 @@ export {
   LookingForService,
   Mail,
   Map,
+  AlertCercle,
   More,
   Notifications,
   Orders,
