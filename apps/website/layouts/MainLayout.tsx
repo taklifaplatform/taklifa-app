@@ -1,9 +1,10 @@
+import { LayoutContainer } from '@zix/ui/layouts';
 import React from 'react';
-import { Stack, YStack } from 'tamagui';
-import { MobileHeader } from '../components/web-home/menu-header/MobileHeader';
-import { TopHeader } from '../components/web-home/top-header/TopHeader';
+import { YStack } from 'tamagui';
 import { Footer } from '../components/web-home/footer/Footer';
 import { Header } from '../components/web-home/header/Header';
+import { MobileHeader } from '../components/web-home/menu-header/MobileHeader';
+import { TopHeader } from '../components/web-home/top-header/TopHeader';
 
 export type MainLayoutProps = {
   children: React.ReactNode;
@@ -11,24 +12,8 @@ export type MainLayoutProps = {
 
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
-    <Stack
-      justifyContent="center"
-      flexDirection="row"
-      paddingVertical="$4"
-      $sm={{
-        flexDirection: 'column',
-        alignItems: 'center',
-        paddingTop: '$0',
-      }}
-    >
-      <YStack
-        flex={1}
-        maxWidth={'1296px'}
-        width={'100%'}
-        // padding="$4"
-        paddingHorizontal="$4"
-        justifyContent="space-between"
-      >
+    <LayoutContainer>
+      <>
         <YStack>
           <TopHeader />
           <Header />
@@ -36,8 +21,8 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         </YStack>
         {children}
         <Footer />
-      </YStack>
-    </Stack>
+      </>
+    </LayoutContainer>
   );
 };
 
