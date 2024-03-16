@@ -64,7 +64,8 @@ export class ZixChatEcho<
         wsPort: 8080,
         wssPort: 443,
         forceTLS: false,
-        enabledTransports: ['ws', 'wss'],
+        enabledTransports: ['ws'],
+        // enabledTransports: ['ws', 'wss'],
       });
 
       this.resolvePromise?.({ type: 'success' });
