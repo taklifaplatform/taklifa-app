@@ -1,13 +1,13 @@
 
 import { useMultiLang } from '@zix/i18n';
-import { CustomIcon } from '@zix/ui/icons';
 import { useAuth } from '@zix/services/auth';
+import { CustomIcon } from '@zix/ui/icons';
 import React from 'react';
 
-import { View, Text, YStack } from 'tamagui';
-import AccountSwitcher from '../account-switcher/account-switcher';
-import { ZixLinkButton } from '@zix/ui/common';
 import { Bell, Home, MessageCircle } from '@tamagui/lucide-icons';
+import { ZixLinkButton } from '@zix/ui/common';
+import { View, YStack } from 'tamagui';
+import AccountSwitcher from '../account-switcher/account-switcher';
 
 export type SideBarProps = {
   //
@@ -19,7 +19,7 @@ export const SideBar: React.FC<SideBarProps> = () => {
   const { user } = useAuth()
 
   return (
-    <View flex={1} maxWidth={268} backgroundColor='$color2' padding='$4'>
+    <View position='sticky' top={0} bottom={0} left={0} flex={1} maxWidth={268} maxHeight='100vh' backgroundColor='$color2' padding='$4'>
       <ZixLinkButton unstyled href='/' >
         <CustomIcon name={`web_logo_${activeLang}`} height={50} width={165} />
       </ZixLinkButton>

@@ -1,2 +1,2 @@
 export * from './auth-provider/auth-provider';
-export * from './hooks/use-auth';
+export * from './use-auth';

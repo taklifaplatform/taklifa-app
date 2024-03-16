@@ -1,18 +1,19 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
 
 import {
   AuthenticatedUserTransformer,
   AuthService,
+  OpenAPI,
   UserService,
-} from "@zix/api";
-import { useAtom } from "jotai";
-import { useCallback, useMemo } from "react";
-import { useRouter } from "solito/router";
+} from '@zix/api';
+import { useAtom } from 'jotai';
+import { useCallback, useMemo } from 'react';
+import { useRouter } from 'solito/router';
 import {
   authAccessTokenStorage,
   authRequestedAccountTypeStorage,
   authUserStorage,
-} from "../../../../utils/src/lib/atoms";
+} from './auth-atoms';
 
 export type RedirectUserOptions = {
   pushRoute?: boolean;
@@ -28,18 +29,36 @@ export function useAuth() {
   const router = useRouter();
 
   const { data, refetch, isLoading } = useQuery({
-    queryKey: ["profile", authUser?.id],
+    queryKey: ['profile', authUser?.id],
     queryFn: async () => {
-      return authAccessToken?.length
-        ? UserService.retrieveUser()
-        : { data: {} as AuthenticatedUserTransformer };
+      if (!authAccessToken) return { data: {} as AuthenticatedUserTransformer };
+
+      OpenAPI.TOKEN = authAccessToken;
+
+      try {
+        const data = await UserService.retrieveUser();
+        return data;
+      } catch (error: any) {
+        if (error?.statusText === 'Unauthorized') {
+          setAuthAccessToken('');
+          setAuthUser({});
+        }
+        console.log('=============');
+        console.log('error::', JSON.stringify(error, null, 2));
+        console.log('=============');
+      }
+
+      return;
     },
   });
 
-  const user = useMemo<AuthenticatedUserTransformer>(() => ({
-    ...(authUser || {}),
-    ...(data?.data || {}),
-  }), [authUser, data]);
+  const user = useMemo<AuthenticatedUserTransformer>(
+    () => ({
+      ...(authUser || {}),
+      ...(data?.data || {}),
+    }),
+    [authUser, data],
+  );
 
   const isLoggedIn = useMemo(() => !!authAccessToken, [authAccessToken]);
 
@@ -47,13 +66,13 @@ export function useAuth() {
    * The number of steps in the registration process.
    */
   const registerSteps = useMemo(() => {
-    if (requestedAccountType === "customer") {
+    if (requestedAccountType === 'customer') {
       return 2;
     }
-    if (requestedAccountType === "company_owner") {
+    if (requestedAccountType === 'company_owner') {
       return 3;
     }
-    if (requestedAccountType === "solo_driver") {
+    if (requestedAccountType === 'solo_driver') {
       return 4;
     }
     return 0;
@@ -62,39 +81,41 @@ export function useAuth() {
   const avatarUrl = useMemo(() => {
     if (user?.avatar?.url) return user?.avatar?.url;
     const params = new URLSearchParams();
-    const name = user?.name || user?.email || "";
-    params.append("name", name);
-    params.append("size", "256"); // will be resized again by NextImage/SolitoImage
+    const name = user?.name || user?.email || '';
+    params.append('name', name);
+    params.append('size', '256'); // will be resized again by NextImage/SolitoImage
     return `https://ui-avatars.com/api.jpg?${params.toString()}`;
   }, [user]);
 
   const redirectUserToActiveDashboard = useCallback(
-    (options: RedirectUserOptions = {
-      pushRoute: true,
-      user: {},
-    }) => {
+    (
+      options: RedirectUserOptions = {
+        pushRoute: true,
+        user: {},
+      },
+    ) => {
       const redirect = options.pushRoute ? router.push : router.replace;
-      const activeRoleName = options?.user?.active_role?.name ||
-        user?.active_role?.name;
+      const activeRoleName =
+        options?.user?.active_role?.name || user?.active_role?.name;
 
-      if (activeRoleName === "solo_driver") {
-        redirect("/solo-driver");
+      if (activeRoleName === 'solo_driver') {
+        redirect('/solo-driver');
       } else if (
         activeRoleName &&
-        ["company_owner", "company_manager", "company_driver"].includes(
+        ['company_owner', 'company_manager', 'company_driver'].includes(
           activeRoleName,
         )
       ) {
-        redirect("/company");
+        redirect('/company');
       } else {
-        redirect("/customer");
+        redirect('/customer');
       }
     },
     [router, user],
   );
 
   function logout() {
-    setAuthAccessToken("");
+    setAuthAccessToken('');
     setAuthUser({});
 
     try {
@@ -103,8 +124,8 @@ export function useAuth() {
       //
     }
 
-    router.replace("/customer");
-    router.push("/auth/login");
+    router.replace('/customer');
+    router.push('/auth/login');
   }
 
   function refetchUser() {

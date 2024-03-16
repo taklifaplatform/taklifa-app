@@ -13,7 +13,7 @@ import {
 import { useMultiLang } from '@zix/i18n';
 import * as React from 'react';
 import { Text } from 'react-native';
-import { ColorTokens, SizeTokens, Stack, useStyle } from 'tamagui';
+import { ColorTokens, SizeTokens, Stack, getTokenValue, useStyle } from 'tamagui';
 
 import * as Icons from '../assets';
 
@@ -232,7 +232,7 @@ export const CustomIcon: React.FC<CustomIconProps> = ({
 
   return (
     <Stack width={style.width} height={style.height} {...props}>
-      <Icon width={style.width} height={style.height} color={style.color} />
+      <Icon width='100%' height='100%' color={style.color} />
     </Stack>
   );
 };

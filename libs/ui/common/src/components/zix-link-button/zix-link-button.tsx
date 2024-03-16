@@ -14,11 +14,11 @@ import { Link } from 'solito/link';
 export type ZixLinkButtonProps = ButtonProps & {
   href: string;
   display?:
-    | 'menuItem'
-    | 'headerMenu'
-    | 'linkItem'
-    | 'warningItem'
-    | 'textLinkItem';
+  | 'menuItem'
+  | 'headerMenu'
+  | 'linkItem'
+  | 'warningItem'
+  | 'textLinkItem';
   menuItem?: boolean;
   headerMenu?: boolean;
 };
@@ -86,6 +86,11 @@ const CustomButton = styled(Button, {
         },
       },
     },
+    linkItemActive: {
+      true: {
+
+      },
+    },
     warningItem: {
       true: {
         backgroundColor: 'red',
@@ -97,6 +102,11 @@ const CustomButton = styled(Button, {
           paddingVertical: '$2',
           paddingHorizontal: '$10',
         },
+      },
+    },
+    warningItemActive: {
+      true: {
+
       },
     },
   },
@@ -112,9 +122,9 @@ export const ZixLinkButton = forwardRef(function ZixLinkButtonFunc(
   return (
     <Link href={href}>
       <CustomButton
-        {...props}
         ref={ref as TamaguiComponent}
         onPress={() => router.push(href)}
+        {...props}
         {...(display
           ? { [display]: true, [`${display}Active`]: activePath === href }
           : {})}

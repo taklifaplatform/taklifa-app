@@ -16,6 +16,7 @@ export function Questions() {
 
   const renderZixAccordion = ({ item, index }) => (
     <Accordion
+      key={index}
       overflow="hidden"
       width="70%"
       type="multiple"
