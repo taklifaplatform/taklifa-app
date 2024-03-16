@@ -39,7 +39,7 @@ export function useAuth() {
         const data = await UserService.retrieveUser();
         return data;
       } catch (error: any) {
-        if (error?.statusText === 'Unauthorized') {
+        if (error?.status === 401) {
           setAuthAccessToken('');
           setAuthUser({});
         }
@@ -94,6 +94,10 @@ export function useAuth() {
         user: {},
       },
     ) => {
+      if (options?.user?.id) {
+        setAuthUser(options.user);
+      }
+
       const redirect = options.pushRoute ? router.push : router.replace;
       const activeRoleName =
         options?.user?.active_role?.name || user?.active_role?.name;

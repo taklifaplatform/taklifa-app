@@ -1,5 +1,5 @@
 
-import { AppHeader, AppHeaderProps } from '@zix/ui/common';
+import { AppHeader, AppHeaderProps } from "@zix/ui/layouts";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useRouter } from 'solito/router';
 
