@@ -60,6 +60,10 @@ export function useAuth() {
     [authUser, data],
   );
 
+  const activeRole = useMemo<'customer' | 'company_owner' | 'company_manager' | 'company_driver' | 'solo_driver'>(() => {
+    return user?.active_role?.name || 'customer'
+  }, [user])
+
   const isLoggedIn = useMemo(() => !!authAccessToken, [authAccessToken]);
 
   /**
@@ -139,6 +143,7 @@ export function useAuth() {
   }
 
   return {
+    activeRole,
     user,
     refetchUser,
     avatarUrl,

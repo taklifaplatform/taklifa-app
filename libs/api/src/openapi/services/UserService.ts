@@ -13,19 +13,6 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class UserService {
     /**
-     * Retrieve the authenticated user.
-     * @returns any Successful response
-     * @throws ApiError
-     */
-    public static retrieveUser(): CancelablePromise<{
-        data?: AuthenticatedUserTransformer;
-    }> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/user',
-        });
-    }
-    /**
      * Update the authenticated user.
      * @returns any Successful response
      * @throws ApiError

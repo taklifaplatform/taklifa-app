@@ -2,22 +2,23 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { DriverTransformer } from '../models/DriverTransformer';
+import type { CarModelTransformer } from '../models/CarModelTransformer';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-export class DriversService {
+export class CarMakesService {
     /**
-     * Fetch all drivers.
+     * Fetch all car models for a single car make.
      * @returns any Successful response
      * @throws ApiError
      */
-    public static fetchAllDrivers({
+    public static fetchCarModelsByMake({
+        makeId,
         page,
         perPage,
-        latitude,
-        longitude,
+        search,
     }: {
+        makeId: string,
         /**
          * Page number
          */
@@ -26,10 +27,9 @@ export class DriversService {
          * Number of items per page
          */
         perPage?: number,
-        latitude?: any,
-        longitude?: any,
+        search?: string,
     }): CancelablePromise<{
-        data?: Array<DriverTransformer>;
+        data?: Array<CarModelTransformer>;
         links?: {
             first?: string;
             last?: string;
@@ -53,32 +53,14 @@ export class DriversService {
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/drivers',
+            url: '/api/cars/makes/{make_id}/models',
+            path: {
+                'make_id': makeId,
+            },
             query: {
                 'page': page,
                 'per_page': perPage,
-                'latitude': latitude,
-                'longitude': longitude,
-            },
-        });
-    }
-    /**
-     * Retrieve a driver.
-     * @returns any Successful response
-     * @throws ApiError
-     */
-    public static retrieveDriver({
-        driver,
-    }: {
-        driver: string,
-    }): CancelablePromise<{
-        data?: DriverTransformer;
-    }> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/drivers/{driver}',
-            path: {
-                'driver': driver,
+                'search': search,
             },
         });
     }

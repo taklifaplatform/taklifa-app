@@ -2,8 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type ListDriversQueryRequest = {
-    latitude?: number;
-    longitude?: number;
+export type ListCarTypeRequest = {
+    search?: string;
 };
 

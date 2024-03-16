@@ -2,22 +2,23 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { DriverTransformer } from '../models/DriverTransformer';
+import type { CarSerieTransformer } from '../models/CarSerieTransformer';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-export class DriversService {
+export class CarGenerationsService {
     /**
-     * Fetch all drivers.
+     * Fetch all car series for a single car model
      * @returns any Successful response
      * @throws ApiError
      */
-    public static fetchAllDrivers({
+    public static fetchCarSeriesByGeneration({
+        generationId,
         page,
         perPage,
-        latitude,
-        longitude,
+        search,
     }: {
+        generationId: string,
         /**
          * Page number
          */
@@ -26,10 +27,9 @@ export class DriversService {
          * Number of items per page
          */
         perPage?: number,
-        latitude?: any,
-        longitude?: any,
+        search?: string,
     }): CancelablePromise<{
-        data?: Array<DriverTransformer>;
+        data?: Array<CarSerieTransformer>;
         links?: {
             first?: string;
             last?: string;
@@ -53,32 +53,14 @@ export class DriversService {
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/drivers',
+            url: '/api/cars/generations/{generation_id}/series',
+            path: {
+                'generation_id': generationId,
+            },
             query: {
                 'page': page,
                 'per_page': perPage,
-                'latitude': latitude,
-                'longitude': longitude,
-            },
-        });
-    }
-    /**
-     * Retrieve a driver.
-     * @returns any Successful response
-     * @throws ApiError
-     */
-    public static retrieveDriver({
-        driver,
-    }: {
-        driver: string,
-    }): CancelablePromise<{
-        data?: DriverTransformer;
-    }> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/drivers/{driver}',
-            path: {
-                'driver': driver,
+                'search': search,
             },
         });
     }

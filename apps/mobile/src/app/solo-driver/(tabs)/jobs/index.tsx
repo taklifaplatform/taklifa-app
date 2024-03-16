@@ -1,12 +1,13 @@
-import { JobsListScreen } from '@zix/features/shipments';
-import { AppHeader } from '@zix/ui/layouts';
+import { ShipmentsListScreen } from '@zix/features/shipments';
 import React from 'react';
 
 export default function Screen() {
   return (
-    <>
-      <AppHeader title="Jobs" headerBackgroundColor="transparent" />
-      <JobsListScreen urlPrefix='solo-driver/jobs' />
-    </>
+    <ShipmentsListScreen urlPrefix='/solo-driver/jobs' />
+
+    // <>
+    //   <AppHeader title="Jobs" headerBackgroundColor="transparent" />
+    //   <JobsListScreen urlPrefix='solo-driver/jobs' />
+    // </>
   );
 }

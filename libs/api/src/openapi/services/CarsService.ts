@@ -2,22 +2,23 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { DriverTransformer } from '../models/DriverTransformer';
+import type { CarOptionValueTransformer } from '../models/CarOptionValueTransformer';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-export class DriversService {
+export class CarsService {
     /**
-     * Fetch all drivers.
+     * Fetch all car option values for a single car equipment
      * @returns any Successful response
      * @throws ApiError
      */
-    public static fetchAllDrivers({
+    public static fetchCarOptionValuesByEquipment({
+        equipmentId,
         page,
         perPage,
-        latitude,
-        longitude,
+        search,
     }: {
+        equipmentId: string,
         /**
          * Page number
          */
@@ -26,10 +27,9 @@ export class DriversService {
          * Number of items per page
          */
         perPage?: number,
-        latitude?: any,
-        longitude?: any,
+        search?: string,
     }): CancelablePromise<{
-        data?: Array<DriverTransformer>;
+        data?: Array<CarOptionValueTransformer>;
         links?: {
             first?: string;
             last?: string;
@@ -53,32 +53,14 @@ export class DriversService {
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/drivers',
+            url: '/api/cars/equipments/{equipment_id}/option-values',
+            path: {
+                'equipment_id': equipmentId,
+            },
             query: {
                 'page': page,
                 'per_page': perPage,
-                'latitude': latitude,
-                'longitude': longitude,
-            },
-        });
-    }
-    /**
-     * Retrieve a driver.
-     * @returns any Successful response
-     * @throws ApiError
-     */
-    public static retrieveDriver({
-        driver,
-    }: {
-        driver: string,
-    }): CancelablePromise<{
-        data?: DriverTransformer;
-    }> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/drivers/{driver}',
-            path: {
-                'driver': driver,
+                'search': search,
             },
         });
     }

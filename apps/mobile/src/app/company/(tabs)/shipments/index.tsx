@@ -1,12 +1,13 @@
-import { ShipmentsListingScreen } from '@zix/features/companies-dashboard';
-import { AppHeader } from '@zix/ui/layouts';
+import { ShipmentsListScreen } from '@zix/features/shipments';
 import React from 'react';
 
 export default function Screen() {
   return (
-    <>
-      <AppHeader showBackButton title="Shipments" />
-      <ShipmentsListingScreen urlPrefix='company/shipments' />
-    </>
+    <ShipmentsListScreen urlPrefix='company/shipments' />
+
+    // <>
+    //   <AppHeader showBackButton title="Shipments" />
+    //   <ShipmentsListingScreen urlPrefix='company/shipments' />
+    // </>
   );
 }
