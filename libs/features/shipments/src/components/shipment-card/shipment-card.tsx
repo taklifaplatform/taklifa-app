@@ -148,7 +148,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
               color: '$color',
             }}
           >
-            {t('job:job-demand')} {`${t('shipment:type:'+shipment?.items_type)}`}
+            {t('job:job-demand')} {`${t('shipment:type:' + shipment?.items_type)}`}
           </Text>
           <Stack
             flexDirection="row"
@@ -215,37 +215,35 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
         $gtSm={{ display: 'none' }}
       />
       <XStack
-      flex={1}
+        flex={1}
         alignItems="center"
         gap="$2"
-        width={'30%'}
         $sm={{
-          width: '70%',
           justifyContent: 'center',
-          alignItems:"center"
+          alignItems: "center"
         }}
       >
         <ZixLinkButton
-          href={`/${urlPrefix}/${shipment.id}`}
+          href={`${urlPrefix}/${shipment.id}`}
           icon={<Eye />}
           themeInverse
-          width={'100%'}
-          fontWeight={600}
+          width='100%'
+          fontWeight='bold'
         >
           {t('shipment:see-more')}
         </ZixLinkButton>
-{shipment.status === 'pending' &&
-        <ZixLinkButton
-          href={`/`}
-          icon={<X size="$1" />}
-          width={'100%'}
-          backgroundColor={'red'}
-          color={'$color1'}
-          fontWeight={600}
-          $gtSm={{ display: 'none' }}
-        >
-          {t('shipment:reject')}
-        </ZixLinkButton>
+        {shipment.status === 'pending' &&
+          <ZixLinkButton
+            href={`/`}
+            icon={<X size="$1" />}
+            width={'100%'}
+            backgroundColor={'red'}
+            color={'$color1'}
+            fontWeight={600}
+            $gtSm={{ display: 'none' }}
+          >
+            {t('shipment:reject')}
+          </ZixLinkButton>
         }
       </XStack>
     </Stack>
