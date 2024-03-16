@@ -1,19 +1,16 @@
 
 import React from 'react';
 
-import { View, Text } from 'react-native';
 
-/* eslint-disable-next-line */
-export interface LaravelEchoProviderProps {
+export type LaravelEchoProviderProps = {
+  children: React.ReactNode;
 }
 
 
-export function LaravelEchoProvider(props: LaravelEchoProviderProps) {
-  return (
-    <View>
-      <Text>Welcome to laravel-echo-provider!</Text>
-    </View>
-  );
+export const LaravelEchoProvider: React.FC<LaravelEchoProviderProps> = ({
+  children
+}) => {
+  return children;
 }
 
 
