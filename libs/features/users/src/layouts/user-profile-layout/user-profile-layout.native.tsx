@@ -2,7 +2,7 @@ import { DriverTransformer } from '@zix/api';
 import { DashboardSwitcher } from '@zix/features/companies-dashboard';
 import { AppHeader } from '@zix/ui/layouts';
 import { CustomIcon } from '@zix/ui/icons';
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 import { TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'solito/router';

@@ -5,7 +5,7 @@ import { UserCard } from '@zix/features/users';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader } from '@zix/ui/layouts';
 import { MapDriverMarker } from '@zix/ui/sawaeed';
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 import { useState } from 'react';
 import { Dimensions } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';

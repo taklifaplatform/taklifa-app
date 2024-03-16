@@ -2,7 +2,7 @@ import { t } from 'i18next';
 import { useRouter } from 'solito/router';
 import { YStack } from 'tamagui';
 
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 import InlineItemSelect from '../../components/inline-item-select/inline-item-select';
 

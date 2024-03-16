@@ -12,7 +12,7 @@ import {
   authAccessTokenStorage,
   authRequestedAccountTypeStorage,
   authUserStorage,
-} from "../atoms";
+} from "../../../../utils/src/lib/atoms";
 
 export type RedirectUserOptions = {
   pushRoute?: boolean;

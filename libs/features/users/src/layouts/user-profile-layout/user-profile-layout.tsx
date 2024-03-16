@@ -1,7 +1,7 @@
 import { DriverTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
 import { AccountSwitcher, AppHeader } from '@zix/ui/layouts';
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 import { TouchableOpacity } from 'react-native';
 import { useRouter } from 'solito/router';
 

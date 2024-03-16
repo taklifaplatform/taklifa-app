@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { View } from 'tamagui';
 
 import { OpenAPI } from '@zix/api';
-import { useAuth } from '@zix/utils';
+import { useAuth } from '../hooks/use-auth';
 
 export interface AuthProviderProps {
   children?: React.ReactNode;

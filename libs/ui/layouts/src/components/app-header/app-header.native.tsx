@@ -2,7 +2,7 @@ import { Bell, Search } from '@tamagui/lucide-icons';
 import { UserAvatar } from '@zix/ui/common';
 import { ZixInput, ZixInputProps } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 import { t } from 'i18next';
 import { useCallback } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';

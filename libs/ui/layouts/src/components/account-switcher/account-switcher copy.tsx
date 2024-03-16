@@ -9,7 +9,7 @@ import { useToastController } from '@tamagui/toast';
 import { ChangeActiveRoleRequest, CompanyAdminService, UserService } from '@zix/api';
 import { MediaAvatar, UserAvatar } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 import { useCallback, useMemo, useState } from 'react';
 import { useRouter } from 'solito/router';
 import { Avatar, Button, Dialog, H4, ListItem, Sheet, Text, View, XStack, YGroup, YStack } from 'tamagui';

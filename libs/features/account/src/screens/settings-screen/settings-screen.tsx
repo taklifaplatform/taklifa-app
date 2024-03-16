@@ -10,7 +10,7 @@ import { t } from 'i18next';
 import { useRef } from 'react';
 import { Linking } from 'react-native';
 
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 import { useLink } from 'solito/link';
 import { AppHeader } from '@zix/ui/layouts';
 

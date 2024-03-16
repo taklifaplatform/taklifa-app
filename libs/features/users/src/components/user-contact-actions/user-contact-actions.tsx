@@ -1,7 +1,7 @@
 import { IconProps } from '@tamagui/helpers-icon';
 import { DriverTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 import { Linking } from 'react-native';
 import { useRouter } from 'solito/router';
 import { Button, SizeTokens, ThemeableStackProps, XStack } from 'tamagui';

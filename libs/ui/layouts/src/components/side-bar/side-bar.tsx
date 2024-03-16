@@ -1,7 +1,7 @@
 
 import { useMultiLang } from '@zix/i18n';
 import { CustomIcon } from '@zix/ui/icons';
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 import React from 'react';
 
 import { View, Text, YStack } from 'tamagui';

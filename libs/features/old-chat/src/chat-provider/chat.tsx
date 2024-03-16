@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 import React from 'react';
 import { Chat } from 'stream-chat-react';
 import 'stream-chat-react/dist/css/v2/index.css';

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { getUserActivityStatus } from '../utils/getUserActivityStatus';
 
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 import type { Channel } from 'stream-chat';
 
 export const useChannelMembersStatus = (channel: Channel) => {

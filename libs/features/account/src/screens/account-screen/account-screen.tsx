@@ -1,5 +1,5 @@
 import { UserProfile } from '@zix/features/users';
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 
 // TODO
 // https://www.figma.com/file/2hwhnxKlAlXCt9EiP5tEb4/SAWAAD?type=design&node-id=1326-5896&mode=design&t=3f1TojWUsWpIXEET-4

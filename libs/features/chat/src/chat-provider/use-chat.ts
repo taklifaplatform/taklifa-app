@@ -1,9 +1,9 @@
-import { useAuth } from "@zix/utils";
-import { useEffect } from "react";
-import { DevToken } from "stream-chat";
-import { ZixChat } from "./ZixChat";
+import { useEffect } from 'react';
+import { DevToken } from 'stream-chat';
+import { ZixChat } from './ZixChat';
+import { useAuth } from '@zix/services/auth';
 
-const client = ZixChat.getInstance("000000");
+const client = ZixChat.getInstance('000000');
 client.baseURL = `${process.env.NEXT_PUBLIC_API_URL}/api/chat`;
 
 export function useChat() {

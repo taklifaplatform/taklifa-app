@@ -10,7 +10,7 @@ import { CustomIcon } from '@zix/ui/icons';
 import { ZixFieldContainer, ZixInput } from '@zix/ui/forms';
 import { useRouter } from 'solito/router';
 import { Alert } from 'react-native';
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 
 const MEMBERS_LIST_LIMIT = 3;
 

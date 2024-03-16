@@ -1,4 +1,3 @@
-import { AuthProvider } from '@zix/features/auth';
 import { ChatProvider } from '@zix/features/chat';
 import { themeConfig } from '@zix/theme';
 import { Provider as JotaiProvider } from 'jotai';
@@ -13,6 +12,7 @@ import {
   PushNotification,
 } from './providers';
 import { LaravelEchoProvider } from '@zix/services/laravel-echo';
+import { AuthProvider } from '@zix/services/auth';
 
 export interface MainAppProviderProps {
   children: React.ReactNode;

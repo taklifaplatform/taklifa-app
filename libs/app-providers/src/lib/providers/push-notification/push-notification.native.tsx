@@ -1,5 +1,5 @@
 
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 import React, { useEffect } from 'react';
 import { registerForPushNotificationsAsync } from './registerForPushNotificationsAsync';
 import { NotificationService } from '@zix/api';

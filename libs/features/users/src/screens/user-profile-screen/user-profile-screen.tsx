@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { DriversService } from '@zix/api';
 
 import { FullScreenSpinner } from '@zix/ui/common';
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 import { createParam } from 'solito';
 import { ScrollView, YStack } from 'tamagui';
 import ProfileHeader from '../../components/profile-header/profile-header';

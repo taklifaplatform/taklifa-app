@@ -9,7 +9,7 @@ import {
   handleFormErrors,
 } from '@zix/ui/forms';
 import { AppHeader } from '@zix/ui/layouts';
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
