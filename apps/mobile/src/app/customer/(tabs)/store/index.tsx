@@ -1,4 +1,4 @@
-import { AppHeader } from '@zix/ui/common';
+import { AppHeader } from '@zix/ui/layouts';
 import { H4, View, XStack } from 'tamagui';
 import { CustomIcon } from '@zix/ui/icons';
 import React from 'react';

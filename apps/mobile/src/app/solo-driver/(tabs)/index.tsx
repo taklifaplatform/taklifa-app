@@ -1,6 +1,6 @@
 // import { HomeScreen } from '@zix/app/features/solo-driver-dashboard';
 import { HomeScreen } from '@zix/features/customer-dashboard';
-import { AppHeader } from '@zix/ui/common';
+import { AppHeader } from '@zix/ui/layouts';
 import React from 'react';
 
 export default function Screen() {

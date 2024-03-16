@@ -1,19 +1,13 @@
 
-import Head from 'next/head'
-import { NextPageWithLayout } from '../../_app'
-import { ChangePasswordScreen } from '@zix/features/auth'
-import { MainLayout } from '@zix/features/main'
 import { AccountSettingsLayout } from '@zix/features/account'
+import { ChangePasswordScreen } from '@zix/features/auth'
+import { MainLayout } from '@zix/ui/layouts'
+import { NextPageWithLayout } from '../../_app'
 
 
 const Page: NextPageWithLayout = () => {
   return (
-    <>
-      <Head>
-        <title>Change Password</title>
-      </Head>
-      <ChangePasswordScreen />
-    </>
+    <ChangePasswordScreen />
   )
 }
 

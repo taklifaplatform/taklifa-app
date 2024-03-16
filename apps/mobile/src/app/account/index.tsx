@@ -3,29 +3,13 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { AccountScreen } from '@zix/features/account';
 import { DashboardSwitcher } from '@zix/features/companies-dashboard';
-import { AppHeader } from '@zix/ui/common';
+import { AppHeader } from '@zix/ui/layouts';
 import { CustomIcon } from '@zix/ui/icons';
 
 export default function Screen() {
   return (
     <>
-      <AppHeader
-        showBackButton
-        headerTitle={() => <DashboardSwitcher />}
-        headerRight={() => (
-          <TouchableOpacity
-            style={{
-              backgroundColor: '#F6F6F6',
-              borderRadius: 4,
-              padding: 5,
-            }}
-            onPress={() => router.push('/account/settings')}
-          >
-            <CustomIcon name="more" color="black" size="$3" />
-          </TouchableOpacity>
-        )}
-        headerBackgroundColor="transparent"
-      />
+
 
       <AccountScreen />
     </>

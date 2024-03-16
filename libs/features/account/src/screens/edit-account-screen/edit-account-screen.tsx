@@ -5,12 +5,13 @@ import { Theme } from 'tamagui';
 import { useToastController } from '@tamagui/toast';
 import { UserService } from '@zix/api';
 import { FullScreenSpinner } from '@zix/ui/common';
+import { AppHeader } from '@zix/ui/layouts';
 import { useAuth } from '@zix/utils';
+import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
 import { z } from 'zod';
-import { t } from 'i18next';
 
 const { useParams } = createParam<{ edit_name?: '1'; edit_about?: '1' }>();
 
@@ -69,6 +70,9 @@ export const EditAccountScreen = () => {
       }}
       defaultValues={user}
       onSubmit={mutate}
+      renderBefore={() => (
+        <AppHeader showBackButton title="Edit Profile" />
+      )}
       renderAfter={({ submit }) => (
         <Theme inverse>
           <SubmitButton onPress={() => submit()}>

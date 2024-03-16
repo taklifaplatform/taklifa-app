@@ -1,4 +1,4 @@
-import { AppHeader } from '@zix/ui/common';
+import { AppHeader } from '@zix/ui/layouts';
 import { useCallback } from 'react';
 import { useRouter } from 'solito/router';
 import { ChannelList } from 'stream-chat-expo';

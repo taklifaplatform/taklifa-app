@@ -1,6 +1,6 @@
 
 
-import { AppHeader } from '@zix/ui/common';
+import { AppHeader } from '@zix/ui/layouts';
 import { ChannelList } from 'stream-chat-react';
 
 

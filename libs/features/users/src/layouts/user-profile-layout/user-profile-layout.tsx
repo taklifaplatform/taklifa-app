@@ -1,6 +1,6 @@
 import { DriverTransformer } from '@zix/api';
 import { DashboardSwitcher } from '@zix/features/companies-dashboard';
-import { AppHeader } from '@zix/ui/common';
+import { AppHeader } from '@zix/ui/layouts';
 import { CustomIcon } from '@zix/ui/icons';
 import { useAuth } from '@zix/utils';
 import { TouchableOpacity } from 'react-native';

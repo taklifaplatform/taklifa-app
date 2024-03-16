@@ -50,6 +50,7 @@
       "@zix/ui/common": ["libs/ui/common/src/index.ts"],
       "@zix/ui/forms": ["libs/ui/forms/src/index.ts"],
       "@zix/ui/icons": ["libs/ui/icons/src/index.ts"],
+      "@zix/ui/layouts": ["libs/ui/layouts/src/index.ts"],
       "@zix/ui/sawaeed": ["libs/ui/sawaeed/src/index.ts"],
       "@zix/ui/widgets": ["libs/ui/widgets/src/index.ts"],
       "@zix/utils": ["libs/utils/src/index.ts"]

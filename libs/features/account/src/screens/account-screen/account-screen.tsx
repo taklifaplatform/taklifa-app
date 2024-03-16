@@ -1,5 +1,6 @@
 import {
   AnimatePresence,
+  Button,
   ScrollView,
   SizableText,
   StackProps,
@@ -15,10 +16,15 @@ import { DriverTap } from '../../components/profile-layout/DriverTap';
 import { ProfileHeader } from '../../components/profile-layout/ProfileHeader';
 import { RatingTap } from '../../components/profile-layout/RatingTap';
 import { TruckTap } from '../../components/profile-layout/TruckTap';
+import { AppHeader } from '@zix/ui/layouts';
+import { DashboardSwitcher } from '@zix/features/companies-dashboard';
+import { CustomIcon } from '@zix/ui/icons';
+import { useRouter } from 'solito/router';
 
 // TODO
 // https://www.figma.com/file/2hwhnxKlAlXCt9EiP5tEb4/SAWAAD?type=design&node-id=1326-5896&mode=design&t=3f1TojWUsWpIXEET-4
 export function AccountScreen() {
+  const router = useRouter();
   const { user } = useAuth();
 
   // TABS
@@ -234,10 +240,27 @@ export function AccountScreen() {
   });
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} padding="$2">
-      {user?.id && <ProfileHeader user={user} />}
-      {HorizontalTabs()}
-    </ScrollView>
+    <>
+      <AppHeader
+        title={user?.name ?? 'Account'}
+        showBackButton
+        headerTitle={() => <DashboardSwitcher />}
+        headerRight={() => (
+          <Button
+            variant='outlined'
+            onPress={() => router.push('/account/settings')}
+          >
+            <CustomIcon name="more" color="black" size="$3" />
+          </Button>
+        )}
+        headerBackgroundColor="transparent"
+      />
+      <ScrollView showsVerticalScrollIndicator={false} padding="$2">
+        {user?.id && <ProfileHeader user={user} />}
+        {HorizontalTabs()}
+      </ScrollView>
+    </>
+
   );
 }
 

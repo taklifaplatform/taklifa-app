@@ -1,17 +1,11 @@
-import Head from 'next/head'
 
-import { NextPageWithLayout } from '../_app'
-import { MainLayout } from '@zix/features/main'
 import { AccountScreen, AccountSettingsLayout } from '@zix/features/account'
+import { NextPageWithLayout } from '../_app'
+import { MainLayout } from '@zix/ui/layouts'
 
 const Page: NextPageWithLayout = () => {
   return (
-    <>
-      <Head>
-        <title>Profile</title>
-      </Head>
-      <AccountScreen />
-    </>
+    <AccountScreen />
   )
 }
 

@@ -1,5 +1,5 @@
 import { ShipmentDetailsScreen } from '@zix/features/customer-dashboard';
-import { AppHeader } from '@zix/ui/common';
+import { AppHeader } from '@zix/ui/layouts';
 import React from 'react';
 
 export default function Screen() {
@@ -7,8 +7,8 @@ export default function Screen() {
     <>
       <AppHeader showBackButton title="Shipment Detail" />
      <ShipmentDetailsScreen />
-      
-      
+
+
     </>
   );
 }

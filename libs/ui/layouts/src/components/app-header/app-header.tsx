@@ -1,13 +1,13 @@
 import { Bell, Search } from '@tamagui/lucide-icons';
+import { UserAvatar } from '@zix/ui/common';
 import { ZixInput, ZixInputProps } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
 import { useAuth } from '@zix/utils';
 import { t } from 'i18next';
 import { useCallback } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'solito/router';
 import { Button, ColorTokens, H4, View, XStack, YStack } from 'tamagui';
-import UserAvatar from '../user-avatar/user-avatar';
+import Head from 'next/head'
 
 export type AppHeaderProps = {
   searchProps?: ZixInputProps
@@ -73,12 +73,6 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   const renderNotificationsButton = () =>
     !showBackButton && (
       <XStack>
-        {/* <Button
-          size="$2"
-          backgroundColor="$color5"
-          icon={<MessageCircle size="$1" />}
-          onPress={() => router.push('/messenger')}
-        /> */}
         <Button
           unstyled
           size="$2"
@@ -89,8 +83,11 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
     );
 
   return (
-    <YStack backgroundColor={headerBackgroundColor} paddingBottom="$2">
-      <SafeAreaView edges={['top', 'left', 'right']}>
+    <>
+      <Head>
+        <title>{title ?? ''} - {t('common:app_name')}</title>
+      </Head>
+      <YStack backgroundColor={headerBackgroundColor} paddingBottom="$2">
         <XStack
           padding="$4"
           paddingVertical="$2"
@@ -116,8 +113,9 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
         </XStack>
 
         {renderSearchBar()}
-      </SafeAreaView>
-    </YStack>
+      </YStack>
+    </>
+
   );
 };
 

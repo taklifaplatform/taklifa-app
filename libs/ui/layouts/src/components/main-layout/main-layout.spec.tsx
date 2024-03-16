@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import AppHeader from './app-header';
+import MainLayout from './main-layout';
 
-describe('AppHeader', () => {
+describe('MainLayout', () => {
   it('should render successfully', () => {
-    const { root } = render(<AppHeader />);
+    const { root } = render(< MainLayout />);
     expect(root).toBeTruthy();
   });
 });
