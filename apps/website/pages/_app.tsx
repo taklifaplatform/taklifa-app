@@ -26,8 +26,7 @@ export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
 };
 
 const defaultLang = bootMultiLang();
-OpenAPI.BASE = `http://0.0.0.0:8000`;
-// OpenAPI.BASE = `https://admin-sawaeed.zixdev.com`;
+OpenAPI.BASE = `${process.env.NEXT_PUBLIC_API_URL}`;
 
 const ZixApp: React.FC<SolitoAppProps> = ({ Component, pageProps }) => {
   // reference: https://nextjs.org/docs/pages/building-your-application/routing/pages-and-layouts

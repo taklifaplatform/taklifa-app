@@ -57,12 +57,10 @@ export class ZixChatEcho<
         requestID: this.requestID,
       });
 
-      const wsHost = OpenAPI.BASE?.replace('http://', '').replace('https://', '').split(':')[0]
-
       const echo = new Echo({
         broadcaster: 'reverb',
         key: 'connect',
-        wsHost: wsHost,
+        wsHost: `${process.env.NEXT_PUBLIC_WS_URL}`,
         wsPort: 8080,
         wssPort: 443,
         forceTLS: false,

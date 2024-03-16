@@ -11,7 +11,7 @@ import React from 'react';
 const context = require.context('./app');
 
 const defaultLang = bootMultiLang()
-OpenAPI.BASE = `${process.env.LARAVEL_API_URL}`;
+OpenAPI.BASE = `${process.env.NEXT_PUBLIC_API_URL}`;
 
 export default function ZixApp() {
   return (
