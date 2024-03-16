@@ -1,16 +1,50 @@
-import React from 'react';
+import { FullScreenSpinner } from "@zix/ui/common"
+import { useAuth } from "@zix/utils"
+import { XStack, YStack } from "tamagui"
+import AccountSettingsMenu from "../account-settings-menu/account-settings-menu"
 
-import { View, Text } from 'react-native';
 
-/* eslint-disable-next-line */
-export interface AccountSettingsLayoutProps {}
-
-export function AccountSettingsLayout(props: AccountSettingsLayoutProps) {
-  return (
-    <View>
-      <Text>Welcome to account-settings-layout!</Text>
-    </View>
-  );
+export type SettingsLayoutProps = {
+  /**
+   * web-only
+   */
+  isSettingsHome?: boolean
+  /**
+   * web-only
+   */
+  children?: React.ReactNode
 }
+
+export const AccountSettingsLayout = ({ children, isSettingsHome = false }: SettingsLayoutProps) => {
+  const { isLoading, user } = useAuth()
+  if (isLoading || !user) {
+    return <FullScreenSpinner />
+  }
+
+  return (
+    <XStack flex={1}>
+      <YStack
+        backgroundColor="$color1"
+        $sm={{ flex: 1, display: isSettingsHome ? 'flex' : 'none' }}
+        // this file is web-only so we can safely use CSS
+        style={{
+          transition: '200ms ease width',
+        }}
+        $gtSm={{
+          width: 300,
+        }}
+        $gtLg={{
+          width: 400,
+        }}
+      >
+        <AccountSettingsMenu />
+      </YStack>
+      <YStack marginVertical="$10" flex={1} alignItems="center" $sm={{ display: isSettingsHome ? 'none' : 'block' }}>
+        <YStack width="100%">{children}</YStack>
+      </YStack>
+    </XStack>
+  )
+}
+
 
 export default AccountSettingsLayout;
