@@ -1,8 +1,8 @@
-import { Bell, Search } from '@tamagui/lucide-icons';
+import { Search } from '@tamagui/lucide-icons';
+import { useAuth } from '@zix/services/auth';
 import { UserAvatar } from '@zix/ui/common';
 import { ZixInput, ZixInputProps } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
-import { useAuth } from '@zix/services/auth';
 import { t } from 'i18next';
 import Head from 'next/head';
 import { useCallback } from 'react';
@@ -26,7 +26,6 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   headerRight,
   headerTitle,
   title,
-  headerBackgroundColor = '$color5',
 }) => {
   const { user, isLoggedIn } = useAuth();
   const router = useRouter();
@@ -40,25 +39,23 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   }, [isLoggedIn, router, user?.id]);
 
   const renderSearchBar = () => showSearchBar && (
-    <View paddingHorizontal="$4" paddingVertical='$2'>
+    <View flex={1} paddingHorizontal="$4" paddingVertical='$2'>
       <ZixInput
         height="$4"
         leftIcon={() => <Search size="$1.5" />}
-        // rightIcon={() => <ScanBarcode size="$1.5" />}
         placeholder={'Search here'}
         {...searchProps}
       />
     </View>
   )
 
-  const renderUserAvatar = () =>
-    !showBackButton && (
-      <Button
-        unstyled
-        icon={<UserAvatar user={user} size="$2.5" />}
-        onPress={onAvatarPress}
-      />
-    );
+  const renderUserAvatar = () => (
+    <Button
+      unstyled
+      icon={<UserAvatar user={user} size="$2.5" />}
+      onPress={onAvatarPress}
+    />
+  );
 
   const renderBackButton = () =>
     showBackButton && (
@@ -70,35 +67,21 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
       />
     );
 
-  const renderNotificationsButton = () =>
-    !showBackButton && (
-      <XStack>
-        <Button
-          unstyled
-          size="$2"
-          icon={<Bell size="$1" fill="#000" />}
-          onPress={() => router.push('/notifications')}
-        />
-      </XStack>
-    );
-
   return (
     <>
       <Head>
         <title>{title ?? ''} - {t('common:app_name')}</title>
       </Head>
-      <YStack backgroundColor={headerBackgroundColor} paddingBottom="$2">
+      <YStack backgroundColor='$color2' paddingBottom="$2" position='sticky' top={0} zIndex={100} >
         <XStack
+          minHeight='$6'
           padding="$4"
           paddingVertical="$2"
           alignItems="center"
           justifyContent="space-between"
         >
           <XStack flex={0.25} justifyContent="flex-start">
-            {renderUserAvatar()}
             {renderBackButton()}
-          </XStack>
-          <XStack flex={0.5} justifyContent="space-around">
             {headerTitle ? (
               headerTitle()
             ) : (
@@ -107,12 +90,11 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
               </H4>
             )}
           </XStack>
+          {renderSearchBar()}
           <XStack flex={0.25} justifyContent="flex-end">
-            {headerRight ? headerRight() : renderNotificationsButton()}
+            {headerRight ? headerRight() : renderUserAvatar()}
           </XStack>
         </XStack>
-
-        {renderSearchBar()}
       </YStack>
     </>
 

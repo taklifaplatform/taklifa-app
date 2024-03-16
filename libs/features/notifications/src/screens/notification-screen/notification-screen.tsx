@@ -1,20 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
 import { NotificationService, NotificationTransformer } from '@zix/api';
+import { CustomIcon } from '@zix/ui/icons';
+import { AppHeader } from '@zix/ui/layouts';
 import moment from 'moment';
 import { useMemo, useState } from 'react';
 import { SectionList, SectionListData, } from 'react-native';
-import { Text, XStack, YStack, View, H4 } from 'tamagui';
+import { H4, Text, View, XStack } from 'tamagui';
 import { NotificationCard } from '../components/NotificationCard';
-import SearchBar from '../components/SearchBar';
-import { CustomIcon } from '@zix/ui/icons';
-import { AppHeader } from '@zix/ui/layouts';
 
 /* eslint-disable-next-line */
 export interface NotificationScreenProps { }
 export function NotificationScreen(props: NotificationScreenProps) {
 
   const [search, setSearch] = useState('');
-
 
   const { data: apiData } = useQuery({
     queryFn() {
@@ -71,37 +69,37 @@ export function NotificationScreen(props: NotificationScreenProps) {
         showBackButton
         title="Notifications"
         headerBackgroundColor="transparent"
+        showSearchBar
+        searchProps={{
+          value: search,
+          onChangeText: setSearch
+        }}
       />
-      <YStack flex={1} gap="$2">
-        <SearchBar setSearch={setSearch} search={search} />
+      <SectionList
+        style={{ flex: 1 }}
+        contentContainerStyle={{ flexGrow: 1 }}
+        showsVerticalScrollIndicator={false}
+        ListEmptyComponent={() => (
+          <View flex={1} alignItems='center' gap="$8">
+            <CustomIcon name="empty_notification" size="$18" color="$color5" />
+            <H4>No Notification Found!</H4>
+          </View>
+        )}
+        renderItem={({ item, index }) => <NotificationCard key={`${item.id}-${index}`} notification={item} />}
+        renderSectionHeader={({ section: { title, data } }) => {
+          return (
+            <XStack padding="$4" alignItems='center' justifyContent='space-between' backgroundColor="$background">
+              <Text fontWeight={'bold'} fontSize={'$3'} >
+                {title}
+              </Text>
 
-        {/* <DebugObject object={sections} /> */}
-        <SectionList
-          style={{ flex: 1 }}
-          contentContainerStyle={{ flexGrow: 1 }}
-          showsVerticalScrollIndicator={false}
-          ListEmptyComponent={() => (
-            <View flex={1} alignItems='center' gap="$8">
-              <CustomIcon name="empty_notification" size="$18" color="$color5" />
-              <H4>No Notification Found!</H4>
-            </View>
-          )}
-          renderItem={({ item, index }) => <NotificationCard key={`${item.id}-${index}`} notification={item} />}
-          renderSectionHeader={({ section: { title, data } }) => {
-            return (
-              <XStack padding="$4" alignItems='center' justifyContent='space-between' backgroundColor="$background">
-                <Text fontWeight={'bold'} fontSize={'$3'} >
-                  {title}
-                </Text>
-
-                <Text>({data?.length})</Text>
-              </XStack>
-            );
-          }}
-          sections={sections}
-          stickySectionHeadersEnabled
-        />
-      </YStack>
+              <Text>({data?.length})</Text>
+            </XStack>
+          );
+        }}
+        sections={sections}
+        stickySectionHeadersEnabled
+      />
     </>
   );
 }

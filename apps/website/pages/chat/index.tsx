@@ -1,10 +1,9 @@
-import Head from 'next/head';
 
+import { AppHeader, DashboardLayout } from '@zix/ui/layouts';
 import { useEffect, useState } from 'react';
 import { Channel, ChannelHeader, ChannelList, MessageInput, Thread, VirtualizedMessageList, useChatContext } from 'stream-chat-react';
 import { View, XStack } from 'tamagui';
 import { NextPageWithLayout } from '../_app';
-import { DashboardLayout } from '@zix/ui/layouts';
 
 export const Page: NextPageWithLayout = () => {
   const { client } = useChatContext()
@@ -44,9 +43,9 @@ export const Page: NextPageWithLayout = () => {
 
   return (
     <>
-      <Head>
-        <title>Chat</title>
-      </Head>
+      <AppHeader
+        title="Chat"
+      />
 
       {renderChatUI()}
     </>
