@@ -104,6 +104,7 @@ const iconNames = [
   'matricule',
   'alert_cercle',
   'user_info',
+  'alert',
   // vehicles
   'vehicle_a',
   'vehicle_b',

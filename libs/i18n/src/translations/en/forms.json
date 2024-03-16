@@ -29,6 +29,11 @@
   "message-to-customer": "Message to Customer // Write notes",
   "confirmation": "Confirmation",
   "cancel-service": "Cancel Service",
+  "message": "Message",
+  "subject": "Subject",
+  "send-message": "Send Message",
+  "write-here": "Write here...",
+  "complain-send": "Send Complain",
   "labels": {
     "code": "Code"
   }

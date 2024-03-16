@@ -1,11 +1,17 @@
+import { ContactScreen } from '@zix/features/contact-us';
 import { MainLayout } from 'apps/website/layouts/MainLayout';
+import { t } from 'i18next';
+import Head from 'next/head';
 import { NextPageWithLayout } from '../_app';
-import { Text } from 'tamagui';
 
 export const Page: NextPageWithLayout = () => {
   return (
     <>
-      <Text>Contact</Text>
+      <Head>
+        <title>{t('web-home:call')}</title>
+      </Head>
+
+      <ContactScreen />
     </>
   );
 };

@@ -138,6 +138,11 @@
     "message-to-customer": "Message to Customer // Write notes",
     "confirmation": "Confirmation",
     "cancel-service": "Cancel Service",
+    "message": "Message",
+    "subject": "Subject",
+    "send-message": "Send Message",
+    "write-here": "Write here...",
+    "complain-send": "Send Complain",
     "labels": {
       "code": "Code"
     }
@@ -337,6 +342,10 @@
     "aramex": "Aramex Press",
     "blogstix": "Blogstix",
     "support": "Help and Support center",
-    "all-rights-reserved": "All rights reserved"
+    "all-rights-reserved": "All rights reserved",
+    "contact-welcome": "We are always keen to provide and guarantee the best services to our dear customers",
+    "contact-question": "How can we serve you today?",
+    "complaint": "Complaint",
+    "complain-text": "If there are any problems you encounter, please do not hesitate to contact us"
   }
 }

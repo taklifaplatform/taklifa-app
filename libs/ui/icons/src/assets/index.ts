@@ -78,6 +78,7 @@ import Opacity from "./icons/opacity.svg";
 import Matricule from "./icons/matricule.svg";
 import UserInfo from "./icons/user-info.svg";
 import AlertCercle from "./icons/alert-cercle.svg";
+import Alert from "./icons/alert.svg";
 
 // arts
 import CompanyCars from "./arts/company-cars.svg";
@@ -152,6 +153,7 @@ export {
   Share,
   Shipping,
   Snapchat,
+  Alert,
   SoloTransporterCar,
   Star,
   StarLocation,
