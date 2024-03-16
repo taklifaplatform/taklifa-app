@@ -1,18 +1,20 @@
 
 import React from 'react';
+import DashboardLayout from '../dashboard-layout/dashboard-layout';
 
-import { View, Text } from 'react-native';
 
-/* eslint-disable-next-line */
-export interface CustomerDashboardLayoutProps {
+export type CustomerDashboardLayoutProps = {
+  children: React.ReactNode;
 }
 
 
-export function CustomerDashboardLayout(props: CustomerDashboardLayoutProps) {
+export const CustomerDashboardLayout: React.FC<CustomerDashboardLayoutProps> = ({
+  children
+}) => {
   return (
-    <View>
-      <Text>Welcome to customer-dashboard-layout!</Text>
-    </View>
+    <DashboardLayout>
+      {children}
+    </DashboardLayout>
   );
 }
 

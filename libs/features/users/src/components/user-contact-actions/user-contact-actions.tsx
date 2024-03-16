@@ -1,6 +1,7 @@
 import { IconProps } from '@tamagui/helpers-icon';
 import { DriverTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
+import { useAuth } from '@zix/utils';
 import { Linking } from 'react-native';
 import { useRouter } from 'solito/router';
 import { Button, SizeTokens, ThemeableStackProps, XStack } from 'tamagui';
@@ -15,6 +16,7 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
   actionButtonSize = '$2.5',
   ...props
 }) => {
+  const { user: authUser } = useAuth()
   const router = useRouter()
 
   const sharedButtonStyle = {
@@ -34,6 +36,13 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
   function onStartChatPress() {
     alert('UNDER DEVELOPMENT')
   }
+
+  if (
+    user.id === authUser?.id
+  ) {
+    return null;
+  }
+
 
   return (
     <XStack justifyContent="space-between" gap="$2" {...props}>

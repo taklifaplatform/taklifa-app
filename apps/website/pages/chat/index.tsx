@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Channel, ChannelHeader, ChannelList, MessageInput, Thread, VirtualizedMessageList, useChatContext } from 'stream-chat-react';
 import { View, XStack } from 'tamagui';
 import { NextPageWithLayout } from '../_app';
+import { DashboardLayout } from '@zix/ui/layouts';
 
 export const Page: NextPageWithLayout = () => {
   const { client } = useChatContext()
@@ -55,7 +56,7 @@ export const Page: NextPageWithLayout = () => {
 
 
 
-// Page.getLayout = (page) => <MainLayout fullPage>{page}</MainLayout>
+Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>
 
 // TODO: we need to protect all screens
 // export const getServerSideProps = userProtectedGetSSP()

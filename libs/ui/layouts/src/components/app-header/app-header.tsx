@@ -4,10 +4,10 @@ import { ZixInput, ZixInputProps } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
 import { useAuth } from '@zix/utils';
 import { t } from 'i18next';
+import Head from 'next/head';
 import { useCallback } from 'react';
 import { useRouter } from 'solito/router';
 import { Button, ColorTokens, H4, View, XStack, YStack } from 'tamagui';
-import Head from 'next/head'
 
 export type AppHeaderProps = {
   searchProps?: ZixInputProps
@@ -33,11 +33,11 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
 
   const onAvatarPress = useCallback(() => {
     if (isLoggedIn) {
-      router.push('/account');
+      router.push(`/users/${user?.id}`);
     } else {
       router.push('/auth/login');
     }
-  }, [isLoggedIn, router]);
+  }, [isLoggedIn, router, user?.id]);
 
   const renderSearchBar = () => showSearchBar && (
     <View paddingHorizontal="$4" paddingVertical='$2'>

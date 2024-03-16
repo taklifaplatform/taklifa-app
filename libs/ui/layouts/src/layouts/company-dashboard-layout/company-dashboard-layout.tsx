@@ -1,18 +1,20 @@
 
 import React from 'react';
+import DashboardLayout from '../dashboard-layout/dashboard-layout';
 
-import { View, Text } from 'react-native';
 
-/* eslint-disable-next-line */
-export interface CompanyDashboardLayoutProps {
+export type CompanyDashboardLayoutProps = {
+  children: React.ReactNode;
 }
 
 
-export function CompanyDashboardLayout(props: CompanyDashboardLayoutProps) {
+export const CompanyDashboardLayout: React.FC<CompanyDashboardLayoutProps> = ({
+  children
+}) => {
   return (
-    <View>
-      <Text>Welcome to company-dashboard-layout!</Text>
-    </View>
+    <DashboardLayout>
+      {children}
+    </DashboardLayout>
   );
 }
 

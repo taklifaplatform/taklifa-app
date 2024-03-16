@@ -1,18 +1,20 @@
 
 import React from 'react';
+import DashboardLayout from '../dashboard-layout/dashboard-layout';
 
-import { View, Text } from 'react-native';
 
-/* eslint-disable-next-line */
-export interface SoloDriverDashboardLayoutProps {
+export type SoloDriverDashboardLayoutProps = {
+  children: React.ReactNode;
 }
 
 
-export function SoloDriverDashboardLayout(props: SoloDriverDashboardLayoutProps) {
+export const SoloDriverDashboardLayout: React.FC<SoloDriverDashboardLayoutProps> = ({
+  children
+}) => {
   return (
-    <View>
-      <Text>Welcome to solo-driver-dashboard-layout!</Text>
-    </View>
+    <DashboardLayout>
+      {children}
+    </DashboardLayout>
   );
 }
 

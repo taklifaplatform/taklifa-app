@@ -1,20 +1,27 @@
 
 import React from 'react';
+import { View, XStack } from 'tamagui';
+import SideBar from '../../components/side-bar/side-bar';
 
-import { View, Text } from 'react-native';
 
-/* eslint-disable-next-line */
-export interface DashboardLayoutProps {
+export type DashboardLayoutProps = {
+  children: React.ReactNode;
 }
 
-
-export function DashboardLayout(props: DashboardLayoutProps) {
+export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
+  children
+}) => {
   return (
-    <View>
-      <Text>Welcome to dashboard-layout!</Text>
-    </View>
+    <XStack flex={1}>
+      <SideBar />
+
+      <View flex={1} backgroundColor='$color1'>
+        {children}
+      </View>
+    </XStack>
   );
 }
+
 
 
 export default DashboardLayout;
