@@ -1,7 +1,7 @@
-import { ShipmentDetailsScreen } from '@zix/features/customer-dashboard';
+import { ShipmentDetailScreen } from '@zix/features/shipments';
 
 export default function Screen() {
   return (
-    <ShipmentDetailsScreen urlPrefix='/customer/shipments' />
+    <ShipmentDetailScreen variant='shipments' />
   );
 }

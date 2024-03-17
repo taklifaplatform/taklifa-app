@@ -1,6 +1,4 @@
 
-export * from './screens/shipments/shipment-details-screen/shipment-details-screen';
-
 export * from './components/customer-dashboard-layout/customer-dashboard-layout';
 
 export * from './screens/shipment-manager/summary-shipment-screen/summary-shipment-screen';
