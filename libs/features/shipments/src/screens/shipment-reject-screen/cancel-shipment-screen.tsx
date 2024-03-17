@@ -46,12 +46,6 @@ export const CancelShipmentScreen = () => {
           email: '',
           message: '',
         }}
-        props={{
-          raison: {
-           // api: 'https://api.openweathermap.org/data/2.5/weather?q=sfax&appid=303f9eec7635d278cf01f88380592743&units=metric',
-          },
-        
-        }}
         onSubmit={mutate}
         renderBefore={() => (
           <YStack gap="$6" paddingHorizontal="$5">

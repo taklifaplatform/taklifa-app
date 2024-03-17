@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import CancelShipmentScreen from './cancel-shipment-screen';
+import ShipmentRejectScreen from './shipment-reject-screen';
 
-describe('CancelShipmentScreen', () => {
+describe('ShipmentRejectScreen', () => {
   it('should render successfully', () => {
-    const { root } = render(< CancelShipmentScreen />);
+    const { root } = render(< ShipmentRejectScreen />);
     expect(root).toBeTruthy();
   });
 });
