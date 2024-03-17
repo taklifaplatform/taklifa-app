@@ -61,6 +61,32 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
+        name="jobs"
+        options={{
+          title: 'Jobs',
+          tabBarIcon: ({ size, focused }) => (
+            <CustomIcon
+              name="store"
+              color={focused ? '$color5' : '$gray6'}
+              size={size}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="team"
+        options={{
+          title: 'Team',
+          tabBarIcon: ({ size, focused }) => (
+            <CustomIcon
+              name="store"
+              color={focused ? '$color5' : '$gray6'}
+              size={size}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="chat"
         options={{
           title: t('navigation:customer-dashboard.chat'),
