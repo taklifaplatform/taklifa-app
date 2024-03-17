@@ -1,7 +1,6 @@
 
 import { ChevronDown } from '@tamagui/lucide-icons';
 import { RecursiveErrorType } from '@ts-react/form/lib/src/zodObjectErrors';
-import { Shake } from '@zix/ui/common';
 import { useEffect, useId, useState } from 'react';
 import {
   Accordion,
@@ -19,6 +18,7 @@ import {
 } from 'tamagui';
 import FieldError from '../field-error/field-error';
 import { useMultiLang } from '@zix/i18n';
+import Shake from '../shake/shake';
 
 
 const StackContainer = styled(ThemeableStack, {

@@ -1,14 +1,13 @@
 import Dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
-import { StreamChatGenerics } from '../types';
 
 import type { UserResponse } from 'stream-chat';
 
 Dayjs.extend(relativeTime);
 
 export const getUserActivityStatus = (
-  user?: UserResponse<StreamChatGenerics>
+  user?: UserResponse,
 ) => {
   if (!user) return '';
 

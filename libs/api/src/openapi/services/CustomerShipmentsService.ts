@@ -19,6 +19,7 @@ export class CustomerShipmentsService {
         search,
         status,
         itemsType,
+        role,
     }: {
         /**
          * Page number
@@ -31,6 +32,7 @@ export class CustomerShipmentsService {
         search?: string,
         status?: 'draft' | 'searching' | 'delivering' | 'delivered' | 'cancelled' | 'pending' | 'expired' | 'rejected' | 'completed' | 'failed' | 'returned' | 'lost' | 'damaged' | 'stolen' | 'other',
         itemsType?: 'document' | 'box' | 'multiple_boxes' | 'other',
+        role?: 'customer' | 'company_owner' | 'company_manager' | 'company_driver' | 'solo_driver',
     }): CancelablePromise<{
         data?: Array<ShipmentTransformer>;
         links?: {
@@ -63,6 +65,7 @@ export class CustomerShipmentsService {
                 'search': search,
                 'status': status,
                 'items_type': itemsType,
+                'role': role,
             },
         });
     }

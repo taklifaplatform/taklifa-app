@@ -31,6 +31,7 @@
       "@zix/features/notifications": [
         "libs/features/notifications/src/index.ts"
       ],
+      "@zix/features/old-chat": ["libs/features/old-chat/src/index.ts"],
       "@zix/features/shipments": ["libs/features/shipments/src/index.ts"],
       "@zix/features/solo-driver-dashboard": [
         "libs/features/solo-driver-dashboard/src/index.ts"
@@ -38,10 +39,17 @@
       "@zix/features/support": ["libs/features/support/src/index.ts"],
       "@zix/features/users": ["libs/features/users/src/index.ts"],
       "@zix/i18n": ["libs/i18n/src/index.ts"],
+      "@zix/services/auth": ["libs/services/auth/src/index.ts"],
+      "@zix/services/chat": ["libs/services/chat/src/index.ts"],
+      "@zix/services/laravel-echo": ["libs/services/laravel-echo/src/index.ts"],
+      "@zix/services/push-notification": [
+        "libs/services/push-notification/src/index.ts"
+      ],
       "@zix/theme": ["libs/theme/src/index.ts"],
       "@zix/ui/common": ["libs/ui/common/src/index.ts"],
       "@zix/ui/forms": ["libs/ui/forms/src/index.ts"],
       "@zix/ui/icons": ["libs/ui/icons/src/index.ts"],
+      "@zix/ui/layouts": ["libs/ui/layouts/src/index.ts"],
       "@zix/ui/sawaeed": ["libs/ui/sawaeed/src/index.ts"],
       "@zix/ui/widgets": ["libs/ui/widgets/src/index.ts"],
       "@zix/utils": ["libs/utils/src/index.ts"]

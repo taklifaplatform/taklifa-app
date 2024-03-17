@@ -1,14 +1,7 @@
-import { AppHeader } from '@zix/ui/common';
-import { ShipmentDetailsScreen } from '@zix/features/solo-driver-dashboard';
-import React from 'react';
+import { ShipmentDetailScreen } from '@zix/features/shipments';
 
 export default function Screen() {
   return (
-    <>
-      <AppHeader showBackButton title="Shipment Detail" />
-      <ShipmentDetailsScreen />
-      
-      
-    </>
+    <ShipmentDetailScreen variant='shipments' />
   );
 }

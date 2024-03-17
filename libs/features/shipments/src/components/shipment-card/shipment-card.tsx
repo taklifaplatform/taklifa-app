@@ -1,6 +1,6 @@
-import { Eye, Inbox, Settings2, X } from '@tamagui/lucide-icons';
+import { Inbox, Settings2 } from '@tamagui/lucide-icons';
 import { ShipmentTransformer } from '@zix/api';
-import { UserAvatar, ZixLinkButton } from '@zix/ui/common';
+import { UserAvatar } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import moment from 'moment';
@@ -14,17 +14,19 @@ import {
   Text,
   ThemeableStackProps,
   XStack,
-  YStack,
+  YStack
 } from 'tamagui';
+import ShipmentCardActions from '../shipment-card-actions/shipment-card-actions';
 
 export type ShipmentCardProps = ThemeableStackProps & {
   shipment: ShipmentTransformer; // TODO: change to shipment, and add
-  urlPrefix?: string;
-  variants: 'shipment' | 'job'
+  urlPrefix: string;
+  variant: 'shipments' | 'jobs'
 };
 
 export const ShipmentCard: React.FC<ShipmentCardProps> = ({
   shipment,
+  variant,
   urlPrefix,
   ...props
 }) => {
@@ -148,7 +150,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
               color: '$color',
             }}
           >
-            {t('job:job-demand')} {`${t('shipment:type:'+shipment?.items_type)}`}
+            {t('job:job-demand')} {`${t('shipment:type:' + shipment?.items_type)}`}
           </Text>
           <Stack
             flexDirection="row"
@@ -214,40 +216,11 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
         width={'100%'}
         $gtSm={{ display: 'none' }}
       />
-      <XStack
-      flex={1}
-        alignItems="center"
-        gap="$2"
-        width={'30%'}
-        $sm={{
-          width: '70%',
-          justifyContent: 'center',
-          alignItems:"center"
-        }}
-      >
-        <ZixLinkButton
-          href={`/${urlPrefix}/${shipment.id}`}
-          icon={<Eye />}
-          themeInverse
-          width={'100%'}
-          fontWeight={600}
-        >
-          {t('shipment:see-more')}
-        </ZixLinkButton>
-{shipment.status === 'pending' &&
-        <ZixLinkButton
-          href={`/`}
-          icon={<X size="$1" />}
-          width={'100%'}
-          backgroundColor={'red'}
-          color={'$color1'}
-          fontWeight={600}
-          $gtSm={{ display: 'none' }}
-        >
-          {t('shipment:reject')}
-        </ZixLinkButton>
-        }
-      </XStack>
+      <ShipmentCardActions
+        shipment={shipment}
+        variant={variant}
+        urlPrefix={urlPrefix}
+      />
     </Stack>
   );
 };

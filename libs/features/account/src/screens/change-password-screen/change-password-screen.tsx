@@ -1,22 +1,29 @@
 import { ChangePasswordForm } from '@zix/features/auth';
 import { isWeb } from 'tamagui';
 
+import { AppHeader } from '@zix/ui/layouts';
+import { t } from 'i18next';
 import { useRouter } from 'solito/router';
 
-/* eslint-disable-next-line */
-export interface ChangePasswordScreenProps {}
 
 export const ChangePasswordScreen = () => {
   const router = useRouter();
 
   return (
-    <ChangePasswordForm
-      onSuccess={() => {
-        if (!isWeb) {
-          router.back();
-        }
-      }}
-    />
+    <>
+      <AppHeader
+        headerBackgroundColor="transparent"
+        showBackButton
+        title={t('auth:change_password.title')}
+      />
+      <ChangePasswordForm
+        onSuccess={() => {
+          if (!isWeb) {
+            router.back();
+          }
+        }}
+      />
+    </>
   );
 };
 

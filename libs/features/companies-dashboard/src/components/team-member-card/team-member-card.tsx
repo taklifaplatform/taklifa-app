@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { CompanyMemberTransformer, CompanyMembersService } from '@zix/api';
 import { ActionSheet, ActionSheetRef, UserAvatar } from '@zix/ui/common';
 import { Button, Text, XStack, YStack } from 'tamagui';
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 import moment from 'moment';
 import { useRef } from 'react';
 import { Alert } from 'react-native';

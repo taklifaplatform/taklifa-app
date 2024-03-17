@@ -1,12 +1,18 @@
-import { AuthProvider } from '@zix/features/auth';
 import { themeConfig } from '@zix/theme';
 import { Provider as JotaiProvider } from 'jotai';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import {
-  ProvidersComposer, PushNotification, QueryClientProvider, SafeAreaProvider, TamaguiProvider,
+  ProvidersComposer,
+  PushNotification,
+  QueryClientProvider,
+  SafeAreaProvider,
+  TamaguiProvider,
   ToastProvider,
   UniversalThemeProvider,
 } from './providers';
+import { ChatProvider } from '@zix/features/chat';
+import { LaravelEchoProvider } from '@zix/services/laravel-echo';
+import { AuthProvider } from '@zix/services/auth';
 
 export interface MainAppProviderProps {
   children: React.ReactNode;
@@ -32,7 +38,9 @@ export const MainAppProvider: React.FC<MainAppProviderProps> = ({
         ToastProvider,
         QueryClientProvider,
         AuthProvider,
-        PushNotification
+        LaravelEchoProvider,
+        ChatProvider,
+        PushNotification,
       ]}
     >
       {children}

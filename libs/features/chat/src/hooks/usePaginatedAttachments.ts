@@ -3,20 +3,17 @@ import { useEffect, useRef, useState } from 'react';
 import type { Channel, MessageResponse } from 'stream-chat';
 
 import { useChatContext } from 'stream-chat-expo';
-import type { StreamChatGenerics } from '../types';
 
 export const usePaginatedAttachments = (
-  channel: Channel<StreamChatGenerics>,
-  attachmentType: string
+  channel: Channel,
+  attachmentType: string,
 ) => {
   const { client: chatClient } = useChatContext();
   const offset = useRef(0);
   const hasMoreResults = useRef(true);
   const queryInProgress = useRef(false);
   const [loading, setLoading] = useState(true);
-  const [messages, setMessages] = useState<
-    MessageResponse<StreamChatGenerics>[]
-  >([]);
+  const [messages, setMessages] = useState<MessageResponse[]>([]);
 
   const fetchAttachments = async () => {
     if (queryInProgress.current) {
@@ -44,7 +41,7 @@ export const usePaginatedAttachments = (
         {
           limit: 10,
           offset: offset.current,
-        }
+        },
       );
 
       const newMessages = res?.results.map((r) => r);

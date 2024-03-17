@@ -15,6 +15,8 @@ export class DriversService {
     public static fetchAllDrivers({
         page,
         perPage,
+        latitude,
+        longitude,
     }: {
         /**
          * Page number
@@ -24,6 +26,8 @@ export class DriversService {
          * Number of items per page
          */
         perPage?: number,
+        latitude?: any,
+        longitude?: any,
     }): CancelablePromise<{
         data?: Array<DriverTransformer>;
         links?: {
@@ -53,6 +57,8 @@ export class DriversService {
             query: {
                 'page': page,
                 'per_page': perPage,
+                'latitude': latitude,
+                'longitude': longitude,
             },
         });
     }

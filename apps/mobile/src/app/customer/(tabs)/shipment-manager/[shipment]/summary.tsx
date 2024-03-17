@@ -1,5 +1,5 @@
 import { SummaryShipmentScreen } from '@zix/features/customer-dashboard';
-import { AppHeader } from '@zix/ui/common';
+import { AppHeader } from '@zix/ui/layouts';
 import React from 'react';
 
 //

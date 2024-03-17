@@ -1,7 +1,7 @@
 import { useRouter } from 'solito/router';
 
 import { UserTransformer } from '@zix/api';
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 import VerifyPhoneNumberForm from '../../forms/verify-phone-number-form/verify-phone-number-form';
 
 export const SignUpPhoneNumberVerificationScreen = () => {

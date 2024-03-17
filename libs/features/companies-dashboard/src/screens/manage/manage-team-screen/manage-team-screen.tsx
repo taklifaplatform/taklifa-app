@@ -1,5 +1,5 @@
 import { ListFilter, MapPin, XCircle } from '@tamagui/lucide-icons';
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Button, SizableText, Tabs, XStack, YStack } from 'tamagui';
 import ManageTeamFabButton from '../../../components/manage-team-fab-button/manage-team-fab-button';

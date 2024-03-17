@@ -7,7 +7,7 @@ import {
   formFields,
   handleFormErrors,
 } from '@zix/ui/forms';
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 import { t } from 'i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';

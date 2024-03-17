@@ -1,12 +1,8 @@
-import { ShipmentsListingScreen } from '@zix/features/solo-driver-dashboard';
-import { AppHeader } from '@zix/ui/common';
+import { ShipmentsListScreen } from '@zix/features/shipments';
 import React from 'react';
 
 export default function Screen() {
   return (
-    <>
-      <AppHeader title="Orders" />
-      <ShipmentsListingScreen urlPrefix='solo-driver/shipments' />
-    </>
+    <ShipmentsListScreen variant='shipments' />
   );
 }

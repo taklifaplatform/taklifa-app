@@ -2,14 +2,11 @@ import { useEffect, useState } from 'react';
 
 import { getUserActivityStatus } from '../utils/getUserActivityStatus';
 
+import { useAuth } from '@zix/services/auth';
 import type { Channel } from 'stream-chat';
 
-import { useChatContext } from 'stream-chat-expo';
-import type { StreamChatGenerics } from '../types';
-
-export const useChannelMembersStatus = (
-  channel: Channel<StreamChatGenerics>
-) => {
+export const useChannelMembersStatus = (channel: Channel) => {
+  const { user } = useAuth();
   const watchersCount = channel.state.watcher_count || 1;
   const memberCount = channel?.data?.member_count || 1;
 
@@ -20,7 +17,7 @@ export const useChannelMembersStatus = (
 
     if (isOneOnOneConversation) {
       const result = Object.values({ ...channel.state.members }).find(
-        (member) => member.user?.id !== client?.user?.id
+        (member) => member.user?.id !== user?.id,
       );
 
       return (newStatus = getUserActivityStatus(result?.user));
@@ -29,18 +26,18 @@ export const useChannelMembersStatus = (
       const onlineCountText =
         watchersCount > 0 ? `${watchersCount} Online` : '';
 
-      newStatus = `${[memberCountText, onlineCountText].join(',')}`;
+      newStatus = `${[memberCountText, onlineCountText].join(', ')}`;
 
       return newStatus;
     }
   };
 
   const [status, setStatus] = useState(getStatus());
-  const { client } = useChatContext();
 
   useEffect(() => {
     setStatus(getStatus());
-  }, [watchersCount, memberCount, client]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watchersCount, memberCount]);
 
   return status;
 };

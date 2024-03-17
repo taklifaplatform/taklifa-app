@@ -4,8 +4,10 @@ import { XStack } from 'tamagui';
 import { useMultiLang } from '@zix/i18n';
 import { ZixLinkButton } from '@zix/ui/common';
 import { t } from 'i18next';
+import { useAuth } from '@zix/services/auth';
 
 export function Header() {
+  const { isLoggedIn, redirectUserToActiveDashboard } = useAuth()
   const { activeLang } = useMultiLang();
   return (
     <XStack
@@ -68,14 +70,33 @@ export function Header() {
         >
           {t('web-home:call')}
         </ZixLinkButton>
-        <ZixLinkButton
-          display="headerMenu"
-          href={'/auth/login'}
-          icon={<CustomIcon name={'account'} size="$1" />}
-          $lg={{ paddingHorizontal: '$4' }}
-        >
-          {t('web-home:signup')}
-        </ZixLinkButton>
+        {
+          !isLoggedIn && (
+            <ZixLinkButton
+              display="headerMenu"
+              href={'/auth/login'}
+              icon={<CustomIcon name={'account'} size="$1" />}
+              $lg={{ paddingHorizontal: '$4' }}
+            >
+              {t('web-home:signup')}
+            </ZixLinkButton>
+          )
+        }
+
+        {
+          isLoggedIn && (
+            <ZixLinkButton
+              display="headerMenu"
+              href={'/account'}
+              onPress={redirectUserToActiveDashboard}
+              icon={<CustomIcon name={'account'} size="$1" />}
+              $lg={{ paddingHorizontal: '$4' }}
+            >
+              {t('web-home:account')}
+            </ZixLinkButton>
+          )
+        }
+
       </XStack>
     </XStack>
   );

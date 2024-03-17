@@ -2,7 +2,7 @@ import { Cog } from '@tamagui/lucide-icons';
 import {
   ManageTeamScreen
 } from '@zix/features/companies-dashboard';
-import { AppHeader } from '@zix/ui/common';
+import { AppHeader } from '@zix/ui/layouts';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useRouter } from 'solito/router';

@@ -1,16 +1,8 @@
 import { NotificationScreen } from '@zix/features/notifications';
-import { AppHeader } from '@zix/ui/common';
 import React from 'react';
 
 export default function Screen() {
   return (
-    <>
-      <AppHeader
-        showBackButton
-        title="Notifications"
-        headerBackgroundColor="transparent"
-      />
-      <NotificationScreen />
-    </>
+    <NotificationScreen />
   );
 }

@@ -1,19 +1,20 @@
 import { useMutation } from '@tanstack/react-query';
 
+import { useToastController } from '@tamagui/toast';
 import { UserService } from '@zix/api';
-import { H2, Theme, YStack, isWeb } from 'tamagui';
 import {
   SchemaForm,
   SubmitButton,
   formFields,
   handleFormErrors,
 } from '@zix/ui/forms';
-import { useAuth } from '@zix/utils';
+import { AppHeader } from '@zix/ui/layouts';
+import { useAuth } from '@zix/services/auth';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
+import { Theme } from 'tamagui';
 import { z } from 'zod';
-import { useToastController } from '@tamagui/toast';
 
 const ChangeEmailSchema = z.object({
   current_email: formFields.text
@@ -50,13 +51,13 @@ export const ChangeEmailScreen = () => {
       form={form}
       onSubmit={mutate}
       schema={ChangeEmailSchema}
-      renderBefore={() =>
-        isWeb && (
-          <YStack padding="$4" paddingBottom="$2">
-            <H2>{t('account:change_email.title')}</H2>
-          </YStack>
-        )
-      }
+      renderBefore={() => (
+        <AppHeader
+          showBackButton
+          headerBackgroundColor="transparent"
+          title={t('account:change_email.title')}
+        />
+      )}
       defaultValues={{
         current_email: user?.email,
         email: '',

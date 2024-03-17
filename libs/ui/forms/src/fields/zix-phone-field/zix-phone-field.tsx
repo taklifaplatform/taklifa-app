@@ -57,6 +57,7 @@ export const ZixPhoneField: React.FC<ZixPhoneFieldProps> = ({
         </Stack>
         <ZixInput
           flex={1}
+          containerProps={{ flex: 1 }}
           disabled={!defaultConfig.dial_code}
           value={phone}
           onChangeText={onChange}

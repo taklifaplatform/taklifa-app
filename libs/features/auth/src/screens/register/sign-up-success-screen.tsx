@@ -1,6 +1,6 @@
 import { SubmitButton } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 import { t } from 'i18next';
 import { H2, Text, Theme, YStack } from 'tamagui';
 import { AuthHeader } from '../../components/auth-header/auth-header';

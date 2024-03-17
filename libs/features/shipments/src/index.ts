@@ -1,4 +1,14 @@
 
+export * from './screens/shipment-reject-screen/shipment-reject-screen';
+
+export * from './components/shipment-card-actions/shipment-card-actions';
+
+export * from './components/shipment-actions/shipment-actions';
+
+export * from './screens/shipment-detail-screen/shipment-detail-screen';
+
+export * from './screens/shipments-list-screen/shipments-list-screen';
+
 export * from './components/offer-description/offer-description';
 
 export * from './components/shipment-canceled-detail/shipment-canceled-detail';

@@ -12,7 +12,7 @@ import { Theme } from 'tamagui';
 import { z } from 'zod';
 
 import { UserVerificationService } from '@zix/api';
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 import { t } from 'i18next';
 

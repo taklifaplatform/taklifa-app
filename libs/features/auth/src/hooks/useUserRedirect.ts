@@ -1,5 +1,5 @@
 import { UserTransformer } from '@zix/api';
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 import { useCallback } from 'react';
 import { useRouter } from 'solito/router';
 

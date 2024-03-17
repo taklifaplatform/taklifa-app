@@ -11,7 +11,7 @@ import {
   handleFormErrors,
 } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
-import { useAuth } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 import { t } from 'i18next';
 import React, { useEffect } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';

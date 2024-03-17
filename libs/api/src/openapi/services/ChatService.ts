@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { ChannelEventTransformer } from '../models/ChannelEventTransformer';
 import type { ChannelTransformer } from '../models/ChannelTransformer';
 import type { ChatUserTransformer } from '../models/ChatUserTransformer';
 import type { ListChannelQueryRequest } from '../models/ListChannelQueryRequest';
@@ -10,6 +11,7 @@ import type { MessageTransformer } from '../models/MessageTransformer';
 import type { ModerateChannelRequest } from '../models/ModerateChannelRequest';
 import type { MuteChannelRequest } from '../models/MuteChannelRequest';
 import type { RetrieveChannelQueryRequest } from '../models/RetrieveChannelQueryRequest';
+import type { SendChannelEventRequest } from '../models/SendChannelEventRequest';
 import type { UpdateMessageRequest } from '../models/UpdateMessageRequest';
 import type { UpdateReactionRequest } from '../models/UpdateReactionRequest';
 import type { UploadAttachmentRequest } from '../models/UploadAttachmentRequest';
@@ -17,6 +19,16 @@ import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class ChatService {
+    /**
+     * Display a listing of the resource.
+     * @throws ApiError
+     */
+    public static chatApp(): CancelablePromise<void> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/chat/app',
+        });
+    }
     /**
      * Display a listing of the resource.
      * @returns any Successful response
@@ -223,6 +235,25 @@ export class ChatService {
      * @returns any Successful response
      * @throws ApiError
      */
+    public static unmuteChannel({
+        requestBody,
+    }: {
+        requestBody: MuteChannelRequest,
+    }): CancelablePromise<{
+        data?: ChannelTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/chat/moderation/unmute/channel',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * Display a listing of the resource.
+     * @returns any Successful response
+     * @throws ApiError
+     */
     public static listUsers(): CancelablePromise<{
         data?: Array<ChatUserTransformer>;
         links?: {
@@ -249,6 +280,30 @@ export class ChatService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/chat/users',
+        });
+    }
+    /**
+     * Display a listing of the resource.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static sendEvent({
+        channel,
+        requestBody,
+    }: {
+        channel: string,
+        requestBody: SendChannelEventRequest,
+    }): CancelablePromise<{
+        data?: ChannelEventTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/chat/channels/messaging/{channel}/event',
+            path: {
+                'channel': channel,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 }

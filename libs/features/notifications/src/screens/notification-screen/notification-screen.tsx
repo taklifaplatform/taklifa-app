@@ -1,19 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
 import { NotificationService, NotificationTransformer } from '@zix/api';
+import { CustomIcon } from '@zix/ui/icons';
+import { AppHeader } from '@zix/ui/layouts';
 import moment from 'moment';
 import { useMemo, useState } from 'react';
 import { SectionList, SectionListData, } from 'react-native';
-import { Text, XStack, YStack, View, H4 } from 'tamagui';
+import { H4, Text, View, XStack } from 'tamagui';
 import { NotificationCard } from '../components/NotificationCard';
-import SearchBar from '../components/SearchBar';
-import { CustomIcon } from '@zix/ui/icons';
 
 /* eslint-disable-next-line */
 export interface NotificationScreenProps { }
 export function NotificationScreen(props: NotificationScreenProps) {
 
   const [search, setSearch] = useState('');
-
 
   const { data: apiData } = useQuery({
     queryFn() {
@@ -65,10 +64,17 @@ export function NotificationScreen(props: NotificationScreenProps) {
 
 
   return (
-    <YStack flex={1} gap="$2" backgroundColor={'#FAFAFA'}>
-      <SearchBar setSearch={setSearch} search={search} />
-
-      {/* <DebugObject object={sections} /> */}
+    <>
+      <AppHeader
+        showBackButton
+        title="Notifications"
+        headerBackgroundColor="transparent"
+        showSearchBar
+        searchProps={{
+          value: search,
+          onChangeText: setSearch
+        }}
+      />
       <SectionList
         style={{ flex: 1 }}
         contentContainerStyle={{ flexGrow: 1 }}
@@ -94,7 +100,7 @@ export function NotificationScreen(props: NotificationScreenProps) {
         sections={sections}
         stickySectionHeadersEnabled
       />
-    </YStack>
+    </>
   );
 }
 

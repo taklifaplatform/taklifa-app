@@ -1,12 +1,13 @@
-import { JobsListScreen } from '@zix/features/shipments';
-import { AppHeader } from '@zix/ui/common';
+import { ShipmentsListScreen } from '@zix/features/shipments';
 import React from 'react';
 
 export default function Screen() {
   return (
-    <>
-      <AppHeader title="Jobs" headerBackgroundColor="transparent" />
-      <JobsListScreen urlPrefix='company/jobs' />
-    </>
+    <ShipmentsListScreen variant='jobs' />
+
+    // <>
+    //   <AppHeader title="Jobs" headerBackgroundColor="transparent" />
+    //   <JobsListScreen urlPrefix='company/jobs' />
+    // </>
   );
 }
