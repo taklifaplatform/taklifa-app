@@ -27,7 +27,7 @@ export function UserProfileScreen() {
     queryKey: ['DriversService.retrieveDriver', userId, user?.id],
   });
 
-  const renderLoadingSpinner = () => !user && <FullScreenSpinner />;
+  const renderLoadingSpinner = () => !data?.data?.id && <FullScreenSpinner />;
 
   const renderUserProfile = () =>
     data?.data && (

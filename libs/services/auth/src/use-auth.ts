@@ -31,7 +31,11 @@ export function useAuth() {
   const { data, refetch, isLoading } = useQuery({
     queryKey: ['profile', authUser?.id],
     queryFn: async () => {
-      if (!authAccessToken) return { data: {} as AuthenticatedUserTransformer };
+      if (!authAccessToken) {
+        setAuthUser({});
+
+        return { data: {} as AuthenticatedUserTransformer }
+      }
 
       OpenAPI.TOKEN = authAccessToken;
 
@@ -70,7 +74,7 @@ export function useAuth() {
     return user?.active_role?.name || 'customer';
   }, [user]);
 
-  const isLoggedIn = useMemo(() => !!authAccessToken, [authAccessToken]);
+  const isLoggedIn = useMemo(() => (!!authAccessToken && !!user?.id), [authAccessToken, user]);
 
   /**
    * The number of steps in the registration process.
