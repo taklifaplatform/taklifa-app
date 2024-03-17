@@ -39,7 +39,7 @@ export interface AuthHelpers {
   getRoleUrlPrefix: (role: string) => string;
 }
 
-export function useAuthHelpers(): AuthHelpers {
+export function useAuth(): AuthHelpers {
   const [authAccessToken, setAuthAccessToken] = useAtom(authAccessTokenStorage);
   const [authUser, setAuthUser] = useAtom(authUserStorage);
   const [requestedAccountType, setRequestedAccountType] = useAtom(
@@ -84,9 +84,7 @@ export function useAuthHelpers(): AuthHelpers {
     [authUser, data],
   );
 
-  const activeRole = useMemo<AUTH_ROLE_TYPE>(() => {
-    return (user?.active_role?.name as AUTH_ROLE_TYPE) || 'customer';
-  }, [user]);
+  const activeRole = 'customer';
 
   const isLoggedIn = useMemo(
     () => !!authAccessToken && !!user?.id,

@@ -1,8 +1,6 @@
 
 import React from 'react';
 
-import { AuthContext } from './auth-context';
-import { useAuthHelpers } from './use-auth-helpers';
 
 export interface AuthProviderProps {
   children?: React.ReactNode;
@@ -11,13 +9,7 @@ export interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({
   children
 }) => {
-  const authHelpers = useAuthHelpers()
-
-  return (
-    <AuthContext.Provider value={authHelpers}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return children;
 };
 
 export default AuthProvider;
