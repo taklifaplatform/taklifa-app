@@ -124,6 +124,8 @@ export type { SendResetPasswordPinCodeRequest } from './models/SendResetPassword
 export type { ServiceAreaTransformer } from './models/ServiceAreaTransformer';
 export type { ServiceZoneTransformer } from './models/ServiceZoneTransformer';
 export type { SetPatchMessageRequest } from './models/SetPatchMessageRequest';
+export type { ShipmentFilterQueryRequest } from './models/ShipmentFilterQueryRequest';
+export type { ShipmentFilterTransformer } from './models/ShipmentFilterTransformer';
 export type { ShipmentInvitationTransformer } from './models/ShipmentInvitationTransformer';
 export type { ShipmentItemTransformer } from './models/ShipmentItemTransformer';
 export type { ShipmentTransformer } from './models/ShipmentTransformer';

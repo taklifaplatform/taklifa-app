@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function Screen() {
   return (
-    <ShipmentsListScreen urlPrefix='company/jobs' />
+    <ShipmentsListScreen variant='jobs' />
 
     // <>
     //   <AppHeader title="Jobs" headerBackgroundColor="transparent" />

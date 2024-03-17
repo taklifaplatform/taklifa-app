@@ -2,12 +2,54 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { ShipmentFilterTransformer } from '../models/ShipmentFilterTransformer';
 import type { ShipmentTransformer } from '../models/ShipmentTransformer';
 import type { UpdateShipmentRequest } from '../models/UpdateShipmentRequest';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class ShipmentService {
+    /**
+     * Fetch all shipments.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static fetchShipmentFilters({
+        page,
+        perPage,
+        search,
+        status,
+        itemsType,
+        role,
+    }: {
+        /**
+         * Page number
+         */
+        page?: number,
+        /**
+         * Number of items per page
+         */
+        perPage?: number,
+        search?: string,
+        status?: 'draft' | 'searching' | 'delivering' | 'delivered' | 'cancelled' | 'pending' | 'expired' | 'rejected' | 'completed' | 'failed' | 'returned' | 'lost' | 'damaged' | 'stolen' | 'other',
+        itemsType?: 'document' | 'box' | 'multiple_boxes' | 'other',
+        role?: 'customer' | 'company_owner' | 'company_manager' | 'company_driver' | 'solo_driver',
+    }): CancelablePromise<{
+        data?: Array<ShipmentFilterTransformer>;
+    }> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/shipment-filters',
+            query: {
+                'page': page,
+                'per_page': perPage,
+                'search': search,
+                'status': status,
+                'items_type': itemsType,
+                'role': role,
+            },
+        });
+    }
     /**
      * Fetch all shipments.
      * @returns any Successful response

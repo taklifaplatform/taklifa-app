@@ -2,6 +2,6 @@ import { ShipmentsListScreen } from '@zix/features/shipments';
 
 export default function Screen() {
   return (
-    <ShipmentsListScreen urlPrefix='/customer/shipments' />
+    <ShipmentsListScreen variant='shipments' />
   );
 }

@@ -1,10 +1,10 @@
 
 import { useQuery } from '@tanstack/react-query';
-import { ShipmentService } from '@zix/api';
+import { ShipmentFilterTransformer, ShipmentService } from '@zix/api';
 import { DataNotFound, ZixButton } from '@zix/ui/common';
 import { AppHeader } from '@zix/ui/layouts';
 import { t } from 'i18next';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 import { useAuth } from '@zix/services/auth';
 import { FlatList } from 'react-native';
@@ -13,91 +13,67 @@ import { Circle, Text, View, YStack } from 'tamagui';
 import ShipmentCard from '../../components/shipment-card/shipment-card';
 
 export type ShipmentsListScreenProps = {
-  urlPrefix?: string
+  variant: 'shipments' | 'jobs'
 }
 
 
 export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
-  urlPrefix = '/customer/shipments'
+  variant = 'shipments'
 }) => {
-  const { activeRole } = useAuth()
+  const { activeRole, getRoleUrlPrefix } = useAuth()
 
+  const screenTitle = useMemo(() => {
+    if (variant === 'jobs') {
+      return 'Jobs'
+    }
+    return 'Orders'
+  }, [variant])
 
-  const [status, setStatus] = useState('pending');
+  const [status, setStatus] = useState<any>('pending');
   const [search, setSearch] = useState('');
   const [activeFilterIndex, setActiveFilterIndex] = useState(0);
-  const { data } = useQuery({
+  const { data, refetch, isLoading } = useQuery({
     queryFn: () => ShipmentService.fetchAllShipment({
       search,
-      role: activeRole
+      role: activeRole,
+      status
     }),
-    queryKey: ['ShipmentService.fetchAllShipment', search, activeRole],
+    queryKey: ['ShipmentService.fetchAllShipment', search, activeRole, status],
   });
-  const filters = [
-    {
-      id: 1,
-      key: 'pending',
-      label: 'في الانتظار',
-      count: 1253,
-    },
-    {
-      id: 2,
-      key: 'new',
-      label: 'طلبات جديدة',
-      count: 2,
-    },
-    {
-      id: 3,
-      key: 'in-progress',
-      label: 'جاري التوصيل',
-      count: 252,
-    },
-    {
-      id: 4,
-      key: 'delivered',
-      label: 'جاري التوصيل',
-      count: 15,
-    },
-    {
-      id: 5,
-      key: 'completed',
-      label: 'مكتمل',
-      count: data?.meta?.total || 0,
-    },
-    {
-      id: 6,
-      key: 'canceled',
-      label: 'ملغاة',
-      count: 1,
-    },
-  ];
+  const shipmentFilterQuery = useQuery({
+    queryFn: () => ShipmentService.fetchShipmentFilters({
+      role: activeRole,
+      search
+    }),
+    queryKey: ['ShipmentService.fetchShipmentFilters', activeRole, search],
+  });
 
   const carouselRef = useRef<ICarouselInstance>(null);
   useEffect(() => {
     carouselRef.current?.scrollTo({ index: activeFilterIndex, animated: true });
   }, [activeFilterIndex]);
 
-  const renderShipment = (item: any, index: number) => (
+  const renderShipment = (item: ShipmentFilterTransformer, index: number) => (
     <ZixButton
       key={index}
-      backgroundColor={status === item.key ? '$color5' : '$gray3'}
-      borderRadius={status === item.key ? '$4' : '$0'}
+      backgroundColor={status === item.status ? '$color5' : '$gray3'}
+      borderRadius={status === item.status ? '$4' : '$0'}
       height={50}
       onPress={() => {
-        setStatus(item.key);
+        setStatus(item.status);
         setActiveFilterIndex(index);
       }}
-      color={status === item.key ? '$color0' : '$gray9'}
+      color={status === item.status ? '$color0' : '$gray9'}
       alignItems="center"
       iconAfter={() =>
         item.count > 9 ? (
           <View
-            backgroundColor={status === item.key ? 'black' : '$gray11'}
+            backgroundColor={status === item.status ? 'black' : '$gray11'}
             padding="$2"
             borderRadius={'100%'}
           >
             <Text
-              color={status === item.key ? '$color5' : '$color1'}
+              color={status === item.status ? '$color5' : '$color1'}
               fontSize="$1"
               fontWeight={'800'}
             >
@@ -107,11 +83,11 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
         ) : (
           <Circle
             size={28}
-            backgroundColor={status === item.key ? 'black' : '$gray11'}
+            backgroundColor={status === item.status ? 'black' : '$gray11'}
             elevation="$4"
           >
             <Text
-              color={status === item.key ? '$color5' : '$color1'}
+              color={status === item.status ? '$color5' : '$color1'}
               fontSize="$1"
               fontWeight={'800'}
             >
@@ -122,17 +98,17 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
       }
     >
       <Text fontSize="$2" fontWeight={'bold'}>
-        {t(item.label)}
+        {t(item.status)}
       </Text>
     </ZixButton>
   );
 
-  const renderShipmentFilters = () => (
+  const renderShipmentFilters = () => variant === 'shipments' && (
     <View paddingHorizontal='$4'>
       <Carousel
         ref={carouselRef}
         loop={false}
-        data={filters}
+        data={shipmentFilterQuery?.data?.data || []}
         defaultIndex={activeFilterIndex}
         style={{
           width: '100%',
@@ -147,7 +123,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
   return (
     <>
       <AppHeader
-        title="Orders"
+        title={screenTitle}
         showSearchBar
         searchProps={{
           value: search,
@@ -157,23 +133,21 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
       <YStack flex={1} gap="$4" paddingVertical='$4'>
         {renderShipmentFilters()}
         <FlatList
+          refreshing={isLoading}
+          onRefresh={refetch}
           style={{ flex: 1 }}
           onEndReachedThreshold={0.5}
           data={data?.data}
           renderItem={({ item, index }) => (
             <ShipmentCard
               key={index}
-              urlPrefix={urlPrefix}
+              urlPrefix={`${getRoleUrlPrefix(activeRole)}/${variant}`}
               shipment={item}
-              variants="shipment"
+              variant={variant}
               marginHorizontal="$4"
               marginBottom='$2'
             />
           )}
-          // ListHeaderComponent={() => (
-
-          // )}
-          ListHeaderComponentStyle={{ marginBottom: 10 }}
           ListEmptyComponent={() => (
             <DataNotFound
               message={t('shipment:shipment-not-found')}
@@ -183,9 +157,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
           )}
         />
       </YStack>
-
     </>
-
   );
 }
 

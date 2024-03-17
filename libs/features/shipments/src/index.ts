@@ -1,4 +1,6 @@
 
+export * from './components/shipment-card-actions/shipment-card-actions';
+
 export * from './screens/shipment-detail-screen/shipment-detail-screen';
 
 export * from './screens/shipments-list-screen/shipments-list-screen';

@@ -60,9 +60,15 @@ export function useAuth() {
     [authUser, data],
   );
 
-  const activeRole = useMemo<'customer' | 'company_owner' | 'company_manager' | 'company_driver' | 'solo_driver'>(() => {
-    return user?.active_role?.name || 'customer'
-  }, [user])
+  const activeRole = useMemo<
+    | 'customer'
+    | 'company_owner'
+    | 'company_manager'
+    | 'company_driver'
+    | 'solo_driver'
+  >(() => {
+    return user?.active_role?.name || 'customer';
+  }, [user]);
 
   const isLoggedIn = useMemo(() => !!authAccessToken, [authAccessToken]);
 
@@ -91,6 +97,18 @@ export function useAuth() {
     return `https://ui-avatars.com/api.jpg?${params.toString()}`;
   }, [user]);
 
+  function getRoleUrlPrefix(role: string) {
+    if (role === 'solo_driver') {
+      return '/solo-driver';
+    }
+
+    if (['company_owner', 'company_manager', 'company_driver'].includes(role)) {
+      return '/company';
+    }
+
+    return '/customer';
+  }
+
   const redirectUserToActiveDashboard = useCallback(
     (
       options: RedirectUserOptions = {
@@ -106,18 +124,7 @@ export function useAuth() {
       const activeRoleName =
         options?.user?.active_role?.name || user?.active_role?.name;
 
-      if (activeRoleName === 'solo_driver') {
-        redirect('/solo-driver');
-      } else if (
-        activeRoleName &&
-        ['company_owner', 'company_manager', 'company_driver'].includes(
-          activeRoleName,
-        )
-      ) {
-        redirect('/company');
-      } else {
-        redirect('/customer');
-      }
+      redirect(getRoleUrlPrefix(activeRoleName as string));
     },
     [router, user],
   );
@@ -158,5 +165,7 @@ export function useAuth() {
     requestedAccountType,
     setRequestedAccountType,
     registerSteps,
+
+    getRoleUrlPrefix,
   };
 }

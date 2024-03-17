@@ -3,6 +3,6 @@ import React from 'react';
 
 export default function Screen() {
   return (
-    <ShipmentsListScreen urlPrefix='/solo-driver/shipments' />
+    <ShipmentsListScreen variant='shipments' />
   );
 }
