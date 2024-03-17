@@ -13,6 +13,19 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class UserService {
     /**
+     * Retrieve the authenticated user.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static retrieveUser(): CancelablePromise<{
+        data?: AuthenticatedUserTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/auth/user',
+        });
+    }
+    /**
      * Update the authenticated user.
      * @returns any Successful response
      * @throws ApiError
@@ -26,7 +39,7 @@ export class UserService {
     }> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/user',
+            url: '/api/auth/user',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -45,7 +58,7 @@ export class UserService {
     }> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/user/update-password',
+            url: '/api/auth/user/update-password',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -64,7 +77,7 @@ export class UserService {
     }> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/user/update-email',
+            url: '/api/auth/user/update-email',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -83,7 +96,7 @@ export class UserService {
     }> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/user/update-phone-number',
+            url: '/api/auth/user/update-phone-number',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -102,7 +115,7 @@ export class UserService {
     }> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/user/change-active-role',
+            url: '/api/auth/user/change-active-role',
             body: requestBody,
             mediaType: 'application/json',
         });

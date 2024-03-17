@@ -7,20 +7,39 @@ import {
   UserService,
 } from '@zix/api';
 import { useAtom } from 'jotai';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useRouter } from 'solito/router';
 import {
   authAccessTokenStorage,
   authRequestedAccountTypeStorage,
   authUserStorage,
 } from './auth-atoms';
+import { AUTH_ROLE_TYPE } from './types';
 
 export type RedirectUserOptions = {
   pushRoute?: boolean;
   user?: AuthenticatedUserTransformer;
 };
 
-export function useAuth() {
+export interface AuthHelpers {
+  activeRole: AUTH_ROLE_TYPE;
+  user: AuthenticatedUserTransformer;
+  refetchUser: () => void;
+  avatarUrl: string;
+  isLoading: boolean;
+  logout: () => void;
+  authAccessToken?: string;
+  setAuthAccessToken: (accessToken: string) => void;
+  setAuthUser: (user: AuthenticatedUserTransformer) => void;
+  isLoggedIn: boolean;
+  redirectUserToActiveDashboard: (options?: RedirectUserOptions) => void;
+  requestedAccountType: string;
+  setRequestedAccountType: (accountType: AUTH_ROLE_TYPE) => void;
+  registerSteps: number;
+  getRoleUrlPrefix: (role: string) => string;
+}
+
+export function useAuthHelpers(): AuthHelpers {
   const [authAccessToken, setAuthAccessToken] = useAtom(authAccessTokenStorage);
   const [authUser, setAuthUser] = useAtom(authUserStorage);
   const [requestedAccountType, setRequestedAccountType] = useAtom(
@@ -65,14 +84,8 @@ export function useAuth() {
     [authUser, data],
   );
 
-  const activeRole = useMemo<
-    | 'customer'
-    | 'company_owner'
-    | 'company_manager'
-    | 'company_driver'
-    | 'solo_driver'
-  >(() => {
-    return user?.active_role?.name || 'customer';
+  const activeRole = useMemo<AUTH_ROLE_TYPE>(() => {
+    return (user?.active_role?.name as AUTH_ROLE_TYPE) || 'customer';
   }, [user]);
 
   const isLoggedIn = useMemo(
@@ -157,6 +170,14 @@ export function useAuth() {
       data?.data && setAuthUser(data.data);
     });
   }
+
+  useEffect(() => {
+    if (authAccessToken && !user?.id) {
+      refetchUser();
+    }
+    OpenAPI.TOKEN = authAccessToken;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authAccessToken, user]);
 
   return {
     activeRole,

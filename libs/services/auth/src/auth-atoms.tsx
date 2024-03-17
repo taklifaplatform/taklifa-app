@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UserTransformer } from "@zix/api";
 import { atomWithStorage, createJSONStorage } from "jotai/utils";
+import { AUTH_ROLE_TYPE } from "./types";
 
 const storage = createJSONStorage(() => AsyncStorage);
 
@@ -20,7 +21,7 @@ export const authUserStorage = atomWithStorage<UserTransformer | undefined>(
   storage,
 );
 
-export const authRequestedAccountTypeStorage = atomWithStorage<'customer' | 'solo_driver' | 'company_owner'>(
+export const authRequestedAccountTypeStorage = atomWithStorage<AUTH_ROLE_TYPE>(
   AUTH_REQUESTED_ACCOUNT_TYPE,
   'customer',
   storage,
