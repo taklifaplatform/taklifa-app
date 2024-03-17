@@ -19,7 +19,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.zixdev.demo.sawaeed",
-      "buildNumber": "62",
+      "buildNumber": "63",
       "infoPlist": {
         "CFBundleDevelopmentRegion": "en",
         "ExpoLocalization_supportsRTL": true,
