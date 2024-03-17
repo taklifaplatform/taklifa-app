@@ -1,14 +1,7 @@
-import { ShipmentDetailsScreen } from '@zix/features/customer-dashboard';
-import { AppHeader } from '@zix/ui/layouts';
-import React from 'react';
+import { ShipmentDetailScreen } from '@zix/features/shipments';
 
 export default function Screen() {
   return (
-    <>
-      <AppHeader showBackButton title="Shipment Detail" />
-     <ShipmentDetailsScreen />
-
-
-    </>
+    <ShipmentDetailScreen variant='shipments' />
   );
 }

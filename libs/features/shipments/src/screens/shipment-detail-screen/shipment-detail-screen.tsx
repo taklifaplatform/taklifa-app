@@ -40,8 +40,9 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
   });
 
   const urlPrefix = useMemo(() => {
-    return getRoleUrlPrefix(activeRole)
-  }, [activeRole])
+    return `${getRoleUrlPrefix(activeRole)}/${variant}`
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeRole, variant])
   // const driver = shipment.driver;
   const driver = driverQuery.data?.data || {};
 
@@ -51,7 +52,7 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
     <>
       <AppHeader
         showBackButton
-        title={`${t('job:job-demand')}`}
+        title={t('job:job-demand')}
       />
       <ScrollView
         refreshControl={
