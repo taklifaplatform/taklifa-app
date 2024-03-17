@@ -33,7 +33,6 @@ export const UserProfileLayout: React.FC<UserProfileLayoutProps> = ({
             <CustomIcon name="more" color="black" size="$3" />
           </TouchableOpacity>
         )}
-        headerBackgroundColor="transparent"
       />
     );
 
@@ -42,7 +41,6 @@ export const UserProfileLayout: React.FC<UserProfileLayoutProps> = ({
       <AppHeader
         showBackButton
         title={user?.name || '...'}
-        headerBackgroundColor="transparent"
       />
     );
 
