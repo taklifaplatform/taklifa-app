@@ -1,5 +1,4 @@
 
-export * from './screens/user-profile-screen/user-profile-screen';
 export * from './components/account-layout/account-layout';
 
 export * from './components/account-settings-layout/account-settings-layout';

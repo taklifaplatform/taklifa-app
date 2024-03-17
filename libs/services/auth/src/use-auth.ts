@@ -29,12 +29,13 @@ export function useAuth() {
   const router = useRouter();
 
   const { data, refetch, isLoading } = useQuery({
-    queryKey: ['profile', authUser?.id],
+    queryKey: ['profile', authUser?.id, authAccessToken?.substring(0, 5)],
     queryFn: async () => {
+      /**
+       * When the app first open, the access might be still loading.
+       */
       if (!authAccessToken) {
-        setAuthUser({});
-
-        return { data: {} as AuthenticatedUserTransformer }
+        return { data: {} as AuthenticatedUserTransformer };
       }
 
       OpenAPI.TOKEN = authAccessToken;
@@ -52,7 +53,7 @@ export function useAuth() {
         console.log('=============');
       }
 
-      return;
+      return { data: {} as AuthenticatedUserTransformer };
     },
   });
 
@@ -74,7 +75,10 @@ export function useAuth() {
     return user?.active_role?.name || 'customer';
   }, [user]);
 
-  const isLoggedIn = useMemo(() => (!!authAccessToken && !!user?.id), [authAccessToken, user]);
+  const isLoggedIn = useMemo(
+    () => !!authAccessToken && !!user?.id,
+    [authAccessToken, user],
+  );
 
   /**
    * The number of steps in the registration process.
@@ -120,15 +124,16 @@ export function useAuth() {
         user: {},
       },
     ) => {
-      if (options?.user?.id) {
-        setAuthUser(options.user);
-      }
-
       const redirect = options.pushRoute ? router.push : router.replace;
       const activeRoleName =
         options?.user?.active_role?.name || user?.active_role?.name;
 
       redirect(getRoleUrlPrefix(activeRoleName as string));
+
+      setAuthUser({
+        ...user,
+        ...(options.user || {}),
+      });
     },
     [router, user],
   );
