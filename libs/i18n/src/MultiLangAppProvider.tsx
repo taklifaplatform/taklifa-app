@@ -16,7 +16,9 @@ async function getActiveLanguage(defaultLang: string) {
   const isRtl = language === 'ar';
   I18nManager.allowRTL(isRtl);
   I18nManager.forceRTL(isRtl);
-  document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+  if (Platform.OS === 'web') {
+    document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+  }
   return language;
 }
 

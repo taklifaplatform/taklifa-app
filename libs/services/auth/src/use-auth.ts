@@ -139,7 +139,7 @@ export function useAuth(): AuthHelpers {
     ) => {
       const redirect = options.pushRoute ? router.push : router.replace;
       const activeRoleName =
-        options?.user?.active_role?.name || user?.active_role?.name;
+        options?.user?.active_role?.name || user?.active_role?.name || 'customer';
 
       redirect(getRoleUrlPrefix(activeRoleName as string));
 
