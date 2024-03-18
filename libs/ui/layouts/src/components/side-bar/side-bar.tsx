@@ -1,12 +1,14 @@
 import { useMultiLang } from '@zix/i18n';
-import { USER_ROLES, useAuth } from '@zix/services/auth';
+import { useAuth } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import React, { useMemo } from 'react';
 
-import { Bell, Home, MessageCircle, Moon } from '@tamagui/lucide-icons';
+import { Bell, Home, MessageCircle } from '@tamagui/lucide-icons';
 import { useThemeSetting } from '@tamagui/next-theme';
 import { Settings, ZixLinkButton } from '@zix/ui/common';
-import { View, YStack } from 'tamagui';
+import { usePathname } from '@zix/utils';
+import { useRouter } from 'solito/router';
+import { Separator, View, YStack } from 'tamagui';
 import AccountSwitcher from '../account-switcher/account-switcher';
 
 export type SideBarProps = {
@@ -15,55 +17,94 @@ export type SideBarProps = {
 
 
 export const SideBar: React.FC<SideBarProps> = () => {
+  const router = useRouter()
   const { activeLang } = useMultiLang();
-  const { user, activeRole, getRoleUrlPrefix } = useAuth()
+  const { user, activeRole, getRoleUrlPrefix, logout } = useAuth()
   const { toggle, current } = useThemeSetting()
+  const pathname = usePathname()
 
   const urlPrefix = useMemo(() => {
     return getRoleUrlPrefix(activeRole)
   }, [activeRole])
 
+  const menuGroups = useMemo(() => {
+    return [
+      [
+        {
+          title: 'Home',
+          icon: Home,
+          href: urlPrefix
+        },
+
+        {
+          title: 'Orders',
+          icon: MessageCircle,
+          href: `${urlPrefix}/shipments`
+        },
+        {
+          title: 'Jobs',
+          icon: MessageCircle,
+          href: `${urlPrefix}/jobs`
+        }
+      ],
+      [
+        {
+          title: 'Notifications',
+          icon: Bell,
+          href: `${urlPrefix}/notifications`
+        },
+        {
+          title: 'Chat',
+          icon: MessageCircle,
+          href: `${urlPrefix}/chat`
+        },
+      ]
+    ]
+
+  }, [activeRole, urlPrefix])
+
+  const renderMenuItem = (item: typeof menuGroups[0][0]) => (
+    <Settings.Item
+      icon={item.icon}
+      rightLabel='4'
+      backgroundColor={pathname === item.href ? '$backgroundFocus' : '$gray3'}
+      onPress={() => router.push(item.href)}
+      accentColor="$green9"
+    >
+      {item.title}
+    </Settings.Item>
+  )
+
   return (
-    <View position='sticky' top={0} bottom={0} left={0} width={268} maxHeight='100vh' backgroundColor='$gray3' padding='$4'>
-      <ZixLinkButton unstyled href='/' >
+    <View position='sticky' top={0} bottom={0} left={0} width={320} maxHeight='100vh' backgroundColor='$gray3'>
+      <ZixLinkButton unstyled href='/' margin='$4' >
         <CustomIcon name={`web_logo_${activeLang}`} height={50} width={165} />
       </ZixLinkButton>
 
-      <YStack flex={1} gap='$2' paddingVertical='$4'>
-        <ZixLinkButton display='headerMenu' icon={Home} href={urlPrefix} >
-          Home
-        </ZixLinkButton>
-
-        <ZixLinkButton display='headerMenu' icon={Bell} href={`${urlPrefix}/notifications`} >
-          Notifications
-        </ZixLinkButton>
-
-        <ZixLinkButton display='headerMenu' icon={MessageCircle} href={`${urlPrefix}/chat`} >
-          Chat
-        </ZixLinkButton>
-
-        <ZixLinkButton display='headerMenu' icon={MessageCircle} href={`${urlPrefix}/shipments`} >
-          Orders
-        </ZixLinkButton>
-
-        {
-          activeRole !== USER_ROLES.customer && (
-            <ZixLinkButton display='headerMenu' icon={MessageCircle} href={`${urlPrefix}/jobs`} >
-              Jobs
-            </ZixLinkButton>
-          )
-        }
-      </YStack>
-      <Settings>
+      <Settings marginTop="$6" backgroundColor='$gray3'>
         <Settings.Items>
           <Settings.Group $gtSm={{ space: '$2' }}>
-            <Settings.Item icon={Moon} onPress={toggle} rightLabel={current}>
-              Theme
-            </Settings.Item>
+            {
+              menuGroups.map((menuItems, index) => (
+                <YStack key={index} gap='$2'>
+                  {
+                    menuItems.map(renderMenuItem)
+                  }
+                  {
+                    index < menuGroups.length - 1 && (
+                      <Separator borderColor="$gray6" marginVertical='$4' borderWidth="$0.5" />
+                    )
+                  }
+                </YStack>
+              ))
+            }
           </Settings.Group>
         </Settings.Items>
       </Settings>
-      <AccountSwitcher />
+
+      <View padding='$4'>
+        <AccountSwitcher />
+      </View>
     </View >
   );
 }
