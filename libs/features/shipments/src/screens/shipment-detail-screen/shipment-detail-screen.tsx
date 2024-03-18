@@ -1,32 +1,68 @@
 import { useQuery } from '@tanstack/react-query';
-import { CustomerShipmentsService, DriversService } from '@zix/api';
+import {
+  CustomerShipmentsService,
+  DriversService,
+  ShipmentTransformer,
+} from '@zix/api';
 import { useAuth } from '@zix/services/auth';
-import { FullScreenSpinner } from '@zix/ui/common';
+import { FullScreenSpinner, UserAvatar } from '@zix/ui/common';
+import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader } from '@zix/ui/layouts';
+import { ZixWidgetContainer } from '@zix/ui/widgets';
 import { t } from 'i18next';
+import moment from 'moment';
 import { useMemo } from 'react';
 import { RefreshControl } from 'react-native';
 import { createParam } from 'solito';
-import { ScrollView, Separator, YStack } from 'tamagui';
-import { BudgetShipment, DefinitionSender, HeaderShipment, InformationAboutDriver, OfferDescription, OrderDescription, ShipmentActions, ShipmentCanceledDetail, ShipmentCode, ShipmentDeliveringDetail, ShipmentDetails, ShipmentDirection, TotalCostOfShipment } from '../../';
-
+import {
+  ScrollView,
+  Separator,
+  Stack,
+  Text,
+  View,
+  XStack,
+  YStack,
+} from 'tamagui';
+import {
+  BudgetShipment,
+  DefinitionSender,
+  InformationAboutDriver,
+  ShipmentActions,
+  ShipmentCanceledDetail,
+  ShipmentCode,
+  ShipmentDeliveringDetail,
+  ShipmentDetails,
+  ShipmentDirection,
+  TotalCostOfShipment,
+} from '../../';
 
 export type ShipmentDetailScreenProps = {
-  variant: 'shipments' | 'jobs'
-}
+  variant: 'shipments' | 'jobs';
+};
 
 const { useParam } = createParam<{ shipment: string }>();
 
+export const SectionWrapper = ({ children }: { children: React.ReactNode }) => (
+  <Stack
+    padding="$3"
+    backgroundColor={'$color1'}
+    borderRadius={'$4'}
+    $sm={{ backgroundColor: 'transparent' }}
+  >
+    {children}
+  </Stack>
+);
 
 export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
-  variant = 'shipments'
+  variant = 'shipments',
 }) => {
-  const { activeRole, getRoleUrlPrefix } = useAuth()
+  const { activeRole, getRoleUrlPrefix } = useAuth();
 
   const [shipmentId] = useParam('shipment');
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['CustomerShipmentsService.retrieveShipment', { id: shipmentId }],
-    queryFn: () => CustomerShipmentsService.retrieveShipment({ shipment: shipmentId || '' }),
+    queryFn: () =>
+      CustomerShipmentsService.retrieveShipment({ shipment: shipmentId || '' }),
   });
   const shipment = data?.data;
   // TODO:: remove this once it's been added to shipment
@@ -39,68 +75,182 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
   });
 
   const urlPrefix = useMemo(() => {
-    return `${getRoleUrlPrefix(activeRole)}/${variant}`
+    return `${getRoleUrlPrefix(activeRole)}/${variant}`;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeRole, variant])
+  }, [activeRole, variant]);
   // const driver = shipment.driver;
   const driver = driverQuery.data?.data || {};
 
-  const status = shipment?.status;
+  // const status = shipment?.status;
+  const status = 'delivering';
 
-  const renderShipmentDetails = () => !shipment ? <FullScreenSpinner /> : (
-    <ScrollView
-      refreshControl={
-        <RefreshControl refreshing={isLoading} onRefresh={refetch} />
-      }
-      style={{
-        flex: 1,
+  const renderHeaderShipment = () => (
+    <XStack
+      justifyContent="space-between"
+      alignItems="center"
+      $gtSm={{
+        backgroundColor: '$gray3',
+        padding: '$5',
+        borderRadius: '$4',
       }}
     >
-      <YStack gap="$3" padding='$4'>
-        {status === 'cancelled' && <ShipmentCanceledDetail />}
-        <HeaderShipment
-          shipmentType={`${t('shipment:type:' + shipment?.items_type)}` || ''}
-          shipmentCreatedAt={shipment?.created_at || ''}
-          demandJob={`${t('job:job-demand')}`}
-          publishedJob={`${t('job:job-published')}`}
-        />
-        <TotalCostOfShipment shipment={shipment} />
-        {status === 'delivering' && <ShipmentDeliveringDetail />}
-        {status === 'delivering' && (
-          <OfferDescription shipment={shipment} />
-        )}
-        <Separator borderColor={'$gray7'} width={'100%'} />
-        <OrderDescription items={shipment?.items} />
-        <Separator borderColor={'$gray7'} width={'100%'} />
-        <ShipmentDirection shipment={shipment} status={status} />
-        <Separator borderColor={'$gray7'} width={'100%'} />
-        <ShipmentDetails shipment={shipment} paddingVertical="$4" />
-        <Separator borderColor={'$gray7'} width={'100%'} />
-        {status === 'draft' && <BudgetShipment shipment={shipment} />}
-        {status === 'delivering' && <InformationAboutDriver driver={driver} />}
+      <YStack gap="$3" alignItems="flex-start">
+        <Text fontSize={12} fontWeight={'600'} color={'$color11'}>
+          SWDKSA{shipment.id?.toString().substring(0, 8).toUpperCase()}
+        </Text>
+        <Text fontSize={18} fontWeight={'400'} color={'$color5'}>
+          {t('job:job-demand')} {shipment?.items_type}
+        </Text>
+        <XStack alignItems="center" gap="$6" marginBottom="$3">
+          <XStack gap="$2" alignItems="center" $sm={{ display: 'none' }}>
+            {/* TODO change to UserAvatar */}
 
-        <ShipmentCode codeId={shipment?.id || ''} marginVertical="$4" />
-        <DefinitionSender shipment={shipment} />
+            <UserAvatar size={'$1'} user={shipment.user} />
+            <Text
+              fontSize={12}
+              fontWeight={'600'}
+              color={'$gray9'}
+              $sm={{
+                fontSize: 12,
+                fontWeight: '600',
+              }}
+            >
+              {shipment.user?.name}
+            </Text>
+          </XStack>
+          <XStack gap="$2" alignItems="center">
+            <CustomIcon
+              name="chronic"
+              size="$1"
+              $sm={{
+                display: 'none',
+              }}
+            />
+            <Text
+              fontSize={12}
+              fontWeight={'600'}
+              color={'$gray9'}
+              $sm={{
+                fontSize: 9,
+                fontWeight: '600',
+              }}
+            >
+              {t('job:job-published')} {moment(shipment.created_at).fromNow()}
+            </Text>
+          </XStack>
+        </XStack>
+      </YStack>
+
+      <View $sm={{ display: 'none' }}>
         <ShipmentActions
           shipment={shipment}
           variant={variant}
           urlPrefix={urlPrefix}
         />
+      </View>
+    </XStack>
+  );
 
-      </YStack>
-    </ScrollView>
-  )
+  const renderDescription = (
+    items: Array<ShipmentTransformer>,
+    label: string,
+  ) => (
+    <SectionWrapper>
+      <ZixWidgetContainer label={t(label)}>
+        <Text
+          fontSize={15}
+          fontWeight={'400'}
+          color={'$gray9'}
+          $sm={{
+            fontSize: 13,
+            fontWeight: '400',
+          }}
+        >
+          {items?.map((item) => item.notes).join(', ')}
+        </Text>
+      </ZixWidgetContainer>
+    </SectionWrapper>
+  );
+
+  const renderShipmentDetails = () =>
+    !shipment ? (
+      <FullScreenSpinner />
+    ) : (
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={isLoading} onRefresh={refetch} />
+        }
+        style={{
+          flex: 1,
+        }}
+      >
+        <YStack gap="$3" padding="$4">
+          <ShipmentCanceledDetail status={shipment.status || 'darft'} />
+          {renderHeaderShipment()}
+          <TotalCostOfShipment shipment={shipment} />
+
+          <ShipmentDeliveringDetail shipment={shipment} />
+          {status === 'delivering' &&
+            renderDescription(
+              shipment?.items || [],
+              'shipment:offer-description',
+            )}
+
+          <Separator
+            borderColor={'$gray7'}
+            width={'100%'}
+            $gtSm={{ display: 'none' }}
+          />
+          {renderDescription(
+            shipment?.items || [],
+            'shipment:service-description',
+          )}
+          <Separator
+            borderColor={'$gray7'}
+            width={'100%'}
+            $gtSm={{ display: 'none' }}
+          />
+          <ShipmentDirection shipment={shipment} status={status} />
+
+          <Separator
+            borderColor={'$gray7'}
+            width={'100%'}
+            $gtSm={{ display: 'none' }}
+          />
+
+          <ShipmentDetails shipment={shipment} paddingVertical="$4" />
+
+          <Separator
+            borderColor={'$gray7'}
+            width={'100%'}
+            $gtSm={{ display: 'none' }}
+          />
+
+          <BudgetShipment shipment={shipment} />
+
+          <InformationAboutDriver driver={driver} status={status} />
+
+          <ShipmentCode codeId={shipment?.id || ''} marginVertical="$4" />
+
+          <DefinitionSender shipment={shipment} />
+
+          <View>
+            <ShipmentActions
+              shipment={shipment}
+              variant={variant}
+              urlPrefix={urlPrefix}
+            />
+          </View>
+        </YStack>
+      </ScrollView>
+    );
 
   return (
     <>
-      <AppHeader
-        showBackButton
-        title={t('job:job-demand')}
-      />
+      <AppHeader showBackButton title={t('job:job-demand')} />
       {renderShipmentDetails()}
     </>
   );
-}
-
+};
 
 export default ShipmentDetailScreen;

@@ -3,6 +3,7 @@ import { ZixWidgetContainer } from '@zix/ui/widgets';
 import { t } from 'i18next';
 import React from 'react';
 import { Stack, Text, View, XStack, YStack } from 'tamagui';
+import { SectionWrapper } from '../../screens/shipment-detail-screen/shipment-detail-screen';
 
 /* eslint-disable-next-line */
 export interface BudgetShipmentProps {
@@ -10,7 +11,9 @@ export interface BudgetShipmentProps {
 }
 
 export const BudgetShipment: React.FC<BudgetShipmentProps> = ({ shipment, ...props }) => {
+  if(shipment.status !== 'draft') return null
   return (
+    <SectionWrapper>
     <ZixWidgetContainer label={t('job:budget')} >
       <XStack gap="$4" paddingVertical='$4'>
         <YStack
@@ -46,7 +49,7 @@ export const BudgetShipment: React.FC<BudgetShipmentProps> = ({ shipment, ...pro
             {t('shipment:medium')}
           </Text>
           <Text fontSize={20} fontWeight={'800'}>
-            {(shipment.max_budget?.value + shipment.min_budget?.value) / 2}
+            {(shipment?.max_budget?.value + shipment?.min_budget?.value) / 2}
           </Text>
           <Text fontSize={12} fontWeight={'600'}>
             {shipment.max_budget?.currency?.code}
@@ -88,7 +91,7 @@ export const BudgetShipment: React.FC<BudgetShipmentProps> = ({ shipment, ...pro
 
           <View width={50} alignItems="flex-start">
             <Text fontSize={15} color={'$color'} fontWeight={'400'}>
-              moin 5
+              Todo
             </Text>
           </View>
         </XStack>
@@ -103,7 +106,7 @@ export const BudgetShipment: React.FC<BudgetShipmentProps> = ({ shipment, ...pro
               fontWeight={'400'}
               textAlign="right"
             >
-              0
+              Todo
             </Text>
           </View>
         </XStack>
@@ -115,7 +118,7 @@ export const BudgetShipment: React.FC<BudgetShipmentProps> = ({ shipment, ...pro
           </View>
           <View width={50} alignItems="flex-start">
             <Text fontSize={15} color={'$color'} fontWeight={'400'}>
-              0
+              Todo
             </Text>
           </View>
         </XStack>
@@ -125,12 +128,13 @@ export const BudgetShipment: React.FC<BudgetShipmentProps> = ({ shipment, ...pro
           </Text>
           <View width={50} alignItems="flex-start">
             <Text fontSize={15} color={'$color'} fontWeight={'400'}>
-              0
+              Todo
             </Text>
           </View>
         </XStack>
       </YStack>
     </ZixWidgetContainer>
+    </SectionWrapper>
   );
 };
 

@@ -19,9 +19,10 @@ export const TotalCostOfShipment: React.FC<TotalCostOfShipmentProps> = ({
       width={'100%'}
       padding="$5"
       justifyContent="space-between"
-      alignItems="flex-start"
+      alignItems="center"
       backgroundColor={'$color3'}
       borderRadius={'$2'}
+      $gtSm={{paddingVertical: '$6'}}
     >
       <XStack gap="$3" alignItems="center">
         <CustomIcon name="budget" size={18} color={'$color5'} />
@@ -29,11 +30,11 @@ export const TotalCostOfShipment: React.FC<TotalCostOfShipmentProps> = ({
           {TotalShipment}
         </Text>
       </XStack>
-      <XStack gap="$1" alignItems='flex-end'>
-        <Text fontSize={20} fontWeight={'600'} color={'$color'}>
+      <XStack gap="$1" alignItems='flex-end' $gtSm={{ gap: '$3'}}>
+        <Text fontSize={20} fontWeight={'600'}  $gtSm={{ fontSize: 40, fontWeight: '800'}}>
           {shipment?.max_budget?.value}
         </Text>
-        <Text fontSize={15} fontWeight={'600'} color={'$color'}>
+        <Text fontSize={15} fontWeight={'600'}  $gtSm={{ fontSize: 20}}>
           {shipment.max_budget?.currency?.code}
         </Text>
       </XStack>

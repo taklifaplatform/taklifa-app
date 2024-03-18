@@ -9,7 +9,7 @@ export * from './screens/shipment-detail-screen/shipment-detail-screen';
 
 export * from './screens/shipments-list-screen/shipments-list-screen';
 
-export * from './components/offer-description/offer-description';
+
 
 export * from './components/shipment-canceled-detail/shipment-canceled-detail';
 
@@ -25,11 +25,7 @@ export * from './components/budget-shipment/budget-shipment';
 
 export * from './components/total-cost-of-shipment/total-cost-of-shipment';
 
-export * from './components/header-shipment/header-shipment';
-
 export * from './components/definition-sender/definition-sender';
-
-export * from './components/order-description/order-description';
 
 export * from './components/shipment-direction/shipment-direction';
 

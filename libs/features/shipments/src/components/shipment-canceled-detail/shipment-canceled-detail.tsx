@@ -5,10 +5,12 @@ import { Text, YStack } from 'tamagui';
 
 /* eslint-disable-next-line */
 export interface ShipmentCanceledDetailProps {
+  status: string;
 }
 
 
-export const ShipmentCanceledDetail: React.FC<ShipmentCanceledDetailProps> = () => {
+export const ShipmentCanceledDetail: React.FC<ShipmentCanceledDetailProps> = ({status}) => {
+  if(status !== 'cancelled') return null;
   return (
     <YStack padding='$4' backgroundColor={'$red3'} borderColor={'$red9'} borderRadius={'$4'}>
       <Text color={'$red9'} fontSize={20} fontWeight={600}>ShipmentCanceledDetail</Text>

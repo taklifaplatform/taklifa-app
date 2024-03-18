@@ -49,7 +49,6 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
   return (
     <Stack
       marginVertical="$1.5"
-      marginHorizontal="$4"
       height={200}
       backgroundColor="$gray6"
       borderRadius="$5"
