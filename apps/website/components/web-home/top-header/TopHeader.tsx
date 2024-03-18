@@ -22,7 +22,7 @@ export function TopHeader() {
   const renderHomeInfo = () => (
     <ZixLinkButton
       display="linkItem"
-      href={'/'}
+      href={'/about'}
       icon={<CustomIcon name={'home_info'} size="$1" />}
     >
       {t('web-home:about')}
@@ -32,7 +32,7 @@ export function TopHeader() {
   const renderHomeQuestion = () => (
     <ZixLinkButton
       display="linkItem"
-      href={'/contact'}
+      href={'/faqs'}
       icon={<CustomIcon name={'help'} size="$1" />}
     >
       {t('web-home:question')}

@@ -1,142 +1,120 @@
 import { useMultiLang } from '@zix/i18n';
-import { ZixLinkButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
-import { ManageShipments } from 'apps/website/components/web-home/management-shipments/ManageShipments';
-import { Partner } from 'apps/website/components/web-home/partner/Partner';
-import { MainLayout } from 'apps/website/layouts/MainLayout';
 import { t } from 'i18next';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Pressable } from 'react-native';
-import { Image, Stack, Text, XStack, YStack } from 'tamagui';
-
+import { Button, Image, Stack, Text, View, XStack, YStack } from 'tamagui';
+import { ManageShipments } from '../../components/web-home/management-shipments/ManageShipments';
+import { Partner } from '../../components/web-home/partner/Partner';
+import { MainLayout } from '../../layouts/MainLayout';
 import { NextPageWithLayout } from '../_app';
-
 type WelcomeTextProps = {
   title: string;
   incon: string;
   text: string;
 };
-
 export const Page: NextPageWithLayout = () => {
   const [press, setPress] = useState('');
   const { activeLang } = useMultiLang();
   const router = useRouter();
-  const renderImageBackground = () => (
-    <>
+  const renderFirstSection = () => (
+    <Stack
+      backgroundColor="$color3"
+      borderRadius={10}
+      gap="$4"
+      marginTop="$7"
+      flexDirection="row"
+      justifyContent="space-around"
+      alignItems="center"
+      flexWrap="wrap"
+      $sm={{
+        flexDirection: "column",
+      }}
+    >
       <Image
         alt="Banner"
         source={{
-          uri: `/images/banner-6.png`,
+          uri: `/images/banner-7.png`,
         }}
-        width={'100%'}
+        width={530}
         height={466}
         resizeMode="cover"
         position="responsive"
         $sm={{
           height: 300,
+          width: 282,
         }}
         borderRadius={10}
       />
-    </>
-  );
-  const renderbannerAbout = () => (
-    <YStack
-      position="absolute"
-      top={0}
-      justifyContent="center"
-      alignItems="flex-start"
-      paddingRight={400}
-      paddingLeft={60}
-      width="100%"
-      gap="$7"
-      marginVertical="$7"
-      $sm={{
-        paddingRight: 10,
-        paddingLeft: 10,
-        gap: '$1',
-      }}
-    >
-      <Text
-        fontSize={25}
-        fontWeight="900"
-        lineHeight={40}
-        color="$color12"
-        $sm={{
-          fontSize: 15,
-          lineHeight: 20,
-        }}
-      >
-        {t('about:section-1:title-1')}
-      </Text>
       <YStack
+        justifyContent="center"
+        alignItems="flex-start"
+        width={530}
         gap="$7"
-        paddingRight={65}
+        marginVertical="$7"
         $sm={{
-          gap: '$2',
-          paddingRight: 5,
+          width: 282,
+          gap: '$1',
         }}
       >
         <Text
-          fontSize={20}
-          fontWeight="400"
+          fontSize={25}
+          fontWeight="900"
           lineHeight={40}
+          color="$color12"
           $sm={{
             fontSize: 15,
-            lineHeight: 15,
+            lineHeight: 20,
           }}
         >
-          {t('about:section-1:description')}
+          {t('about:section-1:title-1')}
         </Text>
-        <XStack
-          gap="$4"
+        <YStack
+          gap="$7"
+          
           $sm={{
             gap: '$2',
-            paddingRight: 5,
-            marginTop: 20,
+           
           }}
         >
-          <ZixLinkButton
-            width={150}
-            height={35}
-            icon={<CustomIcon name="account" size={15} />}
-            href={'/'}
+          <Text
+            fontSize={20}
+            fontWeight="400"
+            lineHeight={40}
             $sm={{
-              width: 120,
-              height: 25,
+              fontSize: 15,
+              lineHeight: 15,
             }}
           >
-            <Text
-              fontSize={10}
-              $sm={{
-                fontSize: 10,
-              }}
-            >{t('about:section-1:signup')}</Text>
-          </ZixLinkButton>
-          <ZixLinkButton
-            onpress={() => setPress('contact')}
-            backgroundColor={setPress === 'contact' ? '$color5' : '$color2'}
-            href={'/'}
-            width={150}
-            height={35}
-            icon={<CustomIcon name="call" size={15} />}
+            {t('about:section-1:description')}
+          </Text>
+          <XStack
+            gap="$4"
             $sm={{
-              width: 120,
-              height: 25,
+              gap: '$2',
+              marginVertical: '$3',
             }}
           >
-            <Text
-              fontSize={10}
-              $sm={{
-                fontSize: 10,
-              }}
-            > {t('about:section-1:call')}
-            </Text>
-          </ZixLinkButton>
-        </XStack>
+            <Button
+              flex={1}
+              icon={<CustomIcon name="account" size={15} />}
+            >
+              {t('about:section-1:signup')}
+            </Button>
+            <Button
+              flex={1}
+              borderColor="$color10"
+              variant="outlined"
+              icon={<CustomIcon name="call" size={15} />}
+            >
+              {t('about:section-1:call')}
+            </Button>
+          </XStack>
+        </YStack>
       </YStack>
-    </YStack>
-  );
+    </Stack>
+  )
   const renderWelcomeText = () => (
     <Stack
       gap="$4"
@@ -285,7 +263,7 @@ export const Page: NextPageWithLayout = () => {
   );
   const renderTextStartToday = () => (
     <YStack
-      pos={'absolute'}
+
       width={'70%'}
       gap="$4"
       padding="$4"
@@ -350,35 +328,39 @@ export const Page: NextPageWithLayout = () => {
   return (
     <YStack
     >
-      {renderImageBackground()}
-      {renderbannerAbout()}
-      {renderWelcomeText()}
-      {renderAboutsServiceCards()}
+      {renderFirstSection()}
+      <View>
+        {renderWelcomeText()}
+      </View>
+      <View>
+        {renderAboutsServiceCards()}
+      </View>
       <XStack
         marginVertical="$7"
       >
+        {renderTextStartToday()}
         <Image
           alt="Banner"
           source={{
-            uri: `/images/bi5tisar-1-${activeLang}.png`,
+            uri: `/images/bi5tisar-${activeLang}.png`,
           }}
-          width={'100%'}
+          width={330}
           height={413}
           resizeMode="cover"
           position="responsive"
           $sm={{
-            height: 120,
-            marginTop: 90,
+           
+            display : 'none',
           }}
           borderRadius={10}
         />
-        {renderTextStartToday()}
       </XStack>
       <Partner />
       <ManageShipments />
     </YStack>
   );
-};
+}
+
 Page.getLayout = (page) => <MainLayout>{page}</MainLayout>;
 
 export default Page;
