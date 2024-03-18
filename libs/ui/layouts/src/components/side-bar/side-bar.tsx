@@ -24,7 +24,7 @@ export const SideBar: React.FC<SideBarProps> = () => {
   }, [activeRole])
 
   return (
-    <View position='sticky' top={0} bottom={0} left={0} width={268} maxHeight='100vh' backgroundColor='$color2' padding='$4'>
+    <View position='sticky' top={0} bottom={0} left={0} width={268} maxHeight='100vh' backgroundColor='$gray3' padding='$4'>
       <ZixLinkButton unstyled href='/' >
         <CustomIcon name={`web_logo_${activeLang}`} height={50} width={165} />
       </ZixLinkButton>

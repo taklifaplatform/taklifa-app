@@ -11,7 +11,7 @@ export type ShipmentCardLocationProps = ThemeableStackProps & {
   date: string;
   phone_number: string;
   userName: string;
-}
+};
 
 export const ShipmentCardLocation: React.FC<ShipmentCardLocationProps> = ({
   date,
@@ -26,21 +26,23 @@ export const ShipmentCardLocation: React.FC<ShipmentCardLocationProps> = ({
       width={'100%'}
       padding={'$4'}
       borderWidth="$0.5"
-      borderColor={'$gray9' }
+      borderColor={'$gray9'}
       borderRadius={'$6'}
       {...props}
     >
       <XStack justifyContent="space-between">
         <Text color={'$color'}>{date}</Text>
-        <Stack
-          paddingHorizontal="$3"
-          backgroundColor={'$color5'}
-          borderRadius={'$3'}
-        >
-          <Text fontSize={15} fontWeight={500}>
-            {location.is_primary ? t('shipment:primary') : t('shipment:secondary')}
-          </Text>
-        </Stack>
+        {location.is_primary ? (
+          <Stack
+            paddingHorizontal="$3"
+            backgroundColor={'$color5'}
+            borderRadius={'$3'}
+          >
+            <Text fontSize={15} fontWeight={500}>
+              {t('shipment:primary')}
+            </Text>
+          </Stack> 
+        ): null}
       </XStack>
       <Stack width={'100%'} alignItems="flex-start">
         <Text fontSize={15} fontWeight={600}>

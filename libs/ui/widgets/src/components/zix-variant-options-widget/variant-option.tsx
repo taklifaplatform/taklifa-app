@@ -125,6 +125,7 @@ export const VariantOption: React.FC<VariantOptionProps> = ({
     <VariantStack
       flexDirection="row"
       alignItems="center"
+      borderRadius={'$4'}
       gap="$2"
       {...(variant ? { [variant]: true } : {})}
     >

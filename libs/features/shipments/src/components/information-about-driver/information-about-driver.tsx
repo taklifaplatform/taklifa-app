@@ -10,6 +10,7 @@ import { t } from 'i18next';
 import React from 'react';
 
 import { ThemeableStackProps, YStack } from 'tamagui';
+import DefinitionSender from '../definition-sender/definition-sender';
 
 export type InformationAboutDriverProps = ThemeableStackProps & {
   driver: DriverTransformer;
@@ -22,6 +23,7 @@ export const InformationAboutDriver: React.FC<InformationAboutDriverProps> = ({
   return (
     <ZixWidgetContainer label={t('shipment:information-about-driver')}>
       <YStack gap="$6" marginTop="$4" {...props}>
+      <DefinitionSender shipment={driver} />
         <ZixVariantOptionsWidget
           icon={<CustomIcon name="user_info" size="$1" color={'$color5'} />}
           label={t('shipment:driver')}

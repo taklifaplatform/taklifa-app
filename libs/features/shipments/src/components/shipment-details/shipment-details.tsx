@@ -40,18 +40,41 @@ export const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
     [shipment?.items],
   );
 
+  /* Delivery Time */
   const deliveryTime = useMemo(() => {
     return moment.duration(
       moment(shipment?.deliver_date).diff(moment(shipment?.pick_date)),
     );
   }, [shipment?.pick_date, shipment?.deliver_date]);
 
-  const duration = useMemo(() => {
-    return moment.duration(
-      moment(shipment?.deliver_time).diff(moment(shipment?.pick_time)),
-      'minute',
-    );
-  }, [shipment?.pick_time, shipment?.deliver_time]);
+
+  /* Distance */
+  const distance = useMemo(() => {
+    const lat1 = shipment?.from_location?.latitude || 0;
+    const lon1 = shipment?.from_location?.longitude || 0;
+    const lat2 = shipment?.to_location?.latitude || 0;
+    const lon2 = shipment?.to_location?.longitude || 0;
+    // calculate distance
+    const R = 6371e3; // metres
+    const φ1 = (lat1 * Math.PI) / 180; // φ, λ in radians
+    const φ2 = (lat2 * Math.PI) / 180;
+    const Δφ = ((lat2 - lat1) * Math.PI) / 180;
+    const Δλ = ((lon2 - lon1) * Math.PI) / 180;
+
+    const a =
+      Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    const d = R * c; // in metres
+    // convert to km
+    return d / 1000;
+  }, [
+    shipment?.from_location?.latitude,
+    shipment?.from_location?.longitude,
+    shipment?.to_location?.latitude,
+    shipment?.to_location?.longitude,
+  ]);
   return (
     <ZixWidgetContainer label={t('shipment:shipment-details')}>
       <YStack gap="$6" marginTop="$4" {...props}>
@@ -99,12 +122,12 @@ export const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
             {
               icons: <Route size="$1" color={'$gray9'} rotate="90deg" />,
               name: t('job:estimated-distance'),
-              value: `ToDooo km`,
+              value: `${distance.toFixed(2)} km`,
             },
             {
               icons: <CustomIcon name="chronic" size="$1" color={'$gray9'} />,
               name: t('job:estimated-time'),
-              value: `${duration.asMinutes()}`,
+              value: `${deliveryTime.asHours()} hours`,
             },
             {
               icons: <CustomIcon name="time" size="$1" color={'$gray9'} />,
