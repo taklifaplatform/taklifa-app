@@ -47,6 +47,12 @@ export const ShipmentDeliveringDetail: React.FC<
     shipment?.to_location?.latitude,
     shipment?.to_location?.longitude,
   ]);
+
+  if (shipment?.status !== 'delivering') {
+    return null;
+  }
+
+
   return (
     <XStack width={'100%'} gap="$2" justifyContent="space-between">
       <Stack
@@ -74,7 +80,9 @@ export const ShipmentDeliveringDetail: React.FC<
         alignItems="center"
       >
         <Route size={15} color={'$gray9'} rotate="90deg" />
-        <Text color={'$gray9'}>{distance.toFixed(2)} {t('km')}</Text>
+        <Text color={'$gray9'}>
+          {distance.toFixed(2)} {t('km')}
+        </Text>
       </Stack>
       <Stack
         flexDirection="row"

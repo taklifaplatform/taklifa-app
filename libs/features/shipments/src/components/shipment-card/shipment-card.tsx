@@ -14,14 +14,14 @@ import {
   Text,
   ThemeableStackProps,
   XStack,
-  YStack
+  YStack,
 } from 'tamagui';
 import ShipmentCardActions from '../shipment-card-actions/shipment-card-actions';
 
 export type ShipmentCardProps = ThemeableStackProps & {
   shipment: ShipmentTransformer; // TODO: change to shipment, and add
   urlPrefix: string;
-  variant: 'shipments' | 'jobs'
+  variant: 'shipments' | 'jobs';
 };
 
 export const ShipmentCard: React.FC<ShipmentCardProps> = ({
@@ -129,7 +129,6 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
         gap: '$6',
         padding: '$4',
       }}
-
       {...props}
     >
       <YStack
@@ -150,7 +149,8 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
               color: '$color',
             }}
           >
-            {t('job:job-demand')} {`${t('shipment:type:' + shipment?.items_type)}`}
+            {t('job:job-demand')}{' '}
+            {`${t('shipment:type:' + shipment?.items_type)}`}
           </Text>
           <Stack
             flexDirection="row"
