@@ -84,7 +84,9 @@ export function useAuth(): AuthHelpers {
     [authUser, data],
   );
 
-  const activeRole = 'customer';
+  const activeRole = useMemo<AUTH_ROLE_TYPE>(() => {
+    return (user?.active_role?.name as AUTH_ROLE_TYPE) || 'customer';
+  }, [user]);
 
   const isLoggedIn = useMemo(
     () => !!authAccessToken && !!user?.id,

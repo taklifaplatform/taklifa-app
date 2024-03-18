@@ -1,0 +1,11 @@
+import { AppHeader } from '@zix/ui/layouts';
+import React from 'react';
+
+export default function Screen() {
+  return (
+    <>
+      <AppHeader showBackButton title="Invite New Driver" />
+      {/* <CreateDriverScreen /> */}
+    </>
+  );
+}

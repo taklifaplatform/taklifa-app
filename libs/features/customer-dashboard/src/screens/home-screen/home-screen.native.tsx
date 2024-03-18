@@ -4,12 +4,25 @@ import { DriverTransformer, DriversService } from '@zix/api';
 import { UserCard } from '@zix/features/users';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader } from '@zix/ui/layouts';
+import { MapDriverMarker } from '@zix/ui/sawaeed';
 import { useState } from 'react';
 import { Dimensions } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+import MapView from 'react-native-maps';
 import Carousel from 'react-native-reanimated-carousel';
 import { Button, YStack } from 'tamagui';
 
+
+const initialCamera = {
+  center: {
+    latitude: 24.713552,
+    longitude: 46.675296,
+  },
+  pitch: 0,
+  heading: 0,
+  altitude: 100000,
+  zoom: 20,
+};
 
 export function HomeScreen() {
   const { width } = Dimensions.get('window');
@@ -17,7 +30,7 @@ export function HomeScreen() {
   // const USER_CARD_HEIGHT = 210;
   const USER_CARD_HEIGHT = width / 1.5;
 
-  const [showMap, setShowMap] = useState(false);
+  const [showMap, setShowMap] = useState(true);
 
   const { data, ...driversQuery } = useQuery({
     queryFn() {
@@ -31,7 +44,21 @@ export function HomeScreen() {
   // new props
   const [showCarousel, setShowCarousel] = useState(false);
 
-
+  const renderMap = () =>
+    showMap && (
+      <MapView style={{ flex: 1 }} initialCamera={initialCamera}>
+        {data?.data?.map((driver, index) => (
+          <MapDriverMarker
+            key={`marker-${index}`}
+            driver={driver}
+            onPress={() => {
+              setShowCarousel(true);
+            }}
+          />
+        ))}
+      </MapView>
+    );
+  //List
   const renderList = () =>
     !showMap && (
       <FlatList
@@ -39,14 +66,12 @@ export function HomeScreen() {
         onRefresh={driversQuery.refetch}
         style={{ flex: 1 }}
         data={data?.data || []}
-        numColumns={2}
         renderItem={({ item, index }) => (
           <UserCard
             key={`stack-${item.id}-${index}`}
             user={item}
             marginHorizontal='$4'
             marginVertical='$2'
-            flex={0.5}
           />
         )}
       />
@@ -117,6 +142,7 @@ export function HomeScreen() {
   return (
     <YStack flex={1}>
       <AppHeader showSearchBar />
+      {renderMap()}
       {renderList()}
       {renderCarousel()}
       {renderSwitcher()}
