@@ -1,12 +1,12 @@
-
 import { useMultiLang } from '@zix/i18n';
 import { USER_ROLES, useAuth } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import React, { useMemo } from 'react';
 
-import { Bell, Home, MessageCircle } from '@tamagui/lucide-icons';
-import { ZixLinkButton } from '@zix/ui/common';
-import { View, YStack, Text } from 'tamagui';
+import { Bell, Home, MessageCircle, Moon } from '@tamagui/lucide-icons';
+import { useThemeSetting } from '@tamagui/next-theme';
+import { Settings, ZixLinkButton } from '@zix/ui/common';
+import { View, YStack } from 'tamagui';
 import AccountSwitcher from '../account-switcher/account-switcher';
 
 export type SideBarProps = {
@@ -17,6 +17,7 @@ export type SideBarProps = {
 export const SideBar: React.FC<SideBarProps> = () => {
   const { activeLang } = useMultiLang();
   const { user, activeRole, getRoleUrlPrefix } = useAuth()
+  const { toggle, current } = useThemeSetting()
 
   const urlPrefix = useMemo(() => {
     return getRoleUrlPrefix(activeRole)
@@ -53,6 +54,15 @@ export const SideBar: React.FC<SideBarProps> = () => {
           )
         }
       </YStack>
+      <Settings>
+        <Settings.Items>
+          <Settings.Group $gtSm={{ space: '$2' }}>
+            <Settings.Item icon={Moon} onPress={toggle} rightLabel={current}>
+              Theme
+            </Settings.Item>
+          </Settings.Group>
+        </Settings.Items>
+      </Settings>
       <AccountSwitcher />
     </View >
   );
