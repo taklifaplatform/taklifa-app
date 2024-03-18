@@ -29,7 +29,7 @@ export class DriverShipmentsService {
          */
         perPage?: number,
         search?: string,
-        status?: 'draft' | 'searching' | 'delivering' | 'delivered' | 'cancelled' | 'pending' | 'expired' | 'rejected' | 'completed' | 'failed' | 'returned' | 'lost' | 'damaged' | 'stolen' | 'other',
+        status?: string,
         itemsType?: 'document' | 'box' | 'multiple_boxes' | 'other',
         role?: 'customer' | 'company_owner' | 'company_manager' | 'company_driver' | 'solo_driver',
     }): CancelablePromise<{

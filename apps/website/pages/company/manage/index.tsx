@@ -1,11 +1,19 @@
-import { ShipmentsListScreen } from '@zix/features/shipments';
-
+import {
+  ManageTeamScreen
+} from '@zix/features/companies-dashboard';
+import { AppHeader } from '@zix/ui/layouts';
 import { DashboardLayout } from '@zix/ui/layouts';
 import { NextPageWithLayout } from '../../_app';
 
 export const Page: NextPageWithLayout = () => {
   return (
-    <ShipmentsListScreen variant='shipments' />
+    <>
+      <AppHeader
+        showBackButton
+        title="Manage Team"
+      />
+      <ManageTeamScreen />
+    </>
   );
 };
 

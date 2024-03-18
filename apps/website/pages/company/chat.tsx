@@ -1,13 +1,17 @@
-import { HomeScreen } from '@zix/features/customer-dashboard';
+
+import { CombinedChatScreen } from '@zix/features/chat';
 import { DashboardLayout } from '@zix/ui/layouts';
 import { NextPageWithLayout } from '../_app';
 
 export const Page: NextPageWithLayout = () => {
   return (
-    <HomeScreen />
+    <CombinedChatScreen />
   );
-};
+}
+
 
 Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>
 
-export default Page;
+// export const getServerSideProps = userProtectedGetSSP()
+
+export default Page

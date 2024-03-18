@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query';
 import { DriversService } from '@zix/api';
 
 import { FullScreenSpinner } from '@zix/ui/common';
-import { useAuth } from '@zix/services/auth';
 import { createParam } from 'solito';
 import { ScrollView, YStack } from 'tamagui';
 import ProfileHeader from '../../components/profile-header/profile-header';
@@ -12,22 +11,25 @@ import UserInfoRow from '../../components/user-info-row/user-info-row';
 import UserProfileLayout from '../../layouts/user-profile-layout/user-profile-layout';
 
 
-const { useParam } = createParam<{ user?: string }>();
+const { useParam } = createParam<{ user: string }>();
 
 export function UserProfileScreen() {
   const [userId] = useParam('user');
-  const { user } = useAuth()
 
   const { data } = useQuery({
     queryFn() {
+      if (!userId) {
+        return;
+      }
+
       return DriversService.retrieveDriver({
-        driver: userId || user?.id,
+        driver: userId,
       });
     },
-    queryKey: ['DriversService.retrieveDriver', userId, user?.id],
+    queryKey: ['DriversService.retrieveDriver', userId],
   });
 
-  const renderLoadingSpinner = () => !user && <FullScreenSpinner />;
+  const renderLoadingSpinner = () => !data?.data?.id && <FullScreenSpinner />;
 
   const renderUserProfile = () =>
     data?.data && (

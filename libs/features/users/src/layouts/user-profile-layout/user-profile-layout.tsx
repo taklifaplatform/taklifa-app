@@ -18,7 +18,7 @@ export const UserProfileLayout: React.FC<UserProfileLayoutProps> = ({
   const { user: authUser } = useAuth();
 
   const renderCurrentAuthUserHeader = () =>
-    user?.id === authUser?.id && (
+    (user?.id === authUser?.id || !user?.id) && (
       <AppHeader
         showBackButton
         headerTitle={() => <AccountSwitcher />}

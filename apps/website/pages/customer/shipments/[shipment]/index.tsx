@@ -1,10 +1,10 @@
-import { HomeScreen } from '@zix/features/customer-dashboard';
+import { ShipmentDetailScreen } from '@zix/features/shipments';
 import { DashboardLayout } from '@zix/ui/layouts';
-import { NextPageWithLayout } from '../_app';
+import { NextPageWithLayout } from '../../../_app';
 
 export const Page: NextPageWithLayout = () => {
   return (
-    <HomeScreen />
+    <ShipmentDetailScreen variant='shipments' />
   );
 };
 

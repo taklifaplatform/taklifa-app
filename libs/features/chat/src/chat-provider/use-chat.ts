@@ -10,14 +10,15 @@ export function useChat() {
   const { user, authAccessToken } = useAuth();
 
   useEffect(() => {
-    if (user?.id && !client.userID) {
+    if (authAccessToken && user?.id && !client.userID) {
       client.options.axiosRequestConfig = {
         headers: {
           Authorization: `Bearer ${authAccessToken}`,
         },
       };
       client.connectUser(user as any, DevToken(`${user.id}`));
-      // client.connectUser(user as any, DevToken(`${user.id}`));
+    } else if (!authAccessToken && !user?.id && client.userID) {
+      client.disconnectUser();
     }
   }, [user, authAccessToken]);
 

@@ -33,11 +33,11 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
 
   const onAvatarPress = useCallback(() => {
     if (isLoggedIn) {
-      router.push('/account');
+      router.push(`/users/${user?.id}`);
     } else {
       router.push('/auth/login');
     }
-  }, [isLoggedIn, router]);
+  }, [isLoggedIn, router, user]);
 
   const renderSearchBar = () => showSearchBar && (
     <View paddingHorizontal="$4" paddingVertical='$2'>
