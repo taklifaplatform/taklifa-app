@@ -195,7 +195,10 @@
     "@datepicker-react/hooks": "*",
     "@react-native-community/datetimepicker": "*",
     "@tamagui/constants": "*",
-    "react-native-qrcode-svg": "*"
+    "react-native-qrcode-svg": "*",
+    "laravel-echo": "*",
+    "pusher-js": "*",
+    "qrcode": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",
