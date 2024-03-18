@@ -1,16 +1,14 @@
+import { ShipmentsListScreen } from '@zix/features/shipments';
 
-import { Text } from 'tamagui';
+import { DashboardLayout } from '@zix/ui/layouts';
 import { NextPageWithLayout } from '../../_app';
-import MainLayout from 'apps/website/layouts/MainLayout';
 
 export const Page: NextPageWithLayout = () => {
   return (
-    <>
-      <Text>shipment</Text>
-    </>
+    <ShipmentsListScreen variant='shipments' />
   );
 };
 
-Page.getLayout = (page) => <MainLayout>{page}</MainLayout>;
+Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>
 
 export default Page;

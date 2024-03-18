@@ -1,13 +1,13 @@
+import { ShipmentDetailScreen } from '@zix/features/shipments';
+import { DashboardLayout } from '@zix/ui/layouts';
+import { NextPageWithLayout } from '../../../_app';
 
-import { JobDetailsScreen } from '@zix/features/companies-dashboard';
-import { AppHeader } from '@zix/ui/layouts';
-import React from 'react';
-
-export default function Screen() {
+export const Page: NextPageWithLayout = () => {
   return (
-    <>
-      <AppHeader showBackButton title="Job Detail" />
-      <JobDetailsScreen />
-    </>
+    <ShipmentDetailScreen variant='jobs' />
   );
-}
+};
+
+Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>
+
+export default Page;

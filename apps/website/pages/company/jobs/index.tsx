@@ -1,13 +1,14 @@
 import { ShipmentsListScreen } from '@zix/features/shipments';
-import React from 'react';
 
-export default function Screen() {
+import { DashboardLayout } from '@zix/ui/layouts';
+import { NextPageWithLayout } from '../../_app';
+
+export const Page: NextPageWithLayout = () => {
   return (
     <ShipmentsListScreen variant='jobs' />
-
-    // <>
-    //   <AppHeader title="Jobs" headerBackgroundColor="transparent" />
-    //   <JobsListScreen urlPrefix='company/jobs' />
-    // </>
   );
-}
+};
+
+Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>
+
+export default Page;

@@ -1,30 +1,22 @@
-import { Cog } from '@tamagui/lucide-icons';
 import {
   ManageTeamScreen
 } from '@zix/features/companies-dashboard';
 import { AppHeader } from '@zix/ui/layouts';
-import React from 'react';
-import { TouchableOpacity } from 'react-native';
-import { useRouter } from 'solito/router';
+import { DashboardLayout } from '@zix/ui/layouts';
+import { NextPageWithLayout } from '../../_app';
 
-export default function Screen() {
-  const router = useRouter();
+export const Page: NextPageWithLayout = () => {
   return (
     <>
       <AppHeader
         showBackButton
         title="Manage Team"
-        headerRight={() => (
-          <TouchableOpacity
-            onPress={() =>
-              router.push(`/company/manage/settings`)
-            }
-          >
-            <Cog size="$2" />
-          </TouchableOpacity>
-        )}
       />
       <ManageTeamScreen />
     </>
   );
-}
+};
+
+Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>
+
+export default Page;

@@ -1,6 +1,6 @@
 
 import { useMultiLang } from '@zix/i18n';
-import { useAuth } from '@zix/services/auth';
+import { USER_ROLES, useAuth } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import React, { useMemo } from 'react';
 
@@ -29,8 +29,6 @@ export const SideBar: React.FC<SideBarProps> = () => {
       </ZixLinkButton>
 
       <YStack flex={1} gap='$2' paddingVertical='$4'>
-        <Text>({activeRole})</Text>
-
         <ZixLinkButton display='headerMenu' icon={Home} href={urlPrefix} >
           Home
         </ZixLinkButton>
@@ -42,6 +40,18 @@ export const SideBar: React.FC<SideBarProps> = () => {
         <ZixLinkButton display='headerMenu' icon={MessageCircle} href={`${urlPrefix}/chat`} >
           Chat
         </ZixLinkButton>
+
+        <ZixLinkButton display='headerMenu' icon={MessageCircle} href={`${urlPrefix}/shipments`} >
+          Orders
+        </ZixLinkButton>
+
+        {
+          activeRole !== USER_ROLES.customer && (
+            <ZixLinkButton display='headerMenu' icon={MessageCircle} href={`${urlPrefix}/jobs`} >
+              Jobs
+            </ZixLinkButton>
+          )
+        }
       </YStack>
       <AccountSwitcher />
     </View >
