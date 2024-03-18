@@ -79,6 +79,10 @@ import Matricule from "./icons/matricule.svg";
 import UserInfo from "./icons/user-info.svg";
 import AlertCercle from "./icons/alert-cercle.svg";
 import Alert from "./icons/alert.svg";
+import Bolt from "./icons/bolt.svg";
+import Touch_app from "./icons/touch_app.svg";
+import Category from "./icons/category.svg";
+import Shield_with_heart from "./icons/shield_with_heart.svg";
 
 // arts
 import CompanyCars from "./arts/company-cars.svg";
@@ -135,6 +139,10 @@ export {
   Lock,
   Logo,
   Logout,
+  Bolt, // bolt
+  Touch_app,
+  Category,
+  Shield_with_heart,
   // arts
   LookingForService,
   Mail,
