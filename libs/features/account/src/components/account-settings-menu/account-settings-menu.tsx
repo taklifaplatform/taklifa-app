@@ -1,8 +1,9 @@
 import { Book, CircleUser, Lock, LogOut, Mail, Moon, UserRoundCog } from '@tamagui/lucide-icons'
 
 import { useThemeSetting } from '@tamagui/next-theme'
+import { useAuth } from '@zix/services/auth'
 import { Settings } from '@zix/ui/common'
-import { useAuth, usePathname } from '@zix/utils'
+import { usePathname } from '@zix/utils'
 import { useLink } from 'solito/link'
 import {
   Paragraph,

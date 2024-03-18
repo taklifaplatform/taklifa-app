@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import DashboardSwitcher from './account-switcher';
+import AccountSwitcher from './account-switcher';
 
-describe('DashboardSwitcher', () => {
+describe('AccountSwitcher', () => {
   it('should render successfully', () => {
-    const { root } = render(<DashboardSwitcher />);
+    const { root } = render(<AccountSwitcher />);
     expect(root).toBeTruthy();
   });
 });

@@ -1,6 +1,6 @@
-export * from './screens/manage/manage-team-screen/manage-team-screen';
+export * from './screens/manage/drivers/update-driver-screen/update-driver-screen';
 
-export * from './components/dashboard-switcher/dashboard-switcher';
+export * from './screens/manage/manage-team-screen/manage-team-screen';
 
 export * from './screens/settings/updated-company-screen/updated-company-screen';
 

@@ -1,7 +1,7 @@
 import { FullScreenSpinner } from "@zix/ui/common"
-import { useAuth } from "@zix/utils"
 import { XStack, YStack } from "tamagui"
 import AccountSettingsMenu from "../account-settings-menu/account-settings-menu"
+import { useAuth } from "@zix/services/auth"
 
 
 export type SettingsLayoutProps = {
