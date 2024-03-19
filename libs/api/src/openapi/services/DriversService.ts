@@ -15,6 +15,7 @@ export class DriversService {
     public static fetchAllDrivers({
         page,
         perPage,
+        search,
         latitude,
         longitude,
     }: {
@@ -26,6 +27,7 @@ export class DriversService {
          * Number of items per page
          */
         perPage?: number,
+        search?: string,
         latitude?: any,
         longitude?: any,
     }): CancelablePromise<{
@@ -57,6 +59,7 @@ export class DriversService {
             query: {
                 'page': page,
                 'per_page': perPage,
+                'search': search,
                 'latitude': latitude,
                 'longitude': longitude,
             },

@@ -5,11 +5,12 @@ import { UserCard } from '@zix/features/users';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader } from '@zix/ui/layouts';
 import { MapDriverMarker } from '@zix/ui/sawaeed';
-import { useState } from 'react';
+import { getDistance } from '@zix/utils';
+import { useMemo, useRef, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import MapView from 'react-native-maps';
-import Carousel from 'react-native-reanimated-carousel';
+import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { Button, YStack } from 'tamagui';
 
 
@@ -28,30 +29,109 @@ export function HomeScreen() {
   const { width } = Dimensions.get('window');
   const USER_CARD_WIDTH = width;
   const USER_CARD_HEIGHT = Math.min(250, width / 1.5);
+  const mapRef = useRef<MapView>(null);
+  const carouselRef = useRef<ICarouselInstance>(null);
+
 
   const [showMap, setShowMap] = useState(true);
 
+  const [search, setSearch] = useState<string>()
   const { data, ...driversQuery } = useQuery({
     queryFn() {
       return DriversService.fetchAllDrivers({
         perPage: 50,
+        search
       });
     },
-    queryKey: ['DriversService.fetchAllDrivers'],
+    queryKey: ['DriversService.fetchAllDrivers', search],
   });
+  const [selectedDriver, setSelectedDriver] = useState<DriverTransformer>()
 
-  // new props
+  const driversList = useMemo<DriverTransformer[]>(() => {
+    if (!selectedDriver?.location || !data?.data) {
+      return data?.data || []
+    }
+    return data.data.sort((a, b) => {
+      if (!a.location || !b.location) return 0;
+      const aDistance = getDistance(
+        selectedDriver.location,
+        a.location
+      );
+      const bDistance = getDistance(
+        selectedDriver.location,
+        b.location
+      );
+      return aDistance - bDistance;
+    });
+  }, [data?.data, selectedDriver])
+
+  // const currentActiveCarouselItemIndex = useMemo(() => {
+  //   return driversList.findIndex((driver) => driver.id === selectedDriver?.id)
+  // }, [driversList, selectedDriver])
+
   const [showCarousel, setShowCarousel] = useState(false);
+
+  // on, Swipe item MAP Animation
+  function onAnimateToDriver(driver: DriverTransformer) {
+    if (!driver.location) return;
+
+    if (!showCarousel) {
+      setShowCarousel(true);
+    }
+
+    if (mapRef && mapRef.current) {
+      mapRef.current.animateCamera(
+        {
+          center: {
+            latitude: Number(driver.location.latitude),
+            longitude: Number(driver.location.longitude),
+          },
+          zoom: 16,
+        },
+        { duration: 1000 }
+      );
+    }
+  }
+
+  function onCloseCarouselButtonPress() {
+    setShowCarousel(false);
+    setSelectedDriver(undefined)
+    if (mapRef && mapRef.current) {
+      mapRef.current.animateCamera(
+        {
+          zoom: 6,
+        },
+        { duration: 1000 }
+      );
+    }
+  }
+
+  // Carousel SnapItem
+  function onSnapToItem(index: number) {
+    onAnimateToDriver(driversList[index]);
+    setSelectedDriver(driversList[index])
+  }
+
+  function onMarkerPress(driver: DriverTransformer, index: number) {
+    onAnimateToDriver(driver);
+    setShowCarousel(true);
+    carouselRef?.current?.scrollTo({
+      index,
+      animated: true,
+    });
+    setSelectedDriver(driver)
+  }
 
   const renderMap = () =>
     showMap && (
-      <MapView style={{ flex: 1 }} initialCamera={initialCamera}>
-        {data?.data?.map((driver, index) => (
+      <MapView ref={mapRef} style={{ flex: 1 }} initialCamera={initialCamera}>
+        {driversList.map((driver, index) => (
           <MapDriverMarker
             key={`marker-${index}`}
             driver={driver}
+            isSelected={selectedDriver?.id === driver.id}
             onPress={() => {
-              setShowCarousel(true);
+              onMarkerPress(driver, index);
             }}
           />
         ))}
@@ -64,7 +144,7 @@ export function HomeScreen() {
         refreshing={driversQuery.isFetching}
         onRefresh={driversQuery.refetch}
         style={{ flex: 1 }}
-        data={data?.data || []}
+        data={driversList}
         renderItem={({ item, index }) => (
           <UserCard
             key={`stack-${item.id}-${index}`}
@@ -127,20 +207,28 @@ export function HomeScreen() {
           position='absolute'
           top='$-6'
           left='$4'
-          onPress={() => setShowCarousel(false)}
+          onPress={onCloseCarouselButtonPress}
         />
         <Carousel
+          ref={carouselRef}
           width={USER_CARD_WIDTH}
           height={USER_CARD_HEIGHT}
           data={data?.data || []}
           renderItem={renderCarouselItem}
+          onSnapToItem={onSnapToItem}
         />
       </YStack>
     );
 
   return (
     <YStack flex={1}>
-      <AppHeader showSearchBar />
+      <AppHeader
+        showSearchBar
+        searchProps={{
+          value: search,
+          onChangeText: setSearch
+        }}
+      />
       {renderMap()}
       {renderList()}
       {renderCarousel()}

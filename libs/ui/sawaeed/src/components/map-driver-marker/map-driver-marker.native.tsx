@@ -32,15 +32,19 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = ({
       onPress={() => onPress?.()}
     >
       <View
+        width='$8'
+        height='$8'
+        alignItems='center'
+        justifyContent='center'
+        borderColor='$color5'
         // rotate vehicle icon based on its direction
         style={
           isSelected
             ? {
-              borderWidth: 10,
+              borderWidth: 1,
               borderColor: 'rgba(254, 202, 22, 0.1)',
               backgroundColor: 'rgba(254, 202, 22, 0.3)',
               borderRadius: 50,
-              padding: 7,
             }
             : null
         }
