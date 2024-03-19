@@ -49,6 +49,7 @@ export function HomeScreen() {
             marginHorizontal='$4'
             marginVertical='$2'
             flex={0.5}
+            $gtSm={{ flex: 1, flexBasis: 1 }}
           />
         )}
       />

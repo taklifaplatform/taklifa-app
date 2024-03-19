@@ -107,7 +107,7 @@ export const SettingsScreen = () => {
                   icon={(props: IconProps) => (
                     <CustomIcon name="share" color="$color5" {...props} />
                   )}
-                  onPress={() => Linking.openURL('https://twitter.com/zixdev')}
+                  onPress={() => Linking.openURL('https://x.com/sawaedlogistics')}
                   accentColor={brandColors.twitter}
                 >
                   {t('account:social.twitter_title')}

@@ -15,12 +15,18 @@ export type SideBarProps = {
   //
 }
 
+type MenuItemType = {
+  title: string
+  icon: React.ReactNode
+  href?: string
+  onPress?: () => void
+}
 
 export const SideBar: React.FC<SideBarProps> = () => {
   const router = useRouter()
   const { activeLang } = useMultiLang();
   const { activeRole, currentUrlPrefix } = useAuth()
-  const { toggle, current } = useThemeSetting()
+  const { toggle: toggleTheme, current } = useThemeSetting()
   const pathname = usePathname()
 
 
@@ -55,18 +61,27 @@ export const SideBar: React.FC<SideBarProps> = () => {
           icon: MessageCircle,
           href: `${currentUrlPrefix}/chat`
         },
+      ],
+      [
+        {
+          title: 'Theme',
+          icon: (props) => <CustomIcon name="theme" {...props} />,
+          onPress: toggleTheme
+        },
       ]
     ]
 
   }, [activeRole, currentUrlPrefix])
 
-  const renderMenuItem = (item: typeof menuGroups[0][0]) => (
+  const renderMenuItem = (item: MenuItemType) => (
     <Settings.Item
       icon={item.icon}
-      rightLabel='4'
+      // rightLabel='4'
+      hideRightChevron
       backgroundColor={pathname === item.href ? '$backgroundFocus' : '$gray3'}
-      onPress={() => router.push(item.href)}
+      onPress={() => item?.onPress ? item.onPress() : router.push(item.href)}
       accentColor="$green9"
+      right={() => null}
     >
       {item.title}
     </Settings.Item>
