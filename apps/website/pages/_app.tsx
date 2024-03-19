@@ -1,5 +1,11 @@
+'use client'
+
 import '@tamagui/core/reset.css';
 import '../public/styles/globals.css';
+
+if (process.env.NODE_ENV === 'production') {
+  require('../public/tamagui.css');
+}
 
 import {
   ColorScheme,
@@ -14,12 +20,9 @@ import Head from 'next/head';
 
 import { OpenAPI } from '@zix/api';
 import 'raf/polyfill';
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode, useMemo } from 'react';
 import type { SolitoAppProps } from 'solito';
 
-if (process.env.NODE_ENV === 'production') {
-  require('../public/tamagui.css');
-}
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -34,6 +37,10 @@ const ZixApp: React.FC<SolitoAppProps> = ({ Component, pageProps }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_theme, setTheme] = useRootTheme();
 
+  // memo to avoid re-render on dark/light change
+  const contents = useMemo(() => {
+    return getLayout(<Component {...pageProps} />)
+  }, [pageProps])
 
   return (
     <>
@@ -49,7 +56,7 @@ const ZixApp: React.FC<SolitoAppProps> = ({ Component, pageProps }) => {
           }}
         >
           <MainAppProvider>
-            {getLayout(<Component {...pageProps} />)}
+            {contents}
           </MainAppProvider>
         </NextThemeProvider>
       </MultiLangAppProvider>
