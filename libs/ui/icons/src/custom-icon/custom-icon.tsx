@@ -105,6 +105,10 @@ const iconNames = [
   'alert_cercle',
   'user_info',
   'alert',
+  'bolt',
+  'touch_app',
+  'category',
+  'shield_with_heart',
   // vehicles
   'vehicle_a',
   'vehicle_b',
@@ -112,6 +116,7 @@ const iconNames = [
   'store',
   'job',
   'radio_button_checked',
+  
 ];
 
 export type CustomIconName = (typeof iconNames)[number];

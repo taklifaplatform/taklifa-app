@@ -1,4 +1,35 @@
 {
+  "about": {
+    "section-1": {
+      "title-1": "Welcome to Sawaeed Logistics",
+      "description": "With our platform Sawaeed Logistics, we provide an advanced and innovative logistics experience, where companies and individual drivers can easily join to search for job opportunities, and customers can easily find the right driver. Our platform combines technological advancement and exceptional logistics service to efficiently and effectively meet all shipping and delivery needs with high efficiency and quality.",
+      "call": "Contact us",
+      "signup": "Sign up"
+    },
+    "section-2": {
+      "title": "Our solutions in Sawaeed Logistics bring together customers and opportunities in a skilled and efficient manner",
+      "description": "We understand that your needs may vary, so we offer a comprehensive range of services. Whether you are looking for fast or economical shipping, we provide you with options that perfectly suit your needs and budget. Thanks to the diversity of our services, you can access outstanding logistics solutions that meet your aspirations in all areas of shipping and delivery."
+    },
+    "service-1": {
+      "title-1": "Advanced Technology",
+      "description-1": "We rely on the latest technologies in developing our platform, ensuring a seamless and efficient experience for all users.",
+      "title-2": "Ease of Use",
+      "description-2": "The application is designed to be easily accessible to everyone, whether senders or recipients, providing them with the optimal experience.",
+      "title-3": "Diverse Services",
+      "description-3": "Whether you need international or local shipping, or even storage and distribution services, we provide everything you need under one roof.",
+      "title-4": "Quality and Security",
+      "description-4": "We ensure the safety and quality of shipments throughout the process, guaranteeing the satisfaction and trust of our customers in our services."
+    },
+    "section-3": {
+      "description": "Sawaeed Logistics is not just a platform for shipping and delivery, but a embodiment of innovation and excellence in the logistics world, where we strive to meet and exceed our customers' expectations every time."
+    },
+    "section-question-1": {
+      "title-1": "You can find all the necessary information to assist you here.",
+      "title-2": "We are at your service for any inquiry you may have.",
+      "call": "Contact us",
+      "question": "Do you still need assistance?"
+    }
+  },
   "account": {
     "settings": {
       "title": "Settings",
