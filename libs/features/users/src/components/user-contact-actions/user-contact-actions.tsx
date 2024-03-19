@@ -1,10 +1,11 @@
 import { IconProps } from '@tamagui/helpers-icon';
-import { DriverTransformer } from '@zix/api';
+import { ChatService, DriverTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
 import { useAuth } from '@zix/services/auth';
-import { Linking } from 'react-native';
+import { Linking, Platform } from 'react-native';
 import { useRouter } from 'solito/router';
 import { Button, SizeTokens, ThemeableStackProps, XStack } from 'tamagui';
+import { useMutation } from '@tanstack/react-query';
 
 export type UserContactActionsProps = ThemeableStackProps & {
   user: DriverTransformer;
@@ -16,7 +17,7 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
   actionButtonSize = '$2.5',
   ...props
 }) => {
-  const { user: authUser } = useAuth()
+  const { user: authUser, currentUrlPrefix } = useAuth()
   const router = useRouter()
 
   const sharedButtonStyle = {
@@ -33,9 +34,21 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
     router.push(`/customer/shipments?driverId=${user.id}`)
   }
 
-  function onStartChatPress() {
-    alert('UNDER DEVELOPMENT')
-  }
+  const { mutate: startChat } = useMutation({
+    mutationFn() {
+      return ChatService.startChat({
+        user: `${user.id}`
+      })
+    },
+    onSuccess(data) {
+      if (Platform.OS === 'web') {
+        router.push(`${currentUrlPrefix}/chat?channel=${data.data?.id}`)
+        return
+      }
+      router.push(`/chat/channels/${data.data?.id}`)
+    },
+  })
+
 
   if (
     user.id === authUser?.id
@@ -58,7 +71,7 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
         flex={1}
         backgroundColor='$gray7'
         icon={(props: IconProps) => <CustomIcon {...props} name="chat" color='$color12' />}
-        onPress={onStartChatPress}
+        onPress={() => startChat()}
         {...sharedButtonStyle}
       >
         محادثة

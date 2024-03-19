@@ -44,7 +44,7 @@ export const SettingItem = ({
         <YStack
           padding="$2"
           borderRadius="$3"
-          backgroundColor={'rgba(255, 251, 237, 1)'}
+          // backgroundColor={'rgba(255, 251, 237, 1)'}
         >
           <Icon opacity={0.6} size={22} />
         </YStack>

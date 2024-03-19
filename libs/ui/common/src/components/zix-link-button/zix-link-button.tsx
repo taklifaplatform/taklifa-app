@@ -1,18 +1,17 @@
+import { usePathname } from '@zix/utils';
 import {
   Button,
   ButtonProps,
-  Spinner,
   TamaguiComponent,
-  styled,
+  styled
 } from 'tamagui';
-import { usePathname } from '@zix/utils';
 
 import { forwardRef } from 'react';
-import { useRouter } from 'solito/router';
 import { Link } from 'solito/link';
+import { useRouter } from 'solito/router';
 
 export type ZixLinkButtonProps = ButtonProps & {
-  href: string;
+  href?: string;
   display?:
   | 'menuItem'
   | 'headerMenu'
@@ -118,6 +117,16 @@ export const ZixLinkButton = forwardRef(function ZixLinkButtonFunc(
 ) {
   const router = useRouter();
   const activePath = usePathname();
+
+  if (props.onPress) {
+    return (
+      <CustomButton
+        ref={ref as TamaguiComponent}
+        {...props}
+        {...({ [`${display}Active`]: false })}
+      />
+    )
+  }
 
   return (
     <Link href={href}>
