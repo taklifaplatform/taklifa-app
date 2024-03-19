@@ -1,8 +1,10 @@
+import { Facebook, Instagram, Twitter } from '@tamagui/lucide-icons';
 import { useMultiLang } from '@zix/i18n';
 import { ZixLinkButton } from '@zix/ui/common';
 import { ZixSelectField } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
+import { Snapchat } from 'libs/ui/icons/src/assets';
 import {
   Image,
   Stack,
@@ -81,21 +83,18 @@ export function TopHeader() {
 
       <ZixLinkButton
         display="menuItem"
-        href={'/'}
-        icon={<CustomIcon name="facebook" size={'$1.5'} color={'$color'} />}
-        path={'/'}
+        href={'https://www.facebook.com/sawaedlogistics'}
+        icon={<Facebook size='$1.5' color='$color11' />}
       />
       <ZixLinkButton
         display="menuItem"
-        href={'/'}
-        icon={<CustomIcon name="instagram" size={'$1.5'} color={'$color'} />}
-        path={'/'}
+        href={'https://www.instagram.com/sawaedlogistics'}
+        icon={<Instagram size='$1.5' color='$color11' />}
       />
       <ZixLinkButton
         display="menuItem"
-        href={'/'}
-        icon={<CustomIcon name="snapchat" size={'$1.5'} color={'$color'} />}
-        path={'/'}
+        href={'https://www.x.com/sawaedlogistics'}
+        icon={<Twitter size='$1.5' color='$color11' />}
       />
     </XStack>
   );

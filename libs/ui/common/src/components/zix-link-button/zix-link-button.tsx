@@ -129,10 +129,9 @@ export const ZixLinkButton = forwardRef(function ZixLinkButtonFunc(
   }
 
   return (
-    <Link href={href}>
+    <Link href={href} {...(href?.includes('http') ? { target: '_blank' } : {})}>
       <CustomButton
         ref={ref as TamaguiComponent}
-        onPress={() => router.push(href)}
         {...props}
         {...(display
           ? { [display]: true, [`${display}Active`]: activePath === href }
