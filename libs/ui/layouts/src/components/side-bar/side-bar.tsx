@@ -98,7 +98,7 @@ export const SideBar: React.FC<SideBarProps> = () => {
 
   return (
     <View position='sticky' top={0} bottom={0} left={0} width={320} maxHeight='100vh' backgroundColor='$gray3'>
-      <ZixLinkButton unstyled href='/' margin='$4' >
+      <ZixLinkButton unstyled href='/' paddingVertical='$4' >
         <CustomIcon name={`web_logo_${activeLang}`} height={50} width={165} />
       </ZixLinkButton>
 
