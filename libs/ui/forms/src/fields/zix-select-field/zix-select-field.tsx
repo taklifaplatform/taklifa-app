@@ -89,7 +89,7 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
           {appendPlaceHolder}
         </Select.Trigger>
 
-        <Adapt when="sm" platform="touch">
+        <Adapt platform="touch">
           <Sheet native modal dismissOnSnapToBottom>
             <Sheet.Frame>
               {renderSearchBar()}

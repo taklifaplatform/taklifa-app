@@ -15,7 +15,9 @@ export function HomeScreen() {
   const { width } = Dimensions.get('window');
   const USER_CARD_WIDTH = width;
   // const USER_CARD_HEIGHT = 210;
-  const USER_CARD_HEIGHT = width / 1.5;
+  const USER_CARD_HEIGHT = 210;
+  // const USER_CARD_HEIGHT = Math.min(210, width / 1.5);
+  // const USER_CARD_HEIGHT = width / 1.5;
 
   const [showMap, setShowMap] = useState(false);
 
