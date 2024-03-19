@@ -27,13 +27,13 @@ import {
   BudgetShipment,
   DefinitionSender,
   InformationAboutDriver,
-  ShipmentActions,
   ShipmentCanceledDetail,
+  ShipmentCardActions,
   ShipmentCode,
   ShipmentDeliveringDetail,
   ShipmentDetails,
   ShipmentDirection,
-  TotalCostOfShipment,
+  TotalCostOfShipment
 } from '../../';
 
 export type ShipmentDetailScreenProps = {
@@ -81,8 +81,7 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
   // const driver = shipment.driver;
   const driver = driverQuery.data?.data || {};
 
-  // const status = shipment?.status;
-  const status = 'delivering';
+  const status = shipment?.status;
 
   const renderHeaderShipment = () => (
     <XStack
@@ -96,7 +95,7 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
     >
       <YStack gap="$3" alignItems="flex-start">
         <Text fontSize={12} fontWeight={'600'} color={'$color11'}>
-          SWDKSA{shipment.id?.toString().substring(0, 8).toUpperCase()}
+          SWDKSA{shipment?.id?.toString().substring(0, 8).toUpperCase()}
         </Text>
         <Text fontSize={18} fontWeight={'400'} color={'$color5'}>
           {t('job:job-demand')} {shipment?.items_type}
@@ -105,7 +104,7 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
           <XStack gap="$2" alignItems="center" $sm={{ display: 'none' }}>
             {/* TODO change to UserAvatar */}
 
-            <UserAvatar size={'$1'} user={shipment.user} />
+            <UserAvatar size={'$1'} user={shipment?.user} />
             <Text
               fontSize={12}
               fontWeight={'600'}
@@ -135,17 +134,18 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
                 fontWeight: '600',
               }}
             >
-              {t('job:job-published')} {moment(shipment.created_at).fromNow()}
+              {t('job:job-published')} {moment(shipment?.created_at).fromNow()}
             </Text>
           </XStack>
         </XStack>
       </YStack>
 
       <View $sm={{ display: 'none' }}>
-        <ShipmentActions
+        <ShipmentCardActions
           shipment={shipment}
           variant={variant}
           urlPrefix={urlPrefix}
+          isDetail={true}
         />
       </View>
     </XStack>
@@ -235,10 +235,11 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
           <DefinitionSender shipment={shipment} />
 
           <View>
-            <ShipmentActions
+            <ShipmentCardActions
               shipment={shipment}
               variant={variant}
               urlPrefix={urlPrefix}
+              isDetail={true}
             />
           </View>
         </YStack>
