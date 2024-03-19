@@ -199,7 +199,7 @@ export const Page: NextPageWithLayout = () => {
         $sm={{
           size: 10,
         }}
-        color="$color5"
+        color="$yellow10"
       />
       <Text
         fontSize={25}
