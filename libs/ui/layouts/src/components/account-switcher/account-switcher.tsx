@@ -12,7 +12,7 @@ import { CustomIcon } from '@zix/ui/icons';
 import { useAuth } from '@zix/services/auth';
 import { useCallback, useMemo, useState } from 'react';
 import { useRouter } from 'solito/router';
-import { Avatar, Button, Dialog, H4, ListItem, Text, View, XStack, YGroup, YStack } from 'tamagui';
+import { Avatar, Button, Dialog, H4, ListItem, Text, View, XStack, YGroup, YStack, isWeb } from 'tamagui';
 
 
 export const AccountSwitcher: React.FC = () => {
@@ -85,18 +85,28 @@ export const AccountSwitcher: React.FC = () => {
     <Dialog open={sheetOpen} onOpenChange={setSheetOpen}>
       <Dialog.Trigger >
         <XStack alignItems="center" gap="$2" onPress={() => setSheetOpen(true)}>
-          {/* <View $sm={{ display: 'none' }}>
-            <UserAvatar user={user} size='$4' />
-          </View> */}
+          {
+            isWeb && (
+              <UserAvatar user={user} size='$4' />
+            )
+          }
           <YStack>
             <Text fontWeight="bold" fontSize={15} numberOfLines={1}>
               {user?.name}
             </Text>
-            {/* <Text $sm={{ display: 'none' }}>
-              {user?.active_role?.name}
-            </Text> */}
+            {
+              isWeb && (
+                <Text>
+                  {user?.active_role?.name}
+                </Text>
+              )
+            }
           </YStack>
-          {/* <View width='$2' $sm={{ display: 'none' }} /> */}
+          {
+            isWeb && (
+              <View width='$2' />
+            )
+          }
           <ChevronDown size="$1" />
         </XStack>
       </Dialog.Trigger>
