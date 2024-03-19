@@ -85,28 +85,31 @@ export const AccountSwitcher: React.FC = () => {
     <Dialog open={sheetOpen} onOpenChange={setSheetOpen}>
       <Dialog.Trigger >
         <XStack alignItems="center" gap="$2" onPress={() => setSheetOpen(true)}>
-          <View $sm={{ display: 'none' }}>
+          {/* <View $sm={{ display: 'none' }}>
             <UserAvatar user={user} size='$4' />
-          </View>
+          </View> */}
           <YStack>
             <Text fontWeight="bold" fontSize={15} numberOfLines={1}>
               {user?.name}
             </Text>
-            <Text $sm={{ display: 'none' }}>
+            {/* <Text $sm={{ display: 'none' }}>
               {user?.active_role?.name}
-            </Text>
+            </Text> */}
           </YStack>
-          <View width='$2' $sm={{ display: 'none' }} />
+          {/* <View width='$2' $sm={{ display: 'none' }} /> */}
           <ChevronDown size="$1" />
         </XStack>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay />
-        <Dialog.Content >
-          <YGroup flex={1} backgroundColor='$color1' width={400} maxWidth='100%'>
+        <Dialog.Content backgroundColor='$color1' padding='$2' width={500}>
+          <YGroup flex={1} backgroundColor='$color1' width='100%' >
             <XStack alignItems='center' justifyContent='space-between'>
               <H4 paddingHorizontal="$4">Switch Account</H4>
-              <Button icon={X} scaleIcon={1.3} backgroundColor='$color1' onPress={() => setSheetOpen(false)} />
+              <Button
+                unstyled
+                padding='$4'
+                icon={X} scaleIcon={1.3} backgroundColor='$color1' onPress={() => setSheetOpen(false)} />
             </XStack>
             {userRoles?.map((role) => (
               <YGroup.Item key={role.id}>
@@ -161,7 +164,7 @@ export const AccountSwitcher: React.FC = () => {
           </YGroup>
         </Dialog.Content>
       </Dialog.Portal>
-      <Dialog.Adapt when="sm">
+      <Dialog.Adapt platform='touch'>
         <Dialog.Sheet native modal snapPoints={snapPoints}>
           <Dialog.Sheet.Frame>
             <Dialog.Adapt.Contents />

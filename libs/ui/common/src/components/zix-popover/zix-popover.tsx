@@ -24,7 +24,7 @@ export function ZixPopover({
   return (
     <Popover size="$5" {...popoverProps}>
       <Popover.Trigger asChild>{trigger}</Popover.Trigger>
-      <Popover.Adapt when='sm' platform="touch">
+      <Popover.Adapt platform="touch">
         <ZixSheet {...sheetProps}>
           <Popover.Adapt.Contents />
         </ZixSheet>
