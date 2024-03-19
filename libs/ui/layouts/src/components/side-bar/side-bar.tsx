@@ -3,13 +3,14 @@ import { useAuth } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import React, { useMemo } from 'react';
 
-import { Bell, Home, MessageCircle } from '@tamagui/lucide-icons';
+import { Bell, Home, LogOut, MessageCircle } from '@tamagui/lucide-icons';
 import { useThemeSetting } from '@tamagui/next-theme';
 import { Settings, ZixLinkButton } from '@zix/ui/common';
 import { usePathname } from '@zix/utils';
 import { useRouter } from 'solito/router';
 import { Separator, View, YStack } from 'tamagui';
 import AccountSwitcher from '../account-switcher/account-switcher';
+import { IconProps } from '@tamagui/helpers-icon';
 
 export type SideBarProps = {
   //
@@ -25,7 +26,7 @@ type MenuItemType = {
 export const SideBar: React.FC<SideBarProps> = () => {
   const router = useRouter()
   const { activeLang } = useMultiLang();
-  const { activeRole, currentUrlPrefix } = useAuth()
+  const { activeRole, currentUrlPrefix, logout } = useAuth()
   const { toggle: toggleTheme, current } = useThemeSetting()
   const pathname = usePathname()
 
@@ -35,30 +36,31 @@ export const SideBar: React.FC<SideBarProps> = () => {
       [
         {
           title: 'Home',
-          icon: Home,
+          icon: (props: IconProps) => <CustomIcon name="home" {...props} />,
           href: currentUrlPrefix
         },
 
         {
           title: 'Orders',
-          icon: MessageCircle,
+          icon: (props: IconProps) => <CustomIcon name="orders" {...props} />,
           href: `${currentUrlPrefix}/shipments`
         },
         {
           title: 'Jobs',
-          icon: MessageCircle,
+          icon: (props: IconProps) => <CustomIcon name="job" {...props} />,
           href: `${currentUrlPrefix}/jobs`
         }
       ],
       [
         {
           title: 'Notifications',
-          icon: Bell,
+          // icon: Bell,
+          icon: (props: IconProps) => <CustomIcon name="notifications" {...props} />,
           href: `${currentUrlPrefix}/notifications`
         },
         {
           title: 'Chat',
-          icon: MessageCircle,
+          icon: (props: IconProps) => <CustomIcon name="chat" {...props} />,
           href: `${currentUrlPrefix}/chat`
         },
       ],
@@ -68,7 +70,14 @@ export const SideBar: React.FC<SideBarProps> = () => {
           icon: (props) => <CustomIcon name="theme" {...props} />,
           onPress: toggleTheme
         },
-      ]
+      ],
+      [
+        {
+          title: 'Logout',
+          icon: LogOut,
+          onPress: logout
+        },
+      ],
     ]
 
   }, [activeRole, currentUrlPrefix])
