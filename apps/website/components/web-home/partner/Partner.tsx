@@ -1,11 +1,12 @@
-import { ZixLinkButton } from '@zix/ui/common';
-import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
-import { Image, Text, XStack, YStack } from 'tamagui';
+import { Image, Stack, Text, XStack, YStack } from 'tamagui';
 
 export function Partner() {
   const renderPartnerLogos = () => (
-    <XStack
+    <Stack
+      flexDirection="row"
+      flexWrap="wrap"
+      gap='$4'
       alignItems="center"
       justifyContent="space-around"
       w={'100%'}
@@ -74,45 +75,30 @@ export function Partner() {
         }}
         resizeMode="contain"
       />
-    </XStack>
+    </Stack>
   );
+
+
   const renderOptionText = () => (
     <YStack
-      alignItems="center"
-      width={'90%'}
+      alignItems="start"
       justifyContent="center"
       borderRadius="$4"
       marginBottom="$3"
     >
-      <XStack
-        alignItems="center"
-        gap="$2"
-        paddingVertical="$4"
-        $md={{ gap: '$1', paddingVertical: '$1' }}
+      <Text
+        fontWeight="800"
+        fontSize={30}
+        textAlign="center"
+        $md={{
+          fontSize: 15,
+        }}
       >
-        <Text
-          fontWeight="800"
-          fontSize={30}
-          textAlign="center"
-          $md={{
-            fontSize: 15,
-          }}
-        >
-          {t('web-home:banner-6')}
-        </Text>
-        <ZixLinkButton
-          display="linkItem"
-          href={'/'}
-          iconAfter={
-            <CustomIcon name="large_arrow_right" size="$1" color="$gray10" />
-          }
-          alignItems="center"
-        />
-      </XStack>
+        {t('web-home:banner-6')}
+      </Text>
       <Text
         fontWeight="400"
         fontSize={25}
-        textAlign="center"
         paddingTop="$6"
         lineHeight={50}
         $sm={{
@@ -126,19 +112,18 @@ export function Partner() {
       </Text>
     </YStack>
   );
+
+
   return (
     <YStack
-      alignItems="center"
       w={'100%'}
-      justifyContent="center"
       backgroundColor={'$color1'}
       borderRadius="$3"
-      paddingHorizontal="$4"
-      paddingVertical="$12"
+      paddingHorizontal="$6"
+      paddingVertical="$8"
       marginBottom="$3"
       $sm={{
-        paddingHorizontal: '$4',
-        paddingVertical: '$4',
+        paddint: '$4',
       }}
     >
       {renderOptionText()}

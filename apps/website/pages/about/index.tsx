@@ -72,10 +72,10 @@ export const Page: NextPageWithLayout = () => {
         </Text>
         <YStack
           gap="$7"
-          
+
           $sm={{
             gap: '$2',
-           
+
           }}
         >
           <Text
@@ -349,8 +349,7 @@ export const Page: NextPageWithLayout = () => {
           resizeMode="cover"
           position="responsive"
           $sm={{
-           
-            display : 'none',
+            display: 'none',
           }}
           borderRadius={10}
         />
