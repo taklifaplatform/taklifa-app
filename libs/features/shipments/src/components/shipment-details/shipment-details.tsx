@@ -14,11 +14,12 @@ import {
   ZixVariantOptionsWidget,
   ZixWidgetContainer,
 } from '@zix/ui/widgets';
+import { getDistance } from '@zix/utils';
 import { t } from 'i18next';
 import moment from 'moment';
 import React, { useMemo } from 'react';
 import { Text, ThemeableStackProps, XStack, YStack } from 'tamagui';
-import { SectionWrapper } from '../../screens/shipment-detail-screen/shipment-detail-screen';
+import SectionWrapper from '../section-wrapper/section-wrapper';
 
 export type ShipmentDetailsProps = ThemeableStackProps & {
   shipment: ShipmentTransformer;
@@ -50,30 +51,13 @@ export const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
 
   /* Distance */
   const distance = useMemo(() => {
-    const lat1 = shipment?.from_location?.latitude || 0;
-    const lon1 = shipment?.from_location?.longitude || 0;
-    const lat2 = shipment?.to_location?.latitude || 0;
-    const lon2 = shipment?.to_location?.longitude || 0;
-    // calculate distance
-    const R = 6371e3; // metres
-    const φ1 = (lat1 * Math.PI) / 180; // φ, λ in radians
-    const φ2 = (lat2 * Math.PI) / 180;
-    const Δφ = ((lat2 - lat1) * Math.PI) / 180;
-    const Δλ = ((lon2 - lon1) * Math.PI) / 180;
-
-    const a =
-      Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-    const d = R * c; // in metres
-    // convert to km
-    return d / 1000;
+    if (!shipment?.from_location || !shipment?.to_location) return 0;
+    return getDistance(
+      shipment.from_location,
+      shipment.to_location,
+    )
   }, [
-    shipment?.from_location?.latitude,
-    shipment?.from_location?.longitude,
-    shipment?.to_location?.latitude,
-    shipment?.to_location?.longitude,
+    shipment,
   ]);
   return (
     <SectionWrapper>
@@ -123,7 +107,7 @@ export const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
               {
                 icons: <Route size="$1" color={'$gray9'} rotate="90deg" />,
                 name: t('job:estimated-distance'),
-                value: `${distance.toFixed(2)} km`,
+                value: distance ? `${distance.toFixed(2)} km` : 'N/A',
               },
               {
                 icons: <CustomIcon name="chronic" size="$1" color={'$gray9'} />,

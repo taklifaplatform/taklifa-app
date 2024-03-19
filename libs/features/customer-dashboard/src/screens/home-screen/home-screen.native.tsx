@@ -65,10 +65,6 @@ export function HomeScreen() {
     });
   }, [data?.data, selectedDriver])
 
-  // const currentActiveCarouselItemIndex = useMemo(() => {
-  //   return driversList.findIndex((driver) => driver.id === selectedDriver?.id)
-  // }, [driversList, selectedDriver])
-
   const [showCarousel, setShowCarousel] = useState(false);
 
   // on, Swipe item MAP Animation
@@ -113,13 +109,13 @@ export function HomeScreen() {
   }
 
   function onMarkerPress(driver: DriverTransformer, index: number) {
+    setSelectedDriver(driver)
     onAnimateToDriver(driver);
     setShowCarousel(true);
     carouselRef?.current?.scrollTo({
       index,
       animated: true,
     });
-    setSelectedDriver(driver)
   }
 
   const renderMap = () =>

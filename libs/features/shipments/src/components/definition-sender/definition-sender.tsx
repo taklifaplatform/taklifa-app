@@ -5,7 +5,7 @@ import { CustomIcon } from '@zix/ui/icons';
 import React from 'react';
 import { Link } from 'solito/link';
 import { Stack, Text, XStack, YStack } from 'tamagui';
-import { SectionWrapper } from '../../screens/shipment-detail-screen/shipment-detail-screen';
+import SectionWrapper from '../section-wrapper/section-wrapper';
 
 /* eslint-disable-next-line */
 export interface DefinitionSenderProps {

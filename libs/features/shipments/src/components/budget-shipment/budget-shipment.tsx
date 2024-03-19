@@ -3,7 +3,7 @@ import { ZixWidgetContainer } from '@zix/ui/widgets';
 import { t } from 'i18next';
 import React from 'react';
 import { Stack, Text, View, XStack, YStack } from 'tamagui';
-import { SectionWrapper } from '../../screens/shipment-detail-screen/shipment-detail-screen';
+import SectionWrapper from '../section-wrapper/section-wrapper';
 
 export interface BudgetShipmentProps {
   shipment: ShipmentTransformer;
@@ -34,7 +34,7 @@ export const BudgetShipment: React.FC<BudgetShipmentProps> = ({
     </XStack>
   );
 
-  const renderCadrBudget = (title: string, value: number, currency: string) => (
+  const renderCardBudget = (title: string, value: number, currency: string) => (
     <YStack
       gap="$2"
       width={'30%'}
@@ -59,19 +59,19 @@ export const BudgetShipment: React.FC<BudgetShipmentProps> = ({
     <SectionWrapper>
       <ZixWidgetContainer label={t('job:budget')}>
         <XStack gap="$4" paddingVertical="$4">
-          {renderCadrBudget(
+          {renderCardBudget(
             t('shipment:higher'),
             shipment.max_budget?.value || 0,
             shipment.max_budget?.currency?.code || '',
           )}
-          {renderCadrBudget(
+          {renderCardBudget(
             t('shipment:medium'),
             ((shipment?.max_budget?.value || 0) +
               (shipment?.min_budget?.value || 0)) /
-              2,
+            2,
             shipment.max_budget?.currency?.code || '',
           )}
-          {renderCadrBudget(
+          {renderCardBudget(
             t('shipment:lower'),
             shipment.min_budget?.value || 0,
             shipment.max_budget?.currency?.code || '',
