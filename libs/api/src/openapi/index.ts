@@ -128,6 +128,7 @@ export type { ShipmentFilterTransformer } from './models/ShipmentFilterTransform
 export type { ShipmentInvitationTransformer } from './models/ShipmentInvitationTransformer';
 export type { ShipmentItemTransformer } from './models/ShipmentItemTransformer';
 export type { ShipmentTransformer } from './models/ShipmentTransformer';
+export type { SimpleChannelTransformer } from './models/SimpleChannelTransformer';
 export type { SimpleCompanyTransformer } from './models/SimpleCompanyTransformer';
 export type { SimpleMessageTransformer } from './models/SimpleMessageTransformer';
 export type { SortListChannelQueryRequest } from './models/SortListChannelQueryRequest';

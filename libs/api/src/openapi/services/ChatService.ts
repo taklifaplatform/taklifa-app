@@ -12,6 +12,7 @@ import type { ModerateChannelRequest } from '../models/ModerateChannelRequest';
 import type { MuteChannelRequest } from '../models/MuteChannelRequest';
 import type { RetrieveChannelQueryRequest } from '../models/RetrieveChannelQueryRequest';
 import type { SendChannelEventRequest } from '../models/SendChannelEventRequest';
+import type { SimpleChannelTransformer } from '../models/SimpleChannelTransformer';
 import type { UpdateMessageRequest } from '../models/UpdateMessageRequest';
 import type { UpdateReactionRequest } from '../models/UpdateReactionRequest';
 import type { UploadAttachmentRequest } from '../models/UploadAttachmentRequest';
@@ -46,6 +47,26 @@ export class ChatService {
             url: '/api/chat/channels',
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+    /**
+     * Display a listing of the resource.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static startChat({
+        user,
+    }: {
+        user: string,
+    }): CancelablePromise<{
+        data?: SimpleChannelTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/chat/channels/start-chat/{user}',
+            path: {
+                'user': user,
+            },
         });
     }
     /**

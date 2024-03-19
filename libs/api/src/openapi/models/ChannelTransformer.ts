@@ -3,7 +3,10 @@
 /* tslint:disable */
 /* eslint-disable */
 export type ChannelTransformer = {
-    id?: string;
-    propName?: string;
+    channel?: {
+        id?: string;
+        own_capabilities?: Array<string>;
+    };
+    watcher_count?: number;
 };
 

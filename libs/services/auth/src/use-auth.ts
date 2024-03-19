@@ -37,6 +37,7 @@ export interface AuthHelpers {
   setRequestedAccountType: (accountType: AUTH_ROLE_TYPE) => void;
   registerSteps: number;
   getRoleUrlPrefix: (role: string) => string;
+  currentUrlPrefix: string;
 }
 
 export function useAuth(): AuthHelpers {
@@ -179,6 +180,10 @@ export function useAuth(): AuthHelpers {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authAccessToken, user]);
 
+  const currentUrlPrefix = useMemo(() => {
+    return getRoleUrlPrefix(activeRole)
+  }, [activeRole])
+
   return {
     activeRole,
     user,
@@ -197,5 +202,6 @@ export function useAuth(): AuthHelpers {
     registerSteps,
 
     getRoleUrlPrefix,
+    currentUrlPrefix,
   };
 }

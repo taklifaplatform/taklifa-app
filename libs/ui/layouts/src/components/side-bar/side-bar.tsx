@@ -19,13 +19,10 @@ export type SideBarProps = {
 export const SideBar: React.FC<SideBarProps> = () => {
   const router = useRouter()
   const { activeLang } = useMultiLang();
-  const { user, activeRole, getRoleUrlPrefix, logout } = useAuth()
+  const { activeRole, currentUrlPrefix } = useAuth()
   const { toggle, current } = useThemeSetting()
   const pathname = usePathname()
 
-  const urlPrefix = useMemo(() => {
-    return getRoleUrlPrefix(activeRole)
-  }, [activeRole])
 
   const menuGroups = useMemo(() => {
     return [
@@ -33,35 +30,35 @@ export const SideBar: React.FC<SideBarProps> = () => {
         {
           title: 'Home',
           icon: Home,
-          href: urlPrefix
+          href: currentUrlPrefix
         },
 
         {
           title: 'Orders',
           icon: MessageCircle,
-          href: `${urlPrefix}/shipments`
+          href: `${currentUrlPrefix}/shipments`
         },
         {
           title: 'Jobs',
           icon: MessageCircle,
-          href: `${urlPrefix}/jobs`
+          href: `${currentUrlPrefix}/jobs`
         }
       ],
       [
         {
           title: 'Notifications',
           icon: Bell,
-          href: `${urlPrefix}/notifications`
+          href: `${currentUrlPrefix}/notifications`
         },
         {
           title: 'Chat',
           icon: MessageCircle,
-          href: `${urlPrefix}/chat`
+          href: `${currentUrlPrefix}/chat`
         },
       ]
     ]
 
-  }, [activeRole, urlPrefix])
+  }, [activeRole, currentUrlPrefix])
 
   const renderMenuItem = (item: typeof menuGroups[0][0]) => (
     <Settings.Item
