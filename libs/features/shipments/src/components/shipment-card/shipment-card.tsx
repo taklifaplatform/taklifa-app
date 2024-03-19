@@ -201,15 +201,13 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
   );
 
   return (
-    <Stack
-      flexDirection="row"
+    <YStack
       justifyContent="space-between"
       paddingHorizontal="$6"
       paddingVertical="$4"
       backgroundColor={'$color1'}
       borderRadius={'$4'}
-      $sm={{
-        flexDirection: 'column',
+        $sm={{
         justifyContent: 'center',
         alignItems: 'center',
         gap: '$6',
@@ -241,7 +239,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
           urlPrefix={urlPrefix}
         />
       </Stack>
-    </Stack>
+    </YStack>
   );
 };
 

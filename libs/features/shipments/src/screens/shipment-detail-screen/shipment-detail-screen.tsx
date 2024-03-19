@@ -81,8 +81,7 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
   // const driver = shipment.driver;
   const driver = driverQuery.data?.data || {};
 
-  // const status = shipment?.status;
-  const status = 'delivering';
+  const status = shipment?.status;
 
   const renderHeaderShipment = () => (
     <XStack

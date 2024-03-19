@@ -1,4 +1,3 @@
-
 import { useQuery } from '@tanstack/react-query';
 import { ShipmentFilterTransformer, ShipmentService } from '@zix/api';
 import { DataNotFound, ZixButton } from '@zix/ui/common';
@@ -13,38 +12,39 @@ import { Circle, Text, View, YStack } from 'tamagui';
 import ShipmentCard from '../../components/shipment-card/shipment-card';
 
 export type ShipmentsListScreenProps = {
-  variant: 'shipments' | 'jobs'
-}
-
+  variant: 'shipments' | 'jobs';
+};
 
 export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
-  variant = 'shipments'
+  variant = 'shipments',
 }) => {
-  const { activeRole, getRoleUrlPrefix } = useAuth()
+  const { activeRole, getRoleUrlPrefix } = useAuth();
 
   const screenTitle = useMemo(() => {
     if (variant === 'jobs') {
-      return 'Jobs'
+      return 'Jobs';
     }
-    return 'Orders'
-  }, [variant])
+    return 'Orders';
+  }, [variant]);
 
   const [status, setStatus] = useState<any>('pending');
   const [search, setSearch] = useState('');
   const [activeFilterIndex, setActiveFilterIndex] = useState(0);
   const { data, refetch, isLoading } = useQuery({
-    queryFn: () => ShipmentService.fetchAllShipment({
-      search,
-      role: activeRole,
-      status
-    }),
+    queryFn: () =>
+      ShipmentService.fetchAllShipment({
+        search,
+        role: activeRole,
+        status,
+      }),
     queryKey: ['ShipmentService.fetchAllShipment', search, activeRole, status],
   });
   const shipmentFilterQuery = useQuery({
-    queryFn: () => ShipmentService.fetchShipmentFilters({
-      role: activeRole,
-      search
-    }),
+    queryFn: () =>
+      ShipmentService.fetchShipmentFilters({
+        role: activeRole,
+        search,
+      }),
     queryKey: ['ShipmentService.fetchShipmentFilters', activeRole, search],
   });
 
@@ -103,22 +103,23 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
     </ZixButton>
   );
 
-  const renderShipmentFilters = () => variant === 'shipments' && (
-    <View paddingHorizontal='$4'>
-      <Carousel
-        ref={carouselRef}
-        loop={false}
-        data={shipmentFilterQuery?.data?.data || []}
-        defaultIndex={activeFilterIndex}
-        style={{
-          width: '100%',
-        }}
-        width={150}
-        height={50}
-        renderItem={({ item, index }) => renderShipment(item, index)}
-      />
-    </View>
-  );
+  const renderShipmentFilters = () =>
+    variant === 'shipments' && (
+      <View paddingHorizontal="$4">
+        <Carousel
+          ref={carouselRef}
+          loop={false}
+          data={shipmentFilterQuery?.data?.data || []}
+          defaultIndex={activeFilterIndex}
+          style={{
+            width: '100%',
+          }}
+          width={150}
+          height={50}
+          renderItem={({ item, index }) => renderShipment(item, index)}
+        />
+      </View>
+    );
 
   return (
     <>
@@ -127,10 +128,10 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
         showSearchBar
         searchProps={{
           value: search,
-          onChangeText: setSearch
+          onChangeText: setSearch,
         }}
       />
-      <YStack flex={1} gap="$4" paddingVertical='$4'>
+      <YStack flex={1} gap="$4" paddingVertical="$4">
         {renderShipmentFilters()}
         <FlatList
           refreshing={isLoading}
@@ -138,28 +139,31 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
           style={{ flex: 1 }}
           onEndReachedThreshold={0.5}
           data={data?.data}
+          // numColumns={2}
+          // contentContainerStyle={{gap: '$4', padding: '$4'}}
+          // columnWrapperStyle={{ gap: '$4' }}
           renderItem={({ item, index }) => (
             <ShipmentCard
-              key={index}
+              key={index} 
               urlPrefix={`${getRoleUrlPrefix(activeRole)}/${variant}`}
               shipment={item}
               variant={variant}
               marginHorizontal="$4"
-              marginBottom='$2'
+              marginBottom="$2"
             />
           )}
           ListEmptyComponent={() => (
             <DataNotFound
               message={t('shipment:shipment-not-found')}
               description={t('shipment:shipment-not-found-description')}
-              imageUrl='/assets/shipmentNotFound.png'
+              imageUrl="/assets/shipmentNotFound.png"
             />
           )}
+          
         />
       </YStack>
     </>
   );
-}
-
+};
 
 export default ShipmentsListScreen;
