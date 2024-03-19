@@ -114,6 +114,92 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
     </YStack>
   );
 
+  const renderHeaderShipment = () => (
+    <YStack gap="$3" justifyContent="flex-start" alignItems="flex-start">
+      <XStack width={'100%'} alignItems="center" justifyContent="space-between">
+        <YStack gap="$2" width={'50%'} $sm={{ width: '100%'}}>
+          <Text fontSize={12} fontWeight={'600'} color={'$color11'} $sm={{ display: 'none'}}>
+            SWDKSA{shipment.id?.toString().substring(0, 8).toUpperCase()}
+          </Text>
+          <Text
+            fontSize={25}
+            fontWeight={'400'}
+            color={'$color5'}
+            $sm={{
+              fontSize: 18,
+              fontWeight: '400',
+              color: '$color',
+            }}
+          >
+            {t('job:job-demand')}{' '}
+            {`${t('shipment:type:' + shipment?.items_type)}`}
+          </Text>
+        </YStack>
+        <Stack width={'20%'} $sm={{ display: 'none' }}>
+          <ShipmentCardActions
+            shipment={shipment}
+            variant={variant}
+            urlPrefix={urlPrefix}
+          />
+        </Stack>
+      </XStack>
+      <Stack
+        flexDirection="row"
+        gap="$8"
+        marginBottom="$3"
+        $sm={{ flexDirection: 'column', gap: '$2' }}
+      >
+        <XStack gap="$2" alignItems="center">
+          {/* TODO change to UserAvatar */}
+
+          <UserAvatar size={'$1'} user={shipment.user} />
+          <Text
+            fontSize={12}
+            fontWeight={'600'}
+            color={'$gray9'}
+            $sm={{
+              fontSize: 12,
+              fontWeight: '600',
+            }}
+          >
+            {shipment.user?.name}
+          </Text>
+        </XStack>
+        <XStack gap="$2" alignItems="center">
+          <CustomIcon
+            name="chronic"
+            size="$1"
+            $sm={{
+              display: 'none',
+            }}
+          />
+          <Text
+            fontSize={12}
+            fontWeight={'600'}
+            color={'$gray9'}
+            $sm={{
+              fontSize: 9,
+              fontWeight: '600',
+            }}
+          >
+            {t('job:job-published')} {moment(shipment.created_at).fromNow()}
+          </Text>
+        </XStack>
+      </Stack>
+      <Text
+        fontSize={15}
+        fontWeight={'400'}
+        color={'$gray9'}
+        $sm={{
+          fontSize: 13,
+          fontWeight: '400',
+        }}
+      >
+        {description}
+      </Text>
+    </YStack>
+  );
+
   return (
     <Stack
       flexDirection="row"
@@ -135,78 +221,10 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
         backgroundColor={'$color1'}
         borderRadius={'$4'}
         gap="$4"
-        width={'70%'}
+        width={'100%'}
         $sm={{ width: '100%' }}
       >
-        <YStack gap="$3" justifyContent="flex-start" alignItems="flex-start">
-          <Text
-            fontSize={25}
-            fontWeight={'400'}
-            color={'$color5'}
-            $sm={{
-              fontSize: 18,
-              fontWeight: '400',
-              color: '$color',
-            }}
-          >
-            {t('job:job-demand')}{' '}
-            {`${t('shipment:type:' + shipment?.items_type)}`}
-          </Text>
-          <Stack
-            flexDirection="row"
-            gap="$8"
-            marginBottom="$3"
-            $sm={{ flexDirection: 'column', gap: '$2' }}
-          >
-            <XStack gap="$2" alignItems="center">
-              {/* TODO change to UserAvatar */}
-
-              <UserAvatar size={'$1'} user={shipment.user} />
-              <Text
-                fontSize={12}
-                fontWeight={'600'}
-                color={'$gray9'}
-                $sm={{
-                  fontSize: 12,
-                  fontWeight: '600',
-                }}
-              >
-                {shipment.user?.name}
-              </Text>
-            </XStack>
-            <XStack gap="$2" alignItems="center">
-              <CustomIcon
-                name="chronic"
-                size="$1"
-                $sm={{
-                  display: 'none',
-                }}
-              />
-              <Text
-                fontSize={12}
-                fontWeight={'600'}
-                color={'$gray9'}
-                $sm={{
-                  fontSize: 9,
-                  fontWeight: '600',
-                }}
-              >
-                {t('job:job-published')} {moment(shipment.created_at).fromNow()}
-              </Text>
-            </XStack>
-          </Stack>
-          <Text
-            fontSize={15}
-            fontWeight={'400'}
-            color={'$gray9'}
-            $sm={{
-              fontSize: 13,
-              fontWeight: '400',
-            }}
-          >
-            {description}
-          </Text>
-        </YStack>
+        {renderHeaderShipment()}
 
         <Separator borderColor={'$gray7'} width={'100%'} />
         {renderDetailShipment()}
@@ -216,11 +234,13 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
         width={'100%'}
         $gtSm={{ display: 'none' }}
       />
-      <ShipmentCardActions
-        shipment={shipment}
-        variant={variant}
-        urlPrefix={urlPrefix}
-      />
+      <Stack width={'100%'} $gtSm={{ display: 'none' }}>
+        <ShipmentCardActions
+          shipment={shipment}
+          variant={variant}
+          urlPrefix={urlPrefix}
+        />
+      </Stack>
     </Stack>
   );
 };

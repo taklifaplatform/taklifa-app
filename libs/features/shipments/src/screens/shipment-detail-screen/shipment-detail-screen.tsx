@@ -96,7 +96,7 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
     >
       <YStack gap="$3" alignItems="flex-start">
         <Text fontSize={12} fontWeight={'600'} color={'$color11'}>
-          SWDKSA{shipment.id?.toString().substring(0, 8).toUpperCase()}
+          SWDKSA{shipment?.id?.toString().substring(0, 8).toUpperCase()}
         </Text>
         <Text fontSize={18} fontWeight={'400'} color={'$color5'}>
           {t('job:job-demand')} {shipment?.items_type}
@@ -105,7 +105,7 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
           <XStack gap="$2" alignItems="center" $sm={{ display: 'none' }}>
             {/* TODO change to UserAvatar */}
 
-            <UserAvatar size={'$1'} user={shipment.user} />
+            <UserAvatar size={'$1'} user={shipment?.user} />
             <Text
               fontSize={12}
               fontWeight={'600'}

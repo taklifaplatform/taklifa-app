@@ -27,6 +27,8 @@ export const JobsListScreen: React.FC<JobsListScreenProps> = ({
     <FlatList
       onEndReachedThreshold={0.5}
       data={data?.data}
+      numColumns={2}
+      columnWrapperStyle={{ justifyContent: 'space-between' }}
       renderItem={({ item, index }) => (
         <ShipmentCard
           key={index}
