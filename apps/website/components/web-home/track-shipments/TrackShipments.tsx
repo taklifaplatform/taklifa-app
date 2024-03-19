@@ -94,6 +94,7 @@ export function TrackShipments() {
           placeholder={t('web-home:shipmentplaceholder')}
           leftIcon={(props) => <CustomIcon {...props} name="flip" />}
           containerProps={{
+            flex: 1,
             $sm: {
               width: '100%',
             },
