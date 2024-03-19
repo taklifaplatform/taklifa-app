@@ -8,7 +8,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useAuth } from '@zix/services/auth';
 import { FlatList } from 'react-native';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
-import { Circle, Text, View, YStack } from 'tamagui';
+import { Circle, Stack, Text, View, YStack } from 'tamagui';
 import ShipmentCard from '../../components/shipment-card/shipment-card';
 
 export type ShipmentsListScreenProps = {
@@ -139,18 +139,20 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
           style={{ flex: 1 }}
           onEndReachedThreshold={0.5}
           data={data?.data}
-          // numColumns={2}
-          // contentContainerStyle={{gap: '$4', padding: '$4'}}
-          // columnWrapperStyle={{ gap: '$4' }}
+          numColumns={2}
           renderItem={({ item, index }) => (
-            <ShipmentCard
-              key={index} 
-              urlPrefix={`${getRoleUrlPrefix(activeRole)}/${variant}`}
-              shipment={item}
-              variant={variant}
-              marginHorizontal="$4"
-              marginBottom="$2"
-            />
+            <Stack $gtSm={{ flex: 1, flexBasis: 1 }}>
+              <ShipmentCard
+                key={index}
+                urlPrefix={`${getRoleUrlPrefix(activeRole)}/${variant}`}
+                shipment={item}
+                variant={variant}
+                marginHorizontal="$2"
+                marginBottom="$2"
+                isDetail={false}
+                flex={1}
+              />
+            </Stack>
           )}
           ListEmptyComponent={() => (
             <DataNotFound
@@ -159,7 +161,6 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
               imageUrl="/assets/shipmentNotFound.png"
             />
           )}
-          
         />
       </YStack>
     </>

@@ -27,13 +27,13 @@ import {
   BudgetShipment,
   DefinitionSender,
   InformationAboutDriver,
-  ShipmentActions,
   ShipmentCanceledDetail,
+  ShipmentCardActions,
   ShipmentCode,
   ShipmentDeliveringDetail,
   ShipmentDetails,
   ShipmentDirection,
-  TotalCostOfShipment,
+  TotalCostOfShipment
 } from '../../';
 
 export type ShipmentDetailScreenProps = {
@@ -134,17 +134,18 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
                 fontWeight: '600',
               }}
             >
-              {t('job:job-published')} {moment(shipment.created_at).fromNow()}
+              {t('job:job-published')} {moment(shipment?.created_at).fromNow()}
             </Text>
           </XStack>
         </XStack>
       </YStack>
 
       <View $sm={{ display: 'none' }}>
-        <ShipmentActions
+        <ShipmentCardActions
           shipment={shipment}
           variant={variant}
           urlPrefix={urlPrefix}
+          isDetail={true}
         />
       </View>
     </XStack>
@@ -234,10 +235,11 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
           <DefinitionSender shipment={shipment} />
 
           <View>
-            <ShipmentActions
+            <ShipmentCardActions
               shipment={shipment}
               variant={variant}
               urlPrefix={urlPrefix}
+              isDetail={true}
             />
           </View>
         </YStack>

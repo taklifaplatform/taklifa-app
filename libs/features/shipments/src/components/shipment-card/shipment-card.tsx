@@ -22,12 +22,14 @@ export type ShipmentCardProps = ThemeableStackProps & {
   shipment: ShipmentTransformer; // TODO: change to shipment, and add
   urlPrefix: string;
   variant: 'shipments' | 'jobs';
+  isDetail?: boolean;
 };
 
 export const ShipmentCard: React.FC<ShipmentCardProps> = ({
   shipment,
   variant,
   urlPrefix,
+  isDetail,
   ...props
 }) => {
   const { isRtl } = useMultiLang();
@@ -115,10 +117,15 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
   );
 
   const renderHeaderShipment = () => (
-    <YStack gap="$3" justifyContent="flex-start" alignItems="flex-start">
+    <YStack gap="$3">
       <XStack width={'100%'} alignItems="center" justifyContent="space-between">
-        <YStack gap="$2" width={'50%'} $sm={{ width: '100%'}}>
-          <Text fontSize={12} fontWeight={'600'} color={'$color11'} $sm={{ display: 'none'}}>
+        <YStack gap="$2" width={'50%'} $sm={{ width: '100%' }}>
+          <Text
+            fontSize={12}
+            fontWeight={'600'}
+            color={'$color11'}
+            $sm={{ display: 'none' }}
+          >
             SWDKSA{shipment.id?.toString().substring(0, 8).toUpperCase()}
           </Text>
           <Text
@@ -135,11 +142,12 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
             {`${t('shipment:type:' + shipment?.items_type)}`}
           </Text>
         </YStack>
-        <Stack width={'20%'} $sm={{ display: 'none' }}>
+        <Stack $sm={{ display: 'none' }}>
           <ShipmentCardActions
             shipment={shipment}
             variant={variant}
             urlPrefix={urlPrefix}
+            isDetail={isDetail}
           />
         </Stack>
       </XStack>
@@ -207,7 +215,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
       paddingVertical="$4"
       backgroundColor={'$color1'}
       borderRadius={'$4'}
-        $sm={{
+      $sm={{
         justifyContent: 'center',
         alignItems: 'center',
         gap: '$6',
@@ -237,6 +245,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
           shipment={shipment}
           variant={variant}
           urlPrefix={urlPrefix}
+          isDetail={isDetail}
         />
       </Stack>
     </YStack>

@@ -32,6 +32,7 @@ export const JobsListScreen: React.FC<JobsListScreenProps> = ({
           key={index}
           urlPrefix={urlPrefix}
           shipment={item}
+          isDetail={false}
           variants='job'
           marginBottom="$4"
         />

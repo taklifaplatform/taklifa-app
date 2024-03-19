@@ -5,7 +5,6 @@ import React from 'react';
 import { Stack, Text, View, XStack, YStack } from 'tamagui';
 import { SectionWrapper } from '../../screens/shipment-detail-screen/shipment-detail-screen';
 
-/* eslint-disable-next-line */
 export interface BudgetShipmentProps {
   shipment: ShipmentTransformer;
 }
@@ -14,7 +13,7 @@ export const BudgetShipment: React.FC<BudgetShipmentProps> = ({
   shipment,
   ...props
 }) => {
-  // if(shipment.status !== 'draft') return null
+  if (shipment.status !== 'draft') return null;
 
   const renderOptionActivity = (title: string, value: string) => (
     <XStack
@@ -64,8 +63,6 @@ export const BudgetShipment: React.FC<BudgetShipmentProps> = ({
             t('shipment:higher'),
             shipment.max_budget?.value || 0,
             shipment.max_budget?.currency?.code || '',
-
-            
           )}
           {renderCadrBudget(
             t('shipment:medium'),
