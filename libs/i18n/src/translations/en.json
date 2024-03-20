@@ -130,6 +130,15 @@
     "select_country": "Select country",
     "search": "Search..."
   },
+  "cookies-banner": {
+    "section-1": {
+      "title-1": "We value your privacy",
+      "description": "We use cookies to enhance your browsing experience, serve personalized ads and content tailored to you, as well as analyze visits to our website. By clicking Accept All, you consent to our use of cookies.",
+      "banner-1": "Customize",
+      "banner-2": "Decline",
+      "banner-3": "Accept All"
+    }
+  },
   "core": {
     "media_picker": {
       "title": "Select a media picker",
@@ -377,6 +386,7 @@
     "contact-welcome": "We are always keen to provide and guarantee the best services to our dear customers",
     "contact-question": "How can we serve you today?",
     "complaint": "Complaint",
-    "complain-text": "If there are any problems you encounter, please do not hesitate to contact us"
+    "complain-text": "If there are any problems you encounter, please do not hesitate to contact us",
+    "saudi_arabia": "Saudi Arabia"
   }
 }

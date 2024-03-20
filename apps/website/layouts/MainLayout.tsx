@@ -1,10 +1,8 @@
-import { LayoutContainer } from '@zix/ui/layouts';
+import { ZixContainer } from '@zix/ui/common';
+import { ZixCookiesBanner, ZixWebFooter, ZixWebHeader } from '@zix/ui/widgets';
 import React from 'react';
-import { YStack } from 'tamagui';
-import { Footer } from '../components/web-home/footer/Footer';
-import { Header } from '../components/web-home/header/Header';
-import { MobileHeader } from '../components/web-home/menu-header/MobileHeader';
-import { TopHeader } from '../components/web-home/top-header/TopHeader';
+
+
 
 export type MainLayoutProps = {
   children: React.ReactNode;
@@ -12,17 +10,17 @@ export type MainLayoutProps = {
 
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
-    <LayoutContainer>
-      <>
-        <YStack>
-          <TopHeader />
-          <Header />
-          <MobileHeader />
-        </YStack>
+    <>
+      <ZixWebHeader />
+
+      <ZixContainer>
         {children}
-        <Footer />
-      </>
-    </LayoutContainer>
+        <ZixCookiesBanner />
+      </ZixContainer>
+
+      <ZixWebFooter />
+    </>
+
   );
 };
 

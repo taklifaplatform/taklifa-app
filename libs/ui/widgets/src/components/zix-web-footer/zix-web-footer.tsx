@@ -1,10 +1,10 @@
 import { useMultiLang } from '@zix/i18n';
-import { ZixLinkButton } from '@zix/ui/common';
+import { ZixContainer, ZixLinkButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import { Stack, Text, Theme, View, XStack, YStack } from 'tamagui';
 
-export function Footer() {
+export const ZixWebFooter = () => {
   const { activeLang } = useMultiLang();
   const renderLogo = () => (
     <View paddingHorizontal="$3">
@@ -191,40 +191,46 @@ export function Footer() {
   );
 
   return (
-    <YStack>
-      <Theme name="light">
-        <YStack backgroundColor={'$color'} padding="$4" borderRadius="$4">
-          {renderLogo()}
-          <View
-            flexDirection="row"
-            padding="$4"
-            $lg={{
-              flex: 1,
-              flexDirection: 'column',
-              gap: '$6',
-              padding: '$4',
-            }}
-          >
-            <Stack
+    <ZixContainer>
+      <YStack>
+        <Theme name="light">
+          <YStack backgroundColor={'$color'} padding="$4" borderRadius="$4">
+            {renderLogo()}
+            <View
               flexDirection="row"
-              flexWrap="wrap"
-              flex={1}
-              gap="$12"
-              justifyContent="flex-start"
-              $sm={{
-                gap: '$4',
+              padding="$4"
+              $lg={{
+                flex: 1,
+                flexDirection: 'column',
+                gap: '$6',
+                padding: '$4',
               }}
             >
-              {renderAboutFooter()}
-              {renderLegal()}
-              {renderContact()}
-            </Stack>
-            {renderFollows()}
-          </View>
-        </YStack>
-      </Theme>
+              <Stack
+                flexDirection="row"
+                flexWrap="wrap"
+                flex={1}
+                gap="$12"
+                justifyContent="flex-start"
+                $sm={{
+                  gap: '$4',
+                }}
+              >
+                {renderAboutFooter()}
+                {renderLegal()}
+                {renderContact()}
+              </Stack>
+              {renderFollows()}
+            </View>
+          </YStack>
+        </Theme>
 
-      {renderRightReserved()}
-    </YStack>
+        {renderRightReserved()}
+      </YStack>
+    </ZixContainer>
   );
 }
+
+
+
+export default ZixWebFooter;

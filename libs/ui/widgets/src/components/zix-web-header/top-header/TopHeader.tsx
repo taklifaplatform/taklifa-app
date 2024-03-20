@@ -70,7 +70,7 @@ export function TopHeader() {
         }}
         resizeMode="contain"
       />
-      <Text $md={{ display: 'none' }}>saudi arabia</Text>
+      <Text $md={{ display: 'none' }}>{t('web-home:saudi_arabia')}</Text>
     </ZixLinkButton>
   );
   const renderFollows = () => (
@@ -119,19 +119,21 @@ export function TopHeader() {
   );
 
   return (
+
     <XStack
       $sm={{ display: 'none' }}
       alignItems="center"
       justifyContent="space-around"
       backgroundColor="$gray3"
-      borderTopLeftRadius={'$4'}
-      borderTopRightRadius={'$4'}
+      flex={1}
+      height={60}
     >
       {renderHomeInfo()}
       {renderHomeQuestion()}
-
       {renderSelectTranslate()}
       {renderLocation()}
+
+
       {renderDownload()}
       {renderFollows()}
     </XStack>

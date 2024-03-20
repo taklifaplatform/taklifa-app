@@ -1,5 +1,4 @@
 export * from './components/account-switcher/account-switcher';
-export * from './components/layout-container/layout-container';
 
 export * from './layouts/dashboard-layout/dashboard-layout';
 

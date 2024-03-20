@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import LayoutContainer from './layout-container';
+import ZixCookiesBanner from './zix-cookies-banner';
 
-describe('LayoutContainer', () => {
+describe('ZixCookiesBanner', () => {
   it('should render successfully', () => {
-    const { root } = render(< LayoutContainer />);
+    const { root } = render(< ZixCookiesBanner />);
     expect(root).toBeTruthy();
   });
 });
