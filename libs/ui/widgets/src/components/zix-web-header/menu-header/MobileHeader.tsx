@@ -2,22 +2,31 @@ import { CustomIcon } from '@zix/ui/icons';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Pressable } from 'react-native';
-import { Button, Sheet, XStack, useTheme } from 'tamagui';
+import { Button, Dialog, Sheet, XStack, useTheme } from 'tamagui';
 import { MobileDrawer } from './MobileDrawer';
 import { useMultiLang } from '@zix/i18n';
 
 export function MobileHeader() {
-  const {  activeLang } = useMultiLang();
+  const { activeLang } = useMultiLang();
   const [drawer, setDrawer] = useState(false);
   const router = useRouter();
   const renderDrawer = () => (
-    <Sheet snapPoints={[100, 50]} open={drawer} modal={true}>
-      <Sheet.Overlay onPress={() => setDrawer(!drawer)} />
-      <Sheet.Handle />
-      <Sheet.Frame>
-        <MobileDrawer />
-      </Sheet.Frame>
-    </Sheet>
+    <Dialog
+      open={drawer}
+      modal={true}
+    >
+      <Dialog.Portal>
+        <Dialog.Overlay onPress={() => setDrawer(!drawer)} />
+        <Dialog.Content
+          justifyContent="center"
+          alignSelf="center"
+          borderRadius={20}
+          width='90%'
+        >
+          <MobileDrawer />
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog>
   );
   return (
     <XStack
@@ -31,7 +40,14 @@ export function MobileHeader() {
       marginVertical="$4"
       paddingVertical="$1"
       overflow="hidden"
+
+      alignSelf="center"
+      position='fixed'
+      top={0}
+      zIndex={100}
+      width='90%'
     >
+      
       <Pressable onPress={() => setDrawer(!drawer)}>
         <CustomIcon name={'align_left'} size="$2" />
       </Pressable>

@@ -1,5 +1,5 @@
 import { CustomIcon } from '@zix/ui/icons';
-import { XStack } from 'tamagui';
+import { Theme, XStack } from 'tamagui';
 
 import { useMultiLang } from '@zix/i18n';
 import { ZixLinkButton } from '@zix/ui/common';
@@ -15,25 +15,22 @@ export function Header() {
       justifyContent="space-between"
       backgroundColor={'$color1'}
       alignItems="center"
-      borderBottomLeftRadius={'$4'}
-      borderBottomRightRadius={'$4'}
       borderTopWidth={2}
       borderTopColor={'$gray7'}
-      paddingHorizontal="$3"
-      marginBottom="$4"
+      paddingHorizontal="$4"
     >
-      <XStack gap="$2" $lg={{ gap: '$1' }}>
+      <XStack $lg={{ gap: '$1' }}>
         <ZixLinkButton
           display="headerMenu"
           href={'/'}
-          $lg={{ paddingHorizontal: '$4' }}
+
         >
           {t('web-home:home')}
         </ZixLinkButton>
         <ZixLinkButton
           display="headerMenu"
           href={'/customer/shipments'}
-          $lg={{ paddingHorizontal: '$4' }}
+
         >
           {t('web-home:payments')}
         </ZixLinkButton>
@@ -53,7 +50,7 @@ export function Header() {
         </ZixLinkButton>
       </XStack>
       <CustomIcon name={`web_logo_${activeLang}`} size={'$9'} />
-      <XStack gap="$0">
+      <XStack >
         <ZixLinkButton
           display="headerMenu"
           href={'/jobs'}

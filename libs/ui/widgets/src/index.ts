@@ -1,4 +1,10 @@
 
+export * from './components/zix-web-footer/zix-web-footer';
+
+export * from './components/zix-web-header/zix-web-header';
+
+export * from './components/zix-cookies-banner/zix-cookies-banner';
+
 export * from './components/zix-working-hours-widget/zix-working-hours-widget';
 
 export * from './components/zix-medias-list-widget/zix-medias-list-widget';

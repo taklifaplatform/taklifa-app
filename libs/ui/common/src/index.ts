@@ -1,4 +1,6 @@
 
+export * from './components/zix-container/zix-container';
+
 export * from './components/zix-tab/zix-tab';
 
 export * from './components/debug-object/debug-object';
