@@ -74,7 +74,6 @@ const CustomButton = styled(Button, {
     linkItem: {
       true: {
         unstyled: true,
-        color: '$color0',
         fontSize: '$5',
         paddingHorizontal: '$4',
         flexDirection: 'row',
@@ -123,7 +122,9 @@ export const ZixLinkButton = forwardRef(function ZixLinkButtonFunc(
       <CustomButton
         ref={ref as TamaguiComponent}
         {...props}
-        {...({ [`${display}Active`]: false })}
+        {...(display
+          ? { [display]: true, [`${display}Active`]: activePath === href }
+          : {})}
       />
     )
   }

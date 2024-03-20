@@ -157,7 +157,7 @@ export function useAuth(): AuthHelpers {
     setAuthUser({});
 
     try {
-      AuthService.logout();
+      // AuthService.logout();
     } catch (error) {
       //
     }

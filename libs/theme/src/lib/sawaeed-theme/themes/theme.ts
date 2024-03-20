@@ -1,75 +1,195 @@
-import { createThemeBuilder } from '@tamagui/theme-builder';
+import { createThemeBuilder } from '@tamagui/theme-builder'
 
-import { componentThemeDefinitions } from './componentThemeDefinitions';
-import { masks } from './masks';
-import { palettes } from './palettes';
-import { shadows } from './shadows';
-import { maskOptions, templates } from './templates';
-import { darkColors, lightColors } from './token-colors';
+import { palettes } from './palettes'
+import { shadows } from './shadows'
+import { lightTemplates, templates } from './templates'
+import { darkColors, lightColors } from './token-colors'
 
-const colorThemeDefinition = (colorName: string) => [
+const nonInherited = {
+  light: {
+    ...lightColors,
+    ...shadows.light,
+  },
+  dark: {
+    ...darkColors,
+    ...shadows.dark,
+  },
+}
+
+const overlayThemeDefinitions = [
   {
     parent: 'light',
-    palette: colorName,
-    template: 'colorLight',
+    theme: {
+      background: 'rgba(0,0,0,0.5)',
+    },
   },
   {
     parent: 'dark',
-    palette: colorName,
-    template: 'base',
+    theme: {
+      background: 'rgba(0,0,0,0.8)',
+    },
   },
-];
+]
 
-const themesBuilder = createThemeBuilder()
+const inverseSurface1 = [
+  {
+    parent: 'active',
+    template: 'inverseActive',
+  },
+  {
+    parent: '',
+    template: 'inverseSurface1',
+  },
+]
+
+const surface1 = [
+  {
+    parent: 'active',
+    template: 'surfaceActive',
+  },
+  {
+    parent: '',
+    template: 'surface1',
+  },
+]
+
+const surface2 = [
+  {
+    parent: 'active',
+    template: 'surfaceActive',
+  },
+  {
+    parent: '',
+    template: 'surface2',
+  },
+]
+
+const surface3 = [
+  {
+    parent: 'active',
+    template: 'surfaceActive',
+  },
+  {
+    parent: '',
+    template: 'surface3',
+  },
+]
+
+const themeBuilder = createThemeBuilder()
   .addPalettes(palettes)
   .addTemplates(templates)
-  .addMasks(masks)
   .addThemes({
     light: {
       template: 'base',
       palette: 'light',
-      nonInheritedValues: {
-        ...lightColors,
-        ...shadows.light,
-      },
+      nonInheritedValues: nonInherited.light,
     },
     dark: {
       template: 'base',
       palette: 'dark',
-      nonInheritedValues: {
-        ...darkColors,
-        ...shadows.dark,
-      },
+      nonInheritedValues: nonInherited.dark,
     },
   })
   .addChildThemes({
-    orange: colorThemeDefinition('orange'),
-    yellow: colorThemeDefinition('yellow'),
-    green: colorThemeDefinition('green'),
-    blue: colorThemeDefinition('blue'),
-    purple: colorThemeDefinition('purple'),
-    pink: colorThemeDefinition('pink'),
-    red: colorThemeDefinition('red'),
+    orange: {
+      palette: 'orange',
+      template: 'base',
+    },
+    yellow: {
+      palette: 'yellow',
+      template: 'base',
+    },
+    green: {
+      palette: 'green',
+      template: 'base',
+    },
+    blue: {
+      palette: 'blue',
+      template: 'base',
+    },
+    purple: {
+      palette: 'purple',
+      template: 'base',
+    },
+    pink: {
+      palette: 'pink',
+      template: 'base',
+    },
+    red: {
+      palette: 'red',
+      template: 'base',
+    },
+    gray: {
+      palette: 'gray',
+      template: 'base',
+    },
   })
   .addChildThemes({
     alt1: {
-      mask: 'soften',
-      ...maskOptions.alt,
+      template: 'alt1',
     },
     alt2: {
-      mask: 'soften2',
-      ...maskOptions.alt,
+      template: 'alt2',
     },
     active: {
-      mask: 'soften3',
-      skip: {
-        color: 1,
-      },
+      template: 'surface3',
+    },
+    surface1: {
+      template: 'surface1',
+    },
+    surface2: {
+      template: 'surface2',
+    },
+    surface3: {
+      template: 'surface3',
+    },
+    surface4: {
+      template: 'surfaceActive',
     },
   })
-  .addChildThemes(componentThemeDefinitions, {
-    // to save bundle size but make alt themes not work on components
-    // avoidNestingWithin: ['alt1', 'alt2'],
-  });
+  .addComponentThemes(
+    {
+      ListItem: {
+        template: 'surface1',
+      },
+      SelectTrigger: surface1,
+      Card: surface1,
+      Button: surface3,
+      Checkbox: surface2,
+      Switch: surface2,
+      SwitchThumb: inverseSurface1,
+      TooltipContent: surface2,
+      Progress: {
+        template: 'surface1',
+      },
+      RadioGroupItem: surface2,
+      TooltipArrow: {
+        template: 'surface1',
+      },
+      SliderTrackActive: {
+        template: 'surface3',
+      },
+      SliderTrack: {
+        template: 'surface1',
+      },
+      SliderThumb: inverseSurface1,
+      Tooltip: inverseSurface1,
+      ProgressIndicator: inverseSurface1,
+      SheetOverlay: overlayThemeDefinitions,
+      DialogOverlay: overlayThemeDefinitions,
+      ModalOverlay: overlayThemeDefinitions,
+      Input: surface1,
+      TextArea: surface1,
+    },
+    {
+      avoidNestingWithin: ['alt1', 'alt2', 'surface1', 'surface2', 'surface3', 'surface4'],
+    }
+  )
 
-export const themes = themesBuilder.build();
+const themesIn = themeBuilder.build()
+
+export type Theme = Record<keyof typeof lightTemplates.base, string> & typeof nonInherited.light
+
+export type ThemesOut = Record<keyof typeof themesIn, Theme>
+
+export const themes = themesIn as unknown as ThemesOut

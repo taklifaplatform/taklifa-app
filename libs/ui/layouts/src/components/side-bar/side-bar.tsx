@@ -82,8 +82,9 @@ export const SideBar: React.FC<SideBarProps> = () => {
 
   }, [activeRole, currentUrlPrefix])
 
-  const renderMenuItem = (item: MenuItemType) => (
+  const renderMenuItem = (item: MenuItemType, index) => (
     <Settings.Item
+      key={`${index}-${item.title}`}
       icon={item.icon}
       // rightLabel='4'
       hideRightChevron

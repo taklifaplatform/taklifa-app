@@ -82,7 +82,7 @@ export function Header() {
             <ZixLinkButton
               display="headerMenu"
               href={'/account'}
-              onPress={redirectUserToActiveDashboard}
+              // onPress={redirectUserToActiveDashboard}
               icon={<CustomIcon name={'account'} size="$1" />}
               $lg={{ paddingHorizontal: '$4' }}
             >

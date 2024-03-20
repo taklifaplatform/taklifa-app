@@ -15,12 +15,12 @@ export {
   redDark,
   yellow,
   yellowDark,
-} from '@tamagui/themes'
+} from '@tamagui/themes';
 
-export const lightTransparent = 'rgba(255,255,255,0)'
-export const darkTransparent = 'rgba(10,10,10,0)'
+export const lightTransparent = 'rgba(255,255,255,0)';
+export const darkTransparent = 'rgba(10,10,10,0)';
 
-export const lightColor = 'hsl(0, 0%, 9.0%)'
+export const lightColor = 'hsl(0, 0%, 9.0%)';
 export const lightPalette = [
   lightTransparent,
   '#fff',
@@ -36,9 +36,9 @@ export const lightPalette = [
   'hsl(0, 0%, 42.5%)',
   lightColor,
   darkTransparent,
-]
+];
 
-export const darkColor = '#fff'
+export const darkColor = '#fff';
 export const darkPalette = [
   darkTransparent,
   '#050505',
@@ -54,4 +54,4 @@ export const darkPalette = [
   '#a5a5a5',
   darkColor,
   lightTransparent,
-]
+];

@@ -17,6 +17,7 @@ SplashScreen.preventAutoHideAsync();
 export default function HomeLayout() {
   const [fontLoaded] = useFonts({
     Almarai_300Light: Almarai_300Light,
+    Almarai: Almarai_400Regular,
     Almarai_400Regular: Almarai_400Regular,
     Almarai_700Bold: Almarai_700Bold,
     Almarai_800ExtraBold: Almarai_800ExtraBold,

@@ -5,4 +5,4 @@ export const zIndex = {
   3: 300,
   4: 400,
   5: 500,
-}
+};

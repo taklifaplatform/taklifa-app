@@ -1,2 +1,2 @@
-export * from './lib/sawaeed-theme';
-// export * from './lib/app-themes-shared';
+// export * from './lib/sawaeed-theme';
+export * from './lib/custom-theme';

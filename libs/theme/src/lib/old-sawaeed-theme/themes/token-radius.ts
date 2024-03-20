@@ -13,7 +13,7 @@ export const radius = {
   10: 34,
   11: 42,
   12: 50,
-}
+};
 
 // rectangular design
 // export const radius = {

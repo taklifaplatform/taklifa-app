@@ -1,116 +1,137 @@
-import { objectFromEntries, objectKeys } from './helpers';
-import { colorTokens } from './token-colors';
+import { objectFromEntries, objectKeys } from './helpers'
+import { color, colorTokens } from './token-colors'
 
 export const palettes = (() => {
-  const lightTransparent = 'rgba(255,255,255,0)';
-  const darkTransparent = 'rgba(10,10,10,0)';
-
   const transparent = (hsl: string, opacity = 0) =>
-    hsl.replace(`%)`, `%, ${opacity})`).replace(`hsl(`, `hsla(`);
+    hsl.replace(`%)`, `%, ${opacity})`).replace(`hsl(`, `hsla(`)
 
-  const getColorPalette = (colors: object, color = colors[0]): string[] => {
-    const colorPalette = Object.values(colors);
+  const getColorPalette = (colors: object, accentColors: object): string[] => {
+    const colorPalette = Object.values(colors)
+    // make the transparent color vibrant and towards the middle
+    const colorI = colorPalette.length - 4
 
-    // were re-ordering these
-    const [head, tail] = [
-      colorPalette.slice(0, 6),
-      colorPalette.slice(colorPalette.length - 5),
-    ];
+    // accents
+    const accentPalette = Object.values(accentColors)
+    const accentBackground = accentPalette[0]
+    const accentColor = accentPalette[accentPalette.length - 1]
 
     // add our transparent colors first/last
     // and make sure the last (foreground) color is white/black rather than colorful
     // this is mostly for consistency with the older theme-base
     return [
-      transparent(colorPalette[0]),
-      ...head,
-      ...tail,
-      color,
-      transparent(colorPalette[colorPalette.length - 1]),
-    ];
-  };
+      accentBackground,
+      transparent(colorPalette[0], 0),
+      transparent(colorPalette[0], 0.25),
+      transparent(colorPalette[0], 0.5),
+      transparent(colorPalette[0], 0.75),
+      ...colorPalette,
+      transparent(colorPalette[colorI], 0.75),
+      transparent(colorPalette[colorI], 0.5),
+      transparent(colorPalette[colorI], 0.25),
+      transparent(colorPalette[colorI], 0),
+      accentColor,
+    ]
+  }
 
-  // const lightColor = 'hsl(0, 0%, 9.0%)'
-  // const lightPalette = [
-  //   lightTransparent,
-  //   '#fff',
-  //   '#f9f9f9',
-  //   'hsl(0, 0%, 97.3%)',
-  //   'hsl(0, 0%, 95.1%)',
-  //   'hsl(0, 0%, 94.0%)',
-  //   'hsl(0, 0%, 92.0%)',
-  //   'hsl(0, 0%, 89.5%)',
-  //   'hsl(0, 0%, 81.0%)',
-  //   'hsl(0, 0%, 56.1%)',
-  //   'hsl(0, 0%, 50.3%)',
-  //   'hsl(0, 0%, 42.5%)',
-  //   lightColor,
-  //   darkTransparent,
-  // ]
+  const brandColor = {
+    light: color.blue4Light,
+    dark: color.blue4Dark,
+  }
 
-  const lightColor = 'hsl(0, 0%, 9.0%)';
   const lightPalette = [
-    lightTransparent,
-    '#fff', // $color1
-    '#F6F6F6', // $color2
+    brandColor.light,
+    color.white0,
+    color.white025,
+    color.white05,
+    color.white075,
+    color.white1,
+    // color.white2,
+    '#fed441', // $color2
+    // color.white3,
     '#FFEEB2', // $color3
+    // color.white4,
     '#fed441', // $color4
+    // color.white5,
     '#feca16', // $color5
+    // color.white6,
     '#ffc300', // $color6
+    // color.white7,
     '#e9b501', // $color7
+    // color.white8,
     '#be9401', // $color8
-    '#E0E0E0', // $color9
-    '#757575', // $color10
-    '#211F1F', // $color11
-    lightColor, // $color12
-    darkTransparent,
-  ];
+    color.white9,
+    color.white10,
+    color.white11,
+    color.white12,
+    color.black075,
+    color.black05,
+    color.black025,
+    color.black0,
+    brandColor.dark,
+  ]
 
-  const darkColor = '#fff';
   const darkPalette = [
-    darkTransparent,
-    '#050505',
-    '#151515',
-    '#191919',
-    '#232323',
+    brandColor.dark,
+    color.black0,
+    color.black025,
+    color.black05,
+    color.black075,
+    color.black1,
+    color.black2,
+    color.black3,
+    color.black4,
+    // color.black5,
     '#feca16', // $color5
-    '#323232',
-    '#424242',
-    '#494949',
-    '#545454',
-    '#626262',
-    '#a5a5a5',
-    darkColor,
-    lightTransparent,
-  ];
+    color.black6,
+    color.black7,
+    color.black8,
+    color.black9,
+    color.black10,
+    color.black11,
+    color.black12,
+    color.white075,
+    color.white05,
+    color.white025,
+    color.white0,
+    brandColor.light,
+  ]
 
+  const lightColorNames = objectKeys(colorTokens.light)
   const lightPalettes = objectFromEntries(
-    objectKeys(colorTokens.light).map(
-      (key) =>
+    lightColorNames.map(
+      (key, index) =>
         [
           `light_${key}`,
-          getColorPalette(colorTokens.light[key], lightColor),
+          getColorPalette(
+            colorTokens.light[key],
+            colorTokens.light[lightColorNames[(index + 1) % lightColorNames.length]]
+          ),
         ] as const
     )
-  );
+  )
 
+  const darkColorNames = objectKeys(colorTokens.dark)
   const darkPalettes = objectFromEntries(
-    objectKeys(colorTokens.dark).map(
-      (key) =>
+    darkColorNames.map(
+      (key, index) =>
         [
           `dark_${key}`,
-          getColorPalette(colorTokens.dark[key], darkColor),
+          getColorPalette(
+            colorTokens.dark[key],
+            colorTokens.light[darkColorNames[(index + 1) % darkColorNames.length]]
+          ),
         ] as const
     )
-  );
+  )
 
   const colorPalettes = {
     ...lightPalettes,
     ...darkPalettes,
-  };
+  }
 
   return {
     light: lightPalette,
     dark: darkPalette,
     ...colorPalettes,
-  };
-})();
+  }
+})()

@@ -11,7 +11,7 @@ export const blueDark = {
   blue10: 'hsl(209, 100%, 60.6%)',
   blue11: 'hsl(210, 100%, 66.1%)',
   blue12: 'hsl(206, 98.0%, 95.8%)',
-}
+};
 export const grayDark = {
   gray1: 'hsl(0, 0%, 8.5%)',
   gray2: 'hsl(0, 0%, 11.0%)',
@@ -25,7 +25,7 @@ export const grayDark = {
   gray10: 'hsl(0, 0%, 49.4%)',
   gray11: 'hsl(0, 0%, 62.8%)',
   gray12: 'hsl(0, 0%, 93.0%)',
-}
+};
 export const greenDark = {
   green1: 'hsl(146, 30.0%, 7.4%)',
   green2: 'hsl(155, 44.2%, 8.4%)',
@@ -39,7 +39,7 @@ export const greenDark = {
   green10: 'hsl(151, 49.3%, 46.5%)',
   green11: 'hsl(151, 50.0%, 53.2%)',
   green12: 'hsl(137, 72.0%, 94.0%)',
-}
+};
 export const orangeDark = {
   orange1: 'hsl(30, 70.0%, 7.2%)',
   orange2: 'hsl(28, 100%, 8.4%)',
@@ -53,7 +53,7 @@ export const orangeDark = {
   orange10: 'hsl(24, 100%, 58.5%)',
   orange11: 'hsl(24, 100%, 62.2%)',
   orange12: 'hsl(24, 97.0%, 93.2%)',
-}
+};
 export const pinkDark = {
   pink1: 'hsl(318, 25.0%, 9.6%)',
   pink2: 'hsl(319, 32.2%, 11.6%)',
@@ -67,7 +67,7 @@ export const pinkDark = {
   pink10: 'hsl(323, 72.8%, 59.2%)',
   pink11: 'hsl(325, 90.0%, 66.4%)',
   pink12: 'hsl(322, 90.0%, 95.8%)',
-}
+};
 export const purpleDark = {
   purple1: 'hsl(284, 20.0%, 9.6%)',
   purple2: 'hsl(283, 30.0%, 11.8%)',
@@ -81,7 +81,7 @@ export const purpleDark = {
   purple10: 'hsl(273, 57.3%, 59.1%)',
   purple11: 'hsl(275, 80.0%, 71.0%)',
   purple12: 'hsl(279, 75.0%, 95.7%)',
-}
+};
 export const redDark = {
   red1: 'hsl(353, 23.0%, 9.8%)',
   red2: 'hsl(357, 34.4%, 12.0%)',
@@ -95,7 +95,7 @@ export const redDark = {
   red10: 'hsl(358, 85.3%, 64.0%)',
   red11: 'hsl(358, 100%, 69.5%)',
   red12: 'hsl(351, 89.0%, 96.0%)',
-}
+};
 export const yellowDark = {
   yellow1: 'hsl(45, 100%, 5.5%)',
   yellow2: 'hsl(46, 100%, 6.7%)',
@@ -109,7 +109,7 @@ export const yellowDark = {
   yellow10: 'hsl(54, 100%, 68.0%)',
   yellow11: 'hsl(48, 100%, 47.0%)',
   yellow12: 'hsl(53, 100%, 91.0%)',
-}
+};
 
 export const blue = {
   blue1: 'hsl(206, 98.0%, 95.8%)',
@@ -124,7 +124,7 @@ export const blue = {
   blue10: 'hsl(214, 59.4%, 15.3%)',
   blue11: 'hsl(216, 50.0%, 11.8%)',
   blue12: 'hsl(212, 35.0%, 9.2%)',
-}
+};
 export const gray = {
   gray1: 'hsl(0, 0%, 93.0%)',
   gray2: 'hsl(0, 0%, 62.8%)',
@@ -138,7 +138,7 @@ export const gray = {
   gray10: 'hsl(0, 0%, 13.6%)',
   gray11: 'hsl(0, 0%, 11.0%)',
   gray12: 'hsl(0, 0%, 8.5%)',
-}
+};
 export const green = {
   green1: 'hsl(137, 72.0%, 94.0%)',
   green2: 'hsl(151, 50.0%, 53.2%)',
@@ -152,7 +152,7 @@ export const green = {
   green10: 'hsl(155, 46.7%, 10.9%)',
   green11: 'hsl(155, 44.2%, 8.4%)',
   green12: 'hsl(146, 30.0%, 7.4%)',
-}
+};
 export const orange = {
   orange1: 'hsl(24, 97.0%, 93.2%)',
   orange2: 'hsl(24, 100%, 62.2%)',
@@ -166,7 +166,7 @@ export const orange = {
   orange10: 'hsl(26, 91.1%, 11.6%)',
   orange11: 'hsl(28, 100%, 8.4%)',
   orange12: 'hsl(30, 70.0%, 7.2%)',
-}
+};
 export const pink = {
   pink1: 'hsl(322, 90.0%, 95.8%)',
   pink2: 'hsl(325, 90.0%, 66.4%)',
@@ -180,7 +180,7 @@ export const pink = {
   pink10: 'hsl(319, 41.0%, 16.0%)',
   pink11: 'hsl(319, 32.2%, 11.6%)',
   pink12: 'hsl(318, 25.0%, 9.6%)',
-}
+};
 export const purple = {
   purple1: 'hsl(279, 75.0%, 95.7%)',
   purple2: 'hsl(275, 80.0%, 71.0%)',
@@ -194,7 +194,7 @@ export const purple = {
   purple10: 'hsl(281, 37.5%, 16.5%)',
   purple11: 'hsl(283, 30.0%, 11.8%)',
   purple12: 'hsl(284, 20.0%, 9.6%)',
-}
+};
 export const red = {
   red1: 'hsl(351, 89.0%, 96.0%)',
   red2: 'hsl(358, 100%, 69.5%)',
@@ -208,7 +208,7 @@ export const red = {
   red10: 'hsl(356, 43.4%, 16.4%)',
   red11: 'hsl(357, 34.4%, 12.0%)',
   red12: 'hsl(353, 23.0%, 9.8%)',
-}
+};
 export const yellow = {
   yellow1: 'hsl(53, 100%, 91.0%)',
   yellow2: 'hsl(48, 100%, 47.0%)',
@@ -222,12 +222,12 @@ export const yellow = {
   yellow10: 'hsl(45, 100%, 8.7%)',
   yellow11: 'hsl(46, 100%, 6.7%)',
   yellow12: 'hsl(45, 100%, 5.5%)',
-}
+};
 
-export const lightTransparent = 'rgba(255,255,255,0)'
-export const darkTransparent = 'rgba(10,10,10,0)'
+export const lightTransparent = 'rgba(255,255,255,0)';
+export const darkTransparent = 'rgba(10,10,10,0)';
 
-export const lightColor = 'hsl(0, 0%, 9.0%)'
+export const lightColor = 'hsl(0, 0%, 9.0%)';
 export const lightPalette = [
   lightTransparent,
   '#efeff1',
@@ -243,9 +243,9 @@ export const lightPalette = [
   '#5a5e6b',
   lightColor,
   darkTransparent,
-]
+];
 
-export const darkColor = '#fff'
+export const darkColor = '#fff';
 export const darkPalette = [
   darkTransparent,
   '#050505',
@@ -261,4 +261,4 @@ export const darkPalette = [
   '#a1a6aa',
   darkColor,
   lightTransparent,
-]
+];
