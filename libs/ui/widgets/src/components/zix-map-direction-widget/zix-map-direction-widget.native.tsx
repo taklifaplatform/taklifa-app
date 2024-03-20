@@ -62,10 +62,12 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
           flex: 1,
           borderRadius: 10,
         }}
-        initialRegion={mapRegion as any}
+        
+        initialRegion={mapRegion}
+        
       >
         <Marker
-          coordinate={start as any}
+          coordinate={start}
           title={startLocation.address}
           description={startLocation.address}
         >
