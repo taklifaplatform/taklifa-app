@@ -34,18 +34,15 @@ export function MobileHeader() {
       $gtSm={{ display: 'none' }}
       backgroundColor={'$color1'}
       alignItems="center"
-      borderRadius={20}
+      borderRadius={10}
       borderTopColor={'$gray7'}
       paddingHorizontal="$4"
       marginVertical="$4"
       paddingVertical="$1"
       overflow="hidden"
-
       alignSelf="center"
-      position='fixed'
-      top={0}
-      zIndex={100}
-      width='90%'
+      width='100%'
+      height={70}
     >
       
       <Pressable onPress={() => setDrawer(!drawer)}>

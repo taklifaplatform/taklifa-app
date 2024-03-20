@@ -23,14 +23,12 @@ export function Header() {
         <ZixLinkButton
           display="headerMenu"
           href={'/'}
-
         >
           {t('web-home:home')}
         </ZixLinkButton>
         <ZixLinkButton
           display="headerMenu"
           href={'/customer/shipments'}
-
         >
           {t('web-home:payments')}
         </ZixLinkButton>
@@ -79,7 +77,6 @@ export function Header() {
             </ZixLinkButton>
           )
         }
-
         {
           isLoggedIn && (
             <ZixLinkButton
@@ -93,7 +90,6 @@ export function Header() {
             </ZixLinkButton>
           )
         }
-
       </XStack>
     </XStack>
   );

@@ -1,8 +1,6 @@
 
 import React from 'react';
-
-
-import { YStack, View } from 'tamagui';
+import {  View } from 'tamagui';
 import { TopHeader } from './top-header/TopHeader';
 import { Header } from './header/Header';
 import { MobileHeader } from './menu-header/MobileHeader';
@@ -25,7 +23,7 @@ export function ZixWebHeader(props: ZixWebHeaderProps) {
       >
         <ZixContainer
         >
-          <View borderRadius='$4' overflow='hidden' backgroundColor='blue'>
+          <View borderRadius='$4' overflow='hidden' >
             <TopHeader />
             <Header />
             <MobileHeader />

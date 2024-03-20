@@ -13,7 +13,7 @@ export const ZixContainer: React.FC<ZixContainerProps> = ({
 }) => {
   return (
     <XStack justifyContent='space-around' width='100%'>
-      <View maxWidth={'1296px'} width='100%'>
+      <View maxWidth={'1296px'} width='100%' paddingHorizontal='$4'>
         {children}
       </View>
     </XStack>

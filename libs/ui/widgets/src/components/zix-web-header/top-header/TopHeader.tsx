@@ -126,6 +126,7 @@ export function TopHeader() {
       justifyContent="space-around"
       backgroundColor="$gray3"
       flex={1}
+      height={60}
     >
       {renderHomeInfo()}
       {renderHomeQuestion()}
