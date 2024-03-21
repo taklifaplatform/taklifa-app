@@ -1,6 +1,6 @@
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
-import { useRouter } from 'next/router';
+import { useRouter } from 'solito/router';
 import { Button, Image, Stack, Text, Theme, YStack } from 'tamagui';
 export function FindJobsBanner() {
   const router = useRouter();
