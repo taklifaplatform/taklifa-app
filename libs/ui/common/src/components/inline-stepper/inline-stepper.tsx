@@ -13,9 +13,9 @@ export const InlineStepper: React.FC<InlineStepperProps> = (
   props: InlineStepperProps
 ) => {
   const {
-    stepColorPrec = '$color6',
-    stepColorActive = '$color3',
-    stepColorPrev = '$color2',
+    stepColorPrec = '$color3',
+    stepColorActive = '$color9',
+    stepColorPrev = '$color3',
   } = props;
 
   const totalSteps = Array.from(Array(props.totalSteps).keys()).map(
@@ -23,8 +23,8 @@ export const InlineStepper: React.FC<InlineStepperProps> = (
   );
 
   return (
-    <Theme name="light">
-      <XStack margin="$4" space="$2" alignItems="center">
+    <Theme name="accent">
+      <XStack margin="$4" gap="$2" alignItems="center">
         {totalSteps.map((index) => {
           return (
             <XStack key={`step-${index}`} alignItems="center">

@@ -1,21 +1,20 @@
 import { t } from 'i18next';
 import { useRouter } from 'solito/router';
-import { Button, Theme } from 'tamagui';
+import { Button } from 'tamagui';
 import BooleanCheckboxField, { BooleanCheckboxFieldProps } from '../boolean-checkbox-field/boolean-checkbox-field';
 
 
 const AcceptTermsLink: React.FC = () => {
   const router = useRouter()
   return (
-    <Theme>
-      <Button
-        unstyled
-        color='$color5'
-        onPress={() => router.push('/terms-of-service')}
-      >
-        {t('auth:terms_and_conditions')}
-      </Button>
-    </Theme>
+    <Button
+      theme='accent'
+      unstyled
+      color='$color9'
+      onPress={() => router.push('/terms-of-service')}
+    >
+      {t('auth:terms_and_conditions')}
+    </Button>
   );
 };
 

@@ -121,13 +121,12 @@ const SignUpLink = () => {
         <Paragraph textAlign="center" theme="alt1">
           {t('auth:dont_have_account')}{' '}
         </Paragraph>
-        <Theme name="light">
-          <Text textDecorationLine="underline" color="$color5">
+
+        <Theme name="accent">
+          <Text textDecorationLine="underline" color="$color9">
             {t('auth:sign_up')}
           </Text>
-        </Theme>
-        <Theme name="light">
-          <CustomIcon name="arrow_right" color="$color5" />
+          <CustomIcon theme="accent" name="arrow_right" color="$color9" />
         </Theme>
       </Stack>
     </Link>
@@ -138,14 +137,14 @@ const ForgotPasswordLink = () => {
   const phone = useWatch<z.infer<typeof LoginSchema>>({ name: 'phone_number' });
 
   return (
-    <Theme name="light">
+    <Theme name="accent">
       <Link
         href={`/auth/reset-password?${new URLSearchParams(
           phone ? { phone } : {}
         ).toString()}`}
       >
         <Stack flex={1} alignItems="flex-end" marginTop="$3">
-          <Paragraph color="$color5">{t('auth:forgot_password')}</Paragraph>
+          <Paragraph color="$color9">{t('auth:forgot_password')}</Paragraph>
         </Stack>
       </Link>
     </Theme>

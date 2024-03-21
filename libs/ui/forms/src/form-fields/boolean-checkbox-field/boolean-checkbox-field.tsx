@@ -35,6 +35,7 @@ export const BooleanCheckboxField: React.FC<BooleanCheckboxFieldProps> = ({
       }}
     >
       <Checkbox
+        theme='accent'
         {...props}
         size={props.size || '$5'}
         disabled={isSubmitting}

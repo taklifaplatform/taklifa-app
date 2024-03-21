@@ -18,7 +18,7 @@ export function Questions() {
     <Accordion
       key={index}
       overflow="hidden"
-      width="70%"
+      width="100%"
       type="multiple"
       marginBottom={-40}
       $sm={{ width: '100%', marginBottom: -10 }}
@@ -28,7 +28,8 @@ export function Questions() {
           flexDirection="row"
           justifyContent="space-between"
           borderColor={'transparent'}
-          backgroundColor={'$gray4'}
+          backgroundColor={'$color2'}
+          hoverStyle={{ backgroundColor: '$color3' }}
           borderRadius={'$4'}
         >
           {({ open }) => (

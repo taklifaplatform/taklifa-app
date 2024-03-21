@@ -4,7 +4,7 @@ import { t } from 'i18next';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Pressable } from 'react-native';
-import { Button, Image, Stack, Text, View, XStack, YStack } from 'tamagui';
+import { Button, Image, Stack, Text, Theme, View, XStack, YStack } from 'tamagui';
 import { ManageShipments } from '../../components/web-home/management-shipments/ManageShipments';
 import { Partner } from '../../components/web-home/partner/Partner';
 import { MainLayout } from '../../layouts/MainLayout';
@@ -20,6 +20,7 @@ export const Page: NextPageWithLayout = () => {
   const router = useRouter();
   const renderFirstSection = () => (
     <Stack
+      theme='accent'
       backgroundColor="$color3"
       borderRadius={10}
       gap="$4"
@@ -177,47 +178,49 @@ export const Page: NextPageWithLayout = () => {
     </Stack>
   );
   const renderAboutServiceCard = ({ title, incon, text }: WelcomeTextProps) => (
-    <YStack
-      backgroundColor="$color3"
-      width={300}
-      height={380}
-      borderRadius={10}
-      justifyContent="center"
-      alignItems="center"
-      padding="$4"
-      gap="$7"
-      $sm={{
-        width: 250,
-        height: 250,
-        gap: '$5',
-        padding: "$3"
-      }}
-    >
-      <CustomIcon
-        name={incon}
-        size={50}
+    <Theme name='accent'>
+      <YStack
+        backgroundColor="$color2"
+        width={300}
+        height={380}
+        borderRadius={10}
+        justifyContent="center"
+        alignItems="center"
+        padding="$4"
+        gap="$7"
         $sm={{
-          size: 10,
+          width: 250,
+          height: 250,
+          gap: '$5',
+          padding: "$3"
         }}
-        color="$yellow10"
-      />
-      <Text
-        fontSize={25}
-        fontWeight="700"
-        textAlign="center"
-        $sm={{
-          fontSize: 20,
-        }}
-      > {title}</Text>
-      <Text
-        fontSize={20}
-        textAlign="center"
-        fontWeight="400"
-        $sm={{
-          fontSize: 15,
-        }}
-      > {text}</Text>
-    </YStack>
+      >
+        <CustomIcon
+          name={incon}
+          size={50}
+          $sm={{
+            size: 10,
+          }}
+          color="$color9"
+        />
+        <Text
+          fontSize={25}
+          fontWeight="700"
+          textAlign="center"
+          $sm={{
+            fontSize: 20,
+          }}
+        > {title}</Text>
+        <Text
+          fontSize={20}
+          textAlign="center"
+          fontWeight="400"
+          $sm={{
+            fontSize: 15,
+          }}
+        > {text}</Text>
+      </YStack>
+    </Theme>
   );
   const renderAboutsServiceCards = () => (
     <Stack

@@ -3,14 +3,14 @@ import { useAuth } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import React, { useMemo } from 'react';
 
-import { Bell, Home, LogOut, MessageCircle } from '@tamagui/lucide-icons';
+import { IconProps } from '@tamagui/helpers-icon';
+import { LogOut } from '@tamagui/lucide-icons';
 import { useThemeSetting } from '@tamagui/next-theme';
 import { Settings, ZixLinkButton } from '@zix/ui/common';
 import { usePathname } from '@zix/utils';
 import { useRouter } from 'solito/router';
 import { Separator, View, YStack } from 'tamagui';
 import AccountSwitcher from '../account-switcher/account-switcher';
-import { IconProps } from '@tamagui/helpers-icon';
 
 export type SideBarProps = {
   //

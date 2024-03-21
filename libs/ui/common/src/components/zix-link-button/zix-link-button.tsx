@@ -26,35 +26,28 @@ const CustomButton = styled(Button, {
   variants: {
     headerMenu: {
       true: {
-        unstyled: true,
+
         alignItems: 'center',
         paddingHorizontal: '$6',
         paddingVertical: '$4',
         borderRadius: '$3',
         fontSize: '$5',
         fontWeight: '500',
-        borderBottomColor: '$color1',
         flexDirection: 'row',
         hoverStyle: {
           cursor: 'pointer',
           backgroundColor: '$color3',
-          borderRadius: '$3',
-        },
-        $lg: {
-          paddingVertical: '$2',
-          paddingHorizontal: '$5',
         },
       },
     },
     headerMenuActive: {
       true: {
-        backgroundColor: '$color5',
-        borderBottomWidth: 2,
+        backgroundColor: '$color9',
       },
     },
     menuItem: {
       true: {
-        unstyled: true,
+
         color: '$color1',
         fontSize: '$5',
         flexDirection: 'row',
@@ -73,7 +66,6 @@ const CustomButton = styled(Button, {
     },
     linkItem: {
       true: {
-        unstyled: true,
         fontSize: '$5',
         paddingHorizontal: '$4',
         flexDirection: 'row',
@@ -120,6 +112,8 @@ export const ZixLinkButton = forwardRef(function ZixLinkButtonFunc(
   if (props.onPress) {
     return (
       <CustomButton
+        unstyled
+        theme='accent'
         ref={ref as TamaguiComponent}
         {...props}
         {...(display
@@ -132,6 +126,8 @@ export const ZixLinkButton = forwardRef(function ZixLinkButtonFunc(
   return (
     <Link href={href} {...(href?.includes('http') ? { target: '_blank' } : {})}>
       <CustomButton
+        unstyled
+        theme='accent'
         ref={ref as TamaguiComponent}
         {...props}
         {...(display

@@ -122,7 +122,7 @@ export function TopHeader() {
       $sm={{ display: 'none' }}
       alignItems="center"
       justifyContent="space-around"
-      backgroundColor="$gray3"
+      backgroundColor="$color2"
       flex={1}
       height={60}
     >
