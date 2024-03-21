@@ -68,7 +68,6 @@ export function NotificationScreen(props: NotificationScreenProps) {
       <AppHeader
         showBackButton
         title="Notifications"
-        headerBackgroundColor="transparent"
         showSearchBar
         searchProps={{
           value: search,

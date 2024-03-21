@@ -9,7 +9,7 @@ export default function Screen() {
       <AppHeader
         showBackButton
         title="مراجعة البيانات"
-        headerBackgroundColor="transparent"
+
       />
       <AddItemsShipmentScreen />
     </>

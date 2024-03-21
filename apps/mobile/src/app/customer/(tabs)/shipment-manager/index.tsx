@@ -8,7 +8,7 @@ export default function Screen() {
     <>
       <AppHeader
         title="تفاصيل الشحنة"
-        headerBackgroundColor="transparent"
+
       />
       <CreateShipmentScreen shipment={{}} />
     </>

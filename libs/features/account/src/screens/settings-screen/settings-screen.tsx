@@ -27,7 +27,7 @@ export const SettingsScreen = () => {
       <AppHeader
         showBackButton
         title={t('account:settings.title')}
-        headerBackgroundColor="transparent"
+
       />
 
       <YStack flex={1} gap="$2" justifyContent="space-between">
