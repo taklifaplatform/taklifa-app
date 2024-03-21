@@ -69,10 +69,10 @@ const nextConfig = {
 
 const tamaguiPlugin = withTamagui({
   platform: 'web',
-  // themeBuilder: {
-  //   input: '../../libs/theme/src/lib/sawaeed-theme/themes/theme.ts',
-  //   output: '../../libs/theme/src/lib/sawaeed-theme/themes.ts',
-  // },
+  themeBuilder: {
+    input: '../../libs/theme/src/lib/advanced-theme/theme-builder.ts',
+    output: '../../libs/theme/src/lib/advanced-theme/theme.ts',
+  },
 
   config: './tamagui.config.ts',
   components: ['tamagui'],

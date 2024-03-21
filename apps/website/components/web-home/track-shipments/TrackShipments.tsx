@@ -102,6 +102,7 @@ export function TrackShipments() {
         />
 
         <Button
+          theme='accent'
           size="$5"
           onPress={() => router.push('/')}
           iconAfter={<CustomIcon name="large_arrow_right" size={'$1'} />}
