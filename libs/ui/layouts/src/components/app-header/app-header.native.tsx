@@ -26,7 +26,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   headerRight,
   headerTitle,
   title,
-  headerBackgroundColor = '$color5',
+  headerBackgroundColor = '$color9',
 }) => {
   const { user, isLoggedIn } = useAuth();
   const router = useRouter();
@@ -40,7 +40,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   }, [isLoggedIn, router, user]);
 
   const renderSearchBar = () => showSearchBar && (
-    <View paddingHorizontal="$4" paddingVertical='$2'>
+    <View theme='light' paddingHorizontal="$4" paddingVertical='$2'>
       <ZixInput
         height="$4"
         leftIcon={() => <Search size="$1.5" />}
@@ -83,7 +83,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
     );
 
   return (
-    <YStack backgroundColor={headerBackgroundColor} paddingBottom="$2">
+    <YStack theme='accent' backgroundColor={headerBackgroundColor} paddingBottom="$2">
       <SafeAreaView edges={['top', 'left', 'right']}>
         <XStack
           padding="$4"

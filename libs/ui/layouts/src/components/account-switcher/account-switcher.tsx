@@ -12,7 +12,7 @@ import { CustomIcon } from '@zix/ui/icons';
 import { useAuth } from '@zix/services/auth';
 import { useCallback, useMemo, useState } from 'react';
 import { useRouter } from 'solito/router';
-import { Avatar, Button, Dialog, H4, ListItem, Text, View, XStack, YGroup, YStack, isWeb } from 'tamagui';
+import { Avatar, Button, Dialog, H4, ListItem, Text, Theme, View, XStack, YGroup, YStack, isWeb } from 'tamagui';
 
 
 export const AccountSwitcher: React.FC = () => {
@@ -82,107 +82,117 @@ export const AccountSwitcher: React.FC = () => {
   }, [roleNames, router])
 
   return (
-    <Dialog open={sheetOpen} onOpenChange={setSheetOpen}>
-      <Dialog.Trigger >
-        <XStack alignItems="center" gap="$2" onPress={() => setSheetOpen(true)}>
-          {
-            isWeb && (
-              <UserAvatar user={user} size='$4' />
-            )
-          }
-          <YStack>
-            <Text fontWeight="bold" fontSize={15} numberOfLines={1}>
-              {user?.name}
-            </Text>
+    <Theme name='light'>
+      <Dialog open={sheetOpen} onOpenChange={setSheetOpen}>
+        <Dialog.Trigger >
+          <XStack alignItems="center" gap="$2" onPress={() => setSheetOpen(true)}>
             {
               isWeb && (
-                <Text>
-                  {user?.active_role?.name}
-                </Text>
+                <UserAvatar user={user} size='$4' />
               )
             }
-          </YStack>
-          {
-            isWeb && (
-              <View width='$2' />
-            )
-          }
-          <ChevronDown size="$1" />
-        </XStack>
-      </Dialog.Trigger>
-      <Dialog.Portal>
-        <Dialog.Overlay />
-        <Dialog.Content backgroundColor='$color1' padding='$2' width={500}>
-          <YGroup flex={1} backgroundColor='$color1' width='100%' >
-            <XStack alignItems='center' justifyContent='space-between'>
-              <H4 paddingHorizontal="$4">Switch Account</H4>
-              <Button
-                unstyled
-                padding='$4'
-                icon={X} scaleIcon={1.3} backgroundColor='$color1' onPress={() => setSheetOpen(false)} />
-            </XStack>
-            {userRoles?.map((role) => (
-              <YGroup.Item key={role.id}>
-                <ListItem
-                  disabled={user?.active_role?.name === role.name}
-                  onPress={() => changeActiveRole({ name: role.name })}
-                  borderBottomColor='$gray5'
-                  borderBottomWidth={1}
-                  icon={<UserAvatar user={user} size='$4' />}
-                  iconAfter={<CustomIcon name='radio_button_checked' color={user?.active_role?.name === role.name ? '$color5' : '$gray9'} />}
-                  scaleIcon={1.3}
-                  title={user.name}
-                  subTitle={role.name}
-                />
-              </YGroup.Item>
-            ))}
+            <YStack>
+              <Text fontWeight="bold" fontSize={15} numberOfLines={1}>
+                {user?.name}
+              </Text>
+              {
+                isWeb && (
+                  <Text>
+                    {user?.active_role?.name}
+                  </Text>
+                )
+              }
+            </YStack>
+            {
+              isWeb && (
+                <View width='$2' />
+              )
+            }
+            <ChevronDown size="$1" />
+          </XStack>
+        </Dialog.Trigger>
+        <Dialog.Portal>
+          <Dialog.Overlay />
+          <Dialog.Content backgroundColor='$color1' padding='$2' width={500}>
+            <YGroup flex={1} backgroundColor='$color1' width='100%' >
+              <XStack alignItems='center' justifyContent='space-between'>
+                <H4 paddingHorizontal="$4">Switch Account</H4>
+                <Button
+                  unstyled
+                  padding='$4'
+                  icon={X} scaleIcon={1.3} backgroundColor='$color1' onPress={() => setSheetOpen(false)} />
+              </XStack>
+              {userRoles?.map((role) => (
+                <YGroup.Item key={role.id}>
+                  <ListItem
+                    disabled={user?.active_role?.name === role.name}
+                    onPress={() => changeActiveRole({ name: role.name })}
+                    borderBottomColor='$gray5'
+                    borderBottomWidth={1}
+                    icon={<UserAvatar user={user} size='$4' />}
+                    iconAfter={(
+                      <Theme name='accent'>
+                        <CustomIcon name='radio_button_checked' color={user?.active_role?.name === role.name ? '$color9' : '$color3'} />
+                      </Theme>
+                    )}
+                    scaleIcon={1.3}
+                    title={user.name}
+                    subTitle={role.name}
+                  />
+                </YGroup.Item>
+              ))}
 
-            {user?.companies?.map((company) => (
-              <YGroup.Item key={company.name}>
+              {user?.companies?.map((company) => (
+                <YGroup.Item key={company.name}>
+                  <ListItem
+                    onPress={() => company.id && changeActiveCompany(company.id)}
+                    borderBottomColor='$gray5'
+                    borderBottomWidth={1}
+                    icon={<MediaAvatar media={company.logo} size='$4' />}
+                    iconAfter={(
+                      <Theme name='accent'>
+                        <CustomIcon name='radio_button_checked' color={user?.active_company?.id === company.id ? '$color9' : '$color3'} />
+                      </Theme>
+                    )}
+                    scaleIcon={1.3}
+                    title={company.name}
+                    subTitle='Company Account'
+                  />
+                </YGroup.Item>
+              ))}
+              <YGroup.Item >
                 <ListItem
-                  onPress={() => company.id && changeActiveCompany(company.id)}
-                  borderBottomColor='$gray5'
-                  borderBottomWidth={1}
-                  icon={<MediaAvatar media={company.logo} size='$4' />}
-                  iconAfter={<CustomIcon name='radio_button_checked' color={user?.active_company?.id === company.id ? '$color5' : '$gray9'} />}
+                  onPress={() => onAddAccount()}
+                  icon={(props) => (
+                    <Avatar
+                      size="$4"
+                      circular
+                      backgroundColor="$gray5"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <Plus size="$2" />
+                    </Avatar>
+                  )}
+                  marginTop='$6'
                   scaleIcon={1.3}
-                  title={company.name}
-                  subTitle='Company Account'
+                  title="Add Account"
+                  subTitle="Add new company or account"
                 />
               </YGroup.Item>
-            ))}
-            <YGroup.Item >
-              <ListItem
-                onPress={() => onAddAccount()}
-                icon={(props) => (
-                  <Avatar
-                    size="$4"
-                    circular
-                    backgroundColor="$gray5"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Plus size="$2" />
-                  </Avatar>
-                )}
-                marginTop='$6'
-                scaleIcon={1.3}
-                title="Add Account"
-                subTitle="Add new company or account"
-              />
-            </YGroup.Item>
-          </YGroup>
-        </Dialog.Content>
-      </Dialog.Portal>
-      <Dialog.Adapt platform='touch'>
-        <Dialog.Sheet native modal snapPoints={snapPoints}>
-          <Dialog.Sheet.Frame>
-            <Dialog.Adapt.Contents />
-          </Dialog.Sheet.Frame>
-          <Dialog.Sheet.Overlay />
-        </Dialog.Sheet>
-      </Dialog.Adapt>
-    </Dialog>
+            </YGroup>
+          </Dialog.Content>
+        </Dialog.Portal>
+        <Dialog.Adapt platform='touch'>
+          <Dialog.Sheet native modal snapPoints={snapPoints}>
+            <Dialog.Sheet.Frame>
+              <Dialog.Adapt.Contents />
+            </Dialog.Sheet.Frame>
+            <Dialog.Sheet.Overlay />
+          </Dialog.Sheet>
+        </Dialog.Adapt>
+      </Dialog>
+    </Theme>
   );
 };
 
