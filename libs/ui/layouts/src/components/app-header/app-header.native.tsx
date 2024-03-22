@@ -28,16 +28,16 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   title,
   headerBackgroundColor = '$color9',
 }) => {
-  const { user, isLoggedIn } = useAuth();
+  const { user, isLoggedIn, getUrlPrefix } = useAuth();
   const router = useRouter();
 
   const onAvatarPress = useCallback(() => {
     if (isLoggedIn) {
-      router.push(`/users/${user?.id}`);
+      router.push(`${getUrlPrefix}/users/${user?.id}`);
     } else {
       router.push('/auth/login');
     }
-  }, [isLoggedIn, router, user]);
+  }, [isLoggedIn, router, user, getUrlPrefix]);
 
   const renderSearchBar = () => showSearchBar && (
     <View theme='light' paddingHorizontal="$4" paddingVertical='$2'>
@@ -77,7 +77,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
           unstyled
           size="$2"
           icon={<Bell size="$1" fill="#000" />}
-          onPress={() => router.push('/notifications')}
+          onPress={() => router.push(`${getUrlPrefix}/notifications`)}
         />
       </XStack>
     );

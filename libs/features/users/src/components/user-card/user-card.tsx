@@ -23,7 +23,7 @@ export const UserCard: React.FC<UserCardProps> = ({
   }, [user?.companies]);
 
   function onPress() {
-    router.push(`/users/${user.id}`);
+    router.push(`/app/users/${user.id}`);
   }
 
   return (

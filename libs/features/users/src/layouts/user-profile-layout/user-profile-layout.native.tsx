@@ -16,7 +16,7 @@ export const UserProfileLayout: React.FC<UserProfileLayoutProps> = ({
   children,
 }) => {
   const router = useRouter();
-  const { user: authUser } = useAuth();
+  const { user: authUser, getUrlPrefix } = useAuth();
 
   const renderCurrentAuthUserHeader = () =>
     user?.id === authUser?.id && (
@@ -29,7 +29,7 @@ export const UserProfileLayout: React.FC<UserProfileLayoutProps> = ({
               borderRadius: 4,
               padding: 5,
             }}
-            onPress={() => router.push('/account/settings')}
+            onPress={() => router.push(`${getUrlPrefix}/account/settings`)}
           >
             <CustomIcon name="more" color="black" size="$3" />
           </TouchableOpacity>

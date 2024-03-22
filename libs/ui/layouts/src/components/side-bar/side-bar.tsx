@@ -26,7 +26,7 @@ type MenuItemType = {
 export const SideBar: React.FC<SideBarProps> = () => {
   const router = useRouter()
   const { activeLang } = useMultiLang();
-  const { activeRole, currentUrlPrefix, logout } = useAuth()
+  const { activeRole, getUrlPrefix, logout } = useAuth()
   const { toggle: toggleTheme, current } = useThemeSetting()
   const pathname = usePathname()
 
@@ -37,18 +37,18 @@ export const SideBar: React.FC<SideBarProps> = () => {
         {
           title: 'Home',
           icon: (props: IconProps) => <CustomIcon name="home" {...props} />,
-          href: currentUrlPrefix
+          href: getUrlPrefix
         },
 
         {
           title: 'Orders',
           icon: (props: IconProps) => <CustomIcon name="orders" {...props} />,
-          href: `${currentUrlPrefix}/shipments`
+          href: `${getUrlPrefix}/shipments`
         },
         {
           title: 'Jobs',
           icon: (props: IconProps) => <CustomIcon name="job" {...props} />,
-          href: `${currentUrlPrefix}/jobs`
+          href: `${getUrlPrefix}/jobs`
         }
       ],
       [
@@ -56,12 +56,12 @@ export const SideBar: React.FC<SideBarProps> = () => {
           title: 'Notifications',
           // icon: Bell,
           icon: (props: IconProps) => <CustomIcon name="notifications" {...props} />,
-          href: `${currentUrlPrefix}/notifications`
+          href: `${getUrlPrefix}/notifications`
         },
         {
           title: 'Chat',
           icon: (props: IconProps) => <CustomIcon name="chat" {...props} />,
-          href: `${currentUrlPrefix}/chat`
+          href: `${getUrlPrefix}/chat`
         },
       ],
       [
@@ -80,7 +80,7 @@ export const SideBar: React.FC<SideBarProps> = () => {
       ],
     ]
 
-  }, [activeRole, currentUrlPrefix])
+  }, [activeRole, getUrlPrefix])
 
   const renderMenuItem = (item: MenuItemType, index) => (
     <Settings.Item

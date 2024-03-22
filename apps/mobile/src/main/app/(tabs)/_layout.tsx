@@ -1,5 +1,6 @@
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import { Plus } from '@tamagui/lucide-icons';
+import { COMPANY_ROLES, USER_ROLES, useAuth } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import { Tabs } from 'expo-router';
 import { t } from 'i18next';
@@ -11,10 +12,11 @@ import { Circle, Theme, YStack } from 'tamagui';
  * make tab title bolder and back color even if active
  */
 export default function Layout() {
+  const { activeRole } = useAuth()
   return (
     <Tabs screenOptions={{ headerShown: false }}>
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
           title: t('navigation:customer-dashboard.home'),
           tabBarIcon: ({ size, color }) => (
@@ -41,15 +43,28 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
-        name="shipment-manager"
-        options={{
+        name="create-shipment"
+        options={activeRole === USER_ROLES.customer ? {
           title: '',
           tabBarIcon: PlusButton,
+        } : {
+          href: null
         }}
       />
       <Tabs.Screen
-        name="store"
-        options={{
+        name="org"
+        options={COMPANY_ROLES.includes(activeRole) ? {
+          title: t('navigation:company-dashboard.data'),
+          tabBarIcon: ({ size, color }) => (
+            <CustomIcon name="apps" color={color} size={size} />
+          ),
+        } : {
+          href: null
+        }}
+      />
+      <Tabs.Screen
+        name="stores"
+        options={activeRole === USER_ROLES.customer ? {
           title: t('navigation:customer-dashboard.store'),
           tabBarIcon: ({ size, color }) => (
             <CustomIcon
@@ -58,6 +73,23 @@ export default function Layout() {
               size={size}
             />
           ),
+        } : {
+          href: null
+        }}
+      />
+      <Tabs.Screen
+        name="jobs"
+        options={activeRole !== USER_ROLES.customer ? {
+          title: t('navigation:solo-driver-dashboard.jobs'),
+          tabBarIcon: ({ size, color }) => (
+            <CustomIcon
+              name="job"
+              color={color}
+              size={size}
+            />
+          ),
+        } : {
+          href: null
         }}
       />
       <Tabs.Screen

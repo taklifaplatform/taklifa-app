@@ -1,7 +1,0 @@
-import { ShipmentDetailScreen } from '@zix/features/shipments';
-
-export default function Screen() {
-  return (
-    <ShipmentDetailScreen variant='shipments' />
-  );
-}

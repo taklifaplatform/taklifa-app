@@ -95,13 +95,17 @@ export const AccountSwitcher: React.FC = () => {
               <Text fontWeight="bold" fontSize={15} numberOfLines={1}>
                 {user?.name}
               </Text>
-              {
+              <Text>
+                {user?.active_role?.name}
+              </Text>
+
+              {/* {
                 isWeb && (
                   <Text>
                     {user?.active_role?.name}
                   </Text>
                 )
-              }
+              } */}
             </YStack>
             {
               isWeb && (

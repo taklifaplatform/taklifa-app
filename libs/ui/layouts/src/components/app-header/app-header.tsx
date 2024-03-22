@@ -34,7 +34,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
 
   const onAvatarPress = useCallback(() => {
     if (isLoggedIn) {
-      router.push(`/users/${user?.id}`);
+      router.push(`/app/users/${user?.id}`);
     } else {
       router.push('/auth/login');
     }

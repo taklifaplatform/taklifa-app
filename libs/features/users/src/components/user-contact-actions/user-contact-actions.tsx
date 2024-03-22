@@ -17,7 +17,7 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
   actionButtonSize = '$2.5',
   ...props
 }) => {
-  const { user: authUser, currentUrlPrefix } = useAuth()
+  const { user: authUser, getUrlPrefix } = useAuth()
   const router = useRouter()
 
   const sharedButtonStyle = {
@@ -42,7 +42,7 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
     },
     onSuccess(data) {
       if (Platform.OS === 'web') {
-        router.push(`${currentUrlPrefix}/chat?channel=${data.data?.id}`)
+        router.push(`${getUrlPrefix}/chat?channel=${data.data?.id}`)
         return
       }
       router.push(`/chat/channels/${data.data?.id}`)

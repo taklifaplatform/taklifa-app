@@ -8,7 +8,7 @@ import React from 'react';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-const context = require.context('./app');
+const context = require.context('./main');
 
 const defaultLang = bootMultiLang()
 OpenAPI.BASE = `${process.env.NEXT_PUBLIC_API_URL}`;

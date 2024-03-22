@@ -6,10 +6,12 @@ import { useRouter } from 'solito/router';
 import { ChannelAvatar, useAttachmentPickerContext, useChannelContext, useChannelPreviewDisplayName } from 'stream-chat-expo';
 import { H4, Text, YStack } from 'tamagui';
 import { useChannelMembersStatus } from '../../hooks/useChannelMembersStatus';
+import { useAuth } from "@zix/services/auth";
 
 
 export const ChannelHeader: React.FC<AppHeaderProps> = (props) => {
   const router = useRouter();
+  const { getUrlPrefix } = useAuth();
   const { channel } = useChannelContext();
   const displayName = useChannelPreviewDisplayName(channel, 30);
   const { closePicker } = useAttachmentPickerContext();
@@ -31,7 +33,7 @@ export const ChannelHeader: React.FC<AppHeaderProps> = (props) => {
       headerRight={() => (
         <TouchableOpacity onPress={() => {
           closePicker();
-          router.push(`/chat/channels/${channel.id}/details`);
+          router.push(`${getUrlPrefix}/chat/channels/${channel.id}/details`);
         }}>
           <ChannelAvatar channel={channel} />
         </TouchableOpacity>

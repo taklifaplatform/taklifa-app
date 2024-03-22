@@ -18,7 +18,7 @@ export type ShipmentsListScreenProps = {
 export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
   variant = 'shipments',
 }) => {
-  const { activeRole, getRoleUrlPrefix } = useAuth();
+  const { activeRole, getUrlPrefix } = useAuth();
 
   const screenTitle = useMemo(() => {
     if (variant === 'jobs') {
@@ -145,7 +145,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
             <Stack $gtSm={{ flex: 1, flexBasis: 1 }}>
               <ShipmentCard
                 key={index}
-                urlPrefix={`${getRoleUrlPrefix(activeRole)}/${variant}`}
+                urlPrefix={`${getUrlPrefix}/${variant}`}
                 shipment={item}
                 variant={variant}
                 marginHorizontal="$2"
