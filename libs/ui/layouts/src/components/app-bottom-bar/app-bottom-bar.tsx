@@ -21,7 +21,7 @@ export const AppBottomBar: React.FC<AppBottomBarProps> = (props) => {
   const activePath = usePathname();
   return (
     <XStack
-
+      elevation='$4'
       backgroundColor='$color1'
       borderTopColor='$color5'
       borderTopWidth={1}

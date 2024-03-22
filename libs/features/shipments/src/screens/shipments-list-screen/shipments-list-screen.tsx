@@ -8,7 +8,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useAuth } from '@zix/services/auth';
 import { FlatList } from 'react-native';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
-import { Circle, Stack, Text, View, YStack } from 'tamagui';
+import { Circle, Stack, Text, View, YStack, useStyle } from 'tamagui';
 import ShipmentCard from '../../components/shipment-card/shipment-card';
 
 export type ShipmentsListScreenProps = {
@@ -56,57 +56,38 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
   const renderShipment = (item: ShipmentFilterTransformer, index: number) => (
     <ZixButton
       key={index}
-      theme='accent'
+      theme={status === item.status ? 'accent' : undefined}
       backgroundColor={status === item.status ? '$color9' : '$color2'}
-      borderRadius={status === item.status ? '$4' : '$0'}
-      height={50}
+      borderRadius='0'
+      height='$4'
+      textProps={{
+        textTransform: 'capitalize',
+      }}
       onPress={() => {
         setStatus(item.status);
         setActiveFilterIndex(index);
       }}
-      color={status === item.status ? '$color0' : '$color9'}
-      alignItems="center"
-      iconAfter={() =>
-        item.count > 9 ? (
-          <View
-            backgroundColor={status === item.status ? 'black' : '$gray11'}
-            padding="$2"
-            borderRadius={'100%'}
+      iconAfter={() => (
+        <Circle
+          size='$2'
+          backgroundColor={status === item.status ? '$color12' : '$color10'}
+        >
+          <Text
+            color='white'
+            fontSize="$1"
           >
-            <Text
-              color={status === item.status ? '$color5' : '$color1'}
-              fontSize="$1"
-              fontWeight={'800'}
-            >
-              {item.count}
-            </Text>
-          </View>
-        ) : (
-          <Circle
-            size={28}
-            backgroundColor={status === item.status ? 'black' : '$gray11'}
-            elevation="$4"
-          >
-            <Text
-              color={status === item.status ? '$color5' : '$color1'}
-              fontSize="$1"
-              fontWeight={'800'}
-            >
-              {item.count}
-            </Text>
-          </Circle>
-        )
-      }
+            {item.count}
+          </Text>
+        </Circle>
+      )}
     >
-      <Text fontSize="$2" fontWeight={'bold'}>
-        {t(item.status)}
-      </Text>
+      {t(item.status as any)}
     </ZixButton>
   );
 
   const renderShipmentFilters = () =>
     variant === 'shipments' && (
-      <View paddingHorizontal="$4" $gtMd={{ display: 'none' }}>
+      <View padding="$4" $gtMd={{ display: 'none' }}>
         <Carousel
           ref={carouselRef}
           loop={false}
@@ -132,25 +113,24 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
           onChangeText: setSearch,
         }}
       />
-      <YStack flex={1} gap="$4" paddingVertical="$4">
+      <YStack flex={1}>
         {renderShipmentFilters()}
         <FlatList
           refreshing={isLoading}
           onRefresh={refetch}
-          style={{ flex: 1 }}
-          onEndReachedThreshold={0.5}
+          style={useStyle({
+            flex: '1',
+            padding: '$2',
+          })}
           data={data?.data}
           numColumns={2}
           renderItem={({ item, index }) => (
-            <Stack $gtSm={{ flex: 1, flexBasis: 1 }}>
+            <Stack $gtMd={{ flex: 1, flexBasis: 1 }} padding='$2'>
               <ShipmentCard
                 key={index}
                 urlPrefix={`${getUrlPrefix}/${variant}`}
                 shipment={item}
                 variant={variant}
-                marginHorizontal="$2"
-                marginBottom="$2"
-                isDetail={false}
                 flex={1}
               />
             </Stack>
