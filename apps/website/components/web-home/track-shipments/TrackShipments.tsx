@@ -28,10 +28,10 @@ export function TrackShipments() {
         >
           <CustomIcon
             name="search_track"
-            color={selectedShipment === 1 ? null : '$gray9'}
+            color={selectedShipment === 1 ? null : '$color9'}
           />
           <Text
-            color={selectedShipment === 1 ? null : '$gray9'}
+            color={selectedShipment === 1 ? null : '$color9'}
             fontSize={20}
             $sm={{
               fontSize: 12,
@@ -51,10 +51,10 @@ export function TrackShipments() {
         >
           <CustomIcon
             name="find_track"
-            color={selectedShipment === 0 ? null : '$gray9'}
+            color={selectedShipment === 0 ? null : '$color9'}
           />
           <Text
-            color={selectedShipment === 0 ? null : '$gray9'}
+            color={selectedShipment === 0 ? null : '$color9'}
             fontSize={20}
             $sm={{
               fontSize: 12,
@@ -114,8 +114,9 @@ export function TrackShipments() {
         </Button>
 
         <Button
+          theme='accent'
           variant="outlined"
-          borderColor="$gray9"
+          borderColor="$color9"
           size="$5"
           onPress={() => router.push('/')}
           iconAfter={<CustomIcon name="large_arrow_right" size={'$1'} />}

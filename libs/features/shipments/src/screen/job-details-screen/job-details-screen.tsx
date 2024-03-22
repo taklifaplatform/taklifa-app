@@ -124,7 +124,7 @@ export function JobDetailsScreen() {
             <Text
               fontSize={12}
               fontWeight={'600'}
-              color={'$gray9'}
+              color={'$color9'}
               $sm={{
                 fontSize: 12,
                 fontWeight: '600',
@@ -144,7 +144,7 @@ export function JobDetailsScreen() {
             <Text
               fontSize={12}
               fontWeight={'600'}
-              color={'$gray9'}
+              color={'$color9'}
               $sm={{
                 fontSize: 9,
                 fontWeight: '600',
@@ -179,7 +179,7 @@ export function JobDetailsScreen() {
           <Text
             fontSize={15}
             fontWeight={'400'}
-            color={'$gray9'}
+            color={'$color9'}
             $sm={{
               fontSize: 13,
               fontWeight: '400',
@@ -198,12 +198,12 @@ export function JobDetailsScreen() {
             variant="details"
             options={[
               {
-                icons: <Package size="$1" color={'$gray9'} />,
+                icons: <Package size="$1" color={'$color9'} />,
                 name: t('job:number-of-packages'),
                 value: `${job?.items?.length}`,
               },
               {
-                icons: <PackageOpen size="$1" color={'$gray9'} />,
+                icons: <PackageOpen size="$1" color={'$color9'} />,
                 name: t('job:shipment-type'),
                 value: `${job?.items_type}`,
               },
@@ -215,7 +215,7 @@ export function JobDetailsScreen() {
                 value: `${size}`,
               },
               {
-                icons: <Weight size="$1" color={'$gray9'} />,
+                icons: <Weight size="$1" color={'$color9'} />,
                 name: t('job:package-weight'),
                 value: `${weight}`,
               },
@@ -229,37 +229,37 @@ export function JobDetailsScreen() {
             variant="details"
             options={[
               {
-                icons: <Inbox size="$1" color={'$gray9'} />,
+                icons: <Inbox size="$1" color={'$color9'} />,
                 name: t('job:deliver_duration'),
                 value: `${deliveryTime.humanize()}`,
               },
               {
-                icons: <Route size="$1" color={'$gray9'} rotate="90deg" />,
+                icons: <Route size="$1" color={'$color9'} rotate="90deg" />,
                 name: t('job:estimated-distance'),
                 value: `${distance} km`,
               },
               {
-                icons: <CustomIcon name="chronic" size="$1" color={'$gray9'} />,
+                icons: <CustomIcon name="chronic" size="$1" color={'$color9'} />,
                 name: t('job:estimated-time'),
                 value: `${duration.asMinutes()}`,
               },
               {
-                icons: <CustomIcon name="time" size="$1" color={'$gray9'} />,
+                icons: <CustomIcon name="time" size="$1" color={'$color9'} />,
                 name: t('job:deliver_time'),
                 value: `${job?.pick_time}`,
               },
               {
-                icons: <CalendarDays size="$1" color={'$gray9'} />,
+                icons: <CalendarDays size="$1" color={'$color9'} />,
                 name: t('job:deliver-date'),
                 value: `${job?.pick_date}`,
               },
               {
-                icons: <CustomIcon name="time" size="$1" color={'$gray9'} />,
+                icons: <CustomIcon name="time" size="$1" color={'$color9'} />,
                 name: t('job:delivery-time'),
                 value: `${job?.deliver_time}`,
               },
               {
-                icons: <CalendarDays size="$1" color={'$gray9'} />,
+                icons: <CalendarDays size="$1" color={'$color9'} />,
                 name: t('job:delivery-date'),
                 value: `${job?.deliver_date}`,
               },

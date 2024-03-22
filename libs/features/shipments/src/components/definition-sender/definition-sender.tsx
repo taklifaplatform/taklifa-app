@@ -32,8 +32,8 @@ export const DefinitionSender: React.FC<DefinitionSenderProps> = ({
               {shipment?.user?.name}
             </Text>
             <XStack gap="$2" alignItems="center">
-              <Phone size="$1" color={'$gray9'} />
-              <Text fontSize={15} fontWeight={'600'} color={'$gray9'}>
+              <Phone size="$1" color={'$color9'} />
+              <Text fontSize={15} fontWeight={'600'} color={'$color9'}>
                 {shipment?.user?.phone_number}
               </Text>
             </XStack>

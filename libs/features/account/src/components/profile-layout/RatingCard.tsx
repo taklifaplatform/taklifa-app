@@ -13,13 +13,13 @@ export function RatingCard({ item }) {
           />
           <YStack space="$2">
             <Text fontWeight="bold">{item.user}</Text>
-            <Text color={'$gray9'} fontWeight="500">
+            <Text color={'$color9'} fontWeight="500">
               {item.date}
             </Text>
           </YStack>
         </XStack>
         <XStack paddingVertical="$4" alignItems="center">
-          <Text color={'$gray9'} paddingRight="$2">
+          <Text color={'$color9'} paddingRight="$2">
             {item.rating}
           </Text>
           <CustomIcon name="star" size={15} color={'#FECA16'} />
