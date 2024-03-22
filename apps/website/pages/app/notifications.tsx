@@ -1,4 +1,4 @@
-import { DashboardLayout } from '@zix/ui/layouts';
+import { AppLayout } from '@zix/ui/layouts';
 import { NextPageWithLayout } from '../_app';
 import { NotificationScreen } from '@zix/features/notifications';
 
@@ -8,7 +8,7 @@ export const Page: NextPageWithLayout = () => {
   );
 };
 
-Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>
+Page.getLayout = (page) => <AppLayout>{page}</AppLayout>
 
 // export const getServerSideProps = userProtectedGetSSP();
 

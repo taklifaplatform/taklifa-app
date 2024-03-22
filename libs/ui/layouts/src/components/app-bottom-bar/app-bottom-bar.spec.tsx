@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import DashboardLayout from './dashboard-layout';
+import AppBottomBar from './app-bottom-bar';
 
-describe('DashboardLayout', () => {
+describe('AppBottomBar', () => {
   it('should render successfully', () => {
-    const { root } = render(< DashboardLayout />);
+    const { root } = render(< AppBottomBar />);
     expect(root).toBeTruthy();
   });
 });

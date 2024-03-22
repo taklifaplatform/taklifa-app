@@ -155,7 +155,7 @@ export function useAuth(): AuthHelpers {
       //
     }
 
-    router.replace('/customer');
+    router.replace('/app');
     router.push('/auth/login');
   }
 

@@ -29,7 +29,7 @@ export const UserCard: React.FC<UserCardProps> = ({
   return (
     <YStack
       onPress={onPress}
-      backgroundColor='$color2'
+      backgroundColor='$color1'
       borderRadius='$5'
       paddingVertical={padding}
       gap="$4"

@@ -1,13 +1,13 @@
-import { Bell, Search } from '@tamagui/lucide-icons';
+import { Search } from '@tamagui/lucide-icons';
+import { useAuth } from '@zix/services/auth';
 import { UserAvatar } from '@zix/ui/common';
 import { ZixInput, ZixInputProps } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
-import { useAuth } from '@zix/services/auth';
 import { t } from 'i18next';
+import Head from 'next/head';
 import { useCallback } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'solito/router';
-import { Button, ColorTokens, H4, View, XStack, YStack } from 'tamagui';
+import { Button, ColorTokens, H4, View, XStack, YStack, isWeb } from 'tamagui';
 
 export type AppHeaderProps = {
   searchProps?: ZixInputProps
@@ -17,6 +17,7 @@ export type AppHeaderProps = {
   headerRight?: () => React.ReactNode;
   title?: string;
   headerBackgroundColor?: ColorTokens | 'transparent';
+  hideOnWeb?: boolean;
 };
 
 export const AppHeader: React.FC<AppHeaderProps> = ({
@@ -26,39 +27,37 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   headerRight,
   headerTitle,
   title,
-  headerBackgroundColor = '$color9',
+  hideOnWeb
 }) => {
-  const { user, isLoggedIn, getUrlPrefix } = useAuth();
+  const { user, isLoggedIn } = useAuth();
   const router = useRouter();
 
   const onAvatarPress = useCallback(() => {
     if (isLoggedIn) {
-      router.push(`${getUrlPrefix}/users/${user?.id}`);
+      router.push(`/app/users/${user?.id}`);
     } else {
       router.push('/auth/login');
     }
-  }, [isLoggedIn, router, user, getUrlPrefix]);
+  }, [isLoggedIn, router, user?.id]);
 
   const renderSearchBar = () => showSearchBar && (
-    <View theme='light' paddingHorizontal="$4" paddingVertical='$2'>
+    <View flex={1} paddingHorizontal="$4" paddingVertical='$2'>
       <ZixInput
         height="$4"
         leftIcon={() => <Search size="$1.5" />}
-        // rightIcon={() => <ScanBarcode size="$1.5" />}
         placeholder={'Search here'}
         {...searchProps}
       />
     </View>
   )
 
-  const renderUserAvatar = () =>
-    !showBackButton && (
-      <Button
-        unstyled
-        icon={<UserAvatar user={user} size="$2.5" />}
-        onPress={onAvatarPress}
-      />
-    );
+  const renderUserAvatar = () => (
+    <Button
+      unstyled
+      icon={<UserAvatar user={user} size="$2.5" />}
+      onPress={onAvatarPress}
+    />
+  );
 
   const renderBackButton = () =>
     showBackButton && (
@@ -70,32 +69,25 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
       />
     );
 
-  const renderNotificationsButton = () =>
-    !showBackButton && (
-      <XStack>
-        <Button
-          unstyled
-          size="$2"
-          icon={<Bell size="$1" fill="#000" />}
-          onPress={() => router.push(`${getUrlPrefix}/notifications`)}
-        />
-      </XStack>
-    );
+  if (hideOnWeb && isWeb) {
+    return null;
+  }
 
   return (
-    <YStack theme='accent' backgroundColor={headerBackgroundColor} paddingBottom="$2">
-      <SafeAreaView edges={['top', 'left', 'right']}>
+    <>
+      <Head>
+        <title>{title ?? ''} - {t('common:app_name')}</title>
+      </Head>
+      <YStack backgroundColor='$color2' paddingBottom="$2" position='sticky' top={0} zIndex={100} >
         <XStack
+          minHeight='$6'
           padding="$4"
           paddingVertical="$2"
           alignItems="center"
           justifyContent="space-between"
         >
           <XStack flex={0.25} justifyContent="flex-start">
-            {renderUserAvatar()}
             {renderBackButton()}
-          </XStack>
-          <XStack flex={0.5} justifyContent="space-around">
             {headerTitle ? (
               headerTitle()
             ) : (
@@ -104,14 +96,14 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
               </H4>
             )}
           </XStack>
+          {renderSearchBar()}
           <XStack flex={0.25} justifyContent="flex-end">
-            {headerRight ? headerRight() : renderNotificationsButton()}
+            {headerRight ? headerRight() : renderUserAvatar()}
           </XStack>
         </XStack>
+      </YStack>
+    </>
 
-        {renderSearchBar()}
-      </SafeAreaView>
-    </YStack>
   );
 };
 

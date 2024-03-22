@@ -1,5 +1,5 @@
 import { HomeScreen } from '@zix/features/customer-dashboard';
-import { DashboardLayout } from '@zix/ui/layouts';
+import { AppLayout } from '@zix/ui/layouts';
 import { NextPageWithLayout } from '../_app';
 
 export const Page: NextPageWithLayout = () => {
@@ -8,6 +8,6 @@ export const Page: NextPageWithLayout = () => {
   );
 };
 
-Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>
+Page.getLayout = (page) => <AppLayout>{page}</AppLayout>
 
 export default Page;

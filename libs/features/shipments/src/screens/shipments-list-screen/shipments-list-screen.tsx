@@ -106,7 +106,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
 
   const renderShipmentFilters = () =>
     variant === 'shipments' && (
-      <View paddingHorizontal="$4">
+      <View paddingHorizontal="$4" $gtMd={{ display: 'none' }}>
         <Carousel
           ref={carouselRef}
           loop={false}

@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import SideBar from './side-bar';
+import MainSideBar from './main-side-bar';
 
-describe('SideBar', () => {
+describe('MainSideBar', () => {
   it('should render successfully', () => {
-    const { root } = render(< SideBar />);
+    const { root } = render(< MainSideBar />);
     expect(root).toBeTruthy();
   });
 });

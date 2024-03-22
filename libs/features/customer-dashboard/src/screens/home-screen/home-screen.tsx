@@ -8,7 +8,7 @@ import { t } from 'i18next';
 import { useRef, useState } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import MapView from 'react-native-maps';
-import { Button, Stack, View, YStack, isWeb } from 'tamagui';
+import { Button, Stack, View, YStack } from 'tamagui';
 
 
 const initialCamera = {
@@ -59,7 +59,7 @@ export function HomeScreen() {
   //List
   const renderList = () =>
     !showMap && (
-      <View marginLeft='$-2'>
+      <View paddingHorizontal='$2'>
         <FlatList
           refreshing={driversQuery.isFetching}
           onRefresh={driversQuery.refetch}
