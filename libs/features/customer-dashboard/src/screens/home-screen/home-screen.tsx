@@ -8,7 +8,7 @@ import { t } from 'i18next';
 import { useRef, useState } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import MapView from 'react-native-maps';
-import { Button, Stack, View, YStack } from 'tamagui';
+import { Button, Stack, View, YStack, isWeb } from 'tamagui';
 
 
 const initialCamera = {
@@ -43,7 +43,7 @@ export function HomeScreen() {
 
   const renderMap = () =>
     showMap && (
-      <MapView provider='google' ref={mapRef} style={{ flex: 1 }} initialCamera={initialCamera}>
+      <MapView provider={isWeb ? 'google' : undefined} ref={mapRef} style={{ flex: 1 }} initialCamera={initialCamera}>
         {data?.data?.map((driver, index) => (
           <MapDriverMarker
             key={`marker-${index}`}
