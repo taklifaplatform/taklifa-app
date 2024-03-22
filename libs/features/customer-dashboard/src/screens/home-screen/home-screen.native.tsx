@@ -120,7 +120,7 @@ export function HomeScreen() {
 
   const renderMap = () =>
     showMap && (
-      <MapView provider='google' ref={mapRef} style={{ flex: 1 }} initialCamera={initialCamera}>
+      <MapView ref={mapRef} style={{ flex: 1 }} initialCamera={initialCamera}>
         {driversList.map((driver, index) => (
           <MapDriverMarker
             key={`marker-${index}`}
