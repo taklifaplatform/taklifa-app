@@ -5,6 +5,7 @@ export type IVariantOption = {
   icons: React.ReactNode;
   name: string;
   value: string;
+  theme?: string
 };
 
 export type VariantOptionType = 'details' | 'card' | 'location'
@@ -48,9 +49,9 @@ const VariantText = styled(Text, {
   variants: {
     details: {
       true: {
-        fontSize:15,
-        fontWeight:'600',
-        color:'$gray9',
+        fontSize: 15,
+        fontWeight: '600',
+        color: '$color9',
         $sm: {
           fontSize: 15,
           fontWeight: '400',
@@ -61,19 +62,19 @@ const VariantText = styled(Text, {
     },
     card: {
       true: {
-        fontSize:12,
-        fontWeight:'600',
-        color:'$gray9',
+        fontSize: 12,
+        fontWeight: '600',
+        color: '$color9',
         $sm: {
           fontWeight: '400',
         },
       },
     },
     location: {
-      true : {
-        fontSize:12,
-        fontWeight:'600',
-        color:'$gray9',
+      true: {
+        fontSize: 12,
+        fontWeight: '600',
+        color: '$color9',
         $sm: {
           fontSize: 10,
           fontWeight: '400',
@@ -87,8 +88,9 @@ const VariantValueText = styled(Text, {
   variants: {
     details: {
       true: {
-        fontSize:15,
-        fontWeight:'600',
+        fontSize: 15,
+        fontWeight: '600',
+        color: '$color9',
         $sm: {
           width: 220,
           textAlign: 'left',
@@ -100,14 +102,16 @@ const VariantValueText = styled(Text, {
     },
     card: {
       true: {
-        fontSize:12,
-        fontWeight:'600',
+        fontSize: 12,
+        fontWeight: '600',
+        color:'$color9',
       },
     },
     location: {
-      true : {
-        fontSize:12,
-        fontWeight:'600',
+      true: {
+        fontSize: 12,
+        fontWeight: '600',
+        color:'$color9',
         $sm: {
           fontSize: 10,
           fontWeight: '600',
@@ -118,11 +122,12 @@ const VariantValueText = styled(Text, {
 });
 
 export const VariantOption: React.FC<VariantOptionProps> = ({
-  option: { icons, name, value },
+  option: { icons, name, value, theme },
   variant,
 }) => {
   return (
     <VariantStack
+      theme={theme}
       flexDirection="row"
       alignItems="center"
       borderRadius={'$4'}
@@ -132,13 +137,13 @@ export const VariantOption: React.FC<VariantOptionProps> = ({
       {icons}
       <VariantText
         {...(variant ? { [variant]: true } : {})}
-        
+
       >
         {name}
       </VariantText>
       <VariantValueText
         {...(variant ? { [variant]: true } : {})}
-        
+
       >
         {value}
       </VariantValueText>

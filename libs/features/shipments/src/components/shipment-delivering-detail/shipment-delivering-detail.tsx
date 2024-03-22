@@ -79,8 +79,8 @@ export const ShipmentDeliveringDetail: React.FC<
         justifyContent="center"
         alignItems="center"
       >
-        <Route size={15} color={'$gray9'} rotate="90deg" />
-        <Text color={'$gray9'}>
+        <Route size={15} color={'$color9'} rotate="90deg" />
+        <Text color={'$color9'}>
           {distance.toFixed(2)} {t('km')}
         </Text>
       </Stack>
@@ -96,8 +96,8 @@ export const ShipmentDeliveringDetail: React.FC<
         justifyContent="center"
         alignItems="center"
       >
-        <CustomIcon name="time" size={15} color={'$gray9'} />
-        <Text color={'$gray9'}>{deliveryTime.humanize()}</Text>
+        <CustomIcon name="time" size={15} color={'$color9'} />
+        <Text color={'$color9'}>{deliveryTime.humanize()}</Text>
       </Stack>
     </XStack>
   );

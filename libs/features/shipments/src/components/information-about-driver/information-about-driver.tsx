@@ -40,8 +40,8 @@ export const InformationAboutDriver: React.FC<InformationAboutDriverProps> = ({
             {driver.name}
           </Text>
           <XStack gap="$2" alignItems="center">
-            <Phone size="$1" color={'$gray9'} />
-            <Text fontSize={15} fontWeight={'600'} color={'$gray9'}>
+            <Phone size="$1" color={'$color9'} />
+            <Text fontSize={15} fontWeight={'600'} color={'$color9'}>
               {driver.phone_number}
             </Text>
           </XStack>
@@ -67,26 +67,26 @@ export const InformationAboutDriver: React.FC<InformationAboutDriverProps> = ({
             variant="details"
             options={[
               {
-                icons: <SquareUserRound size="$1" color={'$gray9'} />,
+                icons: <SquareUserRound size="$1" color={'$color9'} />,
                 name: t('shipment:driver-name'),
                 value: `${driver.name}`,
               },
               {
                 icons: (
-                  <CustomIcon name="location" size="$1" color={'$gray9'} />
+                  <CustomIcon name="location" size="$1" color={'$color9'} />
                 ),
                 name: t('shipment:place'),
                 value: `${driver.location?.address}`,
               },
               {
                 icons: (
-                  <CustomIcon name="half-star" size="$1" color={'$gray9'} />
+                  <CustomIcon name="half-star" size="$1" color={'$color9'} />
                 ),
                 name: t('shipment:ratings'),
                 value: `${driver.rating_stats?.score}`,
               },
               {
-                icons: <CustomIcon name="company" size="$1" color={'$gray9'} />,
+                icons: <CustomIcon name="company" size="$1" color={'$color9'} />,
                 name: t('shipment:company'),
                 value: `${driver.companies?.[0]?.name}`,
               },
@@ -99,7 +99,7 @@ export const InformationAboutDriver: React.FC<InformationAboutDriverProps> = ({
             variant="details"
             options={[
               {
-                icons: <CustomIcon name="garage" size="$1" color={'$gray9'} />,
+                icons: <CustomIcon name="garage" size="$1" color={'$color9'} />,
                 name: t('shipment:truck-type'),
                 value: `${driver.vehicle?.information?.body_type}`,
               },
@@ -108,20 +108,20 @@ export const InformationAboutDriver: React.FC<InformationAboutDriverProps> = ({
                   <CustomIcon
                     name="local-shipping"
                     size="$1"
-                    color={'$gray9'}
+                    color={'$color9'}
                   />
                 ),
                 name: t('shipment:model'),
                 value: `${driver.vehicle?.vehicle_model_id?.name}`,
               },
               {
-                icons: <CustomIcon name="opacity" size="$1" color={'$gray9'} />,
+                icons: <CustomIcon name="opacity" size="$1" color={'$color9'} />,
                 name: t('shipment:color'),
                 value: `${driver.vehicle?.color}`,
               },
               {
                 icons: (
-                  <CustomIcon name="matricule" size="$1" color={'$gray9'} />
+                  <CustomIcon name="matricule" size="$1" color={'$color9'} />
                 ),
                 name: t('shipment:truck-plate'),
                 value: `${driver.vehicle?.vin_number}`,

@@ -108,7 +108,7 @@ export const ZixVariantOptionsWidget: React.FC<
       {...(variant ? { [variant]: true } : {})}
       >
         {options.map((option, index) => (
-          <VariantOption key={index} option={option} variant={optionVariant} />
+          <VariantOption theme={option.theme} key={index} option={option} variant={optionVariant} />
         ))}
       </ZixVariantOptionsWidgetStack>
     </YStack>

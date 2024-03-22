@@ -79,7 +79,7 @@ export const ShipmentDirection: React.FC<ShipmentDirectionProps> = ({
                 date={shipment.pick_date || ''}
                 phone_number={shipment.recipient_phone || ''}
                 userName={shipment.recipient_name || ''}
-                borderColor={status === 'cancelled' ? '$red9' : '$gray9'}
+                borderColor={status === 'cancelled' ? '$red9' : '$color9'}
                 backgroundColor={
                   status === 'cancelled'
                     ? '$red3'

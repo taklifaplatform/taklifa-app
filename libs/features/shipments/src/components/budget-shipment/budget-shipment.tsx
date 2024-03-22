@@ -44,7 +44,7 @@ export const BudgetShipment: React.FC<BudgetShipmentProps> = ({
       borderRadius="$4"
       alignItems="center"
     >
-      <Text color={'$gray9'} fontWeight={'400'}>
+      <Text color={'$color9'} fontWeight={'400'}>
         {title}
       </Text>
       <Text fontSize={20} fontWeight={'800'}>

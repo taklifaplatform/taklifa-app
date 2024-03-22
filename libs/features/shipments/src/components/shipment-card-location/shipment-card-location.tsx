@@ -26,7 +26,7 @@ export const ShipmentCardLocation: React.FC<ShipmentCardLocationProps> = ({
       width={'100%'}
       padding={'$4'}
       borderWidth="$0.5"
-      borderColor={'$gray9'}
+      borderColor={'$color9'}
       borderRadius={'$6'}
       {...props}
     >
@@ -52,11 +52,11 @@ export const ShipmentCardLocation: React.FC<ShipmentCardLocationProps> = ({
 
       <XStack gap="$4">
         <XStack gap="$2" alignItems="center">
-          <User size="$1" color={'$gray9'} />
+          <User size="$1" color={'$color9'} />
           <Text>{userName}</Text>
         </XStack>
         <XStack gap="$2" alignItems="center">
-          <PhoneCall size="$1" color={'$gray9'} />
+          <PhoneCall size="$1" color={'$color9'} />
           <Text>{phone_number}</Text>
         </XStack>
       </XStack>

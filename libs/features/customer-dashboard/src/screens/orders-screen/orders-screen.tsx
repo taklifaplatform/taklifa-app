@@ -82,7 +82,7 @@ const renderShipment = (item: any, index: number) => (
       setStatus(item.key);
       setActiveFilterIndex(index);
     }}
-    color={status === item.key ? '$color0' : '$gray9'}
+    color={status === item.key ? '$color0' : '$color9'}
     alignItems="center"
     iconAfter={() =>
       item.count > 9 ? (
@@ -154,10 +154,10 @@ const renderFilterShipment = () => (
         <YStack flex={1} gap="$4" marginHorizontal="$3" marginTop="$4">
           <ZixInput
             rightIcon={() => (
-              <CustomIcon name="search" size="$1" color={'$gray9'} />
+              <CustomIcon name="search" size="$1" color={'$color9'} />
             )}
             leftIcon={() => (
-              <CustomIcon name="flip" size="$1" color={'$gray9'} />
+              <CustomIcon name="flip" size="$1" color={'$color9'} />
             )}
             placeholder={t('job:search')}
             borderColor={'$gray10'}

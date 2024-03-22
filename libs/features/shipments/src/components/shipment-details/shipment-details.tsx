@@ -70,12 +70,12 @@ export const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
             variant="details"
             options={[
               {
-                icons: <Package size="$1" color={'$gray9'} />,
+                icons: <Package size="$1" color={'$color9'} />,
                 name: t('job:number-of-packages'),
                 value: `${shipment?.items?.length}`,
               },
               {
-                icons: <PackageOpen size="$1" color={'$gray9'} />,
+                icons: <PackageOpen size="$1" color={'$color9'} />,
                 name: t('job:shipment-type'),
                 value: `${shipment?.items_type}`,
               },
@@ -87,7 +87,7 @@ export const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
                 value: `${size}`,
               },
               {
-                icons: <Weight size="$1" color={'$gray9'} />,
+                icons: <Weight size="$1" color={'$color9'} />,
                 name: t('job:package-weight'),
                 value: `${weight}`,
               },
@@ -100,37 +100,37 @@ export const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
             variant="details"
             options={[
               {
-                icons: <Inbox size="$1" color={'$gray9'} />,
+                icons: <Inbox size="$1" color={'$color9'} />,
                 name: t('job:deliver_duration'),
                 value: `${deliveryTime.humanize()}`,
               },
               {
-                icons: <Route size="$1" color={'$gray9'} rotate="90deg" />,
+                icons: <Route size="$1" color={'$color9'} rotate="90deg" />,
                 name: t('job:estimated-distance'),
                 value: distance ? `${distance.toFixed(2)} km` : 'N/A',
               },
               {
-                icons: <CustomIcon name="chronic" size="$1" color={'$gray9'} />,
+                icons: <CustomIcon name="chronic" size="$1" color={'$color9'} />,
                 name: t('job:estimated-time'),
                 value: `${deliveryTime.asHours()} hours`,
               },
               {
-                icons: <CustomIcon name="time" size="$1" color={'$gray9'} />,
+                icons: <CustomIcon name="time" size="$1" color={'$color9'} />,
                 name: t('job:deliver_time'),
                 value: `${shipment?.pick_time}`,
               },
               {
-                icons: <CalendarDays size="$1" color={'$gray9'} />,
+                icons: <CalendarDays size="$1" color={'$color9'} />,
                 name: t('job:deliver-date'),
                 value: `${shipment?.pick_date}`,
               },
               {
-                icons: <CustomIcon name="time" size="$1" color={'$gray9'} />,
+                icons: <CustomIcon name="time" size="$1" color={'$color9'} />,
                 name: t('job:delivery-time'),
                 value: `${shipment?.deliver_time}`,
               },
               {
-                icons: <CalendarDays size="$1" color={'$gray9'} />,
+                icons: <CalendarDays size="$1" color={'$color9'} />,
                 name: t('job:delivery-date'),
                 value: `${shipment?.deliver_date}`,
               },
