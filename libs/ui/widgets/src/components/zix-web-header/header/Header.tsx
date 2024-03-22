@@ -1,6 +1,5 @@
 import { CustomIcon } from '@zix/ui/icons';
-import { Theme, XStack } from 'tamagui';
-
+import { XStack, Text } from 'tamagui';
 import { useMultiLang } from '@zix/i18n';
 import { ZixLinkButton } from '@zix/ui/common';
 import { t } from 'i18next';
@@ -9,87 +8,105 @@ import { useAuth } from '@zix/services/auth';
 export function Header() {
   const { isLoggedIn, redirectUserToActiveDashboard } = useAuth()
   const { activeLang } = useMultiLang();
+  const renderMenuItems = () => (
+    <XStack $lg={{ gap: '$1' }}>
+      <ZixLinkButton
+        display="headerMenu"
+        href={'/'}
+      >
+        <Text>{t('web-home:home')}</Text>
+      </ZixLinkButton>
+      <ZixLinkButton
+        display="headerMenu"
+        href={'/customer/shipments'}
+      >
+        <Text>{t('web-home:payments')}</Text>
+      </ZixLinkButton>
+      <ZixLinkButton
+        display="headerMenu"
+        href={'/customer/orders'}
+        $lg={{ paddingHorizontal: '$4' }}
+      >
+        <Text>  {t('web-home:followers')}</Text>
+      </ZixLinkButton>
+      <ZixLinkButton
+        display="headerMenu"
+        href={'/jobs'}
+        $lg={{ paddingHorizontal: '$4' }}
+      >
+        <Text>{t('web-home:works')}</Text>
+      </ZixLinkButton>
+    </XStack>
+  );
+  const renderLogo = () => (
+    <CustomIcon name={`web_logo_${activeLang}`} size={'$9'} />
+  );
+  const renderSearch = () => (
+    <ZixLinkButton
+      display="headerMenu"
+      href={'/jobs'}
+      icon={<CustomIcon name={'search'} size="$1" />}
+      $lg={{ paddingHorizontal: '$4' }}
+    >
+      <Text>{t('web-home:search')}</Text>
+    </ZixLinkButton>
+  );
+  const renderCall = () => (
+    <ZixLinkButton
+      display="headerMenu"
+      href={'/contact'}
+      icon={<CustomIcon name={'ringing'} size="$1" />}
+      $lg={{ paddingHorizontal: '$4' }}
+    >
+      <Text>{t('web-home:call')}</Text>
+    </ZixLinkButton>
+  );
+  const renderSignup = () => (
+    <>
+      {
+        !isLoggedIn && (
+          <ZixLinkButton
+            display="headerMenu"
+            href={'/auth/login'}
+            icon={<CustomIcon name={'account'} size="$1" />}
+            $lg={{ paddingHorizontal: '$4' }}
+          >
+            <Text> {t('web-home:signup')}</Text>
+          </ZixLinkButton>
+        )
+      }
+      {
+        isLoggedIn && (
+          <ZixLinkButton
+            display="headerMenu"
+            href={'/account'}
+            onPress={redirectUserToActiveDashboard}
+            icon={<CustomIcon name={'account'} size="$1" />}
+            $lg={{ paddingHorizontal: '$4' }}
+          >
+            <Text> {t('web-home:signup')}</Text>
+          </ZixLinkButton>
+        )
+      }
+    </>
+  );
   return (
     <XStack
       $sm={{ display: 'none' }}
       justifyContent="space-between"
       backgroundColor='$white1'
       alignItems="center"
-      borderTopWidth={2}
+      borderTopWidth={1}
       borderTopColor={'$gray7'}
       paddingHorizontal="$4"
+      height={80}
     >
-      <XStack $lg={{ gap: '$1' }}>
-        <ZixLinkButton
-          display="headerMenu"
-          href={'/'}
-        >
-          {t('web-home:home')}
-        </ZixLinkButton>
-        <ZixLinkButton
-          display="headerMenu"
-          href={'/customer/shipments'}
-        >
-          {t('web-home:payments')}
-        </ZixLinkButton>
-        <ZixLinkButton
-          display="headerMenu"
-          href={'/customer/orders'}
-          $lg={{ paddingHorizontal: '$4' }}
-        >
-          {t('web-home:followers')}
-        </ZixLinkButton>
-        <ZixLinkButton
-          display="headerMenu"
-          href={'/jobs'}
-          $lg={{ paddingHorizontal: '$4' }}
-        >
-          {t('web-home:works')}
-        </ZixLinkButton>
-      </XStack>
-      <CustomIcon name={`web_logo_${activeLang}`} size={'$9'} />
+      {renderMenuItems()}
+      {renderLogo()}
       <XStack >
-        <ZixLinkButton
-          display="headerMenu"
-          href={'/jobs'}
-          icon={<CustomIcon name={'search'} size="$1" />}
-          $lg={{ paddingHorizontal: '$4' }}
-        >
-          {t('web-home:search')}
-        </ZixLinkButton>
-        <ZixLinkButton
-          display="headerMenu"
-          href={'/contact'}
-          icon={<CustomIcon name={'ringing'} size="$1" />}
-          $lg={{ paddingHorizontal: '$4' }}
-        >
-          {t('web-home:call')}
-        </ZixLinkButton>
-        {
-          !isLoggedIn && (
-            <ZixLinkButton
-              display="headerMenu"
-              href={'/auth/login'}
-              icon={<CustomIcon name={'account'} size="$1" />}
-              $lg={{ paddingHorizontal: '$4' }}
-            >
-              {t('web-home:signup')}
-            </ZixLinkButton>
-          )
-        }
-        {
-          isLoggedIn && (
-            <ZixLinkButton
-              display="headerMenu"
-              href={'/account'}
-              // onPress={redirectUserToActiveDashboard}
-              icon={<CustomIcon name={'account'} size="$1" />}
-              $lg={{ paddingHorizontal: '$4' }}
-            >
-              {t('web-home:account')}
-            </ZixLinkButton>
-          )
-        }
+        {renderSearch()}
+        {renderCall()}
+        {renderSignup()}
       </XStack>
     </XStack>
   );

@@ -13,30 +13,27 @@ import {
 
 export function TopHeader() {
   const { changeLanguage, activeLang } = useMultiLang();
-
   const languages = [
     { id: 'en', name: t('account:language:en') },
     { id: 'ar', name: t('account:language:ar') },
     { id: 'ur', name: t('account:language:ur') },
   ];
-
   const renderHomeInfo = () => (
     <ZixLinkButton
       display="linkItem"
       href={'/about'}
       icon={<CustomIcon name={'home_info'} size="$1" />}
     >
-      {t('web-home:about')}
+      <Text>{t('web-home:about')}</Text>
     </ZixLinkButton>
   );
-
   const renderHomeQuestion = () => (
     <ZixLinkButton
       display="linkItem"
       href={'/faqs'}
       icon={<CustomIcon name={'help'} size="$1" />}
     >
-      {t('web-home:question')}
+      <Text>{t('web-home:question')}</Text>
     </ZixLinkButton>
   );
   const renderSelectTranslate = () => (
@@ -75,15 +72,15 @@ export function TopHeader() {
     </ZixLinkButton>
   );
   const renderFollows = () => (
-    <XStack gap="$2" alignItems="center">
-      <Text fontWeight="600" $lg={{ display: 'none' }}>
+    <XStack gap="$1" alignItems="center">
+      <Text $lg={{ display: 'none' }}>
         {t('web-home:followus')}
       </Text>
-
       <ZixLinkButton
         display="menuItem"
-        href={'https://www.facebook.com/sawaedlogistics'}
-        icon={<Facebook size='$1.5' color='$gray12' />}
+        href={'/'}
+        icon={<CustomIcon name="snapchat" size={'$1.5'} color={'$color'} />}
+        path={'/'}
       />
       <ZixLinkButton
         display="menuItem"
@@ -92,46 +89,43 @@ export function TopHeader() {
       />
       <ZixLinkButton
         display="menuItem"
-        href={'https://www.x.com/sawaedlogistics'}
-        icon={<Twitter size='$1.5' color='$gray12' />}
+        href={'/'}
+        icon={<CustomIcon name="facebook" size={'$1.5'} color={'$color'} />}
+        path={'/'}
       />
     </XStack>
   );
   const renderDownload = () => (
-    <XStack gap="$2" alignItems="center">
-      <Text fontWeight="600" $lg={{ display: 'none' }}>
+    <XStack gap="$1" alignItems="center">
+      <Text $lg={{ display: 'none' }}>
         {t('web-home:download')}
       </Text>
-
-      <ZixLinkButton
-        display="menuItem"
-        href={'/'}
-        icon={<CustomIcon name={'app_store'} size={'$8'} />}
-      />
       <ZixLinkButton
         display="menuItem"
         href={'/'}
         icon={<CustomIcon name={'google_play'} size={'$8'} />}
       />
+      <ZixLinkButton
+        display="menuItem"
+        href={'/'}
+        icon={<CustomIcon name={'app_store'} size={'$8'} />}
+      />
     </XStack>
   );
 
   return (
-
     <XStack
       $sm={{ display: 'none' }}
       alignItems="center"
       justifyContent="space-around"
       backgroundColor="$color2"
       flex={1}
-      height={60}
+      height={50}
     >
       {renderHomeInfo()}
       {renderHomeQuestion()}
       {renderSelectTranslate()}
       {renderLocation()}
-
-
       {renderDownload()}
       {renderFollows()}
     </XStack>

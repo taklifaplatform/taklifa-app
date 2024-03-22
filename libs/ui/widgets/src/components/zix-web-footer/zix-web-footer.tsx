@@ -1,149 +1,188 @@
+import { X } from '@tamagui/lucide-icons';
 import { useMultiLang } from '@zix/i18n';
 import { ZixContainer, ZixLinkButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
-import { Stack, Text, Theme, View, XStack, YStack } from 'tamagui';
+import { Image, Stack, Text, Theme, View, XStack, YStack } from 'tamagui';
 
 export const ZixWebFooter = () => {
   const { activeLang } = useMultiLang();
   const renderLogo = () => (
     <View paddingHorizontal="$3">
-      <CustomIcon name={`web_logo_${activeLang}`} size={'$9'} color="$color1" />
+      <CustomIcon name={`web_logo_${activeLang}`} size={'$12'} color="$color1" />
     </View>
   );
-
   const renderFollows = () => (
     <Stack
       flexDirection="column"
       flexWrap="wrap"
       gap={'$8'}
-      alignItems="flex-start"
+      justifyContent="space-between"
+      $sm={{
+        flexDirection: 'row',
+        gap: '$4',
+        marginTop: '$6',
+      }}
     >
-      <Text color={'$color1'} fontWeight={'bold'}>
-        {t('web-home:followus')}
-      </Text>
-      <XStack gap="$4">
-        <ZixLinkButton
-          display="menuItem"
-          unstyled
-          icon={<CustomIcon name="facebook" size={'$1.5'} color={'$color1'} />}
-          href={'/'}
-        />
-        <ZixLinkButton
-          display="menuItem"
-          unstyled
-          icon={<CustomIcon name="instagram" size={'$1.5'} color={'$color1'} />}
-          href={'/'}
-        />
-        <ZixLinkButton
-          display="menuItem"
-          unstyled
-          icon={<CustomIcon name="snapchat" size={'$1.5'} color={'$color1'} />}
-          href={'/'}
-        />
-        <ZixLinkButton
-          display="menuItem"
-          unstyled
-          icon={<CustomIcon name="tik_tok" size={'$1.5'} color={'$color1'} />}
-          href={'/'}
-        />
-      </XStack>
-
-      <Text color={'$color1'}>{t('web-home:download')}</Text>
-
-      <Stack gap="$2" flexDirection="row" flexWrap="wrap" alignItems=''>
-        <ZixLinkButton
-          display="menuItem"
-          unstyled
-          icon={<CustomIcon name="app_store" width="$13" height="$5" />}
-          scaleIcon={10}
-          href={'/'}
-        />
-        <ZixLinkButton
-          display="menuItem"
-          unstyled
-          icon={<CustomIcon name="google_play" width={'$13'} height={'$5'} />}
-          scaleIcon={10}
-          href="/"
-        />
-      </Stack>
+      {/* followus */}
+      <YStack
+        gap="$4"
+        $md={{
+          gap: '$3',
+        }}
+      >
+        <Text color={'$color1'} fontWeight={'bold'}>
+          {t('web-home:followus')}
+        </Text>
+        <XStack gap="$1">
+          <ZixLinkButton
+            display="menuItem"
+            unstyled
+            icon={<CustomIcon name="tik_tok" size={'$2.5'} color={'$color1'} />}
+            href={'/'}
+          />
+          <ZixLinkButton
+            display="menuItem"
+            unstyled
+            icon={<CustomIcon name="snapchat" size={'$2.5'} color={'$color1'} />}
+            href={'/'}
+          />
+          <ZixLinkButton
+            display="menuItem"
+            unstyled
+            icon={<CustomIcon name="instagram" size={'$2.5'} color={'$color1'} />}
+            href={'/'}
+          />
+          <ZixLinkButton
+            display="menuItem"
+            unstyled
+            icon={<CustomIcon name="facebook" size={'$2.5'} color={'$color1'} />}
+            href={'/'}
+          />
+        </XStack>
+      </YStack>
+      {/* download */}
+      <YStack
+        gap="$4"
+        alignItems="flex-start"
+        $md={{
+          gap: '$2',
+        }}
+      >
+        <Text
+          color={'$color1'}
+          $sm={{
+            fontSize: '$1',
+          }}
+        >{t('web-home:download')}</Text>
+        <XStack gap="$2">
+          <ZixLinkButton
+            display="menuItem"
+            href="/"
+          >
+            <Image
+              source={{
+                uri: '/images/googlePlay.png',
+                width: 135,
+                height: 50,
+              }}
+              $sm={{
+                width: 100,
+              }}
+              resizeMode="contain"
+            />
+          </ZixLinkButton>
+          <ZixLinkButton
+            display="menuItem"
+            href="/"
+          >
+            <Image
+              source={{
+                uri: '/images/appStore.png',
+                width: 120,
+                height: 50,
+              }}
+              $sm={{
+                width: 90,
+              }}
+              resizeMode="contain"
+            />
+          </ZixLinkButton>
+        </XStack>
+      </YStack>
     </Stack>
   );
 
   const renderAboutFooter = () => (
-    <YStack gap="$4">
+    <YStack gap="$7">
       <Text color={'$color5'} fontWeight={'bold'}>
         {t('web-home:aboutfooter')}
       </Text>
-      <ZixLinkButton display="menuItem" href={'/'}>
-        {t('web-home:investor')}
-      </ZixLinkButton>
-      <ZixLinkButton display="menuItem" href={'/'} color={'$color1'}>
-        {t('web-home:investor')}
-      </ZixLinkButton>
-      <ZixLinkButton display="menuItem" href={'/'} color={'$color1'}>
-        {t('web-home:delivering')}
-      </ZixLinkButton>
-      <ZixLinkButton display="menuItem" href={'/'} color={'$color1'}>
-        {t('web-home:commercial')}
-      </ZixLinkButton>
-      <ZixLinkButton
-        display="menuItem"
-        href={'/terms-of-service'}
-        color={'$color1'}
-      >
-        {t('web-home:certificates')}
-      </ZixLinkButton>
-      <ZixLinkButton display="menuItem" href={'/'} color={'$color1'}>
-        {t('web-home:aboutsawaed')}
-      </ZixLinkButton>
+      <YStack gap="$1">
+        <ZixLinkButton display="menuItem" href={'/'} >
+          <Text color={'$color1'}>{t('web-home:investor')}</Text>
+        </ZixLinkButton>
+        <ZixLinkButton display="menuItem" href={'/'}>
+          <Text color={'$color1'}>{t('web-home:delivering')}</Text>
+        </ZixLinkButton>
+        <ZixLinkButton display="menuItem" href={'/'}>
+          <Text color={'$color1'}>{t('web-home:commercial')}</Text>
+        </ZixLinkButton>
+        <ZixLinkButton display="menuItem" href={'/terms-of-service'}>
+          <Text color={'$color1'}>{t('web-home:certificates')}</Text>
+        </ZixLinkButton>
+        <ZixLinkButton display="menuItem" href={'/'} color={'$color1'}>
+          <Text color={'$color1'}>{t('web-home:aboutsawaed')}</Text>
+        </ZixLinkButton>
+      </YStack>
     </YStack>
   );
 
   const renderLegal = () => (
-    <YStack gap="$4" alignItems="flex-start">
+    <YStack gap="$7" alignItems="flex-start">
       <Text color={'$color5'} fontWeight={'bold'}>
         {t('web-home:legal')}
       </Text>
-      <ZixLinkButton display="menuItem" href={'/'} color={'$color1'}>
-        {t('web-home:term')}
-      </ZixLinkButton>
-      <ZixLinkButton display="menuItem" href={'/'} color={'$color1'}>
-        {t('web-home:customer')}
-      </ZixLinkButton>
-      <ZixLinkButton
-        display="menuItem"
-        href={'/privacy-policy'}
-        color={'$color1'}
-      >
-        {t('web-home:privacy')}
-      </ZixLinkButton>
-      <ZixLinkButton display="menuItem" href={'/'} color={'$color1'}>
-        {t('web-home:cookie')}
-      </ZixLinkButton>
-      <ZixLinkButton display="menuItem" href={'/'} color={'$color1'}>
-        {t('web-home:sdk')}
-      </ZixLinkButton>
+      <YStack gap="$1">
+        <ZixLinkButton display="menuItem" href={'/'}>
+          <Text color={'$color1'}>{t('web-home:term')}</Text>
+        </ZixLinkButton>
+        <ZixLinkButton display="menuItem" href={'/'}>
+          <Text color={'$color1'}>{t('web-home:customer')}</Text>
+
+        </ZixLinkButton>
+        <ZixLinkButton display="menuItem" href={'/privacy-policy'} >
+          <Text color={'$color1'}>{t('web-home:privacy')}</Text>
+        </ZixLinkButton>
+        <ZixLinkButton display="menuItem" href={'/'}>
+          <Text color={'$color1'}>{t('web-home:cookie')}</Text>
+        </ZixLinkButton>
+        <ZixLinkButton display="menuItem" href={'/'}>
+          <Text color={'$color1'}>{t('web-home:sdk')}</Text>
+        </ZixLinkButton>
+      </YStack>
     </YStack>
   );
 
   const renderContact = () => (
-    <YStack gap="$4" alignItems="flex-start">
+    <YStack gap="$7" alignItems="flex-start">
       <Text color={'$color5'} fontWeight={'bold'}>
         {t('web-home:contact')}
       </Text>
-      <ZixLinkButton display="menuItem" href={'/jobs'} color={'$color1'}>
-        {t('web-home:jobs')}
-      </ZixLinkButton>
-      <ZixLinkButton display="menuItem" href={'/'} color={'$color1'}>
-        {t('web-home:aramex')}
-      </ZixLinkButton>
-      <ZixLinkButton display="menuItem" href={'/'} color={'$color1'}>
-        {t('web-home:blogstix')}
-      </ZixLinkButton>
-      <ZixLinkButton display="menuItem" href={'/'} color={'$color1'}>
-        {t('web-home:support')}
-      </ZixLinkButton>
+      <YStack gap="$1">
+        <ZixLinkButton display="menuItem" href={'/jobs'}>
+          <Text color={'$color1'}>{t('web-home:jobs')}</Text>
+        </ZixLinkButton>
+        <ZixLinkButton display="menuItem" href={'/'}>
+          <Text color={'$color1'}>{t('web-home:aramex')}</Text>
+        </ZixLinkButton>
+        <ZixLinkButton display="menuItem" href={'/'}>
+          <Text color={'$color1'}>{t('web-home:blogstix')}</Text>
+        </ZixLinkButton>
+        <ZixLinkButton display="menuItem" href={'/'}>
+          <Text color={'$color1'}>{t('web-home:support')}</Text>
+        </ZixLinkButton>
+      </YStack>
     </YStack>
   );
 
@@ -200,9 +239,9 @@ export const ZixWebFooter = () => {
               flexDirection="row"
               padding="$4"
               $lg={{
-                flex: 1,
+                
                 flexDirection: 'column',
-                gap: '$6',
+                gap: '$3',
                 padding: '$4',
               }}
             >
@@ -216,15 +255,14 @@ export const ZixWebFooter = () => {
                   gap: '$4',
                 }}
               >
-                {renderAboutFooter()}
-                {renderLegal()}
                 {renderContact()}
+                {renderLegal()}
+                {renderAboutFooter()}
               </Stack>
               {renderFollows()}
             </View>
           </YStack>
         </Theme>
-
         {renderRightReserved()}
       </YStack>
     </ZixContainer>
