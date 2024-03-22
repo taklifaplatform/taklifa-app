@@ -1,19 +1,17 @@
 
-import { UserProfileScreen } from '@zix/features/users'
+
+import { EditAccountScreen } from '@zix/features/account'
 import { DashboardLayout } from '@zix/ui/layouts'
-import { NextPageWithLayout } from '../_app'
+import { NextPageWithLayout } from '../../_app'
 
 export const Page: NextPageWithLayout = () => {
   return (
-    // <AccountScreen />
-    <UserProfileScreen />
+    <EditAccountScreen />
   )
 }
 
 Page.getLayout = (page) => (
-  <DashboardLayout>
-    {page}
-  </DashboardLayout>
+  <DashboardLayout>{page}</DashboardLayout>
 )
 // export const getServerSideProps = userProtectedGetSSP()
 

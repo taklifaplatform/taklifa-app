@@ -2,7 +2,7 @@
 import { AccountSettingsLayout } from '@zix/features/account'
 import { ChangePasswordScreen } from '@zix/features/auth'
 import { MainLayout } from '@zix/ui/layouts'
-import { NextPageWithLayout } from '../../_app'
+import { NextPageWithLayout } from '../../../_app'
 
 
 export const Page: NextPageWithLayout = () => {

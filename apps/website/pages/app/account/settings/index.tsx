@@ -1,6 +1,6 @@
 
 import { AccountSettingsLayout, SettingsScreen } from '@zix/features/account'
-import { NextPageWithLayout } from '../../_app'
+import { NextPageWithLayout } from '../../../_app'
 import { MainLayout } from '@zix/ui/layouts'
 
 export const Page: NextPageWithLayout = () => {
