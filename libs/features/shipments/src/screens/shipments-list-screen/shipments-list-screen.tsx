@@ -56,14 +56,15 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
   const renderShipment = (item: ShipmentFilterTransformer, index: number) => (
     <ZixButton
       key={index}
-      backgroundColor={status === item.status ? '$color5' : '$gray3'}
+      theme='accent'
+      backgroundColor={status === item.status ? '$color9' : '$color2'}
       borderRadius={status === item.status ? '$4' : '$0'}
       height={50}
       onPress={() => {
         setStatus(item.status);
         setActiveFilterIndex(index);
       }}
-      color={status === item.status ? '$color0' : '$gray9'}
+      color={status === item.status ? '$color0' : '$color9'}
       alignItems="center"
       iconAfter={() =>
         item.count > 9 ? (

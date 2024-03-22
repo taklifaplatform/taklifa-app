@@ -43,7 +43,7 @@ export function HomeScreen() {
 
   const renderMap = () =>
     showMap && (
-      <MapView provider={isWeb ? 'google' : undefined} ref={mapRef} style={{ flex: 1 }} initialCamera={initialCamera}>
+      <MapView provider='google' ref={mapRef} style={{ flex: 1 }} initialCamera={initialCamera}>
         {data?.data?.map((driver, index) => (
           <MapDriverMarker
             key={`marker-${index}`}
@@ -83,6 +83,7 @@ export function HomeScreen() {
   //switch button Map / List
   const renderSwitcher = () => (
     <Button
+      theme='accent'
       zIndex={300}
       position="fixed"
       bottom="$8"
