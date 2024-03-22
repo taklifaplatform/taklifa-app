@@ -37,7 +37,7 @@ export const AuthHeader: React.FC<AuthHeaderProps> = (props) => {
     canGoBack = true,
     onGoNext = () => null,
     canGoNext,
-    iconColor = '$color5',
+    iconColor = '$color9',
     iconName = 'logo',
     showIcon = true,
   } = props;
@@ -59,7 +59,7 @@ export const AuthHeader: React.FC<AuthHeaderProps> = (props) => {
 
         {showIcon && (
           <Avatar size="$10" margin="$2">
-            <Theme name="light">
+            <Theme name="accent">
               <CustomIcon name={iconName} size="$10" color={iconColor} />
             </Theme>
           </Avatar>

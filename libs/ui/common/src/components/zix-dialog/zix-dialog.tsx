@@ -44,7 +44,7 @@ export function ZixDialog({
   return (
     <Dialog modal {...dialogProps}>
       {trigger && <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>}
-      <Dialog.Adapt when="sm" platform="touch">
+      <Dialog.Adapt platform="touch">
         <Dialog.Sheet zIndex={200000} modal dismissOnSnapToBottom>
           <Dialog.Sheet.Frame padding="$10">
             <Dialog.Adapt.Contents />

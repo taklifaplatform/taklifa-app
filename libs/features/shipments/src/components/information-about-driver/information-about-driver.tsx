@@ -11,8 +11,8 @@ import React from 'react';
 
 import { UserAvatar } from '@zix/ui/common';
 import { Stack, Text, ThemeableStackProps, XStack, YStack } from 'tamagui';
-import { SectionWrapper } from '../../screens/shipment-detail-screen/shipment-detail-screen';
 import { Link } from 'solito/link';
+import SectionWrapper from '../section-wrapper/section-wrapper';
 
 export type InformationAboutDriverProps = ThemeableStackProps & {
   driver: DriverTransformer;

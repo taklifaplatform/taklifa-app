@@ -2,7 +2,7 @@ import { AuthLayout, LoginScreen, guestOnlyGetSSP } from '@zix/features/auth';
 import Head from 'next/head';
 import { NextPageWithLayout } from '../../_app';
 
-const Page: NextPageWithLayout = () => (
+export const Page: NextPageWithLayout = () => (
   <>
     <Head>
       <title>Sign in</title>

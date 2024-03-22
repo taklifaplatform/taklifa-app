@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { themeConfig as config } from "../../libs/theme/src/lib/sawaeed-theme";
+import { themeConfig as config } from "../../libs/theme/src";
+// import { themeConfig as config } from "../../libs/theme/src/lib/sawaeed-theme";
 
 export type Conf = typeof config;
 

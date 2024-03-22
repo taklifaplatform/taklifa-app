@@ -1,4 +1,4 @@
-import { CreateShipmentScreen, SummaryShipmentScreen } from '@zix/features/customer-dashboard';
+import { CreateShipmentScreen } from '@zix/features/customer-dashboard';
 import { AppHeader } from '@zix/ui/layouts';
 import React from 'react';
 
@@ -9,7 +9,7 @@ export default function Screen() {
       <AppHeader
         showBackButton
         title="مراجعة البيانات"
-        headerBackgroundColor="transparent"
+
       />
       <CreateShipmentScreen shipment={{}} />
     </>

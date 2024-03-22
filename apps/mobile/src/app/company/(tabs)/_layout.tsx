@@ -39,10 +39,10 @@ export default function Layout() {
         name="jobs"
         options={{
           title: t('navigation:solo-driver-dashboard.jobs'),
-          tabBarIcon: ({ size, focused }) => (
+          tabBarIcon: ({ size, color }) => (
             <CustomIcon
               name="job"
-              color={focused ? '$color5' : '$gray6'}
+              color={color}
               size={size}
             />
           ),

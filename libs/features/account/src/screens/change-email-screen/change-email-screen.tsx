@@ -54,7 +54,7 @@ export const ChangeEmailScreen = () => {
       renderBefore={() => (
         <AppHeader
           showBackButton
-          headerBackgroundColor="transparent"
+
           title={t('account:change_email.title')}
         />
       )}

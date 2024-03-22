@@ -94,6 +94,7 @@ export function TrackShipments() {
           placeholder={t('web-home:shipmentplaceholder')}
           leftIcon={(props) => <CustomIcon {...props} name="flip" />}
           containerProps={{
+            flex: 1,
             $sm: {
               width: '100%',
             },
@@ -101,6 +102,7 @@ export function TrackShipments() {
         />
 
         <Button
+          theme='accent'
           size="$5"
           onPress={() => router.push('/')}
           iconAfter={<CustomIcon name="large_arrow_right" size={'$1'} />}

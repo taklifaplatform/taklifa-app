@@ -12,6 +12,7 @@ import {
 export type SettingItemProps = {
   icon: React.FC<IconProps>;
   rightLabel?: string;
+  hideRightChevron?: boolean;
   /**
    * native only - not showing colors on native
    */
@@ -26,6 +27,7 @@ export const SettingItem = ({
   icon: Icon,
   children,
   rightLabel,
+  hideRightChevron,
   isActive,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   accentColor: _, // not used on web - destructuring to avoid passing it through props
@@ -44,7 +46,7 @@ export const SettingItem = ({
         <YStack
           padding="$2"
           borderRadius="$3"
-          // backgroundColor={'rgba(255, 251, 237, 1)'}
+        // backgroundColor={'rgba(255, 251, 237, 1)'}
         >
           <Icon opacity={0.6} size={22} />
         </YStack>
@@ -63,7 +65,12 @@ export const SettingItem = ({
             </SizableText>
           </XStack>
         )}
-        <CustomIcon name="chevron_right" size="$1" color="$color11" />
+        {
+          !hideRightChevron && (
+            <CustomIcon name="chevron_right" size="$1" color="$color11" />
+          )
+        }
+
       </ListItem>
     </YGroup.Item>
   );

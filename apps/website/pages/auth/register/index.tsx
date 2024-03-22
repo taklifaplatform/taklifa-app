@@ -7,7 +7,7 @@ import {
 } from '@zix/features/auth';
 import { NextPageWithLayout } from '../../_app';
 
-const Page: NextPageWithLayout = () => (
+export const Page: NextPageWithLayout = () => (
   <>
     <Head>
       <title>Sign up</title>

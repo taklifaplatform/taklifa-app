@@ -3,7 +3,8 @@ import { useAuth } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import React, { useMemo } from 'react';
 
-import { Bell, Home, MessageCircle } from '@tamagui/lucide-icons';
+import { IconProps } from '@tamagui/helpers-icon';
+import { LogOut } from '@tamagui/lucide-icons';
 import { useThemeSetting } from '@tamagui/next-theme';
 import { Settings, ZixLinkButton } from '@zix/ui/common';
 import { usePathname } from '@zix/utils';
@@ -15,12 +16,18 @@ export type SideBarProps = {
   //
 }
 
+type MenuItemType = {
+  title: string
+  icon: React.ReactNode
+  href?: string
+  onPress?: () => void
+}
 
 export const SideBar: React.FC<SideBarProps> = () => {
   const router = useRouter()
   const { activeLang } = useMultiLang();
-  const { activeRole, currentUrlPrefix } = useAuth()
-  const { toggle, current } = useThemeSetting()
+  const { activeRole, currentUrlPrefix, logout } = useAuth()
+  const { toggle: toggleTheme, current } = useThemeSetting()
   const pathname = usePathname()
 
 
@@ -29,44 +36,62 @@ export const SideBar: React.FC<SideBarProps> = () => {
       [
         {
           title: 'Home',
-          icon: Home,
+          icon: (props: IconProps) => <CustomIcon name="home" {...props} />,
           href: currentUrlPrefix
         },
 
         {
           title: 'Orders',
-          icon: MessageCircle,
+          icon: (props: IconProps) => <CustomIcon name="orders" {...props} />,
           href: `${currentUrlPrefix}/shipments`
         },
         {
           title: 'Jobs',
-          icon: MessageCircle,
+          icon: (props: IconProps) => <CustomIcon name="job" {...props} />,
           href: `${currentUrlPrefix}/jobs`
         }
       ],
       [
         {
           title: 'Notifications',
-          icon: Bell,
+          // icon: Bell,
+          icon: (props: IconProps) => <CustomIcon name="notifications" {...props} />,
           href: `${currentUrlPrefix}/notifications`
         },
         {
           title: 'Chat',
-          icon: MessageCircle,
+          icon: (props: IconProps) => <CustomIcon name="chat" {...props} />,
           href: `${currentUrlPrefix}/chat`
         },
-      ]
+      ],
+      [
+        {
+          title: 'Theme',
+          icon: (props) => <CustomIcon name="theme" {...props} />,
+          onPress: toggleTheme
+        },
+      ],
+      [
+        {
+          title: 'Logout',
+          icon: LogOut,
+          onPress: logout
+        },
+      ],
     ]
 
   }, [activeRole, currentUrlPrefix])
 
-  const renderMenuItem = (item: typeof menuGroups[0][0]) => (
+  const renderMenuItem = (item: MenuItemType, index) => (
     <Settings.Item
+      key={`${index}-${item.title}`}
       icon={item.icon}
-      rightLabel='4'
+      // rightLabel='4'
+      hideRightChevron
       backgroundColor={pathname === item.href ? '$backgroundFocus' : '$gray3'}
-      onPress={() => router.push(item.href)}
+      onPress={() => item?.onPress ? item.onPress() : router.push(item.href)}
       accentColor="$green9"
+      right={() => null}
     >
       {item.title}
     </Settings.Item>
@@ -74,7 +99,7 @@ export const SideBar: React.FC<SideBarProps> = () => {
 
   return (
     <View position='sticky' top={0} bottom={0} left={0} width={320} maxHeight='100vh' backgroundColor='$gray3'>
-      <ZixLinkButton unstyled href='/' margin='$4' >
+      <ZixLinkButton unstyled href='/' paddingVertical='$4' >
         <CustomIcon name={`web_logo_${activeLang}`} height={50} width={165} />
       </ZixLinkButton>
 

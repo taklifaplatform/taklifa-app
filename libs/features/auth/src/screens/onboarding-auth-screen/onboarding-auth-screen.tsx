@@ -28,8 +28,6 @@ export const OnboardingAuthScreen = () => {
       <Text
         fontSize={20}
         fontWeight="800"
-        color='$gray10'
-
       >
         مرحبا بك في
       </Text>
@@ -70,7 +68,7 @@ export const OnboardingAuthScreen = () => {
               <Text
                 fontSize={20}
                 fontWeight="700"
-                color={'$color5'}
+                color='$color9'
               >
                 {option.title}
               </Text>
@@ -89,10 +87,10 @@ export const OnboardingAuthScreen = () => {
   );
 
   return (
-    <Theme name='light'>
+    <Theme name='accent'>
       <YStack
         flex={1}
-        backgroundColor="$color3"
+        backgroundColor="$color2"
         gap={'$8'}
         padding='$10'
       >

@@ -11,6 +11,12 @@
       "options": {
         "jestConfig": "libs/theme/jest.config.ts"
       }
+    },
+    "generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tamagui generate-themes ./libs/theme/src/lib/advanced-theme/theme-builder.ts ./libs/theme/src/lib/advanced-theme/theme.ts"
+      }
     }
   }
 }

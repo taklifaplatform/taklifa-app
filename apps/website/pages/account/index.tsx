@@ -3,7 +3,7 @@ import { UserProfileScreen } from '@zix/features/users'
 import { DashboardLayout } from '@zix/ui/layouts'
 import { NextPageWithLayout } from '../_app'
 
-const Page: NextPageWithLayout = () => {
+export const Page: NextPageWithLayout = () => {
   return (
     // <AccountScreen />
     <UserProfileScreen />

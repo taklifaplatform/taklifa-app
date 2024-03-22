@@ -1,5 +1,5 @@
 import { CustomIcon } from '@zix/ui/icons';
-import { useRouter } from 'next/router';
+import { useRouter } from 'solito/router';
 import { useState } from 'react';
 import { Pressable } from 'react-native';
 import { Button, Dialog, Sheet, XStack, useTheme } from 'tamagui';
@@ -32,7 +32,7 @@ export function MobileHeader() {
     <XStack
       justifyContent="space-between"
       $gtSm={{ display: 'none' }}
-      backgroundColor={'$color1'}
+      backgroundColor='$white1'
       alignItems="center"
       borderRadius={10}
       borderTopColor={'$gray7'}
@@ -44,7 +44,7 @@ export function MobileHeader() {
       width='100%'
       height={70}
     >
-      
+
       <Pressable onPress={() => setDrawer(!drawer)}>
         <CustomIcon name={'align_left'} size="$2" />
       </Pressable>

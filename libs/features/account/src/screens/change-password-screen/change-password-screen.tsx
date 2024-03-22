@@ -12,7 +12,7 @@ export const ChangePasswordScreen = () => {
   return (
     <>
       <AppHeader
-        headerBackgroundColor="transparent"
+
         showBackButton
         title={t('auth:change_password.title')}
       />

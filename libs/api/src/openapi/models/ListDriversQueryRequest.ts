@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type ListDriversQueryRequest = {
+    search?: string;
     latitude?: number;
     longitude?: number;
 };

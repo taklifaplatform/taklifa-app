@@ -30,7 +30,7 @@ const SettingsGroup = styled(YGroup, {
   '$platform-native': {
     separator: (
       <XStack>
-        <YStack width={20} backgroundColor="$color2" />
+        <YStack theme='accent' width={20} backgroundColor="$color2" />
         <Separator borderColor="#E0E0E0" borderWidth="$0.25" />
       </XStack>
     ),

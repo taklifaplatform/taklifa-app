@@ -7,7 +7,7 @@ import { t } from 'i18next';
 import Head from 'next/head';
 import { useCallback } from 'react';
 import { useRouter } from 'solito/router';
-import { Button, ColorTokens, H4, View, XStack, YStack } from 'tamagui';
+import { Button, ColorTokens, H4, View, XStack, YStack, isWeb } from 'tamagui';
 
 export type AppHeaderProps = {
   searchProps?: ZixInputProps
@@ -17,6 +17,7 @@ export type AppHeaderProps = {
   headerRight?: () => React.ReactNode;
   title?: string;
   headerBackgroundColor?: ColorTokens | 'transparent';
+  hideOnWeb?: boolean;
 };
 
 export const AppHeader: React.FC<AppHeaderProps> = ({
@@ -26,6 +27,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   headerRight,
   headerTitle,
   title,
+  hideOnWeb
 }) => {
   const { user, isLoggedIn } = useAuth();
   const router = useRouter();
@@ -66,6 +68,10 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
         onPress={() => router.back()}
       />
     );
+
+  if (hideOnWeb && isWeb) {
+    return null;
+  }
 
   return (
     <>

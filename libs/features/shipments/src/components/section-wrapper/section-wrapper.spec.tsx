@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import HomeScreen from './home-screen';
+import SectionWrapper from './section-wrapper';
 
-describe('HomeScreen', () => {
+describe('SectionWrapper', () => {
   it('should render successfully', () => {
-    const { root } = render(<HomeScreen />);
+    const { root } = render(< SectionWrapper > </SectionWrapper>);
     expect(root).toBeTruthy();
   });
 });

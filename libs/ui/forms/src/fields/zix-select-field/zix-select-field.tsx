@@ -73,7 +73,7 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
   );
 
   return (
-    <Theme name={hasError ? 'red' : themeName} forceClassName>
+    <Theme name={hasError ? 'red' : 'themeName'} forceClassName>
       <Select {...props} value={`${value}`} onValueChange={val => {
         // console.log('====:: val', val)
         onChange?.(String(val))
@@ -89,7 +89,7 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
           {appendPlaceHolder}
         </Select.Trigger>
 
-        <Adapt when="sm" platform="touch">
+        <Adapt platform="touch">
           <Sheet native modal dismissOnSnapToBottom>
             <Sheet.Frame>
               {renderSearchBar()}
@@ -134,14 +134,15 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
                       borderBottomWidth={1}
                       borderColor='$gray5'
                       width="100%"
+                      justifyContent='space-between'
                     >
                       <Select.ItemText>
                         {(!isRtl && item.icon) && `${item.icon} `}
                         {item.name}
                         {(isRtl && item.icon) && ` ${item.icon}`}
                       </Select.ItemText>
-                      <Select.ItemIndicator marginLeft="auto">
-                        <CustomIcon name='radio_button_checked' color='$color5' />
+                      <Select.ItemIndicator marginLeft="$4" theme='accent'>
+                        <CustomIcon name='radio_button_checked' color='$color9' />
                       </Select.ItemIndicator>
                     </Select.Item>
                   )

@@ -43,9 +43,9 @@ export const InlineItemSelect: React.FC<InlineItemSelectProps> = ({
       backgroundColor="$color2"
       cursor="pointer"
     >
-      <Theme name="light">
+      <Theme name="accent">
         <Avatar size="$6">
-          <CustomIcon name={icon} size="$4" color="$color5" />
+          <CustomIcon name={icon} size="$4" color="$color9" />
         </Avatar>
       </Theme>
 

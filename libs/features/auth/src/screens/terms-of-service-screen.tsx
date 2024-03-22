@@ -8,7 +8,7 @@ export const TermsOfServiceScreen = () => {
       <AppHeader
         title={t('account:terms_of_service.title')}
         showBackButton
-        headerBackgroundColor="transparent"
+        hideOnWeb
       />
 
       <YStack gap="$4" padding="$4">

@@ -6,7 +6,7 @@ export default function Screen() {
     <ShipmentsListScreen variant='jobs' />
 
     // <>
-    //   <AppHeader title="Jobs" headerBackgroundColor="transparent" />
+    //   <AppHeader title="Jobs"  />
     //   <JobsListScreen urlPrefix='company/jobs' />
     // </>
   );

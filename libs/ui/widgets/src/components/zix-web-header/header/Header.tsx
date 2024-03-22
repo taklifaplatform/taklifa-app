@@ -13,7 +13,7 @@ export function Header() {
     <XStack
       $sm={{ display: 'none' }}
       justifyContent="space-between"
-      backgroundColor={'$color1'}
+      backgroundColor='$white1'
       alignItems="center"
       borderTopWidth={2}
       borderTopColor={'$gray7'}
@@ -82,7 +82,7 @@ export function Header() {
             <ZixLinkButton
               display="headerMenu"
               href={'/account'}
-              onPress={redirectUserToActiveDashboard}
+              // onPress={redirectUserToActiveDashboard}
               icon={<CustomIcon name={'account'} size="$1" />}
               $lg={{ paddingHorizontal: '$4' }}
             >

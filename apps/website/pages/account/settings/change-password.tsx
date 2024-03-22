@@ -5,14 +5,14 @@ import { MainLayout } from '@zix/ui/layouts'
 import { NextPageWithLayout } from '../../_app'
 
 
-const Page: NextPageWithLayout = () => {
+export const Page: NextPageWithLayout = () => {
   return (
     <ChangePasswordScreen />
   )
 }
 
 Page.getLayout = (page) => (
-  <MainLayout fullPage>
+  <MainLayout>
     <AccountSettingsLayout>{page}</AccountSettingsLayout>
   </MainLayout>
 )

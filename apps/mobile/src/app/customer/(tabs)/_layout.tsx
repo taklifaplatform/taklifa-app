@@ -1,10 +1,10 @@
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import { Plus } from '@tamagui/lucide-icons';
-import { Circle, Theme, YStack } from 'tamagui';
 import { CustomIcon } from '@zix/ui/icons';
-import { Tabs, useRouter } from 'expo-router';
+import { Tabs } from 'expo-router';
 import { t } from 'i18next';
 import React from 'react';
+import { Circle, Theme, YStack } from 'tamagui';
 
 /**
  * TODO:
@@ -17,10 +17,10 @@ export default function Layout() {
         name="index"
         options={{
           title: t('navigation:customer-dashboard.home'),
-          tabBarIcon: ({ size, focused }) => (
+          tabBarIcon: ({ size, color }) => (
             <CustomIcon
               name="home"
-              color={focused ? '$color5' : '$gray6'}
+              color={color}
               size={size}
             />
           ),
@@ -31,10 +31,10 @@ export default function Layout() {
         name="shipments"
         options={{
           title: t('navigation:customer-dashboard.orders'),
-          tabBarIcon: ({ size, focused }) => (
+          tabBarIcon: ({ size, color }) => (
             <CustomIcon
               name="orders"
-              color={focused ? '$color5' : '$gray6'}
+              color={color}
               size={size}
             />
           ),
@@ -51,10 +51,10 @@ export default function Layout() {
         name="store"
         options={{
           title: t('navigation:customer-dashboard.store'),
-          tabBarIcon: ({ size, focused }) => (
+          tabBarIcon: ({ size, color }) => (
             <CustomIcon
               name="store"
-              color={focused ? '$color5' : '$gray6'}
+              color={color}
               size={size}
             />
           ),
@@ -64,10 +64,10 @@ export default function Layout() {
         name="chat"
         options={{
           title: t('navigation:customer-dashboard.chat'),
-          tabBarIcon: ({ size, focused }) => (
+          tabBarIcon: ({ size, color }) => (
             <CustomIcon
               name="chat"
-              color={focused ? '$color5' : '$gray6'}
+              color={color}
               size={size}
             />
           ),
@@ -81,27 +81,26 @@ type TabBarIconProps = Parameters<
   Exclude<BottomTabNavigationOptions['tabBarIcon'], undefined>
 >[0];
 
-const PlusButton = ({ size, focused, color }: TabBarIconProps) => {
-  const router = useRouter();
+const PlusButton = ({ size, focused }: TabBarIconProps) => {
 
   return (
-    <Theme>
+    <Theme name='accent'>
       <Circle
         // onPress={() => router.push('/customer/create-shipment')}
-        pos="absolute"
-        backgroundColor={focused ? '$color' : '$color5'}
+        position="absolute"
+        backgroundColor={focused ? '$color5' : '$color9'}
         width={size + 34}
         height={size + 34}
       />
       <YStack
-        pos="absolute"
-        jc="center"
-        ai="center"
+        position="absolute"
+        justifyContent="center"
+        alignItems="center"
         animation="quick"
         pointerEvents="none"
         height={size + 34}
       >
-        <Plus color={focused ? '$color5' : '$color'} size={size + 5} />
+        <Plus size={size + 5} />
       </YStack>
     </Theme>
   );

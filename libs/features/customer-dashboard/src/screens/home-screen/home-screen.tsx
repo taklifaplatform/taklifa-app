@@ -1,124 +1,115 @@
-import { X } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { DriverTransformer, DriversService } from '@zix/api';
 import { UserCard } from '@zix/features/users';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader } from '@zix/ui/layouts';
-import { useState } from 'react';
-import { Dimensions } from 'react-native';
+import { MapDriverMarker } from '@zix/ui/sawaeed';
+import { t } from 'i18next';
+import { useRef, useState } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
-import Carousel from 'react-native-reanimated-carousel';
-import { Button, YStack } from 'tamagui';
+import MapView from 'react-native-maps';
+import { Button, Stack, View, YStack, isWeb } from 'tamagui';
 
+
+const initialCamera = {
+  center: {
+    latitude: 24.713552,
+    longitude: 46.675296,
+  },
+  pitch: 0,
+  heading: 0,
+  altitude: 100000,
+  zoom: 20,
+};
 
 export function HomeScreen() {
-  const { width } = Dimensions.get('window');
-  const USER_CARD_WIDTH = width;
-  // const USER_CARD_HEIGHT = 210;
-  const USER_CARD_HEIGHT = width / 1.5;
+  const mapRef = useRef<MapView>(null);
 
-  const [showMap, setShowMap] = useState(false);
+  const [showMap, setShowMap] = useState(true);
 
+  const [search, setSearch] = useState<string>()
   const { data, ...driversQuery } = useQuery({
     queryFn() {
       return DriversService.fetchAllDrivers({
         perPage: 50,
+        search
       });
     },
-    queryKey: ['DriversService.fetchAllDrivers'],
+    queryKey: ['DriversService.fetchAllDrivers', search],
   });
-
-  // new props
-  const [showCarousel, setShowCarousel] = useState(false);
+  const [selectedDriver, setSelectedDriver] = useState<DriverTransformer>()
 
 
+
+  const renderMap = () =>
+    showMap && (
+      <MapView provider={isWeb ? 'google' : undefined} ref={mapRef} style={{ flex: 1 }} initialCamera={initialCamera}>
+        {data?.data?.map((driver, index) => (
+          <MapDriverMarker
+            key={`marker-${index}`}
+            driver={driver}
+            isSelected={selectedDriver?.id === driver.id}
+            onPress={() => {
+              setSelectedDriver(driver)
+            }}
+          />
+        ))}
+      </MapView>
+    );
+  //List
   const renderList = () =>
     !showMap && (
-      <FlatList
-        refreshing={driversQuery.isFetching}
-        onRefresh={driversQuery.refetch}
-        style={{ flex: 1 }}
-        data={data?.data || []}
-        numColumns={2}
-        renderItem={({ item, index }) => (
-          <UserCard
-            key={`stack-${item.id}-${index}`}
-            user={item}
-            marginHorizontal='$4'
-            marginVertical='$2'
-            flex={0.5}
-          />
-        )}
-      />
+      <View marginLeft='$-2'>
+        <FlatList
+          refreshing={driversQuery.isFetching}
+          onRefresh={driversQuery.refetch}
+          style={{ flex: 1 }}
+          data={data?.data || []}
+          numColumns={2}
+          renderItem={({ item, index }) => (
+            <Stack $gtSm={{ flex: 1, flexBasis: 1 }}>
+              <UserCard
+                key={`stack-${item.id}-${index}`}
+                user={item}
+                margin='$2'
+                flex={1}
+              />
+            </Stack>
+          )}
+        />
+      </View>
     );
 
   //switch button Map / List
-  const renderSwitcher = () =>
-    !showCarousel && (
-      <Button
-        position="absolute"
-        bottom="$4"
-        left="$4"
-        icon={<CustomIcon name={showMap ? 'list' : 'map'} size="$2" />}
-        fontWeight="600"
-        fontSize="$2"
-        size="$3"
-        onPress={() => setShowMap(!showMap)}
-      >
-        {showMap ? 'القائمة' : 'الخريطة'}
-      </Button>
-    );
+  const renderSwitcher = () => (
+    <Button
+      zIndex={300}
+      position="fixed"
+      bottom="$8"
+      right="$8"
+      icon={<CustomIcon name={showMap ? 'list' : 'map'} size="$2" />}
+      fontWeight="600"
+      fontSize="$2"
+      size="$4"
+      onPress={() => setShowMap(!showMap)}
+    >
+      {showMap ? 'القائمة' : 'الخريطة'}
+    </Button>
+  );
 
-  const renderCarouselItem = ({
-    item,
-    index,
-  }: {
-    index: number;
-    item: DriverTransformer;
-  }) => {
-    return (
-      <UserCard
-        key={`view-${item.id}-${index}`}
-        user={item}
-        height={USER_CARD_HEIGHT}
-        marginHorizontal='$4'
-      />
-    );
-  };
-
-  const renderCarousel = () =>
-    showCarousel && (
-      <YStack
-        backgroundColor={'$color1'}
-        borderTopRightRadius={'$6'}
-        borderTopLeftRadius={'$6'}
-        paddingVertical="$5"
-      >
-        <Button
-          icon={X}
-          scaleIcon={1.5}
-          backgroundColor='$gray1'
-          size='$3'
-          width='$6'
-          position='absolute'
-          top='$-6'
-          left='$4'
-          onPress={() => setShowCarousel(false)}
-        />
-        <Carousel
-          width={USER_CARD_WIDTH}
-          height={USER_CARD_HEIGHT}
-          data={data?.data || []}
-          renderItem={renderCarouselItem}
-        />
-      </YStack>
-    );
 
   return (
-    <YStack flex={1}>
-      <AppHeader showSearchBar />
+    <YStack flex={1} backgroundColor='$gray3'>
+      <AppHeader
+        title={t('navigation:customer-dashboard.home')}
+        showSearchBar
+        searchProps={{
+          value: search,
+          onChangeText: setSearch
+        }}
+      />
+      {renderMap()}
       {renderList()}
-      {renderCarousel()}
       {renderSwitcher()}
     </YStack>
   );

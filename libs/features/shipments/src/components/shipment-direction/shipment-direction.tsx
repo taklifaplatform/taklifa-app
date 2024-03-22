@@ -5,8 +5,8 @@ import { ZixMapDirectionWidget, ZixWidgetContainer } from '@zix/ui/widgets';
 import { t } from 'i18next';
 import React from 'react';
 import { Stack, Text, XStack, YStack } from 'tamagui';
-import { SectionWrapper } from '../../screens/shipment-detail-screen/shipment-detail-screen';
 import ShipmentCardLocation from '../shipment-card-location/shipment-card-location';
+import SectionWrapper from '../section-wrapper/section-wrapper';
 
 /* eslint-disable-next-line */
 export interface ShipmentDirectionProps {

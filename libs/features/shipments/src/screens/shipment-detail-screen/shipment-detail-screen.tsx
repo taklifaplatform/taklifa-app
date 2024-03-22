@@ -17,16 +17,16 @@ import { createParam } from 'solito';
 import {
   ScrollView,
   Separator,
-  Stack,
   Text,
   View,
   XStack,
-  YStack,
+  YStack
 } from 'tamagui';
 import {
   BudgetShipment,
   DefinitionSender,
   InformationAboutDriver,
+  SectionWrapper,
   ShipmentCanceledDetail,
   ShipmentCardActions,
   ShipmentCode,
@@ -34,24 +34,13 @@ import {
   ShipmentDetails,
   ShipmentDirection,
   TotalCostOfShipment
-} from '../../';
+} from '../../components';
 
 export type ShipmentDetailScreenProps = {
   variant: 'shipments' | 'jobs';
 };
 
 const { useParam } = createParam<{ shipment: string }>();
-
-export const SectionWrapper = ({ children }: { children: React.ReactNode }) => (
-  <Stack
-    padding="$3"
-    backgroundColor={'$color1'}
-    borderRadius={'$4'}
-    $sm={{ backgroundColor: 'transparent' }}
-  >
-    {children}
-  </Stack>
-);
 
 export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
   variant = 'shipments',
