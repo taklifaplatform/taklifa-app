@@ -2,7 +2,7 @@ import { AuthLayout, guestAndUsersGetSSP } from '@zix/features/auth';
 import Head from 'next/head';
 import { NextPageWithLayout } from '../../_app';
 
-const Page: NextPageWithLayout = () => (
+export const Page: NextPageWithLayout = () => (
   <>
     <Head>
       <title>Verify Phone Number</title>

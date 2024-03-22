@@ -1,7 +1,7 @@
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import { Plus } from '@tamagui/lucide-icons';
 import { CustomIcon } from '@zix/ui/icons';
-import { Tabs, useRouter } from 'expo-router';
+import { Tabs } from 'expo-router';
 import { t } from 'i18next';
 import React from 'react';
 import { Circle, Theme, YStack } from 'tamagui';
@@ -81,8 +81,7 @@ type TabBarIconProps = Parameters<
   Exclude<BottomTabNavigationOptions['tabBarIcon'], undefined>
 >[0];
 
-const PlusButton = ({ size, focused, color }: TabBarIconProps) => {
-  const router = useRouter();
+const PlusButton = ({ size, focused }: TabBarIconProps) => {
 
   return (
     <Theme name='accent'>

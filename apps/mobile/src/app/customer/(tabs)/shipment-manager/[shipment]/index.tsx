@@ -1,4 +1,4 @@
-import { CreateShipmentScreen, SummaryShipmentScreen } from '@zix/features/customer-dashboard';
+import { CreateShipmentScreen } from '@zix/features/customer-dashboard';
 import { AppHeader } from '@zix/ui/layouts';
 import React from 'react';
 

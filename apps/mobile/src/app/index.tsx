@@ -2,13 +2,11 @@ import { useAuth } from '@zix/services/auth';
 import React from 'react';
 
 import { Dimensions, Image, Platform, View } from 'react-native';
-import { useRouter } from 'solito/router';
 
 
 export default function Screen() {
   const { redirectUserToActiveDashboard } = useAuth()
   const { width, height } = Dimensions.get('window');
-  const router = useRouter()
 
   return (
     <View

@@ -32,7 +32,7 @@ export function MobileHeader() {
     <XStack
       justifyContent="space-between"
       $gtSm={{ display: 'none' }}
-      backgroundColor={'$color1'}
+      backgroundColor='$white1'
       alignItems="center"
       borderRadius={10}
       borderTopColor={'$gray7'}

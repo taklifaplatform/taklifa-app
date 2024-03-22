@@ -13,7 +13,7 @@ export function Header() {
     <XStack
       $sm={{ display: 'none' }}
       justifyContent="space-between"
-      backgroundColor={'$color1'}
+      backgroundColor='$white1'
       alignItems="center"
       borderTopWidth={2}
       borderTopColor={'$gray7'}

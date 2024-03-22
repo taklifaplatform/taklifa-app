@@ -4,7 +4,7 @@ import { EditAccountScreen } from '@zix/features/account'
 import { DashboardLayout } from '@zix/ui/layouts'
 import { NextPageWithLayout } from '../_app'
 
-const Page: NextPageWithLayout = () => {
+export const Page: NextPageWithLayout = () => {
   return (
     <EditAccountScreen />
   )
