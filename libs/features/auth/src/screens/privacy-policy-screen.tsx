@@ -8,7 +8,7 @@ export const PrivacyPolicyScreen = () => {
       <AppHeader
         title={t('account:privacy_policy.title')}
         showBackButton
-
+        hideOnWeb
       />
       <YStack gap="$4" padding="$4">
         {/* only show title on web since mobile has navigator title */}
