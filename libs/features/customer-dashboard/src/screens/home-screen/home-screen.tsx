@@ -83,6 +83,7 @@ export function HomeScreen() {
   //switch button Map / List
   const renderSwitcher = () => (
     <Button
+      theme='accent'
       zIndex={300}
       position="fixed"
       bottom="$8"

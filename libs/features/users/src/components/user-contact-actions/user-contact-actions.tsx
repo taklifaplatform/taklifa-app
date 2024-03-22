@@ -60,6 +60,7 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
   return (
     <XStack justifyContent="space-between" gap="$2" {...props}>
       <Button
+        theme='accent'
         flex={1.5}
         icon={(props: IconProps) => <CustomIcon {...props} name="followed" color='$color12' />}
         onPress={onServiceRequestPress}

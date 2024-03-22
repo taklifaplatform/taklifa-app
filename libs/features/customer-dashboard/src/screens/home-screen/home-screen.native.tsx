@@ -156,6 +156,7 @@ export function HomeScreen() {
   const renderSwitcher = () =>
     !showCarousel && (
       <Button
+        theme='accent'
         position="absolute"
         bottom="$4"
         left="$4"
