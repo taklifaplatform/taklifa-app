@@ -12,7 +12,6 @@ export const ChangePasswordScreen = () => {
   return (
     <>
       <AppHeader
-
         showBackButton
         title={t('auth:change_password.title')}
       />

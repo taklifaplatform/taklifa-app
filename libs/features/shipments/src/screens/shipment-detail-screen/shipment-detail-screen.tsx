@@ -45,7 +45,7 @@ const { useParam } = createParam<{ shipment: string }>();
 export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
   variant = 'shipments',
 }) => {
-  const { activeRole, getRoleUrlPrefix } = useAuth();
+  const { activeRole, getUrlPrefix } = useAuth();
 
   const [shipmentId] = useParam('shipment');
   const { data, isLoading, refetch } = useQuery({
@@ -64,7 +64,7 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
   });
 
   const urlPrefix = useMemo(() => {
-    return `${getRoleUrlPrefix(activeRole)}/${variant}`;
+    return `${getUrlPrefix}/${variant}`;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeRole, variant]);
   // const driver = shipment.driver;

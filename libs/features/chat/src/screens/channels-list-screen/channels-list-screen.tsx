@@ -9,9 +9,7 @@ import { ChannelList } from 'stream-chat-react';
 export function ChannelsListScreen() {
   return (
     <>
-      <AppHeader
-        headerBackgroundColor='transparent'
-      />
+      <AppHeader title='Chat' />
       <ChannelList />
     </>
   );

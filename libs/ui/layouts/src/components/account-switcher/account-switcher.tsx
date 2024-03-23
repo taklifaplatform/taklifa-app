@@ -95,13 +95,17 @@ export const AccountSwitcher: React.FC = () => {
               <Text fontWeight="bold" fontSize={15} numberOfLines={1}>
                 {user?.name}
               </Text>
-              {
+              <Text>
+                {user?.active_role?.name}
+              </Text>
+
+              {/* {
                 isWeb && (
                   <Text>
                     {user?.active_role?.name}
                   </Text>
                 )
-              }
+              } */}
             </YStack>
             {
               isWeb && (
@@ -118,16 +122,21 @@ export const AccountSwitcher: React.FC = () => {
               <XStack alignItems='center' justifyContent='space-between'>
                 <H4 paddingHorizontal="$4">Switch Account</H4>
                 <Button
-                  unstyled
                   padding='$4'
-                  icon={X} scaleIcon={1.3} backgroundColor='$color1' onPress={() => setSheetOpen(false)} />
+                  icon={X}
+                  scaleIcon={1.3}
+                  backgroundColor='$color1'
+                  onPress={() => setSheetOpen(false)}
+                />
               </XStack>
               {userRoles?.map((role) => (
                 <YGroup.Item key={role.id}>
                   <ListItem
                     disabled={user?.active_role?.name === role.name}
                     onPress={() => changeActiveRole({ name: role.name })}
-                    borderBottomColor='$gray5'
+                    hoverStyle={{ backgroundColor: '$color5' }}
+                    pressStyle={{ opacity: 0.5 }}
+                    borderBottomColor='$color5'
                     borderBottomWidth={1}
                     icon={<UserAvatar user={user} size='$4' />}
                     iconAfter={(
@@ -146,7 +155,9 @@ export const AccountSwitcher: React.FC = () => {
                 <YGroup.Item key={company.name}>
                   <ListItem
                     onPress={() => company.id && changeActiveCompany(company.id)}
-                    borderBottomColor='$gray5'
+                    hoverStyle={{ backgroundColor: '$color5' }}
+                    pressStyle={{ opacity: 0.5 }}
+                    borderBottomColor='$color5'
                     borderBottomWidth={1}
                     icon={<MediaAvatar media={company.logo} size='$4' />}
                     iconAfter={(
@@ -167,14 +178,16 @@ export const AccountSwitcher: React.FC = () => {
                     <Avatar
                       size="$4"
                       circular
-                      backgroundColor="$gray5"
+                      backgroundColor="$color5"
                       alignItems="center"
                       justifyContent="center"
                     >
                       <Plus size="$2" />
                     </Avatar>
                   )}
-                  marginTop='$6'
+                  hoverStyle={{ backgroundColor: '$color5' }}
+                  pressStyle={{ opacity: 0.5 }}
+                  marginTop='$2'
                   scaleIcon={1.3}
                   title="Add Account"
                   subTitle="Add new company or account"

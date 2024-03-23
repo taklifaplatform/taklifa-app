@@ -7,7 +7,7 @@ import { usePathname } from '@zix/utils';
 import { useMultiLang } from '@zix/i18n';
 import { useThemeSetting } from '@zix/app-providers';
 import { t } from 'i18next';
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { Linking } from 'react-native';
 
 import { useAuth } from '@zix/services/auth';
@@ -21,6 +21,11 @@ const brandColors = {
 export const SettingsScreen = () => {
   const media = useMedia();
   const pathname = usePathname();
+  const { getUrlPrefix } = useAuth();
+
+  const getUrl = useCallback((path: string) => {
+    return `${getUrlPrefix}/${path}`;
+  }, [getUrlPrefix])
 
   return (
     <>
@@ -39,11 +44,11 @@ export const SettingsScreen = () => {
                   icon={(props: IconProps) => (
                     <CustomIcon {...props} name="settings" color="$color5" />
                   )}
-                  isActive={pathname === '/account/settings/general'}
+                  isActive={pathname === getUrl('/account/settings/general')}
                   {...useLink({
                     href: media.sm
-                      ? '/account/settings/general'
-                      : '/account/settings',
+                      ? getUrl('/account/settings/general')
+                      : getUrl('/account/settings'),
                   })}
                   accentColor="$green9"
                 >
@@ -53,8 +58,8 @@ export const SettingsScreen = () => {
                   icon={(props: IconProps) => (
                     <CustomIcon name="lock" color="$color5" {...props} />
                   )}
-                  isActive={pathname === '/account/settings/change-password'}
-                  {...useLink({ href: '/account/settings/change-password' })}
+                  isActive={pathname === getUrl('/account/settings/change-password')}
+                  {...useLink({ href: getUrl('/account/settings/change-password') })}
                   accentColor="$green9"
                 >
                   {t('auth:change_password.title')}
@@ -63,8 +68,8 @@ export const SettingsScreen = () => {
                   icon={(props: IconProps) => (
                     <CustomIcon name="mail" color="$color5" {...props} />
                   )}
-                  isActive={pathname === '/account/settings/change-email'}
-                  {...useLink({ href: '/account/settings/change-email' })}
+                  isActive={pathname === getUrl('/account/settings/change-email')}
+                  {...useLink({ href: getUrl('/account/settings/change-email') })}
                   accentColor="$green9"
                 >
                   {t('account:change_email.title')}
@@ -146,13 +151,13 @@ const SettingsLanguageAction = () => {
     <ActionSheet
       ref={actionSheetRef}
       title={t('account:language.select_language')}
-      actions={languages.map((lang) => ({
+      actions={languages?.length ? languages.map((lang) => ({
         name: t(`account:language.${lang}`).toString(),
         onPress: () => {
           actionSheetRef.current?.close();
           changeLanguage(lang);
         },
-      }))}
+      })) : []}
     />
   );
 

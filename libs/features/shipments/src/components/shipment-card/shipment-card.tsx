@@ -241,7 +241,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
         width={'100%'}
         $gtSm={{ display: 'none' }}
       />
-      <Stack width={'100%'} $gtSm={{ display: 'none' }}>
+      <Stack width={'100%'} $gtMd={{ display: 'none' }}>
         <ShipmentCardActions
           shipment={shipment}
           variant={variant}

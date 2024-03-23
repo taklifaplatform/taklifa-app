@@ -18,7 +18,7 @@ export function ChannelDetailsScreen() {
   const router = useRouter()
   const { channel } = useChannelContext();
   const { client } = useChatContext();
-  const { redirectUserToActiveDashboard } = useAuth()
+  const { redirectUserToActiveDashboard, getUrlPrefix } = useAuth()
 
   const [muted, setMuted] = useState(
     client?.mutedChannels.some((mute) => mute.channel?.id === channel?.id),
@@ -45,10 +45,7 @@ export function ChannelDetailsScreen() {
     if (client?.user?.id) {
       await channel.removeMembers([client?.user?.id]);
     }
-    redirectUserToActiveDashboard({
-      pushRoute: false
-    })
-    router.push('/chat');
+    redirectUserToActiveDashboard()
   };
 
   return (
@@ -170,7 +167,7 @@ export function ChannelDetailsScreen() {
               title='Photos and Videos'
               subTitle='View all shared photos and videos in this group'
               onPress={async () => {
-                router.push(`/chat/channels/${channel.id}/images`);
+                router.push(`${getUrlPrefix}/chat/channels/${channel.id}/images`);
               }}
 
               borderBottomColor='$gray5'

@@ -8,7 +8,7 @@ import { t } from 'i18next';
 import { useRef, useState } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import MapView from 'react-native-maps';
-import { Button, Stack, View, YStack, isWeb } from 'tamagui';
+import { Button, Stack, useStyle } from 'tamagui';
 
 
 const initialCamera = {
@@ -57,27 +57,29 @@ export function HomeScreen() {
       </MapView>
     );
   //List
+  const listStyle = useStyle({
+    flex: '1',
+    padding: '$2',
+  })
   const renderList = () =>
     !showMap && (
-      <View marginLeft='$-2'>
-        <FlatList
-          refreshing={driversQuery.isFetching}
-          onRefresh={driversQuery.refetch}
-          style={{ flex: 1 }}
-          data={data?.data || []}
-          numColumns={2}
-          renderItem={({ item, index }) => (
-            <Stack $gtSm={{ flex: 1, flexBasis: 1 }}>
-              <UserCard
-                key={`stack-${item.id}-${index}`}
-                user={item}
-                margin='$2'
-                flex={1}
-              />
-            </Stack>
-          )}
-        />
-      </View>
+      <FlatList
+        refreshing={driversQuery.isFetching}
+        onRefresh={driversQuery.refetch}
+        style={listStyle}
+        data={data?.data || []}
+        numColumns={3}
+        renderItem={({ item, index }) => (
+          <Stack $gtSm={{ flex: 1, flexBasis: 1 }}>
+            <UserCard
+              key={`stack-${item.id}-${index}`}
+              user={item}
+              margin='$2'
+              flex={1}
+            />
+          </Stack>
+        )}
+      />
     );
 
   //switch button Map / List
@@ -100,7 +102,7 @@ export function HomeScreen() {
 
 
   return (
-    <YStack flex={1} backgroundColor='$gray3'>
+    <>
       <AppHeader
         title={t('navigation:customer-dashboard.home')}
         showSearchBar
@@ -112,7 +114,7 @@ export function HomeScreen() {
       {renderMap()}
       {renderList()}
       {renderSwitcher()}
-    </YStack>
+    </>
   );
 }
 

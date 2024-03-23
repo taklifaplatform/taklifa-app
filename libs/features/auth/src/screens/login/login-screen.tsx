@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 import { Paragraph, Stack, Text, Theme } from 'tamagui';
 import { AuthHeader } from '../../components/auth-header/auth-header';
-import { useUserRedirect } from '../../hooks/useUserRedirect';
 
 import { AuthService } from '@zix/api';
+import { useAuth } from '@zix/services/auth';
 import {
   SchemaForm,
   SubmitButton,
@@ -11,7 +11,6 @@ import {
   handleFormErrors,
 } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
-import { useAuth } from '@zix/services/auth';
 import { t } from 'i18next';
 import React, { useEffect } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
@@ -28,11 +27,10 @@ const LoginSchema = z
   });
 
 export const LoginScreen: React.FC = () => {
-  const { setAuthAccessToken, setAuthUser } = useAuth();
+  const { setAuthAccessToken, setAuthUser, redirectUserToActiveDashboard } = useAuth();
 
   const { params } = useParams();
   const updateParams = useUpdateParams();
-  const { redirectUser } = useUserRedirect();
   const form = useForm<z.infer<typeof LoginSchema>>();
 
   const { mutate } = useMutation({
@@ -44,7 +42,9 @@ export const LoginScreen: React.FC = () => {
     onSuccess({ data }) {
       setAuthAccessToken(data?.plainTextToken);
       setAuthUser(data?.user);
-      redirectUser(data?.user);
+      redirectUserToActiveDashboard({
+        user: data?.user,
+      })
     },
     onError(error: any) {
       handleFormErrors(form, error?.body?.errors);

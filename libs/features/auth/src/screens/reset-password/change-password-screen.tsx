@@ -1,13 +1,13 @@
+import { useAuth } from '@zix/services/auth';
+import { t } from 'i18next';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 import ChangePasswordForm from '../../forms/change-password-form/change-password-form';
-import { useUserRedirect } from '../../hooks/useUserRedirect';
-import { t } from 'i18next';
 
 export const ChangePasswordScreen = () => {
-  const { redirectUser } = useUserRedirect();
+  const { redirectUserToActiveDashboard } = useAuth();
 
   return (
-    <ChangePasswordForm onSuccess={redirectUser}>
+    <ChangePasswordForm onSuccess={user => redirectUserToActiveDashboard({ user })}>
       <AuthHeader
         showIcon={false}
         activeStep={3}

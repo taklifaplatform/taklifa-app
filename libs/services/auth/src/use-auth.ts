@@ -1,11 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import {
-  AuthenticatedUserTransformer,
-  AuthService,
-  OpenAPI,
-  UserService,
-} from '@zix/api';
+import { AuthenticatedUserTransformer, OpenAPI, UserService } from '@zix/api';
 import { useAtom } from 'jotai';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useRouter } from 'solito/router';
@@ -36,8 +31,7 @@ export interface AuthHelpers {
   requestedAccountType: string;
   setRequestedAccountType: (accountType: AUTH_ROLE_TYPE) => void;
   registerSteps: number;
-  getRoleUrlPrefix: (role: string) => string;
-  currentUrlPrefix: string;
+  getUrlPrefix: string;
 }
 
 export function useAuth(): AuthHelpers {
@@ -119,17 +113,18 @@ export function useAuth(): AuthHelpers {
     return `https://ui-avatars.com/api.jpg?${params.toString()}`;
   }, [user]);
 
-  function getRoleUrlPrefix(role: string) {
-    if (role === 'solo_driver') {
-      return '/solo-driver';
-    }
+  const getUrlPrefix = useMemo(() => {
+    // if (role === 'solo_driver') {
+    //   return '/solo-driver';
+    // }
 
-    if (['company_owner', 'company_manager', 'company_driver'].includes(role)) {
-      return '/company';
-    }
+    // if (['company_owner', 'company_manager', 'company_driver'].includes(role)) {
+    //   return '/company';
+    // }
 
-    return '/customer';
-  }
+    // return '/customer';
+    return '/app';
+  }, []);
 
   const redirectUserToActiveDashboard = useCallback(
     (
@@ -139,17 +134,15 @@ export function useAuth(): AuthHelpers {
       },
     ) => {
       const redirect = options.pushRoute ? router.push : router.replace;
-      const activeRoleName =
-        options?.user?.active_role?.name || user?.active_role?.name || 'customer';
 
-      redirect(getRoleUrlPrefix(activeRoleName as string));
+      redirect(getUrlPrefix);
 
       setAuthUser({
         ...user,
         ...(options.user || {}),
       });
     },
-    [router, user],
+    [router.push, router.replace, getUrlPrefix, setAuthUser, user],
   );
 
   function logout() {
@@ -162,7 +155,7 @@ export function useAuth(): AuthHelpers {
       //
     }
 
-    router.replace('/customer');
+    router.replace('/app');
     router.push('/auth/login');
   }
 
@@ -179,10 +172,6 @@ export function useAuth(): AuthHelpers {
     OpenAPI.TOKEN = authAccessToken;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authAccessToken, user]);
-
-  const currentUrlPrefix = useMemo(() => {
-    return getRoleUrlPrefix(activeRole)
-  }, [activeRole])
 
   return {
     activeRole,
@@ -201,7 +190,6 @@ export function useAuth(): AuthHelpers {
     setRequestedAccountType,
     registerSteps,
 
-    getRoleUrlPrefix,
-    currentUrlPrefix,
+    getUrlPrefix,
   };
 }

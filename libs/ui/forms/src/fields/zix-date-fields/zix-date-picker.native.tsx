@@ -43,7 +43,7 @@ export const ZixDatePicker: React.FC<ZixDateFieldProps> = ({
         <Sheet.Overlay />
         <Sheet.Handle />
         <Sheet.Frame>
-          <YStack padding='$4'>
+          <YStack padding='$4' gap='$6'>
 
             <DateTimePicker
               textColor='red'

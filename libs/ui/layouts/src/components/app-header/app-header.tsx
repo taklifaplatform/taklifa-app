@@ -1,13 +1,13 @@
-import { Search } from '@tamagui/lucide-icons';
+import { Bell, PlusSquare, ScanBarcode, Search } from '@tamagui/lucide-icons';
 import { useAuth } from '@zix/services/auth';
 import { UserAvatar } from '@zix/ui/common';
 import { ZixInput, ZixInputProps } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
-import Head from 'next/head';
 import { useCallback } from 'react';
 import { useRouter } from 'solito/router';
-import { Button, ColorTokens, H4, View, XStack, YStack, isWeb } from 'tamagui';
+import { Button, ColorTokens, H4, View, XStack, YStack } from 'tamagui';
+import { AppHeaderWrapper } from './app-header-wrapper';
 
 export type AppHeaderProps = {
   searchProps?: ZixInputProps
@@ -17,7 +17,6 @@ export type AppHeaderProps = {
   headerRight?: () => React.ReactNode;
   title?: string;
   headerBackgroundColor?: ColorTokens | 'transparent';
-  hideOnWeb?: boolean;
 };
 
 export const AppHeader: React.FC<AppHeaderProps> = ({
@@ -27,37 +26,38 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   headerRight,
   headerTitle,
   title,
-  hideOnWeb
 }) => {
-  const { user, isLoggedIn } = useAuth();
+  const { user, isLoggedIn, getUrlPrefix } = useAuth();
   const router = useRouter();
 
   const onAvatarPress = useCallback(() => {
     if (isLoggedIn) {
-      router.push(`/users/${user?.id}`);
+      router.push(`${getUrlPrefix}/users/${user?.id}`);
     } else {
       router.push('/auth/login');
     }
-  }, [isLoggedIn, router, user?.id]);
+  }, [isLoggedIn, router, user, getUrlPrefix]);
 
   const renderSearchBar = () => showSearchBar && (
-    <View flex={1} paddingHorizontal="$4" paddingVertical='$2'>
+    <View theme='light' paddingHorizontal="$4" paddingVertical='$2' $gtMd={{ flex: 1 }}>
       <ZixInput
         height="$4"
         leftIcon={() => <Search size="$1.5" />}
+        rightIcon={() => <ScanBarcode size="$1.5" />}
         placeholder={'Search here'}
         {...searchProps}
       />
     </View>
   )
 
-  const renderUserAvatar = () => (
-    <Button
-      unstyled
-      icon={<UserAvatar user={user} size="$2.5" />}
-      onPress={onAvatarPress}
-    />
-  );
+  const renderUserAvatar = () =>
+    !showBackButton && (
+      <Button
+        unstyled
+        icon={<UserAvatar user={user} size="$2.5" />}
+        onPress={onAvatarPress}
+      />
+    );
 
   const renderBackButton = () =>
     showBackButton && (
@@ -69,25 +69,40 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
       />
     );
 
-  if (hideOnWeb && isWeb) {
-    return null;
-  }
+  const renderNotificationsButton = () =>
+    !showBackButton && (
+      <XStack>
+        <Button
+          unstyled
+          size="$2"
+          icon={<Bell size="$1" fill="#000" />}
+          onPress={() => router.push(`${getUrlPrefix}/notifications`)}
+        />
+      </XStack>
+    );
 
-  return (
-    <>
-      <Head>
-        <title>{title ?? ''} - {t('common:app_name')}</title>
-      </Head>
-      <YStack backgroundColor='$color2' paddingBottom="$2" position='sticky' top={0} zIndex={100} >
+  const renderDesktopHeader = () => (
+    <YStack
+      display='none'
+      $gtMd={{ display: 'block' }}
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      position='sticky'
+      top={0}
+      zIndex={100}
+      backgroundColor='$color2'
+    >
+      <AppHeaderWrapper>
         <XStack
-          minHeight='$6'
           padding="$4"
           paddingVertical="$2"
           alignItems="center"
           justifyContent="space-between"
         >
-          <XStack flex={0.25} justifyContent="flex-start">
+          <XStack flex={0.25} alignItems='center' gap="$4"
+          >
             {renderBackButton()}
+
             {headerTitle ? (
               headerTitle()
             ) : (
@@ -96,14 +111,61 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
               </H4>
             )}
           </XStack>
-          {renderSearchBar()}
-          <XStack flex={0.25} justifyContent="flex-end">
-            {headerRight ? headerRight() : renderUserAvatar()}
+          <XStack flex={0.5}>
+            {renderSearchBar()}
+          </XStack>
+
+          <XStack>
+            {headerRight ? headerRight() : (
+              <Button flex={1} theme='accent' variant='outlined' icon={PlusSquare}>
+                Send New Shipments
+              </Button>
+            )}
           </XStack>
         </XStack>
-      </YStack>
-    </>
+      </AppHeaderWrapper>
+    </YStack>
+  )
 
+  const renderMobileHeader = () => (
+    <YStack theme='accent' backgroundColor='$color9' paddingBottom='$2' $gtMd={{ display: 'none' }}>
+      <AppHeaderWrapper>
+        <YStack>
+          <XStack
+            padding="$4"
+            paddingVertical="$2"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <XStack flex={0.25} justifyContent="flex-start">
+              {renderUserAvatar()}
+              {renderBackButton()}
+            </XStack>
+            <XStack flex={0.5} justifyContent="space-around">
+              {headerTitle ? (
+                headerTitle()
+              ) : (
+                <H4 fontSize={15} numberOfLines={1}>
+                  {title ?? t('common:app_name')}
+                </H4>
+              )}
+            </XStack>
+            <XStack flex={0.25} justifyContent="flex-end">
+              {headerRight ? headerRight() : renderNotificationsButton()}
+            </XStack>
+          </XStack>
+
+          {renderSearchBar()}
+        </YStack>
+      </AppHeaderWrapper>
+    </YStack>
+  )
+
+  return (
+    <>
+      {renderDesktopHeader()}
+      {renderMobileHeader()}
+    </>
   );
 };
 

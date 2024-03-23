@@ -23,13 +23,13 @@ export const UserCard: React.FC<UserCardProps> = ({
   }, [user?.companies]);
 
   function onPress() {
-    router.push(`/users/${user.id}`);
+    router.push(`/app/users/${user.id}`);
   }
 
   return (
     <YStack
       onPress={onPress}
-      backgroundColor='$color2'
+      backgroundColor='$color1'
       borderRadius='$5'
       paddingVertical={padding}
       gap="$4"

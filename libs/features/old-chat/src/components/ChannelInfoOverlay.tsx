@@ -141,19 +141,19 @@ export const ChannelInfoOverlay = (props: ChannelInfoOverlayProps) => {
     }
     showScreen.value = show
       ? withTiming(1, {
-          duration: 150,
-          easing: Easing.in(Easing.ease),
-        })
+        duration: 150,
+        easing: Easing.in(Easing.ease),
+      })
       : withTiming(
-          0,
-          {
-            duration: 150,
-            easing: Easing.out(Easing.ease),
-          },
-          () => {
-            runOnJS(reset)();
-          },
-        );
+        0,
+        {
+          duration: 150,
+          easing: Easing.out(Easing.ease),
+        },
+        () => {
+          runOnJS(reset)();
+        },
+      );
   };
 
   useEffect(() => {
@@ -191,12 +191,12 @@ export const ChannelInfoOverlay = (props: ChannelInfoOverlayProps) => {
         translateY.value =
           evt.velocityY > 1000
             ? withDecay({
-                velocity: evt.velocityY,
-              })
+              velocity: evt.velocityY,
+            })
             : withTiming(screenHeight, {
-                duration: 200,
-                easing: Easing.out(Easing.ease),
-              });
+              duration: 200,
+              easing: Easing.out(Easing.ease),
+            });
       } else {
         translateY.value = withTiming(0);
         overlayOpacity.value = withTiming(1);
@@ -231,39 +231,39 @@ export const ChannelInfoOverlay = (props: ChannelInfoOverlayProps) => {
   // magic number 8 used as fontSize is 16 so assuming average character width of half
   const maxWidth = channel
     ? Math.floor(
-        width / 8 -
-          Object.keys(channel.state.members || {}).length.toString().length,
-      )
+      width / 8 -
+      Object.keys(channel.state.members || {}).length.toString().length,
+    )
     : 0;
   const channelName = channel
     ? channel.data?.name ||
-      Object.values(channel.state.members)
-        .slice(0)
-        .reduce((returnString, currentMember, index, originalArray) => {
-          const returnStringLength = returnString.length;
-          const currentMemberName =
-            currentMember.user?.name ||
-            currentMember.user?.id ||
-            'Unknown User';
-          // a rough approximation of when the +Number shows up
-          if (returnStringLength + (currentMemberName.length + 2) < maxWidth) {
-            if (returnStringLength) {
-              returnString += `, ${currentMemberName}`;
-            } else {
-              returnString = currentMemberName;
-            }
+    Object.values(channel.state.members)
+      .slice(0)
+      .reduce((returnString, currentMember, index, originalArray) => {
+        const returnStringLength = returnString.length;
+        const currentMemberName =
+          currentMember.user?.name ||
+          currentMember.user?.id ||
+          'Unknown User';
+        // a rough approximation of when the +Number shows up
+        if (returnStringLength + (currentMemberName.length + 2) < maxWidth) {
+          if (returnStringLength) {
+            returnString += `, ${currentMemberName}`;
           } else {
-            const remainingMembers = originalArray.length - index;
-            returnString += `, +${remainingMembers}`;
-            originalArray.splice(1); // exit early
+            returnString = currentMemberName;
           }
-          return returnString;
-        }, '')
+        } else {
+          const remainingMembers = originalArray.length - index;
+          returnString += `, +${remainingMembers}`;
+          originalArray.splice(1); // exit early
+        }
+        return returnString;
+      }, '')
     : '';
   const otherMembers = channel
     ? Object.values(channel.state.members).filter(
-        (member) => member.user?.id !== clientId,
-      )
+      (member) => member.user?.id !== clientId,
+    )
     : [];
 
   return (
@@ -318,15 +318,13 @@ export const ChannelInfoOverlay = (props: ChannelInfoOverlayProps) => {
                             ? otherMembers[0].user?.online
                               ? 'Online'
                               : `Last Seen ${dayjs(
-                                  otherMembers[0].user?.last_active,
-                                ).fromNow()}`
-                            : `${
-                                Object.keys(channel.state.members).length
-                              } Members, ${
-                                Object.values(channel.state.members).filter(
-                                  (member) => !!member.user?.online,
-                                ).length
-                              } Online`}
+                                otherMembers[0].user?.last_active,
+                              ).fromNow()}`
+                            : `${Object.keys(channel.state.members).length
+                            } Members, ${Object.values(channel.state.members).filter(
+                              (member) => !!member.user?.online,
+                            ).length
+                            } Online`}
                         </Text>
                         <FlatList
                           contentContainerStyle={styles.flatListContent}
@@ -436,16 +434,14 @@ export const ChannelInfoOverlay = (props: ChannelInfoOverlayProps) => {
                                 channel.delete();
                                 setOverlay('none');
                               },
-                              subtext: `Are you sure you want to delete this ${
-                                otherMembers.length === 1
+                              subtext: `Are you sure you want to delete this ${otherMembers.length === 1
                                   ? 'conversation'
                                   : 'group'
-                              }?`,
-                              title: `Delete ${
-                                otherMembers.length === 1
+                                }?`,
+                              title: `Delete ${otherMembers.length === 1
                                   ? 'Conversation'
                                   : 'Group'
-                              }`,
+                                }`,
                             });
                             setOverlay('confirmation');
                           }
