@@ -5,6 +5,7 @@ import { YStack } from 'tamagui';
 import { useAuth } from '@zix/services/auth';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 import InlineItemSelect from '../../components/inline-item-select/inline-item-select';
+import { FormWrapper } from '@zix/ui/forms';
 
 /**
  * Represents the screen for selecting the account type during the registration process.
@@ -23,7 +24,7 @@ export const SelectAccountTypeScreen: React.FC = () => {
   }
 
   return (
-    <YStack flex={1}>
+    <FormWrapper.Body>
       <AuthHeader
         iconName="avatar"
         canGoNext={!!requestedAccountType}
@@ -53,7 +54,7 @@ export const SelectAccountTypeScreen: React.FC = () => {
           }}
         />
       </YStack>
-    </YStack>
+    </FormWrapper.Body>
   );
 };
 

@@ -1,4 +1,4 @@
-import { PlusSquare, XCircle } from "@tamagui/lucide-icons";
+import { Plus, PlusSquare, X, XCircle } from "@tamagui/lucide-icons";
 import { Button, Text, XStack, useStyle } from "tamagui";
 
 import { IconProps } from "@tamagui/helpers-icon";
@@ -17,7 +17,7 @@ export const ZixFilesInputMediaPickerPreviewer: React.FC<ZixMediaPreviewerProps>
     color: '$gray11'
   })
   const redStyle = useStyle({
-    color: '$red10'
+    color: '$color10'
   })
   const inputText = useMemo(() => {
     return previews?.length
@@ -36,14 +36,14 @@ export const ZixFilesInputMediaPickerPreviewer: React.FC<ZixMediaPreviewerProps>
     >
       <Text fontSize='$3'>{inputText}</Text>
 
-      <XStack>
+      <XStack gap='$2' paddingHorizontal='$2'>
         {
           !!previews?.length && (
             <Button
+              theme='error'
               width="$3"
-              variant="outlined"
-              color='$red1'
-              icon={(props: IconProps) => <XCircle {...props} fill={redStyle.color} />}
+              color='$color9'
+              icon={(props: IconProps) => <X {...props} />}
               scaleIcon={1.8}
               onPress={() => {
                 previews?.map((item) => onRemoveMedia?.(item as MediaTransformer))
@@ -53,9 +53,8 @@ export const ZixFilesInputMediaPickerPreviewer: React.FC<ZixMediaPreviewerProps>
         }
         <Button
           width="$3"
-          variant="outlined"
-          color='$gray1'
-          icon={(props: IconProps) => <PlusSquare {...props} fill={style.color} />}
+          color='$color10'
+          icon={(props: IconProps) => <Plus {...props} />}
           scaleIcon={1.8}
           onPress={onPress}
         />

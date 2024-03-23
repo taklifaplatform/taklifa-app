@@ -65,7 +65,7 @@ export function HomeScreen() {
           onRefresh={driversQuery.refetch}
           style={{ flex: 1 }}
           data={data?.data || []}
-          numColumns={2}
+          numColumns={3}
           renderItem={({ item, index }) => (
             <Stack $gtSm={{ flex: 1, flexBasis: 1 }}>
               <UserCard

@@ -147,6 +147,7 @@ export function HomeScreen() {
             user={item}
             marginHorizontal='$4'
             marginVertical='$2'
+            // backgroundColor='$color2'
           />
         )}
       />
@@ -183,6 +184,7 @@ export function HomeScreen() {
         user={item}
         height={USER_CARD_HEIGHT}
         marginHorizontal='$4'
+        backgroundColor='$color2'
       />
     );
   };
@@ -198,7 +200,7 @@ export function HomeScreen() {
         <Button
           icon={X}
           scaleIcon={1.5}
-          backgroundColor='$gray1'
+          backgroundColor='$color1'
           size='$3'
           width='$6'
           position='absolute'

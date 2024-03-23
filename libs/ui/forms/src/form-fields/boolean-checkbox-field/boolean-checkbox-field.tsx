@@ -44,7 +44,7 @@ export const BooleanCheckboxField: React.FC<BooleanCheckboxFieldProps> = ({
         ref={field.ref}
       >
         <Checkbox.Indicator>
-          <Check color={'$color1'} size={'$1'} />
+          <Check color='$color12' size='$1' />
         </Checkbox.Indicator>
       </Checkbox>
     </FormFieldContainer>
