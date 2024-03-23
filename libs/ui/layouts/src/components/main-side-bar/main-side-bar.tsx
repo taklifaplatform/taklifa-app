@@ -1,5 +1,5 @@
 import { useMultiLang } from '@zix/i18n';
-import { useAuth } from '@zix/services/auth';
+import { USER_ROLES, useAuth } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import React from 'react';
 
@@ -88,11 +88,26 @@ export const MainSideBar: React.FC<MainSideBarProps> = (props) => {
           </MenuItem>
 
 
-          <MenuItem
-            title='Jobs'
-            href={`${getUrlPrefix}/jobs`}
-            icon={<CustomIcon name="job" />}
-          />
+          {
+            activeRole !== USER_ROLES.customer && (
+              <MenuItem
+                title='Jobs'
+                href={`${getUrlPrefix}/jobs`}
+                icon={<CustomIcon name="job" />}
+              />
+            )
+          }
+
+          {
+            activeRole === USER_ROLES.customer && (
+              <MenuItem
+                title='Stores'
+                href={`${getUrlPrefix}/stores`}
+                icon={<CustomIcon name="store" />}
+              />
+            )
+          }
+
 
           <Separator borderColor="$color5" marginVertical='$4' borderWidth="$0.5" />
           <MenuItem
