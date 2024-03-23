@@ -3,33 +3,22 @@ import { USER_ROLES, useAuth } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import React from 'react';
 
-import { LogOut } from '@tamagui/lucide-icons';
 import { useThemeSetting } from '@tamagui/next-theme';
 import { useQuery } from '@tanstack/react-query';
 import { ShipmentService } from '@zix/api';
 import { ZixLinkButton } from '@zix/ui/common';
+import { FlatList } from 'react-native';
 import { Separator, ThemeableStackProps, View, YStack } from 'tamagui';
 import AccountSwitcher from '../account-switcher/account-switcher';
 import { MenuItem } from './menu-item';
-import { FlatList } from 'react-native';
 
 export type MainSideBarProps = ThemeableStackProps & {
   //
 }
 
-type MenuItemType = {
-  title: string
-  icon: () => React.ReactNode
-  href?: string
-  count?: number
-  onPress?: () => void
-  subItems?: MenuItemType[]
-}
-
 export const MainSideBar: React.FC<MainSideBarProps> = (props) => {
   const { activeLang } = useMultiLang();
-  const { activeRole, getUrlPrefix, logout } = useAuth()
-  const themeSetting = useThemeSetting()
+  const { activeRole, getUrlPrefix } = useAuth()
 
   const { data: shipmentsData } = useQuery({
     queryFn: () =>
@@ -121,16 +110,11 @@ export const MainSideBar: React.FC<MainSideBarProps> = (props) => {
             icon={<CustomIcon name="chat" />}
           />
           <Separator borderColor="$color5" marginVertical='$4' borderWidth="$0.5" />
+
           <MenuItem
-            title='Theme'
-            onPress={themeSetting.toggle}
-            icon={<CustomIcon name="theme" />}
-            rightLabel={themeSetting.current}
-          />
-          <MenuItem
-            title='Logout'
-            onPress={logout}
-            icon={<LogOut />}
+            title='Settings'
+            href={`${getUrlPrefix}/account/settings`}
+            icon={<CustomIcon name='settings' />}
           />
 
         </YStack>

@@ -4,6 +4,7 @@ import { useThemeSetting } from '@tamagui/next-theme'
 import { useAuth } from '@zix/services/auth'
 import { Settings } from '@zix/ui/common'
 import { usePathname } from '@zix/utils'
+import { useCallback } from 'react'
 import { useLink } from 'solito/link'
 import {
   Paragraph,
@@ -14,7 +15,12 @@ import {
 
 
 export const AccountSettingsMenu = () => {
+  const { getUrlPrefix, user } = useAuth()
   const pathname = usePathname()
+
+  const getUrl = useCallback((path: string) => {
+    return `${getUrlPrefix}/${path}`;
+  }, [getUrlPrefix])
 
   return (
     <YStack flex={1} gap="$2" justifyContent="space-between">
@@ -25,19 +31,19 @@ export const AccountSettingsMenu = () => {
               <Settings.Item
                 icon={CircleUser}
                 isActive={
-                  pathname === '/account'
+                  pathname === getUrl(`/users/${user.id}`)
                 }
                 {...useLink({
-                  href: '/account'
+                  href: getUrl(`/users/${user.id}`)
                 })}
-                accentColor="$green9"
+                accentColor="$color6"
               >
                 Profile
               </Settings.Item>
               <Settings.Item
                 icon={UserRoundCog}
-                isActive={pathname === '/account/edit'}
-                {...useLink({ href: '/account/edit' })}
+                isActive={pathname === getUrl('/account/edit')}
+                {...useLink({ href: getUrl('/account/edit') })}
                 accentColor="$green9"
               >
                 Edit Profile
@@ -51,16 +57,16 @@ export const AccountSettingsMenu = () => {
             <Settings.Group $gtSm={{ space: '$2' }}>
               <Settings.Item
                 icon={Lock}
-                isActive={pathname === '/account/settings/change-password'}
-                {...useLink({ href: '/account/settings/change-password' })}
+                isActive={pathname === getUrl('/account/settings/change-password')}
+                {...useLink({ href: getUrl('/account/settings/change-password') })}
                 accentColor="$green9"
               >
                 Change Password
               </Settings.Item>
               <Settings.Item
                 icon={Mail}
-                isActive={pathname === '/account/settings/change-email'}
-                {...useLink({ href: '/account/settings/change-email' })}
+                isActive={pathname === getUrl('/account/settings/change-email')}
+                {...useLink({ href: getUrl('/account/settings/change-email') })}
                 accentColor="$green9"
               >
                 Change Email

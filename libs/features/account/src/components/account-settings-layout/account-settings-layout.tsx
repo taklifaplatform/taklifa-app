@@ -1,7 +1,7 @@
+import { useAuth } from "@zix/services/auth"
 import { FullScreenSpinner } from "@zix/ui/common"
 import { XStack, YStack } from "tamagui"
 import AccountSettingsMenu from "../account-settings-menu/account-settings-menu"
-import { useAuth } from "@zix/services/auth"
 
 
 export type SettingsLayoutProps = {
@@ -17,14 +17,17 @@ export type SettingsLayoutProps = {
 
 export const AccountSettingsLayout = ({ children, isSettingsHome = false }: SettingsLayoutProps) => {
   const { isLoading, user } = useAuth()
-  if (isLoading || !user) {
-    return <FullScreenSpinner />
-  }
+
+  const renderContent = () => (isLoading || !user) ? (
+    <FullScreenSpinner />
+  ) : (
+    <YStack width="100%">{children}</YStack>
+  )
 
   return (
     <XStack flex={1}>
       <YStack
-        backgroundColor="$color1"
+        backgroundColor="$color4"
         $sm={{ flex: 1, display: isSettingsHome ? 'flex' : 'none' }}
         // this file is web-only so we can safely use CSS
         style={{
@@ -40,7 +43,7 @@ export const AccountSettingsLayout = ({ children, isSettingsHome = false }: Sett
         <AccountSettingsMenu />
       </YStack>
       <YStack marginVertical="$10" flex={1} alignItems="center" $sm={{ display: isSettingsHome ? 'none' : 'block' }}>
-        <YStack width="100%">{children}</YStack>
+        {renderContent()}
       </YStack>
     </XStack>
   )

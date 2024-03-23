@@ -59,7 +59,7 @@ export const SettingsScreen = () => {
                     <CustomIcon name="lock" color="$color5" {...props} />
                   )}
                   isActive={pathname === getUrl('/account/settings/change-password')}
-                  {...useLink({ href: ('/account/settings/change-password') })}
+                  {...useLink({ href: getUrl('/account/settings/change-password') })}
                   accentColor="$green9"
                 >
                   {t('auth:change_password.title')}
@@ -151,13 +151,13 @@ const SettingsLanguageAction = () => {
     <ActionSheet
       ref={actionSheetRef}
       title={t('account:language.select_language')}
-      actions={languages.map((lang) => ({
+      actions={languages?.length ? languages.map((lang) => ({
         name: t(`account:language.${lang}`).toString(),
         onPress: () => {
           actionSheetRef.current?.close();
           changeLanguage(lang);
         },
-      }))}
+      })) : []}
     />
   );
 
