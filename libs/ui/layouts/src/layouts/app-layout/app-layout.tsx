@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, XStack } from 'tamagui';
+import { ScrollView, View, XStack } from 'tamagui';
 import { MainSideBar } from '../../components/main-side-bar/main-side-bar';
 import AppBottomBar from '../../components/app-bottom-bar/app-bottom-bar';
 
@@ -18,10 +18,8 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
         $gtMd={{ display: 'block' }}
       />
 
-      <View flex={1} backgroundColor="$color2" height='100vh' $gtMD={{ height: 'unset' }}>
-        <View flex={1} position='relative' $gtMD={{ overflow: 'scroll' }}>
-          {children}
-        </View>
+      <View flex={1} backgroundColor="$color2" height='100vh'>
+        {children}
         <AppBottomBar $gtMd={{ display: 'none' }} />
       </View>
     </XStack>

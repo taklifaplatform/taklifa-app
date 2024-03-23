@@ -82,7 +82,16 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
     );
 
   const renderDesktopHeader = () => (
-    <YStack display='none' $gtMd={{ display: 'block' }}>
+    <YStack
+      display='none'
+      $gtMd={{ display: 'block' }}
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      position='sticky'
+      top={0}
+      zIndex={100}
+      backgroundColor='$color2'
+    >
       <AppHeaderWrapper>
         <XStack
           padding="$4"
