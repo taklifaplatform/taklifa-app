@@ -11,6 +11,4 @@ export * from './screens/change-password-screen/change-password-screen';
 
 export * from './screens/change-email-screen/change-email-screen';
 
-export * from './screens/account-settings-screen/account-settings-screen';
-
 export * from './screens/settings-screen/settings-screen';

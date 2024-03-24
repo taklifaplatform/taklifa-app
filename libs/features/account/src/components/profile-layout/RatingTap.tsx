@@ -12,6 +12,7 @@ import { CustomIcon } from '@zix/ui/icons';
 import { RatingCard } from './RatingCard';
 import { TextInput } from 'react-native';
 
+//
 export function RatingTap() {
   const data = [
     {

@@ -1,7 +1,7 @@
 import { DriverTransformer } from '@zix/api';
 import React, { useMemo } from 'react';
 
-import { DebugObject, ZixTab } from '@zix/ui/common';
+import { ZixTab } from '@zix/ui/common';
 import AboutUserTab from '../about-user-tab/about-user-tab';
 import UserReviewsTab from '../user-reviews-tab/user-reviews-tab';
 import UserVehicleTab from '../user-vehicle-tab/user-vehicle-tab';

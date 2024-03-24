@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import AccountSettingsScreen from './account-settings-screen';
+import AddItemsShipmentScreen from './add-items-shipment-screen';
 
-describe('AccountSettingsScreen', () => {
+describe('AddItemsShipmentScreen', () => {
   it('should render successfully', () => {
-    const { root } = render(<AccountSettingsScreen />);
+    const { root } = render(<AddItemsShipmentScreen />);
     expect(root).toBeTruthy();
   });
 });

@@ -1,5 +1,7 @@
 export * from './components';
 
+export * from './screens/shipment-manager';
+
 export * from './screens/shipment-reject-screen/shipment-reject-screen';
 
 export * from './screens/shipment-detail-screen/shipment-detail-screen';

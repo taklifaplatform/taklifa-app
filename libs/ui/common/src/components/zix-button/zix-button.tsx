@@ -1,6 +1,7 @@
 import {
   Button,
   ButtonProps,
+  Spinner,
   TamaguiComponent,
   styled
 } from 'tamagui';
@@ -32,7 +33,7 @@ const CustomButton = styled(Button, {
 });
 
 export const ZixButton = forwardRef(function ZixButtonFunc(
-  { display, ...props }: ZixButtonProps,
+  { display, loading, ...props }: ZixButtonProps,
   ref,
 ) {
   return (
@@ -49,8 +50,12 @@ export const ZixButton = forwardRef(function ZixButtonFunc(
       ref={ref as TamaguiComponent}
       // onPress={() => href ? router.push(href) : null}
       {...(display
-        ? { [display]: true}
+        ? { [display]: true }
         : {})}
+      {...(loading && {
+        icon: <Spinner />,
+        disabled: true,
+      })}
     />
   );
 });
