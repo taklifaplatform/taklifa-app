@@ -5,7 +5,7 @@ import { Paragraph, ScrollView, YStack, useMedia } from 'tamagui';
 import { CustomIcon } from '@zix/ui/icons';
 import { usePathname } from '@zix/utils';
 import { useMultiLang } from '@zix/i18n';
-import { useThemeSetting } from '@zix/app-providers';
+import { useThemeSetting } from '@zix/providers';
 import { t } from 'i18next';
 import { useCallback, useRef } from 'react';
 import { Linking } from 'react-native';
@@ -23,17 +23,16 @@ export const SettingsScreen = () => {
   const pathname = usePathname();
   const { getUrlPrefix } = useAuth();
 
-  const getUrl = useCallback((path: string) => {
-    return `${getUrlPrefix}/${path}`;
-  }, [getUrlPrefix])
+  const getUrl = useCallback(
+    (path: string) => {
+      return `${getUrlPrefix}/${path}`;
+    },
+    [getUrlPrefix],
+  );
 
   return (
     <>
-      <AppHeader
-        showBackButton
-        title={t('account:settings.title')}
-
-      />
+      <AppHeader showBackButton title={t('account:settings.title')} />
 
       <YStack flex={1} gap="$2" justifyContent="space-between">
         <ScrollView>
@@ -58,8 +57,12 @@ export const SettingsScreen = () => {
                   icon={(props: IconProps) => (
                     <CustomIcon name="lock" color="$color5" {...props} />
                   )}
-                  isActive={pathname === getUrl('/account/settings/change-password')}
-                  {...useLink({ href: getUrl('/account/settings/change-password') })}
+                  isActive={
+                    pathname === getUrl('/account/settings/change-password')
+                  }
+                  {...useLink({
+                    href: getUrl('/account/settings/change-password'),
+                  })}
                   accentColor="$green9"
                 >
                   {t('auth:change_password.title')}
@@ -68,8 +71,12 @@ export const SettingsScreen = () => {
                   icon={(props: IconProps) => (
                     <CustomIcon name="mail" color="$color5" {...props} />
                   )}
-                  isActive={pathname === getUrl('/account/settings/change-email')}
-                  {...useLink({ href: getUrl('/account/settings/change-email') })}
+                  isActive={
+                    pathname === getUrl('/account/settings/change-email')
+                  }
+                  {...useLink({
+                    href: getUrl('/account/settings/change-email'),
+                  })}
                   accentColor="$green9"
                 >
                   {t('account:change_email.title')}
@@ -112,7 +119,9 @@ export const SettingsScreen = () => {
                   icon={(props: IconProps) => (
                     <CustomIcon name="share" color="$color5" {...props} />
                   )}
-                  onPress={() => Linking.openURL('https://x.com/sawaedlogistics')}
+                  onPress={() =>
+                    Linking.openURL('https://x.com/sawaedlogistics')
+                  }
                   accentColor={brandColors.twitter}
                 >
                   {t('account:social.twitter_title')}
@@ -139,7 +148,6 @@ export const SettingsScreen = () => {
         </Paragraph>
       </YStack>
     </>
-
   );
 };
 
@@ -151,13 +159,17 @@ const SettingsLanguageAction = () => {
     <ActionSheet
       ref={actionSheetRef}
       title={t('account:language.select_language')}
-      actions={languages?.length ? languages.map((lang) => ({
-        name: t(`account:language.${lang}`).toString(),
-        onPress: () => {
-          actionSheetRef.current?.close();
-          changeLanguage(lang);
-        },
-      })) : []}
+      actions={
+        languages?.length
+          ? languages.map((lang) => ({
+              name: t(`account:language.${lang}`).toString(),
+              onPress: () => {
+                actionSheetRef.current?.close();
+                changeLanguage(lang);
+              },
+            }))
+          : []
+      }
     />
   );
 

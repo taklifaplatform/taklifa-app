@@ -16,7 +16,6 @@
     "baseUrl": ".",
     "paths": {
       "@zix/api": ["libs/api/src/index.ts"],
-      "@zix/app-providers": ["libs/app-providers/src/index.ts"],
       "@zix/features/account": ["libs/features/account/src/index.ts"],
       "@zix/features/auth": ["libs/features/auth/src/index.ts"],
       "@zix/features/chat": ["libs/features/chat/src/index.ts"],
@@ -31,6 +30,7 @@
       "@zix/features/support": ["libs/features/support/src/index.ts"],
       "@zix/features/users": ["libs/features/users/src/index.ts"],
       "@zix/i18n": ["libs/i18n/src/index.ts"],
+      "@zix/providers": ["libs/providers/src/index.ts"],
       "@zix/services/auth": ["libs/services/auth/src/index.ts"],
       "@zix/services/chat": ["libs/services/chat/src/index.ts"],
       "@zix/services/laravel-echo": ["libs/services/laravel-echo/src/index.ts"],
