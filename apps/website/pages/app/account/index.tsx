@@ -5,7 +5,6 @@ import { NextPageWithLayout } from '../../_app'
 
 export const Page: NextPageWithLayout = () => {
   return (
-    // <AccountScreen />
     <UserProfileScreen />
   )
 }

@@ -1,6 +1,6 @@
 
 
-import { AccountSettingsLayout, EditAccountScreen } from '@zix/features/account'
+import { EditAccountScreen } from '@zix/features/account'
 import { AppLayout } from '@zix/ui/layouts'
 import { NextPageWithLayout } from '../../_app'
 
@@ -12,7 +12,7 @@ export const Page: NextPageWithLayout = () => {
 
 Page.getLayout = (page) => (
   <AppLayout>
-    <AccountSettingsLayout isSettingsHome>{page}</AccountSettingsLayout>
+    {page}
   </AppLayout>
 )
 // export const getServerSideProps = userProtectedGetSSP()
