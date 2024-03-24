@@ -28,9 +28,6 @@
         "libs/features/notifications/src/index.ts"
       ],
       "@zix/features/shipments": ["libs/features/shipments/src/index.ts"],
-      "@zix/features/solo-driver-dashboard": [
-        "libs/features/solo-driver-dashboard/src/index.ts"
-      ],
       "@zix/features/support": ["libs/features/support/src/index.ts"],
       "@zix/features/users": ["libs/features/users/src/index.ts"],
       "@zix/i18n": ["libs/i18n/src/index.ts"],
