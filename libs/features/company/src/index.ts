@@ -9,5 +9,3 @@ export * from './screens/manage/vehicles/update-vehicle-screen/update-vehicle-sc
 export * from './screens/manage/vehicles/create-vehicle-screen/create-vehicle-screen';
 
 export * from './screens/manage/vehicles/vehicles-list-screen/vehicles-list-screen';
-
-

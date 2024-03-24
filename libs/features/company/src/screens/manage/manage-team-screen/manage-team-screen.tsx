@@ -7,11 +7,10 @@ import MembersListScreen from '../members/members-list-screen/members-list-scree
 import VehiclesListScreen from '../vehicles/vehicles-list-screen/vehicles-list-screen';
 
 /* eslint-disable-next-line */
-export interface ManageTeamScreenProps { }
+export interface ManageTeamScreenProps {}
 
 export function ManageTeamScreen(props: ManageTeamScreenProps) {
-  const { user } = useAuth()
-
+  const { user } = useAuth();
 
   // taps
   const renderFilters = () => {

@@ -1,4 +1,4 @@
-import { UpdateCompanyScreen } from '@zix/features/companies-dashboard';
+import { UpdateCompanyScreen } from '@zix/features/company';
 import { AppHeader } from '@zix/ui/layouts';
 import React from 'react';
 

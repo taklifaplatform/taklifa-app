@@ -48,9 +48,7 @@ export const ManageTeamFabButton: React.FC = () => {
           icon: <Users size="$2" color="$color10" />,
           onPress: () => {
             actionSheetRef.current?.close();
-            router.push(
-              `/company/manage/drivers/invite`
-            );
+            router.push(`/company/manage/drivers/invite`);
           },
         },
         {

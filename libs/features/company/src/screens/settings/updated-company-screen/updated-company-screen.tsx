@@ -21,7 +21,7 @@ const UpdateCompanyFormSchema = z
     logo: formFields.image.describe('Logo // Add Company Logo'),
     name: formFields.text.min(2).max(150).describe(t('forms:company_name')),
     documents: formFields.files.describe(
-      t('Company Documents // Attach documents...')
+      t('Company Documents // Attach documents...'),
     ),
     // location: formFields.text
     //   .min(2)
@@ -34,7 +34,7 @@ const UpdateCompanyFormSchema = z
 
 export const UpdateCompanyScreen: React.FC = () => {
   const form = useForm<z.infer<typeof UpdateCompanyFormSchema>>();
-  const { user, refetchUser } = useAuth()
+  const { user, refetchUser } = useAuth();
   const toast = useToastController();
 
   const router = useRouter();

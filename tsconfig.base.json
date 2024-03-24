@@ -20,9 +20,7 @@
       "@zix/features/account": ["libs/features/account/src/index.ts"],
       "@zix/features/auth": ["libs/features/auth/src/index.ts"],
       "@zix/features/chat": ["libs/features/chat/src/index.ts"],
-      "@zix/features/companies-dashboard": [
-        "libs/features/companies-dashboard/src/index.ts"
-      ],
+      "@zix/features/company": ["libs/features/company/src/index.ts"],
       "@zix/features/complain": ["libs/features/complain/src/index.ts"],
       "@zix/features/contact-us": ["libs/features/contact-us/src/index.ts"],
       "@zix/features/map": ["libs/features/map/src/index.ts"],

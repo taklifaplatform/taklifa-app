@@ -1,5 +1,4 @@
-
-import { JobDetailsScreen } from '@zix/features/companies-dashboard';
+import { JobDetailsScreen } from '@zix/features/company';
 import { AppHeader } from '@zix/ui/layouts';
 import React from 'react';
 
