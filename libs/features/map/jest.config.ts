@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'features-customer-dashboard',
+  displayName: 'features-map',
   resolver: '@nx/jest/plugins/resolver',
   preset: 'jest-expo',
   transformIgnorePatterns: [

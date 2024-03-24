@@ -10,7 +10,6 @@ import { FlatList } from 'react-native-gesture-handler';
 import MapView from 'react-native-maps';
 import { Button, Stack, useStyle } from 'tamagui';
 
-
 const initialCamera = {
   center: {
     latitude: 24.713552,
@@ -27,30 +26,33 @@ export function HomeScreen() {
 
   const [showMap, setShowMap] = useState(true);
 
-  const [search, setSearch] = useState<string>()
+  const [search, setSearch] = useState<string>();
   const { data, ...driversQuery } = useQuery({
     queryFn() {
       return DriversService.fetchAllDrivers({
         perPage: 50,
-        search
+        search,
       });
     },
     queryKey: ['DriversService.fetchAllDrivers', search],
   });
-  const [selectedDriver, setSelectedDriver] = useState<DriverTransformer>()
-
-
+  const [selectedDriver, setSelectedDriver] = useState<DriverTransformer>();
 
   const renderMap = () =>
     showMap && (
-      <MapView provider='google' ref={mapRef} style={{ flex: 1 }} initialCamera={initialCamera}>
+      <MapView
+        provider="google"
+        ref={mapRef}
+        style={{ flex: 1 }}
+        initialCamera={initialCamera}
+      >
         {data?.data?.map((driver, index) => (
           <MapDriverMarker
             key={`marker-${index}`}
             driver={driver}
             isSelected={selectedDriver?.id === driver.id}
             onPress={() => {
-              setSelectedDriver(driver)
+              setSelectedDriver(driver);
             }}
           />
         ))}
@@ -60,7 +62,7 @@ export function HomeScreen() {
   const listStyle = useStyle({
     flex: '1',
     padding: '$2',
-  })
+  });
   const renderList = () =>
     !showMap && (
       <FlatList
@@ -74,7 +76,7 @@ export function HomeScreen() {
             <UserCard
               key={`stack-${item.id}-${index}`}
               user={item}
-              margin='$2'
+              margin="$2"
               flex={1}
             />
           </Stack>
@@ -85,7 +87,7 @@ export function HomeScreen() {
   //switch button Map / List
   const renderSwitcher = () => (
     <Button
-      theme='accent'
+      theme="accent"
       zIndex={300}
       position="fixed"
       bottom="$8"
@@ -100,7 +102,6 @@ export function HomeScreen() {
     </Button>
   );
 
-
   return (
     <>
       <AppHeader
@@ -108,7 +109,7 @@ export function HomeScreen() {
         showSearchBar
         searchProps={{
           value: search,
-          onChangeText: setSearch
+          onChangeText: setSearch,
         }}
       />
       {renderMap()}

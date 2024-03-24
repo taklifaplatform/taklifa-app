@@ -13,7 +13,6 @@ import MapView from 'react-native-maps';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { Button, YStack } from 'tamagui';
 
-
 const initialCamera = {
   center: {
     latitude: 24.713552,
@@ -32,38 +31,31 @@ export function HomeScreen() {
   const mapRef = useRef<MapView>(null);
   const carouselRef = useRef<ICarouselInstance>(null);
 
-
   const [showMap, setShowMap] = useState(true);
 
-  const [search, setSearch] = useState<string>()
+  const [search, setSearch] = useState<string>();
   const { data, ...driversQuery } = useQuery({
     queryFn() {
       return DriversService.fetchAllDrivers({
         perPage: 50,
-        search
+        search,
       });
     },
     queryKey: ['DriversService.fetchAllDrivers', search],
   });
-  const [selectedDriver, setSelectedDriver] = useState<DriverTransformer>()
+  const [selectedDriver, setSelectedDriver] = useState<DriverTransformer>();
 
   const driversList = useMemo<DriverTransformer[]>(() => {
     if (!selectedDriver?.location || !data?.data) {
-      return data?.data || []
+      return data?.data || [];
     }
     return data.data.sort((a, b) => {
       if (!a.location || !b.location) return 0;
-      const aDistance = getDistance(
-        selectedDriver.location,
-        a.location
-      );
-      const bDistance = getDistance(
-        selectedDriver.location,
-        b.location
-      );
+      const aDistance = getDistance(selectedDriver.location, a.location);
+      const bDistance = getDistance(selectedDriver.location, b.location);
       return aDistance - bDistance;
     });
-  }, [data?.data, selectedDriver])
+  }, [data?.data, selectedDriver]);
 
   const [showCarousel, setShowCarousel] = useState(false);
 
@@ -84,20 +76,20 @@ export function HomeScreen() {
           },
           zoom: 16,
         },
-        { duration: 1000 }
+        { duration: 1000 },
       );
     }
   }
 
   function onCloseCarouselButtonPress() {
     setShowCarousel(false);
-    setSelectedDriver(undefined)
+    setSelectedDriver(undefined);
     if (mapRef && mapRef.current) {
       mapRef.current.animateCamera(
         {
           zoom: 6,
         },
-        { duration: 1000 }
+        { duration: 1000 },
       );
     }
   }
@@ -105,11 +97,11 @@ export function HomeScreen() {
   // Carousel SnapItem
   function onSnapToItem(index: number) {
     onAnimateToDriver(driversList[index]);
-    setSelectedDriver(driversList[index])
+    setSelectedDriver(driversList[index]);
   }
 
   function onMarkerPress(driver: DriverTransformer, index: number) {
-    setSelectedDriver(driver)
+    setSelectedDriver(driver);
     onAnimateToDriver(driver);
     setShowCarousel(true);
     carouselRef?.current?.scrollTo({
@@ -145,8 +137,8 @@ export function HomeScreen() {
           <UserCard
             key={`stack-${item.id}-${index}`}
             user={item}
-            marginHorizontal='$4'
-            marginVertical='$2'
+            marginHorizontal="$4"
+            marginVertical="$2"
             // backgroundColor='$color2'
           />
         )}
@@ -157,7 +149,7 @@ export function HomeScreen() {
   const renderSwitcher = () =>
     !showCarousel && (
       <Button
-        theme='accent'
+        theme="accent"
         position="absolute"
         bottom="$4"
         left="$4"
@@ -183,8 +175,8 @@ export function HomeScreen() {
         key={`view-${item.id}-${index}`}
         user={item}
         height={USER_CARD_HEIGHT}
-        marginHorizontal='$4'
-        backgroundColor='$color2'
+        marginHorizontal="$4"
+        backgroundColor="$color2"
       />
     );
   };
@@ -200,12 +192,12 @@ export function HomeScreen() {
         <Button
           icon={X}
           scaleIcon={1.5}
-          backgroundColor='$color1'
-          size='$3'
-          width='$6'
-          position='absolute'
-          top='$-6'
-          left='$4'
+          backgroundColor="$color1"
+          size="$3"
+          width="$6"
+          position="absolute"
+          top="$-6"
+          left="$4"
           onPress={onCloseCarouselButtonPress}
         />
         <Carousel
@@ -225,7 +217,7 @@ export function HomeScreen() {
         showSearchBar
         searchProps={{
           value: search,
-          onChangeText: setSearch
+          onChangeText: setSearch,
         }}
       />
       {renderMap()}

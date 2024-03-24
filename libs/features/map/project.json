@@ -1,7 +1,7 @@
 {
-  "name": "features-customer-dashboard",
+  "name": "features-map",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/features/customer-dashboard/src",
+  "sourceRoot": "libs/features/map/src",
   "projectType": "library",
   "tags": [],
   "targets": {
@@ -13,7 +13,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/features/customer-dashboard/jest.config.ts"
+        "jestConfig": "libs/features/map/jest.config.ts"
       }
     }
   }
