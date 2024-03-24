@@ -16,29 +16,21 @@
     "baseUrl": ".",
     "paths": {
       "@zix/api": ["libs/api/src/index.ts"],
-      "@zix/app-providers": ["libs/app-providers/src/index.ts"],
       "@zix/features/account": ["libs/features/account/src/index.ts"],
       "@zix/features/auth": ["libs/features/auth/src/index.ts"],
       "@zix/features/chat": ["libs/features/chat/src/index.ts"],
-      "@zix/features/companies-dashboard": [
-        "libs/features/companies-dashboard/src/index.ts"
-      ],
+      "@zix/features/company": ["libs/features/company/src/index.ts"],
       "@zix/features/complain": ["libs/features/complain/src/index.ts"],
       "@zix/features/contact-us": ["libs/features/contact-us/src/index.ts"],
-      "@zix/features/customer-dashboard": [
-        "libs/features/customer-dashboard/src/index.ts"
-      ],
+      "@zix/features/map": ["libs/features/map/src/index.ts"],
       "@zix/features/notifications": [
         "libs/features/notifications/src/index.ts"
       ],
-      "@zix/features/old-chat": ["libs/features/old-chat/src/index.ts"],
       "@zix/features/shipments": ["libs/features/shipments/src/index.ts"],
-      "@zix/features/solo-driver-dashboard": [
-        "libs/features/solo-driver-dashboard/src/index.ts"
-      ],
       "@zix/features/support": ["libs/features/support/src/index.ts"],
       "@zix/features/users": ["libs/features/users/src/index.ts"],
       "@zix/i18n": ["libs/i18n/src/index.ts"],
+      "@zix/providers": ["libs/providers/src/index.ts"],
       "@zix/services/auth": ["libs/services/auth/src/index.ts"],
       "@zix/services/chat": ["libs/services/chat/src/index.ts"],
       "@zix/services/laravel-echo": ["libs/services/laravel-echo/src/index.ts"],

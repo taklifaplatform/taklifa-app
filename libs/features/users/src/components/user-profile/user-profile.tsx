@@ -2,7 +2,7 @@ import { UserTransformer } from '@zix/api';
 
 
 import { FullScreenSpinner } from '@zix/ui/common';
-import UserProfileLayout from '../../layouts/user-profile-layout/user-profile-layout';
+import { UserProfileLayout } from '../../layouts/user-profile-layout/user-profile-layout';
 
 import { ScrollView, YStack } from 'tamagui';
 import { ProfileHeader } from '../profile-header/profile-header';

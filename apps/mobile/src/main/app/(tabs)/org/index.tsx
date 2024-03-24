@@ -1,7 +1,5 @@
 import { Cog } from '@tamagui/lucide-icons';
-import {
-  ManageTeamScreen
-} from '@zix/features/companies-dashboard';
+import { ManageTeamScreen } from '@zix/features/company';
 import { AppHeader } from '@zix/ui/layouts';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
@@ -16,9 +14,7 @@ export default function Screen() {
         title="Manage Team"
         headerRight={() => (
           <TouchableOpacity
-            onPress={() =>
-              router.push(`/company/manage/settings`)
-            }
+            onPress={() => router.push(`/company/manage/settings`)}
           >
             <Cog size="$2" />
           </TouchableOpacity>

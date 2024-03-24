@@ -1,13 +1,11 @@
-import { HomeScreen } from '@zix/features/customer-dashboard';
+import { HomeScreen } from '@zix/features/map';
 import { AppLayout } from '@zix/ui/layouts';
 import { NextPageWithLayout } from '../_app';
 
 export const Page: NextPageWithLayout = () => {
-  return (
-    <HomeScreen />
-  );
+  return <HomeScreen />;
 };
 
-Page.getLayout = (page) => <AppLayout>{page}</AppLayout>
+Page.getLayout = (page) => <AppLayout>{page}</AppLayout>;
 
 export default Page;

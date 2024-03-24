@@ -5,7 +5,7 @@ import {
   Almarai_800ExtraBold,
   useFonts,
 } from '@expo-google-fonts/almarai';
-import { MainAppProvider } from '@zix/app-providers';
+import { MainAppProvider } from '@zix/providers';
 import { SplashScreen, Stack } from 'expo-router';
 import React, { useCallback } from 'react';
 import { LogBox, View } from 'react-native';
@@ -22,7 +22,6 @@ export default function HomeLayout() {
     Almarai_700Bold: Almarai_700Bold,
     Almarai_800ExtraBold: Almarai_800ExtraBold,
   });
-
 
   const onLayoutRootView = useCallback(async () => {
     if (fontLoaded) {

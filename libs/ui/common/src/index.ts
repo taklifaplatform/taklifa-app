@@ -1,4 +1,8 @@
 
+export * from './components/rating-card/rating-card';
+
+export * from './components/rating-stars/rating-stars';
+
 export * from './components/zix-container/zix-container';
 
 export * from './components/zix-tab/zix-tab';

@@ -1,15 +1,132 @@
-import React from 'react';
-
-import { View, Text } from 'react-native';
+import { useToastController } from '@tamagui/toast';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { DriverTransformer, RatingService, UpdateRatingRequest } from '@zix/api';
+import { DebugObject, RatingCard, RatingStars, ZixButton } from '@zix/ui/common';
+import { ZixInput } from '@zix/ui/forms';
+import { CustomIcon } from '@zix/ui/icons';
+import { ZixWidgetContainer } from '@zix/ui/widgets';
+import { useCallback, useState } from 'react';
+import { TextInput } from 'react-native';
+import {
+  Button,
+  Separator,
+  Text,
+  View,
+  XStack,
+  YStack
+} from 'tamagui';
 
 /* eslint-disable-next-line */
-export interface UserReviewsTabProps {}
+export type UserReviewsTabProps = {
+  user: DriverTransformer
+}
 
-export function UserReviewsTab(props: UserReviewsTabProps) {
+export const UserReviewsTab: React.FC<UserReviewsTabProps> = ({
+  user
+}) => {
+  const toast = useToastController()
+  const [score, setScore] = useState(5)
+  const [comment, setComment] = useState('')
+
+  const { data, refetch } = useQuery({
+    queryFn: () => RatingService.fetchRatings({
+      id: user.id,
+      type: 'driver',
+    }),
+    queryKey: ['RatingService.fetchRatings', user.id, 'driver']
+  })
+
+  const { data: ratingTypes } = useQuery({
+    queryFn: () => RatingService.fetchRatingTypes(),
+    queryKey: ['RatingService.fetchRatingTypes']
+  })
+
+  const { mutate, isSuccess, isPending } = useMutation({
+    mutationFn: (variables: Partial<UpdateRatingRequest>) => RatingService.storeRating({
+      requestBody: {
+        entity_type: 'driver',
+        entity_id: user.id,
+        ...variables
+      }
+    }),
+    onSuccess(data, variables, context) {
+      toast.show('Rating submitted successfully')
+      refetch()
+    },
+  })
+
+  const onSubmitRatings = useCallback(() => {
+    mutate({
+      comment,
+      rates: ratingTypes?.data?.map(type => ({
+        rating_type_id: type.id,
+        score
+      })) || [],
+    })
+  }, [mutate, comment, ratingTypes?.data, score])
+
+  const onRatingRemove = useCallback(() => {
+    setScore(5)
+    setComment('')
+  }, [])
+
+
+  const renderRatingInput = () => !isSuccess && (
+    <YStack alignItems="center" gap='$4'>
+      <Text fontWeight="600" fontSize="$4" paddingTop="$4">
+        How was your experience with
+      </Text>
+      <Text fontWeight="bold" fontSize="$4">
+        {user.name}
+      </Text>
+      <RatingStars score={score} onChange={setScore} size='$1.5' />
+
+      <ZixInput
+        placeholder="Enter your details..."
+        isMultiline
+        value={comment}
+        onChangeText={setComment}
+      />
+      <XStack gap='$4'>
+        <ZixButton
+          loading={isPending}
+          size='$5'
+          flex={1}
+          theme='accent'
+          onPress={onSubmitRatings}
+        >
+          Submit
+        </ZixButton>
+        <Button
+          size='$5'
+          flex={1}
+          themeInverse
+          onPress={onRatingRemove}
+        >
+          Remove
+        </Button>
+      </XStack>
+      <View
+        backgroundColor="$color2"
+        height="$0.25"
+        width='100%'
+        marginVertical='$3'
+      />
+    </YStack>
+  );
+
+
   return (
-    <View>
-      <Text>Welcome to driver-ratings-tab!</Text>
-    </View>
+    <YStack flex={1}>
+      {renderRatingInput()}
+      <ZixWidgetContainer label='Customer evaluation'>
+        <YStack gap='$4'>
+          {data?.data?.map((item, index) => (
+            <RatingCard item={item} key={`${item.id}-${index}`} />
+          ))}
+        </YStack>
+      </ZixWidgetContainer>
+    </YStack>
   );
 }
 
