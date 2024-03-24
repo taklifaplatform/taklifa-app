@@ -1,8 +1,11 @@
 import { useToastController } from '@tamagui/toast';
 import { useMutation } from '@tanstack/react-query';
 import { CustomerShipmentsService } from '@zix/api';
+import { useAuth } from '@zix/services/auth';
 import { InlineStepper } from '@zix/ui/common';
 import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/ui/forms';
+import { AppHeader } from '@zix/ui/layouts';
+import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
 import { FormProvider, Theme, XStack } from 'tamagui';
@@ -23,6 +26,7 @@ export const CreateShipmentScreen: React.FC<CreateShipmentScreenProps> = ({ ship
   const form = useForm<z.infer<typeof CreateShipmentSchema>>()
   const router = useRouter()
   const toast = useToastController()
+  const { getUrlPrefix } = useAuth()
 
   const { mutate } = useMutation({
     mutationFn(requestBody: z.infer<typeof CreateShipmentSchema>) {
@@ -35,8 +39,8 @@ export const CreateShipmentScreen: React.FC<CreateShipmentScreenProps> = ({ ship
         toast.show('An error occurred', { preset: 'error' })
         return
       }
-      router.push(`/customer/shipments/${data.data.id}`)
-      router.push(`/customer/shipments/${data.data.id}/recipient`)
+      router.push(`${getUrlPrefix}/shipments/${data.data.id}/edit`)
+      router.push(`${getUrlPrefix}/shipments/${data.data.id}/edit/recipient`)
     },
     onError(error: any) {
       toast.show(error?.body?.message || 'An error occurred', { preset: 'error' })
@@ -45,25 +49,28 @@ export const CreateShipmentScreen: React.FC<CreateShipmentScreenProps> = ({ ship
   })
 
   return (
-    <FormProvider {...form}>
-      <SchemaForm
-        form={form}
-        schema={CreateShipmentSchema}
-        props={{}}
-        defaultValues={shipment}
-        onSubmit={mutate}
-        renderBefore={() => (
-          <XStack alignItems="center" >
-            <InlineStepper totalSteps={3} activeStep={1} />
-          </XStack>
-        )}
-        renderAfter={({ submit }) => (
-          <Theme inverse>
-            <SubmitButton onPress={() => submit()}>Confirm</SubmitButton>
-          </Theme>
-        )}
-      />
-    </FormProvider>
+    <>
+      <AppHeader title="Create Shipment" showBackButton />
+      <FormProvider {...form}>
+        <SchemaForm
+          form={form}
+          schema={CreateShipmentSchema}
+          props={{}}
+          defaultValues={shipment}
+          onSubmit={mutate}
+          renderBefore={() => (
+            <XStack alignItems="center" >
+              <InlineStepper totalSteps={3} activeStep={1} />
+            </XStack>
+          )}
+          renderAfter={({ submit }) => (
+            <Theme inverse>
+              <SubmitButton onPress={() => submit()}>Confirm</SubmitButton>
+            </Theme>
+          )}
+        />
+      </FormProvider>
+    </>
   )
 }
 

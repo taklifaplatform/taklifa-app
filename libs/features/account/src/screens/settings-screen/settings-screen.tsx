@@ -1,7 +1,7 @@
 import { IconProps } from '@tamagui/helpers-icon';
 import { Languages } from '@tamagui/lucide-icons';
 import { ActionSheet, ActionSheetRef, Settings } from '@zix/ui/common';
-import { Paragraph, ScrollView, YStack, useMedia } from 'tamagui';
+import { Paragraph, ScrollView, Theme, YStack, useMedia } from 'tamagui';
 import { CustomIcon } from '@zix/ui/icons';
 import { usePathname } from '@zix/utils';
 import { useMultiLang } from '@zix/i18n';
@@ -41,13 +41,15 @@ export const SettingsScreen = () => {
               <Settings.Group $gtSm={{ space: '$2' }}>
                 <Settings.Item
                   icon={(props: IconProps) => (
-                    <CustomIcon {...props} name="settings" color="$color5" />
+                    <Theme name='accent'>
+                      <CustomIcon {...props} name="settings" color="$color9" />
+                    </Theme>
                   )}
-                  isActive={pathname === getUrl('/account/settings/general')}
+                  isActive={pathname === getUrl('account/settings/general')}
                   {...useLink({
                     href: media.sm
-                      ? getUrl('/account/settings/general')
-                      : getUrl('/account/settings'),
+                      ? getUrl('account/settings/general')
+                      : getUrl('account/settings'),
                   })}
                   accentColor="$green9"
                 >
@@ -55,13 +57,15 @@ export const SettingsScreen = () => {
                 </Settings.Item>
                 <Settings.Item
                   icon={(props: IconProps) => (
-                    <CustomIcon name="lock" color="$color5" {...props} />
+                    <Theme name='accent'>
+                      <CustomIcon name="lock" color="$color9" {...props} />
+                    </Theme>
                   )}
                   isActive={
-                    pathname === getUrl('/account/settings/change-password')
+                    pathname === getUrl('account/settings/change-password')
                   }
                   {...useLink({
-                    href: getUrl('/account/settings/change-password'),
+                    href: getUrl('account/settings/change-password'),
                   })}
                   accentColor="$green9"
                 >
@@ -69,13 +73,15 @@ export const SettingsScreen = () => {
                 </Settings.Item>
                 <Settings.Item
                   icon={(props: IconProps) => (
-                    <CustomIcon name="mail" color="$color5" {...props} />
+                    <Theme name='accent'>
+                      <CustomIcon name="mail" color="$color9" {...props} />
+                    </Theme>
                   )}
                   isActive={
-                    pathname === getUrl('/account/settings/change-email')
+                    pathname === getUrl('account/settings/change-email')
                   }
                   {...useLink({
-                    href: getUrl('/account/settings/change-email'),
+                    href: getUrl('account/settings/change-email'),
                   })}
                   accentColor="$green9"
                 >
@@ -94,7 +100,9 @@ export const SettingsScreen = () => {
               <Settings.Group>
                 <Settings.Item
                   icon={(props: IconProps) => (
-                    <CustomIcon name="secure" color="$color5" {...props} />
+                    <Theme name='accent'>
+                      <CustomIcon name="secure" color="$color9" {...props} />
+                    </Theme>
                   )}
                   isActive={pathname === '/privacy-policy'}
                   {...useLink({ href: '/privacy-policy' })}
@@ -104,7 +112,9 @@ export const SettingsScreen = () => {
                 </Settings.Item>
                 <Settings.Item
                   icon={(props: IconProps) => (
-                    <CustomIcon name="book" color="$color5" {...props} />
+                    <Theme name='accent'>
+                      <CustomIcon name="book" color="$color9" {...props} />
+                    </Theme>
                   )}
                   isActive={pathname === '/terms-of-service'}
                   {...useLink({ href: '/terms-of-service' })}
@@ -117,7 +127,9 @@ export const SettingsScreen = () => {
               <Settings.Group>
                 <Settings.Item
                   icon={(props: IconProps) => (
-                    <CustomIcon name="share" color="$color5" {...props} />
+                    <Theme name='accent'>
+                      <CustomIcon name="share" color="$color9" {...props} />
+                    </Theme>
                   )}
                   onPress={() =>
                     Linking.openURL('https://x.com/sawaedlogistics')
@@ -162,12 +174,12 @@ const SettingsLanguageAction = () => {
       actions={
         languages?.length
           ? languages.map((lang) => ({
-              name: t(`account:language.${lang}`).toString(),
-              onPress: () => {
-                actionSheetRef.current?.close();
-                changeLanguage(lang);
-              },
-            }))
+            name: t(`account:language.${lang}`).toString(),
+            onPress: () => {
+              actionSheetRef.current?.close();
+              changeLanguage(lang);
+            },
+          }))
           : []
       }
     />
@@ -177,7 +189,11 @@ const SettingsLanguageAction = () => {
     <>
       {renderLanguages()}
       <Settings.Item
-        icon={(props: IconProps) => <Languages color="$color5" {...props} />}
+        icon={(props: IconProps) => (
+          <Theme name='accent'>
+            <Languages  {...props} color="$color9" />
+          </Theme>
+        )}
         onPress={() => actionSheetRef.current?.open()}
         rightLabel={t(`account:language.${activeLang}`).toString()}
       >
@@ -193,9 +209,10 @@ const SettingsThemeAction = () => {
   return (
     <Settings.Item
       icon={(props: IconProps) => (
-        <CustomIcon name="theme" color="$color5" {...props} />
+        <Theme name='accent'>
+          <CustomIcon name="theme" color="$color9" {...props} />
+        </Theme>
       )}
-      accentColor="$blue9"
       onPress={toggle}
       rightLabel={t(`account:theme.${current}`).toString()}
     >
@@ -209,10 +226,11 @@ const SettingsItemLogoutAction = () => {
 
   return (
     <Settings.Item
+      theme='error'
       icon={(props: IconProps) => (
-        <CustomIcon name="logout" color="$red5" {...props} />
+        <CustomIcon name="logout" color="$color9" {...props} />
       )}
-      accentColor="$red9"
+      accentColor="$color9"
       onPress={() => logout()}
     >
       {t('account:logout')}

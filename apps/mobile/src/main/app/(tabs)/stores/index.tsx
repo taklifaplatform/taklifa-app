@@ -1,6 +1,6 @@
-import { HomeScreen } from '@zix/features/map';
+import { ShipmentsListScreen } from '@zix/features/shipments';
 import React from 'react';
 
 export default function Screen() {
-  return <HomeScreen />;
+  return <ShipmentsListScreen variant='jobs' />;
 }

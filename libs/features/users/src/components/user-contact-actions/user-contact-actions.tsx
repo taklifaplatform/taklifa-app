@@ -31,7 +31,8 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
   }
 
   function onServiceRequestPress() {
-    router.push(`/customer/shipments?driverId=${user.id}`)
+    //
+    router.push(`${getUrlPrefix}/create-shipment?driverId=${user.id}`)
   }
 
   const { mutate: startChat } = useMutation({
@@ -45,7 +46,7 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
         router.push(`${getUrlPrefix}/chat?channel=${data.data?.id}`)
         return
       }
-      router.push(`/chat/channels/${data.data?.id}`)
+      router.push(`${getUrlPrefix}/chat/channels/${data.data?.id}`)
     },
   })
 

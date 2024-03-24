@@ -46,6 +46,7 @@ export const ZixDatePicker: React.FC<ZixDateFieldProps> = ({
           <YStack padding='$4' gap='$6'>
 
             <DateTimePicker
+              themeVariant='light'
               textColor='red'
               value={moment(value ?? undefined).toDate()}
               mode={'date'}
