@@ -29,7 +29,6 @@
       "@zix/features/notifications": [
         "libs/features/notifications/src/index.ts"
       ],
-      "@zix/features/old-chat": ["libs/features/old-chat/src/index.ts"],
       "@zix/features/shipments": ["libs/features/shipments/src/index.ts"],
       "@zix/features/solo-driver-dashboard": [
         "libs/features/solo-driver-dashboard/src/index.ts"
