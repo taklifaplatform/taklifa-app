@@ -10,6 +10,4 @@ export * from './screens/manage/vehicles/create-vehicle-screen/create-vehicle-sc
 
 export * from './screens/manage/vehicles/vehicles-list-screen/vehicles-list-screen';
 
-export * from './components/companies-dashboard-layout/companies-dashboard-layout';
-
 

@@ -1,6 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
 import React from 'react';
-import { useToastController } from 'tamagui';
 
 import { CompanyAdminService } from '@zix/api';
 import {
@@ -15,6 +14,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
 import { Theme } from 'tamagui';
 import { z } from 'zod';
+import { useToastController } from '@tamagui/toast';
 
 const UpdateCompanyFormSchema = z
   .object({
