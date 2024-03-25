@@ -1,4 +1,5 @@
 import { DriverTransformer, MediaTransformer } from '@zix/api';
+import { useAuth } from '@zix/services/auth';
 import { ZixLocationInfoWidget, ZixMediasListWidget, ZixWidgetContainer, ZixWorkingHoursWidget } from '@zix/ui/widgets';
 import React, { useMemo } from 'react';
 
@@ -11,6 +12,8 @@ export type AboutUserTabProps = {
 export const AboutUserTab: React.FC<AboutUserTabProps> = ({
   user
 }) => {
+
+  const { isServiceProvider } = useAuth()
 
   const companiesLogos = useMemo<MediaTransformer[]>(() => {
     const medias: MediaTransformer[] = []
@@ -44,7 +47,7 @@ export const AboutUserTab: React.FC<AboutUserTabProps> = ({
     </ZixWidgetContainer>
   )
 
-  const renderWorkingHours = () => (
+  const renderWorkingHours = () => isServiceProvider(user) && (
     <ZixWidgetContainer label='Working Hours'>
       <ZixWorkingHoursWidget />
     </ZixWidgetContainer>

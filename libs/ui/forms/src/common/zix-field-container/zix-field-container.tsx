@@ -161,7 +161,7 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
 
 
   return (
-    <Theme name={error ? 'red' : themeName} forceClassName>
+    <Theme name={error ? 'error' : themeName} forceClassName>
       <Fieldset flex={1}>
         {
           collapsible ? renderAccordion() : (

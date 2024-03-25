@@ -28,7 +28,7 @@ export const UserProfileLayout: React.FC<UserProfileLayoutProps> = ({
               borderRadius: 4,
               padding: 5,
             }}
-            // onPress={() => router.push(`${getUrlPrefix}/account/settings`)}
+            onPress={() => router.push(`${getUrlPrefix}/account/settings`)}
           >
             <CustomIcon name="more" color="black" size="$3" />
           </TouchableOpacity>
@@ -40,7 +40,7 @@ export const UserProfileLayout: React.FC<UserProfileLayoutProps> = ({
     user?.id !== authUser?.id && (
       <AppHeader
         showBackButton
-        title={user?.name || '...'}
+        title={user?.name || !!user?.username ? `@${user?.username}` : '...'}
       />
     );
 

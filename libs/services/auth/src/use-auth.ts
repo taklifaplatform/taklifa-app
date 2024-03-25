@@ -1,6 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { AuthenticatedUserTransformer, OpenAPI, UserService } from '@zix/api';
+import {
+  AuthenticatedUserTransformer,
+  DriverTransformer,
+  OpenAPI,
+  UserService,
+} from '@zix/api';
 import { useAtom } from 'jotai';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useRouter } from 'solito/router';
@@ -9,7 +14,7 @@ import {
   authRequestedAccountTypeStorage,
   authUserStorage,
 } from './auth-atoms';
-import { AUTH_ROLE_TYPE } from './types';
+import { AUTH_ROLE_TYPE, COMPANY_ROLES, USER_ROLES } from './types';
 
 export type RedirectUserOptions = {
   pushRoute?: boolean;
@@ -32,6 +37,9 @@ export interface AuthHelpers {
   setRequestedAccountType: (accountType: AUTH_ROLE_TYPE) => void;
   registerSteps: number;
   getUrlPrefix: string;
+  isServiceProvider: (
+    user: AuthenticatedUserTransformer | DriverTransformer,
+  ) => boolean;
 }
 
 export function useAuth(): AuthHelpers {
@@ -145,6 +153,16 @@ export function useAuth(): AuthHelpers {
     [router.push, router.replace, getUrlPrefix, setAuthUser, user],
   );
 
+  const isServiceProvider = (
+    _user: AuthenticatedUserTransformer | DriverTransformer,
+  ) => {
+    return !!_user?.roles?.some(
+      (role) =>
+        COMPANY_ROLES.includes(role.name as AUTH_ROLE_TYPE) ||
+        role.name === USER_ROLES.solo_driver,
+    );
+  };
+
   function logout() {
     setAuthAccessToken('');
     setAuthUser({});
@@ -191,5 +209,6 @@ export function useAuth(): AuthHelpers {
     registerSteps,
 
     getUrlPrefix,
+    isServiceProvider,
   };
 }

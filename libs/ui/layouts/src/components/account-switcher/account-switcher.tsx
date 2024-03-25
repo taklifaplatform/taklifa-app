@@ -93,7 +93,7 @@ export const AccountSwitcher: React.FC = () => {
             }
             <YStack>
               <Text fontWeight="bold" fontSize={15} numberOfLines={1}>
-                {user?.name}
+                {user?.name || !!user?.username ? `@${user?.username}` : '...'}
               </Text>
               <Text>
                 {user?.active_role?.name}
