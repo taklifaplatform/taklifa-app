@@ -6,6 +6,7 @@ import { Linking, Platform } from 'react-native';
 import { useRouter } from 'solito/router';
 import { Button, SizeTokens, ThemeableStackProps, XStack } from 'tamagui';
 import { useMutation } from '@tanstack/react-query';
+import { ZixButton } from '@zix/ui/common';
 
 export type UserContactActionsProps = ThemeableStackProps & {
   user: DriverTransformer;
@@ -35,7 +36,7 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
     router.push(`${getUrlPrefix}/create-shipment?driverId=${user.id}`)
   }
 
-  const { mutate: startChat } = useMutation({
+  const { mutate: startChat, isPending } = useMutation({
     mutationFn() {
       return ChatService.startChat({
         user: `${user.id}`
@@ -69,15 +70,17 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
       >
         ارسال الدعوة
       </Button>
-      <Button
+      <ZixButton
         flex={1}
         backgroundColor='$gray7'
         icon={(props: IconProps) => <CustomIcon {...props} name="chat" color='$color12' />}
+        disabled={isPending}
+        loading={isPending}
         onPress={() => startChat()}
         {...sharedButtonStyle}
       >
         محادثة
-      </Button>
+      </ZixButton>
       <Button
         flex={1}
         backgroundColor='$gray7'
