@@ -9,6 +9,7 @@ import ProfileTabs from '../../components/tabs/profile-tabs/profile-tabs';
 import UserContactActions from '../../components/user-contact-actions/user-contact-actions';
 import UserInfoRow from '../../components/user-info-row/user-info-row';
 import UserProfileLayout from '../../layouts/user-profile-layout/user-profile-layout';
+import { RefreshControl } from 'react-native-gesture-handler';
 
 
 const { useParam } = createParam<{ user: string }>();
@@ -16,7 +17,7 @@ const { useParam } = createParam<{ user: string }>();
 export function UserProfileScreen() {
   const [userId] = useParam('user');
 
-  const { data } = useQuery({
+  const { data, refetch, isLoading } = useQuery({
     queryFn() {
       if (!userId) {
         return;
@@ -33,7 +34,7 @@ export function UserProfileScreen() {
 
   const renderUserProfile = () =>
     data?.data && (
-      <ScrollView flex={1}>
+      <ScrollView flex={1} refreshControl={<RefreshControl refreshing={isLoading} onRefresh={refetch} />}>
         <YStack padding="$4" marginBottom='$4' gap="$4">
           <YStack
             backgroundColor='$color2'

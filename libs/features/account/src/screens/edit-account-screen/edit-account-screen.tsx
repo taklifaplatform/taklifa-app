@@ -21,9 +21,12 @@ const ProfileSchema = z.object({
   phone_number: formFields.phone.describe('Phone Number // 1234567890'),
   about: formFields.textarea
     .describe('About // Tell us a bit about yourself')
-    .optional()
+
 }).required({
-  name: true
+  name: true,
+  phone_number: true,
+  avatar: true,
+  about: true,
 });
 
 export const EditAccountScreen = () => {
