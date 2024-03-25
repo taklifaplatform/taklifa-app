@@ -1,10 +1,11 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { LocationTransformer } from './LocationTransformer';
 import type { MediaTransformer } from './MediaTransformer';
 import type { SimpleCompanyTransformer } from './SimpleCompanyTransformer';
+import type { UserSimpleRoleTransformer } from './UserSimpleRoleTransformer';
 import type { VehicleTransformer } from './VehicleTransformer';
 export type DriverTransformer = {
     id?: number;
@@ -20,5 +21,6 @@ export type DriverTransformer = {
         count?: number;
     };
     vehicle?: VehicleTransformer;
+    roles?: Array<UserSimpleRoleTransformer>;
 };
 

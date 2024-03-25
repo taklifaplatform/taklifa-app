@@ -1,4 +1,4 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -33,7 +33,7 @@ export class RatingService {
         page,
         perPage,
     }: {
-        id: number,
+        id: string,
         type: 'driver' | 'company',
         /**
          * Page number
