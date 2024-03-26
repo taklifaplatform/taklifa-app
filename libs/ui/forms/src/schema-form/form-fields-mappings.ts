@@ -1,6 +1,7 @@
 import {
   AcceptTermsField,
   AddressField,
+  AdvancedAddressField,
   AutoCompleteField,
   BooleanCheckboxField,
   BooleanSwitchField,
@@ -117,4 +118,5 @@ export const formFieldsMappings = [
 
   [formFields.country, CountryField] as const,
   [formFields.address, AddressField] as const,
+  [formFields.advanced_address, AdvancedAddressField] as const,
 ] as const;

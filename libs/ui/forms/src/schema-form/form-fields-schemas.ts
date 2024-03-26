@@ -87,4 +87,5 @@ export const formFields = {
   country: createUniqueFieldSchema(z.string(), "country"),
 
   address: createUniqueFieldSchema(AddressSchema, "address"),
+  advanced_address: createUniqueFieldSchema(AddressSchema, "advanced_address"),
 };
