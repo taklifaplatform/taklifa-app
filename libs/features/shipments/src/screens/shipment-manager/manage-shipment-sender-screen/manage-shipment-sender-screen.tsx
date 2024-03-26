@@ -10,14 +10,14 @@ import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
 import { FormProvider, Text, Theme, View, YStack } from 'tamagui';
 import { z } from 'zod';
-
+import { SHARED_SHIPMENT_MANAGER_FIELD_PROPS } from '../configs';
 
 const { useParam } = createParam<{ shipment?: string }>();
 
 const CreateShipmentSchema = z.object({
   from_location: formFields.address.describe('Shipping from // Enter the address of the pickup location'),
   pick_date: formFields.row_date_picker.describe('Date // Pick Date'),
-  pick_time: formFields.row_time_range_picker.describe('Time // Pick Time'),
+  pick_time: formFields.row_time_range_picker.describe('Time // Pick Time').optional(),
 })
 
 export function ManageShipmentSenderScreen() {
@@ -82,12 +82,9 @@ export function ManageShipmentSenderScreen() {
           form={form}
           schema={CreateShipmentSchema}
           props={{
-
-            pick_date: {
-              collapsible: true,
-              labelBold: true,
-            },
-
+            from_location: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
+            pick_date: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
+            pick_time: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
           }}
           defaultValues={data?.data || {}}
           onSubmit={mutate}
