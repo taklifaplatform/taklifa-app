@@ -1,10 +1,9 @@
 import { DriverTransformer } from '@zix/api';
+import { CustomIcon } from '@zix/ui/icons';
 // import { ZixMap } from '@zix/ui/common';
 import { Marker } from 'react-native-maps';
 
-import { CustomIcon } from '@zix/ui/icons';
-import { View } from 'tamagui';
-import { UserCard } from '@zix/features/users';
+import { Image, View } from 'tamagui';
 
 
 export type MapDriverMarkerProps = {
@@ -19,6 +18,16 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = ({
   onPress
 }: MapDriverMarkerProps) => {
 
+  const renderCarIcon = () => driver?.vehicle?.model?.map_icon?.url ? (
+    <Image
+      source={{ uri: driver.vehicle.model.map_icon.url }}
+      width={driver.vehicle.model.map_icon_width || '$4'}
+      height={driver.vehicle.model.map_icon_height || '$4'}
+    />
+  ) : (
+    <CustomIcon name='vehicle_a' size="$4" />
+  )
+
   if (!driver.location) {
     return null;
   }
@@ -32,19 +41,6 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = ({
       }}
       onPress={() => onPress?.()}
     >
-      {
-        isSelected && (
-          <View position='absolute' paddingLeft='$12' zIndex={10}>
-            <UserCard
-              key={`stack-${driver.id}`}
-              user={driver}
-              marginHorizontal='$4'
-              marginVertical='$2'
-              minWidth={400}
-            />
-          </View>
-        )
-      }
       <View
         width='$8'
         height='$8'
@@ -63,7 +59,7 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = ({
             : null
         }
       >
-        <CustomIcon name='vehicle_a' size="$4" />
+        {renderCarIcon()}
       </View>
     </Marker>
   );
