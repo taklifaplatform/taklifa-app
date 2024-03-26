@@ -3,7 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { UpdateVehicleRequest } from '../models/UpdateVehicleRequest';
-import type { VehicleMakeTransformer } from '../models/VehicleMakeTransformer';
+import type { VehicleModelTransformer } from '../models/VehicleModelTransformer';
 import type { VehicleTransformer } from '../models/VehicleTransformer';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -148,16 +148,16 @@ export class VehiclesService {
         });
     }
     /**
-     * Fetch listing of the Vehicle Types.
+     * Fetch listing of the Vehicle Models.
      * @returns any Successful response
      * @throws ApiError
      */
-    public static fetchAllVehicleTypes(): CancelablePromise<{
-        data?: VehicleMakeTransformer;
+    public static fetchAllVehicleModels(): CancelablePromise<{
+        data?: VehicleModelTransformer;
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/vehicle-types',
+            url: '/api/vehicle-models',
         });
     }
 }

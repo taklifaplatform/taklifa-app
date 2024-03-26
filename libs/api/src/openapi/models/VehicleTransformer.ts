@@ -6,9 +6,7 @@ import type { MediaTransformer } from './MediaTransformer';
 import type { VehicleCapacityDimensionsTransformer } from './VehicleCapacityDimensionsTransformer';
 import type { VehicleCapacityWeightTransformer } from './VehicleCapacityWeightTransformer';
 import type { VehicleFuelInformationTransformer } from './VehicleFuelInformationTransformer';
-import type { VehicleIconTransformer } from './VehicleIconTransformer';
 import type { VehicleInformationTransformer } from './VehicleInformationTransformer';
-import type { VehicleMakeTransformer } from './VehicleMakeTransformer';
 import type { VehicleModelTransformer } from './VehicleModelTransformer';
 export type VehicleTransformer = {
     id?: number;
@@ -19,9 +17,7 @@ export type VehicleTransformer = {
     year?: string;
     image?: MediaTransformer;
     images?: Array<MediaTransformer>;
-    vehicle_make_id?: VehicleMakeTransformer;
-    vehicle_model_id?: VehicleModelTransformer;
-    vehicle_icon_id?: VehicleIconTransformer;
+    model?: VehicleModelTransformer;
     information?: VehicleInformationTransformer;
     fuel_information?: VehicleFuelInformationTransformer;
     capacity_dimensions?: VehicleCapacityDimensionsTransformer;
