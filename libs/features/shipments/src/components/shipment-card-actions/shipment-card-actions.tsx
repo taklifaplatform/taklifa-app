@@ -1,7 +1,8 @@
-import { Check, Eye, X } from '@tamagui/lucide-icons';
+import { Check, Eye, Pen, Settings2, X } from '@tamagui/lucide-icons';
 import { ShipmentTransformer } from '@zix/api';
+import { useAuth } from '@zix/services/auth';
 import { t } from 'i18next';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useRouter } from 'solito/router';
 import { Button, XStack } from 'tamagui';
 
@@ -19,6 +20,23 @@ export const ShipmentCardActions: React.FC<ShipmentCardActionsProps> = ({
   isDetail,
 }) => {
   const router = useRouter();
+  const { user } = useAuth()
+
+  const isAuthCreator = useMemo(() => {
+    return user?.id === shipment.user?.id
+  }, [user, shipment.user])
+
+  const renderShipmentEdit = () => isAuthCreator && (
+    <Button
+      theme='accent'
+      flex={1}
+      icon={Pen}
+      fontWeight="bold"
+      onPress={() => router.push(`${urlPrefix}/${shipment.id}/edit`)}
+    >
+      {t('shipment:edit')}
+    </Button>
+  )
 
   /**
    * The Driver, can only see the reject button if he is been invited to this shipments
@@ -66,6 +84,7 @@ export const ShipmentCardActions: React.FC<ShipmentCardActionsProps> = ({
 
   return (
     <XStack flex={1} alignItems="center" gap="$2">
+      {renderShipmentEdit()}
       {renderAcceptShipment()}
       {renderViewShipment()}
       {renderRejectShipmentInvite()}

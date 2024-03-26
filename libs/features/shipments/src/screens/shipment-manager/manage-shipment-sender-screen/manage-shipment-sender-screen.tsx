@@ -1,20 +1,18 @@
 import { useToastController } from '@tamagui/toast';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { CustomerShipmentsService } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
-import { InlineStepper } from '@zix/ui/common';
+import { FullScreenSpinner, InlineStepper } from '@zix/ui/common';
 import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/ui/forms';
 import { AppHeader } from '@zix/ui/layouts';
-import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
+import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
-import { FormProvider, Theme, XStack } from 'tamagui';
+import { FormProvider, Text, Theme, View, XStack, YStack } from 'tamagui';
 import { z } from 'zod';
 
-/* eslint-disable-next-line */
-export interface ManageShipmentSenderScreenProps {
-  shipment: any
-}
+
+const { useParam } = createParam<{ shipment?: string }>();
 
 const CreateShipmentSchema = z.object({
   from_location: formFields.address.describe('Shipping from // Enter the address of the pickup location'),
@@ -22,14 +20,35 @@ const CreateShipmentSchema = z.object({
   pick_time: formFields.row_time_range_picker.describe('Time // Pick Time'),
 })
 
-export const ManageShipmentSenderScreen: React.FC<ManageShipmentSenderScreenProps> = ({ shipment }) => {
+export function ManageShipmentSenderScreen() {
   const form = useForm<z.infer<typeof CreateShipmentSchema>>()
   const router = useRouter()
   const toast = useToastController()
   const { getUrlPrefix } = useAuth()
+  const [shipmentId] = useParam('shipment');
+
+
+  const { data } = useQuery({
+    queryFn() {
+      if (!shipmentId) {
+        return;
+      }
+
+      return CustomerShipmentsService.retrieveShipment({
+        shipment: shipmentId,
+      });
+    },
+    queryKey: ['CustomerShipmentsService.retrieveShipment', shipmentId],
+  })
 
   const { mutate } = useMutation({
     mutationFn(requestBody: z.infer<typeof CreateShipmentSchema>) {
+      if (shipmentId) {
+        return CustomerShipmentsService.updateShipment({
+          shipment: shipmentId,
+          requestBody
+        })
+      }
       return CustomerShipmentsService.storeShipment({
         requestBody
       })
@@ -51,27 +70,41 @@ export const ManageShipmentSenderScreen: React.FC<ManageShipmentSenderScreenProp
     },
   })
 
+  if (shipmentId && !data?.data) {
+    return <FullScreenSpinner />
+  }
+
   return (
     <>
-      <AppHeader title="Create Shipment" showBackButton />
+      <AppHeader title={shipmentId ? "Edit Shipment" : "Create Shipment"} showBackButton />
       <FormProvider {...form}>
         <SchemaForm
           form={form}
           schema={CreateShipmentSchema}
           props={{}}
-          defaultValues={shipment}
+          defaultValues={data?.data || {}}
           onSubmit={mutate}
-          renderBefore={() => (
-            <XStack alignItems="center" >
-              <InlineStepper totalSteps={3} activeStep={1} />
-            </XStack>
-          )}
+
           renderAfter={({ submit }) => (
             <Theme inverse>
               <SubmitButton onPress={() => submit()}>Confirm</SubmitButton>
             </Theme>
           )}
-        />
+        >
+          {(fields) => (
+            <>
+              <YStack alignItems='center' gap='$4'>
+                <InlineStepper totalSteps={3} activeStep={1} />
+                <Text>
+                  يرجى تحديد عنوانك والتاريخ والوقت الذي تتواجد فيه
+                </Text>
+                <View height={2} width={'100%'} backgroundColor='$color3' />
+              </YStack>
+              {Object.values(fields)}
+            </>
+          )}
+        </SchemaForm>
+
       </FormProvider>
     </>
   )

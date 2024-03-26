@@ -9,15 +9,15 @@ import { FormProvider, Theme, XStack } from 'tamagui';
 import { z } from 'zod';
 import { createParam } from 'solito';
 import { useToastController } from '@tamagui/toast';
+import { AppHeader } from '@zix/ui/layouts';
+
+const { useParam } = createParam<{ shipment: string }>();
 
 const SendFromSchema = z.object({
   from_location: formFields.address.describe('Shipping from // Enter the address of the pickup location'),
   pick_date: formFields.row_date_picker.describe('Date // Pick Date'),
   pick_time: formFields.row_time_range_picker.describe('Time // Pick Time'),
 })
-
-const { useParam } = createParam<{ shipment: string }>();
-
 
 export const ManageShipmentRecipientScreen: React.FC = () => {
   const form = useForm<z.infer<typeof SendFromSchema>>()
@@ -48,24 +48,27 @@ export const ManageShipmentRecipientScreen: React.FC = () => {
   })
 
   return (
-    <FormProvider {...form}>
-      <SchemaForm
-        form={form}
-        schema={SendFromSchema}
-        props={{}}
-        onSubmit={mutate}
-        renderBefore={() => (
-          <XStack alignItems="center" >
-            <InlineStepper totalSteps={3} activeStep={1} />
-          </XStack>
-        )}
-        renderAfter={({ submit }) => (
-          <Theme inverse>
-            <SubmitButton onPress={() => submit()}>Confirm</SubmitButton>
-          </Theme>
-        )}
-      />
-    </FormProvider>
+    <>
+      <AppHeader title='Shipment Details' showBackButton />
+      <FormProvider {...form}>
+        <SchemaForm
+          form={form}
+          schema={SendFromSchema}
+          props={{}}
+          onSubmit={mutate}
+          renderBefore={() => (
+            <XStack alignItems="center" >
+              <InlineStepper totalSteps={3} activeStep={1} />
+            </XStack>
+          )}
+          renderAfter={({ submit }) => (
+            <Theme inverse>
+              <SubmitButton onPress={() => submit()}>Confirm</SubmitButton>
+            </Theme>
+          )}
+        />
+      </FormProvider>
+    </>
   )
 }
 
