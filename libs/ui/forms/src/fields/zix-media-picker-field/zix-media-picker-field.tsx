@@ -1,6 +1,6 @@
 import { randomUUID } from 'expo-crypto';
 
-import { Alert, Platform, Text } from 'react-native';
+import { Alert, Platform } from 'react-native';
 
 import { Camera, Image, Paperclip } from '@tamagui/lucide-icons';
 import { MediaService, MediaTransformer } from '@zix/api';
@@ -11,11 +11,11 @@ import {
   launchCameraAsync,
   launchImageLibraryAsync,
 } from 'expo-image-picker';
+import { t } from 'i18next';
 import { useEffect, useRef, useState } from 'react';
 import { UploadableMediaFile, uploadMediaFile } from '../../utils';
 import { ZixFilesInputMediaPickerPreviewer, ZixImageMediaPickerPreviewer, ZixRowMediaPickerPreviewer } from './previewers';
 import { ZixMediaPickerTransformer } from './types';
-import { t } from 'i18next';
 
 /**
  * Previewers Specifications:

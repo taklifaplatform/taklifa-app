@@ -91,8 +91,8 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
         <Text textAlign="center" theme="alt1">
           {t('auth:pin_code.didnt_receive_code')}
         </Text>
-        <Theme name="light">
-          <Text fontSize="$4" color="$color5">
+        <Theme name="accent">
+          <Text fontSize="$4" color="$color9">
             {t('auth:pin_code.resend')}
           </Text>
         </Theme>

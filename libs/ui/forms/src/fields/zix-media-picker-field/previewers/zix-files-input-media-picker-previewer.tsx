@@ -14,7 +14,7 @@ export const ZixFilesInputMediaPickerPreviewer: React.FC<ZixMediaPreviewerProps>
   onRemoveMedia
 }) => {
   const style = useStyle({
-    color: '$gray11'
+    color: '$color11'
   })
   const redStyle = useStyle({
     color: '$color10'

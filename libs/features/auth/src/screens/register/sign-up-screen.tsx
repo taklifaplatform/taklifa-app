@@ -40,7 +40,7 @@ const SignUpSchema = z
     password_confirmation: true,
     accept_terms: true,
   })
-  .superRefine(({ password_confirmation, password }, ctx) => {
+  .superRefine(({ password_confirmation, password, accept_terms }, ctx) => {
     if (password_confirmation !== password) {
       ctx.addIssue({
         path: ['password_confirmation'],
@@ -48,6 +48,15 @@ const SignUpSchema = z
         message: t('auth:validation.password_confirmation_mismatch'),
       });
     }
+
+    if (!accept_terms) {
+      ctx.addIssue({
+        path: ['accept_terms'],
+        code: 'custom',
+        message: t('auth:validation.accept_terms'),
+      });
+    }
+
   });
 
 export const SignUpScreen = () => {
@@ -71,7 +80,6 @@ export const SignUpScreen = () => {
       AuthService.register({
         requestBody: {
           ...variables,
-          name: variables.username,
         },
       }),
     onSuccess({ data }) {

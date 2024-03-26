@@ -47,7 +47,7 @@ export const GroupFieldsSheet: React.FC<GroupFieldsSheetProps> = ({ children, ac
               <H4>
                 {title}
               </H4>
-              <Button icon={X} size='$3' scaleIcon={1.5} backgroundColor='$gray5' onPress={() => setOpen(false)} />
+              <Button icon={X} size='$3' scaleIcon={1.5} backgroundColor='$color5' onPress={() => setOpen(false)} />
             </XStack>
             <Sheet.ScrollView marginBottom='$4'>
               {children}

@@ -22,7 +22,7 @@ export const ZixImageMediaPickerPreviewer: React.FC<ZixMediaPreviewerProps> = ({
           <Avatar
             size={size}
             circular
-            backgroundColor="$gray6"
+            backgroundColor="$color3"
             alignItems="center"
             justifyContent="center"
           >
@@ -40,7 +40,7 @@ export const ZixImageMediaPickerPreviewer: React.FC<ZixMediaPreviewerProps> = ({
               <ImagePlus size="$2" color="$color11" />
             )}
           </Avatar>
-          <Text>{placeholder}</Text>
+          <Text>{placeholder} * </Text>
         </YStack>
       </XStack>
     </Button>

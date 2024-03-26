@@ -1,6 +1,7 @@
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { DriverTransformer, RatingService, UpdateRatingRequest } from '@zix/api';
+import { useAuth } from '@zix/services/auth';
 import { DebugObject, RatingCard, RatingStars, ZixButton } from '@zix/ui/common';
 import { ZixInput } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
@@ -25,6 +26,7 @@ export const UserReviewsTab: React.FC<UserReviewsTabProps> = ({
   user
 }) => {
   const toast = useToastController()
+  const { user: authUser } = useAuth()
   const [score, setScore] = useState(5)
   const [comment, setComment] = useState('')
 
@@ -71,7 +73,7 @@ export const UserReviewsTab: React.FC<UserReviewsTabProps> = ({
   }, [])
 
 
-  const renderRatingInput = () => !isSuccess && (
+  const renderRatingInput = () => (authUser?.id !== user.id && !isSuccess) && (
     <YStack alignItems="center" gap='$4'>
       <Text fontWeight="600" fontSize="$4" paddingTop="$4">
         How was your experience with
@@ -124,6 +126,11 @@ export const UserReviewsTab: React.FC<UserReviewsTabProps> = ({
           {data?.data?.map((item, index) => (
             <RatingCard item={item} key={`${item.id}-${index}`} />
           ))}
+          {
+            !data?.data?.length && (
+              <Text>No ratings available</Text>
+            )
+          }
         </YStack>
       </ZixWidgetContainer>
     </YStack>

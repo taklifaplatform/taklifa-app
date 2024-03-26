@@ -1,13 +1,13 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { UserVerificationService } from '@zix/api';
+import { useAuth } from '@zix/services/auth';
 import {
   SchemaForm,
   SubmitButton,
   formFields,
   handleFormErrors,
 } from '@zix/ui/forms';
-import { useAuth } from '@zix/services/auth';
 import { t } from 'i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
@@ -23,6 +23,15 @@ const DriverVerificationFormSchema = z
     ),
     assurance_card: formFields.file.describe(t('forms:insurance_image')),
     accept_terms: formFields.accept_terms.describe(t('forms:accept_terms')),
+  })
+  .superRefine(({ accept_terms }, ctx) => {
+    if (!accept_terms) {
+      ctx.addIssue({
+        path: ['accept_terms'],
+        code: 'custom',
+        message: t('auth:validation.accept_terms'),
+      });
+    }
   });
 
 export const AuthDriverVerificationScreen = () => {

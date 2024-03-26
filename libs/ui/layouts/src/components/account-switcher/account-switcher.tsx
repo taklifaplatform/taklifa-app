@@ -93,19 +93,11 @@ export const AccountSwitcher: React.FC = () => {
             }
             <YStack>
               <Text fontWeight="bold" fontSize={15} numberOfLines={1}>
-                {user?.name}
+                {user?.name || !!user?.username ? `@${user?.username}` : '...'}
               </Text>
               <Text>
                 {user?.active_role?.name}
               </Text>
-
-              {/* {
-                isWeb && (
-                  <Text>
-                    {user?.active_role?.name}
-                  </Text>
-                )
-              } */}
             </YStack>
             {
               isWeb && (
@@ -133,6 +125,7 @@ export const AccountSwitcher: React.FC = () => {
                 <YGroup.Item key={role.id}>
                   <ListItem
                     disabled={user?.active_role?.name === role.name}
+                    theme={user?.active_role?.name === role.name ? 'accent' : undefined}
                     onPress={() => changeActiveRole({ name: role.name })}
                     hoverStyle={{ backgroundColor: '$color5' }}
                     pressStyle={{ opacity: 0.5 }}
@@ -155,6 +148,8 @@ export const AccountSwitcher: React.FC = () => {
                 <YGroup.Item key={company.name}>
                   <ListItem
                     onPress={() => company.id && changeActiveCompany(company.id)}
+                    theme={user?.active_company?.id === company.id ? 'accent' : undefined}
+                    disabled={user?.active_company?.id === company.id}
                     hoverStyle={{ backgroundColor: '$color5' }}
                     pressStyle={{ opacity: 0.5 }}
                     borderBottomColor='$color5'

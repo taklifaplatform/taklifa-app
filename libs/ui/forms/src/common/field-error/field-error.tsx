@@ -22,8 +22,9 @@ export const FieldError: React.FC<FieldErrorProps> = ({ message }) => {
         <Paragraph
           key="error"
           // animation="200ms"
-          mt="$2"
-          theme="alt2"
+          marginTop="$2"
+          theme="error"
+          color='$color10'
           enterStyle={{
             y: -4,
             scaleY: 0.2,
