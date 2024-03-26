@@ -8,7 +8,7 @@ import { AppHeader } from '@zix/ui/layouts';
 import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
-import { FormProvider, Text, Theme, View, XStack, YStack } from 'tamagui';
+import { FormProvider, Text, Theme, View, YStack } from 'tamagui';
 import { z } from 'zod';
 
 
@@ -81,7 +81,14 @@ export function ManageShipmentSenderScreen() {
         <SchemaForm
           form={form}
           schema={CreateShipmentSchema}
-          props={{}}
+          props={{
+
+            pick_date: {
+              collapsible: true,
+              labelBold: true,
+            },
+
+          }}
           defaultValues={data?.data || {}}
           onSubmit={mutate}
 

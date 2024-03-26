@@ -11,7 +11,7 @@ import { ZixDateFieldProps } from './types'
 import ZixMonthSelection from './zix-month-selection'
 
 const PAGE_WIDTH = 90
-const PAGE_HEIGHT = 120
+const PAGE_HEIGHT = 110
 
 export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
   onChange,
@@ -46,7 +46,7 @@ export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
       marginRight="$2"
       flexDirection="column"
       theme={activeDayIndex === index ? 'accent' : undefined}
-      backgroundColor={activeDayIndex === index ? '$color9' : '$color4'}
+      backgroundColor={activeDayIndex === index ? '$color9' : '$color3'}
       onPress={() => {
         onDateChange(moment(date).date(item))
       }}
@@ -68,6 +68,11 @@ export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
     <>
       <ZixMonthSelection
         width={150}
+        selectTriggerProps={{
+          height: '$2',
+          size: '$4',
+        }}
+        prependPlaceHolder={<Text fontSize='$1'>Month: </Text>}
         value={date.format('MM')}
         onChange={(month: string) => onDateChange(date.set('month', parseInt(month) - 1))}
       />
