@@ -360,8 +360,8 @@ export const themes = createThemeBuilder()
   })
   .addChildThemes({
     error: [
-      { parent: "dark", template: "base", palette: "red" },
-      { parent: "light", template: "base", palette: "red" },
+      { parent: "dark", template: "base", palette: "dark_red" },
+      { parent: "light", template: "base", palette: "light_red" },
     ],
     warning: [
       { parent: "dark", template: "base", palette: "yellow" },

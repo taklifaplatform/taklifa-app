@@ -79,7 +79,7 @@ export function Questions() {
           {t('web-home:questiontitle')}
         </Text>
         <ZixLinkButton
-          display="linkItem"
+          linkItem
           href={'/'}
           iconAfter={
             <CustomIcon name="large_arrow_right" size="$1" color="$gray10" />
@@ -87,7 +87,6 @@ export function Questions() {
           alignItems="center"
         />
       </XStack>
-
       {data?.data?.map((item, index) => renderZixAccordion({ item, index }))}
     </YStack>
   );

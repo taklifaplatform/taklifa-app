@@ -12,14 +12,11 @@ import { useRouter } from 'solito/router';
 
 export type ZixLinkButtonProps = ButtonProps & {
   href?: string;
-  display?:
-  | 'menuItem'
-  | 'headerMenu'
-  | 'linkItem'
-  | 'warningItem'
-  | 'textLinkItem';
   menuItem?: boolean;
   headerMenu?: boolean;
+  linkItem?: boolean;
+  warningItem?: boolean;
+  textLinkItem?: boolean;
 };
 
 const CustomButton = styled(Button, {

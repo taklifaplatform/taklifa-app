@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Twitter } from '@tamagui/lucide-icons';
+import { Facebook, Instagram, Twitter, Home, HelpCircle, Languages, MapPin } from '@tamagui/lucide-icons';
 import { useMultiLang } from '@zix/i18n';
 import { ZixLinkButton } from '@zix/ui/common';
 import { ZixSelectField } from '@zix/ui/forms';
@@ -20,20 +20,24 @@ export function TopHeader() {
   ];
   const renderHomeInfo = () => (
     <ZixLinkButton
-      display="linkItem"
+      linkItem
       href={'/about'}
-      icon={<CustomIcon name={'home_info'} size="$1" />}
     >
-      <Text>{t('web-home:about')}</Text>
+      <Home size='$1' />
+      <Text
+      color={'$color'}
+      >{t('web-home:about')}</Text>
     </ZixLinkButton>
   );
   const renderHomeQuestion = () => (
     <ZixLinkButton
-      display="linkItem"
+      linkItem
       href={'/faqs'}
-      icon={<CustomIcon name={'help'} size="$1" />}
     >
-      <Text>{t('web-home:question')}</Text>
+      <HelpCircle size='$1' />
+      <Text
+    
+      >{t('web-home:question')}</Text>
     </ZixLinkButton>
   );
   const renderSelectTranslate = () => (
@@ -44,8 +48,9 @@ export function TopHeader() {
           borderWidth: 0,
           gap: '$3',
           iconAfter: null,
+          fontSize: '$5',
         }}
-        prependPlaceHolder={<CustomIcon name={'translate'} size="$1" />}
+        prependPlaceHolder={<Languages size="$1" />}
         fontSize="$5"
         fontWeight="500"
         options={languages}
@@ -56,10 +61,10 @@ export function TopHeader() {
   );
   const renderLocation = () => (
     <ZixLinkButton
-      display="linkItem"
+      linkItem
       href={'/contact'}
-      icon={<CustomIcon name={'location'} size="$1" />}
     >
+      <MapPin size='$1' />
       <Image
         source={{
           uri: '/images/flag.png',
@@ -77,21 +82,19 @@ export function TopHeader() {
         {t('web-home:followus')}
       </Text>
       <ZixLinkButton
-        display="menuItem"
+        menuItem
         href={'/'}
         icon={<CustomIcon name="snapchat" size={'$1.5'} color={'$color'} />}
-        path={'/'}
       />
       <ZixLinkButton
-        display="menuItem"
+        menuItem
         href={'https://www.instagram.com/sawaedlogistics'}
         icon={<Instagram size='$1.5' color='$gray12' />}
       />
       <ZixLinkButton
-        display="menuItem"
-        href={'/'}
-        icon={<CustomIcon name="facebook" size={'$1.5'} color={'$color'} />}
-        path={'/'}
+        menuItem
+        href={'https://www.x.com/sawaedlogistics'}
+        icon={<Facebook size='$1.5' color='$gray12' />}
       />
     </XStack>
   );
@@ -101,12 +104,12 @@ export function TopHeader() {
         {t('web-home:download')}
       </Text>
       <ZixLinkButton
-        display="menuItem"
+        menuItem
         href={'/'}
         icon={<CustomIcon name={'google_play'} size={'$8'} />}
       />
       <ZixLinkButton
-        display="menuItem"
+        menuItem
         href={'/'}
         icon={<CustomIcon name={'app_store'} size={'$8'} />}
       />

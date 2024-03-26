@@ -1,6 +1,6 @@
 
 import { useMultiLang } from '@zix/i18n';
-
+import { Search, Home, Languages,HelpCircle,MapPin } from '@tamagui/lucide-icons';
 import { ZixInput, ZixSelectField } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
@@ -15,34 +15,29 @@ export function MobileDrawer() {
     { id: 'ar', name: t('account:language:ar') },
     { id: 'ur', name: t('account:language:ur') },
   ];
-  const renderSearch = () => (
-    <ZixInput
-      rightIcon={() => <CustomIcon name="search" size="$1" />}
-      placeholder={t('job:search')}
-      borderColor={'$gray10'}
-      hoverStyle={{ borderColor: '$gray10' }}
-      onChangeText={(text) => setSearch(text)}
-      value={search}
-      containerProps={{
-        width: '100%',
-      }}
-    />
-    // <Button
-    //   display="linkItem"
-    //   href={'/jobs'}
-    //   icon={<CustomIcon name={'search'} size="$1" />}
-    // >
-    //   {t('web-home:search')}
-    // </Button>
-  );
+  // const renderSearch = () => (
+  //   <ZixInput
+  //     rightIcon={() => <Search size="$1" />}
+  //     placeholder={t('job:search')}
+  //     borderColor={'$gray10'}
+  //     backgroundColor={'$gray1'}
+  //     hoverStyle={{ borderColor: '$gray10' }}
+  //     onChangeText={(text) => setSearch(text)}
+  //     value={search}
+  //     containerProps={{
+  //       width: '100%',
+  //     }}
+  //   />
+  // );
   const renderHome = () => (
     <Button
-      
+      theme={'accent'}
       borderRadius={10}
       href={'/'}
       width="100%"
       justifyContent="center"
       alignItems="center"
+      backgroundColor={'transparent'}
     >
       <Text
         fontWeight="600"
@@ -51,18 +46,22 @@ export function MobileDrawer() {
   );
   const renderShipment = () => (
     <Button
-
+      theme={'accent'}
       href={'/customer/shipments'}
       width="100%"
       justifyContent="center"
       alignItems="center"
       backgroundColor={'transparent'}
     >
-      <Text fontWeight="600">{t('web-home:payments')}</Text>
+      <Text
+        fontWeight="600"
+        color={'$color12'}
+      >{t('web-home:payments')}</Text>
     </Button>
   );
   const renderOrder = () => (
     <Button
+      theme={'accent'}
       width="100%"
       justifyContent="center"
       alignItems="center"
@@ -74,6 +73,7 @@ export function MobileDrawer() {
   );
   const renderJob = () => (
     <Button
+      theme={'accent'}
       width="100%"
       justifyContent="center"
       alignItems="center"
@@ -84,24 +84,26 @@ export function MobileDrawer() {
   );
   const renderQuestion = () => (
     <Button
+      theme={'accent'}
       width="100%"
       justifyContent="center"
       alignItems="center"
       backgroundColor={'transparent'}
       href={'/jobs'}
-      icon={<CustomIcon name={'help'} size="$1" />}
+      icon={<HelpCircle size="$1" />}
     >
       <Text fontWeight="600">{t('web-home:question')}</Text>
     </Button>
   );
   const renderAbout = () => (
     <Button
+      theme={'accent'}
       width="100%"
       justifyContent="center"
       alignItems="center"
       backgroundColor={'transparent'}
       href={'/jobs'}
-      icon={<CustomIcon name={'home_info'} size="$1" />}
+      icon={<Home size="$1" />}
     >
       <Text fontWeight="600">{t('web-home:about')}</Text>
     </Button>
@@ -118,7 +120,7 @@ export function MobileDrawer() {
           gap: '$3',
           iconAfter: null,
         }}
-        prependPlaceHolder={<CustomIcon name={'translate'} size="$1" />}
+        prependPlaceHolder={<Languages size="$1" />}
         fontSize="$5"
         fontWeight="500"
         options={languages}
@@ -129,12 +131,13 @@ export function MobileDrawer() {
   );
   const renderLocation = () => (
     <Button
+      theme={'accent'}
       width="100%"
       justifyContent="center"
       alignItems="center"
       backgroundColor={'transparent'}
       href={'/contact'}
-      icon={<CustomIcon name={'location'} size="$1" />}
+      icon={<MapPin size="$1" />}
     >
       <Image
         alt="Flag"
@@ -148,16 +151,14 @@ export function MobileDrawer() {
       <Text fontWeight="600">{t('web-home:saudi_arabia')}</Text>
     </Button>
   );
+
   return (
     <YStack
       width="100%"
-      flex={1}
-
       alignItems="center"
       justifyContent="center"
       gap="$3"
     >
-      {renderSearch()}
       {renderHome()}
       {renderShipment()}
       {renderOrder()}

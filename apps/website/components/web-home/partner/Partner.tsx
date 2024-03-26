@@ -2,82 +2,6 @@ import { t } from 'i18next';
 import { Image, Stack, Text, XStack, YStack } from 'tamagui';
 
 export function Partner() {
-  const renderPartnerLogos = () => (
-    <Stack
-      flexDirection="row"
-      flexWrap="wrap"
-      gap='$4'
-      alignItems="center"
-      justifyContent="space-around"
-      w={'100%'}
-      paddingTop="$10"
-      $sm={{
-        paddingTop: '$4',
-      }}
-    >
-      <Image
-        source={{
-          uri: '/images/TNT_Express_Logo.png',
-        }}
-        w={108}
-        height={39}
-        $sm={{
-          width: 31,
-          height: 11,
-        }}
-        resizeMode="contain"
-      />
-      <Image
-        source={{
-          uri: '/images/FedEx_Express.png',
-        }}
-        w={86}
-        height={40}
-        $sm={{
-          width: 25,
-          height: 11,
-        }}
-        resizeMode="contain"
-      />
-      <Image
-        source={{
-          uri: '/images/Aramex_logo.png',
-        }}
-        w={243}
-        height={40}
-        $sm={{
-          width: 70,
-          height: 11,
-        }}
-        resizeMode="contain"
-      />
-      <Image
-        source={{
-          uri: '/images/Amazon_logo.png',
-        }}
-        w={131}
-        height={39}
-        $sm={{
-          width: 38,
-          height: 11,
-        }}
-        resizeMode="contain"
-      />
-      <Image
-        source={{
-          uri: '/images/DHL_Logo.png',
-        }}
-        w={280}
-        height={40}
-        $sm={{
-          width: 81,
-          height: 11,
-        }}
-        resizeMode="contain"
-      />
-    </Stack>
-  );
-
 
   const renderOptionText = () => (
     <YStack
@@ -85,6 +9,9 @@ export function Partner() {
       justifyContent="center"
       borderRadius="$4"
       marginBottom="$3"
+      $sm={{
+       alignItems: 'center',
+      }}
     >
       <Text
         fontWeight="800"
@@ -112,6 +39,88 @@ export function Partner() {
       </Text>
     </YStack>
   );
+  const renderPartnerLogos = () => (
+    <Stack
+      flexDirection="row"
+      flexWrap="wrap"
+      gap='$4'
+      alignItems="center"
+      justifyContent="space-around"
+      w={'100%'}
+      paddingTop="$10"
+      $sm={{
+        paddingTop: '$4',
+      }}
+    >
+      <Image
+        alt="DHL"
+        source={{
+          uri: '/images/TNT_Express_Logo.png',
+        }}
+        w={108}
+        height={39}
+        $sm={{
+          width: 31,
+          height: 11,
+        }}
+        resizeMode="contain"
+      />
+      <Image
+        alt="DHL"
+        source={{
+          uri: '/images/FedEx_Express.png',
+        }}
+        w={86}
+        height={40}
+        $sm={{
+          width: 25,
+          height: 11,
+        }}
+        resizeMode="contain"
+      />
+      <Image
+        alt="DHL"
+        source={{
+          uri: '/images/Aramex_logo.png',
+        }}
+        w={243}
+        height={40}
+        $sm={{
+          width: 70,
+          height: 11,
+        }}
+        resizeMode="contain"
+      />
+      <Image
+        alt="DHL"
+        source={{
+          uri: '/images/Amazon_logo.png',
+        }}
+        w={131}
+        height={39}
+        $sm={{
+          width: 38,
+          height: 11,
+        }}
+        resizeMode="contain"
+      />
+      <Image
+        alt="DHL"
+        source={{
+          uri: '/images/DHL_Logo.png',
+        }}
+        w={280}
+        height={40}
+        $sm={{
+          width: 81,
+          height: 11,
+        }}
+        resizeMode="contain"
+      />
+    </Stack>
+  );
+
+
 
 
   return (
@@ -123,7 +132,8 @@ export function Partner() {
       paddingVertical="$8"
       marginBottom="$3"
       $sm={{
-        paddint: '$4',
+        paddingHorizontal: '$1',
+        paddingVertical: '$4',
       }}
     >
       {renderOptionText()}

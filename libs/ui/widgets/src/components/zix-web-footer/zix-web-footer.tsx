@@ -36,25 +36,25 @@ export const ZixWebFooter = () => {
         </Text>
         <XStack gap="$1">
           <ZixLinkButton
-            display="menuItem"
+            menuItem
             unstyled
             icon={<CustomIcon name="tik_tok" size={'$2.5'} color={'$color1'} />}
             href={'/'}
           />
           <ZixLinkButton
-            display="menuItem"
+            menuItem
             unstyled
             icon={<CustomIcon name="snapchat" size={'$2.5'} color={'$color1'} />}
             href={'/'}
           />
           <ZixLinkButton
-            display="menuItem"
+            menuItem
             unstyled
             icon={<CustomIcon name="instagram" size={'$2.5'} color={'$color1'} />}
             href={'/'}
           />
           <ZixLinkButton
-            display="menuItem"
+            menuItem
             unstyled
             icon={<CustomIcon name="facebook" size={'$2.5'} color={'$color1'} />}
             href={'/'}
@@ -77,7 +77,7 @@ export const ZixWebFooter = () => {
         >{t('web-home:download')}</Text>
         <XStack gap="$2">
           <ZixLinkButton
-            display="menuItem"
+            menuItem
             href="/"
           >
             <Image
@@ -119,19 +119,19 @@ export const ZixWebFooter = () => {
         {t('web-home:aboutfooter')}
       </Text>
       <YStack gap="$1">
-        <ZixLinkButton display="menuItem" href={'/'} >
+        <ZixLinkButton menuItem href={'/'} >
           <Text color={'$color1'}>{t('web-home:investor')}</Text>
         </ZixLinkButton>
-        <ZixLinkButton display="menuItem" href={'/'}>
+        <ZixLinkButton menuItem href={'/'}>
           <Text color={'$color1'}>{t('web-home:delivering')}</Text>
         </ZixLinkButton>
-        <ZixLinkButton display="menuItem" href={'/'}>
+        <ZixLinkButton menuItem href={'/'}>
           <Text color={'$color1'}>{t('web-home:commercial')}</Text>
         </ZixLinkButton>
-        <ZixLinkButton display="menuItem" href={'/terms-of-service'}>
+        <ZixLinkButton menuItem href={'/terms-of-service'}>
           <Text color={'$color1'}>{t('web-home:certificates')}</Text>
         </ZixLinkButton>
-        <ZixLinkButton display="menuItem" href={'/'} color={'$color1'}>
+        <ZixLinkButton menuItem href={'/'} color={'$color1'}>
           <Text color={'$color1'}>{t('web-home:aboutsawaed')}</Text>
         </ZixLinkButton>
       </YStack>
@@ -144,20 +144,20 @@ export const ZixWebFooter = () => {
         {t('web-home:legal')}
       </Text>
       <YStack gap="$1">
-        <ZixLinkButton display="menuItem" href={'/'}>
+        <ZixLinkButton menuItem href={'/'}>
           <Text color={'$color1'}>{t('web-home:term')}</Text>
         </ZixLinkButton>
-        <ZixLinkButton display="menuItem" href={'/'}>
+        <ZixLinkButton menuItem href={'/'}>
           <Text color={'$color1'}>{t('web-home:customer')}</Text>
 
         </ZixLinkButton>
-        <ZixLinkButton display="menuItem" href={'/privacy-policy'} >
+        <ZixLinkButton menuItem href={'/privacy-policy'} >
           <Text color={'$color1'}>{t('web-home:privacy')}</Text>
         </ZixLinkButton>
-        <ZixLinkButton display="menuItem" href={'/'}>
+        <ZixLinkButton menuItem href={'/'}>
           <Text color={'$color1'}>{t('web-home:cookie')}</Text>
         </ZixLinkButton>
-        <ZixLinkButton display="menuItem" href={'/'}>
+        <ZixLinkButton menuItem href={'/'}>
           <Text color={'$color1'}>{t('web-home:sdk')}</Text>
         </ZixLinkButton>
       </YStack>
@@ -170,16 +170,16 @@ export const ZixWebFooter = () => {
         {t('web-home:contact')}
       </Text>
       <YStack gap="$1">
-        <ZixLinkButton display="menuItem" href={'/jobs'}>
+        <ZixLinkButton menuItem href={'/jobs'}>
           <Text color={'$color1'}>{t('web-home:jobs')}</Text>
         </ZixLinkButton>
-        <ZixLinkButton display="menuItem" href={'/'}>
+        <ZixLinkButton menuItem href={'/'}>
           <Text color={'$color1'}>{t('web-home:aramex')}</Text>
         </ZixLinkButton>
-        <ZixLinkButton display="menuItem" href={'/'}>
+        <ZixLinkButton menuItem href={'/'}>
           <Text color={'$color1'}>{t('web-home:blogstix')}</Text>
         </ZixLinkButton>
-        <ZixLinkButton display="menuItem" href={'/'}>
+        <ZixLinkButton menuItem href={'/'}>
           <Text color={'$color1'}>{t('web-home:support')}</Text>
         </ZixLinkButton>
       </YStack>
@@ -205,11 +205,11 @@ export const ZixWebFooter = () => {
         alignItems="center"
         justifyContent="center"
       >
-        <ZixLinkButton display="linkItem" href={'/terms-of-service'}>
+        <ZixLinkButton linkItem href={'/terms-of-service'}>
           {t('web-home:term')}
         </ZixLinkButton>
         <Text color={'$color0'}> | </Text>
-        <ZixLinkButton display="linkItem" href={'/privacy-policy'}>
+        <ZixLinkButton linkItem href={'/privacy-policy'}>
           {t('web-home:privacy')}
         </ZixLinkButton>
       </Stack>
@@ -221,7 +221,7 @@ export const ZixWebFooter = () => {
         alignItems="center"
       >
         <Text color={'$color0'}>© 2024</Text>
-        <ZixLinkButton display="linkItem" href={'/'} color={'$color5'}>
+        <ZixLinkButton linkItem href={'/'} color={'$color5'}>
           Sawaed Logistics
         </ZixLinkButton>
         <Text color={'$color0'}>{t('web-home:all-rights-reserved')}</Text>
@@ -268,7 +268,5 @@ export const ZixWebFooter = () => {
     </ZixContainer>
   );
 }
-
-
 
 export default ZixWebFooter;

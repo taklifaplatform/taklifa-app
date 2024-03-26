@@ -21,8 +21,7 @@ export function ZixWebHeader(props: ZixWebHeaderProps) {
         left={0}
         right={0}
       >
-        <ZixContainer
-        >
+        <ZixContainer>
           <View
             borderRadius='$4'
             overflow='hidden'
