@@ -1,8 +1,9 @@
+export * from './shipment-summary-screen/shipment-summary-screen';
 
-export * from './summary-shipment-screen/summary-shipment-screen';
+export * from './manage-shipment-items-screen/manage-shipment-items-screen';
 
-export * from './add-items-shipment-screen/add-items-shipment-screen';
+export * from './manage-shipment-drivers-screen/manage-shipment-drivers-screen';
 
-export * from './set-recipient-shipment-screen/set-recipient-shipment-screen';
+export * from './manage-shipment-recipient-screen/manage-shipment-recipient-screen';
 
-export * from './create-shipment-screen/create-shipment-screen';
+export * from './manage-shipment-sender-screen/manage-shipment-sender-screen';

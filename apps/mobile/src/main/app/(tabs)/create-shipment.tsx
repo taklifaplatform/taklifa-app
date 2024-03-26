@@ -1,6 +1,6 @@
-import { CreateShipmentScreen } from '@zix/features/shipments';
+import { ManageShipmentSenderScreen } from '@zix/features/shipments';
 import React from 'react';
 
 export default function Screen() {
-  return <CreateShipmentScreen shipment={{}} />;
+  return <ManageShipmentSenderScreen shipment={{}} />;
 }

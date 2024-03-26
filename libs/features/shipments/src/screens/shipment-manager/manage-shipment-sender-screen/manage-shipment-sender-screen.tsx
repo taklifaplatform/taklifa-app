@@ -12,7 +12,7 @@ import { FormProvider, Theme, XStack } from 'tamagui';
 import { z } from 'zod';
 
 /* eslint-disable-next-line */
-export interface CreateShipmentScreenProps {
+export interface ManageShipmentSenderScreenProps {
   shipment: any
 }
 
@@ -22,7 +22,7 @@ const CreateShipmentSchema = z.object({
   pick_time: formFields.row_time_range_picker.describe('Time // Pick Time'),
 })
 
-export const CreateShipmentScreen: React.FC<CreateShipmentScreenProps> = ({ shipment }) => {
+export const ManageShipmentSenderScreen: React.FC<ManageShipmentSenderScreenProps> = ({ shipment }) => {
   const form = useForm<z.infer<typeof CreateShipmentSchema>>()
   const router = useRouter()
   const toast = useToastController()
@@ -35,6 +35,9 @@ export const CreateShipmentScreen: React.FC<CreateShipmentScreenProps> = ({ ship
       })
     },
     onSuccess(data, variables, context) {
+      console.log('========')
+      console.log('onSuccess::', data)
+      console.log('========')
       if (!data.data?.id) {
         toast.show('An error occurred', { preset: 'error' })
         return
@@ -74,4 +77,4 @@ export const CreateShipmentScreen: React.FC<CreateShipmentScreenProps> = ({ ship
   )
 }
 
-export default CreateShipmentScreen;
+export default ManageShipmentSenderScreen;

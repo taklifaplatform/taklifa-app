@@ -3,9 +3,9 @@ import React from 'react';
 import { View, Text } from 'react-native';
 
 /* eslint-disable-next-line */
-export interface AddItemsShipmentScreenProps {}
+export interface ManageShipmentDriversScreenProps { }
 
-export function AddItemsShipmentScreen(props: AddItemsShipmentScreenProps) {
+export function ManageShipmentDriversScreen(props: ManageShipmentDriversScreenProps) {
   return (
     <View>
       <Text>Welcome to add-items-shipment-screen!</Text>
@@ -13,4 +13,4 @@ export function AddItemsShipmentScreen(props: AddItemsShipmentScreenProps) {
   );
 }
 
-export default AddItemsShipmentScreen;
+export default ManageShipmentDriversScreen;

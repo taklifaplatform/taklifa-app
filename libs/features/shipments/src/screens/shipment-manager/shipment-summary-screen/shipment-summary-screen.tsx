@@ -5,9 +5,9 @@ import { Button, ScrollView, YStack } from 'tamagui';
 // import QrCard from '../../../components/QrCard';
 
 /* eslint-disable-next-line */
-export interface SummaryShipmentScreenProps {}
+export interface ShipmentSummaryScreenProps {}
 
-export function SummaryShipmentScreen(props: SummaryShipmentScreenProps) {
+export function ShipmentSummaryScreen(props: ShipmentSummaryScreenProps) {
   const data = [
     {
       id: 1,
@@ -75,4 +75,4 @@ export function SummaryShipmentScreen(props: SummaryShipmentScreenProps) {
   );
 }
 
-export default SummaryShipmentScreen;
+export default ShipmentSummaryScreen;
