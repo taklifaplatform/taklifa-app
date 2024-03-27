@@ -11,6 +11,7 @@ import ZixSelectField, { BaseSelectFieldItem, ZixSelectFieldProps } from '../zix
  */
 export type ZixAutoCompleteFieldProps = Partial<ZixSelectFieldProps> & {
   api: string;
+  query?: Record<string, any>;
   itemKey?: string;
   itemValue?: string;
 
@@ -23,6 +24,7 @@ export type ZixAutoCompleteFieldProps = Partial<ZixSelectFieldProps> & {
 export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
   {
     api,
+    query = {},
     itemKey,
     itemValue,
     dataMapper,
@@ -46,10 +48,11 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
             search,
             page: 1,
             per_page: perPage,
+            ...query
           },
         });
       },
-      queryKey: [api, search, perPage, props.value],
+      queryKey: [api, search, perPage, props.value, Object.values(query)],
       staleTime: 1000 * 60 * 60 * 24,
     }
   );
