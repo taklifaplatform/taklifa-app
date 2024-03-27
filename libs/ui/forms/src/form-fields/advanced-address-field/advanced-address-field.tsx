@@ -38,11 +38,11 @@ export const AdvancedAddressSchema = z.object({
   country_id: z.number(),
   state_id: z.number().optional().nullable(),
   city_id: z.number().optional().nullable(),
-  phone_number: z.string(),
+  phone_number: z.string().optional().nullable(),
   is_primary: z.boolean().optional().nullable(),
 
-  latitude: z.string().optional().nullable(),
-  longitude: z.string().optional().nullable(),
+  latitude: z.any().optional().nullable(),
+  longitude: z.any().optional().nullable(),
 })
 
 export const AdvancedAddressField: React.FC<AdvancedAddressFieldProps> = ({
@@ -53,7 +53,7 @@ export const AdvancedAddressField: React.FC<AdvancedAddressFieldProps> = ({
   const { placeholder } = useFieldInfo()
 
 
-  const renderAddressCard = () => value?.id && (
+  const renderAddressCard = () => value?.address && (
     <YStack
       borderWidth='$0.5'
       borderColor='$color8'
@@ -118,7 +118,7 @@ export const AdvancedAddressField: React.FC<AdvancedAddressFieldProps> = ({
     </View>
   )
 
-  const renderAddButton = () => !value?.id && (
+  const renderAddButton = () => !value?.address && (
     <Button
       icon={Plus}
     >
@@ -220,7 +220,7 @@ export const AdvancedAddressField: React.FC<AdvancedAddressFieldProps> = ({
           >
             <ZixAutoCompleteField
               api="geography/countries"
-              value={value?.country_id}
+              value={`${value?.country_id}`}
               dataMapper={(item: CountryTransformer) => ({
                 id: `${item.id}`,
                 name: item.name,
@@ -228,7 +228,7 @@ export const AdvancedAddressField: React.FC<AdvancedAddressFieldProps> = ({
               })}
               onChange={country_id => onChange({
                 ...value,
-                country_id
+                country_id: parseInt(country_id)
               })}
             />
           </ZixFieldContainer>
@@ -282,6 +282,7 @@ export const AdvancedAddressField: React.FC<AdvancedAddressFieldProps> = ({
         labelBold
         collapsible
         error={error?.notes}
+        isOptional
       >
         <ZixInput
           placeholder='Write any additional notes here...'

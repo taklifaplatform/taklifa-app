@@ -15,17 +15,21 @@ export const ZixMapPointerField: React.FC<ZixMapPointerFieldProps> = (props) => 
   const mapRef = useRef<MapView>(null);
 
   useEffect(() => {
-    if (mapRef && mapRef.current && props.value?.latitude && props.value?.longitude) {
-      mapRef.current.animateCamera(
-        {
-          center: {
-            latitude: Number(props.value.latitude),
-            longitude: Number(props.value.longitude),
+    if (mapRef.current && props.value?.latitude && props.value?.longitude) {
+      try {
+        mapRef.current?.animateCamera(
+          {
+            center: {
+              latitude: Number(props.value.latitude),
+              longitude: Number(props.value.longitude),
+            },
+            zoom: 10,
           },
-          zoom: 16,
-        },
-        { duration: 1000 },
-      );
+          { duration: 1000 },
+        );
+      } catch (error) {
+        //
+      }
     }
   }, [props.value?.latitude, props.value?.longitude])
 

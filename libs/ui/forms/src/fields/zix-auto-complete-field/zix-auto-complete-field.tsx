@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { OpenAPI, request } from '@zix/api';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   SelectProps
 } from 'tamagui';
@@ -37,6 +37,7 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
   }
 
   const [search, setSearch] = useState<string>();
+  const [localItems, setLocalItems] = useState([])
 
   const { data } = useQuery(
     {
@@ -52,18 +53,41 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
           },
         });
       },
-      queryKey: [api, search, perPage, props.value, Object.values(query)],
-      staleTime: 1000 * 60 * 60 * 24,
+      queryKey: [api, search, perPage, `-${props.value}`, Object.values(query)],
     }
   );
 
   const mappedData = useMemo<BaseSelectFieldItem[]>(() => {
-    return data?.data?.map(dataMapper ? dataMapper : (item: any) => ({
+    return [
+      ...localItems,
+      ...data?.data || []
+    ].map(dataMapper ? dataMapper : (item: any) => ({
       id: item[itemKey || 'id'],
       name: item[itemValue || 'name'],
     })) || [];
-  }, [data?.data, itemKey, itemValue, dataMapper])
+  }, [localItems, data?.data, dataMapper, itemKey, itemValue])
 
+  useEffect(() => {
+    if (props.value && !mappedData.find(item => item.id === props.value)) {
+      request<any>(OpenAPI, {
+        method: 'GET',
+        url: `/api/${api}`,
+        query: {
+          search: props.value,
+          page: 1,
+          per_page: 1
+        },
+      }).then((res) => {
+        if (res.data.length) {
+          setLocalItems(res.data)
+        }
+      })
+    }
+  }, [props.value, itemKey, mappedData, api])
+
+  if (!mappedData.length && !search?.length) {
+    return null
+  }
 
   return (
     <ZixSelectField

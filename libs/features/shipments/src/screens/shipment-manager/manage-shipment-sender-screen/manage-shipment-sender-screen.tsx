@@ -31,14 +31,14 @@ export function ManageShipmentSenderScreen() {
   const { data } = useQuery({
     queryFn() {
       if (!shipmentId) {
-        return;
+        return {};
       }
 
       return CustomerShipmentsService.retrieveShipment({
         shipment: shipmentId,
       });
     },
-    queryKey: ['CustomerShipmentsService.retrieveShipment', shipmentId],
+    queryKey: ['CustomerShipmentsService.retrieveShipment', `-${shipmentId}`],
   })
 
   const { mutate } = useMutation({
