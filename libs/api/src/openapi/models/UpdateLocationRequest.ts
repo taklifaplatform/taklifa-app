@@ -8,6 +8,10 @@ export type UpdateLocationRequest = {
     city_id?: number;
     address?: string;
     address_complement?: string;
+    building_name?: string;
+    floor_number?: string;
+    house_number?: string;
+    notes?: string;
     latitude?: number;
     longitude?: number;
     postcode?: string;

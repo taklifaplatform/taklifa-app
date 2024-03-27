@@ -6,7 +6,7 @@ import MapView, { Marker } from 'react-native-maps';
 import { View } from 'tamagui';
 
 export type ZixMapPointerFieldProps = {
-  onChange: (val: LocationTransformer) => void,
+  onChange?: (val: LocationTransformer) => void,
   value: LocationTransformer,
 }
 
@@ -14,17 +14,31 @@ export type ZixMapPointerFieldProps = {
 export const ZixMapPointerField: React.FC<ZixMapPointerFieldProps> = (props) => {
   return (
     <View flex={1} borderRadius='$4' overflow='hidden'>
-      <MapView style={{ flex: 1 }} initialCamera={{
-        center: props.value,
-        pitch: 0,
-        heading: 0,
-        altitude: 100000,
-        zoom: 20,
-      }}>
+      <MapView
+        style={{ flex: 1 }}
+        initialCamera={{
+          center: {
+            latitude: 24.713552,
+            longitude: 46.675296,
+            ...props.value
+          },
+          pitch: 0,
+          heading: 0,
+          altitude: 100000,
+          zoom: 10,
+        }}
+      >
         <Marker
           coordinate={props.value}
           title="Hello"
           description="I'm here"
+          draggable={!!props.onChange}
+          onDragEnd={(e) => {
+            props.onChange?.({
+              latitude: e.nativeEvent.coordinate.latitude,
+              longitude: e.nativeEvent.coordinate.longitude,
+            });
+          }}
         >
           <View
             theme='accent'

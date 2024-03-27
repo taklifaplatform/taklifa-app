@@ -76,7 +76,7 @@ export const ZixInput = forwardRef(function ZixInputEl(
       ref={ref}
     />
   ) : (
-    <Input {...currentInputProps} autoCapitalize="none" ref={ref} />
+    <Input {...currentInputProps} numberOfLines={1} autoCapitalize="none" ref={ref} />
   )
 
   return (

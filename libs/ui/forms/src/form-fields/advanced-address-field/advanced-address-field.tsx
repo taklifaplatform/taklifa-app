@@ -13,10 +13,14 @@ import { View, XStack, YStack, Text, Theme, Button, Separator } from 'tamagui';
 import { DebugObject } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { useQuery } from '@tanstack/react-query';
+import { Dimensions } from 'react-native';
+import { MapLocationPicker } from './map-location-picker';
 
 export type AdvancedAddressFieldProps = {
   containerProps?: BaseFormFieldContainerProps;
 }
+
+const SCREEN_HEIGHT = Dimensions.get('screen').width;
 
 export const AdvancedAddressSchema = z.object({
   id: z.string().optional(),
@@ -126,19 +130,11 @@ export const AdvancedAddressField: React.FC<AdvancedAddressFieldProps> = ({
 
   const renderFormContent = () => (
     <YStack gap='$2'>
-      <ZixFieldContainer
-        label='Please Enter your detailed Address'
-      >
-        <ZixInput
-          rightIcon={(props) => <LocateFixed {...props} />}
-          placeholder={placeholder}
-          value={value?.address}
-          onChangeText={address => onChange({
-            ...value,
-            address
-          })}
-        />
-      </ZixFieldContainer>
+      <MapLocationPicker value={value} onChange={(val) => onChange({
+        ...value,
+        ...val
+      })} />
+
 
       <ZixFieldContainer
         label='Position on Map'
@@ -146,10 +142,6 @@ export const AdvancedAddressField: React.FC<AdvancedAddressFieldProps> = ({
         <View height='$15'>
           <ZixMapPointerField
             value={value}
-            onChange={location => onChange({
-              ...value,
-              ...location
-            })}
           />
         </View>
       </ZixFieldContainer>
