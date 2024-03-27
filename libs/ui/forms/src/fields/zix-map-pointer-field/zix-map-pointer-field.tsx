@@ -1,6 +1,6 @@
 
 import { LocationTransformer } from '@zix/api';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import MapView, { Marker } from 'react-native-maps';
 import { View } from 'tamagui';
@@ -12,9 +12,27 @@ export type ZixMapPointerFieldProps = {
 
 
 export const ZixMapPointerField: React.FC<ZixMapPointerFieldProps> = (props) => {
+  const mapRef = useRef<MapView>(null);
+
+  useEffect(() => {
+    if (mapRef && mapRef.current && props.value?.latitude && props.value?.longitude) {
+      mapRef.current.animateCamera(
+        {
+          center: {
+            latitude: Number(props.value.latitude),
+            longitude: Number(props.value.longitude),
+          },
+          zoom: 16,
+        },
+        { duration: 1000 },
+      );
+    }
+  }, [props.value?.latitude, props.value?.longitude])
+
   return (
     <View flex={1} borderRadius='$4' overflow='hidden'>
       <MapView
+        ref={mapRef}
         style={{ flex: 1 }}
         initialCamera={{
           center: {
@@ -27,11 +45,18 @@ export const ZixMapPointerField: React.FC<ZixMapPointerFieldProps> = (props) => 
           altitude: 100000,
           zoom: 10,
         }}
+
+        onPress={(e) => {
+          if (!props.value?.latitude || !props.value?.longitude) {
+            props.onChange?.({
+              latitude: e.nativeEvent.coordinate.latitude,
+              longitude: e.nativeEvent.coordinate.longitude,
+            });
+          }
+        }}
       >
         <Marker
           coordinate={props.value}
-          title="Hello"
-          description="I'm here"
           draggable={!!props.onChange}
           onDragEnd={(e) => {
             props.onChange?.({

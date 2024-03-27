@@ -15,7 +15,7 @@ export type GroupFieldsSheetProps = {
 
 export const GroupFieldsSheet: React.FC<GroupFieldsSheetProps> = ({ children, activator, title }) => {
   const [open, setOpen] = useState(false)
-  const { bottom } = useSafeAreaInsets()
+  const { bottom, top } = useSafeAreaInsets()
 
   return (
     <>
@@ -35,11 +35,13 @@ export const GroupFieldsSheet: React.FC<GroupFieldsSheetProps> = ({ children, ac
         open={open}
         onOpenChange={setOpen}
         modal
+        snapPoints={[100, 100]}
+        dismissOnSnapToBottom={false}
+        forceRemoveScrollEnabled
+        disableDrag
       >
-        <Sheet.Overlay />
-        <Sheet.Handle />
         <Sheet.Frame>
-          <View flex={1} paddingBottom={bottom} backgroundColor='$background1'>
+          <View flex={1} paddingBottom={bottom} paddingTop={top} backgroundColor='$background1'>
             <XStack padding='$4' justifyContent='space-between' alignItems='center' paddingBottom='$4'>
               <H4>
                 {title}

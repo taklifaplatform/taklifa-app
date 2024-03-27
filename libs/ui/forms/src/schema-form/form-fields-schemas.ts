@@ -1,7 +1,7 @@
 import { createUniqueFieldSchema } from "@ts-react/form";
 
 import { z } from "zod";
-import { AddressSchema } from "../form-fields";
+import { AddressSchema, AdvancedAddressSchema } from "../form-fields";
 
 export const mediaSchema = z.object({
   // id: z.number(),
@@ -87,5 +87,5 @@ export const formFields = {
   country: createUniqueFieldSchema(z.string(), "country"),
 
   address: createUniqueFieldSchema(AddressSchema, "address"),
-  advanced_address: createUniqueFieldSchema(AddressSchema, "advanced_address"),
+  advanced_address: createUniqueFieldSchema(AdvancedAddressSchema, "advanced_address"),
 };

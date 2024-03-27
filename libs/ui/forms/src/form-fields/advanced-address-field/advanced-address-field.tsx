@@ -2,19 +2,18 @@
 import { useFieldInfo, useTsController } from '@ts-react/form';
 import { z } from "zod";
 
-import { LocateFixed, Pen, Plus } from '@tamagui/lucide-icons';
-import { CountryTransformer, GeographyService, UserLocationsService } from '@zix/api';
+import { Pen, Plus } from '@tamagui/lucide-icons';
+import { CountryTransformer } from '@zix/api';
+import { CustomIcon } from '@zix/ui/icons';
+import { Dimensions } from 'react-native';
+import { Button, Separator, Text, Theme, View, XStack, YStack } from 'tamagui';
 import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common';
 import ZixFieldContainer from '../../common/zix-field-container/zix-field-container';
 import { ZixAutoCompleteField, ZixInput } from '../../fields';
 import ZixMapPointerField from '../../fields/zix-map-pointer-field/zix-map-pointer-field';
 import { GroupFieldsSheet } from '../../wrappers';
-import { View, XStack, YStack, Text, Theme, Button, Separator } from 'tamagui';
-import { DebugObject } from '@zix/ui/common';
-import { CustomIcon } from '@zix/ui/icons';
-import { useQuery } from '@tanstack/react-query';
-import { Dimensions } from 'react-native';
 import { MapLocationPicker } from './map-location-picker';
+import { DebugObject } from '@zix/ui/common';
 
 export type AdvancedAddressFieldProps = {
   containerProps?: BaseFormFieldContainerProps;
@@ -23,28 +22,27 @@ export type AdvancedAddressFieldProps = {
 const SCREEN_HEIGHT = Dimensions.get('screen').width;
 
 export const AdvancedAddressSchema = z.object({
-  id: z.string().optional(),
-  name: z.string(),
+  id: z.string().optional().nullable(),
+  name: z.string().optional().nullable(),
   address: z.string(),
-  address_complement: z.string(),
+  address_complement: z.string().optional().nullable(),
 
-  building_name: z.string().optional(),
-  floor_number: z.string().optional(),
-  house_number: z.string().optional(),
 
-  notes: z.string().optional(),
+  building_name: z.string().optional().nullable(),
+  floor_number: z.string().optional().nullable(),
+  house_number: z.string().optional().nullable(),
+  postcode: z.string().optional().nullable(),
 
-  country_id: z.string(),
-  state_id: z.string().optional(),
-  city_id: z.string().optional(),
+  notes: z.string().optional().nullable(),
+
+  country_id: z.number(),
+  state_id: z.number().optional().nullable(),
+  city_id: z.number().optional().nullable(),
   phone_number: z.string(),
-  is_primary: z.boolean(),
-  // city_id: z.string(),
-  // state_id: z.string(),
-  // address_complement: z.string(),
-  // postcode: z.string(),
-  latitude: z.number(),
-  longitude: z.number(),
+  is_primary: z.boolean().optional().nullable(),
+
+  latitude: z.string().optional().nullable(),
+  longitude: z.string().optional().nullable(),
 })
 
 export const AdvancedAddressField: React.FC<AdvancedAddressFieldProps> = ({
@@ -138,6 +136,7 @@ export const AdvancedAddressField: React.FC<AdvancedAddressFieldProps> = ({
 
       <ZixFieldContainer
         label='Position on Map'
+        error={error?.latitude || error?.longitude}
       >
         <View height='$15'>
           <ZixMapPointerField
@@ -156,6 +155,7 @@ export const AdvancedAddressField: React.FC<AdvancedAddressFieldProps> = ({
         <YStack gap='$4'>
           <ZixFieldContainer
             label='Address'
+            error={error?.address}
           >
             <ZixInput
               placeholder='Address'
@@ -170,6 +170,7 @@ export const AdvancedAddressField: React.FC<AdvancedAddressFieldProps> = ({
           <ZixFieldContainer
             label='Building Name'
             isOptional
+            error={error?.building_name}
           >
             <ZixInput
               placeholder='Enter Building Name...'
@@ -181,10 +182,11 @@ export const AdvancedAddressField: React.FC<AdvancedAddressFieldProps> = ({
             />
           </ZixFieldContainer>
 
-          <XStack alignItems='center' gap='$4'>
+          <XStack alignItems='flex-start' gap='$4'>
             <ZixFieldContainer
               label='Floor Number'
               isOptional
+              error={error?.floor_number}
             >
               <ZixInput
                 placeholder='Enter Floor Number...'
@@ -199,6 +201,7 @@ export const AdvancedAddressField: React.FC<AdvancedAddressFieldProps> = ({
             <ZixFieldContainer
               label='House Number'
               isOptional
+              error={error?.house_number}
             >
               <ZixInput
                 placeholder='Enter House Number...'
@@ -213,6 +216,7 @@ export const AdvancedAddressField: React.FC<AdvancedAddressFieldProps> = ({
           </XStack>
           <ZixFieldContainer
             label='Country'
+            error={error?.country_id}
           >
             <ZixAutoCompleteField
               api="geography/countries"
@@ -229,10 +233,11 @@ export const AdvancedAddressField: React.FC<AdvancedAddressFieldProps> = ({
             />
           </ZixFieldContainer>
 
-          <XStack alignItems='center' gap='$4'>
+          <XStack alignItems='flex-start' gap='$4'>
             <ZixFieldContainer
               label='State'
               isOptional
+              error={error?.state_id}
             >
               <ZixAutoCompleteField
                 api="geography/states"
@@ -250,6 +255,7 @@ export const AdvancedAddressField: React.FC<AdvancedAddressFieldProps> = ({
             <ZixFieldContainer
               label='City'
               isOptional
+              error={error?.city_id}
             >
               <ZixAutoCompleteField
                 api="geography/cities"
@@ -275,8 +281,8 @@ export const AdvancedAddressField: React.FC<AdvancedAddressFieldProps> = ({
         label='Notes'
         labelBold
         collapsible
+        error={error?.notes}
       >
-
         <ZixInput
           placeholder='Write any additional notes here...'
           isMultiline
@@ -307,7 +313,7 @@ export const AdvancedAddressField: React.FC<AdvancedAddressFieldProps> = ({
 
         {renderAddressMap()}
 
-        {/* <DebugObject object={value} /> */}
+        <DebugObject object={error} />
       </YStack>
     </FormFieldContainer>
   );
