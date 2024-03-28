@@ -37,7 +37,7 @@ export const ManageShipmentItemsScreen: React.FC = () => {
         shipment: shipmentId,
       });
     },
-    queryKey: ['CustomerShipmentsService.retrieveShipment', `-${shipmentId}`],
+    queryKey: ['ShipmentService.retrieveShipment', `-${shipmentId}`],
   })
 
   const { mutate } = useMutation({

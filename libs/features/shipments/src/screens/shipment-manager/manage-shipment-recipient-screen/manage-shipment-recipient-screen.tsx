@@ -1,6 +1,6 @@
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { CustomerShipmentsService } from '@zix/api';
+import { ShipmentService } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
 import { SchemaForm, SubmitButton, ZixFieldContainer, formFields, handleFormErrors } from '@zix/ui/forms';
@@ -36,11 +36,11 @@ export const ManageShipmentRecipientScreen: React.FC = () => {
         return { data: {} };
       }
 
-      return CustomerShipmentsService.retrieveShipment({
+      return ShipmentService.retrieveShipment({
         shipment: shipmentId,
       });
     },
-    queryKey: ['CustomerShipmentsService.retrieveShipment', `-${shipmentId}`],
+    queryKey: ['ShipmentService.retrieveShipment', `-${shipmentId}`],
   })
 
   const { mutate } = useMutation({
@@ -48,7 +48,7 @@ export const ManageShipmentRecipientScreen: React.FC = () => {
       if (!shipmentId) {
         throw new Error('Shipment ID is required')
       }
-      return CustomerShipmentsService.updateShipment({
+      return ShipmentService.updateShipment({
         shipment: shipmentId,
         requestBody
       })

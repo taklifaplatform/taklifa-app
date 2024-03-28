@@ -45,7 +45,6 @@ export type { FromLocationUpdateShipmentRequest } from './models/FromLocationUpd
 export type { FuelInformationUpdateVehicleRequest } from './models/FuelInformationUpdateVehicleRequest';
 export type { GeoLocationTransformer } from './models/GeoLocationTransformer';
 export type { IdentityCardUpdateUserVerificationRequest } from './models/IdentityCardUpdateUserVerificationRequest';
-export type { ImagesItemsUpdateShipmentRequest } from './models/ImagesItemsUpdateShipmentRequest';
 export type { ImagesUpdateVehicleRequest } from './models/ImagesUpdateVehicleRequest';
 export type { ImageUpdateVehicleRequest } from './models/ImageUpdateVehicleRequest';
 export type { InformationUpdateVehicleRequest } from './models/InformationUpdateVehicleRequest';
@@ -81,6 +80,7 @@ export type { LocationUpdateUserVerificationRequest } from './models/LocationUpd
 export type { LoginRequest } from './models/LoginRequest';
 export type { LogoUpdateCompanyRequest } from './models/LogoUpdateCompanyRequest';
 export type { MaxBudgetUpdateShipmentRequest } from './models/MaxBudgetUpdateShipmentRequest';
+export type { MediasItemsUpdateShipmentRequest } from './models/MediasItemsUpdateShipmentRequest';
 export type { MediaTransformer } from './models/MediaTransformer';
 export type { MembershipTransformer } from './models/MembershipTransformer';
 export type { MemberTransformer } from './models/MemberTransformer';
@@ -162,10 +162,7 @@ export { CompaniesService } from './services/CompaniesService';
 export { CompanyAdminService } from './services/CompanyAdminService';
 export { CompanyInvitationsService } from './services/CompanyInvitationsService';
 export { CompanyMembersService } from './services/CompanyMembersService';
-export { CompanyShipmentsService } from './services/CompanyShipmentsService';
-export { CustomerShipmentsService } from './services/CustomerShipmentsService';
 export { DriversService } from './services/DriversService';
-export { DriverShipmentsService } from './services/DriverShipmentsService';
 export { FaqsService } from './services/FaqsService';
 export { GeographyService } from './services/GeographyService';
 export { JobService } from './services/JobService';

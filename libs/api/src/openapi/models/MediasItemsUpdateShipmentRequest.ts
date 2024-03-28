@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type ImagesItemsUpdateShipmentRequest = {
+export type MediasItemsUpdateShipmentRequest = {
     uuid?: string;
     id?: string;
 };

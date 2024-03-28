@@ -1,6 +1,6 @@
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { CustomerShipmentsService } from '@zix/api';
+import { ShipmentService } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
 import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/ui/forms';
@@ -36,12 +36,12 @@ export function ManageShipmentSenderScreen() {
   const { mutate } = useMutation({
     mutationFn(requestBody: z.infer<typeof CreateShipmentSchema>) {
       if (shipmentId) {
-        return CustomerShipmentsService.updateShipment({
+        return ShipmentService.updateShipment({
           shipment: shipmentId,
           requestBody
         })
       }
-      return CustomerShipmentsService.storeShipment({
+      return ShipmentService.storeShipment({
         requestBody: {
           ...requestBody,
           selected_driver_id: selectedDriverId,
@@ -74,11 +74,11 @@ export function ManageShipmentSenderScreen() {
         return { data: {} };
       }
 
-      return CustomerShipmentsService.retrieveShipment({
+      return ShipmentService.retrieveShipment({
         shipment: shipmentId,
       });
     },
-    queryKey: ['CustomerShipmentsService.retrieveShipment', `-${shipmentId}`],
+    queryKey: ['ShipmentService.retrieveShipment', `-${shipmentId}`],
   })
 
   const shipment = useMemo(() => ({
