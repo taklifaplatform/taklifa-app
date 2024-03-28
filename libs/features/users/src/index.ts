@@ -1,5 +1,8 @@
 
+export * from './components/user-info-row/user-info-row';
+
 export * from './components/user-profile/user-profile';
+
 export * from './components/profile-header/profile-header';
 
 export * from './components/tabs/user-reviews-tab/user-reviews-tab';

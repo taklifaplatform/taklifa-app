@@ -14,6 +14,7 @@ export type ShipmentTransformer = {
     deliver_time?: string | null;
     recipient_name?: string | null;
     recipient_phone?: string | null;
+    selected_driver_id?: string | null;
     items_type?: string;
     status?: string;
     user?: UserTransformer;

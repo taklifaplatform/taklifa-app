@@ -33,7 +33,7 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
 
   function onServiceRequestPress() {
     //
-    router.push(`${getUrlPrefix}/create-shipment?driverId=${user.id}`)
+    router.push(`${getUrlPrefix}/shipment-manager?selected_driver_id=${user.id}`)
   }
 
   const { mutate: startChat, isPending } = useMutation({

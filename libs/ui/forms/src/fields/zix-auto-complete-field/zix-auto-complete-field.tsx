@@ -67,8 +67,10 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
     })) || [];
   }, [localItems, data?.data, dataMapper, itemKey, itemValue])
 
+  const [loadingLocalItems, setLoadingLocalItems] = useState(false)
   useEffect(() => {
     if (props.value && !mappedData.find(item => item.id === props.value)) {
+      setLoadingLocalItems(true)
       request<any>(OpenAPI, {
         method: 'GET',
         url: `/api/${api}`,
@@ -81,11 +83,13 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
         if (res.data.length) {
           setLocalItems(res.data)
         }
+      }).finally(() => {
+        setLoadingLocalItems(false)
       })
     }
   }, [props.value, itemKey, mappedData, api])
 
-  if (!mappedData.length && !search?.length) {
+  if (loadingLocalItems) {
     return null
   }
 

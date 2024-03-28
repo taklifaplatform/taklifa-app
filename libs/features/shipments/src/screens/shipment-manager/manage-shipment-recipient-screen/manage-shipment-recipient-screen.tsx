@@ -1,22 +1,26 @@
-import { useMutation } from '@tanstack/react-query';
+import { useToastController } from '@tamagui/toast';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { CustomerShipmentsService } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
-import { InlineStepper } from '@zix/ui/common';
-import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/ui/forms';
-import { useForm } from 'react-hook-form';
-import { useRouter } from 'solito/router';
-import { FormProvider, Theme, XStack } from 'tamagui';
-import { z } from 'zod';
-import { createParam } from 'solito';
-import { useToastController } from '@tamagui/toast';
+import { FullScreenSpinner } from '@zix/ui/common';
+import { SchemaForm, SubmitButton, ZixFieldContainer, formFields, handleFormErrors } from '@zix/ui/forms';
 import { AppHeader } from '@zix/ui/layouts';
+import { useForm } from 'react-hook-form';
+import { createParam } from 'solito';
+import { useRouter } from 'solito/router';
+import { FormProvider, Theme } from 'tamagui';
+import { z } from 'zod';
+import ShipmentManagerHeader from '../../../components/shipment-manager/shipment-manager-header/shipment-manager-header';
+import { SHARED_SHIPMENT_MANAGER_FIELD_PROPS } from '../configs';
 
 const { useParam } = createParam<{ shipment: string }>();
 
 const SendFromSchema = z.object({
-  from_location: formFields.advanced_location.describe('Shipping from // Enter the address of the pickup location'),
-  pick_date: formFields.row_date_picker.describe('Date // Pick Date'),
-  pick_time: formFields.row_time_range_picker.describe('Time // Pick Time'),
+  to_location: formFields.advanced_location.describe('Shipping To // Enter the address of the delivery location'),
+  recipient_name: formFields.text.describe('Recipient Name // Enter the name of the recipient'),
+  recipient_phone: formFields.phone.describe('Recipient Phone // Enter the phone number of the recipient'),
+  deliver_date: formFields.row_date_picker.describe('Date // Deliver Date'),
+  deliver_time: formFields.row_time_range_picker.describe('Time // Deliver Time'),
 })
 
 export const ManageShipmentRecipientScreen: React.FC = () => {
@@ -26,6 +30,18 @@ export const ManageShipmentRecipientScreen: React.FC = () => {
   const [shipmentId] = useParam('shipment');
   const toast = useToastController()
 
+  const { data } = useQuery({
+    queryFn() {
+      if (!shipmentId) {
+        return { data: {} };
+      }
+
+      return CustomerShipmentsService.retrieveShipment({
+        shipment: shipmentId,
+      });
+    },
+    queryKey: ['CustomerShipmentsService.retrieveShipment', `-${shipmentId}`],
+  })
 
   const { mutate } = useMutation({
     mutationFn(requestBody: z.infer<typeof SendFromSchema>) {
@@ -38,7 +54,7 @@ export const ManageShipmentRecipientScreen: React.FC = () => {
       })
     },
     onSuccess(data, variables, context) {
-      router.push(`${getUrlPrefix}/shipments/${shipmentId}/edit/items`)
+      router.push(`${getUrlPrefix}/shipment-manager/${shipmentId}/items`)
       //
     },
     onError(error: any) {
@@ -47,6 +63,10 @@ export const ManageShipmentRecipientScreen: React.FC = () => {
     },
   })
 
+  if (shipmentId && !data?.data) {
+    return <FullScreenSpinner />
+  }
+
   return (
     <>
       <AppHeader title='Shipment Details' showBackButton />
@@ -54,19 +74,42 @@ export const ManageShipmentRecipientScreen: React.FC = () => {
         <SchemaForm
           form={form}
           schema={SendFromSchema}
-          props={{}}
+          props={{
+            to_location: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
+            deliver_date: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
+            deliver_time: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
+          }}
+          defaultValues={data.data}
           onSubmit={mutate}
-          renderBefore={() => (
-            <XStack alignItems="center" >
-              <InlineStepper totalSteps={3} activeStep={1} />
-            </XStack>
-          )}
+
           renderAfter={({ submit }) => (
             <Theme inverse>
               <SubmitButton onPress={() => submit()}>Confirm</SubmitButton>
             </Theme>
           )}
-        />
+        >
+          {({ to_location, recipient_name, recipient_phone, ...fields }) => (
+            <>
+              <ShipmentManagerHeader
+                activeStep={2}
+                shipment={data?.data}
+                title='الرجاء تحديد  الوجهة'
+              />
+
+              {to_location}
+
+              <ZixFieldContainer
+                label='Recipient Information'
+                {...SHARED_SHIPMENT_MANAGER_FIELD_PROPS.containerProps}
+              >
+                {recipient_name}
+                {recipient_phone}
+              </ZixFieldContainer>
+
+              {Object.values(fields)}
+            </>
+          )}
+        </SchemaForm>
       </FormProvider>
     </>
   )

@@ -2,17 +2,22 @@ import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { CustomerShipmentsService } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
-import { FullScreenSpinner, InlineStepper } from '@zix/ui/common';
+import { FullScreenSpinner } from '@zix/ui/common';
 import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/ui/forms';
 import { AppHeader } from '@zix/ui/layouts';
 import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
-import { FormProvider, Text, Theme, View, YStack } from 'tamagui';
+import { FormProvider, Theme } from 'tamagui';
 import { z } from 'zod';
+import ShipmentManagerHeader from '../../../components/shipment-manager/shipment-manager-header/shipment-manager-header';
 import { SHARED_SHIPMENT_MANAGER_FIELD_PROPS } from '../configs';
+import { useMemo } from 'react';
 
-const { useParam } = createParam<{ shipment?: string }>();
+const { useParam } = createParam<{
+  shipment?: string,
+  selected_driver_id?: string,
+}>();
 
 const CreateShipmentSchema = z.object({
   from_location: formFields.advanced_location.describe('Shipping from // Enter the address of the pickup location'),
@@ -26,20 +31,7 @@ export function ManageShipmentSenderScreen() {
   const toast = useToastController()
   const { getUrlPrefix } = useAuth()
   const [shipmentId] = useParam('shipment');
-
-
-  const { data } = useQuery({
-    queryFn() {
-      if (!shipmentId) {
-        return {};
-      }
-
-      return CustomerShipmentsService.retrieveShipment({
-        shipment: shipmentId,
-      });
-    },
-    queryKey: ['CustomerShipmentsService.retrieveShipment', `-${shipmentId}`],
-  })
+  const [selectedDriverId] = useParam('selected_driver_id');
 
   const { mutate } = useMutation({
     mutationFn(requestBody: z.infer<typeof CreateShipmentSchema>) {
@@ -50,7 +42,10 @@ export function ManageShipmentSenderScreen() {
         })
       }
       return CustomerShipmentsService.storeShipment({
-        requestBody
+        requestBody: {
+          ...requestBody,
+          selected_driver_id: selectedDriverId,
+        }
       })
     },
     onSuccess(data, variables, context) {
@@ -73,6 +68,25 @@ export function ManageShipmentSenderScreen() {
     },
   })
 
+  const { data } = useQuery({
+    queryFn() {
+      if (!shipmentId) {
+        return { data: {} };
+      }
+
+      return CustomerShipmentsService.retrieveShipment({
+        shipment: shipmentId,
+      });
+    },
+    queryKey: ['CustomerShipmentsService.retrieveShipment', `-${shipmentId}`],
+  })
+
+  const shipment = useMemo(() => ({
+    selected_driver_id: selectedDriverId,
+    ...(data?.data || {}),
+  }), [data?.data, selectedDriverId])
+
+
   if (shipmentId && !data?.data) {
     return <FullScreenSpinner />
   }
@@ -89,7 +103,7 @@ export function ManageShipmentSenderScreen() {
             pick_date: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
             pick_time: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
           }}
-          defaultValues={data?.data || {}}
+          defaultValues={shipment}
           onSubmit={mutate}
 
           renderAfter={({ submit }) => (
@@ -100,13 +114,11 @@ export function ManageShipmentSenderScreen() {
         >
           {(fields) => (
             <>
-              <YStack alignItems='center' gap='$4'>
-                <InlineStepper totalSteps={3} activeStep={1} />
-                <Text>
-                  يرجى تحديد عنوانك والتاريخ والوقت الذي تتواجد فيه
-                </Text>
-                <View height={2} width={'100%'} backgroundColor='$color3' />
-              </YStack>
+              <ShipmentManagerHeader
+                activeStep={1}
+                shipment={shipment}
+                title='يرجى تحديد عنوانك والتاريخ والوقت الذي تتواجد فيه'
+              />
               {Object.values(fields)}
             </>
           )}

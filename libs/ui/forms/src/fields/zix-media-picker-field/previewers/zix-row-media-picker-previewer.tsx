@@ -17,7 +17,7 @@ export const ZixRowMediaPickerPreviewer: React.FC<ZixMediaPreviewerProps> = ({
           justifyContent="center"
           height="$6"
           width="$6"
-          backgroundColor="$color9"
+          backgroundColor="$color4"
           marginHorizontal="$1"
           borderRadius="$4"
         >
