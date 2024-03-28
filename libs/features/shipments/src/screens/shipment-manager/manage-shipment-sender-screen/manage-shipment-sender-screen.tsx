@@ -15,7 +15,7 @@ import { SHARED_SHIPMENT_MANAGER_FIELD_PROPS } from '../configs';
 const { useParam } = createParam<{ shipment?: string }>();
 
 const CreateShipmentSchema = z.object({
-  from_location: formFields.advanced_address.describe('Shipping from // Enter the address of the pickup location'),
+  from_location: formFields.advanced_location.describe('Shipping from // Enter the address of the pickup location'),
   pick_date: formFields.row_date_picker.describe('Date // Pick Date'),
   pick_time: formFields.row_time_range_picker.describe('Time // Pick Time').optional(),
 })

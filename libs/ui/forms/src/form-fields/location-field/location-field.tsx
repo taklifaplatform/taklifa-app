@@ -2,10 +2,9 @@
 import { useFieldInfo, useTsController } from '@ts-react/form';
 import { z } from "zod";
 
-import { Pen, Plus } from '@tamagui/lucide-icons';
+import { LocateFixed, Pen } from '@tamagui/lucide-icons';
 import { CountryTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
-import { Dimensions } from 'react-native';
 import { Button, Separator, Text, Theme, View, XStack, YStack } from 'tamagui';
 import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common';
 import ZixFieldContainer from '../../common/zix-field-container/zix-field-container';
@@ -13,15 +12,15 @@ import { ZixAutoCompleteField, ZixInput } from '../../fields';
 import ZixMapPointerField from '../../fields/zix-map-pointer-field/zix-map-pointer-field';
 import { GroupFieldsSheet } from '../../wrappers';
 import { MapLocationPicker } from './map-location-picker';
-import { DebugObject } from '@zix/ui/common';
 
-export type AdvancedAddressFieldProps = {
+export type LocationFieldProps = {
   containerProps?: BaseFormFieldContainerProps;
+
+  type?: 'advanced' | 'simple';
 }
 
-const SCREEN_HEIGHT = Dimensions.get('screen').width;
 
-export const AdvancedAddressSchema = z.object({
+export const LocationSchema = z.object({
   id: z.string().optional().nullable(),
   name: z.string().optional().nullable(),
   address: z.string(),
@@ -45,86 +44,87 @@ export const AdvancedAddressSchema = z.object({
   longitude: z.any().optional().nullable(),
 })
 
-export const AdvancedAddressField: React.FC<AdvancedAddressFieldProps> = ({
+export const LocationField: React.FC<LocationFieldProps> = ({
   containerProps = {},
+  type = 'simple',
+  // type = 'advanced',
   ...props
 }) => {
-  const { field: { onChange, value }, error } = useTsController<z.infer<typeof AdvancedAddressSchema>>();
+  const { field: { onChange, value }, error } = useTsController<z.infer<typeof LocationSchema>>();
   const { placeholder } = useFieldInfo()
 
 
-  const renderAddressCard = () => value?.address && (
-    <YStack
-      borderWidth='$0.5'
-      borderColor='$color8'
-      borderRadius='$4'
-      padding='$2'
-      gap='$2'
-      height='$10'
-      flex={1}
-    >
-      <XStack justifyContent='space-between' alignItems='center'>
-        <XStack alignItems='center' gap='$2'>
-          <Theme name='accent'>
-            <CustomIcon name='location' size='$1' color='$color9' />
-          </Theme>
-          <Text fontWeight='700'>{value?.name ?? 'Home'}</Text>
-        </XStack>
+  const renderAddressCard = () => (
+    type === 'advanced' &&
+    value?.address
+  ) && (
+      <YStack
+        borderWidth='$0.5'
+        borderColor='$color8'
+        borderRadius='$4'
+        padding='$2'
+        gap='$2'
+        height='$10'
+        flex={1}
+      >
+        <XStack justifyContent='space-between' alignItems='center'>
+          <XStack alignItems='center' gap='$2'>
+            <Theme name='accent'>
+              <CustomIcon name='location' size='$1' color='$color9' />
+            </Theme>
+            <Text fontWeight='700'>{value?.name ?? 'Home'}</Text>
+          </XStack>
 
-        <XStack alignItems='center' gap='$2'>
-          <View
-            theme={value?.is_primary ? 'accent' : undefined}
-            backgroundColor='$color4'
-            paddingHorizontal='$4'
-            paddingVertical='$2'
-            borderRadius='$3'
-          >
-            <Text fontWeight='700'>
-              {value?.is_primary ? 'Primary' : 'Secondary'}
+          <XStack alignItems='center' gap='$2'>
+            <View
+              theme={value?.is_primary ? 'accent' : undefined}
+              backgroundColor='$color4'
+              paddingHorizontal='$4'
+              paddingVertical='$2'
+              borderRadius='$3'
+            >
+              <Text fontWeight='700'>
+                {value?.is_primary ? 'Primary' : 'Secondary'}
+              </Text>
+            </View>
+            <Button
+              size='$2'
+              icon={Pen}
+            />
+          </XStack>
+
+        </XStack>
+        {
+          value?.address && (
+            <Text>
+              {value?.address}
             </Text>
-          </View>
-          <Button
-            size='$2'
-            icon={Pen}
-          />
-        </XStack>
+          )
+        }
 
-      </XStack>
-      {
-        value?.address && (
-          <Text>
-            {value?.address}
-          </Text>
-        )
-      }
+        {
+          value?.phone_number && (
+            <Text>
+              {value?.phone_number}
+            </Text>
+          )
+        }
 
-      {
-        value?.phone_number && (
-          <Text>
-            {value?.phone_number}
-          </Text>
-        )
-      }
+        {/* <DebugObject object={value} /> */}
+      </YStack>
+    )
 
-      {/* <DebugObject object={value} /> */}
-    </YStack>
-  )
+  const renderAddressMap = () => (
+    type === 'advanced' &&
+    value?.latitude && value?.longitude
+  ) && (
+      <View height='$12'>
+        <ZixMapPointerField
+          value={value}
+        />
+      </View>
+    )
 
-  const renderAddressMap = () => value?.latitude && value?.longitude && (
-    <View height='$12'>
-      <ZixMapPointerField
-        value={value}
-      />
-    </View>
-  )
-
-  const renderAddButton = () => !value?.address && (
-    <Button
-      icon={Plus}
-    >
-      Add Address
-    </Button>
-  )
 
   const renderFormContent = () => (
     <YStack gap='$2'>
@@ -132,18 +132,6 @@ export const AdvancedAddressField: React.FC<AdvancedAddressFieldProps> = ({
         ...value,
         ...val
       })} />
-
-
-      <ZixFieldContainer
-        label='Position on Map'
-        error={error?.latitude || error?.longitude}
-      >
-        <View height='$15'>
-          <ZixMapPointerField
-            value={value}
-          />
-        </View>
-      </ZixFieldContainer>
 
       <Separator marginTop='$4' />
 
@@ -297,28 +285,31 @@ export const AdvancedAddressField: React.FC<AdvancedAddressFieldProps> = ({
     </YStack>
   )
 
+  const renderInputActivator = () => (type === 'simple' || !value?.address) && (
+    <ZixInput
+      rightIcon={(props) => <LocateFixed {...props} />}
+      placeholder={placeholder}
+      value={value?.address}
+    />
+  )
+
   return (
     <FormFieldContainer {...containerProps}>
-      <YStack gap='$2'>
-        <GroupFieldsSheet
-          title='Address Information'
-          activator={(
-            <>
-              {renderAddressCard()}
-              {renderAddButton()}
-            </>
-          )}
-        >
-          {renderFormContent()}
-        </GroupFieldsSheet>
-
-        {renderAddressMap()}
-
-        <DebugObject object={error} />
-      </YStack>
+      <GroupFieldsSheet
+        title='Address Information'
+        activator={(
+          <YStack gap='$4'>
+            {renderAddressCard()}
+            {renderAddressMap()}
+            {renderInputActivator()}
+          </YStack>
+        )}
+      >
+        {renderFormContent()}
+      </GroupFieldsSheet>
     </FormFieldContainer>
   );
 }
 
 
-export default AdvancedAddressField;
+export default LocationField;

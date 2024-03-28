@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { LocateFixed, Search, X } from '@tamagui/lucide-icons';
+import { Search, X } from '@tamagui/lucide-icons';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { GeographyService, LocationTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
@@ -229,13 +229,14 @@ export const MapLocationPicker: React.FC<MapLocationPickerProps> = ({ value, onC
     <>
       <View position='relative'>
         <ZixFieldContainer
-          label='Please Enter your detailed Address'
+          label='Please select location on map'
+          labelBold
         >
-          <ZixInput
-            rightIcon={(props) => <LocateFixed {...props} />}
-            placeholder='Enter your address'
-            value={value?.address}
-          />
+          <View height='$15'>
+            <ZixMapPointerField
+              value={value}
+            />
+          </View>
         </ZixFieldContainer>
         <View
           onPress={() => setOpen(true)}

@@ -22,7 +22,7 @@ const CreateCompanyFormSchema = z
       t('forms:company_legal_documents')
     ),
 
-    location: formFields.address.describe(t('forms:company_location')),
+    location: formFields.location.describe(t('forms:company_location')),
     accept_terms: formFields.accept_terms.describe(t('forms:accept_terms')),
   })
   .required({

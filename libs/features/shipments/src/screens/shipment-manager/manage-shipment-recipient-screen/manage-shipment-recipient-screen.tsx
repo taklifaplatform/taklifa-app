@@ -14,7 +14,7 @@ import { AppHeader } from '@zix/ui/layouts';
 const { useParam } = createParam<{ shipment: string }>();
 
 const SendFromSchema = z.object({
-  from_location: formFields.address.describe('Shipping from // Enter the address of the pickup location'),
+  from_location: formFields.advanced_location.describe('Shipping from // Enter the address of the pickup location'),
   pick_date: formFields.row_date_picker.describe('Date // Pick Date'),
   pick_time: formFields.row_time_range_picker.describe('Time // Pick Time'),
 })

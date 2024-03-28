@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import AddressField from './address-field';
+import LocationField from './location-field';
 
-describe('AddressField', () => {
+describe('LocationField', () => {
   it('should render successfully', () => {
-    const { root } = render(< AddressField />);
+    const { root } = render(< LocationField />);
     expect(root).toBeTruthy();
   });
 });
