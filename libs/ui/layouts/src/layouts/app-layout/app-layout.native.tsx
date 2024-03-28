@@ -42,7 +42,7 @@ export const AppLayout = () => {
         }}
       />
       <Tabs.Screen
-        name="create-shipment"
+        name="shipment-manager"
         options={activeRole === USER_ROLES.customer ? {
           title: '',
           tabBarIcon: PlusButton,

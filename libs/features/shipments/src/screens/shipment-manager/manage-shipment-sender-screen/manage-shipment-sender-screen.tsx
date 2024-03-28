@@ -61,8 +61,11 @@ export function ManageShipmentSenderScreen() {
         toast.show('An error occurred', { preset: 'error' })
         return
       }
-      router.push(`${getUrlPrefix}/shipments/${data.data.id}/edit`)
-      router.push(`${getUrlPrefix}/shipments/${data.data.id}/edit/recipient`)
+
+      if (shipmentId) {
+        router.push(`${getUrlPrefix}/shipment-manager/${data.data.id}`)
+      }
+      router.push(`${getUrlPrefix}/shipment-manager/${data.data.id}/recipient`)
     },
     onError(error: any) {
       toast.show(error?.body?.message || 'An error occurred', { preset: 'error' })

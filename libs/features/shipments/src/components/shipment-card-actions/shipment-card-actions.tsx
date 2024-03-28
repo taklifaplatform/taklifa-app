@@ -20,7 +20,7 @@ export const ShipmentCardActions: React.FC<ShipmentCardActionsProps> = ({
   isDetail,
 }) => {
   const router = useRouter();
-  const { user } = useAuth()
+  const { user, getUrlPrefix } = useAuth()
 
   const isAuthCreator = useMemo(() => {
     return user?.id === shipment.user?.id
@@ -32,7 +32,7 @@ export const ShipmentCardActions: React.FC<ShipmentCardActionsProps> = ({
       flex={1}
       icon={Pen}
       fontWeight="bold"
-      onPress={() => router.push(`${urlPrefix}/${shipment.id}/edit`)}
+      onPress={() => router.push(`${getUrlPrefix}/shipment-manager/${shipment.id}`)}
     >
       {t('shipment:edit')}
     </Button>
