@@ -1,6 +1,6 @@
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { CustomerShipmentsService } from '@zix/api';
+import { ShipmentService } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
 import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/ui/forms';
@@ -33,26 +33,31 @@ export const ManageShipmentItemsScreen: React.FC = () => {
         return { data: {} };
       }
 
-      return CustomerShipmentsService.retrieveShipment({
+      return ShipmentService.retrieveShipment({
         shipment: shipmentId,
       });
     },
     queryKey: ['CustomerShipmentsService.retrieveShipment', `-${shipmentId}`],
   })
 
-  const { mutate, isIdle } = useMutation({
+  const { mutate } = useMutation({
     mutationFn(requestBody: z.infer<typeof SendFromSchema>) {
       if (!shipmentId) {
         throw new Error('Shipment ID is required')
       }
-      return CustomerShipmentsService.updateShipment({
+      return ShipmentService.updateShipment({
         shipment: shipmentId,
         requestBody
       })
     },
     onSuccess(data, variables, context) {
       toast.show('Shipment items updated successfully', { preset: 'success' })
-      // router.push(`${getUrlPrefix}/shipment-manager/${shipmentId}/items`)
+      if (data?.data?.selected_driver_id) {
+        router.push(`${getUrlPrefix}/shipment-manager/${shipmentId}/summary`)
+      } else {
+        router.push(`${getUrlPrefix}/shipment-manager/${shipmentId}/assign-driver`)
+      }
+
       //
     },
     onError(error: any) {

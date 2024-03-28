@@ -2,9 +2,9 @@ import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import { Plus } from '@tamagui/lucide-icons';
 import { COMPANY_ROLES, USER_ROLES, useAuth } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
-import { Tabs } from 'expo-router';
+import { Tabs, useRouter } from 'expo-router';
 import { t } from 'i18next';
-import { Circle, Theme, YStack } from 'tamagui';
+import { Button } from 'tamagui';
 
 /**
  * TODO:
@@ -113,27 +113,20 @@ type TabBarIconProps = Parameters<
 >[0];
 
 const PlusButton = ({ size, focused }: TabBarIconProps) => {
+  const router = useRouter()
 
   return (
-    <Theme name='accent'>
-      <Circle
-        position="absolute"
-        backgroundColor={focused ? '$color5' : '$color9'}
-        width={size + 34}
-        height={size + 34}
-      />
-      <YStack
-        position="absolute"
-        justifyContent="center"
-        alignItems="center"
-        animation="quick"
-        pointerEvents="none"
-        height={size + 34}
-      >
-        <Plus size={size + 5} />
-      </YStack>
-    </Theme>
-  );
+    <Button
+      theme='accent'
+      onPress={() => router.push('/app/shipment-manager')}
+      height={size + 34}
+      width={size + 34}
+      borderRadius={size + 34}
+      icon={Plus}
+      scaleIcon={2}
+      backgroundColor={focused ? '$color5' : '$color9'}
+    />
+  )
 };
 
 
