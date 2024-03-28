@@ -2,12 +2,11 @@ import { z } from 'zod';
 
 import React from 'react';
 
-import { View, Text, Button, Separator, YStack } from 'tamagui';
-import { MediaPickerFieldSchema } from '../media-picker-field/media-picker-field';
-import { BaseFormFieldContainerProps } from '../../common';
-import { useFieldInfo, useTsController } from '@ts-react/form';
-import { DebugObject } from '@zix/ui/common';
 import { MinusSquare, PlusSquare } from '@tamagui/lucide-icons';
+import { useFieldInfo, useTsController } from '@ts-react/form';
+import { Button, Separator, View, YStack } from 'tamagui';
+import { BaseFormFieldContainerProps } from '../../common';
+import { MediaPickerFieldSchema } from '../media-picker-field/media-picker-field';
 import { ShipmentItem } from './shipment-item';
 
 export const ShipmentItemsSchema = z.array(z.object({
@@ -87,7 +86,6 @@ export const ShipmentItemsField: React.FC<ShipmentItemsFieldProps> = ({
           </YStack>
         ))
       }
-      <DebugObject object={value} />
 
       <Separator marginTop='$4' />
       {renderAddItemButton()}
