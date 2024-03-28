@@ -1,7 +1,6 @@
 
 import { CustomIcon } from '@zix/ui/icons';
-import React from 'react';
-import { XStack, YStack, View, Text } from 'tamagui';
+import { Text, XStack, YStack } from 'tamagui';
 
 
 export function ShipmentBoxDimension() {
@@ -20,20 +19,20 @@ export function ShipmentBoxDimension() {
       value: 25
     },
     {
-      label: 'الارتفاع (سم)',
-      value: 25
+      label: 'الوزن (كغ)',
+      value: 2.553
     }
   ]
 
   return (
     <XStack
-      alignItems='flex-end'
+      alignItems='center'
       backgroundColor='$color2'
       padding='$4'
       borderRadius='$4'
       gap='$3'
     >
-      <CustomIcon name='package' size='$4' />
+      <CustomIcon name='dimension_box' size='$4' />
       <YStack gap='$3' flex={1}>
         <Text>
           الأبعاد الصندوق ووزنها لاعتيادية

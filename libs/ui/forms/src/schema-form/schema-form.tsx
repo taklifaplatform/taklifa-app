@@ -19,20 +19,14 @@ const MappedSchemaForm = createTsForm(formFieldsMappings, {
   FormComponent: FormComponent,
 });
 
-type RenderWrapper = (children: ReactElement) => ReactElement;
 
-type SchemaFormProps = ComponentProps<typeof MappedSchemaForm> & {
-  wrappers?:
-    | Record<string, RenderWrapper>
-    | Record<string, Record<string, RenderWrapper>>;
-};
 
-export const SchemaForm = (props: SchemaFormProps) => {
+export const SchemaForm = (props: ComponentProps<typeof MappedSchemaForm>) => {
   const renderAfter: ComponentProps<typeof MappedSchemaForm>['renderAfter'] =
     props.renderAfter
       ? (vars) => (
-          <FormWrapper.Footer>{props.renderAfter?.(vars)}</FormWrapper.Footer>
-        )
+        <FormWrapper.Footer>{props.renderAfter?.(vars)}</FormWrapper.Footer>
+      )
       : undefined;
 
   return (
