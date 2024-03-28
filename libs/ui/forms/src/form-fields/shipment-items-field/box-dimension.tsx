@@ -1,28 +1,35 @@
 
+import { ShipmentItemTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
+import { useMemo } from 'react';
 import { Text, XStack, YStack } from 'tamagui';
 
+export type BoxDimensionProps = {
+  item: ShipmentItemTransformer
+};
 
-export function ShipmentBoxDimension() {
+export const BoxDimension: React.FC<BoxDimensionProps> = ({
+  item
+}) => {
 
-  const dimensions = [
+  const dimensions = useMemo(() => ([
     {
       label: 'الطول (سم)',
-      value: 25
+      value: item.dim_length || 25
     },
     {
       label: 'العرض (سم)',
-      value: 25
+      value: item.dim_width || 25
     },
     {
       label: 'الارتفاع (سم)',
-      value: 25
+      value: item.dim_height || 25
     },
     {
       label: 'الوزن (كغ)',
-      value: 2.553
+      value: item.cap_weight || 1
     }
-  ]
+  ]), [item])
 
   return (
     <XStack
@@ -35,7 +42,9 @@ export function ShipmentBoxDimension() {
       <CustomIcon name='dimension_box' size='$4' />
       <YStack gap='$3' flex={1}>
         <Text>
-          الأبعاد الصندوق ووزنها لاعتيادية
+          {
+            !item?.dim_length ? 'الأبعاد الصندوق ووزنها لاعتيادية' : 'الأبعاد الصندوق ووزنها'
+          }
         </Text>
         <XStack gap='$3' flex={1}>
           {
@@ -64,4 +73,4 @@ export function ShipmentBoxDimension() {
 }
 
 
-export default ShipmentBoxDimension;
+export default BoxDimension;

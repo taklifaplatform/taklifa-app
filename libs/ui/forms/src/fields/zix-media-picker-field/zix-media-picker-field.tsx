@@ -145,18 +145,19 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
         }))
       })
         .then((result) => {
+          const newMedia = {
+            ...media,
+            ...result,
+            uploadProgress: 1
+          }
           setPreviews((prev) => ({
             ...prev,
-            [uuid]: {
-              ...media,
-              ...result,
-              uploadProgress: 1
-            },
+            [uuid]: newMedia,
           }))
           onChange?.(isMultiple ? [
             ...files,
-            result,
-          ] : result)
+            newMedia,
+          ] : newMedia)
         })
         .catch((error) => {
           Alert.alert(
@@ -311,6 +312,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
    * @param media - The media to be removed.
    */
   function onRemoveMedia(media: MediaTransformer) {
+    onChange?.(Object.values(previews).filter((preview) => preview.uuid !== media.uuid));
     MediaService.deleteMedia({
       requestBody: {
         uuid: media.uuid,

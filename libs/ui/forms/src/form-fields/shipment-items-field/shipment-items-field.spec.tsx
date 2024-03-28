@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import ShipmentBoxDimension from './shipment-box-dimension';
+import ShipmentItemsField from './shipment-items-field';
 
-describe('ShipmentBoxDimension', () => {
+describe('ShipmentItemsField', () => {
   it('should render successfully', () => {
-    const { root } = render(< ShipmentBoxDimension />);
+    const { root } = render(< ShipmentItemsField />);
     expect(root).toBeTruthy();
   });
 });

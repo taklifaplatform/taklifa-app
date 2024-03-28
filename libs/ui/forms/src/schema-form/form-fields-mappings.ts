@@ -16,6 +16,7 @@ import {
   TextField,
   TextSecureField,
   LocationFieldProps,
+  ShipmentItemsField,
 } from '../form-fields';
 
 import { formFields } from './form-fields-schemas';
@@ -145,4 +146,6 @@ export const formFieldsMappings = [
         type: 'advanced',
       }),
   ] as const,
+
+  [formFields.shipment_items, ShipmentItemsField],
 ] as const;
