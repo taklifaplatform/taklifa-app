@@ -1,5 +1,5 @@
 import { CustomIcon } from '@zix/ui/icons';
-import { Search,UserCircle } from '@tamagui/lucide-icons';
+import { Search, UserCircle } from '@tamagui/lucide-icons';
 import { XStack, Text } from 'tamagui';
 import { useMultiLang } from '@zix/i18n';
 import { ZixLinkButton } from '@zix/ui/common';
@@ -16,27 +16,27 @@ export function Header() {
         headerMenu
         href={'/'}
       >
-        <Text>{t('web-home:home')}</Text>
+        {t('web-home:home')}
       </ZixLinkButton>
       <ZixLinkButton
         headerMenu
         href={'/customer/shipments'}
       >
-        <Text>{t('web-home:payments')}</Text>
+        {t('web-home:payments')}
       </ZixLinkButton>
       <ZixLinkButton
         headerMenu
         href={'/customer/orders'}
         $lg={{ paddingHorizontal: '$4' }}
       >
-        <Text>  {t('web-home:followers')}</Text>
+        {t('web-home:followers')}
       </ZixLinkButton>
       <ZixLinkButton
         headerMenu
         href={'/jobs'}
         $lg={{ paddingHorizontal: '$4' }}
       >
-        <Text>{t('web-home:works')}</Text>
+        {t('web-home:works')}
       </ZixLinkButton>
     </XStack>
   );
@@ -50,7 +50,7 @@ export function Header() {
       icon={<Search size="$1" />}
       $lg={{ paddingHorizontal: '$4' }}
     >
-      <Text>{t('web-home:search')}</Text>
+      {t('web-home:search')}
     </ZixLinkButton>
   );
   const renderCall = () => (
@@ -60,7 +60,7 @@ export function Header() {
       icon={<CustomIcon name={'ringing'} size="$1" />}
       $lg={{ paddingHorizontal: '$4' }}
     >
-      <Text>{t('web-home:call')}</Text>
+      {t('web-home:call')}
     </ZixLinkButton>
   );
   const renderSignup = () => (
@@ -73,7 +73,7 @@ export function Header() {
             icon={<UserCircle size="$1" />}
             $lg={{ paddingHorizontal: '$4' }}
           >
-            <Text> {t('web-home:signup')}</Text>
+            {t('web-home:signup')}
           </ZixLinkButton>
         )
       }
@@ -86,7 +86,7 @@ export function Header() {
             icon={<UserCircle size="$1" />}
             $lg={{ paddingHorizontal: '$4' }}
           >
-            <Text> {t('web-home:signup')}</Text>
+            {t('web-home:signup')}
           </ZixLinkButton>
         )
       }
@@ -94,7 +94,6 @@ export function Header() {
   );
   return (
     <XStack
-    
       $sm={{ display: 'none' }}
       justifyContent="space-between"
       backgroundColor='$color1'

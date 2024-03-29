@@ -7,7 +7,6 @@ import { Stack, Text, XStack, YStack } from 'tamagui';
 
 export function SecondBanner() {
   const { activeLang } = useMultiLang();
-
   const renderImageBackground = () => (
     <Stack
       width={'100%'}
@@ -29,14 +28,17 @@ export function SecondBanner() {
       />
     </Stack>
   );
-
-  const renderWelcomeText = () => (
-    <YStack alignItems="center" w={'100%'} paddingVertical="$2">
+  const renderWelcomeText = () => ( 
+    <YStack
+      alignItems="center"
+      width={'100%'}
+      paddingVertical="$2"
+    >
       <XStack
         alignItems="center"
         gap="$2"
         paddingVertical="$4"
-        $md={{ gap: '$1', paddingVertical: '$1' }}
+        $md={{ gap: 0, paddingVertical: 0 }}
       >
         <Text
           fontWeight="800"
@@ -49,10 +51,10 @@ export function SecondBanner() {
           {t('web-home:banner-2')}
         </Text>
         <ZixLinkButton
-          display="linkItem"
+          linkItem
           href={'/'}
           iconAfter={
-            <CustomIcon name="large_arrow_right" size="$1" color="$gray10" />
+            <CustomIcon name="large_arrow_right" size="$1" color="$color12" />
           }
           alignItems="center"
         />
@@ -61,14 +63,13 @@ export function SecondBanner() {
         fontWeight="400"
         fontSize={25}
         textAlign="center"
-        suppressHighlighting={true}
-        width="80%"
-        paddingTop="$6"
+        width="95%"
+        paddingTop="$4"
         lineHeight={50}
         $sm={{
           fontSize: 15,
           lineHeight: 25,
-          paddingTop: '$3',
+          paddingTop: '$1',
           textAlign: 'center',
         }}
       >
@@ -76,7 +77,6 @@ export function SecondBanner() {
       </Text>
     </YStack>
   );
-
   const renderIcons = () => (
     <XStack
       position="absolute"
@@ -159,7 +159,7 @@ export function SecondBanner() {
           display="linkItem"
           href={'/'}
           iconAfter={
-            <CustomIcon name="large_arrow_right" size="$1" color="$gray10" />
+            <CustomIcon name="large_arrow_right" size="$1" color="$color12" />
           }
           alignItems="center"
         />

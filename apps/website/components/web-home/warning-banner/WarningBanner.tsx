@@ -1,10 +1,11 @@
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import { useRouter } from 'next/router';
-import { Button, Image, Stack, Text, YStack } from 'tamagui';
+import { Button, Image, Stack, Text, Theme, YStack } from 'tamagui';
 
 export function WarningBanner() {
   const router = useRouter();
+
   const renderOptionText = () => (
     <YStack
       alignItems="flex-start"
@@ -40,6 +41,7 @@ export function WarningBanner() {
       </Text>
     </YStack>
   );
+
   return (
     <YStack
       justifyContent="center"
@@ -75,21 +77,19 @@ export function WarningBanner() {
         }}
       >
         {renderOptionText()}
-        <Button
-          theme='error'
-          href={'/client'}
-          bg={'$color8'}
-          $sm={{
-            width: '100%',
-          }}
-        >
-          <Text
-            color={'$color1'}
+        <Theme name='error'>
+          <Button
+            href='/client'
+            backgroundColor='$color9'
+            color='$color1'
+            $sm={{
+              width: '100%',
+            }}
+            iconAfter={(props) => <CustomIcon {...props} name="large_arrow_right" />}
           >
-            {t('web-home:warningbtn')} v2
-          </Text>
-          <CustomIcon color={'$color1'} name="large_arrow_right" size="$1" />
-        </Button>
+            {t('web-home:warningbtn')}
+          </Button>
+        </Theme>
       </Stack>
     </YStack>
   );

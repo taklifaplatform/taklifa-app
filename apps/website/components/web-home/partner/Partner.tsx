@@ -10,7 +10,7 @@ export function Partner() {
       borderRadius="$4"
       marginBottom="$3"
       $sm={{
-       alignItems: 'center',
+        alignItems: 'center',
       }}
     >
       <Text
@@ -107,7 +107,7 @@ export function Partner() {
       <Image
         alt="DHL"
         source={{
-          uri: '/images/DHL_Logo.png',
+          uri: '/images/dhl-Logo.png',
         }}
         w={280}
         height={40}

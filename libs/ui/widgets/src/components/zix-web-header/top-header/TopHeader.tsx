@@ -22,22 +22,18 @@ export function TopHeader() {
     <ZixLinkButton
       linkItem
       href={'/about'}
+      icon={<Home size='$1' color='$color12' />}
     >
-      <Home size='$1' />
-      <Text
-      color={'$color'}
-      >{t('web-home:about')}</Text>
+      {t('web-home:about')}
     </ZixLinkButton>
   );
   const renderHomeQuestion = () => (
     <ZixLinkButton
       linkItem
       href={'/faqs'}
+      icon={<HelpCircle size='$1' color='$color12' />}
     >
-      <HelpCircle size='$1' />
-      <Text
-    
-      >{t('web-home:question')}</Text>
+      {t('web-home:question')}
     </ZixLinkButton>
   );
   const renderSelectTranslate = () => (
@@ -63,8 +59,9 @@ export function TopHeader() {
     <ZixLinkButton
       linkItem
       href={'/contact'}
+
     >
-      <MapPin size='$1' />
+      <MapPin size='$1' color='$color12' />
       <Image
         source={{
           uri: '/images/flag.png',
@@ -73,30 +70,8 @@ export function TopHeader() {
         }}
         resizeMode="contain"
       />
-      <Text $md={{ display: 'none' }}>{t('web-home:saudi_arabia')}</Text>
+      {t('web-home:saudi_arabia')}
     </ZixLinkButton>
-  );
-  const renderFollows = () => (
-    <XStack gap="$1" alignItems="center">
-      <Text $lg={{ display: 'none' }}>
-        {t('web-home:followus')}
-      </Text>
-      <ZixLinkButton
-        menuItem
-        href={'/'}
-        icon={<CustomIcon name="snapchat" size={'$1.5'} color={'$color'} />}
-      />
-      <ZixLinkButton
-        menuItem
-        href={'https://www.instagram.com/sawaedlogistics'}
-        icon={<Instagram size='$1.5' color='$gray12' />}
-      />
-      <ZixLinkButton
-        menuItem
-        href={'https://www.x.com/sawaedlogistics'}
-        icon={<Facebook size='$1.5' color='$gray12' />}
-      />
-    </XStack>
   );
   const renderDownload = () => (
     <XStack gap="$1" alignItems="center">
@@ -112,6 +87,28 @@ export function TopHeader() {
         menuItem
         href={'/'}
         icon={<CustomIcon name={'app_store'} size={'$8'} />}
+      />
+    </XStack>
+  );
+  const renderFollows = () => (
+    <XStack gap="$1" alignItems="center">
+      <Text $lg={{ display: 'none' }}>
+        {t('web-home:followus')}
+      </Text>
+      <ZixLinkButton
+        menuItem
+        href={'/'}
+        icon={<CustomIcon name="snapchat" size={'$1.5'} color='$color12' />}
+      />
+      <ZixLinkButton
+        menuItem
+        href={'https://www.instagram.com/sawaedlogistics'}
+        icon={<Instagram size='$1.5' color='$color12' />}
+      />
+      <ZixLinkButton
+        menuItem
+        href={'https://www.x.com/sawaedlogistics'}
+        icon={<Facebook size='$1.5' color='$color12' />}
       />
     </XStack>
   );

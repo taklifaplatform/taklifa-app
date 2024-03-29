@@ -78,8 +78,28 @@ export function StartToday() {
         >
           <Image
             alt="Google Play"
+            borderRadius={'$4'}
             source={{
-              uri: '/images/googlePlay.png',
+              uri: '/images/googlePlay1.png',
+              width: 200,
+              height: 60,
+            }}
+            $sm={{
+              width: 100,
+            }}
+            resizeMode="contain"
+
+          />
+        </ZixLinkButton>
+        <ZixLinkButton
+          menuItem
+          href="/"
+        >
+          <Image
+            alt="App Store"
+            borderRadius={'$4'}
+            source={{
+              uri: '/images/Frame.png',
               width: 200,
               height: 60,
             }}
@@ -89,46 +109,11 @@ export function StartToday() {
             resizeMode="contain"
           />
         </ZixLinkButton>
-        <ZixLinkButton
-          menuItem
-          href="/"
-        >
-          <Image
-            alt="App Store"
-            source={{
-              uri: '/images/appStore.png',
-              width: 250,
-              height: 60,
-            }}
-            $sm={{
-              width: 90,
-            }}
-            resizeMode="contain"
-          />
-        </ZixLinkButton>
       </XStack>
-
-
-      {/* <Stack flexDirection="row" gap="$4" $gtSm={{ display: 'none' }}>
-        <Pressable onPress={() => router.push('/')}>
-          <CustomIcon name="google_play" size={'$11'} />
-        </Pressable>
-        <Pressable onPress={() => router.push('/')}>
-          <CustomIcon name="app_store" size={'$11'} />
-        </Pressable>
-      </Stack>
-      <Stack flexDirection="row" gap="$4" $sm={{ display: 'none' }}>
-        <Pressable onPress={() => router.push('/')}>
-          <CustomIcon name="google_play" size={'$14'} />
-        </Pressable>
-        <Pressable onPress={() => router.push('/')}>
-          <CustomIcon name="app_store" size={'$14'} />
-        </Pressable>
-      </Stack> */}
     </YStack>
   );
-  return (
 
+  return (
     <Stack
       theme={'accent'}
       height={560}
@@ -142,7 +127,7 @@ export function StartToday() {
         alt="Banner"
         borderRadius={'$4'}
         source={{
-          uri: `/images/banner-4-${activeLang}.png`,
+          uri: `/images/banner-3-${activeLang}.png`,
         }}
         width="100%"
         height="100%"

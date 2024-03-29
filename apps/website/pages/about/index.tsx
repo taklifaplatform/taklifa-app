@@ -2,7 +2,6 @@ import { useMultiLang } from '@zix/i18n';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import { Pressable } from 'react-native';
 import { Button, Image, Stack, Text, Theme, View, XStack, YStack } from 'tamagui';
 import { ManageShipments } from '../../components/web-home/management-shipments/ManageShipments';
@@ -15,12 +14,11 @@ type WelcomeTextProps = {
   text: string;
 };
 export const Page: NextPageWithLayout = () => {
-  const [press, setPress] = useState('');
   const { activeLang } = useMultiLang();
   const router = useRouter();
   const renderFirstSection = () => (
     <Stack
-      theme='accent'
+      theme={'accent'}
       backgroundColor="$color3"
       borderRadius={10}
       gap="$4"
@@ -46,7 +44,6 @@ export const Page: NextPageWithLayout = () => {
           height: 300,
           width: 282,
         }}
-        borderRadius={10}
       />
       <YStack
         justifyContent="center"
@@ -57,13 +54,14 @@ export const Page: NextPageWithLayout = () => {
         $sm={{
           width: 282,
           gap: '$1',
+
         }}
       >
         <Text
           fontSize={25}
           fontWeight="900"
           lineHeight={40}
-          color="$color12"
+          color="$color11"
           $sm={{
             fontSize: 15,
             lineHeight: 20,
@@ -73,7 +71,6 @@ export const Page: NextPageWithLayout = () => {
         </Text>
         <YStack
           gap="$7"
-
           $sm={{
             gap: '$2',
 
@@ -84,8 +81,8 @@ export const Page: NextPageWithLayout = () => {
             fontWeight="400"
             lineHeight={40}
             $sm={{
-              fontSize: 15,
-              lineHeight: 15,
+              fontSize: 12,
+              lineHeight: 25,
             }}
           >
             {t('about:section-1:description')}
@@ -94,18 +91,18 @@ export const Page: NextPageWithLayout = () => {
             gap="$4"
             $sm={{
               gap: '$2',
-              marginVertical: '$3',
+
             }}
           >
             <Button
-              flex={1}
+              width='40%'
               icon={<CustomIcon name="account" size={15} />}
             >
               {t('about:section-1:signup')}
             </Button>
             <Button
-              flex={1}
-              borderColor="$color10"
+              width='40%'
+              borderColor="$color11"
               variant="outlined"
               icon={<CustomIcon name="call" size={15} />}
             >
@@ -347,7 +344,7 @@ export const Page: NextPageWithLayout = () => {
           source={{
             uri: `/images/bi5tisar-${activeLang}.png`,
           }}
-          width={330}
+          width={300}
           height={413}
           resizeMode="cover"
           position="responsive"

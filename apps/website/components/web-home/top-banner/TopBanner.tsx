@@ -15,7 +15,7 @@ export function TopBanner() {
     <Image
       alt="Banner"
       source={{
-        uri: `/images/banner-1-${activeLang}.png`,
+        uri: `/images/Rectangle-1-${activeLang}.png`,
       }}
       width="100%"
       borderRadius='$4'
@@ -32,10 +32,6 @@ export function TopBanner() {
       <Stack
         flexDirection="column"
         flexWrap="wrap"
-        paddingHorizontal="$5"
-        $sm={{
-          paddingHorizontal: '$2',
-        }}
       >
         <Text
           fontWeight="800"
@@ -63,6 +59,7 @@ export function TopBanner() {
   );
   const renderButton = () => (
     <XStack
+      theme={'accent'}
       justifyContent="center"
       gap="$6"
       paddingVertical="$6"
@@ -83,7 +80,7 @@ export function TopBanner() {
           width: 120,
         }}
       >
-        <Text>{t('web-home:singlecarrier')}</Text>
+        {t('web-home:singlecarrier')}
       </ZixLinkButton>
       <ZixLinkButton
         linkItem
@@ -94,13 +91,12 @@ export function TopBanner() {
         width={150}
         justifyContent="center"
         backgroundColor='$color12'
+        color='$color3'
         $sm={{
           width: 120,
         }}
       >
-        <Text
-          color='$color3'
-        >{t('web-home:company')}</Text>
+        {t('web-home:company')}
       </ZixLinkButton>
     </XStack>
   );

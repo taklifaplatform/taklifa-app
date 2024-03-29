@@ -9,6 +9,7 @@ export const Page: NextPageWithLayout = () => {
   const router = useRouter();
   const renderBanner = () => (
     <YStack
+    theme={'accent'}
       justifyContent="center"
       marginBottom="$8"
       width={'100%'}
@@ -59,8 +60,8 @@ export const Page: NextPageWithLayout = () => {
           padding="$2"
           w={164}
           borderWidth={1}
-          borderColor="$color10"
-          icon={<CustomIcon name="call" size="$2" />}
+          borderColor="$color12"
+          icon={<CustomIcon name="ringing" size="$2" />}
           onPress={() => router.push('/contact')}
         >
           <Text color="$color12" fontWeight="600" fontSize={15}>

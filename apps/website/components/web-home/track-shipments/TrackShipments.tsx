@@ -5,7 +5,7 @@ import { t } from 'i18next';
 import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useRouter } from 'solito/router';
-import { Button, Stack, Text, XStack, YStack } from 'tamagui';
+import { Button, Stack, Text, Theme, XStack, YStack } from 'tamagui';
 
 
 
@@ -13,9 +13,9 @@ import { Button, Stack, Text, XStack, YStack } from 'tamagui';
 export function TrackShipments() {
   const [selectedShipment, setSelectedShipment] = useState(0);
   const router = useRouter();
-
   const renderMethodShipment = () => (
     <XStack
+      theme='accent'
       gap="$4"
       $sm={{
         width: '100%',
@@ -32,10 +32,10 @@ export function TrackShipments() {
         >
           <CustomIcon
             name="search_track"
-            color={selectedShipment === 1 ? null : '$color9'}
+            color={selectedShipment === 1 ? '$color5' : '$color9'}
           />
           <Text
-            color={selectedShipment === 1 ? null : '$color9'}
+            color={selectedShipment === 1 ? '$color5' : '$color9'}
             fontSize={20}
             $sm={{
               fontSize: 12,
@@ -55,10 +55,10 @@ export function TrackShipments() {
         >
           <CustomIcon
             name="find_track"
-            color={selectedShipment === 0 ? null : '$color9'}
+            color={selectedShipment === 0 ? '$color5' : '$color9'}
           />
           <Text
-            color={selectedShipment === 0 ? null : '$color9'}
+            color={selectedShipment === 0 ? '$color5' : '$color12'}
             fontSize={20}
             $sm={{
               fontSize: 12,
@@ -70,11 +70,10 @@ export function TrackShipments() {
       </TouchableOpacity>
     </XStack>
   );
-
   return (
     <YStack
       alignItems="center"
-      backgroundColor={'$color1'}
+      backgroundColor={'transparent'}
       borderRadius="$2"
       padding="$4"
       gap="$4"
@@ -93,7 +92,7 @@ export function TrackShipments() {
         }}
       >
         <ZixInput
-          backgroundColor={'$color1'}
+          backgroundColor={'transparent'}
           placeholder={t('web-home:shipmentplaceholder')}
           leftIcon={(props) => <CustomIcon {...props} name="flip" />}
           containerProps={{
@@ -104,7 +103,9 @@ export function TrackShipments() {
           }}
         />
         <Button
-          theme='accent'
+          theme={'accent'}
+          borderColor='$color9'
+          backgroundColor='$color9'
           size="$5"
           onPress={() => router.push('/app')}
           iconAfter={<ArrowLeft size={'$1'} />}
@@ -113,12 +114,11 @@ export function TrackShipments() {
             width: '100%',
           }}
         >
-          <Text color={'$color12'}>{selectedShipment === 0 ? t('web-home:track') : t('web-home:send')}</Text>
+          {selectedShipment === 0 ? t('web-home:track') : t('web-home:send')}
         </Button>
         <Button
-          theme='accent'
-          variant="outlined"
           borderColor="$color12"
+          backgroundColor="$color1"
           size="$5"
           onPress={() => router.push('/app')}
           iconAfter={<ArrowLeft size={'$1'} />}
@@ -127,9 +127,10 @@ export function TrackShipments() {
             width: '100%',
           }}
         >
-          <Text color={'$color12'}>{selectedShipment === 0 ? t('web-home:realtrack') : t('web-home:realsend')}</Text>
+          {selectedShipment === 0 ? t('web-home:realtrack') : t('web-home:realsend')}
         </Button>
       </Stack>
     </YStack>
+
   );
 }

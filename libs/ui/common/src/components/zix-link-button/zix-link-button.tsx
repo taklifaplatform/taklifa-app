@@ -23,7 +23,7 @@ const CustomButton = styled(Button, {
   variants: {
     headerMenu: {
       true: {
-
+        color: '$color12',
         alignItems: 'center',
         paddingHorizontal: '$6',
         paddingVertical: '$4',
@@ -34,6 +34,7 @@ const CustomButton = styled(Button, {
         hoverStyle: {
           cursor: 'pointer',
           backgroundColor: '$color3',
+          color: '$color11',
         },
       },
     },
@@ -63,12 +64,13 @@ const CustomButton = styled(Button, {
     },
     linkItem: {
       true: {
+        color: '$color12',
         fontSize: '$5',
         paddingHorizontal: '$4',
         flexDirection: 'row',
         paddingVertical: '$4',
         hoverStyle: {
-          backgroundColor: '$color3',
+          color: '$color1',
           borderRadius: '$3',
         },
       },
