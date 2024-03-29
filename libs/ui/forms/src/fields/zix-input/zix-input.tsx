@@ -76,7 +76,8 @@ export const ZixInput = forwardRef(function ZixInputEl(
       ref={ref}
     />
   ) : (
-    <Input {...currentInputProps} autoCapitalize="none" ref={ref} />
+    // TODO: check why, when we're using numberOfLines={2} is counting it as single line
+    <Input {...currentInputProps} numberOfLines={2} autoCapitalize="none" ref={ref} />
   )
 
   return (

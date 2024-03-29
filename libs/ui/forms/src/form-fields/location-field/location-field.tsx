@@ -1,0 +1,315 @@
+
+import { useFieldInfo, useTsController } from '@ts-react/form';
+import { z } from "zod";
+
+import { LocateFixed, Pen } from '@tamagui/lucide-icons';
+import { CountryTransformer } from '@zix/api';
+import { CustomIcon } from '@zix/ui/icons';
+import { Button, Separator, Text, Theme, View, XStack, YStack } from 'tamagui';
+import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common';
+import ZixFieldContainer from '../../common/zix-field-container/zix-field-container';
+import { ZixAutoCompleteField, ZixInput } from '../../fields';
+import ZixMapPointerField from '../../fields/zix-map-pointer-field/zix-map-pointer-field';
+import { GroupFieldsSheet } from '../../wrappers';
+import { MapLocationPicker } from './map-location-picker';
+
+export type LocationFieldProps = {
+  containerProps?: BaseFormFieldContainerProps;
+
+  type?: 'advanced' | 'simple';
+}
+
+
+export const LocationSchema = z.object({
+  id: z.string().optional().nullable(),
+  name: z.string().optional().nullable(),
+  address: z.string(),
+  address_complement: z.string().optional().nullable(),
+
+
+  building_name: z.string().optional().nullable(),
+  floor_number: z.string().optional().nullable(),
+  house_number: z.string().optional().nullable(),
+  postcode: z.string().optional().nullable(),
+
+  notes: z.string().optional().nullable(),
+
+  country_id: z.number(),
+  state_id: z.number().optional().nullable(),
+  city_id: z.number().optional().nullable(),
+  phone_number: z.string().optional().nullable(),
+  is_primary: z.boolean().optional().nullable(),
+
+  latitude: z.any().optional().nullable(),
+  longitude: z.any().optional().nullable(),
+})
+
+export const LocationField: React.FC<LocationFieldProps> = ({
+  containerProps = {},
+  type = 'simple',
+  // type = 'advanced',
+  ...props
+}) => {
+  const { field: { onChange, value }, error } = useTsController<z.infer<typeof LocationSchema>>();
+  const { placeholder } = useFieldInfo()
+
+
+  const renderAddressCard = () => (
+    type === 'advanced' &&
+    value?.address
+  ) && (
+      <YStack
+        borderWidth='$0.5'
+        borderColor='$color8'
+        borderRadius='$4'
+        padding='$2'
+        gap='$2'
+        height='$10'
+        flex={1}
+      >
+        <XStack justifyContent='space-between' alignItems='center'>
+          <XStack alignItems='center' gap='$2'>
+            <Theme name='accent'>
+              <CustomIcon name='location' size='$1' color='$color9' />
+            </Theme>
+            <Text fontWeight='700'>{value?.name ?? 'Home'}</Text>
+          </XStack>
+
+          <XStack alignItems='center' gap='$2'>
+            <View
+              theme={value?.is_primary ? 'accent' : undefined}
+              backgroundColor='$color4'
+              paddingHorizontal='$4'
+              paddingVertical='$2'
+              borderRadius='$3'
+            >
+              <Text fontWeight='700'>
+                {value?.is_primary ? 'Primary' : 'Secondary'}
+              </Text>
+            </View>
+            <Button
+              size='$2'
+              icon={Pen}
+            />
+          </XStack>
+
+        </XStack>
+        {
+          value?.address && (
+            <Text>
+              {value?.address}
+            </Text>
+          )
+        }
+
+        {
+          value?.phone_number && (
+            <Text>
+              {value?.phone_number}
+            </Text>
+          )
+        }
+
+        {/* <DebugObject object={value} /> */}
+      </YStack>
+    )
+
+  const renderAddressMap = () => (
+    type === 'advanced' &&
+    value?.latitude && value?.longitude
+  ) && (
+      <View height='$12'>
+        <ZixMapPointerField
+          value={value}
+        />
+      </View>
+    )
+
+
+  const renderFormContent = () => (
+    <YStack gap='$2'>
+      <MapLocationPicker value={value} onChange={(val) => onChange({
+        ...value,
+        ...val
+      })} />
+
+      <Separator marginTop='$4' />
+
+      <ZixFieldContainer
+        label='Additional Information'
+        labelBold
+        collapsible
+      >
+        <YStack gap='$4'>
+          <ZixFieldContainer
+            label='Address'
+            error={error?.address}
+          >
+            <ZixInput
+              placeholder='Address'
+              value={value?.address}
+              onChangeText={address => onChange({
+                ...value,
+                address
+              })}
+            />
+          </ZixFieldContainer>
+
+          <ZixFieldContainer
+            label='Building Name'
+            isOptional
+            error={error?.building_name}
+          >
+            <ZixInput
+              placeholder='Enter Building Name...'
+              value={value?.building_name}
+              onChangeText={building_name => onChange({
+                ...value,
+                building_name
+              })}
+            />
+          </ZixFieldContainer>
+
+          <XStack alignItems='flex-start' gap='$4'>
+            <ZixFieldContainer
+              label='Floor Number'
+              isOptional
+              error={error?.floor_number}
+            >
+              <ZixInput
+                placeholder='Enter Floor Number...'
+                value={value?.floor_number}
+                onChangeText={floor_number => onChange({
+                  ...value,
+                  floor_number
+                })}
+              />
+            </ZixFieldContainer>
+
+            <ZixFieldContainer
+              label='House Number'
+              isOptional
+              error={error?.house_number}
+            >
+              <ZixInput
+                placeholder='Enter House Number...'
+                value={value?.house_number}
+                onChangeText={house_number => onChange({
+                  ...value,
+                  house_number
+                })}
+              />
+            </ZixFieldContainer>
+
+          </XStack>
+          <ZixFieldContainer
+            label='Country'
+            error={error?.country_id}
+          >
+            <ZixAutoCompleteField
+              api="geography/countries"
+              value={`${value?.country_id}`}
+              dataMapper={(item: CountryTransformer) => ({
+                id: `${item.id}`,
+                name: item.name,
+                icon: item.flag,
+              })}
+              onChange={country_id => onChange({
+                ...value,
+                country_id: parseInt(country_id)
+              })}
+            />
+          </ZixFieldContainer>
+
+          <XStack alignItems='flex-start' gap='$4'>
+            <ZixFieldContainer
+              label='State'
+              isOptional
+              error={error?.state_id}
+            >
+              <ZixAutoCompleteField
+                api="geography/states"
+                query={{
+                  country_id: value?.country_id
+                }}
+                value={value?.state_id}
+                onChange={state_id => onChange({
+                  ...value,
+                  state_id
+                })}
+              />
+            </ZixFieldContainer>
+
+            <ZixFieldContainer
+              label='City'
+              isOptional
+              error={error?.city_id}
+            >
+              <ZixAutoCompleteField
+                api="geography/cities"
+                query={{
+                  country_id: value?.country_id
+                }}
+                value={value?.city_id}
+                onChange={city_id => onChange({
+                  ...value,
+                  city_id
+                })}
+              />
+            </ZixFieldContainer>
+          </XStack>
+
+        </YStack>
+      </ZixFieldContainer>
+
+
+      <Separator marginTop='$4' />
+
+      <ZixFieldContainer
+        label='Notes'
+        labelBold
+        collapsible
+        error={error?.notes}
+        isOptional
+      >
+        <ZixInput
+          placeholder='Write any additional notes here...'
+          isMultiline
+          value={value?.notes}
+          onChangeText={notes => onChange({
+            ...value,
+            notes
+          })}
+        />
+      </ZixFieldContainer>
+    </YStack>
+  )
+
+  const renderInputActivator = () => (type === 'simple' || !value?.address) && (
+    <ZixInput
+      rightIcon={(props) => <LocateFixed {...props} />}
+      placeholder={placeholder}
+      value={value?.address}
+    />
+  )
+
+  return (
+    <FormFieldContainer {...containerProps}>
+      <GroupFieldsSheet
+        title='Address Information'
+        activator={(
+          <YStack gap='$4'>
+            {renderAddressCard()}
+            {renderAddressMap()}
+            {renderInputActivator()}
+          </YStack>
+        )}
+      >
+        {renderFormContent()}
+      </GroupFieldsSheet>
+    </FormFieldContainer>
+  );
+}
+
+
+export default LocationField;

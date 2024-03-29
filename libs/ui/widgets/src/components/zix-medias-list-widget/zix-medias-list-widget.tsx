@@ -32,11 +32,12 @@ export const ZixMediasListWidget: React.FC<ZixMediasListWidgetProps> = ({
         renderItem={({ item, index }) => (
           <Image
             key={`key-${index}`}
-            source={{ uri: item.url }}
+            source={{ uri: item.original_url }}
             width={imageWidth}
             height={imageHeight}
             borderRadius="$4"
             marginHorizontal="$2"
+            resizeMode='cover'
           />
         )}
       />

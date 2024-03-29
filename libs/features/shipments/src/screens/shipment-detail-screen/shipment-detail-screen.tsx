@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import {
-  CustomerShipmentsService,
   DriversService,
+  ShipmentService,
   ShipmentTransformer,
 } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
@@ -49,14 +49,14 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
 
   const [shipmentId] = useParam('shipment');
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ['CustomerShipmentsService.retrieveShipment', { id: shipmentId }],
+    queryKey: ['ShipmentService.retrieveShipment', { id: shipmentId }],
     queryFn: () =>
-      CustomerShipmentsService.retrieveShipment({ shipment: shipmentId || '' }),
+      ShipmentService.retrieveShipment({ shipment: shipmentId || '' }),
   });
   const shipment = data?.data;
   // TODO:: remove this once it's been added to shipment
   const driverQuery = useQuery({
-    queryKey: ['DriverShipmentsService.retrieveShipment', shipment?.user?.id],
+    queryKey: ['DriversService.retrieveDriver', shipment?.user?.id],
     queryFn: () =>
       DriversService.retrieveDriver({
         driver: shipment?.user?.id || '',

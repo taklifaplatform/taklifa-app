@@ -1,6 +1,6 @@
 import {
   AcceptTermsField,
-  AddressField,
+  LocationField,
   AutoCompleteField,
   BooleanCheckboxField,
   BooleanSwitchField,
@@ -15,9 +15,11 @@ import {
   TextAreaField,
   TextField,
   TextSecureField,
-} from "../form-fields";
+  LocationFieldProps,
+  ShipmentItemsField,
+} from '../form-fields';
 
-import { formFields } from "./form-fields-schemas";
+import { formFields } from './form-fields-schemas';
 
 export const formFieldsMappings = [
   [formFields.text, TextField] as const,
@@ -33,32 +35,44 @@ export const formFieldsMappings = [
   /**
    * Date Fields
    */
-  [formFields.date_picker, (props: DatePickerFieldProps) =>
-    DatePickerField({
-      ...props,
-      type: "date_picker",
-    })] as const,
-  [formFields.day_selector, (props: DatePickerFieldProps) =>
-    DatePickerField({
-      ...props,
-      type: "day_selector",
-    })] as const,
-  [formFields.month_selector, (props: DatePickerFieldProps) =>
-    DatePickerField({
-      ...props,
-      type: "month_selector",
-    })] as const,
-  [formFields.year_selector, (props: DatePickerFieldProps) =>
-    DatePickerField({
-      ...props,
-      type: "year_selector",
-    })] as const,
+  [
+    formFields.date_picker,
+    (props: DatePickerFieldProps) =>
+      DatePickerField({
+        ...props,
+        type: 'date_picker',
+      }),
+  ] as const,
+  [
+    formFields.day_selector,
+    (props: DatePickerFieldProps) =>
+      DatePickerField({
+        ...props,
+        type: 'day_selector',
+      }),
+  ] as const,
+  [
+    formFields.month_selector,
+    (props: DatePickerFieldProps) =>
+      DatePickerField({
+        ...props,
+        type: 'month_selector',
+      }),
+  ] as const,
+  [
+    formFields.year_selector,
+    (props: DatePickerFieldProps) =>
+      DatePickerField({
+        ...props,
+        type: 'year_selector',
+      }),
+  ] as const,
   [
     formFields.row_time_range_picker,
     (props: DatePickerFieldProps) =>
       DatePickerField({
         ...props,
-        type: "row_time_range_picker",
+        type: 'row_time_range_picker',
       }),
   ] as const,
   [
@@ -66,7 +80,7 @@ export const formFieldsMappings = [
     (props: DatePickerFieldProps) =>
       DatePickerField({
         ...props,
-        type: "row_date_picker",
+        type: 'row_date_picker',
       }),
   ] as const,
 
@@ -79,7 +93,7 @@ export const formFieldsMappings = [
     (props: MediaPickerFieldProps) =>
       MediaPickerField({
         ...props,
-        type: "medias",
+        type: 'medias',
         isMultiple: true,
       }),
   ] as const,
@@ -88,7 +102,7 @@ export const formFieldsMappings = [
     (props: MediaPickerFieldProps) =>
       MediaPickerField({
         ...props,
-        type: "image",
+        type: 'image',
         containerProps: {
           labelHidden: true,
         },
@@ -99,7 +113,7 @@ export const formFieldsMappings = [
     (props: MediaPickerFieldProps) =>
       MediaPickerField({
         ...props,
-        type: "files",
+        type: 'files',
         isMultiple: true,
       }),
   ] as const,
@@ -108,7 +122,7 @@ export const formFieldsMappings = [
     (props: MediaPickerFieldProps) =>
       MediaPickerField({
         ...props,
-        type: "file",
+        type: 'file',
       }),
   ] as const,
 
@@ -116,5 +130,22 @@ export const formFieldsMappings = [
   [formFields.code, CodeInputField] as const,
 
   [formFields.country, CountryField] as const,
-  [formFields.address, AddressField] as const,
+  [
+    formFields.location,
+    (props: LocationFieldProps) =>
+      LocationField({
+        ...props,
+        type: 'simple',
+      }),
+  ] as const,
+  [
+    formFields.advanced_location,
+    (props: LocationFieldProps) =>
+      LocationField({
+        ...props,
+        type: 'advanced',
+      }),
+  ] as const,
+
+  [formFields.shipment_items, ShipmentItemsField],
 ] as const;

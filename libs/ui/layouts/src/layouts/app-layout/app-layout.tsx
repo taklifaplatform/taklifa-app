@@ -1,10 +1,10 @@
 import React from 'react';
-import { ScrollView, View, XStack } from 'tamagui';
-import { MainSideBar } from '../../components/main-side-bar/main-side-bar';
+import { View, XStack } from 'tamagui';
 import AppBottomBar from '../../components/app-bottom-bar/app-bottom-bar';
+import { MainSideBar } from '../../components/main-side-bar/main-side-bar';
 
 export type AppLayoutProps = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 

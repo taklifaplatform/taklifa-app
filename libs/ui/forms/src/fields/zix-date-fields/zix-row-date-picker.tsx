@@ -4,14 +4,14 @@ import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel'
 import {
   Button,
   Text,
+  View,
   YStack
 } from 'tamagui'
 import { ZixDateFieldProps } from './types'
 import ZixMonthSelection from './zix-month-selection'
 
-
-const PAGE_WIDTH = 120
-const PAGE_HEIGHT = 150
+const PAGE_WIDTH = 90
+const PAGE_HEIGHT = 110
 
 export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
   onChange,
@@ -39,25 +39,26 @@ export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
 
   const renderDayCard = (item: number, index: number) => (
     <Button
-      height="$9"
-      width={110}
+      flex={1}
+      paddingVertical='$2'
+      paddingHorizontal='$1'
       alignItems="center"
-      margin="$4"
-      marginHorizontal="$4"
+      marginRight="$2"
       flexDirection="column"
-      backgroundColor={activeDayIndex === index ? '$color5' : '$color9'}
+      theme={activeDayIndex === index ? 'accent' : undefined}
+      backgroundColor={activeDayIndex === index ? '$color9' : '$color3'}
       onPress={() => {
         onDateChange(moment(date).date(item))
       }}
     >
-      <YStack alignItems="center" paddingVertical="$2">
-        <Text color="black" fontSize={'$1'}>
+      <YStack alignItems='center' justifyContent='space-between' flex={1}>
+        <Text fontSize='$1' fontWeight='800'>
           {moment(date).date(item).format('dddd')}
         </Text>
-        <Text color="black" fontSize={'$9'} fontWeight={'800'}>
+        <Text fontSize='$10' fontWeight='900'>
           {item}
         </Text>
-        <Text color="black" fontSize={'$1'}>
+        <Text fontSize='$1' fontWeight='800'>
           {moment(date).date(item).format('MMMM')}
         </Text>
       </YStack>
@@ -67,22 +68,31 @@ export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
     <>
       <ZixMonthSelection
         width={150}
+        selectTriggerProps={{
+          height: '$2',
+          size: '$4',
+        }}
+        prependPlaceHolder={<Text fontSize='$1'>Month: </Text>}
         value={date.format('MM')}
         onChange={(month: string) => onDateChange(date.set('month', parseInt(month) - 1))}
       />
-      <Carousel
-        ref={carouselRef}
-        loop={false}
-        defaultIndex={activeDayIndex}
-        data={listDays}
-        style={{
-          width: '100%',
-          justifyContent: activeDayIndex > 3 ? 'center' : 'flex-start',
-        }}
-        width={PAGE_WIDTH}
-        height={PAGE_HEIGHT}
-        renderItem={({ item, index }) => renderDayCard(item, index)}
-      />
+      <View paddingVertical='$4'>
+        <Carousel
+          ref={carouselRef}
+          loop={false}
+          vertical={false}
+          defaultIndex={activeDayIndex}
+          data={listDays}
+          style={{
+            height: PAGE_HEIGHT,
+            width: '100%',
+            justifyContent: activeDayIndex > 3 ? 'center' : 'flex-start',
+          }}
+          width={PAGE_WIDTH}
+          height={PAGE_HEIGHT}
+          renderItem={({ item, index }) => renderDayCard(item, index)}
+        />
+      </View>
     </>
   )
 }

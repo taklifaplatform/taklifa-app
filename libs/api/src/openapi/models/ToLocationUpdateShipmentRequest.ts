@@ -8,6 +8,10 @@ export type ToLocationUpdateShipmentRequest = {
     city_id?: string;
     address?: string;
     address_complement?: string;
+    building_name?: string;
+    floor_number?: string;
+    house_number?: string;
+    notes?: string;
     postcode?: string;
     latitude?: string;
     longitude?: string;

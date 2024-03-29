@@ -83,6 +83,7 @@ import Bolt from "./icons/bolt.svg";
 import Touch_app from "./icons/touch_app.svg";
 import Category from "./icons/category.svg";
 import Shield_with_heart from "./icons/shield_with_heart.svg";
+import DimensionBox from "./icons/dimension-box.svg";
 
 // arts
 import CompanyCars from "./arts/company-cars.svg";
@@ -186,5 +187,6 @@ export {
   Garage,
   Opacity,
   Matricule,
-  UserInfo
+  UserInfo,
+  DimensionBox
 };

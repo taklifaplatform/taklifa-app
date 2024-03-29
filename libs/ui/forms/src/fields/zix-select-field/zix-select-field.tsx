@@ -57,7 +57,6 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
   onSearch,
   ...props
 }) => {
-  const themeName = useThemeName()
   const { isRtl } = useMultiLang()
 
   const renderSearchBar = () => onSearch && (

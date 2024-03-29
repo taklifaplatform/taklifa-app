@@ -1,7 +1,7 @@
 import { useAuth } from '@zix/services/auth';
 import React from 'react';
 
-import { Dimensions, Image, Platform, View } from 'react-native';
+import { Dimensions, Image, View } from 'react-native';
 import { useRouter } from 'solito/router';
 
 

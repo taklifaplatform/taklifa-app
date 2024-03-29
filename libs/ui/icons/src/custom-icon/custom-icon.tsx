@@ -116,7 +116,7 @@ const iconNames = [
   'store',
   'job',
   'radio_button_checked',
-
+  'dimension_box',
 ];
 
 export type CustomIconName = (typeof iconNames)[number];

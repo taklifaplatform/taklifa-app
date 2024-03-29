@@ -15,10 +15,7 @@ export type GroupFieldsSheetProps = {
 
 export const GroupFieldsSheet: React.FC<GroupFieldsSheetProps> = ({ children, activator, title }) => {
   const [open, setOpen] = useState(false)
-  const { bottom } = useSafeAreaInsets()
-
-  // auto validate current form context
-  // const form = useFormContext()
+  const { bottom, top } = useSafeAreaInsets()
 
   return (
     <>
@@ -38,23 +35,27 @@ export const GroupFieldsSheet: React.FC<GroupFieldsSheetProps> = ({ children, ac
         open={open}
         onOpenChange={setOpen}
         modal
+        snapPoints={[100, 100]}
+        dismissOnSnapToBottom={false}
+        forceRemoveScrollEnabled
+        disableDrag
       >
-        <Sheet.Overlay />
-        <Sheet.Handle />
         <Sheet.Frame>
-          <View flex={1} padding='$4' paddingBottom={bottom} backgroundColor='$background1'>
-            <XStack justifyContent='space-between' alignItems='center' paddingBottom='$4'>
+          <View flex={1} paddingBottom={bottom} paddingTop={top} backgroundColor='$background1'>
+            <XStack padding='$4' justifyContent='space-between' alignItems='center' paddingBottom='$4'>
               <H4>
                 {title}
               </H4>
               <Button icon={X} size='$3' scaleIcon={1.5} backgroundColor='$color5' onPress={() => setOpen(false)} />
             </XStack>
             <Sheet.ScrollView marginBottom='$4'>
-              {children}
+              <View padding='$4' flex={1}>
+                {children}
+              </View>
             </Sheet.ScrollView>
 
             <Theme inverse>
-              <SubmitButton onPress={() => setOpen(false)}>
+              <SubmitButton marginHorizontal='$4' onPress={() => setOpen(false)}>
                 Confirm
               </SubmitButton>
             </Theme>

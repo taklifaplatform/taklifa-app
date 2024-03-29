@@ -1,8 +1,17 @@
 import { useFieldInfo, useTsController } from '@ts-react/form'
 import { MediaTransformer } from '@zix/api'
+import { z } from 'zod';
 
 import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common'
 import { ZixMediaPickerField, ZixMediaPickerFieldProps } from '../../fields'
+
+
+export const MediaPickerFieldSchema = z.object({
+  // id: z.number(),
+  uuid: z.string().optional(),
+  // url: z.string().optional(),
+  // original_url: z.string(),
+});
 
 export type MediaPickerFieldProps = ZixMediaPickerFieldProps & {
   containerProps?: BaseFormFieldContainerProps

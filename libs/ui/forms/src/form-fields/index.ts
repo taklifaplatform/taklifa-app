@@ -10,5 +10,6 @@ export * from "./select-field/select-field";
 export * from "./text-area-field/text-area-field";
 export * from "./text-field/text-field";
 export * from "./text-secure-field/text-secure-field";
-export * from "./address-field/address-field";
+export * from "./location-field/location-field";
 export * from "./country-field/country-field";
+export * from "./shipment-items-field/shipment-items-field";

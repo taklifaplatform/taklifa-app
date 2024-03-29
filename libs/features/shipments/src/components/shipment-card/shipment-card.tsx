@@ -14,7 +14,7 @@ import {
   Text,
   ThemeableStackProps,
   XStack,
-  YStack,
+  YStack
 } from 'tamagui';
 import ShipmentCardActions from '../shipment-card-actions/shipment-card-actions';
 
@@ -118,9 +118,9 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
   );
 
   const renderHeaderShipment = () => (
-    <YStack gap="$3">
-      <XStack width={'100%'} alignItems="center" justifyContent="space-between">
-        <YStack gap="$2" width={'50%'} $sm={{ width: '100%' }}>
+    <YStack gap="$3" flex={1}>
+      <XStack flex={1} alignItems="center" justifyContent="space-between">
+        <YStack gap="$2">
           <Text
             fontSize={12}
             fontWeight={'600'}
@@ -216,6 +216,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
       paddingVertical="$4"
       backgroundColor={'$color1'}
       borderRadius={'$4'}
+      flex={1}
       $sm={{
         justifyContent: 'center',
         alignItems: 'center',

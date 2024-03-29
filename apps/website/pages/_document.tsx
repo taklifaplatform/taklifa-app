@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 
 import Tamagui from '../tamagui.config';
 import Script from 'next/script';
-const source = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBw3sZh4uFyLbi9sKTzKYn3BqIS_b-vGeA&libraries=places`;
+const source = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`;
 // const source = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`
 
 class MyDocument extends Document {

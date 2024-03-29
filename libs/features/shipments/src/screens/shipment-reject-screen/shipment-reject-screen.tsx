@@ -1,6 +1,6 @@
 import { Check } from '@tamagui/lucide-icons';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { DriverShipmentsService } from '@zix/api';
+import { ShipmentService } from '@zix/api';
 import { UserAvatar } from '@zix/ui/common';
 import { SchemaForm, SubmitButton, formFields } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
@@ -35,9 +35,9 @@ export const ShipmentRejectScreen: React.FC<ShipmentRejectScreenProps> = (
 ) => {
   const [shipmentId] = useParam('shipment');
   const { data } = useQuery({
-    queryKey: ['DriverShipmentsService.retrieveShipment', { id: shipmentId }],
+    queryKey: ['ShipmentService.retrieveShipment', { id: shipmentId }],
     queryFn: () =>
-      DriverShipmentsService.retrieveShipment({
+      ShipmentService.retrieveShipment({
         shipment: shipmentId || '',
       }),
   });

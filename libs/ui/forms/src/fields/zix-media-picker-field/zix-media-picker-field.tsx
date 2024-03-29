@@ -63,19 +63,18 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     console.log('=============')
     if (value) {
       const files = Array.isArray(value) ? value : [value];
-      files.forEach((file) => {
+      const _medias: Record<string, any> = {}
+      files.forEach(file => {
         if (file.uuid) {
-          setPreviews((prev) => ({
-            ...prev,
-            [file.uuid]: file as ZixMediaPickerTransformer,
-          }));
-        } else if (file.id) {
-          setPreviews((prev) => ({
-            ...prev,
-            [file.id]: file as ZixMediaPickerTransformer,
-          }));
+          _medias[file.uuid] = file
+        } else {
+          _medias[file.id] = file
         }
-      });
+      })
+      setPreviews(prev => ({
+        ...prev,
+        ..._medias
+      }));
     }
   }, [value]);
 
@@ -115,66 +114,78 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
    * Handles the selection of files in the media picker.
    * @param files The selected files.
    */
-  function onFilesSelected(files: ZixMediaPickerTransformer[]) {
-    files.forEach((file) => {
+  async function onFilesSelected(files: ZixMediaPickerTransformer[]) {
+    const _medias: Record<string, any> = {}
+
+    files.forEach(file => {
       const uuid = randomUUID()
-      const media = {
+
+      _medias[uuid] = {
         ...file,
         url: file.uri,
         original_url: file.uri,
         uuid,
         uploadProgress: 0.2,
       }
-      if (isMultiple) {
-        setPreviews((prev) => ({
-          ...prev,
-          [uuid]: media,
-        }))
-      } else {
-        setPreviews({
-          [uuid]: media,
-        })
-      }
-      uploadMediaFile(media as UploadableMediaFile, (progress) => {
-        setPreviews((prev) => ({
-          ...prev,
-          [uuid]: {
-            ...media,
-            uploadProgress: progress,
-          },
-        }))
-      })
-        .then((result) => {
+    })
+
+    if (isMultiple) {
+      setPreviews((prev) => ({
+        ...prev,
+        ..._medias,
+      }))
+    } else {
+      setPreviews(_medias)
+    }
+
+    const failedMedias: Record<string, string[]> = {}
+
+    const finalResults = await Promise.all(Object.values(_medias).map((media) => {
+      return new Promise((resolve, reject) => {
+        uploadMediaFile(media as UploadableMediaFile, (progress) => {
           setPreviews((prev) => ({
             ...prev,
-            [uuid]: {
+            [media.uuid]: {
               ...media,
-              ...result,
-              uploadProgress: 1
+              uploadProgress: progress,
             },
           }))
-          onChange?.(isMultiple ? [
-            ...files,
-            result,
-          ] : result)
+        }).then((result) => {
+          console.log('result::', JSON.stringify(result, null, 2))
+          resolve({
+            ...media,
+            ...result,
+            uploadProgress: 1
+          })
+        }).catch((error) => {
+          console.log('error::', JSON.stringify(error, null, 2))
+          failedMedias[media.uuid] = error?.errors?.file || []
         })
-        .catch((error) => {
-          Alert.alert(
-            error?.message || 'Oops!!',
-            error?.errors?.file?.join(', ') || 'Failed to upload file',
-            [
-              {
-                text: 'OK',
-                style: 'cancel',
-              },
-            ],
-            {
-              cancelable: true,
-            },
-          );
-          onRemoveMedia(media)
-        })
-    })
+      })
+    }))
+
+    onChange?.(isMultiple ? finalResults : finalResults[0])
+
+    if (Object.keys(failedMedias).length) {
+      let errors: string[] = []
+      Object.keys(failedMedias).forEach((uuid) => {
+        onRemoveMedia(_medias[uuid])
+        errors = [...errors, ...failedMedias[uuid]]
+      })
+      Alert.alert(
+        'Oops!!',
+        errors?.length ? errors.join(', ') : 'Failed to upload file',
+        [
+          {
+            text: 'OK',
+            style: 'cancel',
+          },
+        ],
+        {
+          cancelable: true,
+        },
+      );
+    }
   }
 
   /**
@@ -311,6 +322,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
    * @param media - The media to be removed.
    */
   function onRemoveMedia(media: MediaTransformer) {
+    onChange?.(Object.values(previews).filter((preview) => preview.uuid !== media.uuid));
     MediaService.deleteMedia({
       requestBody: {
         uuid: media.uuid,

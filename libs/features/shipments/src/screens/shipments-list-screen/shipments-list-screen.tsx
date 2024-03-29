@@ -123,7 +123,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
             padding: '$2',
           })}
           data={data?.data}
-          numColumns={2}
+          // numColumns={2} // TODO: num of columns when screen is large
           renderItem={({ item, index }) => (
             <Stack $gtMd={{ flex: 1, flexBasis: 1 }} padding='$2'>
               <ShipmentCard
