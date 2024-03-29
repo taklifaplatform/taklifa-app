@@ -2,6 +2,7 @@ import { X } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { CompaniesService, DriverTransformer, DriversService } from '@zix/api';
 import { UserCard } from '@zix/features/users';
+import { useAuth } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader } from '@zix/ui/layouts';
 import { MapCompanyMarker, MapDriverMarker } from '@zix/ui/sawaeed';
@@ -11,6 +12,7 @@ import { Dimensions } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import MapView from 'react-native-maps';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
+import { useRouter } from 'solito/router';
 import { Button, YStack } from 'tamagui';
 
 const initialCamera = {
@@ -30,6 +32,8 @@ export function HomeScreen() {
   const USER_CARD_HEIGHT = Math.min(250, width / 1.5);
   const mapRef = useRef<MapView>(null);
   const carouselRef = useRef<ICarouselInstance>(null);
+  const router = useRouter();
+  const { getUrlPrefix } = useAuth()
 
   const [showMap, setShowMap] = useState(true);
 
@@ -134,10 +138,10 @@ export function HomeScreen() {
     <MapCompanyMarker
       key={`marker-${index}`}
       company={company}
-    // isSelected={selectedDriver?.id === driver.id}
-    // onPress={() => {
-    //   onMarkerPress(driver, index);
-    // }}
+      // isSelected={selectedDriver?.id === driver.id}
+      onPress={() => {
+        router.push(`${getUrlPrefix}/companies/${company.id}`)
+      }}
     />
   ))
 

@@ -8,6 +8,29 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class CompanyMembersService {
     /**
+     * Delete member of a company
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static delete({
+        company,
+        member,
+    }: {
+        company: string,
+        member: string,
+    }): CancelablePromise<{
+        data?: CompanyMemberTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/admin/companies/{company}/members/{member}',
+            path: {
+                'company': company,
+                'member': member,
+            },
+        });
+    }
+    /**
      * Fetch all members of a company
      * @returns any Successful response
      * @throws ApiError
@@ -57,7 +80,7 @@ export class CompanyMembersService {
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/admin/companies/{company}/members',
+            url: '/api/companies/{company}/members',
             path: {
                 'company': company,
             },
@@ -86,30 +109,7 @@ export class CompanyMembersService {
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/admin/companies/{company}/members/{member}',
-            path: {
-                'company': company,
-                'member': member,
-            },
-        });
-    }
-    /**
-     * Delete member of a company
-     * @returns any Successful response
-     * @throws ApiError
-     */
-    public static delete({
-        company,
-        member,
-    }: {
-        company: string,
-        member: string,
-    }): CancelablePromise<{
-        data?: CompanyMemberTransformer;
-    }> {
-        return __request(OpenAPI, {
-            method: 'DELETE',
-            url: '/api/admin/companies/{company}/members/{member}',
+            url: '/api/companies/{company}/members/{member}',
             path: {
                 'company': company,
                 'member': member,
