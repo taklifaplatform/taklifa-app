@@ -1,3 +1,9 @@
+
+export * from './screens/vehicle-profile-screen/vehicle-profile-screen';
+
+export * from './screens/employee-profile-screen/employee-profile-screen';
+
+export * from './screens/company-profile-screen/company-profile-screen';
 export * from './screens/manage/drivers/update-driver-screen/update-driver-screen';
 
 export * from './screens/manage/manage-team-screen/manage-team-screen';
