@@ -1,4 +1,5 @@
 import { CustomIcon } from '@zix/ui/icons';
+import { Search, UserCircle } from '@tamagui/lucide-icons';
 import { XStack, Text } from 'tamagui';
 import { useMultiLang } from '@zix/i18n';
 import { ZixLinkButton } from '@zix/ui/common';
@@ -11,30 +12,31 @@ export function Header() {
   const renderMenuItems = () => (
     <XStack $lg={{ gap: '$1' }}>
       <ZixLinkButton
-        display="headerMenu"
+        backgroundColor={'$color6'}
+        headerMenu
         href={'/'}
       >
-        <Text>{t('web-home:home')}</Text>
+        {t('web-home:home')}
       </ZixLinkButton>
       <ZixLinkButton
-        display="headerMenu"
+        headerMenu
         href={'/customer/shipments'}
       >
-        <Text>{t('web-home:payments')}</Text>
+        {t('web-home:payments')}
       </ZixLinkButton>
       <ZixLinkButton
-        display="headerMenu"
+        headerMenu
         href={'/customer/orders'}
         $lg={{ paddingHorizontal: '$4' }}
       >
-        <Text>  {t('web-home:followers')}</Text>
+        {t('web-home:followers')}
       </ZixLinkButton>
       <ZixLinkButton
-        display="headerMenu"
+        headerMenu
         href={'/jobs'}
         $lg={{ paddingHorizontal: '$4' }}
       >
-        <Text>{t('web-home:works')}</Text>
+        {t('web-home:works')}
       </ZixLinkButton>
     </XStack>
   );
@@ -43,22 +45,22 @@ export function Header() {
   );
   const renderSearch = () => (
     <ZixLinkButton
-      display="headerMenu"
+      headerMenu
       href={'/jobs'}
-      icon={<CustomIcon name={'search'} size="$1" />}
+      icon={<Search size="$1" />}
       $lg={{ paddingHorizontal: '$4' }}
     >
-      <Text>{t('web-home:search')}</Text>
+      {t('web-home:search')}
     </ZixLinkButton>
   );
   const renderCall = () => (
     <ZixLinkButton
-      display="headerMenu"
+      headerMenu
       href={'/contact'}
       icon={<CustomIcon name={'ringing'} size="$1" />}
       $lg={{ paddingHorizontal: '$4' }}
     >
-      <Text>{t('web-home:call')}</Text>
+      {t('web-home:call')}
     </ZixLinkButton>
   );
   const renderSignup = () => (
@@ -66,25 +68,25 @@ export function Header() {
       {
         !isLoggedIn && (
           <ZixLinkButton
-            display="headerMenu"
+            headerMenu
             href={'/auth/login'}
-            icon={<CustomIcon name={'account'} size="$1" />}
+            icon={<UserCircle size="$1" />}
             $lg={{ paddingHorizontal: '$4' }}
           >
-            <Text> {t('web-home:signup')}</Text>
+            {t('web-home:signup')}
           </ZixLinkButton>
         )
       }
       {
         isLoggedIn && (
           <ZixLinkButton
-            display="headerMenu"
+            headerMenu
             href={'/account'}
             onPress={redirectUserToActiveDashboard}
-            icon={<CustomIcon name={'account'} size="$1" />}
+            icon={<UserCircle size="$1" />}
             $lg={{ paddingHorizontal: '$4' }}
           >
-            <Text> {t('web-home:signup')}</Text>
+            {t('web-home:signup')}
           </ZixLinkButton>
         )
       }
@@ -94,7 +96,7 @@ export function Header() {
     <XStack
       $sm={{ display: 'none' }}
       justifyContent="space-between"
-      backgroundColor='$white1'
+      backgroundColor='$color1'
       alignItems="center"
       borderTopWidth={1}
       borderTopColor={'$gray7'}

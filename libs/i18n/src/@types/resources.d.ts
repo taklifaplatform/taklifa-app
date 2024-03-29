@@ -387,7 +387,8 @@ interface Resources {
     "contact-question": "How can we serve you today?",
     "complaint": "Complaint",
     "complain-text": "If there are any problems you encounter, please do not hesitate to contact us",
-    "saudi_arabia": "Saudi Arabia"
+    "saudi_arabia": "Saudi Arabia",
+    "sawaed_logistics": "Sawaed Logistics"
   }
 }
 

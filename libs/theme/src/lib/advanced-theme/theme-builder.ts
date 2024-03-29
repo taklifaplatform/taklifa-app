@@ -100,18 +100,18 @@ const palettes = {
     "hsla(47, 99%, 54%, 0.25)",
     "hsla(47, 99%, 54%, 0.5)",
     "hsla(47, 99%, 54%, 0.75)",
-    "hsla(47, 99%, 54%, 1)",
-    "hsla(48, 100%, 96%, 1)",
-    "hsla(47, 100%, 85%, 1)",
-    "hsla(47, 99%, 54%, 1)",
-    "hsla(47, 99%, 74%, 1)",
-    "hsla(47, 99%, 54%, 1)",
-    "hsla(47, 99%, 54%, 1)",
-    "hsla(47, 99%, 55%, 1)",
-    "hsla(47, 99%, 55%, 1)",
-    "hsla(47, 99%, 55%, 1)",
-    "hsla(202, 76%, 0%, 1)",
-    "hsla(202, 76%, 0%, 1)",
+    "hsla(47, 99%, 54%, 1)", // color1 : background
+    "hsla(48, 100%, 96%, 1)", // color2 : Substle Background
+    "hsla(47, 100%, 85%, 1)", // color3: UI Background
+    "hsla(47, 99%, 54%, 1)", // color4: Hovezr UI Background
+    "hsla(47, 99%, 74%, 1)", // color5: Active UI Background
+    "hsla(47, 99%, 54%, 1)", // color6: Subtle border
+    "hsla(47, 99%, 54%, 1)", // color7: Strong Border
+    "hsla(47, 99%, 55%, 1)", // color8: Hover Border
+    "hsla(47, 99%, 55%, 1)", // color9: Primary
+    "hsla(47, 99%, 55%, 1)", // color10: Hover Primary
+    "hsla(202, 76%, 8%, 1)", // color11: Subtle Text
+    "hsla(202, 76%, 0%, 1)", // color12: Text
     "hsla(0, 0%, 0%, 0.75)",
     "hsla(0, 0%, 0%, 0.5)",
     "hsla(0, 0%, 0%, 0.25)",
@@ -133,7 +133,7 @@ const palettes = {
     "hsla(47, 99%, 51%, 1)",
     "hsla(47, 99%, 50%, 1)",
     "hsla(202, 76%, 0%, 1)",
-    "hsla(202, 76%, 8%, 1)",
+    "hsla(48, 100%, 96%, 1)", // color12: Text
     "hsla(201, 76%, 8%, 0.75)",
     "hsla(201, 76%, 8%, 0.5)",
     "hsla(201, 76%, 8%, 0.25)",
@@ -146,7 +146,7 @@ const palettes = {
     "hsla(160, 60%, 99%, 0.75)",
     "hsla(153, 70%, 99%, 1)",
     "hsla(153, 70%, 93%, 1)",
-    "hsla(153, 70%, 88%, 1)",
+    "hsla(153, 70%, 88%, 1)", 
     "hsla(153, 70%, 82%, 1)",
     "hsla(153, 70%, 77%, 1)",
     "hsla(153, 70%, 72%, 1)",

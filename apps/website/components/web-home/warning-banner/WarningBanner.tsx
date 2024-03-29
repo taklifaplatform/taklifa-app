@@ -1,41 +1,30 @@
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import { useRouter } from 'next/router';
-import { Pressable } from 'react-native';
-import { Image, Stack, Text, XStack, YStack } from 'tamagui';
-import { ZixLinkButton } from '@zix/ui/common';
+import { Button, Image, Stack, Text, Theme, YStack } from 'tamagui';
 
 export function WarningBanner() {
   const router = useRouter();
 
   const renderOptionText = () => (
     <YStack
-      alignItems="flex-end"
+      alignItems="flex-start"
       gap="$2"
       $sm={{
         alignItems: 'center',
         gap: '$1',
       }}
     >
-      <XStack
-        alignItems="flex-end"
-        gap="$6"
-        $md={{ gap: '$2', alignItems: 'center' }}
+      <Text
+        fontWeight="800"
+        fontSize={29}
+        textAlign="center"
+        $xs={{
+          fontSize: 15,
+        }}
       >
-        <Text
-          fontWeight="800"
-          fontSize={20}
-          textAlign="center"
-          $xs={{
-            fontSize: 15,
-          }}
-        >
-          {t('web-home:warningtitle')}
-        </Text>
-        <Pressable onPress={() => router.push('/client')}>
-          <CustomIcon name="large_arrow_right" size="$1" color="$gray10" />
-        </Pressable>
-      </XStack>
+        {t('web-home:warningtitle')}
+      </Text>
       <Text
         fontWeight="400"
         fontSize={12}
@@ -43,7 +32,7 @@ export function WarningBanner() {
         lineHeight={50}
         $sm={{
           fontSize: 10,
-          lineHeight: 25,
+          lineHeight: 20,
           paddingTop: '$1',
           textAlign: 'center',
         }}
@@ -52,6 +41,7 @@ export function WarningBanner() {
       </Text>
     </YStack>
   );
+
   return (
     <YStack
       justifyContent="center"
@@ -87,13 +77,19 @@ export function WarningBanner() {
         }}
       >
         {renderOptionText()}
-        <ZixLinkButton
-          display="warningItem"
-          href={'/client'}
-          iconAfter={<CustomIcon name="large_arrow_right" size="$1" />}
-        >
-          {t('web-home:warningbtn')}
-        </ZixLinkButton>
+        <Theme name='error'>
+          <Button
+            href='/client'
+            backgroundColor='$color9'
+            color='$color1'
+            $sm={{
+              width: '100%',
+            }}
+            iconAfter={(props) => <CustomIcon {...props} name="large_arrow_right" />}
+          >
+            {t('web-home:warningbtn')}
+          </Button>
+        </Theme>
       </Stack>
     </YStack>
   );

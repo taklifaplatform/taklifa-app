@@ -32,7 +32,7 @@ export function FrequentlyQuestions() {
                     flexDirection="row"
                     justifyContent="space-between"
                     borderColor={'transparent'}
-                    backgroundColor={'$gray4'}
+                    backgroundColor={'$color2'}
                     borderRadius={'$4'}
                 >
                     {({ open }) => (
@@ -62,7 +62,7 @@ export function FrequentlyQuestions() {
     );
     return (
         <YStack
-            alignItems="center"
+             alignItems="center"
             justifyContent="center"
             borderRadius="$4"
             marginTop="$10"
@@ -101,10 +101,10 @@ export function FrequentlyQuestions() {
             <ZixInput
                 rightIcon={() => <CustomIcon name="search" size="$1" />}
                 placeholder={t('job:search')}
-                borderColor={'$gray10'}
-                hoverStyle={{ borderColor: '$gray10' }}
+                borderColor={'$color12'}
                 onChangeText={(text) => setSearch(text)}
                 value={search}
+                backgroundColor='transparent'
                 containerProps={{
                     width: '100%',
                 }}

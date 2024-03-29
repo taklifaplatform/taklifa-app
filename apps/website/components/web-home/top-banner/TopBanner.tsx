@@ -1,7 +1,7 @@
 import { useMultiLang } from '@zix/i18n';
 import { t } from 'i18next';
-import { Button, Image, Stack, Text, Theme } from 'tamagui';
-
+import { Button, Image, Stack, Text, Theme, XStack } from 'tamagui';
+import { ZixLinkButton } from '@zix/ui/common';
 /**
  * /customer
  * /solo-driver
@@ -15,12 +15,15 @@ export function TopBanner() {
     <Image
       alt="Banner"
       source={{
-        uri: `/images/banner-1-${activeLang}.png`,
+        uri: `/images/Rectangle-1-${activeLang}.png`,
       }}
       width="100%"
       borderRadius='$4'
       resizeMode="cover"
-      height={400}
+      height={632}
+      $sm={{
+        height: 400,
+      }}
     />
   );
 
@@ -29,17 +32,12 @@ export function TopBanner() {
       <Stack
         flexDirection="column"
         flexWrap="wrap"
-        paddingHorizontal="$5"
-        $sm={{
-          paddingHorizontal: '$2',
-        }}
       >
         <Text
           fontWeight="800"
           fontSize={36}
           paddingVertical="$4"
           textAlign="center"
-
           $sm={{
             fontSize: 20,
           }}
@@ -59,19 +57,48 @@ export function TopBanner() {
       </Stack>
     </>
   );
-
   const renderButton = () => (
-    <Stack
-      flexDirection="row"
-      flexWrap="wrap"
+    <XStack
+      theme={'accent'}
       justifyContent="center"
       gap="$6"
-      padding="$5"
-      $sm={{ gap: '$3', padding: '$3', flexDirection: 'column', width: '100%', flexGrow: 1 }}
+      paddingVertical="$6"
+      $sm={{
+        gap: '$4',
+        paddingVertical: '$4',
+      }}
     >
-      <Button size="$5" themeInverse> {t('web-home:company')}</Button>
-      <Button size="$5" themeInverse variant="outlined" borderColor="$color1"> {t('web-home:singlecarrier')}</Button>
-    </Stack>
+      <ZixLinkButton
+        linkItem
+        href={'/app'}
+        borderRadius='$4'
+        borderWidth={1}
+        borderColor='$color12'
+        width={150}
+        justifyContent="center"
+        $sm={{
+          width: 120,
+        }}
+      >
+        {t('web-home:singlecarrier')}
+      </ZixLinkButton>
+      <ZixLinkButton
+        linkItem
+        href={'/app'}
+        borderRadius='$4'
+        borderWidth={1}
+        borderColor='$color12'
+        width={150}
+        justifyContent="center"
+        backgroundColor='$color12'
+        color='$color3'
+        $sm={{
+          width: 120,
+        }}
+      >
+        {t('web-home:company')}
+      </ZixLinkButton>
+    </XStack>
   );
 
   const renderContainer = () => (
