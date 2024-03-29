@@ -1,10 +1,10 @@
 import { X } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
-import { DriverTransformer, DriversService } from '@zix/api';
+import { CompaniesService, DriverTransformer, DriversService } from '@zix/api';
 import { UserCard } from '@zix/features/users';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader } from '@zix/ui/layouts';
-import { MapDriverMarker } from '@zix/ui/sawaeed';
+import { MapCompanyMarker, MapDriverMarker } from '@zix/ui/sawaeed';
 import { getDistance } from '@zix/utils';
 import { useMemo, useRef, useState } from 'react';
 import { Dimensions } from 'react-native';
@@ -42,6 +42,15 @@ export function HomeScreen() {
       });
     },
     queryKey: ['DriversService.fetchAllDrivers', search],
+  });
+  const companiesQuery = useQuery({
+    queryFn() {
+      return CompaniesService.fetchAllCompanies({
+        perPage: 50,
+        search,
+      });
+    },
+    queryKey: ['CompaniesService.fetchAllCompanies', search],
   });
   const [selectedDriver, setSelectedDriver] = useState<DriverTransformer>();
 
@@ -110,19 +119,33 @@ export function HomeScreen() {
     });
   }
 
+  const renderMapDrivers = () => driversList.map((driver, index) => (
+    <MapDriverMarker
+      key={`marker-${index}`}
+      driver={driver}
+      isSelected={selectedDriver?.id === driver.id}
+      onPress={() => {
+        onMarkerPress(driver, index);
+      }}
+    />
+  ))
+
+  const renderMapCompanies = () => companiesQuery.data?.data?.map((company, index) => (
+    <MapCompanyMarker
+      key={`marker-${index}`}
+      company={company}
+    // isSelected={selectedDriver?.id === driver.id}
+    // onPress={() => {
+    //   onMarkerPress(driver, index);
+    // }}
+    />
+  ))
+
   const renderMap = () =>
     showMap && (
       <MapView ref={mapRef} style={{ flex: 1 }} initialCamera={initialCamera}>
-        {driversList.map((driver, index) => (
-          <MapDriverMarker
-            key={`marker-${index}`}
-            driver={driver}
-            isSelected={selectedDriver?.id === driver.id}
-            onPress={() => {
-              onMarkerPress(driver, index);
-            }}
-          />
-        ))}
+        {renderMapDrivers()}
+        {renderMapCompanies()}
       </MapView>
     );
   //List
@@ -139,7 +162,7 @@ export function HomeScreen() {
             user={item}
             marginHorizontal="$4"
             marginVertical="$2"
-            // backgroundColor='$color2'
+          // backgroundColor='$color2'
           />
         )}
       />

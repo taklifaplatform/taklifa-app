@@ -55,10 +55,10 @@ export const UserCard: React.FC<UserCardProps> = ({
           {activeCompany && (
             <Image
               source={{
-                uri: activeCompany?.logo?.url,
+                uri: activeCompany?.logo?.original_url,
               }}
-              width={75}
-              height={12}
+              width='$9'
+              height='$4'
               resizeMode="cover"
             />
           )}
