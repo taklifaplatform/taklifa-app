@@ -1,8 +1,9 @@
-import { Brush, CarFront, TextCursorInput } from '@tamagui/lucide-icons';
+import { Brush, CarFront, TextCursorInput, User } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
-import { CompanyTransformer, CompanyVehiclesService } from '@zix/api';
-import { useAuth } from '@zix/services/auth';
-import { MediaFile } from '@zix/ui/common';
+import { CompanyMembersService, CompanyTransformer } from '@zix/api';
+import { USER_ROLES, useAuth } from '@zix/services/auth';
+import { MediaFile, UserAvatar } from '@zix/ui/common';
+import { CustomIcon } from '@zix/ui/icons';
 import { ZixVariantOptionsWidget, ZixWidgetContainer } from '@zix/ui/widgets';
 import React from 'react';
 import { FlatList } from 'react-native';
@@ -10,59 +11,55 @@ import { useRouter } from 'solito/router';
 
 import { XStack, YStack } from 'tamagui';
 
-export type CompanyVehiclesTabProps = {
+export type CompanyDriversTabProps = {
   company: CompanyTransformer
 }
 
-export const CompanyVehiclesTab: React.FC<CompanyVehiclesTabProps> = ({
+export const CompanyDriversTab: React.FC<CompanyDriversTabProps> = ({
   company
 }) => {
   const router = useRouter()
   const { getUrlPrefix } = useAuth()
 
   const { data } = useQuery({
-    queryFn: () => CompanyVehiclesService.list({
+    queryFn: () => CompanyMembersService.list({
       company: company.id as string,
+      role: USER_ROLES.company_driver,
     }),
-    queryKey: ['CompanyVehiclesService.list', company.id],
+    queryKey: ['CompanyMembersService.list', company.id],
   })
 
   return (
     <YStack gap='$2'>
-      <ZixWidgetContainer label='Vehicles'>
+      <ZixWidgetContainer label='Drivers'>
         <FlatList
           data={data?.data || []}
           renderItem={({ item, index }) => (
             <XStack
               onPress={() => {
-                router.push(`${getUrlPrefix}/companies/${company.id}/vehicles/${item.id}`)
+                router.push(`${getUrlPrefix}/companies/${company.id}/employees/${item.id}`)
               }}
               key={`${item.id}-${index}`}
-              gap='$2'
+              gap='$4'
               padding='$3'
               marginBottom='$4'
               borderRadius='$4'
               backgroundColor='$color2'
               alignItems='center'
             >
-              <MediaFile media={item.image} width='$10' height='$6' borderRadius='$4' heightQuality />
+              <UserAvatar user={item.user} />
               <ZixVariantOptionsWidget
                 optionVariant="location"
                 variant="location"
                 options={[
                   {
-                    icons: <CarFront size="$1" color='$color11' />,
-                    value: item.name ?? 'N/A',
+                    icons: <User size="$1" color='$color11' />,
+                    value: item.user?.name ?? 'N/A',
                   },
                   {
-                    icons: <TextCursorInput size="$1" color='$color11' />,
-                    value: item.plate_number ?? 'N/A',
+                    icons: <CustomIcon name='half_star' size="$1" color='$color11' />,
+                    value: `${item.user?.rating_stats?.score} (${item.user?.rating_stats?.count})`,
                   },
-                  {
-                    icons: <Brush size="$1" color='$color11' />,
-                    value: item.color ?? 'N/A',
-                  },
-
                 ]}
               />
 
@@ -75,4 +72,4 @@ export const CompanyVehiclesTab: React.FC<CompanyVehiclesTabProps> = ({
   );
 }
 
-export default CompanyVehiclesTab;
+export default CompanyDriversTab;

@@ -5,6 +5,7 @@ import { ZixTab } from '@zix/ui/common';
 import { Text, View } from 'tamagui';
 import AboutCompanyTab from '../about-company-tab/about-company-tab';
 import CompanyVehiclesTab from '../company-vehicles-tab/company-vehicles-tab';
+import CompanyDriversTab from '../company-drivers-tab/company-drivers-tab';
 
 export type ProfileTabsProps = {
   company: CompanyTransformer
@@ -34,14 +35,7 @@ export const CompanyProfileTabs: React.FC<ProfileTabsProps> = ({
     _tabs.push({
       key: 'drivers',
       title: 'Drivers',
-      content: (
-        <View>
-          <Text>
-            Hello
-          </Text>
-        </View>
-      )
-      // content: <UserReviewsTab user={user} />
+      content: <CompanyDriversTab company={company} />
     })
 
     _tabs.push({
