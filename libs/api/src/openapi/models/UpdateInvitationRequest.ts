@@ -6,5 +6,7 @@ export type UpdateInvitationRequest = {
     name?: string;
     phone_number?: string;
     email?: string;
+    message?: string;
+    role?: string;
 };
 

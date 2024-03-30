@@ -6,8 +6,8 @@ import { TouchableOpacity } from 'react-native';
 import { useRouter } from 'solito/router';
 import { YStack } from 'tamagui';
 import { ManageTeamFabButton } from '../../components/manage-team-fab-button/manage-team-fab-button';
-import MembersListScreen from '../manage/members/members-list-screen/members-list-screen';
-import VehiclesListScreen from '../manage/vehicles/vehicles-list-screen/vehicles-list-screen';
+import EmployeesListScreen from '../employees/employees-list-screen/employees-list-screen';
+import VehiclesListScreen from '../vehicles/vehicles-list-screen/vehicles-list-screen';
 
 
 export function ManageCompanyDataScreen() {
@@ -23,7 +23,7 @@ export function ManageCompanyDataScreen() {
             key: 'managers',
             title: 'Managers',
             content: (
-              <MembersListScreen
+              <EmployeesListScreen
                 memberRole="company_manager"
                 company_id={user.active_company.id}
               />
@@ -33,7 +33,7 @@ export function ManageCompanyDataScreen() {
             key: 'drivers',
             title: 'Drivers',
             content: (
-              <MembersListScreen
+              <EmployeesListScreen
                 memberRole="company_driver"
                 company_id={user.active_company.id}
               />

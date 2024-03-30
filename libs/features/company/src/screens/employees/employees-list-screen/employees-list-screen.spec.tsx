@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import UpdateMemberScreen from './update-member-screen';
+import EmployeesListScreen from './employees-list-screen';
 
-describe('UpdateMemberScreen', () => {
+describe('EmployeesListScreen', () => {
   it('should render successfully', () => {
-    const { root } = render(<UpdateMemberScreen />);
+    const { root } = render(<EmployeesListScreen />);
     expect(root).toBeTruthy();
   });
 });

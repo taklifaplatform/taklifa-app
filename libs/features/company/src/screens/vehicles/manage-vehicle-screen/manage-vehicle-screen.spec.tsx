@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import CreateVehicleScreen from './create-vehicle-screen';
+import ManageVehicleScreen from './manage-vehicle-screen';
 
-describe('CreateVehicleScreen', () => {
+describe('ManageVehicleScreen', () => {
   it('should render successfully', () => {
-    const { root } = render(<CreateVehicleScreen />);
+    const { root } = render(<ManageVehicleScreen />);
     expect(root).toBeTruthy();
   });
 });

@@ -1,39 +1,40 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { CompanyInvitationsService, CompanyMembersService } from '@zix/api';
-import { COMPANY_ROLE_TYPES } from '@zix/services/auth';
+import { COMPANY_ROLE_TYPES, useAuth } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import { useMemo } from 'react';
 import { SectionList } from 'react-native';
 import { H4, Stack, useStyle } from 'tamagui';
-import { TeamMemberInvitationCard } from '../../../../components/team-member-invitation-card/team-member-invitation-card';
-import { TeamMemberCard } from '../../../../components/team-member-card/team-member-card';
+import { TeamMemberCard } from '../../../components/team-member-card/team-member-card';
+import { TeamMemberInvitationCard } from '../../../components/team-member-invitation-card/team-member-invitation-card';
 
-export interface MembersListScreenProps {
+export interface EmployeesListScreenProps {
   memberRole: COMPANY_ROLE_TYPES;
-  company_id: string;
 }
 
-export function MembersListScreen({
+export function EmployeesListScreen({
   memberRole,
-  company_id,
-}: MembersListScreenProps) {
+}: EmployeesListScreenProps) {
+
+  const { user } = useAuth()
+
   const membersQuery = useQuery({
     queryFn: () =>
       CompanyMembersService.list({
-        company: company_id,
+        company: user?.active_company?.id || '',
         role: memberRole,
       }),
-    queryKey: ['CompanyMembersService.list', company_id, memberRole],
+    queryKey: ['CompanyMembersService.list', user?.active_company?.id, memberRole],
   });
 
   const invitationsQuery = useQuery({
     queryFn: () =>
       CompanyInvitationsService.list({
-        company: company_id,
+        company: user?.active_company?.id || '',
         role: memberRole,
       }),
-    queryKey: ['CompanyInvitationsService.list', company_id, memberRole],
+    queryKey: ['CompanyInvitationsService.list', user?.active_company?.id, memberRole],
   });
 
   const sectionListStyle = useStyle({
@@ -85,4 +86,4 @@ export function MembersListScreen({
   );
 }
 
-export default MembersListScreen;
+export default EmployeesListScreen;
