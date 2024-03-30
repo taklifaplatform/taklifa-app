@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { MediaTransformer } from '@zix/api'
-import { Image, ImageProps } from 'react-native'
+import { Image, ImageProps } from 'tamagui'
 
 export interface MediaFileProps extends Partial<ImageProps> {
-  media: MediaTransformer
+  media?: MediaTransformer
   heightQuality?: boolean
   placeholder?: 'image' | 'avatar'
 }
@@ -39,7 +39,7 @@ export const MediaFile: React.FC<MediaFileProps> = (props) => {
 
   return (
     <Image
-      resizeMode="cover"
+      resizeMode="contain"
       alt={String(media.id)}
       {...props}
       source={{ uri: heightQuality && media.original_url ? media.original_url : media.url }}

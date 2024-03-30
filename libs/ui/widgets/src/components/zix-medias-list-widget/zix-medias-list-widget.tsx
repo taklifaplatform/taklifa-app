@@ -3,13 +3,13 @@ import { MediaTransformer } from '@zix/api';
 import { useMultiLang } from '@zix/i18n';
 import React from 'react';
 import { FlatList } from 'react-native';
-import { Image, ThemeableStackProps, View } from 'tamagui';
+import { Image, SizeTokens, ThemeableStackProps, View } from 'tamagui';
 
 
 export type ZixMediasListWidgetProps = ThemeableStackProps & {
   medias?: MediaTransformer[];
-  imageWidth?: number;
-  imageHeight?: number;
+  imageWidth?: SizeTokens;
+  imageHeight?: SizeTokens;
 }
 
 export const ZixMediasListWidget: React.FC<ZixMediasListWidgetProps> = ({

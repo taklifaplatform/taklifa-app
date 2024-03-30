@@ -7,7 +7,13 @@ import type { MediaTransformer } from './MediaTransformer';
 export type CompanyTransformer = {
     id?: string;
     name?: string;
+    about?: string;
+    vehicles_count?: number;
     logo?: MediaTransformer;
     location?: LocationTransformer;
+    rating_stats?: {
+        score?: number;
+        count?: number;
+    };
 };
 

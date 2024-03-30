@@ -25,7 +25,6 @@ const ZixVariantOptionsWidgetStack = styled(Stack, {
         flexWrap: "wrap",
         marginRight: "$3",
         marginTop: "$3",
-        gap: "$3",
         $sm: {
           width: '100%',
           flexDirection: 'column',
@@ -37,7 +36,6 @@ const ZixVariantOptionsWidgetStack = styled(Stack, {
       true: {
         width: '100%',
         flexDirection: "column",
-        gap: "$3",
       }
     },
     card: {
@@ -45,7 +43,6 @@ const ZixVariantOptionsWidgetStack = styled(Stack, {
         width: '100%',
         flexDirection: "row",
         flexWrap: "wrap",
-        gap: "$3",
       }
     }
   }
@@ -89,15 +86,20 @@ export const ZixVariantOptionsWidget: React.FC<
 > = ({ icon, label, options, labelBold, optionVariant, variant, ...props }) => {
   return (
     <YStack width={'100%'}>
-      <Stack flexDirection='row' flexWrap='wrap' gap="$3" alignItems="center">
-        {icon}
-        <ZixVariantOptionsWidgetText
-          {...(variant ? { [variant]: true } : {})}
-        >
-          {label}
-        </ZixVariantOptionsWidgetText>
-      </Stack>
+      {
+        !!label && (
+          <Stack flexDirection='row' flexWrap='wrap' gap="$3" alignItems="center">
+            {icon}
+            <ZixVariantOptionsWidgetText
+              {...(variant ? { [variant]: true } : {})}
+            >
+              {label}
+            </ZixVariantOptionsWidgetText>
+          </Stack>
+        )
+      }
       <ZixVariantOptionsWidgetStack
+        gap="$2"
         {...(variant ? { [variant]: true } : {})}
       >
         {options.map((option, index) => (

@@ -12,5 +12,9 @@ export type CompanyUserTransformer = {
     latest_activity?: string;
     status?: string;
     avatar?: MediaTransformer;
+    rating_stats?: {
+        score?: number;
+        count?: number;
+    };
 };
 

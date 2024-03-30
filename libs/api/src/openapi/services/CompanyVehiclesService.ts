@@ -2,36 +2,13 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { CompanyMemberTransformer } from '../models/CompanyMemberTransformer';
+import type { VehicleTransformer } from '../models/VehicleTransformer';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-export class CompanyMembersService {
+export class CompanyVehiclesService {
     /**
-     * Delete member of a company
-     * @returns any Successful response
-     * @throws ApiError
-     */
-    public static delete({
-        company,
-        member,
-    }: {
-        company: string,
-        member: string,
-    }): CancelablePromise<{
-        data?: CompanyMemberTransformer;
-    }> {
-        return __request(OpenAPI, {
-            method: 'DELETE',
-            url: '/api/admin/companies/{company}/members/{member}',
-            path: {
-                'company': company,
-                'member': member,
-            },
-        });
-    }
-    /**
-     * Fetch all members of a company
+     * Fetch all vehicles of a company
      * @returns any Successful response
      * @throws ApiError
      */
@@ -40,8 +17,6 @@ export class CompanyMembersService {
         page,
         perPage,
         search,
-        status,
-        role,
     }: {
         company: string,
         /**
@@ -53,10 +28,8 @@ export class CompanyMembersService {
          */
         perPage?: number,
         search?: string,
-        status?: 'online' | 'busy' | 'offline',
-        role?: 'company_driver' | 'company_manager',
     }): CancelablePromise<{
-        data?: Array<CompanyMemberTransformer>;
+        data?: Array<VehicleTransformer>;
         links?: {
             first?: string;
             last?: string;
@@ -80,7 +53,7 @@ export class CompanyMembersService {
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/companies/{company}/members',
+            url: '/api/companies/{company}/vehicles',
             path: {
                 'company': company,
             },
@@ -88,31 +61,29 @@ export class CompanyMembersService {
                 'page': page,
                 'per_page': perPage,
                 'search': search,
-                'status': status,
-                'role': role,
             },
         });
     }
     /**
-     * Retrieve member of a company
+     * Retrieve vehicle of a company
      * @returns any Successful response
      * @throws ApiError
      */
     public static retrieve({
         company,
-        member,
+        vehicle,
     }: {
         company: string,
-        member: string,
+        vehicle: string,
     }): CancelablePromise<{
-        data?: CompanyMemberTransformer;
+        data?: VehicleTransformer;
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/companies/{company}/members/{member}',
+            url: '/api/companies/{company}/vehicles/{vehicle}',
             path: {
                 'company': company,
-                'member': member,
+                'vehicle': vehicle,
             },
         });
     }
