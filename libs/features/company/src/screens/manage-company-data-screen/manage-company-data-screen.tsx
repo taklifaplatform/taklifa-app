@@ -13,6 +13,7 @@ import VehiclesListScreen from '../vehicles/vehicles-list-screen/vehicles-list-s
 
 export function ManageCompanyDataScreen() {
   const router = useRouter()
+  const { getUrlPrefix } = useAuth()
 
   const [search, setSearch] = useState<string>()
 
@@ -65,7 +66,7 @@ export function ManageCompanyDataScreen() {
         }}
         headerRight={() => (
           <TouchableOpacity
-            onPress={() => router.push(`/company/manage/settings`)}
+            onPress={() => router.push(`${getUrlPrefix}/company/settings`)}
           >
             <Cog size="$2" />
           </TouchableOpacity>
