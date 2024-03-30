@@ -1,4 +1,4 @@
-import { Bell, PlusSquare, ScanBarcode, Search } from '@tamagui/lucide-icons';
+import { Bell, PlusSquare, Search } from '@tamagui/lucide-icons';
 import { useAuth } from '@zix/services/auth';
 import { UserAvatar } from '@zix/ui/common';
 import { ZixInput, ZixInputProps } from '@zix/ui/forms';
@@ -41,9 +41,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   const renderSearchBar = () => showSearchBar && (
     <View theme='light' paddingHorizontal="$4" paddingVertical='$2' $gtMd={{ flex: 1 }}>
       <ZixInput
-        height="$4"
         leftIcon={() => <Search size="$1.5" />}
-        rightIcon={() => <ScanBarcode size="$1.5" />}
         placeholder={'Search here'}
         {...searchProps}
       />

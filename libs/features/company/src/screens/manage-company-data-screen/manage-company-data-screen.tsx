@@ -2,6 +2,7 @@ import { Cog } from '@tamagui/lucide-icons';
 import { useAuth } from '@zix/services/auth';
 import { ZixTab } from '@zix/ui/common';
 import { AppHeader } from '@zix/ui/layouts';
+import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useRouter } from 'solito/router';
 import { YStack } from 'tamagui';
@@ -11,10 +12,11 @@ import VehiclesListScreen from '../vehicles/vehicles-list-screen/vehicles-list-s
 
 
 export function ManageCompanyDataScreen() {
-  const { user } = useAuth();
   const router = useRouter()
 
-  const renderHorizonTabs = () => user?.active_company?.id && (
+  const [search, setSearch] = useState<string>()
+
+  const renderHorizonTabs = () => (
     (
       <ZixTab
         defaultActiveTab='managers'
@@ -25,7 +27,7 @@ export function ManageCompanyDataScreen() {
             content: (
               <EmployeesListScreen
                 memberRole="company_manager"
-                company_id={user.active_company.id}
+                search={search}
               />
             )
           },
@@ -35,7 +37,7 @@ export function ManageCompanyDataScreen() {
             content: (
               <EmployeesListScreen
                 memberRole="company_driver"
-                company_id={user.active_company.id}
+                search={search}
               />
             )
           },
@@ -56,6 +58,11 @@ export function ManageCompanyDataScreen() {
       <AppHeader
         showBackButton
         title="Manage Team"
+        showSearchBar
+        searchProps={{
+          value: search,
+          onChangeText: setSearch
+        }}
         headerRight={() => (
           <TouchableOpacity
             onPress={() => router.push(`/company/manage/settings`)}

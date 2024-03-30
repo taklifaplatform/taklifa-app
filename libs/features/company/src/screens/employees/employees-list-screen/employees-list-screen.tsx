@@ -11,10 +11,12 @@ import { TeamMemberInvitationCard } from '../../../components/team-member-invita
 
 export interface EmployeesListScreenProps {
   memberRole: COMPANY_ROLE_TYPES;
+  search?: string;
 }
 
 export function EmployeesListScreen({
   memberRole,
+  search
 }: EmployeesListScreenProps) {
 
   const { user } = useAuth()
@@ -24,8 +26,9 @@ export function EmployeesListScreen({
       CompanyMembersService.list({
         company: user?.active_company?.id || '',
         role: memberRole,
+        search
       }),
-    queryKey: ['CompanyMembersService.list', user?.active_company?.id, memberRole],
+    queryKey: ['CompanyMembersService.list', user?.active_company?.id, memberRole, `-${search}`],
   });
 
   const invitationsQuery = useQuery({
@@ -33,8 +36,9 @@ export function EmployeesListScreen({
       CompanyInvitationsService.list({
         company: user?.active_company?.id || '',
         role: memberRole,
+        search
       }),
-    queryKey: ['CompanyInvitationsService.list', user?.active_company?.id, memberRole],
+    queryKey: ['CompanyInvitationsService.list', user?.active_company?.id, memberRole, `-${search}`],
   });
 
   const sectionListStyle = useStyle({
