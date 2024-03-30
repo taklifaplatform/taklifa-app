@@ -4,6 +4,7 @@ import React, { useMemo } from 'react';
 import { ZixTab } from '@zix/ui/common';
 import { Text, View } from 'tamagui';
 import AboutCompanyTab from '../about-company-tab/about-company-tab';
+import CompanyVehiclesTab from '../company-vehicles-tab/company-vehicles-tab';
 
 export type ProfileTabsProps = {
   company: CompanyTransformer
@@ -26,20 +27,13 @@ export const CompanyProfileTabs: React.FC<ProfileTabsProps> = ({
       _tabs.push({
         key: 'vehicles',
         title: 'Vehicles',
-        content: (
-          <View>
-            <Text>
-              Hello
-            </Text>
-          </View>
-        )
-        // content: <UserVehicleTab user={user} />
+        content: <CompanyVehiclesTab company={company} />
       })
     }
 
     _tabs.push({
       key: 'drivers',
-      title: 'Derivers',
+      title: 'Drivers',
       content: (
         <View>
           <Text>

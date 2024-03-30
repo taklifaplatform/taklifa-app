@@ -3,7 +3,7 @@ import { Stack, Text, ThemeableStackProps, styled } from 'tamagui';
 
 export type IVariantOption = {
   icons: React.ReactNode;
-  name: string;
+  name?: string;
   value: string;
   theme?: string
 };
@@ -51,7 +51,7 @@ const VariantText = styled(Text, {
       true: {
         fontSize: 15,
         fontWeight: '600',
-        color: '$color9',
+        color: '$color12',
         $sm: {
           fontSize: 15,
           fontWeight: '400',
@@ -64,7 +64,7 @@ const VariantText = styled(Text, {
       true: {
         fontSize: 12,
         fontWeight: '600',
-        color: '$color9',
+        color: '$color12',
         $sm: {
           fontWeight: '400',
         },
@@ -74,7 +74,7 @@ const VariantText = styled(Text, {
       true: {
         fontSize: 12,
         fontWeight: '600',
-        color: '$color9',
+        color: '$color12',
         $sm: {
           fontSize: 10,
           fontWeight: '400',
@@ -90,7 +90,7 @@ const VariantValueText = styled(Text, {
       true: {
         fontSize: 15,
         fontWeight: '600',
-        color: '$color9',
+        color: '$color12',
         $sm: {
           width: 220,
           textAlign: 'left',
@@ -104,14 +104,14 @@ const VariantValueText = styled(Text, {
       true: {
         fontSize: 12,
         fontWeight: '600',
-        color:'$color9',
+        color: '$color12',
       },
     },
     location: {
       true: {
         fontSize: 12,
         fontWeight: '600',
-        color:'$color9',
+        color: '$color12',
         $sm: {
           fontSize: 10,
           fontWeight: '600',
@@ -135,12 +135,16 @@ export const VariantOption: React.FC<VariantOptionProps> = ({
       {...(variant ? { [variant]: true } : {})}
     >
       {icons}
-      <VariantText
-        {...(variant ? { [variant]: true } : {})}
+      {
+        !!name && (
+          <VariantText
+            {...(variant ? { [variant]: true } : {})}
 
-      >
-        {name}
-      </VariantText>
+          >
+            {name}
+          </VariantText>
+        )
+      }
       <VariantValueText
         {...(variant ? { [variant]: true } : {})}
 

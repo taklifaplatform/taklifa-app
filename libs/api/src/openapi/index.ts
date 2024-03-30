@@ -58,6 +58,7 @@ export type { ListChatUsersQueryRequest } from './models/ListChatUsersQueryReque
 export type { ListCitiesQueryRequest } from './models/ListCitiesQueryRequest';
 export type { ListCompanyMembersQueryRequest } from './models/ListCompanyMembersQueryRequest';
 export type { ListCompanyQueryRequest } from './models/ListCompanyQueryRequest';
+export type { ListCompanyVehiclesQueryRequest } from './models/ListCompanyVehiclesQueryRequest';
 export type { ListCountriesQueryRequest } from './models/ListCountriesQueryRequest';
 export type { ListDriversQueryRequest } from './models/ListDriversQueryRequest';
 export type { ListInvitationQueryRequest } from './models/ListInvitationQueryRequest';
@@ -162,6 +163,7 @@ export { CompaniesService } from './services/CompaniesService';
 export { CompanyAdminService } from './services/CompanyAdminService';
 export { CompanyInvitationsService } from './services/CompanyInvitationsService';
 export { CompanyMembersService } from './services/CompanyMembersService';
+export { CompanyVehiclesService } from './services/CompanyVehiclesService';
 export { DriversService } from './services/DriversService';
 export { FaqsService } from './services/FaqsService';
 export { GeographyService } from './services/GeographyService';

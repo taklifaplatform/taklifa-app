@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { MediaTransformer } from '@zix/api'
-import { Image, ImageProps } from 'react-native'
+import { Image, ImageProps } from 'tamagui'
 
 export interface MediaFileProps extends Partial<ImageProps> {
-  media: MediaTransformer
+  media?: MediaTransformer
   heightQuality?: boolean
   placeholder?: 'image' | 'avatar'
 }
