@@ -15,7 +15,7 @@ export function VehiclesListScreen() {
   const { user, getUrlPrefix } = useAuth()
   const router = useRouter()
 
-  const { data } = useQuery({
+  const { data, refetch, isLoading } = useQuery({
     queryFn: () => CompanyVehiclesService.list({
       company: user?.active_company?.id as string,
     }),
@@ -62,6 +62,8 @@ export function VehiclesListScreen() {
 
   return (
     <FlatList
+      refreshing={isLoading}
+      onRefresh={refetch}
       style={{ flex: 1 }}
       data={data?.data || []}
       renderItem={renderItem}

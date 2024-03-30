@@ -57,8 +57,7 @@ export const ManageTeamFabButton: React.FC = () => {
           icon: <CarFront size="$2" color="$color10" />,
           onPress: () => {
             actionSheetRef.current?.close();
-            alert('UNDER DEVELOPMENT');
-            // router.push(`/company/admin/vehicles/create`);
+            router.push(`${getUrlPrefix}/company/vehicles/create`);
           },
         },
       ]}
