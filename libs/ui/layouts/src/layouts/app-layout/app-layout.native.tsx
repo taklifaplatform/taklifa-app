@@ -51,7 +51,7 @@ export const AppLayout = () => {
         }}
       />
       <Tabs.Screen
-        name="org"
+        name="company"
         options={COMPANY_ROLES.includes(activeRole) ? {
           title: t('navigation:company-dashboard.data'),
           tabBarIcon: ({ size, color }) => (
