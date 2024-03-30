@@ -1,14 +1,10 @@
-import { ManageTeamScreen } from '@zix/features/company';
-import { AppHeader } from '@zix/ui/layouts';
+import { ManageCompanyDataScreen } from '@zix/features/company';
 import { AppLayout } from '@zix/ui/layouts';
 import { NextPageWithLayout } from '../../_app';
 
 export const Page: NextPageWithLayout = () => {
   return (
-    <>
-      <AppHeader showBackButton title="Manage Team" />
-      <ManageTeamScreen />
-    </>
+    <ManageCompanyDataScreen />
   );
 };
 

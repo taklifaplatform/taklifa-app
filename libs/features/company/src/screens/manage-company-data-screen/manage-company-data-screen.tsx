@@ -5,12 +5,12 @@ import { AppHeader } from '@zix/ui/layouts';
 import { TouchableOpacity } from 'react-native';
 import { useRouter } from 'solito/router';
 import { YStack } from 'tamagui';
-import ManageTeamFabButton from '../../../components/manage-team-fab-button/manage-team-fab-button';
-import MembersListScreen from '../members/members-list-screen/members-list-screen';
-import VehiclesListScreen from '../vehicles/vehicles-list-screen/vehicles-list-screen';
+import { ManageTeamFabButton } from '../../components/manage-team-fab-button/manage-team-fab-button';
+import MembersListScreen from '../manage/members/members-list-screen/members-list-screen';
+import VehiclesListScreen from '../manage/vehicles/vehicles-list-screen/vehicles-list-screen';
 
 
-export function ManageTeamScreen() {
+export function ManageCompanyDataScreen() {
   const { user } = useAuth();
   const router = useRouter()
 
@@ -73,4 +73,4 @@ export function ManageTeamScreen() {
   );
 }
 
-export default ManageTeamScreen;
+export default ManageCompanyDataScreen;
