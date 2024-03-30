@@ -1,14 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { CompanyInvitationsService, CompanyMembersService } from '@zix/api';
-import { H4, Stack, Text, YStack, useStyle } from 'tamagui';
+import { COMPANY_ROLE_TYPES } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
+import { useMemo } from 'react';
 import { SectionList } from 'react-native';
-import TeamMemberCard from '../../../../components/team-member-card/team-member-card';
-import TeamMemberInvitationCard from '../../../../components/team-member-invitation-card/team-member-invitation-card';
+import { H4, Stack, useStyle } from 'tamagui';
+import { TeamMemberInvitationCard } from '../../../../components/team-member-invitation-card/team-member-invitation-card';
+import { TeamMemberCard } from '../../../../components/team-member-card/team-member-card';
 
 export interface MembersListScreenProps {
-  memberRole: 'company_manager' | 'company_driver';
+  memberRole: COMPANY_ROLE_TYPES;
   company_id: string;
 }
 
@@ -36,60 +38,49 @@ export function MembersListScreen({
 
   const sectionListStyle = useStyle({
     flex: 1,
-    paddingHorizontal: '$4',
+    paddingHorizontal: '$2',
   });
+
+  const sections = useMemo(() => {
+    const _sections = []
+
+    if (membersQuery?.data?.data) {
+      _sections.push({
+        key: 'Members',
+        data: membersQuery?.data?.data || [],
+        renderItem: ({ item, index }) => <TeamMemberCard key={`${item.id}-${index}`} member={item} />,
+      })
+    }
+
+    if (invitationsQuery?.data?.data) {
+      _sections.push({
+        key: 'invitation',
+        data: invitationsQuery?.data?.data || [],
+        renderItem: ({ item, index }) => (
+          <TeamMemberInvitationCard key={`${item.id}-${index}`} invitation={item} />
+        ),
+      })
+    }
+
+    return _sections
+  }, [membersQuery?.data?.data, invitationsQuery?.data?.data])
 
   return (
     <SectionList
       style={sectionListStyle as any}
-      refreshing={invitationsQuery?.isLoading || membersQuery?.isLoading}
+      refreshing={membersQuery?.isLoading}
       onRefresh={() => {
         membersQuery?.refetch();
         invitationsQuery?.refetch();
       }}
-      onEndReached={() => {
-        // membersQuery?.ge()
-        // invitationsQuery?.fetchNextPage()
-      }}
-      sections={[
-        {
-          key: 'Members',
-          data: membersQuery?.data?.data || [],
-          renderItem: ({ item }) => <TeamMemberCard member={item} />,
-        },
-        {
-          key: 'invitation',
-          data: invitationsQuery?.data?.data || [],
-          renderItem: ({ item }) => (
-            <TeamMemberInvitationCard invitation={item} />
-          ),
-        },
-      ]}
-      renderSectionHeader={({ section: { key, data } }) => {
-        return (
-          <YStack
-            backgroundColor="$background"
-            width={'100%'}
-            height={'$4'}
-            justifyContent={'center'}
-          >
-            <Text fontSize="$6" fontWeight="800">
-              {key === 'Members' ? 'Members' : 'Invitations'}
-            </Text>
-          </YStack>
-        );
-      }}
-      renderSectionFooter={({ section: { key, data } }) => {
-        if (data.length) {
-          return null;
-        }
-        return (
-          <Stack flex={1} alignItems="center" marginBottom="$6">
-            <CustomIcon name="empty_data" size="$20" color={'#757575'} />
-            <H4>No members yet</H4>
-          </Stack>
-        );
-      }}
+      sections={sections}
+
+      ListEmptyComponent={() => (
+        <Stack flex={1} alignItems="center" marginBottom="$6">
+          <CustomIcon name="empty_data" size="$20" color={'#757575'} />
+          <H4>No members yet</H4>
+        </Stack>
+      )}
     />
   );
 }

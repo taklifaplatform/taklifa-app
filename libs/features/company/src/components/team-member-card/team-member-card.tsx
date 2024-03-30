@@ -77,20 +77,24 @@ export function TeamMemberCard({
     />
   );
 
+  if (!user) {
+    return null;
+  }
+
   return (
     <XStack
       width={'100%'}
       justifyContent="space-between"
       paddingVertical="$4"
       borderTopWidth={1}
-      borderColor="$color9"
+      borderColor="$color3"
       alignItems="center"
     >
       <XStack gap="$3" alignItems="center">
         <UserAvatar user={user} size="$5" />
         <YStack gap="$2">
           <Text fontWeight="bold">{user.name}</Text>
-          <Text color={'$gray10Dark'} fontWeight={'$10'}>
+          <Text color={'$color10'} fontWeight={'$10'}>
             Last activity: {moment(user.created_at).fromNow()}
           </Text>
         </YStack>

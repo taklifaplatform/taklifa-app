@@ -122,15 +122,6 @@ export function useAuth(): AuthHelpers {
   }, [user]);
 
   const getUrlPrefix = useMemo(() => {
-    // if (role === 'solo_driver') {
-    //   return '/solo-driver';
-    // }
-
-    // if (['company_owner', 'company_manager', 'company_driver'].includes(role)) {
-    //   return '/company';
-    // }
-
-    // return '/customer';
     return '/app';
   }, []);
 

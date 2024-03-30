@@ -4,19 +4,21 @@ import { useRef } from 'react';
 import { Button, Theme } from 'tamagui';
 
 import { useRouter } from 'solito/router';
+import { USER_ROLES, useAuth } from '@zix/services/auth';
 
 export const ManageTeamFabButton: React.FC = () => {
   const router = useRouter();
+  const { getUrlPrefix } = useAuth()
   const actionSheetRef = useRef<ActionSheetRef>(null);
 
   const renderFabButton = () => (
-    <Theme>
+    <Theme name='accent'>
       <Button
         position="absolute"
         width="$5"
         height="$5"
         size="$5"
-        bottom="$10"
+        bottom="$3"
         right="$3"
         icon={<Plus size="$2.5" />}
         borderRadius="$10"
@@ -39,8 +41,7 @@ export const ManageTeamFabButton: React.FC = () => {
           icon: <UsersRound size="$2" color="$color10" />,
           onPress: () => {
             actionSheetRef.current?.close();
-            alert('UNDER DEVELOPMENT');
-            // router.push(`/company/admin/managers/create`);
+            router.push(`${getUrlPrefix}/company/employees/invite?role=${USER_ROLES.company_manager}`);
           },
         },
         {
@@ -48,7 +49,7 @@ export const ManageTeamFabButton: React.FC = () => {
           icon: <Users size="$2" color="$color10" />,
           onPress: () => {
             actionSheetRef.current?.close();
-            router.push(`/company/manage/drivers/invite`);
+            router.push(`${getUrlPrefix}/company/employees/invite?role=${USER_ROLES.company_driver}`);
           },
         },
         {

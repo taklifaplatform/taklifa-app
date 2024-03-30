@@ -18,3 +18,8 @@ export const COMPANY_ROLES: AUTH_ROLE_TYPE[] = [
   USER_ROLES.company_manager,
   USER_ROLES.company_owner,
 ];
+
+export type COMPANY_ROLE_TYPES =
+  | 'company_owner'
+  | 'company_manager'
+  | 'company_driver';
