@@ -71,7 +71,7 @@ export function ManageCompanyDataScreen() {
           </TouchableOpacity>
         )}
       />
-      <YStack flex={1}>
+      <YStack flex={1} paddingVertical='$4'>
         {renderHorizonTabs()}
         <ManageTeamFabButton />
       </YStack>
