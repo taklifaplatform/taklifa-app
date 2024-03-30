@@ -1,8 +1,8 @@
-import { Brush, CarFront, TextCursorInput, User } from '@tamagui/lucide-icons';
+import { User } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { CompanyMembersService, CompanyTransformer } from '@zix/api';
 import { USER_ROLES, useAuth } from '@zix/services/auth';
-import { MediaFile, UserAvatar } from '@zix/ui/common';
+import { UserAvatar } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { ZixVariantOptionsWidget, ZixWidgetContainer } from '@zix/ui/widgets';
 import React from 'react';
@@ -62,8 +62,6 @@ export const CompanyDriversTab: React.FC<CompanyDriversTabProps> = ({
                   },
                 ]}
               />
-
-
             </XStack>
           )}
         />

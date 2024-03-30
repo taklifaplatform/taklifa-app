@@ -6,6 +6,7 @@ import { Text, View } from 'tamagui';
 import AboutCompanyTab from '../about-company-tab/about-company-tab';
 import CompanyVehiclesTab from '../company-vehicles-tab/company-vehicles-tab';
 import CompanyDriversTab from '../company-drivers-tab/company-drivers-tab';
+import CompanyReviewsTab from '../company-reviews-tab/company-reviews-tab';
 
 export type ProfileTabsProps = {
   company: CompanyTransformer
@@ -41,14 +42,7 @@ export const CompanyProfileTabs: React.FC<ProfileTabsProps> = ({
     _tabs.push({
       key: 'reviews',
       title: 'Reviews',
-      content: (
-        <View>
-          <Text>
-            Hello
-          </Text>
-        </View>
-      )
-      // content: <UserReviewsTab user={user} />
+      content: <CompanyReviewsTab company={company} />
     })
     return _tabs
   }, [company])

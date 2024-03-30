@@ -1,7 +1,6 @@
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { DriverTransformer, RatingService, UpdateRatingRequest } from '@zix/api';
-import { useAuth } from '@zix/services/auth';
+import { CompanyTransformer, RatingService, UpdateRatingRequest } from '@zix/api';
 import { RatingCard, RatingStars, ZixButton } from '@zix/ui/common';
 import { ZixInput } from '@zix/ui/forms';
 import { ZixWidgetContainer } from '@zix/ui/widgets';
@@ -14,25 +13,23 @@ import {
   YStack
 } from 'tamagui';
 
-/* eslint-disable-next-line */
-export type UserReviewsTabProps = {
-  user: DriverTransformer
+export type CompanyReviewsTabProps = {
+  company: CompanyTransformer
 }
 
-export const UserReviewsTab: React.FC<UserReviewsTabProps> = ({
-  user
+export const CompanyReviewsTab: React.FC<CompanyReviewsTabProps> = ({
+  company
 }) => {
   const toast = useToastController()
-  const { user: authUser } = useAuth()
   const [score, setScore] = useState(5)
   const [comment, setComment] = useState('')
 
   const { data, refetch } = useQuery({
     queryFn: () => RatingService.fetchRatings({
-      id: user.id,
-      type: 'driver',
+      id: company.id,
+      type: 'company',
     }),
-    queryKey: ['RatingService.fetchRatings', user.id, 'driver']
+    queryKey: ['RatingService.fetchRatings', company.id, 'company']
   })
 
   const { data: ratingTypes } = useQuery({
@@ -43,8 +40,8 @@ export const UserReviewsTab: React.FC<UserReviewsTabProps> = ({
   const { mutate, isSuccess, isPending } = useMutation({
     mutationFn: (variables: Partial<UpdateRatingRequest>) => RatingService.storeRating({
       requestBody: {
-        entity_type: 'driver',
-        entity_id: user.id,
+        entity_type: 'company',
+        entity_id: company.id,
         ...variables
       }
     }),
@@ -70,13 +67,13 @@ export const UserReviewsTab: React.FC<UserReviewsTabProps> = ({
   }, [])
 
 
-  const renderRatingInput = () => (authUser?.id !== user.id && !isSuccess) && (
+  const renderRatingInput = () => (!isSuccess) && (
     <YStack alignItems="center" gap='$4'>
       <Text fontWeight="600" fontSize="$4" paddingTop="$4">
         How was your experience with
       </Text>
       <Text fontWeight="bold" fontSize="$4">
-        {user.name}
+        {company.name}
       </Text>
       <RatingStars score={score} onChange={setScore} size='$1.5' />
 
@@ -134,4 +131,4 @@ export const UserReviewsTab: React.FC<UserReviewsTabProps> = ({
   );
 }
 
-export default UserReviewsTab;
+export default CompanyReviewsTab;
