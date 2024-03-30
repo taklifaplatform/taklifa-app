@@ -9,8 +9,7 @@ import type { VehicleFuelInformationTransformer } from './VehicleFuelInformation
 import type { VehicleInformationTransformer } from './VehicleInformationTransformer';
 import type { VehicleModelTransformer } from './VehicleModelTransformer';
 export type VehicleTransformer = {
-    id?: number;
-    name?: string;
+    id?: string;
     internal_id?: string;
     color?: string;
     plate_number?: string;

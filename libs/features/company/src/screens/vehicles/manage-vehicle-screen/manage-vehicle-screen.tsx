@@ -2,7 +2,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import React from 'react';
 
 import { useToastController } from '@tamagui/toast';
-import { CompaniesService, CompanyAdminService, VehiclesService } from '@zix/api';
+import { VehiclesService } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
 import {
@@ -15,10 +15,10 @@ import {
 import { AppHeader } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'solito/router';
-import { Theme } from 'tamagui';
-import { z } from 'zod';
 import { createParam } from 'solito';
+import { useRouter } from 'solito/router';
+import { Theme, Text } from 'tamagui';
+import { z } from 'zod';
 
 const ManageVehicleFormSchema = z
   .object({
@@ -27,35 +27,35 @@ const ManageVehicleFormSchema = z
     internal_id: formFields.text.describe('Internal ID // Enter Vehicle Internal ID'),
     color: formFields.text.describe('Color // Enter Vehicle Color'),
     plate_number: formFields.text.describe('Plate Number // Enter Vehicle Plate Number'),
-    vin_number: formFields.text.describe('VIN Number // Enter Vehicle VIN Number').optional(),
+    vin_number: formFields.text.describe('VIN Number // Enter Vehicle VIN Number').optional().nullable(),
     // TODO: missing model
     year: formFields.text.describe('Year // Enter Vehicle Year'),
 
     information: z.object({
-      body_type: formFields.text.describe('Body Type // Enter Vehicle Body Type').optional(),
-      steering_wheel: formFields.text.describe('Steering Wheel // Enter Vehicle Steering Wheel').optional(),
-      doors_count: formFields.text.describe('Doors Count // Enter Vehicle Doors Count').optional(),
-      seats_count: formFields.text.describe('Seats Count // Enter Vehicle Seats Count').optional(),
-      top_speed: formFields.text.describe('Top Speed // Enter Vehicle Top Speed').optional(),
+      body_type: formFields.text.describe('Body Type // Enter Vehicle Body Type').optional().nullable(),
+      steering_wheel: formFields.text.describe('Steering Wheel // Enter Vehicle Steering Wheel').optional().nullable(),
+      doors_count: formFields.text.describe('Doors Count // Enter Vehicle Doors Count').optional().nullable(),
+      seats_count: formFields.text.describe('Seats Count // Enter Vehicle Seats Count').optional().nullable(),
+      top_speed: formFields.text.describe('Top Speed // Enter Vehicle Top Speed').optional().nullable(),
     }),
 
     fuel_information: z.object({
-      fuel_type: formFields.text.describe('Fuel Type // Enter Vehicle Fuel Type').optional(),
-      fuel_capacity: formFields.text.describe('Fuel Capacity // Enter Vehicle Fuel Capacity').optional(),
-      liter_per_km_in_city: formFields.text.describe('Liter Per KM In City // Enter Vehicle Liter Per KM In City').optional(),
-      liter_per_km_in_highway: formFields.text.describe('Liter Per KM In Highway // Enter Vehicle Liter Per KM In Highway').optional(),
-      liter_per_km_mixed: formFields.text.describe('Liter Per KM Mixed // Enter Vehicle Liter Per KM Mixed').optional(),
+      fuel_type: formFields.text.describe('Fuel Type // Enter Vehicle Fuel Type').optional().nullable(),
+      fuel_capacity: formFields.text.describe('Fuel Capacity // Enter Vehicle Fuel Capacity').optional().nullable(),
+      liter_per_km_in_city: formFields.text.describe('Liter Per KM In City // Enter Vehicle Liter Per KM In City').optional().nullable(),
+      liter_per_km_in_highway: formFields.text.describe('Liter Per KM In Highway // Enter Vehicle Liter Per KM In Highway').optional().nullable(),
+      liter_per_km_mixed: formFields.text.describe('Liter Per KM Mixed // Enter Vehicle Liter Per KM Mixed').optional().nullable(),
     }),
 
     capacity_dimensions: z.object({
-      width: formFields.text.describe('Width // Enter Vehicle Width').optional(),
-      height: formFields.text.describe('Height // Enter Vehicle Height').optional(),
-      length: formFields.text.describe('Length // Enter Vehicle Length').optional(),
-      unit: formFields.text.describe('Unit // Enter Vehicle Unit').optional(),
+      width: formFields.text.describe('Width // Enter Vehicle Width').optional().nullable(),
+      height: formFields.text.describe('Height // Enter Vehicle Height').optional().nullable(),
+      length: formFields.text.describe('Length // Enter Vehicle Length').optional().nullable(),
+      unit: formFields.text.describe('Unit // Enter Vehicle Unit').optional().nullable(),
     }),
     capacity_weight: z.object({
-      weight: formFields.text.describe('Weight // Enter Vehicle Weight').optional(),
-      unit: formFields.text.describe('Unit // Enter Vehicle Unit').optional(),
+      weight: formFields.text.describe('Weight // Enter Vehicle Weight').optional().nullable(),
+      unit: formFields.text.describe('Unit // Enter Vehicle Unit').optional().nullable(),
     }),
   });
 
@@ -79,11 +79,18 @@ export const ManageVehicleScreen: React.FC = () => {
 
   const { mutate } = useMutation({
     async mutationFn(requestBody: z.infer<typeof ManageVehicleFormSchema>) {
+      console.log('============')
+      console.log('mutationFn::', JSON.stringify(requestBody, null, 2))
+      console.log('============')
+      if (vehicleId) {
+        return VehiclesService.updateVehicle({
+          vehicle: vehicleId,
+          requestBody,
+        });
+      }
+
       return VehiclesService.createVehicle({
-        requestBody: {
-          name: 'TODO Remove',
-          ...requestBody
-        },
+        requestBody,
       });
     },
     onSuccess() {
@@ -92,6 +99,9 @@ export const ManageVehicleScreen: React.FC = () => {
       router.back();
     },
     onError(error: any) {
+      console.log('============')
+      console.log('onError::', JSON.stringify(error, null, 2))
+      console.log('============')
       toast.show(error?.body?.message || 'Failed to update company');
       handleFormErrors(form, error?.body?.errors);
     },
@@ -105,7 +115,7 @@ export const ManageVehicleScreen: React.FC = () => {
     <FormProvider {...form}>
       <SchemaForm
         schema={ManageVehicleFormSchema}
-        // defaultValues={data.data}
+        defaultValues={data?.data || {}}
         onSubmit={mutate}
         renderAfter={({ submit }) => {
           return (
