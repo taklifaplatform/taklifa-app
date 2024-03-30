@@ -37,7 +37,7 @@ export const CompanyDriversTab: React.FC<CompanyDriversTabProps> = ({
           renderItem={({ item, index }) => (
             <XStack
               onPress={() => {
-                router.push(`${getUrlPrefix}/companies/${company.id}/employees/${item.id}`)
+                router.push(`${getUrlPrefix}/users/${item.user?.id}`)
               }}
               key={`${item.id}-${index}`}
               gap='$4'

@@ -56,7 +56,7 @@ export const AboutCompanyTab: React.FC<AboutCompanyTabProps> = ({
         renderItem={({ item, index }) => (
           <YStack
             onPress={() => {
-              router.push(`${getUrlPrefix}/companies/${company.id}/employees/${item.id}`)
+              router.push(`${getUrlPrefix}/users/${item.user?.id}`)
             }}
             key={`${item.id}-${index}`}
             marginRight='$4'

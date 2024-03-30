@@ -1,9 +1,11 @@
-import { DriverTransformer, MediaTransformer } from '@zix/api';
+import { DriverTransformer } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
-import { ZixLocationInfoWidget, ZixMediasListWidget, ZixWidgetContainer, ZixWorkingHoursWidget } from '@zix/ui/widgets';
-import React, { useMemo } from 'react';
+import { MediaFile } from '@zix/ui/common';
+import { ZixLocationInfoWidget, ZixWidgetContainer, ZixWorkingHoursWidget } from '@zix/ui/widgets';
+import React from 'react';
+import { useRouter } from 'solito/router';
 
-import { Text, YStack } from 'tamagui';
+import { Stack, Text, YStack } from 'tamagui';
 
 export type AboutUserTabProps = {
   user: DriverTransformer
@@ -12,20 +14,8 @@ export type AboutUserTabProps = {
 export const AboutUserTab: React.FC<AboutUserTabProps> = ({
   user
 }) => {
-
-  const { isServiceProvider } = useAuth()
-
-  const companiesLogos = useMemo<MediaTransformer[]>(() => {
-    const medias: MediaTransformer[] = []
-
-    user?.companies?.forEach(company => {
-      if (company?.logo) {
-        medias.push(company.logo)
-      }
-    })
-
-    return medias;
-  }, [user.companies])
+  const router = useRouter()
+  const { isServiceProvider, getUrlPrefix } = useAuth()
 
   const renderAbout = () => !!user.about?.length && (
     <ZixWidgetContainer label='About Driver'>
@@ -35,9 +25,38 @@ export const AboutUserTab: React.FC<AboutUserTabProps> = ({
     </ZixWidgetContainer>
   )
 
-  const renderCompanies = () => !!companiesLogos?.length && (
+  const renderCompanies = () => !!user?.companies?.length && (
     <ZixWidgetContainer label='Works With'>
-      <ZixMediasListWidget medias={companiesLogos || []} />
+      <Stack
+        flexDirection='row'
+        flexWrap='wrap'
+        gap='$4'
+      >
+        {
+          user?.companies.map(company => (
+            <Stack
+              key={company.id}
+              onPress={() => router.push(`${getUrlPrefix}/companies/${company.id}`)}
+              width='$8'
+              height='$4'
+              borderRadius='$2'
+              overflow='hidden'
+            >
+              {
+                company?.logo?.url ? (
+                  <MediaFile
+                    media={company.logo}
+                    width='$8'
+                    height='$4'
+                  />
+                ) : (
+                  <Text fontWeight='bold'>{company.name}</Text>
+                )
+              }
+            </Stack>
+          ))
+        }
+      </Stack>
     </ZixWidgetContainer>
   )
 

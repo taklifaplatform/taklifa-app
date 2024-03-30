@@ -39,7 +39,7 @@ export const MediaFile: React.FC<MediaFileProps> = (props) => {
 
   return (
     <Image
-      resizeMode="cover"
+      resizeMode="contain"
       alt={String(media.id)}
       {...props}
       source={{ uri: heightQuality && media.original_url ? media.original_url : media.url }}
