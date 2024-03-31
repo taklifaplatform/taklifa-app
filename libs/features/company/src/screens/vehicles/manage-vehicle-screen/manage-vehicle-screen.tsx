@@ -29,32 +29,32 @@ const ManageVehicleFormSchema = z
     plate_number: formFields.text.describe('Plate Number // Enter Vehicle Plate Number'),
     vin_number: formFields.text.describe('VIN Number // Enter Vehicle VIN Number').optional().nullable(),
     // TODO: missing model
-    year: formFields.text.describe('Year // Enter Vehicle Year'),
+    year: formFields.number.describe('Year // Enter Vehicle Year'),
 
     information: z.object({
       body_type: formFields.text.describe('Body Type // Enter Vehicle Body Type').optional().nullable(),
       steering_wheel: formFields.text.describe('Steering Wheel // Enter Vehicle Steering Wheel').optional().nullable(),
-      doors_count: formFields.text.describe('Doors Count // Enter Vehicle Doors Count').optional().nullable(),
-      seats_count: formFields.text.describe('Seats Count // Enter Vehicle Seats Count').optional().nullable(),
-      top_speed: formFields.text.describe('Top Speed // Enter Vehicle Top Speed').optional().nullable(),
+      doors_count: formFields.number.describe('Doors Count // Enter Vehicle Doors Count').optional().nullable(),
+      seats_count: formFields.number.describe('Seats Count // Enter Vehicle Seats Count').optional().nullable(),
+      top_speed: formFields.number.describe('Top Speed // Enter Vehicle Top Speed').optional().nullable(),
     }),
 
     fuel_information: z.object({
       fuel_type: formFields.text.describe('Fuel Type // Enter Vehicle Fuel Type').optional().nullable(),
-      fuel_capacity: formFields.text.describe('Fuel Capacity // Enter Vehicle Fuel Capacity').optional().nullable(),
-      liter_per_km_in_city: formFields.text.describe('Liter Per KM In City // Enter Vehicle Liter Per KM In City').optional().nullable(),
-      liter_per_km_in_highway: formFields.text.describe('Liter Per KM In Highway // Enter Vehicle Liter Per KM In Highway').optional().nullable(),
-      liter_per_km_mixed: formFields.text.describe('Liter Per KM Mixed // Enter Vehicle Liter Per KM Mixed').optional().nullable(),
+      fuel_capacity: formFields.number.describe('Fuel Capacity // Enter Vehicle Fuel Capacity').optional().nullable(),
+      liter_per_km_in_city: formFields.number.describe('Liter Per KM In City // Enter Vehicle Liter Per KM In City').optional().nullable(),
+      liter_per_km_in_highway: formFields.number.describe('Liter Per KM In Highway // Enter Vehicle Liter Per KM In Highway').optional().nullable(),
+      liter_per_km_mixed: formFields.number.describe('Liter Per KM Mixed // Enter Vehicle Liter Per KM Mixed').optional().nullable(),
     }),
 
     capacity_dimensions: z.object({
-      width: formFields.text.describe('Width // Enter Vehicle Width').optional().nullable(),
-      height: formFields.text.describe('Height // Enter Vehicle Height').optional().nullable(),
-      length: formFields.text.describe('Length // Enter Vehicle Length').optional().nullable(),
+      width: formFields.number.describe('Width // Enter Vehicle Width').optional().nullable(),
+      height: formFields.number.describe('Height // Enter Vehicle Height').optional().nullable(),
+      length: formFields.number.describe('Length // Enter Vehicle Length').optional().nullable(),
       unit: formFields.text.describe('Unit // Enter Vehicle Unit').optional().nullable(),
     }),
     capacity_weight: z.object({
-      weight: formFields.text.describe('Weight // Enter Vehicle Weight').optional().nullable(),
+      weight: formFields.number.describe('Weight // Enter Vehicle Weight').optional().nullable(),
       unit: formFields.text.describe('Unit // Enter Vehicle Unit').optional().nullable(),
     }),
   });
