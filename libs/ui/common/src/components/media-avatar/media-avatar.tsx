@@ -1,7 +1,6 @@
 import { MediaTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
-// import { SolitoImage } from 'solito/image';
-import { Avatar, SizeTokens, useStyle, Image } from 'tamagui';
+import { Avatar, Image, SizeTokens } from 'tamagui';
 
 export type MediaAvatarProps = {
   size?: SizeTokens;
@@ -14,10 +13,6 @@ export const MediaAvatar: React.FC<MediaAvatarProps> = ({
   size = '$4',
   ...props
 }) => {
-  const style = useStyle({
-    width: size,
-    height: size,
-  });
 
   return (
     <Avatar
@@ -29,12 +24,11 @@ export const MediaAvatar: React.FC<MediaAvatarProps> = ({
     >
       {media?.url ? (
         <Image
-          source={{ uri: media.url }}
-          src={media.url}
-          alt="your avatar"
-          width={style.width as number}
-          height={style.height as number}
-          style={{ backgroundColor: 'white' }}
+          source={{ uri: media.original_url }}
+          alt="Image"
+          width={size}
+          height={size}
+          resizeMode='contain'
         />
       ) : (
         <CustomIcon name="avatar" size={size} color="$color2" />

@@ -35,6 +35,8 @@ export const ZixTab: React.FC<ZixTabProps> = ({
               theme={activeTab === tab.key ? 'accent' : undefined}
               onPress={() => setActiveTab(tab.key)}
               borderRadius='0'
+              fontWeight='bold'
+              fontSize='$1'
             >
               {tab.title}
             </Button>
