@@ -20,7 +20,7 @@ export function TeamMemberCard({
   const actionSheetManagerRef = useRef<ActionSheetRef>(null);
   const toast = useToastController();
   const router = useRouter();
-  const { user: authUser } = useAuth();
+  const { user: authUser, getUrlPrefix } = useAuth();
 
   const { mutate } = useMutation({
     mutationFn(variables) {
@@ -31,7 +31,7 @@ export function TeamMemberCard({
     },
   });
 
-  const renderActionSheetForSettingManager = () => (
+  const renderActionSheetForSettingManager = () => user?.id && (
     <ActionSheet
       ref={actionSheetManagerRef}
       title={`Settings`}
@@ -41,11 +41,11 @@ export function TeamMemberCard({
           icon: <Eye size="$1" color="$color10" />,
           onPress: () => {
             actionSheetManagerRef.current?.close();
-            router.push(`/users/${user.id}`);
+            router.push(`${getUrlPrefix}/users/${user.id}`);
           },
         },
         {
-          disabled: authUser?.id === user.id,
+          disabled: authUser?.id === user?.id,
           name: 'Remove from company',
           icon: <Trash2 size="$1" color="$color10" />,
           onPress: () => {
@@ -66,7 +66,7 @@ export function TeamMemberCard({
                     mutate({
                       company: company_id,
                       member: user.id,
-                    });
+                    } as any);
                   },
                 },
               ],
@@ -77,21 +77,25 @@ export function TeamMemberCard({
     />
   );
 
+  if (!user) {
+    return null;
+  }
+
   return (
     <XStack
       width={'100%'}
       justifyContent="space-between"
       paddingVertical="$4"
       borderTopWidth={1}
-      borderColor="$color9"
+      borderColor="$color3"
       alignItems="center"
     >
       <XStack gap="$3" alignItems="center">
         <UserAvatar user={user} size="$5" />
         <YStack gap="$2">
           <Text fontWeight="bold">{user.name}</Text>
-          <Text color={'$gray10Dark'} fontWeight={'$10'}>
-            Last activity: {moment(user.created_at).fromNow()}
+          <Text color={'$color10'} fontWeight={'$10'}>
+            Last activity: {moment(user.latest_activity).fromNow()}
           </Text>
         </YStack>
       </XStack>

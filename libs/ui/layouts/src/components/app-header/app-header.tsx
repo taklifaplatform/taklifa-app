@@ -1,4 +1,4 @@
-import { Bell, PlusSquare, ScanBarcode, Search } from '@tamagui/lucide-icons';
+import { Bell, PlusSquare, Search } from '@tamagui/lucide-icons';
 import { useAuth } from '@zix/services/auth';
 import { UserAvatar } from '@zix/ui/common';
 import { ZixInput, ZixInputProps } from '@zix/ui/forms';
@@ -6,7 +6,7 @@ import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import { useCallback } from 'react';
 import { useRouter } from 'solito/router';
-import { Button, ColorTokens, H4, View, XStack, YStack } from 'tamagui';
+import { Button, ColorTokens, H4, Theme, View, XStack, YStack } from 'tamagui';
 import { AppHeaderWrapper } from './app-header-wrapper';
 
 export type AppHeaderProps = {
@@ -39,15 +39,15 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   }, [isLoggedIn, router, user, getUrlPrefix]);
 
   const renderSearchBar = () => showSearchBar && (
-    <View theme='light' paddingHorizontal="$4" paddingVertical='$2' $gtMd={{ flex: 1 }}>
-      <ZixInput
-        height="$4"
-        leftIcon={() => <Search size="$1.5" />}
-        rightIcon={() => <ScanBarcode size="$1.5" />}
-        placeholder={'Search here'}
-        {...searchProps}
-      />
-    </View>
+    <Theme reset>
+      <View paddingHorizontal="$4" paddingVertical='$2' $gtMd={{ flex: 1 }}>
+        <ZixInput
+          leftIcon={() => <Search size="$1.5" />}
+          placeholder={'Search here'}
+          {...searchProps}
+        />
+      </View>
+    </Theme>
   )
 
   const renderUserAvatar = () =>

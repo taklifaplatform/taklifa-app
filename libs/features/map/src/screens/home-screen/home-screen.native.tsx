@@ -1,4 +1,4 @@
-import { X } from '@tamagui/lucide-icons';
+import { ScanBarcode, X } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { CompaniesService, DriverTransformer, DriversService } from '@zix/api';
 import { UserCard } from '@zix/features/users';
@@ -245,6 +245,7 @@ export function HomeScreen() {
         searchProps={{
           value: search,
           onChangeText: setSearch,
+          rightIcon: () => <ScanBarcode size="$1.5" />,
         }}
       />
       {renderMap()}

@@ -1,6 +1,5 @@
 import {
   AcceptTermsField,
-  LocationField,
   AutoCompleteField,
   BooleanCheckboxField,
   BooleanSwitchField,
@@ -8,15 +7,17 @@ import {
   CountryField,
   DatePickerField,
   DatePickerFieldProps,
+  LocationField,
+  LocationFieldProps,
   MediaPickerField,
   MediaPickerFieldProps,
+  NumberField,
   PhoneField,
   SelectField,
+  ShipmentItemsField,
   TextAreaField,
   TextField,
   TextSecureField,
-  LocationFieldProps,
-  ShipmentItemsField,
 } from '../form-fields';
 
 import { formFields } from './form-fields-schemas';
@@ -25,7 +26,7 @@ export const formFieldsMappings = [
   [formFields.text, TextField] as const,
   [formFields.textarea, TextAreaField] as const,
   [formFields.secure_text, TextSecureField] as const,
-  // [formFields.number, NumberField] as const,
+  [formFields.number, NumberField] as const,
   [formFields.boolean_switch, BooleanSwitchField] as const,
   [formFields.boolean_checkbox, BooleanCheckboxField] as const,
   [formFields.accept_terms, AcceptTermsField] as const,

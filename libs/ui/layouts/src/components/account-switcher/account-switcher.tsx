@@ -12,7 +12,7 @@ import { CustomIcon } from '@zix/ui/icons';
 import { useAuth } from '@zix/services/auth';
 import { useCallback, useMemo, useState } from 'react';
 import { useRouter } from 'solito/router';
-import { Avatar, Button, Dialog, H4, ListItem, Text, Theme, View, XStack, YGroup, YStack, isWeb } from 'tamagui';
+import { Avatar, Button, Dialog, H4, ListItem, Text, Theme, View, XStack, YGroup, YStack, isWeb, useTheme } from 'tamagui';
 
 
 export const AccountSwitcher: React.FC = () => {
@@ -82,10 +82,10 @@ export const AccountSwitcher: React.FC = () => {
   }, [roleNames, router])
 
   return (
-    <Theme name='light'>
+    <Theme reset>
       <Dialog open={sheetOpen} onOpenChange={setSheetOpen}>
         <Dialog.Trigger >
-          <XStack alignItems="center" gap="$2" onPress={() => setSheetOpen(true)}>
+          <XStack theme='light' alignItems="center" gap="$2" onPress={() => setSheetOpen(true)}>
             {
               isWeb && (
                 <UserAvatar user={user} size='$4' />
@@ -95,9 +95,14 @@ export const AccountSwitcher: React.FC = () => {
               <Text fontWeight="bold" fontSize={15} numberOfLines={1}>
                 {user?.name || !!user?.username ? `@${user?.username}` : '...'}
               </Text>
-              <Text>
-                {user?.active_role?.name}
-              </Text>
+              {
+                user?.active_role?.name && (
+                  <Text>
+                    {user?.active_role?.name}
+                  </Text>
+                )
+              }
+
             </YStack>
             {
               isWeb && (

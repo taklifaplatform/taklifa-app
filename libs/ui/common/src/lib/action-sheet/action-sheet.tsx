@@ -6,9 +6,9 @@ import {
   useState,
 } from 'react';
 import { Dimensions } from 'react-native';
-import { Button, ListItem, Sheet, Text, XStack, YStack } from 'tamagui';
+import { Button, ListItem, Sheet, Text, ThemeableStackProps, XStack, YStack } from 'tamagui';
 
-export interface IAction {
+export type IAction = ThemeableStackProps & {
   name: string;
   disabled?: boolean;
   icon?:
@@ -77,17 +77,15 @@ export const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
                 onPress={() => setIsOpen(false)}
               />
             </XStack>
-            {props.actions.map((action, index) => (
+            {props.actions.map(({ name, ...prop }, index) => (
               <ListItem
                 key={index}
-                onPress={action.onPress}
-                title={action.name}
-                icon={action.icon}
-                disabled={action.disabled}
+                title={name}
                 padding="$4"
                 borderTopWidth={1}
                 borderColor='$gray5'
                 alignItems='center'
+                {...prop}
               />
             ))}
           </YStack>

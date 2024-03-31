@@ -1,32 +1,29 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import React from 'react';
 
-import { CompanyAdminService } from '@zix/api';
+import { useToastController } from '@tamagui/toast';
+import { CompaniesService, CompanyAdminService } from '@zix/api';
+import { useAuth } from '@zix/services/auth';
+import { FullScreenSpinner } from '@zix/ui/common';
 import {
   SchemaForm,
   SubmitButton,
   formFields,
   handleFormErrors,
 } from '@zix/ui/forms';
-import { useAuth } from '@zix/services/auth';
+import { AppHeader } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
 import { Theme } from 'tamagui';
 import { z } from 'zod';
-import { useToastController } from '@tamagui/toast';
 
 const UpdateCompanyFormSchema = z
   .object({
     logo: formFields.image.describe('Logo // Add Company Logo'),
     name: formFields.text.min(2).max(150).describe(t('forms:company_name')),
-    documents: formFields.files.describe(
-      t('Company Documents // Attach documents...'),
-    ),
-    // location: formFields.text
-    //   .min(2)
-    //   .max(25)
-    //   .describe('Company Location // Enter company location'),
+    about: formFields.textarea.describe('About // Enter company description'),
+    location: formFields.advanced_location.describe('Company Location // Enter company location'),
   })
   .required({
     name: true,
@@ -39,11 +36,18 @@ export const UpdateCompanyScreen: React.FC = () => {
 
   const router = useRouter();
 
+  const { data } = useQuery({
+    queryFn: () => CompaniesService.retrieveCompany({
+      company: user?.active_company?.id || '',
+    }),
+    queryKey: ['CompaniesService.retrieveCompany', user?.active_company?.id]
+  })
+
   const { mutate } = useMutation({
-    async mutationFn(values: z.infer<typeof UpdateCompanyFormSchema>) {
+    async mutationFn(requestBody: z.infer<typeof UpdateCompanyFormSchema>) {
       return CompanyAdminService.update({
         company: user?.active_company?.id,
-        requestBody: values,
+        requestBody,
       });
     },
     onSuccess() {
@@ -56,15 +60,13 @@ export const UpdateCompanyScreen: React.FC = () => {
     },
   });
 
-  if (!user?.active_company?.id) {
-    return null;
-  }
 
-  return (
+
+  const renderForm = () => !!data?.data?.id && (
     <FormProvider {...form}>
       <SchemaForm
         schema={UpdateCompanyFormSchema}
-        defaultValues={user?.active_company}
+        defaultValues={data.data}
         onSubmit={mutate}
         renderAfter={({ submit }) => {
           return (
@@ -78,6 +80,19 @@ export const UpdateCompanyScreen: React.FC = () => {
       />
     </FormProvider>
   );
+
+
+  const renderLoading = () => !data?.data?.id && (
+    <FullScreenSpinner />
+  )
+
+  return (
+    <>
+      <AppHeader showBackButton title="Update Company" />
+      {renderForm()}
+      {renderLoading()}
+    </>
+  )
 };
 
 export default UpdateCompanyScreen;

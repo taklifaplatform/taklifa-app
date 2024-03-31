@@ -4,9 +4,9 @@ import { z } from "zod";
 import { LocationSchema, ShipmentItemsSchema } from "../form-fields";
 
 export const mediaSchema = z.object({
-  // id: z.number(),
-  uuid: z.string().optional(),
-  // url: z.string().optional(),
+  id: z.any().optional().nullable(),
+  uuid: z.string().optional().nullable(),
+  url: z.string().optional().nullable(),
   // original_url: z.string(),
 });
 
