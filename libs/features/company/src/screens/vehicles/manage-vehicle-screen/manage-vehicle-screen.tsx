@@ -24,7 +24,7 @@ const ManageVehicleFormSchema = z
   .object({
     image: formFields.image.describe('Image // Add Vehicle Main Images'),
     images: formFields.medias.describe('Images // Add Vehicle Images'),
-    internal_id: formFields.text.describe('Internal ID // Enter Vehicle Internal ID'),
+    internal_id: formFields.text.describe('Internal ID // Enter Vehicle Internal ID').optional().nullable(),
     color: formFields.text.describe('Color // Enter Vehicle Color'),
     plate_number: formFields.text.describe('Plate Number // Enter Vehicle Plate Number'),
     vin_number: formFields.text.describe('VIN Number // Enter Vehicle VIN Number').optional().nullable(),
