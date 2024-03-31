@@ -14,10 +14,10 @@ import {
 } from '@zix/ui/forms';
 import { AppHeader } from '@zix/ui/layouts';
 import { t } from 'i18next';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
-import { Theme, Text } from 'tamagui';
+import { Theme } from 'tamagui';
 import { z } from 'zod';
 
 const ManageVehicleFormSchema = z
@@ -112,70 +112,69 @@ export const ManageVehicleScreen: React.FC = () => {
   )
 
   const renderForm = () => (!!data?.data?.id || !vehicleId) && (
-    <FormProvider {...form}>
-      <SchemaForm
-        schema={ManageVehicleFormSchema}
-        defaultValues={data?.data || {}}
-        onSubmit={mutate}
-        renderAfter={({ submit }) => {
-          return (
-            <Theme inverse>
-              <SubmitButton onPress={() => submit()}>
-                {t('common:next')}
-              </SubmitButton>
-            </Theme>
-          );
-        }}
-      >
-        {({ information, fuel_information, capacity_dimensions, capacity_weight, ...fields }) => (
-          <>
-            <ZixFieldContainer
-              label='Vehicle Information'
-              labelBold
-              collapsible
-            >
-              {Object.values(fields)}
-            </ZixFieldContainer>
-            <ZixFieldContainer
-              label='Vehicle Type'
-              labelBold
-              collapsible
-              isOptional
-            >
-              {Object.values(information)}
-            </ZixFieldContainer>
+    <SchemaForm
+      form={form}
+      schema={ManageVehicleFormSchema}
+      defaultValues={data?.data || {}}
+      onSubmit={mutate}
+      renderAfter={({ submit }) => {
+        return (
+          <Theme inverse>
+            <SubmitButton onPress={() => submit()}>
+              {t('common:next')}
+            </SubmitButton>
+          </Theme>
+        );
+      }}
+    >
+      {({ information, fuel_information, capacity_dimensions, capacity_weight, ...fields }) => (
+        <>
+          <ZixFieldContainer
+            label='Vehicle Information'
+            labelBold
+            collapsible
+          >
+            {Object.values(fields)}
+          </ZixFieldContainer>
+          <ZixFieldContainer
+            label='Vehicle Type'
+            labelBold
+            collapsible
+            isOptional
+          >
+            {Object.values(information)}
+          </ZixFieldContainer>
 
-            <ZixFieldContainer
-              label='Fuel Information'
-              labelBold
-              collapsible
-              isOptional
-            >
-              {Object.values(fuel_information)}
-            </ZixFieldContainer>
+          <ZixFieldContainer
+            label='Fuel Information'
+            labelBold
+            collapsible
+            isOptional
+          >
+            {Object.values(fuel_information)}
+          </ZixFieldContainer>
 
-            <ZixFieldContainer
-              label='Dimensions'
-              labelBold
-              collapsible
-              isOptional
-            >
-              {Object.values(capacity_dimensions)}
-            </ZixFieldContainer>
+          <ZixFieldContainer
+            label='Dimensions'
+            labelBold
+            collapsible
+            isOptional
+          >
+            {Object.values(capacity_dimensions)}
+          </ZixFieldContainer>
 
-            <ZixFieldContainer
-              label='Capacity Weight'
-              labelBold
-              collapsible
-              isOptional
-            >
-              {Object.values(capacity_weight)}
-            </ZixFieldContainer>
+          <ZixFieldContainer
+            label='Capacity Weight'
+            labelBold
+            collapsible
+            isOptional
+          >
+            {Object.values(capacity_weight)}
+          </ZixFieldContainer>
 
-          </>
-        )}
-      </SchemaForm>
-    </FormProvider>
+        </>
+      )}
+    </SchemaForm>
   );
 
   return (

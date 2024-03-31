@@ -325,11 +325,13 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
         !media.id || preview.id !== media.id
       )
     )));
-    MediaService.deleteMedia({
-      requestBody: {
-        uuid: media.uuid,
-      }
-    })
+    if (media.uuid) {
+      MediaService.deleteMedia({
+        requestBody: {
+          uuid: media.uuid,
+        }
+      })
+    }
   }
 
   return (
