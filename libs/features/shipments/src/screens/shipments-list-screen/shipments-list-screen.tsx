@@ -22,9 +22,9 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
 
   const screenTitle = useMemo(() => {
     if (variant === 'jobs') {
-      return 'Jobs';
+      return t('common:jobs');
     }
-    return 'Orders';
+    return t('common:orders');
   }, [variant]);
 
   const [status, setStatus] = useState<any>('pending');

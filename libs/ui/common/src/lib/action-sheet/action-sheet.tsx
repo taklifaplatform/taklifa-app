@@ -6,7 +6,7 @@ import {
   useState,
 } from 'react';
 import { Dimensions } from 'react-native';
-import { Button, ListItem, Sheet, Text, ThemeableStackProps, XStack, YStack } from 'tamagui';
+import { Button, Sheet, Text, ThemeableStackProps, XStack, YStack } from 'tamagui';
 
 export type IAction = ThemeableStackProps & {
   name: string;
@@ -78,15 +78,26 @@ export const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
               />
             </XStack>
             {props.actions.map(({ name, ...prop }, index) => (
-              <ListItem
+              <Button
+                unstyled
                 key={index}
-                title={name}
                 padding="$4"
-                borderTopWidth={1}
-                borderColor='$gray5'
+                flexDirection='row'
+                justifyContent="flex-start"
                 alignItems='center'
+                borderTopWidth={1}
+                borderColor='$color4'
+                pressStyle={{
+                  backgroundColor: '$color7',
+                }}
+                hoverStyle={{
+                  backgroundColor: '$color7',
+                }}
+
                 {...prop}
-              />
+              >
+                {name}
+              </Button>
             ))}
           </YStack>
           <Sheet.Handle />

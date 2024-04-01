@@ -245,7 +245,7 @@ export function HomeScreen() {
         searchProps={{
           value: search,
           onChangeText: setSearch,
-          rightIcon: () => <ScanBarcode size="$1.5" />,
+          rightIcon: () => showMap ? <ScanBarcode size="$1.5" /> : null,
         }}
       />
       {renderMap()}

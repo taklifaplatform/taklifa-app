@@ -43,7 +43,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
       <View paddingHorizontal="$4" paddingVertical='$2' $gtMd={{ flex: 1 }}>
         <ZixInput
           leftIcon={() => <Search size="$1.5" />}
-          placeholder={'Search here'}
+          placeholder={t('common:search')}
           {...searchProps}
         />
       </View>

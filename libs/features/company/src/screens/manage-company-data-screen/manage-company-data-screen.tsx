@@ -9,6 +9,7 @@ import { YStack } from 'tamagui';
 import { ManageTeamFabButton } from '../../components/manage-team-fab-button/manage-team-fab-button';
 import EmployeesListScreen from '../employees/employees-list-screen/employees-list-screen';
 import VehiclesListScreen from '../vehicles/vehicles-list-screen/vehicles-list-screen';
+import { t } from 'i18next';
 
 
 export function ManageCompanyDataScreen() {
@@ -24,7 +25,7 @@ export function ManageCompanyDataScreen() {
         tabs={[
           {
             key: 'managers',
-            title: 'Managers',
+            title: t('common:managers'),
             content: (
               <EmployeesListScreen
                 memberRole="company_manager"
@@ -34,7 +35,7 @@ export function ManageCompanyDataScreen() {
           },
           {
             key: 'drivers',
-            title: 'Drivers',
+            title: t('common:drivers'),
             content: (
               <EmployeesListScreen
                 memberRole="company_driver"
@@ -44,7 +45,7 @@ export function ManageCompanyDataScreen() {
           },
           {
             key: 'vehicles',
-            title: 'Vehicles',
+            title: t('common:vehicles'),
             content: (
               <VehiclesListScreen />
             )
@@ -58,7 +59,7 @@ export function ManageCompanyDataScreen() {
     <>
       <AppHeader
         showBackButton
-        title="Manage Team"
+        title={t('common:manage-team')}
         showSearchBar
         searchProps={{
           value: search,

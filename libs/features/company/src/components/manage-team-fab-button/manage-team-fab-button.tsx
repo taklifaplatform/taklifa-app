@@ -5,6 +5,7 @@ import { Button, Theme } from 'tamagui';
 
 import { useRouter } from 'solito/router';
 import { USER_ROLES, useAuth } from '@zix/services/auth';
+import { t } from 'i18next';
 
 export const ManageTeamFabButton: React.FC = () => {
   const router = useRouter();
@@ -34,10 +35,10 @@ export const ManageTeamFabButton: React.FC = () => {
     <ActionSheet
       modal={false}
       ref={actionSheetRef}
-      title="Add"
+      title={t('common:add')}
       actions={[
         {
-          name: 'Manager',
+          name: t('common:manager'),
           icon: <UsersRound size="$2" color="$color10" />,
           onPress: () => {
             actionSheetRef.current?.close();
@@ -45,7 +46,7 @@ export const ManageTeamFabButton: React.FC = () => {
           },
         },
         {
-          name: 'Drivers',
+          name: t('common:driver'),
           icon: <Users size="$2" color="$color10" />,
           onPress: () => {
             actionSheetRef.current?.close();
@@ -53,7 +54,7 @@ export const ManageTeamFabButton: React.FC = () => {
           },
         },
         {
-          name: 'Vehicle',
+          name: t('common:vehicle'),
           icon: <CarFront size="$2" color="$color10" />,
           onPress: () => {
             actionSheetRef.current?.close();

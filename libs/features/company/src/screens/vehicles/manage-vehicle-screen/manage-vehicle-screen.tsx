@@ -22,40 +22,42 @@ import { z } from 'zod';
 
 const ManageVehicleFormSchema = z
   .object({
-    image: formFields.image.describe('Image // Add Vehicle Main Images'),
-    images: formFields.medias.describe('Images // Add Vehicle Images'),
-    internal_id: formFields.text.describe('Internal ID // Enter Vehicle Internal ID').optional().nullable(),
-    color: formFields.text.describe('Color // Enter Vehicle Color'),
-    plate_number: formFields.text.describe('Plate Number // Enter Vehicle Plate Number'),
-    vin_number: formFields.text.describe('VIN Number // Enter Vehicle VIN Number').optional().nullable(),
+    image: formFields.image.describe(t('forms:vehicle-image')),
+    images: formFields.medias.describe(t('forms:images')),
+    internal_id: formFields.text.describe(t('forms:vehicle-internal-id')).optional().nullable(),
+    color: formFields.text.describe(t('forms:color')),
+    plate_number: formFields.text.describe(t('forms:plate-number')),
+    vin_number: formFields.text.describe(t('forms:vin-number')).optional().nullable(),
     // TODO: missing model
-    year: formFields.number.describe('Year // Enter Vehicle Year'),
+    year: formFields.number.describe(t('forms:vehicle-year')),
+
+    // After
 
     information: z.object({
-      body_type: formFields.text.describe('Body Type // Enter Vehicle Body Type').optional().nullable(),
-      steering_wheel: formFields.text.describe('Steering Wheel // Enter Vehicle Steering Wheel').optional().nullable(),
-      doors_count: formFields.number.describe('Doors Count // Enter Vehicle Doors Count').optional().nullable(),
-      seats_count: formFields.number.describe('Seats Count // Enter Vehicle Seats Count').optional().nullable(),
-      top_speed: formFields.number.describe('Top Speed // Enter Vehicle Top Speed').optional().nullable(),
+      body_type: formFields.text.describe(t('forms:body-type')).optional().nullable(),
+      steering_wheel: formFields.text.describe(t('forms:steering-wheel')).optional().nullable(),
+      doors_count: formFields.number.describe(t('forms:doors-count')).optional().nullable(),
+      seats_count: formFields.number.describe(t('forms:seats-count')).optional().nullable(),
+      top_speed: formFields.number.describe(t('forms:top-speed')).optional().nullable(),
     }),
 
     fuel_information: z.object({
-      fuel_type: formFields.text.describe('Fuel Type // Enter Vehicle Fuel Type').optional().nullable(),
-      fuel_capacity: formFields.number.describe('Fuel Capacity // Enter Vehicle Fuel Capacity').optional().nullable(),
-      liter_per_km_in_city: formFields.number.describe('Liter Per KM In City // Enter Vehicle Liter Per KM In City').optional().nullable(),
-      liter_per_km_in_highway: formFields.number.describe('Liter Per KM In Highway // Enter Vehicle Liter Per KM In Highway').optional().nullable(),
-      liter_per_km_mixed: formFields.number.describe('Liter Per KM Mixed // Enter Vehicle Liter Per KM Mixed').optional().nullable(),
+      fuel_type: formFields.text.describe(t('forms:fuel-type')).optional().nullable(),
+      fuel_capacity: formFields.number.describe(t('forms:fuel-capacity')).optional().nullable(),
+      liter_per_km_in_city: formFields.number.describe(t('forms:liter-per-km-in-city')).optional().nullable(),
+      liter_per_km_in_highway: formFields.number.describe(t('forms:liter-per-km-in-highway')).optional().nullable(),
+      liter_per_km_mixed: formFields.number.describe(t('forms:liter-per-km-in-combined')).optional().nullable(),
     }),
 
     capacity_dimensions: z.object({
-      width: formFields.number.describe('Width // Enter Vehicle Width').optional().nullable(),
-      height: formFields.number.describe('Height // Enter Vehicle Height').optional().nullable(),
-      length: formFields.number.describe('Length // Enter Vehicle Length').optional().nullable(),
-      unit: formFields.text.describe('Unit // Enter Vehicle Unit').optional().nullable(),
+      width: formFields.number.describe(t('forms:vehicle-width')).optional().nullable(),
+      height: formFields.number.describe(t('forms:vehicle-height')).optional().nullable(),
+      length: formFields.number.describe(t('forms:vehicle-length')).optional().nullable(),
+      unit: formFields.text.describe(t('forms:unit')).optional().nullable(),
     }),
     capacity_weight: z.object({
-      weight: formFields.number.describe('Weight // Enter Vehicle Weight').optional().nullable(),
-      unit: formFields.text.describe('Unit // Enter Vehicle Unit').optional().nullable(),
+      weight: formFields.number.describe(t('forms:vehicle-capacity-weight')).optional().nullable(),
+      unit: formFields.text.describe(t('forms:unit')).optional().nullable(),
     }),
   });
 
@@ -130,14 +132,14 @@ export const ManageVehicleScreen: React.FC = () => {
       {({ information, fuel_information, capacity_dimensions, capacity_weight, ...fields }) => (
         <>
           <ZixFieldContainer
-            label='Vehicle Information'
+            label={t('common:vehicle-information')}
             labelBold
             collapsible
           >
             {Object.values(fields)}
           </ZixFieldContainer>
           <ZixFieldContainer
-            label='Vehicle Type'
+            label={t('common:vehicle-type')}
             labelBold
             collapsible
             isOptional
@@ -146,7 +148,7 @@ export const ManageVehicleScreen: React.FC = () => {
           </ZixFieldContainer>
 
           <ZixFieldContainer
-            label='Fuel Information'
+            label={t('common:fuel-information')}
             labelBold
             collapsible
             isOptional
@@ -155,7 +157,7 @@ export const ManageVehicleScreen: React.FC = () => {
           </ZixFieldContainer>
 
           <ZixFieldContainer
-            label='Dimensions'
+            label={t('common:dimensions')}
             labelBold
             collapsible
             isOptional
@@ -164,7 +166,7 @@ export const ManageVehicleScreen: React.FC = () => {
           </ZixFieldContainer>
 
           <ZixFieldContainer
-            label='Capacity Weight'
+            label={t('common:capacity-weight')}
             labelBold
             collapsible
             isOptional
@@ -181,7 +183,7 @@ export const ManageVehicleScreen: React.FC = () => {
     <>
       <AppHeader
         showBackButton
-        title={vehicleId ? 'Edit Vehicle' : 'Add Vehicle'}
+        title={vehicleId ? t('common:edit-vehicle') :  t('common:add-vehicle')}
       />
       {renderForm()}
       {renderLoading()}

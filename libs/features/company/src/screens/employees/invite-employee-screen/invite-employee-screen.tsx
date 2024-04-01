@@ -16,10 +16,10 @@ import { useRouter } from 'solito/router';
 
 const InviteEmployeeFormSchema = z
   .object({
-    name: formFields.text.describe('Member Name // Enter Member Name'),
-    phone_number: formFields.phone.describe('Phone Number // Enter Phone Number'),
-    email: formFields.text.describe('Email // Enter Email Address').optional(),
-    message: formFields.textarea.describe('Message // Enter Message'),
+    name: formFields.text.describe(t('forms:name')),
+    phone_number: formFields.phone.describe(t('forms:phone_number')),
+    email: formFields.text.describe(t('forms:email')).optional(),
+    message: formFields.textarea.describe(t('forms:message')),
   })
   .required({
     name: true,
@@ -66,8 +66,8 @@ export const InviteEmployeeScreen: React.FC = () => {
     <>
       <AppHeader showBackButton title={
         role === USER_ROLES.company_driver
-          ? t('company:invite_driver')
-          : t('company:invite_employee')
+          ? t('common:invite-driver')
+          : t('common:invite-manager')
       } />
 
       <FormProvider {...form}>
