@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 
 import { useToastController } from '@tamagui/toast';
@@ -77,6 +77,8 @@ export const ManageVehicleScreen: React.FC = () => {
     queryKey: ['VehiclesService.retrieveVehicle', `-${vehicleId}`]
   })
 
+  const queryClient = useQueryClient();
+
   const { mutate } = useMutation({
     async mutationFn(requestBody: z.infer<typeof ManageVehicleFormSchema>) {
       console.log('============')
@@ -94,6 +96,9 @@ export const ManageVehicleScreen: React.FC = () => {
       });
     },
     onSuccess() {
+      queryClient.invalidateQueries({
+        queryKey: ['CompanyVehiclesService.list', user?.active_company?.id],
+      });
       refetchUser();
       toast.show('Company Updated Successfully!');
       router.back();
