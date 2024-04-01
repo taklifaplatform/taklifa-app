@@ -31,8 +31,6 @@ const ManageVehicleFormSchema = z
     // TODO: missing model
     year: formFields.number.describe(t('forms:vehicle-year')),
 
-    // After
-
     information: z.object({
       body_type: formFields.text.describe(t('forms:body-type')).optional().nullable(),
       steering_wheel: formFields.text.describe(t('forms:steering-wheel')).optional().nullable(),

@@ -8,7 +8,8 @@ import { FullScreenSpinner, MediaFile } from '@zix/ui/common';
 import { AppHeader } from '@zix/ui/layouts';
 import { ZixMediasListWidget, ZixWidgetContainer } from '@zix/ui/widgets';
 import { Dimensions, RefreshControl } from 'react-native';
-import { ScrollView, Text, XStack, YStack } from 'tamagui';
+import { ScrollView, Text, View, XStack, YStack } from 'tamagui';
+import { t } from 'i18next';
 
 
 const { useParam } = createParam<{ company: string, vehicle: string }>();
@@ -47,104 +48,100 @@ export function VehicleProfileScreen() {
 
   const vehicleInfoRows = useMemo<VehicleInfoSection[]>(() => ([
     {
-      label: 'Vehicle Information',
+      label: t('common:vehicle-information'),
       items: [
         {
-          label: 'Vehicle type',
+          label: t('common:model'),
           value: vehicle.model?.name || 'N/A'
         },
         {
-          label: 'Model',
-          value: vehicle.model?.name || 'N/A'
-        },
-        {
-          label: 'Year',
+          label: t('common:year'),
           value: vehicle.year || 'N/A'
         },
         {
-          label: 'Color',
+          label: t('common:color'),
           value: vehicle.color || 'N/A'
         },
         {
-          label: 'Plate number',
+          label: t('common:plate-number'),
           value: vehicle.plate_number || 'N/A'
         },
       ]
     },
     {
-      label: 'Vehicle Type',
+      label: t('common:vehicle-type'),
       items: [
         {
-          label: 'Body type',
+          label: t('common:body-type'),
           value: vehicle.information?.body_type || 'N/A'
         },
         {
-          label: 'Steering wheel',
+          label: t('common:steering-wheel'),
           value: vehicle.information?.steering_wheel || 'N/A'
         },
         {
-          label: 'Doors count',
+          label: t('common:doors-count'),
           value: vehicle.information?.doors_count || 'N/A'
         },
         {
-          label: 'Seats count',
+          label: t('common:seats-count'),
           value: vehicle.information?.seats_count || 'N/A'
         },
         {
-          label: 'Top speed',
+          label: t('common:top-speed'),
           value: vehicle.information?.top_speed || 'N/A'
         },
       ]
     },
     {
-      label: 'Fuel Information',
+      label: t('common:fuel-information'),
       items: [
         {
-          label: 'Fuel type',
+          label: t('common:fuel-type'),
           value: vehicle.fuel_information?.fuel_type || 'N/A'
         },
         {
-          label: 'Fuel capacity',
+          label: t('common:fuel-capacity'),
           value: vehicle.fuel_information?.fuel_capacity || 'N/A'
         },
         {
-          label: 'Liter per km in city',
+          label: t('common:liter-per-km-in-city'),
           value: vehicle.fuel_information?.liter_per_km_in_city || 'N/A'
         },
         {
-          label: 'Liter per km in highway',
+          label: t('common:liter-per-km-in-highway'),
           value: vehicle.fuel_information?.liter_per_km_in_highway || 'N/A'
         },
         {
-          label: 'Liter per km mixed',
+          label: t('common:liter-per-km-in-combined'),
           value: vehicle.fuel_information?.liter_per_km_mixed || 'N/A'
         }
       ]
     },
     {
-      label: 'Dimensions',
+      label: t('common:dimensions'),
       items: [
         {
-          label: 'Width',
+          label: t('common:width'),
           value: vehicle.capacity_dimensions?.width
             ? `${vehicle.capacity_dimensions?.width} (${vehicle.capacity_dimensions?.unit})`
             : 'N/A'
         },
         {
-          label: 'Height',
+          label: t('common:height'),
           value: vehicle.capacity_dimensions?.height
             ? `${vehicle.capacity_dimensions?.height} (${vehicle.capacity_dimensions?.unit})`
             : 'N/A'
         },
         {
-          label: 'Length',
+          label: t('common:length'),
           value: vehicle.capacity_dimensions?.length
             ? `${vehicle.capacity_dimensions?.length} (${vehicle.capacity_dimensions?.unit})`
             : 'N/A'
         },
 
         {
-          label: 'Capacity',
+          label: t('common:capacity-volume'),
           value: vehicle.capacity_weight?.value
             ? `${vehicle.capacity_weight?.value} (${vehicle.capacity_weight?.unit ?? 'kg'})`
             : 'N/A'
@@ -154,30 +151,29 @@ export function VehicleProfileScreen() {
   ]), [vehicle])
 
   const renderVehicleInformation = () => data?.data && (
-    <ScrollView flex={1} padding='$4' refreshControl={<RefreshControl refreshing={isLoading} onRefresh={refetch} />}>
-      {
-        vehicle.image && (
-          <MediaFile
-            media={vehicle.image}
-            height='$14'
-            width='100%'
-            resizeMode='cover'
-            borderRadius='$4'
+    <ScrollView flex={1} refreshControl={<RefreshControl refreshing={isLoading} onRefresh={refetch} />}>
+      <YStack gap='$3' padding='$4'>
+        {
+          vehicle.image && (
+            <MediaFile
+              media={vehicle.image}
+              height='$14'
+              width='100%'
+              resizeMode='cover'
+              borderRadius='$4'
+            />
+          )
+        }
+
+        <ZixWidgetContainer
+          label={t('common:images')}
+        >
+          <ZixMediasListWidget
+            medias={data.data.images || []}
+            imageHeight='$10'
+            imageWidth='$12'
           />
-        )
-      }
-
-      <ZixWidgetContainer
-        label='Vehicle Images'
-      >
-        <ZixMediasListWidget
-          medias={data.data.images || []}
-          imageHeight='$10'
-          imageWidth='$12'
-        />
-      </ZixWidgetContainer>
-
-      <YStack gap='$3'>
+        </ZixWidgetContainer>
         {
           vehicleInfoRows.map((section, index) => (
             <ZixWidgetContainer
@@ -193,8 +189,12 @@ export function VehicleProfileScreen() {
                       padding='$2'
                       borderRadius='$2'
                     >
-                      <Text minWidth='$14' fontWeight='700' color='$color12'>{row.label}</Text>
-                      <Text textAlign='right'>{row.value}</Text>
+                      <View flex={0.6}>
+                        <Text textAlign='left' fontWeight='700' color='$color12'>{row.label}</Text>
+                      </View>
+                      <View flex={0.4}>
+                        <Text textAlign='left'>{row.value}</Text>
+                      </View>
                     </XStack>
                   ))
                 }
@@ -203,8 +203,6 @@ export function VehicleProfileScreen() {
           ))
         }
       </YStack>
-
-
     </ScrollView>
   )
 
@@ -212,7 +210,7 @@ export function VehicleProfileScreen() {
 
   return (
     <>
-      <AppHeader title={data?.data?.name || 'Vehicle Info'} showBackButton />
+      <AppHeader title={t('common:vehicle-information')} showBackButton />
       {renderLoadingSpinner()}
       {renderVehicleInformation()}
     </>

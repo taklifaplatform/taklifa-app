@@ -9,6 +9,7 @@ import { useRef } from 'react';
 import { Alert } from 'react-native';
 import { useRouter } from 'solito/router';
 import { useToastController } from '@tamagui/toast';
+import { t } from 'i18next';
 
 export interface TeamMemberCardProps {
   member: CompanyMemberTransformer;
@@ -34,10 +35,10 @@ export function TeamMemberCard({
   const renderActionSheetForSettingManager = () => user?.id && (
     <ActionSheet
       ref={actionSheetManagerRef}
-      title={`Settings`}
+      title={t('common:settings')}
       actions={[
         {
-          name: 'View Profile',
+          name: t('common:view'),
           icon: <Eye size="$1" color="$color10" />,
           onPress: () => {
             actionSheetManagerRef.current?.close();
@@ -46,20 +47,21 @@ export function TeamMemberCard({
         },
         {
           disabled: authUser?.id === user?.id,
-          name: 'Remove from company',
+          name: t('common:delete'),
           icon: <Trash2 size="$1" color="$color10" />,
+          theme: 'error',
           onPress: () => {
             Alert.alert(
-              'Remove member',
-              `Are you sure you want to remove ${user.name} from the company?`,
+              t('common:delete'),
+              t('common:confirm-delete'),
               [
                 {
-                  text: 'Cancel',
+                  text: t('common:cancel'),
                   onPress: () => actionSheetManagerRef.current?.close(),
                   style: 'cancel',
                 },
                 {
-                  text: 'Remove',
+                  text: t('common:remove'),
                   style: 'destructive',
                   onPress: () => {
                     actionSheetManagerRef.current?.close();
@@ -102,13 +104,7 @@ export function TeamMemberCard({
       <Button
         iconAfter={<MoreHorizontal />}
         onPress={() => {
-          console.log('press');
           actionSheetManagerRef.current?.open();
-        }}
-        backgroundColor={'transparent'}
-        pressStyle={{
-          borderColor: 'transparent',
-          backgroundColor: 'transparent',
         }}
       />
       {renderActionSheetForSettingManager()}
