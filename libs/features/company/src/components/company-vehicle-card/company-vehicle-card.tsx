@@ -6,6 +6,7 @@ import { VehicleTransformer, VehiclesService } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { ActionSheet, ActionSheetRef, MediaFile } from '@zix/ui/common';
 import { ZixVariantOptionsWidget } from '@zix/ui/widgets';
+import { t } from 'i18next';
 import React, { useRef } from 'react';
 import { Alert } from 'react-native';
 
@@ -87,10 +88,10 @@ export const CompanyVehicleCard: React.FC<CompanyVehicleCardProps> = ({
         />
         <ActionSheet
           ref={actionSheetManagerRef}
-          title={`Settings`}
+          title={t('common:settings')}
           actions={[
             {
-              name: 'View Vehicle Info',
+              name: t('common:view'),
               icon: <Eye size="$1" color="$color10" />,
               onPress: () => {
                 actionSheetManagerRef.current?.close();
@@ -98,7 +99,7 @@ export const CompanyVehicleCard: React.FC<CompanyVehicleCardProps> = ({
               },
             },
             {
-              name: 'Edit',
+              name: t('common:edit'),
               icon: <Pencil size="$1" color="$color10" />,
               onPress: () => {
                 actionSheetManagerRef.current?.close();
@@ -107,20 +108,20 @@ export const CompanyVehicleCard: React.FC<CompanyVehicleCardProps> = ({
             },
             {
               theme: 'error',
-              name: 'Remove from company',
+              name: t('common:delete'),
               icon: <Trash2 size="$1" color="$color10" />,
               onPress: () => {
                 Alert.alert(
-                  'Remove member',
-                  `Are you sure you want to remove this vehicle?`,
+                  t('common:delete'),
+                  t('common:confirm-delete'),
                   [
                     {
-                      text: 'Cancel',
+                      text: t('common:cancel'),
                       onPress: () => actionSheetManagerRef.current?.close(),
                       style: 'cancel',
                     },
                     {
-                      text: 'Remove',
+                      text: t('common:remove'),
                       style: 'destructive',
                       onPress: () => {
                         actionSheetManagerRef.current?.close();

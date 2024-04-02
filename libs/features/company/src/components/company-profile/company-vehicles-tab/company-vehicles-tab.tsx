@@ -4,6 +4,7 @@ import { CompanyTransformer, CompanyVehiclesService } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { MediaFile } from '@zix/ui/common';
 import { ZixVariantOptionsWidget, ZixWidgetContainer } from '@zix/ui/widgets';
+import { t } from 'i18next';
 import React from 'react';
 import { FlatList } from 'react-native';
 import { useRouter } from 'solito/router';
@@ -29,7 +30,7 @@ export const CompanyVehiclesTab: React.FC<CompanyVehiclesTabProps> = ({
 
   return (
     <YStack gap='$2'>
-      <ZixWidgetContainer label='Vehicles'>
+      <ZixWidgetContainer label={t('common:vehicles')}>
         <FlatList
           data={data?.data || []}
           renderItem={({ item, index }) => (
@@ -65,8 +66,6 @@ export const CompanyVehiclesTab: React.FC<CompanyVehiclesTabProps> = ({
 
                 ]}
               />
-
-
             </XStack>
           )}
         />

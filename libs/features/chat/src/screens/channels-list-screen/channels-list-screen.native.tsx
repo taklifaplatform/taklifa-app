@@ -1,5 +1,6 @@
 import { useAuth } from '@zix/services/auth';
 import { AppHeader } from '@zix/ui/layouts';
+import { t } from 'i18next';
 import { useCallback } from 'react';
 import { useRouter } from 'solito/router';
 import { ChannelList } from 'stream-chat-expo';
@@ -14,7 +15,7 @@ export function ChannelsListScreen() {
 
   return (
     <>
-      <AppHeader showBackButton title='Chat' />
+      <AppHeader showBackButton title={t('common:chat')} />
       <ChannelList
         onSelect={onSelect}
       />

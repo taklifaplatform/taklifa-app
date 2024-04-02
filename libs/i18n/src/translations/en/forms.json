@@ -36,5 +36,27 @@
   "complain-send": "Send Complain",
   "labels": {
     "code": "Code"
-  }
+  },
+  "vehicle-image": "Vehicle Image // Upload your vehicle image",
+  "images": "Images // Upload images",
+  "vehicle-internal-id": "Internal ID // Enter your vehicle internal reference",
+  "color": "Color // Enter your vehicle color",
+  "plate-number": "Plate Number // Enter your vehicle plate number",
+  "vin-number": "VIN Number // Enter your vehicle VIN number",
+  "vehicle-year": "Year // Enter your vehicle year",
+  "body-type": "Body Type // Enter your vehicle body type",
+  "steering-wheel": "Steering Wheel // Enter your vehicle steering wheel",
+  "doors-count": "Doors Count // Enter your vehicle doors count",
+  "seats-count": "Seats Count // Enter your vehicle seats count",
+  "top-speed": "Top Speed // Enter your vehicle top speed",
+  "fuel-type": "Fuel Type // Enter your vehicle fuel type",
+  "fuel-capacity": "Fuel Capacity // Enter your vehicle fuel capacity",
+  "liter-per-km-in-city": "Liter per KM in City // Enter your vehicle liter per KM in city",
+  "liter-per-km-in-highway": "Liter per KM in Highway // Enter your vehicle liter per KM in highway",
+  "liter-per-km-in-combined": "Liter per KM in Combined // Enter your vehicle liter per KM in combined",
+  "vehicle-width": "Width // Enter your vehicle width",
+  "vehicle-height": "Height // Enter your vehicle height",
+  "vehicle-length": "Length // Enter your vehicle length",
+  "unit": "Unit // Enter unit type...",
+  "vehicle-capacity-weight": "Capacity Weight // Enter your vehicle capacity weight"
 }

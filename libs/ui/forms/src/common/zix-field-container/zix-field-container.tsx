@@ -84,7 +84,6 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
 }) => {
   const id = useId()
   const themeName = useThemeName();
-  const { isRtl } = useMultiLang()
   const [activeAccordions, setActiveAccordions] = useState([id as string]);
 
   useEffect(() => {
@@ -127,7 +126,7 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
       <Accordion.Item value={id as string}>
         <Accordion.Trigger
           unstyled
-          flexDirection={isRtl ? 'row-reverse' : 'row'}
+          flexDirection='row'
           justifyContent="space-between"
           paddingVertical="$2"
           hoverStyle={{
