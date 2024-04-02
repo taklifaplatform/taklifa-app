@@ -1,29 +1,14 @@
-import { useMultiLang } from '@zix/i18n';
-import { CustomIcon } from '@zix/ui/icons';
 import {
   ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  ChevronUp,
-  Circle,
+  ChevronLeft
 } from '@tamagui/lucide-icons';
+import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
-import { useRouter } from 'next/router';
-import { Pressable } from 'react-native';
-import { Accordion, AlertDialog, Button, Image, Paragraph, Square, Stack, Text, Theme, Tooltip, View, XStack, YStack } from 'tamagui';
-import { ManageShipments } from '../../components/web-home/management-shipments/ManageShipments';
-import { Partner } from '../../components/web-home/partner/Partner';
+import { Accordion, Button, Image, Paragraph, Square, Stack, Text, Tooltip, View, XStack, YStack } from 'tamagui';
 import { MainLayout } from '../../layouts/MainLayout';
 import { NextPageWithLayout } from '../_app';
-import { PersonalInforma } from './personalforma';
-type WelcomeTextProps = {
-  title: string;
-  incon: string;
-  text: string;
-};
+
 export const Page: NextPageWithLayout = () => {
-  const { activeLang } = useMultiLang();
-  const router = useRouter();
   const renderFirstSection = () => (
     <Stack
       backgroundColor="$color5"
@@ -503,39 +488,6 @@ export const Page: NextPageWithLayout = () => {
       </View>
 
       {renderCard()}
-
-      <AlertDialog>
-        <AlertDialog.Trigger asChild>
-          <Button>بيانات شخصية </Button>
-        </AlertDialog.Trigger>
-        <AlertDialog.Portal>
-          <AlertDialog.Overlay />
-          <AlertDialog.Content
-            backgroundColor="$color2"
-            borderRadius={10}
-            padding="$5"
-            width={600}
-            $sm={{
-              width: '100%',
-              padding: "$2",
-            }}
-          >
-            <AlertDialog.Title />
-            <AlertDialog.Description>
-              استفد من خدماتنا وحلولنا المصممة لتلبية جميع احتياجاتك الخاصة بالشحن.
-            </AlertDialog.Description>
-            <XStack gap="$3" justifyContent="flex-end">
-              <AlertDialog.Cancel asChild>
-                <Button>خروج</Button>
-              </AlertDialog.Cancel>
-              <AlertDialog.Action asChild>
-                <Button theme="active">التالي </Button>
-              </AlertDialog.Action>
-            </XStack>
-            <PersonalInforma />
-          </AlertDialog.Content>
-        </AlertDialog.Portal>
-      </AlertDialog>
 
     </YStack>
   );
