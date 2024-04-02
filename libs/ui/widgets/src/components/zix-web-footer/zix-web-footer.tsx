@@ -117,13 +117,13 @@ export const ZixWebFooter = () => {
         {t('web-home:aboutfooter')}
       </Text>
       <YStack gap="$1">
-        <ZixLinkButton menuItem href={'/'} >
+        {/* <ZixLinkButton menuItem href={'/'} >
           <Text color={'$color2'}>{t('web-home:investor')}</Text>
-        </ZixLinkButton>
-        <ZixLinkButton menuItem href={'/'}>
+        </ZixLinkButton> */}
+        {/* <ZixLinkButton menuItem href={'/'}>
           <Text color={'$color2'}>{t('web-home:delivering')}</Text>
-        </ZixLinkButton>
-        <ZixLinkButton menuItem href={'/'}>
+        </ZixLinkButton> */}
+        <ZixLinkButton menuItem href={'/about/commercial'}>
           <Text color={'$color2'}>{t('web-home:commercial')}</Text>
         </ZixLinkButton>
         <ZixLinkButton menuItem href={'/terms-of-service'}>
