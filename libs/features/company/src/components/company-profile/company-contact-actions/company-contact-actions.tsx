@@ -11,14 +11,17 @@ import { Button, SizeTokens, ThemeableStackProps, XStack } from 'tamagui';
 export type CompanyContactActionsProps = ThemeableStackProps & {
   company: CompanyTransformer;
   actionButtonSize?: SizeTokens;
+  onServiceRequestPress?: () => void;
+
 };
 
 export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
   company,
   actionButtonSize = '$2.5',
+  onServiceRequestPress,
   ...props
 }) => {
-  const { user: authUser, getUrlPrefix } = useAuth()
+  const { getUrlPrefix } = useAuth()
   const router = useRouter()
 
   const sharedButtonStyle = {
@@ -32,8 +35,10 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
     // Linking.openURL(`tel:${company.phone_number}`);
   }
 
-  function onServiceRequestPress() {
-    //
+  function _onServiceRequestPress() {
+    if (onServiceRequestPress) {
+      return onServiceRequestPress()
+    }
     router.push(`${getUrlPrefix}/shipment-manager?selected_company_id=${company.id}`)
   }
 
@@ -58,7 +63,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
         theme='accent'
         flex={1.5}
         icon={(props: IconProps) => <CustomIcon {...props} name="followed" color='$color12' />}
-        onPress={onServiceRequestPress}
+        onPress={_onServiceRequestPress}
         {...sharedButtonStyle}
       >
         ارسال الدعوة
