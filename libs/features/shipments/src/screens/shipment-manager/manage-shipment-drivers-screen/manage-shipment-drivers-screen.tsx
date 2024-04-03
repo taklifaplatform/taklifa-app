@@ -4,19 +4,27 @@ import { createParam } from 'solito';
 
 import { View, Text, YStack, Button } from 'tamagui';
 import ShipmentManagerHeader from '../../../components/shipment-manager/shipment-manager-header/shipment-manager-header';
-import { useQuery } from '@tanstack/react-query';
-import { CompaniesService, DriverTransformer, DriversService, ShipmentService } from '@zix/api';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { CompaniesService, CompanyTransformer, DriverTransformer, DriversService, ShipmentService, UpdateShipmentRequest } from '@zix/api';
 import { ZixTab } from '@zix/ui/common';
 import { t } from 'i18next';
 import { FlatList } from 'react-native';
 import { UserCard } from '@zix/features/users';
 import { CompanyCard } from '@zix/features/company';
+import { useToastController } from '@tamagui/toast';
+import { useRouter } from 'solito/router';
+import { useAuth } from '@zix/services/auth';
 
 const { useParam } = createParam<{ shipment: string }>();
 
 export function ManageShipmentDriversScreen() {
   const [shipmentId] = useParam('shipment');
   const [selectedDrivers, setSelectedDrivers] = useState<DriverTransformer[]>([])
+  const [selectedCompanies, setSelectedCompanies] = useState<CompanyTransformer[]>([])
+  const toast = useToastController()
+  const router = useRouter()
+  const { getUrlPrefix } = useAuth()
+
 
   const { data } = useQuery({
     queryFn() {
@@ -40,6 +48,39 @@ export function ManageShipmentDriversScreen() {
     queryFn: () => CompaniesService.fetchAllCompanies({}),
     queryKey: ['CompaniesService.fetchAllCompanies'],
   })
+
+
+  const { mutate } = useMutation({
+    mutationFn(requestBody: UpdateShipmentRequest) {
+      if (!shipmentId) {
+        throw new Error('Shipment ID is required')
+      }
+      return ShipmentService.updateShipment({
+        shipment: shipmentId,
+        requestBody
+      })
+    },
+    onSuccess() {
+      toast.show('Shipment items updated successfully', { preset: 'success' })
+      onSkipPress()
+    },
+    onError(error: any) {
+      toast.show(error?.body?.message || 'An error occurred', { preset: 'error' })
+    },
+  })
+
+  function onSkipPress() {
+    router.push(`${getUrlPrefix}/shipment-manager/${shipmentId}/budget`)
+  }
+
+  function onConfirmPress() {
+    mutate({
+      invitations: [
+        ...selectedDrivers.map(d => ({ driver_id: d.id })),
+        ...selectedCompanies.map(c => ({ company_id: c.id }))
+      ]
+    })
+  }
 
   const renderTabs = () => (
     <ZixTab
@@ -82,16 +123,15 @@ export function ManageShipmentDriversScreen() {
                 <CompanyCard
                   company={item}
                   key={`${index}-${item.id}`}
-                  borderWidth={selectedDrivers.some(d => d.id === item.id) ? 2 : 0}
+                  borderWidth={selectedCompanies.some(d => d.id === item.id) ? 2 : 0}
                   marginBottom='$4'
-                  userContactActionsProps={{
-                    // onServiceRequestPress: () => {
-                    //   // alert('Service Request Pressed')
-                    //   setSelectedDrivers(prev => prev.some(d => d.id === item.id)
-                    //     ? prev.filter(d => d.id !== item.id)
-                    //     : [...prev, item]
-                    //   )
-                    // }
+                  companyContactActionsProps={{
+                    onServiceRequestPress: () => {
+                      setSelectedCompanies(prev => prev.some(d => d.id === item.id)
+                        ? prev.filter(d => d.id !== item.id)
+                        : [...prev, item]
+                      )
+                    }
 
                   }}
                 />
@@ -114,10 +154,16 @@ export function ManageShipmentDriversScreen() {
         />
         {renderTabs()}
         <YStack padding='$4' gap='$2'>
-          <Button themeInverse>
+          <Button
+            themeInverse
+            onPress={onConfirmPress}
+          >
             {t('common:confirm')}
           </Button>
-          <Button variant='outlined'>
+          <Button
+            variant='outlined'
+            onPress={onSkipPress}
+          >
             {t('common:skip')}
           </Button>
         </YStack>
