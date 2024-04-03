@@ -39,7 +39,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
     if (onServiceRequestPress) {
       return onServiceRequestPress()
     }
-    router.push(`${getUrlPrefix}/shipment-manager?selected_company_id=${company.id}`)
+    router.push(`${getUrlPrefix}/create-shipment?selected_company_id=${company.id}`)
   }
 
   const { mutate: startChat, isPending } = useMutation({

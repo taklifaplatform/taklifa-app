@@ -3,6 +3,7 @@ import { CustomIcon } from '@zix/ui/icons';
 import { useRouter } from 'solito/router';
 import { Image, Separator, Text, Theme, ThemeableStackProps, XStack, YStack } from 'tamagui';
 import { CompanyContactActions, CompanyContactActionsProps } from '../company-profile/company-contact-actions/company-contact-actions';
+import { useAuth } from '@zix/services/auth';
 
 export type CompanyCardProps = ThemeableStackProps & {
   company: CompanyTransformer;
@@ -16,10 +17,11 @@ export const CompanyCard: React.FC<CompanyCardProps> = ({
   ...props
 }) => {
   const router = useRouter();
+  const { getUrlPrefix } = useAuth()
 
 
   function onPress() {
-    router.push(`/app/companies/${company.id}`);
+    router.push(`${getUrlPrefix}/companies/${company.id}`);
   }
 
   const renderLocationInfo = () => !!company?.location?.id && (

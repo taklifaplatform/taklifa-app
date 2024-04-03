@@ -42,7 +42,7 @@ export const AppLayout = () => {
         }}
       />
       <Tabs.Screen
-        name="shipment-manager"
+        name="create-shipment"
         options={activeRole === USER_ROLES.customer ? {
           title: '',
           tabBarIcon: PlusButton,
@@ -118,7 +118,7 @@ const PlusButton = ({ size, focused }: TabBarIconProps) => {
   return (
     <Button
       theme='accent'
-      onPress={() => router.push('/app/shipment-manager')}
+      onPress={() => router.replace('/app/create-shipment')}
       height={size + 34}
       width={size + 34}
       borderRadius={size + 34}
