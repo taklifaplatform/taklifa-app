@@ -6,6 +6,7 @@ export * from "./code-input-field/code-input-field";
 export * from "./date-picker-field/date-picker-field";
 export * from "./media-picker-field/media-picker-field";
 export * from "./phone-field/phone-field";
+export * from "./money-field/money-field";
 export * from "./select-field/select-field";
 export * from "./text-area-field/text-area-field";
 export * from "./text-field/text-field";

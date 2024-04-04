@@ -8,15 +8,17 @@ import { AppHeader } from '@zix/ui/layouts';
 import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
-import { FormProvider, Theme } from 'tamagui';
+import { Button, Theme, YStack } from 'tamagui';
 import { z } from 'zod';
 import ShipmentManagerHeader from '../../../components/shipment-manager/shipment-manager-header/shipment-manager-header';
 import { SHARED_SHIPMENT_MANAGER_FIELD_PROPS } from '../configs';
+import { t } from 'i18next';
 
 const { useParam } = createParam<{ shipment: string }>();
 
 const SendFromSchema = z.object({
-  to_location: formFields.advanced_location.describe('Shipping To // Enter the address of the delivery location'),
+  min_budget: formFields.money.describe('Min Budget'),
+  max_budget: formFields.money.describe('Max Budget'),
 
 })
 
@@ -51,8 +53,7 @@ export const ManageShipmentBudgetScreen: React.FC = () => {
       })
     },
     onSuccess(data, variables, context) {
-      router.push(`${getUrlPrefix}/shipment-manager/${shipmentId}/items`)
-      //
+      onGoNext()
     },
     onError(error: any) {
       toast.show(error?.body?.message || 'An error occurred', { preset: 'error' })
@@ -60,50 +61,59 @@ export const ManageShipmentBudgetScreen: React.FC = () => {
     },
   })
 
-  if (shipmentId && !data?.data) {
-    return <FullScreenSpinner />
+  function onGoNext() {
+    router.push(`${getUrlPrefix}/shipment-manager/${shipmentId}/summary`)
   }
+
+  const renderLoadingSpinner = () => !data?.data && (
+    <FullScreenSpinner />
+  )
+
+  const renderForm = () => data?.data && (
+    <SchemaForm
+      form={form}
+      schema={SendFromSchema}
+      defaultValues={data.data}
+      onSubmit={mutate}
+
+      renderAfter={({ submit }) => (
+        <YStack gap='$4'>
+          <Theme inverse>
+            <SubmitButton onPress={() => submit()}>
+              {t('common:next')}
+            </SubmitButton>
+          </Theme>
+          <Button onPress={() => onGoNext()}>
+            {t('common:skip')}
+          </Button>
+        </YStack>
+      )}
+    >
+      {(fields) => (
+        <>
+          <ShipmentManagerHeader
+            activeStep={2}
+            shipment={data?.data}
+            title='يرجى تحديد السعر المناسب لك'
+          />
+
+          <ZixFieldContainer
+            label='Budget'
+            {...SHARED_SHIPMENT_MANAGER_FIELD_PROPS.containerProps}
+          >
+            {Object.values(fields)}
+          </ZixFieldContainer>
+
+        </>
+      )}
+    </SchemaForm>
+  )
 
   return (
     <>
       <AppHeader title='Shipment Details' showBackButton />
-      <FormProvider {...form}>
-        <SchemaForm
-          form={form}
-          schema={SendFromSchema}
-          props={{
-            to_location: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
-            deliver_date: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
-            deliver_time: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
-          }}
-          defaultValues={data.data}
-          onSubmit={mutate}
-
-          renderAfter={({ submit }) => (
-            <Theme inverse>
-              <SubmitButton onPress={() => submit()}>Confirm</SubmitButton>
-            </Theme>
-          )}
-        >
-          {(fields) => (
-            <>
-              <ShipmentManagerHeader
-                activeStep={2}
-                shipment={data?.data}
-                title='يرجى تحديد السعر المناسب لك'
-              />
-
-              <ZixFieldContainer
-                label='Budget'
-                {...SHARED_SHIPMENT_MANAGER_FIELD_PROPS.containerProps}
-              >
-                {Object.values(fields)}
-              </ZixFieldContainer>
-
-            </>
-          )}
-        </SchemaForm>
-      </FormProvider>
+      {renderForm()}
+      {renderLoadingSpinner()}
     </>
   )
 }

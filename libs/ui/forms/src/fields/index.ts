@@ -4,5 +4,6 @@ export * from './zix-code-input-field/zix-code-input-field';
 export * from './zix-country-field/zix-country-field';
 export * from './zix-media-picker-field';
 export * from './zix-phone-field/zix-phone-field';
+export * from './zix-money-field/zix-money-field';
 export * from './zix-select-field/zix-select-field';
 export * from './zix-date-fields';
