@@ -1,6 +1,8 @@
 export * from './shipment-card-actions/shipment-card-actions';
 
-export * from './shipment-canceled-detail/shipment-canceled-detail';
+export * from './shipment-card-header/shipment-card-header';
+
+export * from './shipment-status/shipment-status';
 
 export * from './shipment-delivering-detail/shipment-delivering-detail';
 
@@ -12,7 +14,7 @@ export * from './shipment-card-location/shipment-card-location';
 
 export * from './budget-shipment/budget-shipment';
 
-export * from './total-cost-of-shipment/total-cost-of-shipment';
+export * from './shipment-cost/shipment-cost';
 
 export * from './definition-sender/definition-sender';
 

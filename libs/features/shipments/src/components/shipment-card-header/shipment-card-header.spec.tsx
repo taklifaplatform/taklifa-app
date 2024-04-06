@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import ShipmentCanceledDetail from './shipment-canceled-detail';
+import { ShipmentCardHeader } from './shipment-card-header';
 
-describe('ShipmentCanceledDetail', () => {
+describe('ShipmentCardHeader', () => {
   it('should render successfully', () => {
-    const { root } = render(< ShipmentCanceledDetail />);
+    const { root } = render(< ShipmentCardHeader shipment={{}} />);
     expect(root).toBeTruthy();
   });
 });

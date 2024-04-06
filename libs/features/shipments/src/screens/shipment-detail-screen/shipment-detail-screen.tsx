@@ -5,12 +5,10 @@ import {
   ShipmentTransformer,
 } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
-import { FullScreenSpinner, UserAvatar } from '@zix/ui/common';
-import { CustomIcon } from '@zix/ui/icons';
+import { FullScreenSpinner } from '@zix/ui/common';
 import { AppHeader } from '@zix/ui/layouts';
 import { ZixWidgetContainer } from '@zix/ui/widgets';
 import { t } from 'i18next';
-import moment from 'moment';
 import { useMemo } from 'react';
 import { RefreshControl } from 'react-native';
 import { createParam } from 'solito';
@@ -19,7 +17,6 @@ import {
   Separator,
   Text,
   View,
-  XStack,
   YStack
 } from 'tamagui';
 import {
@@ -27,13 +24,14 @@ import {
   DefinitionSender,
   InformationAboutDriver,
   SectionWrapper,
-  ShipmentCanceledDetail,
   ShipmentCardActions,
+  ShipmentCardHeader,
   ShipmentCode,
+  ShipmentCost,
   ShipmentDeliveringDetail,
   ShipmentDetails,
   ShipmentDirection,
-  TotalCostOfShipment
+  ShipmentStatus,
 } from '../../components';
 
 export type ShipmentDetailScreenProps = {
@@ -72,74 +70,6 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
 
   const status = shipment?.status;
 
-  const renderHeaderShipment = () => (
-    <XStack
-      justifyContent="space-between"
-      alignItems="center"
-      $gtSm={{
-        backgroundColor: '$gray3',
-        padding: '$5',
-        borderRadius: '$4',
-      }}
-    >
-      <YStack gap="$3" alignItems="flex-start">
-        <Text fontSize={12} fontWeight={'600'} color={'$color11'}>
-          SWDKSA{shipment?.id?.toString().substring(0, 8).toUpperCase()}
-        </Text>
-        <Text fontSize={18} fontWeight={'400'} color={'$color5'}>
-          {t('job:job-demand')} {shipment?.items_type}
-        </Text>
-        <XStack alignItems="center" gap="$6" marginBottom="$3">
-          <XStack gap="$2" alignItems="center" $sm={{ display: 'none' }}>
-            {/* TODO change to UserAvatar */}
-
-            <UserAvatar size={'$1'} user={shipment?.user} />
-            <Text
-              fontSize={12}
-              fontWeight={'600'}
-              color={'$color9'}
-              $sm={{
-                fontSize: 12,
-                fontWeight: '600',
-              }}
-            >
-              {shipment.user?.name}
-            </Text>
-          </XStack>
-          <XStack gap="$2" alignItems="center">
-            <CustomIcon
-              name="chronic"
-              size="$1"
-              $sm={{
-                display: 'none',
-              }}
-            />
-            <Text
-              fontSize={12}
-              fontWeight={'600'}
-              color={'$color9'}
-              $sm={{
-                fontSize: 9,
-                fontWeight: '600',
-              }}
-            >
-              {t('job:job-published')} {moment(shipment?.created_at).fromNow()}
-            </Text>
-          </XStack>
-        </XStack>
-      </YStack>
-
-      <View $sm={{ display: 'none' }}>
-        <ShipmentCardActions
-          shipment={shipment}
-          variant={variant}
-          urlPrefix={urlPrefix}
-          isDetail={true}
-        />
-      </View>
-    </XStack>
-  );
-
   const renderDescription = (
     items: Array<ShipmentTransformer>,
     label: string,
@@ -174,11 +104,14 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
         }}
       >
         <YStack gap="$3" padding="$4">
-          <ShipmentCanceledDetail status={shipment.status || 'darft'} />
-          {renderHeaderShipment()}
-          <TotalCostOfShipment shipment={shipment} />
+          <ShipmentStatus shipment={shipment} />
+
+          <ShipmentCardHeader shipment={shipment} />
+
+          <ShipmentCost shipment={shipment} />
 
           <ShipmentDeliveringDetail shipment={shipment} />
+
           {status === 'delivering' &&
             renderDescription(
               shipment?.items || [],

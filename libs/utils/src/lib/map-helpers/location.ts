@@ -1,5 +1,4 @@
 import { LocationTransformer } from "@zix/api";
-import { LatLng } from "./types";
 
 export function getDistance(location1: LocationTransformer, location2: LocationTransformer) {
     const earthRadius = 6371; // Radius of the Earth in kilometers
