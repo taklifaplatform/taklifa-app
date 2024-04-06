@@ -9,8 +9,8 @@ import React, { useMemo } from 'react';
 import { useMultiLang } from '@zix/i18n';
 import { ZixVariantOptionsWidget } from '@zix/ui/widgets';
 import {
+  H6,
   Separator,
-  Stack,
   Text,
   ThemeableStackProps,
   XStack,
@@ -44,212 +44,157 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
     );
   }, [shipment.pick_date, shipment.deliver_date]);
 
-  const renderDetailShipment = () => (
-    <YStack gap="$4">
-      <ZixVariantOptionsWidget
-        variant="card"
-        optionVariant="card"
-        options={[
-          {
-            icons: (
-              <Inbox size="$1" color={'$color9'} $sm={{ display: 'none' }} />
-            ),
-            name: t('job:number-of-packages'),
-            value: `${shipment.items?.length}`,
-          },
-          {
-            icons: (
-              <CustomIcon
-                name="time-pace"
-                size="$1"
-                color={'$color9'}
-                $sm={{ display: 'none' }}
-              />
-            ),
-            name: t('job:deliver_time'),
-            value: `${deliveryTime.humanize()}`,
-          },
-          {
-            icons: (
-              <Settings2 size="$1" color={'$color9'} $sm={{ display: 'none' }} />
-            ),
-            name: t('job:Suggestions'),
-            value: 'TODO',
-          },
-          {
-            icons: (
-              <CustomIcon
-                name="budget"
-                size="$1"
-                color={'$color9'}
-                $sm={{ display: 'none' }}
-              />
-            ),
-            name: t('shipment:budget'),
-            value: `${shipment.min_budget?.value} - ${shipment.max_budget?.value} ${shipment.min_budget?.currency?.code}`,
-          },
-        ]}
-      />
-      <ZixVariantOptionsWidget
-        variant="location"
-        optionVariant="location"
-        options={[
-          {
-            icons: (
-              <CustomIcon
-                name="assistant-navigation"
-                size="$1"
-                color={'$color9'}
-                {...(!isRtl && { rotate: '180deg' })}
-              />
-            ),
-            name: t('shipment:from_location'),
-            value: `${shipment?.from_location?.address}`,
-          },
-          {
-            theme: 'success',
-            icons: <CustomIcon name="location" size="$1" color={'$color9'} />,
-            name: t('shipment:to_location'),
-            value: `${shipment.to_location?.address}`,
-          },
-        ]}
-      />
-    </YStack>
-  );
 
-  const renderHeaderShipment = () => (
-    <YStack gap="$3" flex={1}>
-      <XStack flex={1} alignItems="center" justifyContent="space-between">
-        <YStack gap="$2">
-          <Text
-            fontSize={12}
-            fontWeight={'600'}
-            color={'$color11'}
-            $sm={{ display: 'none' }}
-          >
-            SWDKSA{shipment.id?.toString().substring(0, 8).toUpperCase()}
-          </Text>
-          <Text
-            fontSize={25}
-            fontWeight={'400'}
-            color={'$color5'}
-            $sm={{
-              fontSize: 18,
-              fontWeight: '400',
-              color: '$color',
-            }}
-          >
-            {t('job:job-demand')}{' '}
-            {`${t('shipment:type:' + shipment?.items_type)}`}
-          </Text>
-        </YStack>
-        <Stack $sm={{ display: 'none' }}>
-          <ShipmentCardActions
-            shipment={shipment}
-            variant={variant}
-            urlPrefix={urlPrefix}
-            isDetail={isDetail}
-          />
-        </Stack>
-      </XStack>
-      <Stack
-        flexDirection="row"
-        gap="$8"
-        marginBottom="$3"
-        $sm={{ flexDirection: 'column', gap: '$2' }}
-      >
-        <XStack gap="$2" alignItems="center">
-          {/* TODO change to UserAvatar */}
 
-          <UserAvatar size={'$1'} user={shipment.user} />
-          <Text
-            fontSize={12}
-            fontWeight={'600'}
-            color={'$color9'}
-            $sm={{
-              fontSize: 12,
-              fontWeight: '600',
-            }}
-          >
-            {shipment.user?.name}
-          </Text>
-        </XStack>
-        <XStack gap="$2" alignItems="center">
-          <CustomIcon
-            name="chronic"
-            size="$1"
-            $sm={{
-              display: 'none',
-            }}
-          />
-          <Text
-            fontSize={12}
-            fontWeight={'600'}
-            color={'$color9'}
-            $sm={{
-              fontSize: 9,
-              fontWeight: '600',
-            }}
-          >
-            {t('job:job-published')} {moment(shipment.created_at).fromNow()}
-          </Text>
-        </XStack>
-      </Stack>
-      <Text
-        fontSize={15}
-        fontWeight={'400'}
-        color={'$color9'}
-        $sm={{
-          fontSize: 13,
-          fontWeight: '400',
-        }}
-      >
-        {description}
+
+  const renderSender = () => (
+    <XStack alignItems='center' gap='$2'>
+      <UserAvatar size='$1' user={shipment.user} />
+      <Text>
+        {shipment.user?.name}
       </Text>
+    </XStack>
+  )
+
+  const renderTitle = () => (
+    <XStack alignItems='center' justifyContent='space-between' gap='$2'>
+      <H6 textTransform='none'>
+        {t('job:job-demand')}{' '}
+        {`${t('shipment:type:' + shipment?.items_type)}`}
+      </H6>
+      <Text>
+        {/* TODO REPLACE WITH SHIPMENT CODE */}
+        SWDKSA{shipment.id?.toString().substring(0, 8).toUpperCase()}
+      </Text>
+    </XStack>
+  )
+
+  const renderPublishedDate = () => (
+    <XStack alignItems='center' gap='$1'>
+      <CustomIcon
+        name="chronic"
+        size="$1"
+      />
+      <Text fontSize={10} color='$color9'>
+        {t('job:job-published')} {moment(shipment.created_at).fromNow()}
+      </Text>
+    </XStack>
+  )
+
+  const renderDescription = () => (
+    <YStack gap='$1.5'>
+      {
+        shipment.items?.map((item) => (
+          <Text key={item.id}>
+            {item.notes}
+          </Text>
+        ))
+      }
     </YStack>
+  )
+
+  const renderDetail = () => (
+    <ZixVariantOptionsWidget
+      variant="card"
+      optionVariant="card"
+      options={[
+        {
+          icons: (
+            <Inbox size="$1" color={'$color9'} $sm={{ display: 'none' }} />
+          ),
+          name: t('job:number-of-packages'),
+          value: `${shipment.items?.length}`,
+        },
+        {
+          icons: (
+            <CustomIcon
+              name="time-pace"
+              size="$1"
+              color={'$color9'}
+              $sm={{ display: 'none' }}
+            />
+          ),
+          name: t('job:deliver_time'),
+          value: `${deliveryTime.humanize()}`,
+        },
+        {
+          icons: (
+            <Settings2 size="$1" color={'$color9'} $sm={{ display: 'none' }} />
+          ),
+          name: t('job:Suggestions'),
+          value: 'TODO',
+        },
+        {
+          icons: (
+            <CustomIcon
+              name="budget"
+              size="$1"
+              color={'$color9'}
+              $sm={{ display: 'none' }}
+            />
+          ),
+          name: t('shipment:budget'),
+          value: `${shipment.min_budget?.value} - ${shipment.max_budget?.value} ${shipment.min_budget?.currency?.code}`,
+        },
+      ]}
+    />
   );
+
+  const renderLocation = () => (
+    <ZixVariantOptionsWidget
+      variant="location"
+      optionVariant="location"
+      options={[
+        {
+          icons: (
+            <CustomIcon
+              name="assistant-navigation"
+              size="$1"
+              color={'$color9'}
+              {...(!isRtl && { rotate: '180deg' })}
+            />
+          ),
+          name: t('shipment:from_location'),
+          value: `${shipment?.from_location?.address}`,
+        },
+        {
+          icons: <CustomIcon name="location" size="$1" color={'$color9'} />,
+          name: t('shipment:to_location'),
+          value: `${shipment.to_location?.address}`,
+        },
+      ]}
+    />
+  )
 
   return (
     <YStack
-      justifyContent="space-between"
-      paddingHorizontal="$6"
-      paddingVertical="$4"
-      backgroundColor={'$color1'}
-      borderRadius={'$4'}
-      flex={1}
-      $sm={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: '$6',
-        padding: '$4',
-      }}
+      padding="$4"
+      backgroundColor='$color1'
+      borderRadius='$4'
+      gap="$4"
       {...props}
     >
-      <YStack
-        backgroundColor={'$color1'}
-        borderRadius={'$4'}
-        gap="$4"
-        width={'100%'}
-        $sm={{ width: '100%' }}
-      >
-        {renderHeaderShipment()}
-
-        <Separator borderColor={'$gray7'} width={'100%'} />
-        {renderDetailShipment()}
+      <YStack gap='$2'>
+        {renderSender()}
+        {renderTitle()}
+        {renderPublishedDate()}
       </YStack>
-      <Separator
-        borderColor={'$gray7'}
-        width={'100%'}
-        $gtSm={{ display: 'none' }}
+
+      {renderDescription()}
+
+      <Separator borderColor='$gray7' />
+
+      {renderDetail()}
+      {renderLocation()}
+
+      <Separator borderColor='$gray7' />
+
+      <ShipmentCardActions
+        shipment={shipment}
+        variant={variant}
+        urlPrefix={urlPrefix}
+        isDetail={isDetail}
       />
-      <Stack width={'100%'} $gtMd={{ display: 'none' }}>
-        <ShipmentCardActions
-          shipment={shipment}
-          variant={variant}
-          urlPrefix={urlPrefix}
-          isDetail={isDetail}
-        />
-      </Stack>
     </YStack>
   );
 };

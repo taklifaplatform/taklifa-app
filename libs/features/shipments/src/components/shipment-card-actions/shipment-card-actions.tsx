@@ -34,7 +34,7 @@ export const ShipmentCardActions: React.FC<ShipmentCardActionsProps> = ({
       fontWeight="bold"
       onPress={() => router.push(`${getUrlPrefix}/shipment-manager/${shipment.id}`)}
     >
-      {t('shipment:edit')}
+      {t('common:edit')}
     </Button>
   )
 
