@@ -215,7 +215,13 @@ export const MapLocationPicker: React.FC<MapLocationPickerProps> = ({ value, onC
         <View flex={1} backgroundColor='$background1'>
           <ZixMapPointerField
             value={value}
-            onChange={mutate}
+            onChange={location => {
+              onChange({
+                ...value,
+                ...location
+              });
+              mutate(location)
+            }}
           />
           <MapLocationPickerHeader onChange={mutate} onClose={() => setOpen(false)} />
 
