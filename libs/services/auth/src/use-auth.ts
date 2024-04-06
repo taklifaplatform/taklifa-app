@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import {
   AuthenticatedUserTransformer,
@@ -49,6 +49,7 @@ export function useAuth(): AuthHelpers {
     authRequestedAccountTypeStorage,
   );
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const { data, refetch, isLoading } = useQuery({
     queryKey: ['profile', authUser?.id, authAccessToken?.substring(0, 5)],
@@ -169,6 +170,9 @@ export function useAuth(): AuthHelpers {
   }
 
   function refetchUser() {
+    queryClient.invalidateQueries({
+      queryKey: ['DriversService.retrieveDriver', user.id],
+    });
     refetch().then(() => {
       data?.data && setAuthUser(data.data);
     });

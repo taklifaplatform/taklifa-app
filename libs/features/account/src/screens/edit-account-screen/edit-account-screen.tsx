@@ -17,6 +17,7 @@ const { useParams } = createParam<{ edit_name?: '1'; edit_about?: '1' }>();
 
 const ProfileSchema = z.object({
   avatar: formFields.image.describe('Avatar // Upload avatar'),
+  username: formFields.text.describe('Username // Enter your username'),
   name: formFields.text.describe('Name // John Doe'),
   phone_number: formFields.phone.describe('Phone Number // 1234567890'),
   about: formFields.textarea
