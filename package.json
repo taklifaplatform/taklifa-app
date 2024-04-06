@@ -107,7 +107,8 @@
     "tamagui": "^1.92.0",
     "text-encoding": "^0.7.0",
     "tslib": "^2.6.2",
-    "zod-i18n-map": "^2.27.0"
+    "zod-i18n-map": "^2.27.0",
+    "expo-camera": "~14.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.14.5",
