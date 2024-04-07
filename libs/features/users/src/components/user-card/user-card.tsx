@@ -4,16 +4,18 @@ import { ZixMediasListWidget } from '@zix/ui/widgets';
 import { useMemo } from 'react';
 import { useRouter } from 'solito/router';
 import { Image, Separator, Text, ThemeableStackProps, XStack, YStack } from 'tamagui';
-import { UserContactActions } from '../user-contact-actions/user-contact-actions';
+import { UserContactActions, UserContactActionsProps } from '../user-contact-actions/user-contact-actions';
 import { UserInfoRow } from '../user-info-row/user-info-row';
 
 export type UserCardProps = ThemeableStackProps & {
   user: DriverTransformer;
+  userContactActionsProps?: Partial<UserContactActionsProps>
 };
 
 export const UserCard: React.FC<UserCardProps> = ({
   user,
   padding = '$4',
+  userContactActionsProps = {},
   ...props
 }) => {
   const router = useRouter();
@@ -69,7 +71,7 @@ export const UserCard: React.FC<UserCardProps> = ({
       <UserInfoRow user={user} paddingHorizontal={padding} />
       <ZixMediasListWidget medias={user?.vehicle?.images || []} paddingHorizontal={padding} />
       <Separator borderColor="$gray6" />
-      <UserContactActions user={user} paddingHorizontal={padding} />
+      <UserContactActions {...userContactActionsProps} user={user} paddingHorizontal={padding} />
     </YStack>
   );
 };

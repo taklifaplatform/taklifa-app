@@ -65,7 +65,6 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
         placeholder={t('common:search')}
         value={search}
         onChangeText={onSearch}
-        height='$3'
         rightIcon={(props) => <CustomIcon name='search' {...props} />}
       />
     </YStack>

@@ -6895,7 +6895,8 @@
               "tag": "p",
               "userSelect": "auto",
               "color": "$color",
-              "size": "$true"
+              "size": "$true",
+              "whiteSpace": "normal"
             },
             "inlineWhenUnflattened": {},
             "variants": {
@@ -7862,6 +7863,7 @@
               "userSelect": "auto",
               "color": "$color",
               "size": "$9",
+              "whiteSpace": "normal",
               "accessibilityRole": "header",
               "margin": 0
             },
@@ -20559,7 +20561,8 @@
               "tag": "p",
               "userSelect": "auto",
               "color": "$color",
-              "size": "$true"
+              "size": "$true",
+              "whiteSpace": "normal"
             },
             "inlineWhenUnflattened": {},
             "variants": {
@@ -20762,6 +20765,7 @@
               "userSelect": "auto",
               "color": "$color",
               "size": "$10",
+              "whiteSpace": "normal",
               "accessibilityRole": "header",
               "margin": 0
             },
@@ -20966,6 +20970,7 @@
               "userSelect": "auto",
               "color": "$color",
               "size": "$9",
+              "whiteSpace": "normal",
               "accessibilityRole": "header",
               "margin": 0
             },
@@ -21170,6 +21175,7 @@
               "userSelect": "auto",
               "color": "$color",
               "size": "$8",
+              "whiteSpace": "normal",
               "accessibilityRole": "header",
               "margin": 0
             },
@@ -21374,6 +21380,7 @@
               "userSelect": "auto",
               "color": "$color",
               "size": "$7",
+              "whiteSpace": "normal",
               "accessibilityRole": "header",
               "margin": 0
             },
@@ -21578,6 +21585,7 @@
               "userSelect": "auto",
               "color": "$color",
               "size": "$6",
+              "whiteSpace": "normal",
               "accessibilityRole": "header",
               "margin": 0
             },
@@ -21782,6 +21790,7 @@
               "userSelect": "auto",
               "color": "$color",
               "size": "$5",
+              "whiteSpace": "normal",
               "accessibilityRole": "header",
               "margin": 0
             },
@@ -21986,6 +21995,7 @@
               "userSelect": "auto",
               "color": "$color",
               "size": "$8",
+              "whiteSpace": "normal",
               "accessibilityRole": "header",
               "margin": 0
             },
@@ -22552,48 +22562,26 @@
     "onlyAllowShorthands": false,
     "fontLanguages": [],
     "animations": {
-      "isReactNative": true,
       "animations": {
-        "100ms": {
-          "type": "timing",
-          "duration": 100
-        },
-        "bouncy": {
-          "damping": 9,
-          "mass": 0.9,
-          "stiffness": 150
-        },
-        "lazy": {
-          "damping": 18,
-          "stiffness": 50
-        },
-        "medium": {
-          "damping": 15,
-          "stiffness": 120,
-          "mass": 1
-        },
-        "slow": {
-          "damping": 15,
-          "stiffness": 40
-        },
-        "quick": {
-          "damping": 20,
-          "mass": 1.2,
-          "stiffness": 250
-        },
-        "tooltip": {
-          "damping": 10,
-          "mass": 0.9,
-          "stiffness": 100
-        }
+        "75ms": "ease-in 75ms",
+        "100ms": "ease-in 100ms",
+        "200ms": "ease-in 200ms",
+        "bouncy": "ease-in 200ms",
+        "superBouncy": "ease-in 500ms",
+        "lazy": "ease-in 1000ms",
+        "medium": "ease-in 300ms",
+        "slow": "ease-in 500ms",
+        "quick": "cubic-bezier(0.215, 0.610, 0.355, 1.000) 400ms",
+        "quicker": "cubic-bezier(0.215, 0.610, 0.355, 1.000) 300ms",
+        "quickest": "cubic-bezier(0.215, 0.610, 0.355, 1.000) 200ms",
+        "tooltip": "ease-in 400ms"
       },
-      "View": "Component",
-      "Text": "Component",
+      "usePresence": "Function",
+      "ResetPresence": "Function",
+      "supportsCSSVars": true,
       "useAnimatedNumber": "Function",
       "useAnimatedNumberReaction": "Function",
       "useAnimatedNumberStyle": "Function",
-      "usePresence": "Function",
-      "ResetPresence": "Function",
       "useAnimations": "Function"
     },
     "media": {

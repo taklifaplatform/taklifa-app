@@ -6,4 +6,6 @@ export * from './manage-shipment-drivers-screen/manage-shipment-drivers-screen';
 
 export * from './manage-shipment-recipient-screen/manage-shipment-recipient-screen';
 
+export * from './manage-shipment-budget-screen/manage-shipment-budget-screen';
+
 export * from './manage-shipment-sender-screen/manage-shipment-sender-screen';

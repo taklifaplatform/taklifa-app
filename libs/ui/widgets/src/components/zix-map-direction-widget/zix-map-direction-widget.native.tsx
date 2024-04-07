@@ -51,8 +51,6 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
 
   return (
     <Stack
-      marginVertical="$1.5"
-      marginHorizontal="$4"
       height={200}
       backgroundColor="$gray6"
       borderRadius="$5"
@@ -62,9 +60,9 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
           flex: 1,
           borderRadius: 10,
         }}
-        
+
         initialRegion={mapRegion}
-        
+
       >
         <Marker
           coordinate={start}

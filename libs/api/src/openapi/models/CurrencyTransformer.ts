@@ -6,5 +6,16 @@ export type CurrencyTransformer = {
     id?: number;
     name?: string;
     code?: string;
+    units?: {
+        major?: {
+            name?: string;
+            symbol?: string;
+        };
+        minor?: {
+            name?: string;
+            symbol?: string;
+            majorValue?: number;
+        };
+    };
 };
 

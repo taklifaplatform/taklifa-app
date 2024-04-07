@@ -3,7 +3,7 @@ import { LocationTransformer, ShipmentTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import React from 'react';
-import { XStack, YStack, Text, Stack, ThemeableStackProps } from 'tamagui';
+import { XStack, YStack, Text, Stack, ThemeableStackProps, View } from 'tamagui';
 
 /* eslint-disable-next-line */
 export type ShipmentCardLocationProps = ThemeableStackProps & {
@@ -22,41 +22,42 @@ export const ShipmentCardLocation: React.FC<ShipmentCardLocationProps> = ({
 }) => {
   return (
     <YStack
-      gap="$2"
-      width={'100%'}
-      padding={'$4'}
+      gap="$3"
+      paddingHorizontal='$4'
+      paddingVertical='$3'
       borderWidth="$0.5"
-      borderColor={'$color9'}
-      borderRadius={'$6'}
+      borderColor='$color9'
+      borderRadius='$4'
       {...props}
     >
       <XStack justifyContent="space-between">
-        <Text color={'$color'}>{date}</Text>
+        <Text fontWeight='bold'>{date}</Text>
         {location.is_primary ? (
-          <Stack
+          <View
+            theme='accent'
             paddingHorizontal="$3"
-            backgroundColor={'$color5'}
-            borderRadius={'$3'}
+            paddingVertical="$1"
+            backgroundColor='$color10'
+            borderRadius='$3'
           >
-            <Text fontSize={15} fontWeight={500}>
+            <Text fontWeight='700' >
               {t('shipment:primary')}
             </Text>
-          </Stack> 
-        ): null}
+          </View>
+        ) : null}
       </XStack>
-      <Stack width={'100%'} alignItems="flex-start">
-        <Text fontSize={15} fontWeight={600}>
-          {location.address}
-        </Text>
-      </Stack>
+
+      <Text fontWeight='bold'>
+        {location.address}
+      </Text>
 
       <XStack gap="$4">
         <XStack gap="$2" alignItems="center">
-          <User size="$1" color={'$color9'} />
+          <User size="$1" />
           <Text>{userName}</Text>
         </XStack>
         <XStack gap="$2" alignItems="center">
-          <PhoneCall size="$1" color={'$color9'} />
+          <PhoneCall size="$1" />
           <Text>{phone_number}</Text>
         </XStack>
       </XStack>

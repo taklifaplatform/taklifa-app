@@ -1,21 +1,23 @@
 import { IconProps } from '@tamagui/helpers-icon';
+import { useMutation } from '@tanstack/react-query';
 import { ChatService, DriverTransformer } from '@zix/api';
-import { CustomIcon } from '@zix/ui/icons';
 import { useAuth } from '@zix/services/auth';
+import { ZixButton } from '@zix/ui/common';
+import { CustomIcon } from '@zix/ui/icons';
 import { Linking, Platform } from 'react-native';
 import { useRouter } from 'solito/router';
 import { Button, SizeTokens, ThemeableStackProps, XStack } from 'tamagui';
-import { useMutation } from '@tanstack/react-query';
-import { ZixButton } from '@zix/ui/common';
 
 export type UserContactActionsProps = ThemeableStackProps & {
   user: DriverTransformer;
   actionButtonSize?: SizeTokens;
+  onServiceRequestPress?: () => void;
 };
 
 export const UserContactActions: React.FC<UserContactActionsProps> = ({
   user,
   actionButtonSize = '$2.5',
+  onServiceRequestPress,
   ...props
 }) => {
   const { user: authUser, getUrlPrefix } = useAuth()
@@ -31,9 +33,12 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
     Linking.openURL(`tel:${user.phone_number}`);
   }
 
-  function onServiceRequestPress() {
+  function _onServiceRequestPress() {
+    if (onServiceRequestPress) {
+      return onServiceRequestPress()
+    }
     //
-    router.push(`${getUrlPrefix}/shipment-manager?selected_driver_id=${user.id}`)
+    router.push(`${getUrlPrefix}/create-shipment?selected_driver_id=${user.id}`)
   }
 
   const { mutate: startChat, isPending } = useMutation({
@@ -65,7 +70,7 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
         theme='accent'
         flex={1.5}
         icon={(props: IconProps) => <CustomIcon {...props} name="followed" color='$color12' />}
-        onPress={onServiceRequestPress}
+        onPress={_onServiceRequestPress}
         {...sharedButtonStyle}
       >
         ارسال الدعوة

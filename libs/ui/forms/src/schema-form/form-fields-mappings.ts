@@ -11,6 +11,7 @@ import {
   LocationFieldProps,
   MediaPickerField,
   MediaPickerFieldProps,
+  MoneyField,
   NumberField,
   PhoneField,
   SelectField,
@@ -128,6 +129,7 @@ export const formFieldsMappings = [
   ] as const,
 
   [formFields.phone, PhoneField] as const,
+  [formFields.money, MoneyField] as const,
   [formFields.code, CodeInputField] as const,
 
   [formFields.country, CountryField] as const,

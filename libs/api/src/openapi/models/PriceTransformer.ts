@@ -5,6 +5,7 @@
 import type { CurrencyTransformer } from './CurrencyTransformer';
 export type PriceTransformer = {
     id?: number;
+    currency_id?: number;
     currency?: CurrencyTransformer;
     value?: number;
 };

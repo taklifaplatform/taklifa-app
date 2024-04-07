@@ -46,7 +46,7 @@
         "document": "Document",
         "box": "Box",
         "multiple_boxes": "Multiple boxes",
-        "other": "Other"
+        "other": ""
 
     },
     "status": {

@@ -62,24 +62,15 @@ const VariantText = styled(Text, {
     },
     card: {
       true: {
-        fontSize: 12,
-        fontWeight: '600',
-        color: '$color12',
-        $sm: {
-          fontWeight: '400',
-        },
+        fontSize: 10,
+        fontWeight: '700',
+        color: '$color10',
       },
     },
     location: {
       true: {
-        fontSize: 12,
-        fontWeight: '600',
-        color: '$color12',
-        $sm: {
-          fontSize: 10,
-          fontWeight: '400',
-          //width: 60
-        },
+        fontWeight: '700',
+        color: '$color9',
       }
     }
   },
@@ -88,34 +79,20 @@ const VariantValueText = styled(Text, {
   variants: {
     details: {
       true: {
-        fontSize: 15,
-        fontWeight: '600',
-        color: '$color12',
-        $sm: {
-          width: 220,
-          textAlign: 'left',
-          fontSize: 15,
-          fontWeight: '600',
-          flexWrap: 'wrap',
-        },
+        fontWeight: 'bold',
       },
     },
     card: {
       true: {
         fontSize: 12,
-        fontWeight: '600',
-        color: '$color12',
+        fontWeight: '700',
       },
     },
     location: {
       true: {
+        numberOfLines: 1,
         fontSize: 12,
-        fontWeight: '600',
-        color: '$color12',
-        $sm: {
-          fontSize: 10,
-          fontWeight: '600',
-        }
+        fontWeight: '700',
       }
     }
   },

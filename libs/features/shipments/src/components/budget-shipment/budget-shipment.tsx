@@ -3,9 +3,8 @@ import { ZixWidgetContainer } from '@zix/ui/widgets';
 import { t } from 'i18next';
 import React from 'react';
 import { Stack, Text, View, XStack, YStack } from 'tamagui';
-import SectionWrapper from '../section-wrapper/section-wrapper';
 
-export interface BudgetShipmentProps {
+export type BudgetShipmentProps = {
   shipment: ShipmentTransformer;
 }
 
@@ -13,7 +12,6 @@ export const BudgetShipment: React.FC<BudgetShipmentProps> = ({
   shipment,
   ...props
 }) => {
-  if (shipment.status !== 'draft') return null;
 
   const renderOptionActivity = (title: string, value: string) => (
     <XStack
@@ -39,66 +37,67 @@ export const BudgetShipment: React.FC<BudgetShipmentProps> = ({
       gap="$2"
       width={'30%'}
       height={100}
-      backgroundColor={'$gray5'}
-      padding="$4"
+      backgroundColor='$color3'
+      paddingVertical="$2"
       borderRadius="$4"
       alignItems="center"
+      justifyContent='space-around'
     >
-      <Text color={'$color9'} fontWeight={'400'}>
+      <Text>
         {title}
       </Text>
-      <Text fontSize={20} fontWeight={'800'}>
+      <Text fontSize='$8' fontWeight='bold'>
         {value}
       </Text>
-      <Text fontSize={12} fontWeight={'600'}>
+      <Text >
         {currency}
       </Text>
     </YStack>
   );
+
+
   return (
-    <SectionWrapper>
-      <ZixWidgetContainer label={t('job:budget')}>
-        <XStack gap="$4" paddingVertical="$4">
-          {renderCardBudget(
-            t('shipment:higher'),
-            shipment.max_budget?.value || 0,
-            shipment.max_budget?.currency?.code || '',
+    <ZixWidgetContainer label={t('job:budget')}>
+      <XStack gap="$4" paddingVertical="$4">
+        {renderCardBudget(
+          t('shipment:lower'),
+          shipment.min_budget?.value || 0,
+          shipment.max_budget?.currency?.code || '',
+        )}
+        {renderCardBudget(
+          t('shipment:medium'),
+          ((shipment?.max_budget?.value || 0) +
+            (shipment?.min_budget?.value || 0)) /
+          2,
+          shipment.max_budget?.currency?.code || '',
+        )}
+        {renderCardBudget(
+          t('shipment:higher'),
+          shipment.max_budget?.value || 0,
+          shipment.max_budget?.currency?.code || '',
+        )}
+      </XStack>
+      <YStack width="100%" gap="$3" marginTop="$3" paddingVertical="$4">
+        <Stack alignItems="flex-start" marginBottom="$3">
+          <Text fontSize={20} color={'$color'} fontWeight='bold'>
+            {t('shipment:activity-in-this-presentation')}
+          </Text>
+        </Stack>
+        <Stack
+          flexDirection="column"
+          gap="$3"
+          $gtSm={{ flexDirection: 'row', justifyContent: 'space-between' }}
+        >
+          {renderOptionActivity(t('job:Suggestions'), 'Todo')}
+          {renderOptionActivity(t('shipment:conducting-interviews'), 'Todo')}
+          {renderOptionActivity(
+            t('shipment:invitation-have-been-sent'),
+            'Todo',
           )}
-          {renderCardBudget(
-            t('shipment:medium'),
-            ((shipment?.max_budget?.value || 0) +
-              (shipment?.min_budget?.value || 0)) /
-            2,
-            shipment.max_budget?.currency?.code || '',
-          )}
-          {renderCardBudget(
-            t('shipment:lower'),
-            shipment.min_budget?.value || 0,
-            shipment.max_budget?.currency?.code || '',
-          )}
-        </XStack>
-        <YStack width="100%" gap="$3" marginTop="$3" paddingVertical="$4">
-          <Stack alignItems="flex-start" marginBottom="$3">
-            <Text fontSize={20} color={'$color'} fontWeight={'600'}>
-              {t('shipment:activity-in-this-presentation')}
-            </Text>
-          </Stack>
-          <Stack
-            flexDirection="column"
-            gap="$3"
-            $gtSm={{ flexDirection: 'row', justifyContent: 'space-between' }}
-          >
-            {renderOptionActivity(t('job:Suggestions'), 'Todo')}
-            {renderOptionActivity(t('shipment:conducting-interviews'), 'Todo')}
-            {renderOptionActivity(
-              t('shipment:invitation-have-been-sent'),
-              'Todo',
-            )}
-            {renderOptionActivity(t('shipment:unanswered-invitations'), 'Todo')}
-          </Stack>
-        </YStack>
-      </ZixWidgetContainer>
-    </SectionWrapper>
+          {renderOptionActivity(t('shipment:unanswered-invitations'), 'Todo')}
+        </Stack>
+      </YStack>
+    </ZixWidgetContainer>
   );
 };
 

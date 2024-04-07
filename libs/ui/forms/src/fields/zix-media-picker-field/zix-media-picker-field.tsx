@@ -1,8 +1,6 @@
 import { randomUUID } from 'expo-crypto';
 
-import { Alert, Platform } from 'react-native';
-
-import { Camera, Image, Paperclip } from '@tamagui/lucide-icons';
+import { Camera as CameraIcon, Image, Paperclip } from '@tamagui/lucide-icons';
 import { MediaService, MediaTransformer } from '@zix/api';
 import { ActionSheet, ActionSheetRef } from '@zix/ui/common';
 import { getDocumentAsync } from 'expo-document-picker';
@@ -13,7 +11,9 @@ import {
 } from 'expo-image-picker';
 import { t } from 'i18next';
 import { useEffect, useRef, useState } from 'react';
+import { Alert, Linking, Platform } from 'react-native';
 import { UploadableMediaFile, uploadMediaFile } from '../../utils';
+import { useCamera } from './hooks/useCamera';
 import { ZixFilesInputMediaPickerPreviewer, ZixImageMediaPickerPreviewer, ZixRowMediaPickerPreviewer } from './previewers';
 import { ZixMediaPickerTransformer } from './types';
 
@@ -51,6 +51,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
   placeholder
 }) => {
   const Previewer = MediaPreviewers[type]
+  const { permission, requestPermission } = useCamera();
 
   const actionRef = useRef<ActionSheetRef>(null);
 
@@ -79,7 +80,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     const actions = [
       {
         name: t(`core:media_picker.camera`),
-        icon: <Camera size="$1.5" color="$color10" />,
+        icon: <CameraIcon size="$1.5" color="$color10" />,
         onPress: launchCamera,
       },
       {
@@ -256,6 +257,32 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
    * @returns {Promise<void>} A promise that resolves when the camera is launched.
    */
   async function launchCamera() {
+
+    if (!permission?.granted) {
+      const grant = await requestPermission()
+
+      if (!grant.granted) {
+        Alert.alert(
+          'Oops!!',
+          'Camera permission is required to take photo',
+          [
+            {
+              text: 'Cancel',
+              style: 'cancel',
+            },
+            {
+              text: 'Open Settings',
+              onPress: () => Linking.openSettings(),
+            },
+          ],
+          {
+            cancelable: true,
+          },
+        );
+        return
+      }
+    }
+
     actionRef.current?.close();
 
     let mediaTypes = MediaTypeOptions.All;

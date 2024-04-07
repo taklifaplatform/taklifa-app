@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import TotalCostOfShipment from './total-cost-of-shipment';
+import { ShipmentCardHeader } from './shipment-card-header';
 
-describe('TotalCostOfShipment', () => {
+describe('ShipmentCardHeader', () => {
   it('should render successfully', () => {
-    const { root } = render(< TotalCostOfShipment />);
+    const { root } = render(< ShipmentCardHeader shipment={{}} />);
     expect(root).toBeTruthy();
   });
 });

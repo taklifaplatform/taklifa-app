@@ -26,6 +26,7 @@ const nextConfig = {
     'react-native-web',
     'expo-linking',
     'expo-crypto',
+    'expo-camera',
     'expo-constants',
     'expo-modules-core',
     'expo-image-picker',

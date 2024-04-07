@@ -16,9 +16,7 @@ export type UpdateVehicleRequest = {
     year?: number;
     image?: ImageUpdateVehicleRequest;
     images?: Array<ImagesUpdateVehicleRequest>;
-    vehicle_make_id?: number;
     model_id?: number;
-    vehicle_icon_id?: number;
     information?: InformationUpdateVehicleRequest;
     fuel_information?: FuelInformationUpdateVehicleRequest;
     capacity_dimensions?: CapacityDimensionsUpdateVehicleRequest;

@@ -12,7 +12,7 @@ import React from 'react';
 import { UserAvatar } from '@zix/ui/common';
 import { Stack, Text, ThemeableStackProps, XStack, YStack } from 'tamagui';
 import { Link } from 'solito/link';
-import SectionWrapper from '../section-wrapper/section-wrapper';
+import { ShipmentSectionWrapper } from '../shipment-section-wrapper/shipment-section-wrapper';
 
 export type InformationAboutDriverProps = ThemeableStackProps & {
   driver: DriverTransformer;
@@ -55,8 +55,9 @@ export const InformationAboutDriver: React.FC<InformationAboutDriverProps> = ({
     </XStack>
   );
   if (status !== 'delivering') return null;
+
   return (
-    <SectionWrapper>
+    <ShipmentSectionWrapper>
       <ZixWidgetContainer label={t('shipment:information-about-driver')}>
         <YStack gap="$6" marginTop="$4" {...props}>
           {renderDriver()}
@@ -132,7 +133,7 @@ export const InformationAboutDriver: React.FC<InformationAboutDriverProps> = ({
           <ZixMediasListWidget medias={driver?.vehicle?.images} />
         </YStack>
       </ZixWidgetContainer>
-    </SectionWrapper>
+    </ShipmentSectionWrapper>
   );
 };
 

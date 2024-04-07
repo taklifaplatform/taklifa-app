@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import ShipmentCanceledDetail from './shipment-canceled-detail';
+import ShipmentCost from './shipment-cost';
 
-describe('ShipmentCanceledDetail', () => {
+describe('ShipmentCost', () => {
   it('should render successfully', () => {
-    const { root } = render(< ShipmentCanceledDetail />);
+    const { root } = render(< ShipmentCost />);
     expect(root).toBeTruthy();
   });
 });

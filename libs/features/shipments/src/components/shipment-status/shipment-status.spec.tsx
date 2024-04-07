@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import SectionWrapper from './section-wrapper';
+import { ShipmentStatus } from './shipment-status';
 
-describe('SectionWrapper', () => {
+describe('ShipmentStatus', () => {
   it('should render successfully', () => {
-    const { root } = render(< SectionWrapper > </SectionWrapper>);
+    const { root } = render(< ShipmentStatus shipment={{}} />);
     expect(root).toBeTruthy();
   });
 });
