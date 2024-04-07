@@ -8,7 +8,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useAuth } from '@zix/services/auth';
 import { FlatList } from 'react-native';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
-import { Circle, Stack, Text, View, YStack, useStyle } from 'tamagui';
+import { Circle, Stack, Text, View, YStack, useMedia, useStyle } from 'tamagui';
 import ShipmentCard from '../../components/shipment-card/shipment-card';
 
 export type ShipmentsListScreenProps = {
@@ -19,6 +19,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
   variant = 'shipments',
 }) => {
   const { activeRole, getUrlPrefix } = useAuth();
+  const media = useMedia()
 
   const screenTitle = useMemo(() => {
     if (variant === 'jobs') {
@@ -116,6 +117,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
       <YStack flex={1}>
         {renderShipmentFilters()}
         <FlatList
+          key={`shipment-list-${media.gtMd ? 'lg' : 'sm'}`}
           refreshing={isLoading}
           onRefresh={refetch}
           style={useStyle({
@@ -123,7 +125,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
             padding: '$2',
           })}
           data={data?.data}
-          // numColumns={2} // TODO: num of columns when screen is large
+          numColumns={media.gtMd ? 2 : 1}
           renderItem={({ item, index }) => (
             <Stack $gtMd={{ flex: 1, flexBasis: 1 }} padding='$2'>
               <ShipmentCard
