@@ -24,4 +24,4 @@ export * from './shipment-details/shipment-details';
 
 export * from './shipment-card/shipment-card';
 
-export * from './section-wrapper/section-wrapper';
+export * from './shipment-section-wrapper/shipment-section-wrapper';

@@ -1,13 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import {
   DriversService,
-  ShipmentService,
-  ShipmentTransformer,
+  ShipmentService
 } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
 import { AppHeader } from '@zix/ui/layouts';
-import { ZixWidgetContainer } from '@zix/ui/widgets';
+import { ZixMapDirectionWidget, ZixWidgetContainer } from '@zix/ui/widgets';
 import { t } from 'i18next';
 import { useMemo } from 'react';
 import { RefreshControl } from 'react-native';
@@ -23,7 +22,7 @@ import {
   BudgetShipment,
   DefinitionSender,
   InformationAboutDriver,
-  SectionWrapper,
+  ShipmentSectionWrapper,
   ShipmentCardActions,
   ShipmentCardHeader,
   ShipmentCode,
@@ -70,26 +69,6 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
 
   const status = shipment?.status;
 
-  const renderDescription = (
-    items: Array<ShipmentTransformer>,
-    label: string,
-  ) => (
-    <SectionWrapper>
-      <ZixWidgetContainer label={t(label)}>
-        <Text
-          fontSize={15}
-          fontWeight={'400'}
-          color={'$color9'}
-          $sm={{
-            fontSize: 13,
-            fontWeight: '400',
-          }}
-        >
-          {items?.map((item) => item.notes).join(', ')}
-        </Text>
-      </ZixWidgetContainer>
-    </SectionWrapper>
-  );
 
   const renderShipmentDetails = () =>
     !shipment ? (
@@ -104,6 +83,7 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
         }}
       >
         <YStack gap="$3" padding="$4">
+
           <ShipmentStatus shipment={shipment} />
 
           <ShipmentCardHeader shipment={shipment} />
@@ -112,43 +92,49 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
 
           <ShipmentDeliveringDetail shipment={shipment} />
 
-          {status === 'delivering' &&
-            renderDescription(
-              shipment?.items || [],
-              'shipment:offer-description',
-            )}
+          <ShipmentSectionWrapper>
+            <ZixWidgetContainer label={t('shipment:offer-description')}>
+              <YStack gap='$2'>
+                <Text>
+                  TODO
+                </Text>
+              </YStack>
+            </ZixWidgetContainer>
+          </ShipmentSectionWrapper>
 
-          <Separator
-            borderColor={'$gray7'}
-            width={'100%'}
-            $gtSm={{ display: 'none' }}
-          />
-          {renderDescription(
-            shipment?.items || [],
-            'shipment:service-description',
-          )}
-          <Separator
-            borderColor={'$gray7'}
-            width={'100%'}
-            $gtSm={{ display: 'none' }}
-          />
-          <ShipmentDirection shipment={shipment} status={status} />
+          <ShipmentSectionWrapper>
+            <ZixWidgetContainer label={t('shipment:service-description')}>
+              <YStack gap='$2'>
+                {shipment?.items?.map((item, index) => (
+                  <Text key={`shipment-note-${item.id}-${index}`}>
+                    {item.notes}
+                  </Text>
+                ))}
+              </YStack>
+            </ZixWidgetContainer>
+          </ShipmentSectionWrapper>
 
-          <Separator
-            borderColor={'$gray7'}
-            width={'100%'}
-            $gtSm={{ display: 'none' }}
-          />
 
-          <ShipmentDetails shipment={shipment} paddingVertical="$4" />
+          <ShipmentSectionWrapper hideSeparator>
+            <ShipmentDirection shipment={shipment} />
+          </ShipmentSectionWrapper>
 
-          <Separator
-            borderColor={'$gray7'}
-            width={'100%'}
-            $gtSm={{ display: 'none' }}
-          />
+          <ShipmentSectionWrapper>
+            <ZixMapDirectionWidget
+              startLocation={shipment.from_location || {}}
+              endLocation={shipment.to_location || {}}
+              status={shipment.status}
+            />
+          </ShipmentSectionWrapper>
 
-          <BudgetShipment shipment={shipment} />
+          <ShipmentSectionWrapper>
+            <ShipmentDetails shipment={shipment} />
+          </ShipmentSectionWrapper>
+
+
+          <ShipmentSectionWrapper>
+            <BudgetShipment shipment={shipment} />
+          </ShipmentSectionWrapper>
 
           <InformationAboutDriver driver={driver} status={status} />
 

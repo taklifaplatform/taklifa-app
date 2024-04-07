@@ -79,16 +79,7 @@ const VariantValueText = styled(Text, {
   variants: {
     details: {
       true: {
-        fontSize: 15,
-        fontWeight: '600',
-        color: '$color12',
-        $sm: {
-          width: 220,
-          textAlign: 'left',
-          fontSize: 15,
-          fontWeight: '600',
-          flexWrap: 'wrap',
-        },
+        fontWeight: 'bold',
       },
     },
     card: {

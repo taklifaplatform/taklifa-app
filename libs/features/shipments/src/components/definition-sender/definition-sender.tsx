@@ -5,7 +5,7 @@ import { CustomIcon } from '@zix/ui/icons';
 import React from 'react';
 import { Link } from 'solito/link';
 import { Stack, Text, XStack, YStack } from 'tamagui';
-import SectionWrapper from '../section-wrapper/section-wrapper';
+import { ShipmentSectionWrapper } from '../shipment-section-wrapper/shipment-section-wrapper';
 
 /* eslint-disable-next-line */
 export interface DefinitionSenderProps {
@@ -16,7 +16,7 @@ export const DefinitionSender: React.FC<DefinitionSenderProps> = ({
   shipment,
 }) => {
   return (
-    <SectionWrapper>
+    <ShipmentSectionWrapper>
       <XStack
         width={'100%'}
         justifyContent="space-between"
@@ -45,7 +45,7 @@ export const DefinitionSender: React.FC<DefinitionSenderProps> = ({
           </Stack>
         </Link>
       </XStack>
-    </SectionWrapper>
+    </ShipmentSectionWrapper>
   );
 };
 

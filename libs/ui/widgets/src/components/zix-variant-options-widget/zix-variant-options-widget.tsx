@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Stack, Text, YStack, styled } from 'tamagui';
+import { Stack, Text, ThemeableStackProps, YStack, styled } from 'tamagui';
 import {
   IVariantOption,
   VariantOption,
@@ -10,6 +10,7 @@ import {
 export interface ZixVariantOptionsWidgetProps {
   icon?: React.ReactNode;
   label?: string;
+  labelContainerProps?: ThemeableStackProps;
   options: IVariantOption[];
   variant: 'details' | 'card' | 'location';
   optionVariant: VariantOptionType;
@@ -20,14 +21,12 @@ const ZixVariantOptionsWidgetStack = styled(Stack, {
   variants: {
     details: {
       true: {
-        width: '100%',
         flexDirection: "row",
         flexWrap: "wrap",
-        marginRight: "$3",
         marginTop: "$3",
         $sm: {
-          width: '100%',
           flexDirection: 'column',
+          paddingLeft: "$4",
         }
       },
 
@@ -52,11 +51,8 @@ const ZixVariantOptionsWidgetText = styled(Text, {
     details: {
       true: {
         fontSize: 18,
-        fontWeight: '600',
-        color: '$color5',
-        $sm: {
-          fontSize: 18,
-        }
+        fontWeight: 'bold',
+        color: '$color10',
       }
     },
     location: {
@@ -83,12 +79,15 @@ const ZixVariantOptionsWidgetText = styled(Text, {
 
 export const ZixVariantOptionsWidget: React.FC<
   ZixVariantOptionsWidgetProps
-> = ({ icon, label, options, labelBold, optionVariant, variant, ...props }) => {
+> = ({ icon, label, options, labelBold, optionVariant, variant, labelContainerProps = {}, ...props }) => {
   return (
     <YStack width={'100%'}>
       {
         !!label && (
-          <Stack flexDirection='row' flexWrap='wrap' gap="$3" alignItems="center">
+          <Stack
+            {...labelContainerProps}
+            flexDirection='row' flexWrap='wrap' gap="$3" alignItems="center"
+          >
             {icon}
             <ZixVariantOptionsWidgetText
               {...(variant ? { [variant]: true } : {})}

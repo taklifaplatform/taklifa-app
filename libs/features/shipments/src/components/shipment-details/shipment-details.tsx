@@ -19,7 +19,6 @@ import { t } from 'i18next';
 import moment from 'moment';
 import React, { useMemo } from 'react';
 import { Text, ThemeableStackProps, XStack, YStack } from 'tamagui';
-import SectionWrapper from '../section-wrapper/section-wrapper';
 
 export type ShipmentDetailsProps = ThemeableStackProps & {
   shipment: ShipmentTransformer;
@@ -59,97 +58,109 @@ export const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
   }, [
     shipment,
   ]);
+
+
+  const renderImages = () => !!shipment?.items?.filter(i => i.medias?.length).length && (
+    <YStack gap="$6" marginTop="$4">
+      <XStack theme='accent' gap="$3" alignItems="center">
+        <Image size="$1.5" color='$color10' />
+        <Text fontSize={18} fontWeight='bold' color='$color10'>
+          {t('shipment:shipment-image')}
+        </Text>
+      </XStack>
+      {shipment?.items?.map((item) => (
+        <ZixMediasListWidget medias={item.medias} />
+      ))}
+    </YStack>
+  )
+
+
   return (
-    <SectionWrapper>
-      <ZixWidgetContainer label={t('shipment:shipment-details')}>
-        <YStack gap="$6" marginTop="$4" {...props}>
-          <ZixVariantOptionsWidget
-            icon={<Inbox size="$1" color={'$color5'} />}
-            label={t('shipment:shipment')}
-            optionVariant="details"
-            variant="details"
-            options={[
-              {
-                icons: <Package size="$1" color={'$color9'} />,
-                name: t('job:number-of-packages'),
-                value: `${shipment?.items?.length}`,
-              },
-              {
-                icons: <PackageOpen size="$1" color={'$color9'} />,
-                name: t('job:shipment-type'),
-                value: `${shipment?.items_type}`,
-              },
-              {
-                icons: (
-                  <CustomIcon name="aspect_ratio" size="$1" color="$gray3" />
-                ),
-                name: t('job:package-size'),
-                value: `${size}`,
-              },
-              {
-                icons: <Weight size="$1" color={'$color9'} />,
-                name: t('job:package-weight'),
-                value: `${weight}`,
-              },
-            ]}
-          />
-          <ZixVariantOptionsWidget
-            icon={<CustomIcon name="time" size="$1" color="$color5" />}
-            label={t('shipment:time-and-distance')}
-            optionVariant="details"
-            variant="details"
-            options={[
-              {
-                icons: <Inbox size="$1" color={'$color9'} />,
-                name: t('job:deliver_duration'),
-                value: `${deliveryTime.humanize()}`,
-              },
-              {
-                icons: <Route size="$1" color={'$color9'} rotate="90deg" />,
-                name: t('job:estimated-distance'),
-                value: distance ? `${distance.toFixed(2)} km` : 'N/A',
-              },
-              {
-                icons: <CustomIcon name="chronic" size="$1" color={'$color9'} />,
-                name: t('job:estimated-time'),
-                value: `${deliveryTime.asHours()} hours`,
-              },
-              {
-                icons: <CustomIcon name="time" size="$1" color={'$color9'} />,
-                name: t('job:deliver_time'),
-                value: `${shipment?.pick_time}`,
-              },
-              {
-                icons: <CalendarDays size="$1" color={'$color9'} />,
-                name: t('job:deliver-date'),
-                value: `${shipment?.pick_date}`,
-              },
-              {
-                icons: <CustomIcon name="time" size="$1" color={'$color9'} />,
-                name: t('job:delivery-time'),
-                value: `${shipment?.deliver_time}`,
-              },
-              {
-                icons: <CalendarDays size="$1" color={'$color9'} />,
-                name: t('job:delivery-date'),
-                value: `${shipment?.deliver_date}`,
-              },
-            ]}
-          />
-          <YStack gap="$6" marginTop="$4">
-            <XStack gap="$3" alignItems="center">
-              <Image size="$1.5" color={'$color5'} />
-              <Text fontSize={18} fontWeight={600} color={'$color5'}>
-                {t('shipment:shipment-image')}
-              </Text>
-            </XStack>
-            {shipment?.items?.map((item) => (
-              <ZixMediasListWidget medias={item.medias} />
-            ))}
-          </YStack>
-        </YStack>
-      </ZixWidgetContainer>
-    </SectionWrapper>
+    <ZixWidgetContainer label={t('shipment:shipment-details')}>
+      <YStack gap="$6" {...props}>
+        <ZixVariantOptionsWidget
+          icon={<Inbox size="$1" color={'$color5'} />}
+          label={t('shipment:shipment')}
+          labelContainerProps={{
+            theme: 'accent',
+          }}
+          optionVariant="details"
+          variant="details"
+          options={[
+            {
+              icons: <Package size="$1" color='$color10' />,
+              name: t('job:number-of-packages'),
+              value: `${shipment?.items?.length}`,
+            },
+            {
+              icons: <PackageOpen size="$1" color='$color10' />,
+              name: t('job:shipment-type'),
+              value: `${shipment?.items_type}`,
+            },
+            {
+              icons: (
+                <CustomIcon name="aspect_ratio" size="$1" color="$color10" />
+              ),
+              name: t('job:package-size'),
+              value: `${size}`,
+            },
+            {
+              icons: <Weight size="$1" color='$color10' />,
+              name: t('job:package-weight'),
+              value: `${weight}`,
+            },
+          ]}
+        />
+        <ZixVariantOptionsWidget
+          icon={<CustomIcon name="time" size="$1" color="$color10" />}
+          label={t('shipment:time-and-distance')}
+          labelContainerProps={{
+            theme: 'accent',
+          }}
+          optionVariant="details"
+          variant="details"
+          options={[
+            {
+              icons: <Inbox size="$1" color='$color10' />,
+              name: t('job:deliver_duration'),
+              value: `${deliveryTime.humanize()}`,
+            },
+            {
+              icons: <Route size="$1" color='$color10' rotate="90deg" />,
+              name: t('job:estimated-distance'),
+              value: distance ? `${distance.toFixed(2)} km` : 'N/A',
+            },
+            {
+              icons: <CustomIcon name="chronic" size="$1" color='$color10' />,
+              name: t('job:estimated-time'),
+              value: `${deliveryTime.asHours()} hours`,
+            },
+            {
+              icons: <CustomIcon name="time" size="$1" color='$color10' />,
+              name: t('job:deliver_time'),
+              value: `${shipment?.pick_time}`,
+            },
+            {
+              icons: <CalendarDays size="$1" color='$color10' />,
+              name: t('job:deliver-date'),
+              value: `${shipment?.pick_date}`,
+            },
+            {
+              icons: <CustomIcon name="time" size="$1" color='$color10' />,
+              name: t('job:delivery-time'),
+              value: `${shipment?.deliver_time}`,
+            },
+            {
+              icons: <CalendarDays size="$1" color='$color10' />,
+              name: t('job:delivery-date'),
+              value: `${shipment?.deliver_date}`,
+            },
+          ]}
+        />
+
+        {renderImages()}
+      </YStack>
+    </ZixWidgetContainer>
   );
 };
 
