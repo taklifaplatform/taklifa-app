@@ -198,7 +198,8 @@
     "react-native-qrcode-svg": "*",
     "laravel-echo": "*",
     "pusher-js": "*",
-    "qrcode": "*"
+    "qrcode": "*",
+    "expo-camera": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",
