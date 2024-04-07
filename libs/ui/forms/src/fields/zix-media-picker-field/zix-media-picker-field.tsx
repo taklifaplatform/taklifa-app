@@ -3,7 +3,6 @@ import { randomUUID } from 'expo-crypto';
 import { Camera as CameraIcon, Image, Paperclip } from '@tamagui/lucide-icons';
 import { MediaService, MediaTransformer } from '@zix/api';
 import { ActionSheet, ActionSheetRef } from '@zix/ui/common';
-import { Camera } from 'expo-camera';
 import { getDocumentAsync } from 'expo-document-picker';
 import {
   MediaTypeOptions,
@@ -14,6 +13,7 @@ import { t } from 'i18next';
 import { useEffect, useRef, useState } from 'react';
 import { Alert, Linking, Platform } from 'react-native';
 import { UploadableMediaFile, uploadMediaFile } from '../../utils';
+import { useCamera } from './hooks/useCamera';
 import { ZixFilesInputMediaPickerPreviewer, ZixImageMediaPickerPreviewer, ZixRowMediaPickerPreviewer } from './previewers';
 import { ZixMediaPickerTransformer } from './types';
 
@@ -51,7 +51,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
   placeholder
 }) => {
   const Previewer = MediaPreviewers[type]
-  const [permission, requestPermission] = Camera.useCameraPermissions();
+  const { permission, requestPermission } = useCamera();
 
   const actionRef = useRef<ActionSheetRef>(null);
 
@@ -258,7 +258,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
    */
   async function launchCamera() {
 
-    if(!permission?.granted) {
+    if (!permission?.granted) {
       const grant = await requestPermission()
 
       if (!grant.granted) {

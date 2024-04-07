@@ -65,7 +65,6 @@ import TikTok from './icons/tik-tok.svg';
 import Time from './icons/time.svg';
 import TimePace from './icons/time-pace.svg';
 import Translate from './icons/translate.svg';
-import View from './icons/view.svg';
 import Vector from './icons/vector.svg';
 import Wallet from './icons/wallet.svg';
 import WebLogoAr from './icons/web-logo-ar.svg';
@@ -177,7 +176,6 @@ export {
   VehicleA,
   VehicleB,
   VehicleC,
-  View,
   Vector,
   Wallet,
   WebLogoAr,

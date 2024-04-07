@@ -88,7 +88,6 @@ const iconNames = [
   'account',
   'ringing',
   'search',
-  'view',
   'flip',
   'search_track',
   'find_track',

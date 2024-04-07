@@ -1,5 +1,4 @@
 import { useConfiguration } from '@tamagui/web';
-import { Stack } from 'tamagui';
 import { useEffect } from 'react';
 
 export type ShakeProps = {
@@ -80,6 +79,9 @@ export const Shake: React.FC<ShakeProps> = ({
 
   // return <Stack animation={shakeKey ? 'bouncy' : undefined}>{children}</Stack>;
 
+  if (!AnimatedView) {
+    return children
+  }
   return <AnimatedView style={animatedStyle}>{children}</AnimatedView>;
 };
 
