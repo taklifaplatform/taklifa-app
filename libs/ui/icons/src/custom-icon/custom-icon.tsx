@@ -116,6 +116,11 @@ const iconNames = [
   'job',
   'radio_button_checked',
   'dimension_box',
+  'box_add',
+  'location_check',
+  'contact_calendar',
+  'paper_money',
+  'near_me'
 ];
 
 export type CustomIconName = (typeof iconNames)[number];
