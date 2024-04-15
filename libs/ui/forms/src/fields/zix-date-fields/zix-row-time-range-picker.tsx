@@ -3,14 +3,17 @@ import { useMemo } from 'react'
 import {
   Button,
   Stack,
-  Text
+  Text,
+  XStack
 } from 'tamagui'
 import { ZixDateFieldProps } from './types'
+import { useMultiLang } from '@zix/i18n'
 
 export const ZixRowTimeRangePicker: React.FC<ZixDateFieldProps> = ({
   onChange,
   value,
 }) => {
+  const { activeLang } = useMultiLang()
   const workTimeSlots = Array.from(Array(8).keys()).map((i) =>
     moment('09:00', 'HH:mm').add(i, 'hours')
   )
@@ -40,10 +43,22 @@ export const ZixRowTimeRangePicker: React.FC<ZixDateFieldProps> = ({
         }}
         borderRadius="$4"
       >
-        <Text fontWeight='700' fontSize="$1">
-          {item.format('hh:mm A').toString()} -{' '}
-          {moment(item).add(1, 'hour').format('hh:mm A').toString()}
-        </Text>
+        <XStack alignItems='center' gap='$1'>
+          <Text fontWeight='700' fontSize="$1">
+            {item.format('hh:mm').toString()}
+          </Text>
+          <Text fontWeight='700' fontSize="$1">
+            {moment(item).locale(activeLang).format('A').toString()}
+          </Text>
+          <Text>-</Text>
+          <Text fontWeight='700' fontSize="$1">
+            {moment(item).add(1, 'hour').format('hh:mm').toString()}
+          </Text>
+          <Text fontWeight='700' fontSize="$1">
+            {moment(item).add(1, 'hour').locale(activeLang).format('A').toString()}
+          </Text>
+
+        </XStack>
       </Button>
     )
   }
