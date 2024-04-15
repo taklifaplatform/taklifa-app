@@ -5,14 +5,15 @@ import { useAuth } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
 import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/ui/forms';
 import { AppHeader } from '@zix/ui/layouts';
+import { t } from 'i18next';
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
 import { FormProvider, Theme } from 'tamagui';
 import { z } from 'zod';
-import ShipmentManagerHeader from '../../../components/shipment-manager/shipment-manager-header/shipment-manager-header';
+import { ShipmentManagerHeader } from '../../../components/shipment-manager/shipment-manager-header/shipment-manager-header';
 import { SHARED_SHIPMENT_MANAGER_FIELD_PROPS } from '../configs';
-import { useMemo } from 'react';
 
 const { useParam } = createParam<{
   shipment?: string,
@@ -20,9 +21,9 @@ const { useParam } = createParam<{
 }>();
 
 const CreateShipmentSchema = z.object({
-  from_location: formFields.advanced_location.describe('Shipping from // Enter the address of the pickup location'),
-  pick_date: formFields.row_date_picker.describe('Date // Pick Date'),
-  pick_time: formFields.row_time_range_picker.describe('Time // Pick Time').optional(),
+  from_location: formFields.advanced_location.describe(t('forms:shipping-from')),
+  pick_date: formFields.row_date_picker.describe(t('common:date')),
+  pick_time: formFields.row_time_range_picker.describe(t('common:time')).optional(),
 })
 
 export function ManageShipmentSenderScreen() {
@@ -93,7 +94,7 @@ export function ManageShipmentSenderScreen() {
 
   return (
     <>
-      <AppHeader title={shipmentId ? "Edit Shipment" : "Create Shipment"} showBackButton />
+      <AppHeader title={t('shipment-manager:sender.title')} showBackButton />
       <FormProvider {...form}>
         <SchemaForm
           form={form}
@@ -105,10 +106,11 @@ export function ManageShipmentSenderScreen() {
           }}
           defaultValues={shipment}
           onSubmit={mutate}
-
           renderAfter={({ submit }) => (
             <Theme inverse>
-              <SubmitButton onPress={() => submit()}>Confirm</SubmitButton>
+              <SubmitButton onPress={() => submit()}>
+                {t('common:next')}
+              </SubmitButton>
             </Theme>
           )}
         >
@@ -117,13 +119,12 @@ export function ManageShipmentSenderScreen() {
               <ShipmentManagerHeader
                 activeStep={1}
                 shipment={shipment}
-                title='يرجى تحديد عنوانك والتاريخ والوقت الذي تتواجد فيه'
+                title={t('shipment-manager:sender.description')}
               />
               {Object.values(fields)}
             </>
           )}
         </SchemaForm>
-
       </FormProvider>
     </>
   )

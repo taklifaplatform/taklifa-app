@@ -45,8 +45,9 @@ export const SubmitButton: React.FC<ButtonProps & { isLoading?: boolean }> = (
       }
       disabled={isSubmitting}
       {...props}
-      height={'$5'}
-      borderRadius={'$6'}
+      height='$5'
+      borderRadius='$6'
+      fontWeight='bold'
     />
   );
 };

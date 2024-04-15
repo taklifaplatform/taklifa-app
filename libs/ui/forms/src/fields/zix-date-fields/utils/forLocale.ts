@@ -1,8 +1,9 @@
-import { DaysForLocaleProps, YearsForLocaleProps } from "./types";
+import moment from 'moment';
+import { DaysForLocaleProps, YearsForLocaleProps } from './types';
 
-export function daysForLocale(params?: Pick<DaysForLocaleProps, "localeName">) {
-  const { localeName = "en" } = params || {};
-  const format = new Intl.DateTimeFormat(localeName, { day: "2-digit" }).format;
+export function daysForLocale(params?: Pick<DaysForLocaleProps, 'localeName'>) {
+  const { localeName = 'en' } = params || {};
+  const format = new Intl.DateTimeFormat(localeName, { day: '2-digit' }).format;
   return Array.from(Array(31).keys()).map((day) => {
     return {
       id: format(new Date(Date.UTC(2021, 0, day + 1))),
@@ -12,14 +13,11 @@ export function daysForLocale(params?: Pick<DaysForLocaleProps, "localeName">) {
 }
 
 export function monthsForLocale(params?: DaysForLocaleProps) {
-  const { localeName = "en", month = "short" } = params || {};
-  const format = new Intl.DateTimeFormat(localeName, { month }).format;
-  const formatDigits =
-    new Intl.DateTimeFormat(localeName, { month: "2-digit" }).format;
-  return Array.from(Array(12).keys()).map((month) => {
+  const { localeName = 'en', format = 'MMMM' } = params || {};
+  return moment.months().map((month, index) => {
     return {
-      id: formatDigits(new Date(Date.UTC(2021, month, 1))),
-      name: format(new Date(Date.UTC(2021, month, 1))),
+      id: index + 1,
+      name: moment().locale(localeName).month(index).format(format),
     };
   });
 }
