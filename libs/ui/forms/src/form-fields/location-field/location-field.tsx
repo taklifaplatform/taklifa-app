@@ -12,6 +12,7 @@ import { ZixAutoCompleteField, ZixInput } from '../../fields';
 import ZixMapPointerField from '../../fields/zix-map-pointer-field/zix-map-pointer-field';
 import { GroupFieldsSheet } from '../../wrappers';
 import { MapLocationPicker } from './map-location-picker';
+import { t } from 'i18next';
 
 export type LocationFieldProps = {
   containerProps?: BaseFormFieldContainerProps;
@@ -136,7 +137,7 @@ export const LocationField: React.FC<LocationFieldProps> = ({
       <Separator marginTop='$4' />
 
       <ZixFieldContainer
-        label='Additional Information'
+        label={t('common:address-information')}
         labelBold
         collapsible
       >
@@ -296,7 +297,7 @@ export const LocationField: React.FC<LocationFieldProps> = ({
   return (
     <FormFieldContainer {...containerProps}>
       <GroupFieldsSheet
-        title='Address Information'
+        title={t('common:address-information')}
         activator={(
           <YStack gap='$4'>
             {renderAddressCard()}

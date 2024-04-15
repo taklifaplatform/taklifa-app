@@ -131,6 +131,7 @@
     "welcome": "مرحبًا",
     "next": "التالي",
     "confirm": "تأكيد",
+    "confirm-location": "تأكيد الموقع",
     "user_types": {
       "individual": "فرد",
       "company": "شركة"
@@ -190,7 +191,13 @@
     "length": "الطول",
     "unit": "الوحدة",
     "internal-id": "المعرف الداخلي",
-    "capacity-volume": "سعة الحجم"
+    "capacity-volume": "سعة الحجم",
+    "date": "التاريخ",
+    "time": "الوقت",
+    "month": "الشهر",
+    "address-information": "معلومات العنوان",
+    "address": "العنوان",
+    "select-location-on-map": "حدد الموقع على الخريطة"
   },
   "cookies-banner": {
     "section-1": {
@@ -269,7 +276,9 @@
     "vehicle-height": "الارتفاع // أدخل ارتفاع المركبة الخاصة بك",
     "vehicle-length": "الطول // أدخل طول المركبة الخاصة بك",
     "unit": "الوحدة // أدخل نوع الوحدة...",
-    "vehicle-capacity-weight": "وزن السعة // أدخل وزن سعة المركبة الخاصة بك"
+    "vehicle-capacity-weight": "وزن السعة // أدخل وزن سعة المركبة الخاصة بك",
+    "shipping-from": "الشحن من // أدخل عنوان موقع الاستلام",
+    "shipping-to": "الشحن الى // أدخل عنوان موقع التسليم"
   },
   "job": {
     "job-title": "احصل على أفضل الوظائف المضمونة والمستقلة",
@@ -472,5 +481,11 @@
     "complain-text": "إذا كانت هناك أية مشاكل تواجهك، فالرجاء عدم التردد في الاتصال بنا",
     "saudi_arabia": "السعودية",
     "sawaed_logistics": "سواعد اللوجستية"
+  },
+  "shipment-manager": {
+    "sender": {
+      "title": "تفاصيل الشحنة",
+      "description": "يرجى تحديد عنوانك والتاريخ والوقت الذي تتواجد فيه"
+    }
   }
 }

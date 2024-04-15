@@ -1,7 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import 'moment/locale/ar';
 import React, { useEffect, useState } from 'react';
-import { I18nManager, Platform, View } from 'react-native';
+import { I18nManager, Platform } from 'react-native';
 
+import moment from 'moment';
 import { MultiLangContext } from './MultiLangContext';
 import i18n from './i18n';
 
@@ -37,6 +39,8 @@ export function MultiLangAppProvider({ children, defaultLang }: ILangProviderPro
       }
 
       i18n.changeLanguage(lang);
+      moment.locale('en');
+
 
       setActiveLanguage(lang);
     })();

@@ -131,6 +131,7 @@
     "welcome": "Welcome",
     "next": "Next",
     "confirm": "Confirm",
+    "confirm-location": "Confirm Location",
     "user_types": {
       "individual": "Individual",
       "company": "Company"
@@ -190,7 +191,13 @@
     "length": "Length",
     "unit": "Unit",
     "internal-id": "Internal ID",
-    "capacity-volume": "Capacity Volume"
+    "capacity-volume": "Capacity Volume",
+    "date": "Date",
+    "time": "Time",
+    "month": "Month",
+    "address-information": "Address Information",
+    "address": "Address",
+    "select-location-on-map": "Select location on map"
   },
   "cookies-banner": {
     "section-1": {
@@ -269,7 +276,9 @@
     "vehicle-height": "Height // Enter your vehicle height",
     "vehicle-length": "Length // Enter your vehicle length",
     "unit": "Unit // Enter unit type...",
-    "vehicle-capacity-weight": "Capacity Weight // Enter your vehicle capacity weight"
+    "vehicle-capacity-weight": "Capacity Weight // Enter your vehicle capacity weight",
+    "shipping-from": "Shipping from // Enter the address of the pickup location",
+    "shipping-to": "Shipping to // Enter the address of the delivery location"
   },
   "invite": {
     "company-member": "Hello, {{name}}! \n\n{{company}} has invited you to join their team. \n\nTo accept the invitation, click the link below: \n\n{{link}} \n\n"
@@ -473,5 +482,11 @@
     "complain-text": "If there are any problems you encounter, please do not hesitate to contact us",
     "saudi_arabia": "Saudi Arabia",
     "sawaed_logistics": "Sawaed Logistics"
+  },
+  "shipment-manager": {
+    "sender": {
+      "title": "Shipment Details",
+      "description": "Here you can view the details of the shipment and manage it."
+    }
   }
 }
