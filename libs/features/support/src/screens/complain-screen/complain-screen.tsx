@@ -31,7 +31,7 @@ export const ComplainScreen = () => {
   const toast = useToastController();
   const router = useRouter();
   const form = useForm<z.infer<typeof ComplainSchema>>();
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn: (requestBody: z.infer<typeof ComplainSchema>) =>
       SupportService.storeSupportRequest({
         requestBody,
@@ -82,7 +82,7 @@ export const ComplainScreen = () => {
               subject: '',
               message: '',
             }}
-            onSubmit={mutate}
+            onSubmit={mutateAsync}
             renderBefore={() => (
               <View width={'100%'} paddingHorizontal="$4">
                 <XStack justifyContent="space-between">

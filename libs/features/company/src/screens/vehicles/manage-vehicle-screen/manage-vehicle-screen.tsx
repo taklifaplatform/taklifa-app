@@ -79,11 +79,8 @@ export const ManageVehicleScreen: React.FC = () => {
 
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     async mutationFn(requestBody: z.infer<typeof ManageVehicleFormSchema>) {
-      console.log('============')
-      console.log('mutationFn::', JSON.stringify(requestBody, null, 2))
-      console.log('============')
       if (vehicleId) {
         return VehiclesService.updateVehicle({
           vehicle: vehicleId,
@@ -107,7 +104,7 @@ export const ManageVehicleScreen: React.FC = () => {
       console.log('============')
       console.log('onError::', JSON.stringify(error, null, 2))
       console.log('============')
-      toast.show(error?.body?.message || 'Failed to update company');
+      toast.show(error?.body?.message || t('app:errors.something-went-wrong'), { preset: 'error' });
       handleFormErrors(form, error?.body?.errors);
     },
   });
@@ -121,7 +118,7 @@ export const ManageVehicleScreen: React.FC = () => {
       form={form}
       schema={ManageVehicleFormSchema}
       defaultValues={data?.data || {}}
-      onSubmit={mutate}
+      onSubmit={mutateAsync}
       renderAfter={({ submit }) => {
         return (
           <Theme inverse>

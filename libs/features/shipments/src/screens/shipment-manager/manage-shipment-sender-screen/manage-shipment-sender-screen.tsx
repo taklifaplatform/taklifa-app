@@ -21,9 +21,15 @@ const { useParam } = createParam<{
 }>();
 
 const CreateShipmentSchema = z.object({
-  from_location: formFields.advanced_location.describe(t('forms:shipping-from')),
-  pick_date: formFields.row_date_picker.describe(t('common:date')),
-  pick_time: formFields.row_time_range_picker.describe(t('common:time')).optional(),
+  from_location: formFields.advanced_location.describe(
+    `${t('app:forms.labels.shipping-from')} // ${t('app:forms.placeholders.shipping-from')}`
+  ),
+  pick_date: formFields.row_date_picker.describe(
+    `${t('app:forms.labels.date')} // ${t('app:forms.placeholders.date')}`
+  ),
+  pick_time: formFields.row_time_range_picker.describe(
+    `${t('app:forms.labels.time')} // ${t('app:forms.placeholders.time')}`
+  ).optional(),
 })
 
 export function ManageShipmentSenderScreen() {
@@ -34,7 +40,7 @@ export function ManageShipmentSenderScreen() {
   const [shipmentId] = useParam('shipment');
   const [selectedDriverId] = useParam('selected_driver_id');
 
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn(requestBody: z.infer<typeof CreateShipmentSchema>) {
       if (shipmentId) {
         return ShipmentService.updateShipment({
@@ -50,11 +56,8 @@ export function ManageShipmentSenderScreen() {
       })
     },
     onSuccess(data, variables, context) {
-      console.log('========')
-      console.log('onSuccess::', data)
-      console.log('========')
       if (!data.data?.id) {
-        toast.show('An error occurred', { preset: 'error' })
+        toast.show(t('app:errors.something-went-wrong'), { preset: 'error' })
         return
       }
 
@@ -64,7 +67,7 @@ export function ManageShipmentSenderScreen() {
       router.push(`${getUrlPrefix}/shipment-manager/${data.data.id}/recipient`)
     },
     onError(error: any) {
-      toast.show(error?.body?.message || 'An error occurred', { preset: 'error' })
+      toast.show(error?.body?.message || t('app:errors.something-went-wrong'), { preset: 'error' })
       handleFormErrors(form, error?.body?.errors);
     },
   })
@@ -94,7 +97,7 @@ export function ManageShipmentSenderScreen() {
 
   return (
     <>
-      <AppHeader title={t('shipment-manager:sender.title')} showBackButton />
+      <AppHeader title={t('app:shipment-manager.sender.title')} showBackButton />
       <FormProvider {...form}>
         <SchemaForm
           form={form}
@@ -105,7 +108,7 @@ export function ManageShipmentSenderScreen() {
             pick_time: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
           }}
           defaultValues={shipment}
-          onSubmit={mutate}
+          onSubmit={mutateAsync}
           renderAfter={({ submit }) => (
             <Theme inverse>
               <SubmitButton onPress={() => submit()}>
@@ -119,7 +122,7 @@ export function ManageShipmentSenderScreen() {
               <ShipmentManagerHeader
                 activeStep={1}
                 shipment={shipment}
-                title={t('shipment-manager:sender.description')}
+                title={t('app:shipment-manager.sender.description')}
               />
               {Object.values(fields)}
             </>

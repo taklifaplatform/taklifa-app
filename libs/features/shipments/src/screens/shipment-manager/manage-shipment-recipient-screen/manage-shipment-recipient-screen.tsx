@@ -12,15 +12,26 @@ import { FormProvider, Theme } from 'tamagui';
 import { z } from 'zod';
 import ShipmentManagerHeader from '../../../components/shipment-manager/shipment-manager-header/shipment-manager-header';
 import { SHARED_SHIPMENT_MANAGER_FIELD_PROPS } from '../configs';
+import { t } from 'i18next';
 
 const { useParam } = createParam<{ shipment: string }>();
 
 const SendFromSchema = z.object({
-  to_location: formFields.advanced_location.describe('Shipping To // Enter the address of the delivery location'),
-  recipient_name: formFields.text.describe('Recipient Name // Enter the name of the recipient'),
-  recipient_phone: formFields.phone.describe('Recipient Phone // Enter the phone number of the recipient'),
-  deliver_date: formFields.row_date_picker.describe('Date // Deliver Date'),
-  deliver_time: formFields.row_time_range_picker.describe('Time // Deliver Time'),
+  to_location: formFields.advanced_location.describe(
+    `${t('app:forms.labels.shipping-to')} // ${t('app:forms.placeholders.shipping-to')}`
+  ),
+  recipient_name: formFields.text.describe(
+    `${t('app:forms.labels.recipient-name')} // ${t('app:forms.placeholders.recipient-name')}`
+  ),
+  recipient_phone: formFields.phone.describe(
+    `${t('app:forms.labels.recipient-phone')} // ${t('app:forms.placeholders.recipient-phone')}`
+  ),
+  deliver_date: formFields.row_date_picker.describe(
+    `${t('app:forms.labels.date')} // ${t('app:forms.placeholders.date')}`
+  ),
+  deliver_time: formFields.row_time_range_picker.describe(
+    `${t('app:forms.labels.time')} // ${t('app:forms.placeholders.time')}`
+  ),
 })
 
 export const ManageShipmentRecipientScreen: React.FC = () => {
@@ -43,7 +54,7 @@ export const ManageShipmentRecipientScreen: React.FC = () => {
     queryKey: ['ShipmentService.retrieveShipment', `-${shipmentId}`],
   })
 
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn(requestBody: z.infer<typeof SendFromSchema>) {
       if (!shipmentId) {
         throw new Error('Shipment ID is required')
@@ -58,7 +69,7 @@ export const ManageShipmentRecipientScreen: React.FC = () => {
       //
     },
     onError(error: any) {
-      toast.show(error?.body?.message || 'An error occurred', { preset: 'error' })
+      toast.show(error?.body?.message || t('app:errors.something-went-wrong'), { preset: 'error' });
       handleFormErrors(form, error?.body?.errors);
     },
   })
@@ -69,7 +80,7 @@ export const ManageShipmentRecipientScreen: React.FC = () => {
 
   return (
     <>
-      <AppHeader title='Shipment Details' showBackButton />
+      <AppHeader title={t('app:shipment-manager.recipient.title')} showBackButton />
       <FormProvider {...form}>
         <SchemaForm
           form={form}
@@ -80,8 +91,7 @@ export const ManageShipmentRecipientScreen: React.FC = () => {
             deliver_time: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
           }}
           defaultValues={data.data}
-          onSubmit={mutate}
-
+          onSubmit={mutateAsync}
           renderAfter={({ submit }) => (
             <Theme inverse>
               <SubmitButton onPress={() => submit()}>Confirm</SubmitButton>
@@ -93,13 +103,13 @@ export const ManageShipmentRecipientScreen: React.FC = () => {
               <ShipmentManagerHeader
                 activeStep={2}
                 shipment={data?.data}
-                title='الرجاء تحديد  الوجهة'
+                title={t('app:shipment-manager.recipient.description')}
               />
 
               {to_location}
 
               <ZixFieldContainer
-                label='Recipient Information'
+                label={t('app:forms.labels.recipient-info')}
                 {...SHARED_SHIPMENT_MANAGER_FIELD_PROPS.containerProps}
               >
                 {recipient_name}

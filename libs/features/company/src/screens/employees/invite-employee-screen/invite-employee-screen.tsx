@@ -57,7 +57,7 @@ export const InviteEmployeeScreen: React.FC = () => {
 
     },
     onError(error: any, variables, context) {
-      toast.show(error?.body?.message || 'Member Invitation Failed!');
+      toast.show(error?.body?.message || t('app:errors.something-went-wrong'), { preset: 'error' });
       handleFormErrors(form, error?.body?.errors);
     },
   });

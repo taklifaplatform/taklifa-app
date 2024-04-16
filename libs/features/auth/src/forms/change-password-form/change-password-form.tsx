@@ -42,7 +42,7 @@ export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
   const toast = useToastController();
   const form = useForm<z.infer<typeof ChangePasswordSchema>>();
 
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn: (requestBody: z.infer<typeof ChangePasswordSchema>) =>
       UserService.updatePassword({
         requestBody,
@@ -59,7 +59,7 @@ export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
   return (
     <SchemaForm
       form={form}
-      onSubmit={mutate}
+      onSubmit={mutateAsync}
       schema={ChangePasswordSchema}
       defaultValues={{
         password: '',

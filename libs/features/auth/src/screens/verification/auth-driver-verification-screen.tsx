@@ -40,7 +40,7 @@ export const AuthDriverVerificationScreen = () => {
 
 
   const form = useForm<z.infer<typeof DriverVerificationFormSchema>>();
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn(requestBody: z.infer<typeof DriverVerificationFormSchema>) {
       return UserVerificationService.storeDriverVerification({
         requestBody,
@@ -58,7 +58,7 @@ export const AuthDriverVerificationScreen = () => {
     <FormProvider {...form}>
       <SchemaForm
         schema={DriverVerificationFormSchema}
-        onSubmit={mutate}
+        onSubmit={mutateAsync}
         renderAfter={({ submit }) => {
           return (
             <Theme inverse>

@@ -42,7 +42,7 @@ export const ManageShipmentBudgetScreen: React.FC = () => {
     queryKey: ['ShipmentService.retrieveShipment', `-${shipmentId}`],
   })
 
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn(requestBody: z.infer<typeof SendFromSchema>) {
       if (!shipmentId) {
         throw new Error('Shipment ID is required')
@@ -56,7 +56,7 @@ export const ManageShipmentBudgetScreen: React.FC = () => {
       onGoNext()
     },
     onError(error: any) {
-      toast.show(error?.body?.message || 'An error occurred', { preset: 'error' })
+      toast.show(error?.body?.message || t('app:errors.something-went-wrong'), { preset: 'error' });
       handleFormErrors(form, error?.body?.errors);
     },
   })
@@ -74,8 +74,7 @@ export const ManageShipmentBudgetScreen: React.FC = () => {
       form={form}
       schema={SendFromSchema}
       defaultValues={data.data}
-      onSubmit={mutate}
-
+      onSubmit={mutateAsync}
       renderAfter={({ submit }) => (
         <YStack gap='$4'>
           <Theme inverse>

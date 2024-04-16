@@ -1,4 +1,63 @@
 {
+  "app": {
+    "forms": {
+      "labels": {
+        "address": "Address",
+        "building-name": "Building Name",
+        "floor-number": "Floor Number",
+        "house-number": "House Number",
+        "country": "Country",
+        "city": "City",
+        "state": "State",
+        "notes": "Notes",
+        "shipping-from": "Shipping from",
+        "shipping-to": "Shipping to",
+        "pick-date": "Pickup Date",
+        "pick-time": "Pickup Time",
+        "delivery-date": "Delivery Date",
+        "delivery-time": "Delivery Time",
+        "date": "Date",
+        "time": "Time",
+        "recipient-info": "Recipient Information",
+        "recipient-name": "Recipient Name",
+        "recipient-phone": "Recipient Phone"
+      },
+      "placeholders": {
+        "address": "Enter your address",
+        "building-name": "Enter your building name",
+        "floor-number": "Enter your floor number",
+        "house-number": "Enter your house number",
+        "country": "Select your country",
+        "city": "Select your city",
+        "state": "Select your state",
+        "notes": "Enter your notes",
+        "shipping-from": "Enter the address of the pickup location",
+        "shipping-to": "Enter the address of the delivery location",
+        "pick-date": "Select the pickup date",
+        "pick-time": "Select the pickup time",
+        "delivery-date": "Select the delivery date",
+        "delivery-time": "Select the delivery time",
+        "date": "Select the date",
+        "time": "Select the time",
+        "recipient-info": "Enter the recipient's information",
+        "recipient-name": "Enter the recipient's name",
+        "recipient-phone": "Enter the recipient's phone"
+      }
+    },
+    "errors": {
+      "something-went-wrong": "Something went wrong"
+    },
+    "shipment-manager": {
+      "sender": {
+        "title": "Shipment Details",
+        "description": "Here you can view the details of the shipment and manage it."
+      },
+      "recipient": {
+        "title": "Recipient Details",
+        "description": "Please define the destination."
+      }
+    }
+  },
   "about": {
     "section-1": {
       "title-1": "Welcome to Sawaeed Logistics",
@@ -276,9 +335,7 @@
     "vehicle-height": "Height // Enter your vehicle height",
     "vehicle-length": "Length // Enter your vehicle length",
     "unit": "Unit // Enter unit type...",
-    "vehicle-capacity-weight": "Capacity Weight // Enter your vehicle capacity weight",
-    "shipping-from": "Shipping from // Enter the address of the pickup location",
-    "shipping-to": "Shipping to // Enter the address of the delivery location"
+    "vehicle-capacity-weight": "Capacity Weight // Enter your vehicle capacity weight"
   },
   "invite": {
     "company-member": "Hello, {{name}}! \n\n{{company}} has invited you to join their team. \n\nTo accept the invitation, click the link below: \n\n{{link}} \n\n"
@@ -482,11 +539,5 @@
     "complain-text": "If there are any problems you encounter, please do not hesitate to contact us",
     "saudi_arabia": "Saudi Arabia",
     "sawaed_logistics": "Sawaed Logistics"
-  },
-  "shipment-manager": {
-    "sender": {
-      "title": "Shipment Details",
-      "description": "Here you can view the details of the shipment and manage it."
-    }
   }
 }

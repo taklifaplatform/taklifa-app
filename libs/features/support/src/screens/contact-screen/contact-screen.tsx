@@ -31,7 +31,7 @@ export const ContactScreen = () => {
   const toast = useToastController();
   const router = useRouter();
   const form = useForm<z.infer<typeof ContactUsSchema>>();
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn: (requestBody: z.infer<typeof ContactUsSchema>) =>
       SupportService.storeSupportRequest({
         requestBody,
@@ -88,7 +88,7 @@ export const ContactScreen = () => {
             //     api: 'geography/cities',
             //   }
             // }}
-            onSubmit={mutate}
+            onSubmit={mutateAsync}
             renderBefore={() => (
               <View width={'100%'} paddingHorizontal="$4">
                 <XStack justifyContent="space-between">

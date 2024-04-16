@@ -45,7 +45,7 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
     return `${phoneNumber.slice(0, 3)} **** ${phoneNumber.slice(-3)}`;
   }, [phoneNumber]);
 
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn: (variables: z.infer<typeof VerifyPhoneNumberFormSchema>) =>
       AuthService.verifyPhoneNumber({
         requestBody: {
@@ -104,7 +104,7 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
     <FormProvider {...form}>
       <SchemaForm
         schema={VerifyPhoneNumberFormSchema}
-        onSubmit={mutate}
+        onSubmit={mutateAsync}
         defaultValues={{
           pin_code: '',
         }}

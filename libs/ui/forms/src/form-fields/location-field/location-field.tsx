@@ -143,11 +143,11 @@ export const LocationField: React.FC<LocationFieldProps> = ({
       >
         <YStack gap='$4'>
           <ZixFieldContainer
-            label='Address'
+            label={t('app:forms.labels.address')}
             error={error?.address}
           >
             <ZixInput
-              placeholder='Address'
+              placeholder={t('app:forms.placeholders.address')}
               value={value?.address}
               onChangeText={address => onChange({
                 ...value,
@@ -157,12 +157,12 @@ export const LocationField: React.FC<LocationFieldProps> = ({
           </ZixFieldContainer>
 
           <ZixFieldContainer
-            label='Building Name'
+            label={t('app:forms.labels.building-name')}
             isOptional
             error={error?.building_name}
           >
             <ZixInput
-              placeholder='Enter Building Name...'
+              placeholder={t('app:forms.placeholders.building-name')}
               value={value?.building_name}
               onChangeText={building_name => onChange({
                 ...value,
@@ -173,12 +173,12 @@ export const LocationField: React.FC<LocationFieldProps> = ({
 
           <XStack alignItems='flex-start' gap='$4'>
             <ZixFieldContainer
-              label='Floor Number'
+              label={t('app:forms.labels.floor-number')}
               isOptional
               error={error?.floor_number}
             >
               <ZixInput
-                placeholder='Enter Floor Number...'
+                placeholder={t('app:forms.placeholders.floor-number')}
                 value={value?.floor_number}
                 onChangeText={floor_number => onChange({
                   ...value,
@@ -188,12 +188,12 @@ export const LocationField: React.FC<LocationFieldProps> = ({
             </ZixFieldContainer>
 
             <ZixFieldContainer
-              label='House Number'
+              label={t('app:forms.labels.house-number')}
               isOptional
               error={error?.house_number}
             >
               <ZixInput
-                placeholder='Enter House Number...'
+                placeholder={t('app:forms.placeholders.house-number')}
                 value={value?.house_number}
                 onChangeText={house_number => onChange({
                   ...value,
@@ -204,10 +204,11 @@ export const LocationField: React.FC<LocationFieldProps> = ({
 
           </XStack>
           <ZixFieldContainer
-            label='Country'
+            label={t('app:forms.labels.country')}
             error={error?.country_id}
           >
             <ZixAutoCompleteField
+              placeholder={t('app:forms.placeholders.country')}
               api="geography/countries"
               value={`${value?.country_id}`}
               dataMapper={(item: CountryTransformer) => ({
@@ -224,11 +225,12 @@ export const LocationField: React.FC<LocationFieldProps> = ({
 
           <XStack alignItems='flex-start' gap='$4'>
             <ZixFieldContainer
-              label='State'
+              label={t('app:forms.labels.state')}
               isOptional
               error={error?.state_id}
             >
               <ZixAutoCompleteField
+                placeholder={t('app:forms.placeholders.state')}
                 api="geography/states"
                 query={{
                   country_id: value?.country_id
@@ -242,11 +244,12 @@ export const LocationField: React.FC<LocationFieldProps> = ({
             </ZixFieldContainer>
 
             <ZixFieldContainer
-              label='City'
+              label={t('app:forms.labels.city')}
               isOptional
               error={error?.city_id}
             >
               <ZixAutoCompleteField
+                placeholder={t('app:forms.placeholders.city')}
                 api="geography/cities"
                 query={{
                   country_id: value?.country_id
@@ -267,14 +270,14 @@ export const LocationField: React.FC<LocationFieldProps> = ({
       <Separator marginTop='$4' />
 
       <ZixFieldContainer
-        label='Notes'
+        label={t('app:forms.labels.notes')}
         labelBold
         collapsible
         error={error?.notes}
         isOptional
       >
         <ZixInput
-          placeholder='Write any additional notes here...'
+          placeholder={t('app:forms.placeholders.notes')}
           isMultiline
           value={value?.notes}
           onChangeText={notes => onChange({

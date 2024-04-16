@@ -65,7 +65,7 @@ export function ManageShipmentDriversScreen() {
       onSkipPress()
     },
     onError(error: any) {
-      toast.show(error?.body?.message || 'An error occurred', { preset: 'error' })
+      toast.show(error?.body?.message || t('app:errors.something-went-wrong'), { preset: 'error' });
     },
   })
 

@@ -38,7 +38,7 @@ export const EditAccountScreen = () => {
   const toast = useToastController();
   const router = useRouter();
 
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn(requestBody: z.infer<typeof ProfileSchema>) {
       return UserService.updateUser({ requestBody });
     },
@@ -73,7 +73,7 @@ export const EditAccountScreen = () => {
         },
       }}
       defaultValues={user}
-      onSubmit={mutate}
+      onSubmit={mutateAsync}
       renderBefore={() => (
         <AppHeader showBackButton title="Edit Profile" />
       )}
