@@ -6,6 +6,7 @@ import { I18nManager, Platform } from 'react-native';
 import moment from 'moment';
 import { MultiLangContext } from './MultiLangContext';
 import i18n from './i18n';
+import { OpenAPI } from '@zix/api';
 
 async function getActiveLanguage(defaultLang: string) {
   const localLanguage = await AsyncStorage.getItem('LANGUAGE');
@@ -40,7 +41,7 @@ export function MultiLangAppProvider({ children, defaultLang }: ILangProviderPro
 
       i18n.changeLanguage(lang);
       moment.locale('en');
-
+      OpenAPI.HEADERS = { 'Accept-Language': lang };
 
       setActiveLanguage(lang);
     })();
