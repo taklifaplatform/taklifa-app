@@ -12,6 +12,7 @@ import { Theme } from 'tamagui';
 import { z } from 'zod';
 import ShipmentManagerHeader from '../../../components/shipment-manager/shipment-manager-header/shipment-manager-header';
 import { SHARED_SHIPMENT_MANAGER_FIELD_PROPS } from '../configs';
+import { t } from 'i18next';
 
 const { useParam } = createParam<{ shipment: string }>();
 
@@ -40,7 +41,7 @@ export const ManageShipmentItemsScreen: React.FC = () => {
     queryKey: ['ShipmentService.retrieveShipment', `-${shipmentId}`],
   })
 
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn(requestBody: z.infer<typeof SendFromSchema>) {
       if (!shipmentId) {
         throw new Error('Shipment ID is required')
@@ -61,7 +62,7 @@ export const ManageShipmentItemsScreen: React.FC = () => {
       //
     },
     onError(error: any) {
-      toast.show(error?.body?.message || 'An error occurred', { preset: 'error' })
+      toast.show(error?.body?.message || t('app:errors.something-went-wrong'), { preset: 'error' });
       handleFormErrors(form, error?.body?.errors);
     },
   })
@@ -84,8 +85,7 @@ export const ManageShipmentItemsScreen: React.FC = () => {
         ...data.data,
         items: data?.data?.items?.length ? data.data.items : [{ content: '' }]
       }}
-      onSubmit={mutate}
-
+      onSubmit={mutateAsync}
       renderAfter={({ submit }) => (
         <Theme inverse>
           <SubmitButton onPress={() => submit()}>Confirm</SubmitButton>

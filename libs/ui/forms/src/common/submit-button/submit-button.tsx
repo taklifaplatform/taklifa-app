@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useFormState } from 'react-hook-form';
 import { AnimatePresence, Button, ButtonProps, Spinner } from 'tamagui';
 
@@ -15,18 +16,23 @@ const useIsSubmitting = () => {
  * created to be used in forms
  * will show loading spinners and disable submission when already submitting
  */
-export const SubmitButton: React.FC<ButtonProps & { isLoading?: boolean }> = (
+export const SubmitButton: React.FC<ButtonProps> = (
   props
 ) => {
-  const isSubmitting = useIsSubmitting();
+  const { isSubmitting } = useFormState();
 
+  useEffect(() => {
+    console.log('====================================');
+    console.log('isSubmitting::', isSubmitting);
+    console.log('====================================');
+  }, [isSubmitting]);
   return (
     <Button
       iconAfter={
         <AnimatePresence>
-          {(isSubmitting || props?.isLoading) && (
+          {(isSubmitting) && (
             <Spinner
-              color="$color"
+              color="$color12"
               key="loading-spinner"
               opacity={1}
               y={0}
@@ -45,8 +51,9 @@ export const SubmitButton: React.FC<ButtonProps & { isLoading?: boolean }> = (
       }
       disabled={isSubmitting}
       {...props}
-      height={'$5'}
-      borderRadius={'$6'}
+      height='$5'
+      borderRadius='$6'
+      fontWeight='bold'
     />
   );
 };

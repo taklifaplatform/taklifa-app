@@ -22,7 +22,7 @@ export type ZixDatepickerProps =  {
 
 export type DaysForLocaleProps = {
   localeName?: string;
-  month?: "short" | "long" | "narrow" | "numeric" | "2-digit";
+  format?: string;
 };
 
 export type YearsForLocaleProps = {

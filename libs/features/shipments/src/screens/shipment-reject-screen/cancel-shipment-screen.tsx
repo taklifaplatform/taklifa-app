@@ -35,7 +35,7 @@ export const CancelShipmentScreen = () => {
   const shipment = data?.data;
 
   const form = useForm<z.infer<typeof CancelShipmentSchema>>();
-  const { mutate } = useMutation({});
+  const { mutateAsync } = useMutation({});
   // mutationFn: (requestBody: z.infer<typeof CancelShipmentSchema>) =>
   return (
     <FormProvider {...form}>
@@ -46,7 +46,7 @@ export const CancelShipmentScreen = () => {
           email: '',
           message: '',
         }}
-        onSubmit={mutate}
+        onSubmit={mutateAsync}
         renderBefore={() => (
           <YStack gap="$6" paddingHorizontal="$5">
             <Stack alignItems="center" paddingVertical="$4">

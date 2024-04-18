@@ -83,6 +83,11 @@ import Touch_app from "./icons/touch_app.svg";
 import Category from "./icons/category.svg";
 import Shield_with_heart from "./icons/shield_with_heart.svg";
 import DimensionBox from "./icons/dimension-box.svg";
+import BoxAdd from "./icons/box-add.svg";
+import LocationCheck from "./icons/location-check.svg";
+import ContactCalendar from "./icons/contact-calendar.svg";
+import PaperMoney from "./icons/paper-money.svg";
+import NearMe from "./icons/near-me.svg";
 
 // arts
 import CompanyCars from "./arts/company-cars.svg";
@@ -143,6 +148,11 @@ export {
   Touch_app,
   Category,
   Shield_with_heart,
+  BoxAdd,
+  LocationCheck,
+  ContactCalendar,
+  PaperMoney,
+  NearMe,
   // arts
   LookingForService,
   Mail,

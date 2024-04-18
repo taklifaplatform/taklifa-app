@@ -33,7 +33,7 @@ export const LoginScreen: React.FC = () => {
   const updateParams = useUpdateParams();
   const form = useForm<z.infer<typeof LoginSchema>>();
 
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn(requestBody: z.infer<typeof LoginSchema>) {
       return AuthService.login({
         requestBody,
@@ -67,7 +67,7 @@ export const LoginScreen: React.FC = () => {
           phone_number: params?.phone || '+966',
           password: '',
         }}
-        onSubmit={mutate}
+        onSubmit={mutateAsync}
         props={{
           password: {
             afterElement: <ForgotPasswordLink />,

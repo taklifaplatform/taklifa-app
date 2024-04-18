@@ -1,4 +1,63 @@
 {
+  "app": {
+    "forms": {
+      "labels": {
+        "address": "العنوان",
+        "building-name": "اسم المبنى",
+        "floor-number": "رقم الطابق",
+        "house-number": "رقم المنزل",
+        "country": "الدولة",
+        "city": "المدينة",
+        "state": "المحافظة",
+        "notes": "ملاحظات",
+        "shipping-from": "الشحن من",
+        "shipping-to": "الشحن الى",
+        "pick-date": "تاريخ الاستلام",
+        "pick-time": "وقت الاستلام",
+        "delivery-date": "تاريخ التسليم",
+        "delivery-time": "وقت التسليم",
+        "date": "التاريخ",
+        "time": "الوقت",
+        "recipient-info": "معلومات المستلم",
+        "recipient-name": "اسم المستلم",
+        "recipient-phone": "رقم هاتف المستلم"
+      },
+      "placeholders": {
+        "address": "أدخل عنوانك",
+        "building-name": "أدخل اسم المبنى",
+        "floor-number": "أدخل رقم الطابق",
+        "house-number": "أدخل رقم المنزل",
+        "country": "اختر الدولة",
+        "city": "اختر المدينة",
+        "state": "اختر المحافظة",
+        "notes": "أدخل ملاحظاتك",
+        "shipping-from": "أدخل عنوان موقع الاستلام",
+        "shipping-to": "أدخل عنوان موقع التسليم",
+        "pick-date": "اختر تاريخ الاستلام",
+        "pick-time": "اختر وقت الاستلام",
+        "recipient-info": "أدخل معلومات المستلم",
+        "delivery-date": "اختر تاريخ التسليم",
+        "delivery-time": "اختر وقت التسليم",
+        "date": "اختر التاريخ",
+        "time": "اختر الوقت",
+        "recipient-name": "أدخل اسم المستلم",
+        "recipient-phone": "أدخل رقم هاتف المستلم"
+      }
+    },
+    "errors": {
+      "something-went-wrong": "حدث خطأ ما"
+    },
+    "shipment-manager": {
+      "sender": {
+        "title": "تفاصيل الشحنة",
+        "description": "يرجى تحديد عنوانك والتاريخ والوقت الذي تتواجد فيه"
+      },
+      "recipient": {
+        "title": "معلومات المستلم",
+        "description": "الرجاء تحديد الوجهة"
+      }
+    }
+  },
   "about": {
     "section-1": {
       "title-1": " مرحبًابك في سواعد اللوجستية",
@@ -131,6 +190,7 @@
     "welcome": "مرحبًا",
     "next": "التالي",
     "confirm": "تأكيد",
+    "confirm-location": "تأكيد الموقع",
     "user_types": {
       "individual": "فرد",
       "company": "شركة"
@@ -190,7 +250,13 @@
     "length": "الطول",
     "unit": "الوحدة",
     "internal-id": "المعرف الداخلي",
-    "capacity-volume": "سعة الحجم"
+    "capacity-volume": "سعة الحجم",
+    "date": "التاريخ",
+    "time": "الوقت",
+    "month": "الشهر",
+    "address-information": "معلومات العنوان",
+    "address": "العنوان",
+    "select-location-on-map": "حدد الموقع على الخريطة"
   },
   "cookies-banner": {
     "section-1": {
@@ -269,7 +335,9 @@
     "vehicle-height": "الارتفاع // أدخل ارتفاع المركبة الخاصة بك",
     "vehicle-length": "الطول // أدخل طول المركبة الخاصة بك",
     "unit": "الوحدة // أدخل نوع الوحدة...",
-    "vehicle-capacity-weight": "وزن السعة // أدخل وزن سعة المركبة الخاصة بك"
+    "vehicle-capacity-weight": "وزن السعة // أدخل وزن سعة المركبة الخاصة بك",
+    "shipping-from": "الشحن من // أدخل عنوان موقع الاستلام",
+    "shipping-to": "الشحن الى // أدخل عنوان موقع التسليم"
   },
   "job": {
     "job-title": "احصل على أفضل الوظائف المضمونة والمستقلة",

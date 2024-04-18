@@ -48,8 +48,8 @@ export const CreateCompanyScreen: React.FC = () => {
       router.push('/auth/register/success')
     },
     onError(error: any) {
+      toast.show(error?.body?.message || t('app:errors.something-went-wrong'), { preset: 'error' });
       handleFormErrors(form, error?.body?.errors);
-      error?.body?.message && toast.show(error?.body?.message);
     },
   });
 

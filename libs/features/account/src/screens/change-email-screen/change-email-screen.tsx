@@ -30,7 +30,7 @@ export const ChangeEmailScreen = () => {
   const router = useRouter();
   const form = useForm<z.infer<typeof ChangeEmailSchema>>();
 
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn: (requestBody: z.infer<typeof ChangeEmailSchema>) =>
       UserService.updateEmail({
         requestBody,
@@ -49,7 +49,7 @@ export const ChangeEmailScreen = () => {
   return (
     <SchemaForm
       form={form}
-      onSubmit={mutate}
+      onSubmit={mutateAsync}
       schema={ChangeEmailSchema}
       renderBefore={() => (
         <AppHeader

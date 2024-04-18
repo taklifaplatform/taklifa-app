@@ -75,7 +75,7 @@ export const SignUpScreen = () => {
 
   const form = useForm<z.infer<typeof SignUpSchema>>();
 
-  const { mutate, } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn: (variables: z.infer<typeof SignUpSchema>) =>
       AuthService.register({
         requestBody: {
@@ -93,7 +93,7 @@ export const SignUpScreen = () => {
       });
     },
     onError(error: any) {
-      toast.show(error?.body?.message || t('common:unknown_error'))
+      toast.show(error?.body?.message || t('app:errors.something-went-wrong'), { preset: 'error' });
       handleFormErrors(form, error?.body?.errors);
     },
   });
@@ -112,7 +112,7 @@ export const SignUpScreen = () => {
           accept_terms: false,
           phone_number_has_whatsapp: false,
         }}
-        onSubmit={mutate}
+        onSubmit={mutateAsync}
         renderAfter={({ submit }) => (
           <Theme inverse>
             <SubmitButton

@@ -36,7 +36,7 @@ export const ResetPasswordScreen = () => {
 
   const form = useForm<z.infer<typeof ResetPasswordSchema>>();
 
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn(requestBody: z.infer<typeof ResetPasswordSchema>) {
       return AuthService.sendResetPasswordPinCode({
         requestBody,
@@ -62,7 +62,7 @@ export const ResetPasswordScreen = () => {
         defaultValues={{
           phone: params?.phone || '',
         }}
-        onSubmit={mutate}
+        onSubmit={mutateAsync}
         renderAfter={({ submit }) => {
           return (
             <Stack gap="$4">

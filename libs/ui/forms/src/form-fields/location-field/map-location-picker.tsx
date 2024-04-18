@@ -10,6 +10,7 @@ import { Avatar, Button, H4, ListItem, Sheet, Text, Theme, View, XStack, YStack 
 import { SubmitButton, ZixFieldContainer } from '../../common';
 import { ZixInput } from '../../fields';
 import ZixMapPointerField from '../../fields/zix-map-pointer-field/zix-map-pointer-field';
+import { t } from 'i18next';
 
 export type MapLocationPickerProps = {
   value: LocationTransformer
@@ -190,11 +191,11 @@ export const MapLocationPicker: React.FC<MapLocationPickerProps> = ({ value, onC
 
   const renderAddressConfirmation = () => !!value?.address && (
     <YStack padding='$4' paddingBottom={bottom} gap='$4' backgroundColor='$color1'>
-      <H4>Address</H4>
+      <H4>{t('common:address')}</H4>
       <Text>{value?.address}</Text>
       <Theme inverse>
         <SubmitButton isLoading={isPending} onPress={() => setOpen(false)}>
-          Confirm Location
+          {t('common:confirm')}
         </SubmitButton>
       </Theme>
     </YStack>
@@ -235,7 +236,7 @@ export const MapLocationPicker: React.FC<MapLocationPickerProps> = ({ value, onC
     <>
       <View position='relative'>
         <ZixFieldContainer
-          label='Please select location on map'
+          label={t('common:select-location-on-map')}
           labelBold
         >
           <View height='$15'>

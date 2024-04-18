@@ -43,7 +43,7 @@ export const UpdateCompanyScreen: React.FC = () => {
     queryKey: ['CompaniesService.retrieveCompany', user?.active_company?.id]
   })
 
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     async mutationFn(requestBody: z.infer<typeof UpdateCompanyFormSchema>) {
       return CompanyAdminService.update({
         company: user?.active_company?.id,
@@ -67,7 +67,7 @@ export const UpdateCompanyScreen: React.FC = () => {
       <SchemaForm
         schema={UpdateCompanyFormSchema}
         defaultValues={data.data}
-        onSubmit={mutate}
+        onSubmit={mutateAsync}
         renderAfter={({ submit }) => {
           return (
             <Theme inverse>

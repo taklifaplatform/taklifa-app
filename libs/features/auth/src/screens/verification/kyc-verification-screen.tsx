@@ -31,7 +31,7 @@ export const KycVerificationScreen = () => {
   const { user, registerSteps } = useAuth()
 
   const form = useForm<z.infer<typeof KYCFormSchema>>();
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn(requestBody: z.infer<typeof KYCFormSchema>) {
       return UserVerificationService.storeUserVerification({
         requestBody,
@@ -54,7 +54,7 @@ export const KycVerificationScreen = () => {
           name: user?.name || '',
         }}
         props={{}}
-        onSubmit={mutate}
+        onSubmit={mutateAsync}
         renderAfter={({ submit }) => {
           return (
             <Theme inverse>

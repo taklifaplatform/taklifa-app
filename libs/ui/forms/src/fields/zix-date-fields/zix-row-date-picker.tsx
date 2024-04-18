@@ -1,3 +1,5 @@
+import { useMultiLang } from '@zix/i18n'
+import { t } from 'i18next'
 import moment, { Moment } from 'moment'
 import { useEffect, useMemo, useRef } from 'react'
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel'
@@ -17,15 +19,21 @@ export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
   onChange,
   value,
 }) => {
+  const { activeLang, isRtl } = useMultiLang()
   const carouselRef = useRef<ICarouselInstance>(null)
-  const date = useMemo(() => moment(value ?? undefined), [value])
+  const date: Moment = useMemo(() => moment(value ?? undefined), [value])
 
   const listDays: number[] = useMemo(() => {
+    if (!date.isValid() || !date.daysInMonth()) {
+      return Array.from(Array(30).keys()).map((i) => i + 1)
+    }
+
     return Array.from(Array(date.daysInMonth()).keys()).map((i) => i + 1)
   }, [date])
 
   const activeDayIndex = useMemo<number>(
     () => (value ? Number(moment(value).format('D')) - 1 : 0),
+    // () => (value ? Number(moment(value).format('D')) - 1 : 15),
     [value]
   )
 
@@ -53,13 +61,13 @@ export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
     >
       <YStack alignItems='center' justifyContent='space-between' flex={1}>
         <Text fontSize='$1' fontWeight='800'>
-          {moment(date).date(item).format('dddd')}
+          {moment(date).locale(activeLang).date(item).format('dddd')}
         </Text>
         <Text fontSize='$10' fontWeight='900'>
           {item}
         </Text>
         <Text fontSize='$1' fontWeight='800'>
-          {moment(date).date(item).format('MMMM')}
+          {moment(date).locale(activeLang).date(item).format('MMMM')}
         </Text>
       </YStack>
     </Button>
@@ -72,7 +80,7 @@ export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
           height: '$2',
           size: '$4',
         }}
-        prependPlaceHolder={<Text fontSize='$1'>Month: </Text>}
+        prependPlaceHolder={<Text fontSize='$1'>{t('common:month')}: </Text>}
         value={date.format('MM')}
         onChange={(month: string) => onDateChange(date.set('month', parseInt(month) - 1))}
       />
@@ -86,7 +94,7 @@ export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
           style={{
             height: PAGE_HEIGHT,
             width: '100%',
-            justifyContent: activeDayIndex > 3 ? 'center' : 'flex-start',
+            justifyContent: activeDayIndex > 1 ? 'center' : isRtl ? 'flex-end' : 'flex-start',
           }}
           width={PAGE_WIDTH}
           height={PAGE_HEIGHT}
