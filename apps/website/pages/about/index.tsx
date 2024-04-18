@@ -4,9 +4,9 @@ import { t } from 'i18next';
 import { useRouter } from 'next/router';
 import { Pressable } from 'react-native';
 import { Button, Image, Stack, Text, Theme, View, XStack, YStack } from 'tamagui';
-import { ManageShipments } from '../../components/web-home/management-shipments/ManageShipments';
-import { Partner } from '../../components/web-home/partner/Partner';
-import { MainLayout } from '../../layouts/MainLayout';
+import { ManageShipments } from '../../components/web-home/management-shipments/manage-shipments';
+import { Partner } from '../../components/web-home/partner/partner';
+import { MainLayout } from '../../layouts/main-layout';
 import { NextPageWithLayout } from '../_app';
 type WelcomeTextProps = {
   title: string;

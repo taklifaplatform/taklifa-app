@@ -1,4 +1,4 @@
-import { MainLayout } from 'apps/website/layouts/MainLayout';
+import { MainLayout } from 'apps/website/layouts/main-layout';
 import { NextPageWithLayout } from '../_app';
 import { Text } from 'tamagui';
 import { PrivacyPolicyScreen } from '@zix/features/auth';

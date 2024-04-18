@@ -1,6 +1,6 @@
 import { JobsListScreen } from '@zix/features/shipments';
-import { FindJobsBanner } from 'apps/website/components/jobs/FindJobsBanner';
-import { MainLayout } from 'apps/website/layouts/MainLayout';
+import { FindJobsBanner } from 'apps/website/components/jobs/find-jobs-banner';
+import { MainLayout } from 'apps/website/layouts/main-layout';
 import { NextPageWithLayout } from '../_app';
 
 export const Page: NextPageWithLayout = () => {
