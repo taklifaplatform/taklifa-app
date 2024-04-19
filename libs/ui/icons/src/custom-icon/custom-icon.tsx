@@ -13,9 +13,10 @@ import {
 import { useMultiLang } from '@zix/i18n';
 import * as React from 'react';
 import { Text } from 'react-native';
-import { ColorTokens, SizeTokens, Stack, getTokenValue, useStyle } from 'tamagui';
+import { ColorTokens, SizeTokens, Stack, useStyle } from 'tamagui';
 
 import * as Icons from '../assets';
+import { iconNames } from '../assets/icon-names';
 
 // create a map of icons with {snake_case_name: ReactComponent}
 const IconsMap = Object.keys(Icons).reduce((acc: Record<string, any>, name) => {
@@ -25,103 +26,6 @@ const IconsMap = Object.keys(Icons).reduce((acc: Record<string, any>, name) => {
   return acc;
 }, {});
 
-const iconNames = [
-  'web_logo_en',
-  'web_logo_ar',
-  'aspect_ratio',
-  'logo',
-  'avatar',
-  'circle_avatar',
-  'home',
-  'orders',
-  'create',
-  'comment',
-  'notifications',
-  'chat',
-  'apps',
-  'success',
-  'company',
-  'garage',
-  'opacity',
-  'align-left',
-  'align-right',
-  'arrow_left',
-  'arrow_right',
-  'chevron_left',
-  'chevron_right',
-  'chevrons_left',
-  'chevrons_right',
-  'large_arrow_left',
-  'large_arrow_right',
-  'star',
-  'half_star',
-  'local_shipping',
-  'time',
-  'package',
-  'call',
-  'settings',
-  'lock',
-  'logout',
-  'theme',
-  'mail',
-  'share',
-  'secure',
-  'book',
-  'about',
-  'empty_notification',
-  'empty_chat',
-  'empty_data',
-  'empty_folder',
-  'wallet',
-  'location',
-  'car',
-  'followed',
-  'more',
-  'facebook',
-  'instagram',
-  'snapchat',
-  'google_play',
-  'app_store',
-  'help',
-  'home_info',
-  'translate',
-  'account',
-  'ringing',
-  'search',
-  'flip',
-  'search_track',
-  'find_track',
-  'client',
-  'company_shipping',
-  'shipping',
-  'tik_tok',
-  'map',
-  'list',
-  'edit',
-  'star_location',
-  'drawer',
-  'matricule',
-  'alert_cercle',
-  'user_info',
-  'alert',
-  'bolt',
-  'touch_app',
-  'category',
-  'shield_with_heart',
-  // vehicles
-  'vehicle_a',
-  'vehicle_b',
-  'vehicle_c',
-  'store',
-  'job',
-  'radio_button_checked',
-  'dimension_box',
-  'box_add',
-  'location_check',
-  'contact_calendar',
-  'paper_money',
-  'near_me'
-];
 
 export type CustomIconName = (typeof iconNames)[number];
 export interface CustomIconProps {
