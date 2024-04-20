@@ -5,6 +5,8 @@ output_dir="./libs/ui/icons/src/assets/"
 content_array=()
 idx=0
 
+# TODO: need logic to force icons naming to be kebab case
+
 
 # Check if the file exists, and if so, delete it
 if [ -f "$output_dir/icon-names.ts" ]; then
