@@ -1,6 +1,6 @@
-import { Partner } from '../components/web-home/partner/partner';
 import { ManageShipments } from '../components/web-home/management-shipments/manage-shipments';
-import { Questions } from '../components/web-home/questions/questions';
+import { OurPartners } from '../components/web-home/our-partners/our-partners';
+import { FrequentlyQuestions } from '../components/web-home/questions/frequently-question';
 import { SecondBanner } from '../components/web-home/second-banner/second-banner';
 import { StartToday } from '../components/web-home/start-today/start-today';
 import { TopBanner } from '../components/web-home/top-banner/top-banner';
@@ -17,9 +17,9 @@ export const Page: NextPageWithLayout = () => {
       <SecondBanner />
       <ManageShipments />
       <StartToday />
-      <Partner />
+      <OurPartners />
       <WarningBanner />
-      <Questions />
+      <FrequentlyQuestions />
     </>
   );
 };

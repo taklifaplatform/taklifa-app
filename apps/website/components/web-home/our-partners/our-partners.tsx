@@ -1,7 +1,7 @@
 import { t } from 'i18next';
-import { Image, Stack, Text, XStack, YStack } from 'tamagui';
+import { Image, Stack, Text, YStack } from 'tamagui';
 
-export function Partner() {
+export function OurPartners() {
 
   const renderOptionText = () => (
     <YStack
