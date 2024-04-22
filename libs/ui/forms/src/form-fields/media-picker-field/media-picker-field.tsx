@@ -22,7 +22,7 @@ export const MediaPickerField: React.FC<MediaPickerFieldProps> = ({
   ...props
 }) => {
   const { field, error } = useTsController<MediaTransformer | MediaTransformer[]>()
-  const { placeholder } = useFieldInfo();
+  const { placeholder, isOptional } = useFieldInfo();
   return (
     <FormFieldContainer {...containerProps}>
       <ZixMediaPickerField
@@ -31,6 +31,7 @@ export const MediaPickerField: React.FC<MediaPickerFieldProps> = ({
         onChange={field.onChange}
         hasError={!!error?.errorMessage}
         placeholder={placeholder}
+        isOptional={isOptional}
       />
     </FormFieldContainer>
   )

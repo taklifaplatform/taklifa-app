@@ -7,7 +7,8 @@ import { ImageStyle } from "react-native";
 export const ZixImageMediaPickerPreviewer: React.FC<ZixMediaPreviewerProps> = ({
   previews,
   onPress,
-  placeholder
+  placeholder,
+  isOptional
 }) => {
   const size = "$7";
   const media = previews?.length > 0 ? previews[0] : null;
@@ -40,7 +41,7 @@ export const ZixImageMediaPickerPreviewer: React.FC<ZixMediaPreviewerProps> = ({
               <ImagePlus size="$2" color="$color11" />
             )}
           </Avatar>
-          <Text>{placeholder} * </Text>
+          <Text>{placeholder} {isOptional ? '' : '*'} </Text>
         </YStack>
       </XStack>
     </Button>
