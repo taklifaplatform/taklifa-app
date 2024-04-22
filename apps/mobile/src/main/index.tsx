@@ -1,15 +1,12 @@
-import { useAuth } from '@zix/services/auth';
 import React from 'react';
 
-import { Dimensions, Image, View } from 'react-native';
+import { Dimensions, Image, Platform, View } from 'react-native';
 import { useRouter } from 'solito/router';
 
-
 export default function Screen() {
-  const { redirectUserToActiveDashboard } = useAuth()
   const { width, height } = Dimensions.get('window');
 
-  const router = useRouter()
+  const router = useRouter();
   return (
     <View
       style={{
@@ -17,16 +14,13 @@ export default function Screen() {
         backgroundColor: '#333333',
       }}
       onLayout={() => {
-        setTimeout(() => {
-          router.replace('/app')
-        }, 4000);
-        // if (Platform.OS === 'ios') {
-        //   setTimeout(() => {
-        //     redirectUserToActiveDashboard();
-        //   }, 4000);
-        // } else {
-        //   redirectUserToActiveDashboard();
-        // }
+        if (Platform.OS === 'ios') {
+          setTimeout(() => {
+            router.replace('/app');
+          }, 4000);
+        } else {
+          router.replace('/app');
+        }
       }}
     >
       <Image

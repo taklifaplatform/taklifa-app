@@ -59,7 +59,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
       key={index}
       theme={status === item.status ? 'accent' : undefined}
       backgroundColor={status === item.status ? '$color9' : '$color2'}
-      borderRadius='0'
+      borderRadius= '$0'
       height='$4'
       textProps={{
         textTransform: 'capitalize',

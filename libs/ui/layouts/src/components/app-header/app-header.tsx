@@ -10,7 +10,7 @@ import { Button, ColorTokens, H4, Theme, View, XStack, YStack } from 'tamagui';
 import { AppHeaderWrapper } from './app-header-wrapper';
 
 export type AppHeaderProps = {
-  searchProps?: ZixInputProps
+  searchProps?: ZixInputProps;
   showSearchBar?: boolean;
   showBackButton?: boolean;
   headerTitle?: () => React.ReactNode;
@@ -38,17 +38,16 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
     }
   }, [isLoggedIn, router, user, getUrlPrefix]);
 
-  const renderSearchBar = () => showSearchBar && (
-    <Theme reset>
-      <View paddingHorizontal="$4" paddingVertical='$2' $gtMd={{ flex: 1 }}>
+  const renderSearchBar = () =>
+    showSearchBar && (
+      <View paddingHorizontal="$4" paddingVertical="$2" $gtMd={{ flex: 1 }}>
         <ZixInput
           leftIcon={() => <Search size="$1.5" />}
           placeholder={t('common:search')}
           {...searchProps}
         />
       </View>
-    </Theme>
-  )
+    );
 
   const renderUserAvatar = () =>
     !showBackButton && (
@@ -83,14 +82,14 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
 
   const renderDesktopHeader = () => (
     <YStack
-      display='none'
+      display="none"
       $gtMd={{ display: 'block' }}
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      position='sticky'
+      position="sticky"
       top={0}
       zIndex={100}
-      backgroundColor='$color2'
+      backgroundColor="$color2"
     >
       <AppHeaderWrapper>
         <XStack
@@ -99,8 +98,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
           alignItems="center"
           justifyContent="space-between"
         >
-          <XStack flex={0.25} alignItems='center' gap="$4"
-          >
+          <XStack flex={0.25} alignItems="center" gap="$4">
             {renderBackButton()}
 
             {headerTitle ? (
@@ -111,13 +109,18 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
               </H4>
             )}
           </XStack>
-          <XStack flex={0.5}>
-            {renderSearchBar()}
-          </XStack>
+          <XStack flex={0.5}>{renderSearchBar()}</XStack>
 
           <XStack>
-            {headerRight ? headerRight() : (
-              <Button flex={1} theme='accent' variant='outlined' icon={PlusSquare}>
+            {headerRight ? (
+              headerRight()
+            ) : (
+              <Button
+                flex={1}
+                theme="accent"
+                variant="outlined"
+                icon={PlusSquare}
+              >
                 Send New Shipments
               </Button>
             )}
@@ -125,10 +128,16 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
         </XStack>
       </AppHeaderWrapper>
     </YStack>
-  )
+  );
 
   const renderMobileHeader = () => (
-    <YStack theme='accent' backgroundColor='$color9' paddingBottom='$2' $gtMd={{ display: 'none' }}>
+    <YStack
+      theme="accent"
+      themeShallow
+      backgroundColor="$color9"
+      paddingBottom="$2"
+      $gtMd={{ display: 'none' }}
+    >
       <AppHeaderWrapper>
         <YStack>
           <XStack
@@ -159,7 +168,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
         </YStack>
       </AppHeaderWrapper>
     </YStack>
-  )
+  );
 
   return (
     <>
