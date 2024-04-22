@@ -129,7 +129,7 @@ export const AccountSwitcher: React.FC = () => {
             {userRoles?.map((role) => (
               <YGroup.Item key={role.id}>
                 <ListItem
-                  disabled={user?.active_role?.name === role.name}
+                  //disabled={user?.active_role?.name === role.name}
                   theme={
                     user?.active_role?.name === role.name ? 'accent' : undefined
                   }
@@ -167,7 +167,7 @@ export const AccountSwitcher: React.FC = () => {
                       ? 'accent'
                       : undefined
                   }
-                  disabled={user?.active_company?.id === company.id}
+                  //disabled={user?.active_company?.id === company.id}
                   hoverStyle={{ backgroundColor: '$color5' }}
                   pressStyle={{ opacity: 0.5 }}
                   borderBottomColor="$color5"
