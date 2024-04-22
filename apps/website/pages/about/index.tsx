@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { Pressable } from 'react-native';
 import { Button, Image, Stack, Text, Theme, View, XStack, YStack } from 'tamagui';
 import { ManageShipments } from '../../components/web-home/management-shipments/manage-shipments';
-import { Partner } from '../../components/web-home/our-partners/partners';
+import { OurPartners } from '../../components/web-home/our-partners/our-partners';
 import { MainLayout } from '../../layouts/main-layout';
 import { NextPageWithLayout } from '../_app';
 type WelcomeTextProps = {
@@ -354,7 +354,7 @@ export const Page: NextPageWithLayout = () => {
           borderRadius={10}
         />
       </XStack>
-      <Partner />
+      <OurPartners />
       <ManageShipments />
     </YStack>
   );
