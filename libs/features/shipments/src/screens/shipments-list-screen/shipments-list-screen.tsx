@@ -121,7 +121,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
           refreshing={isLoading}
           onRefresh={refetch}
           style={useStyle({
-            flex: '1',
+            flex: 1,
             padding: '$2',
           })}
           data={data?.data}
