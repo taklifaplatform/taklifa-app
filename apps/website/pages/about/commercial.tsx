@@ -5,7 +5,7 @@ import {
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import { Accordion, Button, Image, Paragraph, Square, Stack, Text, Tooltip, View, XStack, YStack } from 'tamagui';
-import { MainLayout } from '../../layouts/MainLayout';
+import { MainLayout } from '../../layouts/main-layout';
 import { NextPageWithLayout } from '../_app';
 
 export const Page: NextPageWithLayout = () => {

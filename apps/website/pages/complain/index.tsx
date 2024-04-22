@@ -1,4 +1,4 @@
-import { MainLayout } from 'apps/website/layouts/MainLayout';
+import { MainLayout } from 'apps/website/layouts/main-layout';
 import { t } from 'i18next';
 import Head from 'next/head';
 import { NextPageWithLayout } from '../_app';

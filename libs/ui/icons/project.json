@@ -15,6 +15,12 @@
       "options": {
         "jestConfig": "libs/ui/icons/jest.config.ts"
       }
+    },
+    "generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "chmod +x ./libs/ui/icons/file.sh && ./libs/ui/icons/file.sh"
+      }
     }
   }
 }

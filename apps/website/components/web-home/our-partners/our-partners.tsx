@@ -1,7 +1,7 @@
 import { t } from 'i18next';
-import { Image, Stack, Text, XStack, YStack } from 'tamagui';
+import { Image, Stack, Text, YStack } from 'tamagui';
 
-export function Partner() {
+export function OurPartners() {
 
   const renderOptionText = () => (
     <YStack
@@ -55,7 +55,7 @@ export function Partner() {
       <Image
         alt="DHL"
         source={{
-          uri: '/images/TNT_Express_Logo.png',
+          uri: '/images/t-nt-express-logo.png',
         }}
         w={108}
         height={39}
@@ -68,7 +68,7 @@ export function Partner() {
       <Image
         alt="DHL"
         source={{
-          uri: '/images/FedEx_Express.png',
+          uri: '/images/fed-ex-express.png',
         }}
         w={86}
         height={40}
@@ -81,7 +81,7 @@ export function Partner() {
       <Image
         alt="DHL"
         source={{
-          uri: '/images/Aramex_logo.png',
+          uri: '/images/aramexlogo.png',
         }}
         w={243}
         height={40}
@@ -94,7 +94,7 @@ export function Partner() {
       <Image
         alt="DHL"
         source={{
-          uri: '/images/Amazon_logo.png',
+          uri: '/images/amazonlogo.png',
         }}
         w={131}
         height={39}

@@ -1,8 +1,8 @@
 import { CustomIcon } from '@zix/ui/icons';
 import { useRouter } from 'next/router';
 import { Button, Image, Stack, Text, View, YStack } from 'tamagui';
-import { FrequentlyQuestions } from '../../components/web-home/questions/FrequentlyQuestion';
-import { MainLayout } from '../../layouts/MainLayout';
+import { FrequentlyQuestions } from '../../components/web-home/questions/frequently-question';
+import { MainLayout } from '../../layouts/main-layout';
 import { NextPageWithLayout } from '../_app';
 import { t } from 'i18next';
 export const Page: NextPageWithLayout = () => {
