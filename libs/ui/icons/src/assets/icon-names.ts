@@ -67,6 +67,7 @@ export const iconNames = [
   'success',
   'theme',
   'tik_tok',
+  'time_pace',
   'time',
   'touch_app',
   'user_info',

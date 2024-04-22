@@ -66,7 +66,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
         {
           icons: (
             <CustomIcon
-              name="time-pace"
+              name="time_pace"
               size="$1"
               color={'$color9'}
               $sm={{ display: 'none' }}
@@ -85,7 +85,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
         {
           icons: (
             <CustomIcon
-              name="budget"
+              name="paper_money"
               size="$1"
               color={'$color9'}
               $sm={{ display: 'none' }}
