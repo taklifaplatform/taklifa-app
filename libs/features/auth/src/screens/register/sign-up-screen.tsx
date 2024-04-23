@@ -16,7 +16,7 @@ import { Theme } from 'tamagui';
 import { z } from 'zod';
 
 import { AuthService } from '@zix/api';
-import { useAuth } from '@zix/services/auth';
+import { USER_ROLES, useAuth } from '@zix/services/auth';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 
 const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
@@ -29,8 +29,9 @@ const SignUpSchema = z
       .optional()
       .describe(t('forms:is_whatsapp')),
     password: formFields.secure_text.describe(t('forms:password')),
-    password_confirmation: formFields.secure_text
-      .describe(t('forms:password_confirmation')),
+    password_confirmation: formFields.secure_text.describe(
+      t('forms:password_confirmation'),
+    ),
     accept_terms: formFields.accept_terms.describe(t('forms:accept_terms')),
   })
   .required({
@@ -56,7 +57,6 @@ const SignUpSchema = z
         message: t('auth:validation.accept_terms'),
       });
     }
-
   });
 
 export const SignUpScreen = () => {
@@ -64,7 +64,12 @@ export const SignUpScreen = () => {
   const router = useRouter();
   const updateParams = useUpdateParams();
 
-  const { setAuthAccessToken, setAuthUser, registerSteps } = useAuth();
+  const {
+    setAuthAccessToken,
+    setAuthUser,
+    registerSteps,
+    requestedAccountType,
+  } = useAuth();
   const { params } = useParams();
 
   useEffect(() => {
@@ -79,6 +84,7 @@ export const SignUpScreen = () => {
     mutationFn: (variables: z.infer<typeof SignUpSchema>) =>
       AuthService.register({
         requestBody: {
+          is_customer: requestedAccountType === USER_ROLES.customer,
           ...variables,
         },
       }),
@@ -93,7 +99,9 @@ export const SignUpScreen = () => {
       });
     },
     onError(error: any) {
-      toast.show(error?.body?.message || t('app:errors.something-went-wrong'), { preset: 'error' });
+      toast.show(error?.body?.message || t('app:errors.something-went-wrong'), {
+        preset: 'error',
+      });
       handleFormErrors(form, error?.body?.errors);
     },
   });
@@ -115,10 +123,7 @@ export const SignUpScreen = () => {
         onSubmit={mutateAsync}
         renderAfter={({ submit }) => (
           <Theme inverse>
-            <SubmitButton
-              onPress={() => submit()}
-              borderRadius="$10"
-            >
+            <SubmitButton onPress={() => submit()} borderRadius="$10">
               {t('common:next')}
             </SubmitButton>
           </Theme>

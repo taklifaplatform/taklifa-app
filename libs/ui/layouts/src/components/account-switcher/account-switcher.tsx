@@ -7,7 +7,7 @@ import {
   CompanyAdminService,
   UserService,
 } from '@zix/api';
-import { MediaAvatar, UserAvatar } from '@zix/ui/common';
+import { DebugObject, MediaAvatar, UserAvatar } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { useAuth } from '@zix/services/auth';
 import { useCallback, useMemo, useState } from 'react';
@@ -126,6 +126,7 @@ export const AccountSwitcher: React.FC = () => {
                 onPress={() => setSheetOpen(false)}
               />
             </XStack>
+            {/* <DebugObject object={userRoles} /> */}
             {userRoles?.map((role) => (
               <YGroup.Item key={role.id}>
                 <ListItem

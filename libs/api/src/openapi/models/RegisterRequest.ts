@@ -9,5 +9,6 @@ export type RegisterRequest = {
     password?: string;
     password_confirmation?: string;
     phone_number_has_whatsapp?: boolean;
+    is_customer?: boolean;
 };
 
