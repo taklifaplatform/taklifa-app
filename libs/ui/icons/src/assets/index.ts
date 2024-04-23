@@ -18,6 +18,7 @@ import Chat from './icons/chat.svg';
 import Chronic from './icons/chronic.svg';
 import Client from './icons/client.svg';
 import Comment from './icons/comment.svg';
+import CompanyCars from './icons/company-cars.svg';
 import CompanyShipping from './icons/company-shipping.svg';
 import Company from './icons/company.svg';
 import ContactCalendar from './icons/contact-calendar.svg';
@@ -65,6 +66,7 @@ import Share from './icons/share.svg';
 import Shield_with_heart from './icons/shield_with_heart.svg';
 import Shipping from './icons/shipping.svg';
 import Snapchat from './icons/snapchat.svg';
+import SoloTransporterCar from './icons/solo-transporter-car.svg';
 import Star from './icons/star.svg';
 import Store from './icons/store.svg';
 import Success from './icons/success.svg';
@@ -99,6 +101,7 @@ export {
   Chronic,
   Client,
   Comment,
+  CompanyCars,
   CompanyShipping,
   Company,
   ContactCalendar,
@@ -146,6 +149,7 @@ export {
   Shield_with_heart,
   Shipping,
   Snapchat,
+  SoloTransporterCar,
   Star,
   Store,
   Success,
