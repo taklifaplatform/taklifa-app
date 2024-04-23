@@ -4,7 +4,7 @@ import { Theme } from 'tamagui';
 
 import { useToastController } from '@tamagui/toast';
 import { UserService } from '@zix/api';
-import { FullScreenSpinner } from '@zix/ui/common';
+import { DebugObject, FullScreenSpinner } from '@zix/ui/common';
 import { AppHeader } from '@zix/ui/layouts';
 import { useAuth } from '@zix/services/auth';
 import { t } from 'i18next';
@@ -59,6 +59,7 @@ export const EditAccountScreen = () => {
   if (!user?.id) {
     return <FullScreenSpinner />;
   }
+
 
   return (
     <SchemaForm

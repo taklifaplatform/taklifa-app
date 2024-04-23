@@ -28,7 +28,7 @@ const KYCFormSchema = z
 
 export const KycVerificationScreen = () => {
   const router = useRouter();
-  const { user, registerSteps } = useAuth()
+  const { user, registerSteps, refetchUser } = useAuth()
 
   const form = useForm<z.infer<typeof KYCFormSchema>>();
   const { mutateAsync } = useMutation({
@@ -38,6 +38,7 @@ export const KycVerificationScreen = () => {
       });
     },
     onSuccess() {
+      refetchUser()
       router.push('/auth/verify-driver');
     },
     onError(error: any) {
