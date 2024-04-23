@@ -7,6 +7,7 @@ import Alert from './icons/alert.svg';
 import AppStore from './icons/app-store.svg';
 import Apps from './icons/apps.svg';
 import AspectRatio from './icons/aspect-ratio.svg';
+import AssistantNavigation from './icons/assistant-navigation.svg';
 import Avatar from './icons/avatar.svg';
 import Bolt from './icons/bolt.svg';
 import Book from './icons/book.svg';
@@ -90,6 +91,7 @@ export {
   AppStore,
   Apps,
   AspectRatio,
+  AssistantNavigation,
   Avatar,
   Bolt,
   Book,

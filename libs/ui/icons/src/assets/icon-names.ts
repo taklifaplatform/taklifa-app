@@ -6,6 +6,7 @@ export const iconNames = [
   'app_store',
   'apps',
   'aspect_ratio',
+  'assistant_navigation',
   'avatar',
   'bolt',
   'book',
