@@ -21,7 +21,7 @@ export const ShipmentCost: React.FC<ShipmentCostProps> = ({
       backgroundColor='$color2'
     >
       <XStack gap="$3" alignItems="center">
-        <CustomIcon name="budget" size='$1.5' color={'$color1'} />
+        <CustomIcon name="paper_money" size='$1.5' color={'$color1'} />
         <H6 textTransform='none'>
           Total cost of shipment
         </H6>
