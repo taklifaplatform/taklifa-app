@@ -39,6 +39,7 @@ import Instagram from './icons/instagram.svg';
 import Job from './icons/job.svg';
 import List from './icons/list.svg';
 import LocalShipping from './icons/local-shipping.svg';
+import LookingForService from './icons/looking-for-service.svg';
 import LocationCheck from './icons/location-check.svg';
 import Location from './icons/location.svg';
 import Lock from './icons/lock.svg';
@@ -58,6 +59,7 @@ import Ringing from './icons/ringing.svg';
 import SearchTrack from './icons/search-track.svg';
 import Search from './icons/search.svg';
 import Secure from './icons/secure.svg';
+import ServiceProvider from './icons/service-provider.svg';
 import Settings from './icons/settings.svg';
 import Share from './icons/share.svg';
 import Shield_with_heart from './icons/shield_with_heart.svg';
@@ -118,6 +120,7 @@ export {
   Job,
   List,
   LocalShipping,
+  LookingForService,
   LocationCheck,
   Location,
   Lock,
@@ -137,6 +140,7 @@ export {
   SearchTrack,
   Search,
   Secure,
+  ServiceProvider,
   Settings,
   Share,
   Shield_with_heart,
