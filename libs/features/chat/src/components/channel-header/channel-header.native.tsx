@@ -21,7 +21,7 @@ export const ChannelHeader: React.FC<AppHeaderProps> = (props) => {
     <AppHeader
       headerTitle={() => (
         <YStack alignItems='center'>
-          <H4 fontSize='$1.5' numberOfLines={1}>
+          <H4 fontSize='$2' numberOfLines={1}>
             {displayName}
           </H4>
           <Text fontSize='$1' numberOfLines={1}>

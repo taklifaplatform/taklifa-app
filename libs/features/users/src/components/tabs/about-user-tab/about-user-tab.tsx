@@ -17,7 +17,7 @@ export const AboutUserTab: React.FC<AboutUserTabProps> = ({
   const router = useRouter()
   const { isServiceProvider, getUrlPrefix } = useAuth()
 
-  const renderAbout = () => !!user.about?.length && (
+  const renderAbout = () => (isServiceProvider(user) && !!user.about?.length) && (
     <ZixWidgetContainer label='About Driver'>
       <Text flex={1} color='black'>
         {user.about}

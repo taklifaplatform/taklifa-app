@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useFormState } from 'react-hook-form';
 import { AnimatePresence, Button, ButtonProps, Spinner } from 'tamagui';
 
@@ -19,13 +18,8 @@ const useIsSubmitting = () => {
 export const SubmitButton: React.FC<ButtonProps> = (
   props
 ) => {
-  const { isSubmitting } = useFormState();
+  const isSubmitting = useIsSubmitting();
 
-  useEffect(() => {
-    console.log('====================================');
-    console.log('isSubmitting::', isSubmitting);
-    console.log('====================================');
-  }, [isSubmitting]);
   return (
     <Button
       iconAfter={

@@ -1,4 +1,4 @@
-import { H1, H2, Paragraph, YStack, isWeb } from 'tamagui';
+import { H1, H2, Paragraph, ScrollView, YStack, isWeb } from 'tamagui';
 import { t } from 'i18next';
 import { AppHeader } from '@zix/ui/layouts';
 
@@ -10,9 +10,11 @@ export const PrivacyPolicyScreen = () => {
         showBackButton
         hideOnWeb
       />
+      <ScrollView>
       <YStack gap="$4" padding="$4">
         {/* only show title on web since mobile has navigator title */}
         {isWeb && <H1>{t('account:privacy_policy.title')}</H1>}
+        <H2>The Introduction</H2>
         <Paragraph>
           Sawaeed Inc built the Sawaeed app as a Free app. This SERVICE is
           provided by Sawaeed Inc at no cost and is intended for use as is.
@@ -133,6 +135,7 @@ export const PrivacyPolicyScreen = () => {
           not hesitate to contact us at admin@zixdev.com.
         </Paragraph>
       </YStack>
+      </ScrollView>
     </>
 
   );

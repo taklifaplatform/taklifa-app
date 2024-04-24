@@ -8,7 +8,7 @@ import { useMultiLang } from '@zix/i18n';
 import { useThemeSetting } from '@zix/providers';
 import { t } from 'i18next';
 import { useCallback, useRef } from 'react';
-import { Linking } from 'react-native';
+import { Alert, Linking } from 'react-native';
 
 import { useAuth } from '@zix/services/auth';
 import { useLink } from 'solito/link';
@@ -231,7 +231,25 @@ const SettingsItemLogoutAction = () => {
         <CustomIcon name="logout" color="$color9" {...props} />
       )}
       accentColor="$color9"
-      onPress={() => logout()}
+      //onPress={() => logout()}
+      onPress={async () => {
+        Alert.alert(
+          'Sign Out',
+          `Are you sure you want to Sign Out?`,
+          [
+            {
+              text: 'Sign Out',
+              onPress: () => logout(),
+              style: 'cancel',
+            },
+            {
+              text: 'Cancel',
+              style: 'destructive',
+            },
+          ]
+        )
+      }}
+
     >
       {t('account:logout')}
     </Settings.Item>
