@@ -36,8 +36,8 @@ export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = ({
     <Marker
       key={company.id}
       coordinate={{
-        latitude: company.location.latitude,
-        longitude: company.location.longitude
+        latitude: parseFloat(company.location.latitude ?? '0'),
+        longitude: parseFloat(company.location.longitude ?? '0'),
       }}
       onPress={() => onPress?.()}
     >

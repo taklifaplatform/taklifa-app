@@ -59,7 +59,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
       key={index}
       theme={status === item.status ? 'accent' : undefined}
       backgroundColor={status === item.status ? '$color9' : '$color2'}
-      borderRadius='0'
+      borderRadius= '$0'
       height='$4'
       textProps={{
         textTransform: 'capitalize',
@@ -121,7 +121,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
           refreshing={isLoading}
           onRefresh={refetch}
           style={useStyle({
-            flex: '1',
+            flex: 1,
             padding: '$2',
           })}
           data={data?.data}

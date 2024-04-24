@@ -36,8 +36,8 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = ({
     <Marker
       key={driver.id}
       coordinate={{
-        latitude: driver.location.latitude,
-        longitude: driver.location.longitude
+        latitude: parseFloat(driver.location.latitude ?? '0'),
+        longitude: parseFloat(driver.location.longitude ?? '0'),
       }}
       onPress={() => onPress?.()}
     >

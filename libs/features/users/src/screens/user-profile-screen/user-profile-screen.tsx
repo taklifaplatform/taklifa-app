@@ -11,7 +11,6 @@ import UserInfoRow from '../../components/user-info-row/user-info-row';
 import UserProfileLayout from '../../layouts/user-profile-layout/user-profile-layout';
 import { RefreshControl } from 'react-native-gesture-handler';
 
-
 const { useParam } = createParam<{ user: string }>();
 
 export function UserProfileScreen() {
@@ -34,14 +33,19 @@ export function UserProfileScreen() {
 
   const renderUserProfile = () =>
     data?.data && (
-      <ScrollView flex={1} refreshControl={<RefreshControl refreshing={isLoading} onRefresh={refetch} />}>
-        <YStack padding="$4" marginBottom='$4' gap="$4">
+      <ScrollView
+        flex={1}
+        refreshControl={
+          <RefreshControl refreshing={isLoading} onRefresh={refetch} />
+        }
+      >
+        <YStack padding="$4" marginBottom="$4" gap="$4">
           <YStack
-            backgroundColor='$color2'
-            borderRadius='$5'
-            paddingHorizontal='$4'
-            paddingBottom='$4'
-            gap='$6'
+            backgroundColor="$color2"
+            borderRadius="$5"
+            paddingHorizontal="$4"
+            paddingBottom="$4"
+            gap="$6"
           >
             <ProfileHeader user={data.data} />
             <UserInfoRow user={data.data} />

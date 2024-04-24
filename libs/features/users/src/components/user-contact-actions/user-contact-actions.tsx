@@ -25,7 +25,7 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
 
   const sharedButtonStyle = {
     size: actionButtonSize,
-    fontSize: '$0.75',
+    fontSize: '$1',
     scaleIcon: 1.2
   }
 

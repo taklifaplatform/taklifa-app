@@ -1,7 +1,7 @@
 #!/bin/bash
 
 dir="./libs/ui/icons/src/assets/icons"
-output_dir="./libs/ui/icons/src/assets/"
+output_dir="./libs/ui/icons/src/assets"
 content_array=()
 idx=0
 

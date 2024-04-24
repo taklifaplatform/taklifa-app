@@ -20,16 +20,16 @@ export const ZixLocationInfoWidget: React.FC<ZixLocationInfoWidgetProps> = ({
       <MapView
         style={{ flex: 1, height: 200, borderRadius: 14 }}
         initialRegion={{
-          latitude: location?.latitude,
-          longitude: location?.longitude,
+          latitude: parseFloat(location?.latitude ?? '0'),
+          longitude: parseFloat(location?.longitude ?? '0'),
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
       >
         <Marker
           coordinate={{
-            latitude: location?.latitude,
-            longitude: location?.longitude
+            latitude: parseFloat(location?.latitude ?? '0'),
+            longitude: parseFloat(location?.longitude ?? '0')
           }}
           title={location?.address}
           description={location?.address}

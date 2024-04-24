@@ -38,8 +38,8 @@ export function ZixDatepickerPopover({
           borderColor="$color10"
           borderWidth="$0.25"
           borderLeftWidth={0}
-          borderTopLeftRadius={0}
-          borderBottomLeftRadius={0}
+          borderTopLeftRadius={'$0'}
+          borderBottomLeftRadius={'$0'}
           backgroundColor="transparent"
           size={size}
           {...buttonProps}
