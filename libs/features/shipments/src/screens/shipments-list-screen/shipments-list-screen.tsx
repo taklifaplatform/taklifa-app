@@ -19,7 +19,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
   variant = 'shipments',
 }) => {
   const { activeRole, getUrlPrefix } = useAuth();
-  const media = useMedia()
+  const media = useMedia();
 
   const screenTitle = useMemo(() => {
     if (variant === 'jobs') {
@@ -59,8 +59,8 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
       key={index}
       theme={status === item.status ? 'accent' : undefined}
       backgroundColor={status === item.status ? '$color9' : '$color2'}
-      borderRadius= '$0'
-      height='$4'
+      borderRadius="$0"
+      height="$4"
       textProps={{
         textTransform: 'capitalize',
       }}
@@ -70,13 +70,10 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
       }}
       iconAfter={() => (
         <Circle
-          size='$2'
+          size="$2"
           backgroundColor={status === item.status ? '$color12' : '$color10'}
         >
-          <Text
-            color='white'
-            fontSize="$1"
-          >
+          <Text color="white" fontSize="$1">
             {item.count}
           </Text>
         </Circle>
@@ -127,7 +124,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
           data={data?.data}
           numColumns={media.gtMd ? 2 : 1}
           renderItem={({ item, index }) => (
-            <Stack $gtMd={{ flex: 1, flexBasis: 1 }} padding='$2'>
+            <Stack $gtMd={{ flex: 1, flexBasis: 1 }} padding="$2">
               <ShipmentCard
                 key={index}
                 urlPrefix={`${getUrlPrefix}/${variant}`}
@@ -137,13 +134,15 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
               />
             </Stack>
           )}
-          ListEmptyComponent={() => (
-            <DataNotFound
-              message={t('shipment:shipment-not-found')}
-              description={t('shipment:shipment-not-found-description')}
-              imageUrl="/assets/shipmentNotFound.png"
-            />
-          )}
+          ListEmptyComponent={() =>
+            !isLoading ? (
+              <DataNotFound
+                message={t('shipment:shipment-not-found')}
+                description={t('shipment:shipment-not-found-description')}
+                imageUrl="/assets/shipmentNotFound.png"
+              />
+            ) : null
+          }
         />
       </YStack>
     </>

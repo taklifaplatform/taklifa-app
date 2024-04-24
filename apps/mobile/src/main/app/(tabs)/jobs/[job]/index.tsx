@@ -1,12 +1,8 @@
-import { JobDetailsScreen } from '@zix/features/company';
-import { AppHeader } from '@zix/ui/layouts';
+import { ShipmentDetailScreen } from '@zix/features/shipments';
 import React from 'react';
 
 export default function Screen() {
   return (
-    <>
-      <AppHeader showBackButton title="Job Detail" />
-      <JobDetailsScreen />
-    </>
+    <ShipmentDetailScreen variant='jobs' />
   );
 }

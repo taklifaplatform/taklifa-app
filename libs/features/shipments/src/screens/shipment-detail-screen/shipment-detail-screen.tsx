@@ -1,8 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import {
-  DriversService,
-  ShipmentService
-} from '@zix/api';
+import { DriversService, ShipmentService } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
 import { AppHeader } from '@zix/ui/layouts';
@@ -11,18 +8,11 @@ import { t } from 'i18next';
 import { useMemo } from 'react';
 import { RefreshControl } from 'react-native';
 import { createParam } from 'solito';
-import {
-  ScrollView,
-  Separator,
-  Text,
-  View,
-  YStack
-} from 'tamagui';
+import { ScrollView, Text, View, YStack } from 'tamagui';
 import {
   BudgetShipment,
   DefinitionSender,
   InformationAboutDriver,
-  ShipmentSectionWrapper,
   ShipmentCardActions,
   ShipmentCardHeader,
   ShipmentCode,
@@ -30,6 +20,7 @@ import {
   ShipmentDeliveringDetail,
   ShipmentDetails,
   ShipmentDirection,
+  ShipmentSectionWrapper,
   ShipmentStatus,
 } from '../../components';
 
@@ -37,14 +28,14 @@ export type ShipmentDetailScreenProps = {
   variant: 'shipments' | 'jobs';
 };
 
-const { useParam } = createParam<{ shipment: string }>();
+const { useParam } = createParam<{ shipment: string; job: string }>();
 
 export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
   variant = 'shipments',
 }) => {
   const { activeRole, getUrlPrefix } = useAuth();
 
-  const [shipmentId] = useParam('shipment');
+  const [shipmentId] = useParam(variant === 'shipments' ? 'shipment' : 'job');
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['ShipmentService.retrieveShipment', { id: shipmentId }],
     queryFn: () =>
@@ -69,7 +60,6 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
 
   const status = shipment?.status;
 
-
   const renderShipmentDetails = () =>
     !shipment ? (
       <FullScreenSpinner />
@@ -83,7 +73,6 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
         }}
       >
         <YStack gap="$3" padding="$4">
-
           <ShipmentStatus shipment={shipment} />
 
           <ShipmentCardHeader shipment={shipment} />
@@ -94,17 +83,15 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
 
           <ShipmentSectionWrapper>
             <ZixWidgetContainer label={t('shipment:offer-description')}>
-              <YStack gap='$2'>
-                <Text>
-                  TODO
-                </Text>
+              <YStack gap="$2">
+                <Text>TODO</Text>
               </YStack>
             </ZixWidgetContainer>
           </ShipmentSectionWrapper>
 
           <ShipmentSectionWrapper>
             <ZixWidgetContainer label={t('shipment:service-description')}>
-              <YStack gap='$2'>
+              <YStack gap="$2">
                 {shipment?.items?.map((item, index) => (
                   <Text key={`shipment-note-${item.id}-${index}`}>
                     {item.notes}
@@ -113,7 +100,6 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
               </YStack>
             </ZixWidgetContainer>
           </ShipmentSectionWrapper>
-
 
           <ShipmentSectionWrapper hideSeparator>
             <ShipmentDirection shipment={shipment} />
@@ -130,7 +116,6 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
           <ShipmentSectionWrapper>
             <ShipmentDetails shipment={shipment} />
           </ShipmentSectionWrapper>
-
 
           <ShipmentSectionWrapper>
             <BudgetShipment shipment={shipment} />
