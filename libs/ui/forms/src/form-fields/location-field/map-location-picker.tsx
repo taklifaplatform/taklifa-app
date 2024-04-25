@@ -1,57 +1,87 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Search, X } from '@tamagui/lucide-icons';
-import { useMutation, useQuery } from '@tanstack/react-query';
 import { GeographyService, LocationTransformer } from '@zix/api';
+import { ZixButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { useSafeAreaInsets } from '@zix/utils';
+import { t } from 'i18next';
 import { FlatList } from 'react-native';
-import { Avatar, Button, H4, ListItem, Sheet, Text, Theme, View, XStack, YStack } from 'tamagui';
-import { SubmitButton, ZixFieldContainer } from '../../common';
+import {
+  Avatar,
+  Button,
+  H4,
+  ListItem,
+  Sheet,
+  Text,
+  Theme,
+  View,
+  XStack,
+  YStack,
+} from 'tamagui';
+import { ZixFieldContainer } from '../../common';
 import { ZixInput } from '../../fields';
 import ZixMapPointerField from '../../fields/zix-map-pointer-field/zix-map-pointer-field';
-import { t } from 'i18next';
 
 export type MapLocationPickerProps = {
-  value: LocationTransformer
-  onChange: (val: LocationTransformer) => void
-}
+  value: LocationTransformer;
+  onChange: (val: LocationTransformer) => void;
+};
 
 type MapLocationPickerHeaderProps = {
-  onChange: (props: any) => void
-  onClose: () => void
-}
+  onChange: (props: any) => void;
+  onClose: () => void;
+};
 
-const MapLocationPickerHeader: React.FC<MapLocationPickerHeaderProps> = ({ onChange, onClose }) => {
-  const { top } = useSafeAreaInsets()
+const MapLocationPickerHeader: React.FC<MapLocationPickerHeaderProps> = ({
+  onChange,
+  onClose,
+}) => {
+  const { top } = useSafeAreaInsets();
 
-  const [search, setSearch] = useState<string>()
+  const [search, setSearch] = useState<string>();
 
   /**
    * Search Google Map Location
    */
-  const { data } = useQuery({
-    queryKey: ['search-location', search],
-    queryFn: () => {
-      return fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${search}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`)
-        .then(response => response.json())
+  // const { data } = useQuery({
+  //   queryKey: ['search-location', search],
+  //   queryFn: () => {
+  //     return fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${search}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`)
+  //       .then(response => response.json())
+  //   }
+  // })
+
+  const [data, setData] = useState<any>(null);
+
+  useEffect(() => {
+    if (search) {
+      fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${search}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`,
+      )
+        .then((response) => response.json())
+        .then((responseData) => {
+          setData(responseData);
+        })
+        .catch((error) => {
+          console.log('Error fetching data:', error);
+        });
     }
-  })
+  }, [search]);
 
   function onSelectSearchResult(item: any) {
-    console.log('onSelectSearchResult', item)
-    setSearch('')
-    const { lat, lng } = item.geometry.location
+    // console.log('onSelectSearchResult', item);
+    setSearch('');
+    const { lat, lng } = item.geometry.location;
     onChange({
       latitude: lat,
       longitude: lng,
-    })
+    });
   }
-
 
   const renderMapSearchResults = () => (
     <FlatList
-      data={data?.results}
+      data={search ? data?.results : []}
       renderItem={({ item, index }) => (
         <ListItem
           key={`${item.place_id}-${index}`}
@@ -64,38 +94,40 @@ const MapLocationPickerHeader: React.FC<MapLocationPickerHeaderProps> = ({ onCha
               alignItems="center"
               justifyContent="center"
             >
-              <Theme name='accent'>
-                <CustomIcon name='location' size="$2" color='$color10' />
+              <Theme name="accent">
+                <CustomIcon name="location" size="$2" color="$color10" />
               </Theme>
             </Avatar>
           }
           title={
-            item.address_components?.find((component: any) => component.types.includes('country'))?.long_name
+            item.address_components?.find((component: any) =>
+              component.types.includes('country'),
+            )?.long_name
           }
           subTitle={item.formatted_address}
-          marginBottom='$2'
+          marginBottom="$2"
         />
       )}
     />
-  )
+  );
 
   return (
     <View
-      position='absolute'
+      position="absolute"
       paddingTop={top}
       top={0}
       left={0}
       right={0}
       backgroundColor={search?.length ? '$color1' : 'transparent'}
     >
-      <XStack padding='$4' gap='$4'>
+      <XStack padding="$4" gap="$4">
         <ZixInput
           value={search}
           onChangeText={setSearch}
-          placeholder='Search here'
+          placeholder="Search here"
           leftIcon={() => (
-            <Theme name='accent'>
-              <Search size="$1.5" color='$color10' />
+            <Theme name="accent">
+              <Search size="$1.5" color="$color10" />
             </Theme>
           )}
           containerProps={{
@@ -104,77 +136,96 @@ const MapLocationPickerHeader: React.FC<MapLocationPickerHeaderProps> = ({ onCha
         />
         <Button
           icon={X}
-          size='$5'
-          backgroundColor='$color2'
+          size="$5"
+          backgroundColor="$color2"
           scaleIcon={1.5}
           onPress={onClose}
         />
       </XStack>
       {renderMapSearchResults()}
     </View>
-  )
-}
+  );
+};
 
+export const MapLocationPickerContent: React.FC<MapLocationPickerProps> = ({
+  value,
+  onChange,
+  onClose,
+}) => {
+  const { bottom } = useSafeAreaInsets();
 
-export const MapLocationPicker: React.FC<MapLocationPickerProps> = ({ value, onChange }) => {
-  const [open, setOpen] = useState(false)
+  const [isPending, setIsPending] = useState(false);
 
-  const { bottom } = useSafeAreaInsets()
+  async function mutate({ latitude, longitude }: LocationTransformer) {
+    setIsPending(true);
+    try {
+      const { results } = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`,
+      )
+        .then((response) => response.json())
+        .then(({ results }) => ({ results, latitude, longitude }));
 
-  const { mutate, isPending } = useMutation({
-    mutationFn({ latitude, longitude }: LocationTransformer) {
-      return fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`)
-        .then(response => response.json())
-        .then(({ results }) => ({ results, latitude, longitude }))
-    },
-    onSuccess: async ({ results, latitude, longitude }) => {
-      const result = results[0]
+      const result = results[0];
       let country_id: any = value?.country_id;
       let city_id: any = value?.city_id;
 
-      const postcode = result.address_components.find((component: any) => component.types.includes('postal_code'))?.long_name || value?.postcode
-      const countryName = result.address_components.find((component: any) => component.types.includes('country'))?.long_name
-      const cityName = result.address_components.find((component: any) => component.types.includes('locality'))?.long_name
+      const postcode =
+        result.address_components.find((component: any) =>
+          component.types.includes('postal_code'),
+        )?.long_name || value?.postcode;
+      const countryName = result.address_components.find((component: any) =>
+        component.types.includes('country'),
+      )?.long_name;
+      const cityName = result.address_components.find((component: any) =>
+        component.types.includes('locality'),
+      )?.long_name;
 
       if (countryName) {
         const countryData = await GeographyService.listCountries({
-          search: countryName
-        })
+          search: countryName,
+        });
 
         if (countryData?.data?.length) {
-          country_id = countryData.data[0].id
+          country_id = countryData.data[0].id;
         } else {
-          country_id = null
+          country_id = null;
         }
       } else {
-        country_id = null
+        country_id = null;
       }
 
       if (cityName) {
         const cityData = await GeographyService.fetchCities({
-          search: cityName
-        })
+          search: cityName,
+        });
 
         if (cityData?.data?.length) {
-          city_id = cityData.data[0].id
+          city_id = cityData.data[0].id;
         } else {
-          city_id = null
+          city_id = null;
         }
       } else {
-        city_id = null
+        city_id = null;
       }
 
-      console.log('===========')
-      console.log('SELECTED LOCATION::', JSON.stringify({
-        ...value,
-        latitude,
-        longitude,
-        country_id,
-        city_id,
-        postcode,
-        address: results[0].formatted_address
-      }, null, 2))
-      console.log('===========')
+      console.log('===========');
+      console.log(
+        'SELECTED LOCATION::',
+        JSON.stringify(
+          {
+            ...value,
+            latitude,
+            longitude,
+            country_id,
+            city_id,
+            postcode,
+            address: results[0].formatted_address,
+          },
+          null,
+          2,
+        ),
+      );
+      console.log('===========');
       onChange({
         ...value,
         latitude,
@@ -182,72 +233,81 @@ export const MapLocationPicker: React.FC<MapLocationPickerProps> = ({ value, onC
         country_id,
         city_id,
         postcode,
-        address: results[0].formatted_address
-      })
+        address: results[0].formatted_address,
+      });
+    } catch (error) {
+      console.log('error', error);
+    } finally {
+      setIsPending(false);
     }
+  }
 
-  })
+  // const { mutate, isPending } = useMutation({
+  //   mutationFn({ latitude, longitude }: LocationTransformer) {
+  //     return fetch(
+  //       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`,
+  //     )
+  //       .then((response) => response.json())
+  //       .then(({ results }) => ({ results, latitude, longitude }));
+  //   },
+  //   onSuccess: async ({ results, latitude, longitude }) => {},
+  // });
 
-
-  const renderAddressConfirmation = () => !!value?.address && (
-    <YStack padding='$4' paddingBottom={bottom} gap='$4' backgroundColor='$color1'>
-      <H4>{t('common:address')}</H4>
-      <Text>{value?.address}</Text>
-      <Theme inverse>
-        <SubmitButton isLoading={isPending} onPress={() => setOpen(false)}>
-          {t('common:confirm')}
-        </SubmitButton>
-      </Theme>
-    </YStack>
-  )
-
-  const renderSheet = () => (
-    <Sheet
-      open={open}
-      onOpenChange={setOpen}
-      modal
-      native
-      snapPoints={[100, 100]}
-      dismissOnSnapToBottom={false}
-      forceRemoveScrollEnabled
-      disableDrag
-    >
-      <Sheet.Frame>
-        <View flex={1} backgroundColor='$background1'>
-          <ZixMapPointerField
-            value={value}
-            onChange={location => {
-              onChange({
-                ...value,
-                ...location
-              });
-              mutate(location)
-            }}
-          />
-          <MapLocationPickerHeader onChange={mutate} onClose={() => setOpen(false)} />
-
-          {renderAddressConfirmation()}
-        </View>
-      </Sheet.Frame>
-    </Sheet>
-  )
+  const renderAddressConfirmation = () =>
+    !!value?.address && (
+      <YStack
+        padding="$4"
+        paddingBottom={bottom}
+        gap="$4"
+        backgroundColor="$color1"
+      >
+        <H4>{t('common:address')}</H4>
+        <Text>{value?.address}</Text>
+        <Theme inverse>
+          <ZixButton loading={isPending} onPress={() => onClose(false)}>
+            {t('common:confirm')}
+          </ZixButton>
+        </Theme>
+      </YStack>
+    );
 
   return (
+    <View flex={1} backgroundColor="$background1">
+      <ZixMapPointerField
+        value={value || {}}
+        onChange={(location) => {
+          onChange({
+            ...value,
+            ...location,
+          });
+          mutate(location);
+        }}
+      />
+      <MapLocationPickerHeader
+        onChange={mutate}
+        onClose={() => onClose(false)}
+      />
+      {renderAddressConfirmation()}
+    </View>
+  );
+};
+
+export const MapLocationPicker: React.FC<MapLocationPickerProps> = ({
+  value,
+  onChange,
+}) => {
+  const [open, setOpen] = useState(false);
+  return (
     <>
-      <View position='relative'>
-        <ZixFieldContainer
-          label={t('common:select-location-on-map')}
-          labelBold
-        >
-          <View height='$15'>
-            <ZixMapPointerField
-              value={value}
-            />
+      <View position="relative">
+        <ZixFieldContainer label={t('common:select-location-on-map')} labelBold>
+          <View height="$15">
+            <ZixMapPointerField value={value} />
           </View>
         </ZixFieldContainer>
         <View
           onPress={() => setOpen(true)}
-          position='absolute'
+          position="absolute"
           top={0}
           right={0}
           bottom={0}
@@ -255,7 +315,24 @@ export const MapLocationPicker: React.FC<MapLocationPickerProps> = ({ value, onC
         />
       </View>
 
-      {renderSheet()}
+      <Sheet
+        open={open}
+        onOpenChange={setOpen}
+        modal
+        native
+        snapPoints={[100, 100]}
+        dismissOnSnapToBottom={false}
+        forceRemoveScrollEnabled
+        disableDrag
+      >
+        <Sheet.Frame>
+          <MapLocationPickerContent
+            value={value}
+            onChange={onChange}
+            onClose={() => setOpen(false)}
+          />
+        </Sheet.Frame>
+      </Sheet>
     </>
   );
-}
+};
