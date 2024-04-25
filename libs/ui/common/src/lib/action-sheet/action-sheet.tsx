@@ -33,7 +33,7 @@ export const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
     const [isOpen, setIsOpen] = useState(false);
     const [position, setPosition] = useState<number>();
 
-    const ACTION_HEIGHT = 50;
+    const ACTION_HEIGHT = 40;
     const SCREEN_HEIGHT = Dimensions.get('window').height - ACTION_HEIGHT;
     const ACTION_HEIGHT_POINTS =
       Number(SCREEN_HEIGHT / (ACTION_HEIGHT * 2)) + (props.modal ? 0 : 1);
