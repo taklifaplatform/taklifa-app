@@ -7,6 +7,7 @@ import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader } from '@zix/ui/layouts';
 import { MapCompanyMarker, MapDriverMarker } from '@zix/ui/sawaeed';
 import { getDistance } from '@zix/utils';
+import React from 'react';
 import { useMemo, useRef, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
@@ -26,7 +27,7 @@ const initialCamera = {
   zoom: 20,
 };
 
-export function HomeScreen() {
+export const HomeScreen = React.memo(() => {
   const { width } = Dimensions.get('window');
   const USER_CARD_WIDTH = width;
   const USER_CARD_HEIGHT = Math.min(250, width / 1.5);
@@ -36,7 +37,9 @@ export function HomeScreen() {
   const { getUrlPrefix } = useAuth()
 
   const [showMap, setShowMap] = useState(true);
-
+  console.log("***************************")
+  console.log("render home screen ==========")
+  console.log("***************************")
   const [search, setSearch] = useState<string>();
   const { data, ...driversQuery } = useQuery({
     queryFn() {
@@ -46,6 +49,7 @@ export function HomeScreen() {
       });
     },
     queryKey: ['DriversService.fetchAllDrivers', search],
+    staleTime: 5 * 1000,
   });
   const companiesQuery = useQuery({
     queryFn() {
@@ -55,6 +59,7 @@ export function HomeScreen() {
       });
     },
     queryKey: ['CompaniesService.fetchAllCompanies', search],
+    staleTime: 5 * 1000,
   });
   const [selectedDriver, setSelectedDriver] = useState<DriverTransformer>();
 
@@ -160,6 +165,8 @@ export function HomeScreen() {
         onRefresh={driversQuery.refetch}
         style={{ flex: 1 }}
         data={driversList}
+        initialNumToRender={5}
+        maxToRenderPerBatch={5}
         renderItem={({ item, index }) => (
           <UserCard
             key={`stack-${item.id}-${index}`}
@@ -254,6 +261,8 @@ export function HomeScreen() {
       {renderSwitcher()}
     </YStack>
   );
-}
+},
+() => true
+);
 
 export default HomeScreen;

@@ -112,6 +112,7 @@ export function HomeScreen() {
           onChangeText: setSearch,
         }}
       />
+
       {renderMap()}
       {renderList()}
       {renderSwitcher()}
