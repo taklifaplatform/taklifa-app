@@ -1,5 +1,6 @@
 import { DriverTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
+import React from 'react';
 // import { ZixMap } from '@zix/ui/common';
 import { Marker } from 'react-native-maps';
 
@@ -12,7 +13,7 @@ export type MapDriverMarkerProps = {
   onPress?: () => void;
 };
 
-export const MapDriverMarker: React.FC<MapDriverMarkerProps> = ({
+export const MapDriverMarker: React.FC<MapDriverMarkerProps> = React.memo(({
   driver,
   isSelected,
   onPress
@@ -63,6 +64,8 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = ({
       </View>
     </Marker>
   );
-}
+},
+  (prevProps, nextProps) => prevProps.isSelected === nextProps.isSelected
+);
 
 export default MapDriverMarker;

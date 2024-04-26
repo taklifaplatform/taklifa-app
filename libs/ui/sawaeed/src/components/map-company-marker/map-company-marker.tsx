@@ -1,5 +1,6 @@
 import { Building } from '@tamagui/lucide-icons';
 import { CompanyTransformer } from '@zix/api';
+import React from 'react';
 import { Marker } from 'react-native-maps';
 
 import { Image, View } from 'tamagui';
@@ -11,7 +12,7 @@ export type MapCompanyMarkerProps = {
   onPress?: () => void;
 };
 
-export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = ({
+export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = React.memo(({
   company,
   isSelected,
   onPress
@@ -52,6 +53,8 @@ export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = ({
       </View>
     </Marker>
   );
-}
+},
+(prevProps, nextProps) => prevProps.isSelected === nextProps.isSelected
+);
 
 export default MapCompanyMarker;
