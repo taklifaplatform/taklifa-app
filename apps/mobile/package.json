@@ -199,8 +199,7 @@
     "laravel-echo": "*",
     "pusher-js": "*",
     "qrcode": "*",
-    "expo-camera": "*",
-    "react-native-modal": "*"
+    "expo-camera": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",

@@ -70,7 +70,6 @@ const MapLocationPickerHeader: React.FC<MapLocationPickerHeaderProps> = ({
   }, [search]);
 
   function onSelectSearchResult(item: any) {
-    // console.log('onSelectSearchResult', item);
     setSearch('');
     const { lat, lng } = item.geometry.location;
     onChange({
@@ -208,24 +207,6 @@ export const MapLocationPickerContent: React.FC<MapLocationPickerProps> = ({
         city_id = null;
       }
 
-      console.log('===========');
-      console.log(
-        'SELECTED LOCATION::',
-        JSON.stringify(
-          {
-            ...value,
-            latitude,
-            longitude,
-            country_id,
-            city_id,
-            postcode,
-            address: results[0].formatted_address,
-          },
-          null,
-          2,
-        ),
-      );
-      console.log('===========');
       onChange({
         ...value,
         latitude,
@@ -241,17 +222,6 @@ export const MapLocationPickerContent: React.FC<MapLocationPickerProps> = ({
       setIsPending(false);
     }
   }
-
-  // const { mutate, isPending } = useMutation({
-  //   mutationFn({ latitude, longitude }: LocationTransformer) {
-  //     return fetch(
-  //       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`,
-  //     )
-  //       .then((response) => response.json())
-  //       .then(({ results }) => ({ results, latitude, longitude }));
-  //   },
-  //   onSuccess: async ({ results, latitude, longitude }) => {},
-  // });
 
   const renderAddressConfirmation = () =>
     !!value?.address && (
