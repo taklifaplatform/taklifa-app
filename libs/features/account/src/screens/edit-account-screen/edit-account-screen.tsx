@@ -4,9 +4,9 @@ import { Theme } from 'tamagui';
 
 import { useToastController } from '@tamagui/toast';
 import { UserService } from '@zix/api';
-import { DebugObject, FullScreenSpinner } from '@zix/ui/common';
-import { AppHeader } from '@zix/ui/layouts';
 import { useAuth } from '@zix/services/auth';
+import { FullScreenSpinner } from '@zix/ui/common';
+import { AppHeader } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';

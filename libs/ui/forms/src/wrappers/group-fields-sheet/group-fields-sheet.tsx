@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 
 import { X } from '@tamagui/lucide-icons';
@@ -10,20 +9,23 @@ export type GroupFieldsSheetProps = {
   activator?: React.ReactNode | Element;
   children: React.ReactNode;
   title?: string;
-}
+};
 
-
-export const GroupFieldsSheet: React.FC<GroupFieldsSheetProps> = ({ children, activator, title }) => {
-  const [open, setOpen] = useState(false)
-  const { bottom, top } = useSafeAreaInsets()
+export const GroupFieldsSheet: React.FC<GroupFieldsSheetProps> = ({
+  children,
+  activator,
+  title,
+}) => {
+  const [open, setOpen] = useState(false);
+  const { bottom, top } = useSafeAreaInsets();
 
   return (
     <>
-      <View position='relative'>
+      <View position="relative">
         {activator}
         <View
           onPress={() => setOpen(true)}
-          position='absolute'
+          position="absolute"
           top={0}
           right={0}
           bottom={0}
@@ -35,27 +37,45 @@ export const GroupFieldsSheet: React.FC<GroupFieldsSheetProps> = ({ children, ac
         open={open}
         onOpenChange={setOpen}
         modal
+        native
         snapPoints={[100, 100]}
         dismissOnSnapToBottom={false}
         forceRemoveScrollEnabled
         disableDrag
       >
         <Sheet.Frame>
-          <View flex={1} paddingBottom={bottom} paddingTop={top} backgroundColor='$background1'>
-            <XStack padding='$4' justifyContent='space-between' alignItems='center' paddingBottom='$4'>
-              <H4>
-                {title}
-              </H4>
-              <Button icon={X} size='$3' scaleIcon={1.5} backgroundColor='$color5' onPress={() => setOpen(false)} />
+          <View
+            flex={1}
+            paddingBottom={bottom}
+            paddingTop={top}
+            backgroundColor="$background1"
+          >
+            <XStack
+              padding="$4"
+              justifyContent="space-between"
+              alignItems="center"
+              paddingBottom="$4"
+            >
+              <H4>{title}</H4>
+              <Button
+                icon={X}
+                size="$3"
+                scaleIcon={1.5}
+                backgroundColor="$color5"
+                onPress={() => setOpen(false)}
+              />
             </XStack>
-            <Sheet.ScrollView marginBottom='$4'>
-              <View padding='$4' flex={1}>
+            <Sheet.ScrollView marginBottom="$4">
+              <View padding="$4" flex={1}>
                 {children}
               </View>
             </Sheet.ScrollView>
 
             <Theme inverse>
-              <SubmitButton marginHorizontal='$4' onPress={() => setOpen(false)}>
+              <SubmitButton
+                marginHorizontal="$4"
+                onPress={() => setOpen(false)}
+              >
                 Confirm
               </SubmitButton>
             </Theme>
@@ -63,8 +83,8 @@ export const GroupFieldsSheet: React.FC<GroupFieldsSheetProps> = ({ children, ac
         </Sheet.Frame>
       </Sheet>
     </>
-  );
-}
 
+  );
+};
 
 export default GroupFieldsSheet;

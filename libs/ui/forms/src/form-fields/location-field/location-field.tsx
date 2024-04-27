@@ -1,6 +1,5 @@
-
 import { useFieldInfo, useTsController } from '@ts-react/form';
-import { z } from "zod";
+import { z } from 'zod';
 
 import { LocateFixed, Pen } from '@tamagui/lucide-icons';
 import { CountryTransformer } from '@zix/api';
@@ -13,20 +12,19 @@ import ZixMapPointerField from '../../fields/zix-map-pointer-field/zix-map-point
 import { GroupFieldsSheet } from '../../wrappers';
 import { MapLocationPicker } from './map-location-picker';
 import { t } from 'i18next';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 export type LocationFieldProps = {
   containerProps?: BaseFormFieldContainerProps;
 
   type?: 'advanced' | 'simple';
-}
-
+};
 
 export const LocationSchema = z.object({
   id: z.string().optional().nullable(),
   name: z.string().optional().nullable(),
   address: z.string(),
   address_complement: z.string().optional().nullable(),
-
 
   building_name: z.string().optional().nullable(),
   floor_number: z.string().optional().nullable(),
@@ -43,105 +41,89 @@ export const LocationSchema = z.object({
 
   latitude: z.any().optional().nullable(),
   longitude: z.any().optional().nullable(),
-})
-
+});
+const client = new QueryClient();
 export const LocationField: React.FC<LocationFieldProps> = ({
   containerProps = {},
   type = 'simple',
   // type = 'advanced',
   ...props
 }) => {
-  const { field: { onChange, value }, error } = useTsController<z.infer<typeof LocationSchema>>();
-  const { placeholder } = useFieldInfo()
+  const {
+    field: { onChange, value },
+    error,
+  } = useTsController<z.infer<typeof LocationSchema>>();
+  const { placeholder } = useFieldInfo();
 
-
-  const renderAddressCard = () => (
+  const renderAddressCard = () =>
     type === 'advanced' &&
-    value?.address
-  ) && (
+    value?.address && (
       <YStack
-        borderWidth='$0.5'
-        borderColor='$color8'
-        borderRadius='$4'
-        padding='$2'
-        gap='$2'
-        height='$10'
+        borderWidth="$0.5"
+        borderColor="$color8"
+        borderRadius="$4"
+        padding="$2"
+        gap="$2"
+        height="$10"
         flex={1}
       >
-        <XStack justifyContent='space-between' alignItems='center'>
-          <XStack alignItems='center' gap='$2'>
-            <Theme name='accent'>
-              <CustomIcon name='location' size='$1' color='$color9' />
+        <XStack justifyContent="space-between" alignItems="center">
+          <XStack alignItems="center" gap="$2">
+            <Theme name="accent">
+              <CustomIcon name="location" size="$1" color="$color9" />
             </Theme>
-            <Text fontWeight='700'>{value?.name ?? 'Home'}</Text>
+            <Text fontWeight="700">{value?.name ?? 'Home'}</Text>
           </XStack>
 
-          <XStack alignItems='center' gap='$2'>
+          <XStack alignItems="center" gap="$2">
             <View
               theme={value?.is_primary ? 'accent' : undefined}
-              backgroundColor='$color4'
-              paddingHorizontal='$4'
-              paddingVertical='$2'
-              borderRadius='$3'
+              backgroundColor="$color4"
+              paddingHorizontal="$4"
+              paddingVertical="$2"
+              borderRadius="$3"
             >
-              <Text fontWeight='700'>
+              <Text fontWeight="700">
                 {value?.is_primary ? 'Primary' : 'Secondary'}
               </Text>
             </View>
-            <Button
-              size='$2'
-              icon={Pen}
-            />
+            <Button size="$2" icon={Pen} />
           </XStack>
-
         </XStack>
-        {
-          value?.address && (
-            <Text>
-              {value?.address}
-            </Text>
-          )
-        }
+        {value?.address && <Text>{value?.address}</Text>}
 
-        {
-          value?.phone_number && (
-            <Text>
-              {value?.phone_number}
-            </Text>
-          )
-        }
+        {value?.phone_number && <Text>{value?.phone_number}</Text>}
 
         {/* <DebugObject object={value} /> */}
       </YStack>
-    )
+    );
 
-  const renderAddressMap = () => (
+  const renderAddressMap = () =>
     type === 'advanced' &&
-    value?.latitude && value?.longitude
-  ) && (
-      <View height='$12'>
-        <ZixMapPointerField
-          value={value}
-        />
+    value?.latitude &&
+    value?.longitude && (
+      <View height="$12">
+        <ZixMapPointerField value={value} />
       </View>
-    )
-
+    );
 
   const renderFormContent = () => (
-    <YStack gap='$2'>
+    <YStack gap="$2">
+
       <MapLocationPicker value={value} onChange={(val) => onChange({
         ...value,
         ...val
       })} />
 
-      <Separator marginTop='$4' />
+
+      <Separator marginTop="$4" />
 
       <ZixFieldContainer
         label={t('common:address-information')}
         labelBold
         collapsible
       >
-        <YStack gap='$4'>
+        <YStack gap="$4">
           <ZixFieldContainer
             label={t('app:forms.labels.address')}
             error={error?.address}
@@ -149,10 +131,12 @@ export const LocationField: React.FC<LocationFieldProps> = ({
             <ZixInput
               placeholder={t('app:forms.placeholders.address')}
               value={value?.address}
-              onChangeText={address => onChange({
-                ...value,
-                address
-              })}
+              onChangeText={(address) =>
+                onChange({
+                  ...value,
+                  address,
+                })
+              }
             />
           </ZixFieldContainer>
 
@@ -164,14 +148,16 @@ export const LocationField: React.FC<LocationFieldProps> = ({
             <ZixInput
               placeholder={t('app:forms.placeholders.building-name')}
               value={value?.building_name}
-              onChangeText={building_name => onChange({
-                ...value,
-                building_name
-              })}
+              onChangeText={(building_name) =>
+                onChange({
+                  ...value,
+                  building_name,
+                })
+              }
             />
           </ZixFieldContainer>
 
-          <XStack alignItems='flex-start' gap='$4'>
+          <XStack alignItems="flex-start" gap="$4">
             <ZixFieldContainer
               label={t('app:forms.labels.floor-number')}
               isOptional
@@ -180,10 +166,12 @@ export const LocationField: React.FC<LocationFieldProps> = ({
               <ZixInput
                 placeholder={t('app:forms.placeholders.floor-number')}
                 value={value?.floor_number}
-                onChangeText={floor_number => onChange({
-                  ...value,
-                  floor_number
-                })}
+                onChangeText={(floor_number) =>
+                  onChange({
+                    ...value,
+                    floor_number,
+                  })
+                }
               />
             </ZixFieldContainer>
 
@@ -195,14 +183,16 @@ export const LocationField: React.FC<LocationFieldProps> = ({
               <ZixInput
                 placeholder={t('app:forms.placeholders.house-number')}
                 value={value?.house_number}
-                onChangeText={house_number => onChange({
-                  ...value,
-                  house_number
-                })}
+                onChangeText={(house_number) =>
+                  onChange({
+                    ...value,
+                    house_number,
+                  })
+                }
               />
             </ZixFieldContainer>
-
           </XStack>
+
           <ZixFieldContainer
             label={t('app:forms.labels.country')}
             error={error?.country_id}
@@ -216,14 +206,16 @@ export const LocationField: React.FC<LocationFieldProps> = ({
                 name: item.name,
                 icon: item.flag,
               })}
-              onChange={country_id => onChange({
-                ...value,
-                country_id: parseInt(country_id)
-              })}
+              onChange={(country_id) =>
+                onChange({
+                  ...value,
+                  country_id: parseInt(country_id),
+                })
+              }
             />
           </ZixFieldContainer>
 
-          <XStack alignItems='flex-start' gap='$4'>
+          <XStack alignItems="flex-start" gap="$4">
             <ZixFieldContainer
               label={t('app:forms.labels.state')}
               isOptional
@@ -233,13 +225,15 @@ export const LocationField: React.FC<LocationFieldProps> = ({
                 placeholder={t('app:forms.placeholders.state')}
                 api="geography/states"
                 query={{
-                  country_id: value?.country_id
+                  country_id: value?.country_id,
                 }}
                 value={value?.state_id}
-                onChange={state_id => onChange({
-                  ...value,
-                  state_id
-                })}
+                onChange={(state_id) =>
+                  onChange({
+                    ...value,
+                    state_id,
+                  })
+                }
               />
             </ZixFieldContainer>
 
@@ -252,22 +246,22 @@ export const LocationField: React.FC<LocationFieldProps> = ({
                 placeholder={t('app:forms.placeholders.city')}
                 api="geography/cities"
                 query={{
-                  country_id: value?.country_id
+                  country_id: value?.country_id,
                 }}
                 value={value?.city_id}
-                onChange={city_id => onChange({
-                  ...value,
-                  city_id
-                })}
+                onChange={(city_id) =>
+                  onChange({
+                    ...value,
+                    city_id,
+                  })
+                }
               />
             </ZixFieldContainer>
           </XStack>
-
         </YStack>
       </ZixFieldContainer>
 
-
-      <Separator marginTop='$4' />
+      <Separator marginTop="$4" />
 
       <ZixFieldContainer
         label={t('app:forms.labels.notes')}
@@ -280,40 +274,44 @@ export const LocationField: React.FC<LocationFieldProps> = ({
           placeholder={t('app:forms.placeholders.notes')}
           isMultiline
           value={value?.notes}
-          onChangeText={notes => onChange({
-            ...value,
-            notes
-          })}
+          onChangeText={(notes) =>
+            onChange({
+              ...value,
+              notes,
+            })
+          }
         />
       </ZixFieldContainer>
     </YStack>
-  )
+  );
 
-  const renderInputActivator = () => (type === 'simple' || !value?.address) && (
-    <ZixInput
-      rightIcon={(props) => <LocateFixed {...props} />}
-      placeholder={placeholder}
-      value={value?.address}
-    />
-  )
+  const renderInputActivator = () =>
+    (type === 'simple' || !value?.address) && (
+      <ZixInput
+        rightIcon={(props) => <LocateFixed {...props} />}
+        placeholder={placeholder}
+        value={value?.address}
+      />
+    );
 
   return (
     <FormFieldContainer {...containerProps}>
       <GroupFieldsSheet
         title={t('common:address-information')}
-        activator={(
-          <YStack gap='$4'>
+        activator={
+          <YStack gap="$4">
             {renderAddressCard()}
             {renderAddressMap()}
             {renderInputActivator()}
           </YStack>
-        )}
+        }
       >
-        {renderFormContent()}
+        <QueryClientProvider client={client}>
+          {renderFormContent()}
+        </QueryClientProvider>
       </GroupFieldsSheet>
     </FormFieldContainer>
   );
-}
-
+};
 
 export default LocationField;
