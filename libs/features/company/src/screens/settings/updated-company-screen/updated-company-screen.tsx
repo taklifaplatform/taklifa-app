@@ -20,7 +20,7 @@ import { z } from 'zod';
 
 const UpdateCompanyFormSchema = z
   .object({
-    logo: formFields.image.describe('Logo // Add Company Logo'),
+    logo: formFields.image.describe('Logo // Add Company Logo').optional(),
     name: formFields.text.min(2).max(150).describe(t('forms:company_name')),
     about: formFields.textarea.describe('About // Enter company description'),
     location: formFields.advanced_location.describe('Company Location // Enter company location'),

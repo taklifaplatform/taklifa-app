@@ -41,6 +41,7 @@ export type ZixMediaPickerFieldProps = {
   value?: MediaTransformer | MediaTransformer[];
   onChange: (value: MediaTransformer | MediaTransformer[]) => Promise<void> | void;
   placeholder?: string;
+  isOptional?: boolean;
 };
 
 export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
@@ -48,7 +49,8 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
   type = 'medias',
   onChange,
   value,
-  placeholder
+  placeholder,
+  isOptional
 }) => {
   const Previewer = MediaPreviewers[type]
   const { permission, requestPermission } = useCamera();
@@ -369,6 +371,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
         previews={Object.values(previews)}
         onRemoveMedia={onRemoveMedia}
         placeholder={placeholder}
+        isOptional={isOptional}
       />
     </>
   );
