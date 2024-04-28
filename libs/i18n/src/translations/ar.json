@@ -73,7 +73,8 @@
       "business-hours": "ساعات العمل",
       "working-day": "يوم عمل",
       "from": "من",
-      "to": "إلى"
+      "to": "إلى",
+      "location": "الموقع"
     }
   },
   "about": {

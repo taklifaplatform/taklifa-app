@@ -1,22 +1,22 @@
 
-import { LocationTransformer } from '@zix/api';
 import React from 'react';
 
 import { Text, YStack } from 'tamagui';
+import ZixLocationInfoWidgetWrapper, { ZixLocationInfoWidgetWrapperProps } from './zix-location-info-widget-wrapper';
 
-export type ZixLocationInfoWidgetProps = {
-  location: LocationTransformer
-}
+export const ZixLocationInfoWidget: React.FC<ZixLocationInfoWidgetWrapperProps> = (props) => {
+  const {
+    location
+  } = props;
 
-export const ZixLocationInfoWidget: React.FC<ZixLocationInfoWidgetProps> = ({
-  location
-}) => {
   return (
-    <YStack gap='$4'>
-      <Text>
-        {location?.address}
-      </Text>
-    </YStack>
+    <ZixLocationInfoWidgetWrapper {...props}>
+      <YStack gap='$4'>
+        <Text>
+          {location?.address}
+        </Text>
+      </YStack>
+    </ZixLocationInfoWidgetWrapper>
   );
 }
 
