@@ -77,7 +77,7 @@ export const formFields = {
   ),
   row_date_picker: createUniqueFieldSchema(z.string(), 'row_date_picker'),
 
-  country: createUniqueFieldSchema(z.number(), 'country'),
+  country: createUniqueFieldSchema(z.string(), 'country'),
 
   location: createUniqueFieldSchema(LocationSchema, 'location'),
   advanced_location: createUniqueFieldSchema(
