@@ -44,6 +44,9 @@
         "recipient-phone": "أدخل رقم هاتف المستلم"
       }
     },
+    "success": {
+      "updated": "تم التحديث بنجاح"
+    },
     "errors": {
       "something-went-wrong": "حدث خطأ ما"
     },
@@ -56,6 +59,21 @@
         "title": "معلومات المستلم",
         "description": "الرجاء تحديد الوجهة"
       }
+    },
+    "days": {
+      "monday": "الاثنين",
+      "tuesday": "الثلاثاء",
+      "wednesday": "الأربعاء",
+      "thursday": "الخميس",
+      "friday": "الجمعة",
+      "saturday": "السبت",
+      "sunday": "الأحد"
+    },
+    "common": {
+      "business-hours": "ساعات العمل",
+      "working-day": "يوم عمل",
+      "from": "من",
+      "to": "إلى"
     }
   },
   "about": {

@@ -46,6 +46,14 @@ export const formFieldsMappings = [
       }),
   ] as const,
   [
+    formFields.time_picker,
+    (props: DatePickerFieldProps) =>
+      DatePickerField({
+        ...props,
+        type: 'time_picker',
+      }),
+  ] as const,
+  [
     formFields.day_selector,
     (props: DatePickerFieldProps) =>
       DatePickerField({

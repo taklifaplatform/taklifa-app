@@ -12,6 +12,7 @@ export type DriverTransformer = {
     username?: string;
     name?: string;
     phone_number?: string;
+    working_hours_id?: string;
     about?: string;
     avatar?: MediaTransformer;
     companies?: Array<SimpleCompanyTransformer>;

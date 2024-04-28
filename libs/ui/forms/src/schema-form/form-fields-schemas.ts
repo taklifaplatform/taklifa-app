@@ -67,6 +67,7 @@ export const formFields = {
    * Date Fields
    */
   date_picker: createUniqueFieldSchema(z.string(), 'date_picker'),
+  time_picker: createUniqueFieldSchema(z.string(), 'time_picker'),
   day_selector: createUniqueFieldSchema(z.string(), 'day_selector'),
   month_selector: createUniqueFieldSchema(z.string(), 'month_selector'),
   year_selector: createUniqueFieldSchema(z.string(), 'year_selector'),

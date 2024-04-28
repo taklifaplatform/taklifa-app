@@ -2,10 +2,11 @@
 import { useTsController } from '@ts-react/form';
 
 import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common';
-import { ZixDateFieldProps, ZixDatePicker, ZixDaySelection, ZixMonthSelection, ZixRowDatePicker, ZixRowTimeRangePicker, ZixYearSelection } from '../../fields';
+import { ZixDateFieldProps, ZixDatePicker, ZixDaySelection, ZixMonthSelection, ZixRowDatePicker, ZixRowTimeRangePicker, ZixTimePicker, ZixYearSelection } from '../../fields';
 
 export const DateComponents = {
   date_picker: ZixDatePicker,
+  time_picker: ZixTimePicker,
   day_selector: ZixDaySelection,
   month_selector: ZixMonthSelection,
   year_selector: ZixYearSelection,
@@ -15,7 +16,7 @@ export const DateComponents = {
 
 export type DatePickerFieldProps = ZixDateFieldProps & {
   containerProps?: BaseFormFieldContainerProps;
-  type: 'date_picker' | 'day_selector' | 'month_selector' | 'year_selector' | 'row_time_range_picker' | 'row_date_picker'
+  type: 'date_picker' | 'time_picker' | 'day_selector' | 'month_selector' | 'year_selector' | 'row_time_range_picker' | 'row_date_picker'
 }
 
 export const DatePickerField: React.FC<DatePickerFieldProps> = ({

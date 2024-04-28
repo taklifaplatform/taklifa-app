@@ -1,7 +1,8 @@
 import { DriverTransformer } from '@zix/api';
+import { ZixWorkingHoursWidget } from '@zix/features/working-hours';
 import { useAuth } from '@zix/services/auth';
 import { MediaFile } from '@zix/ui/common';
-import { ZixLocationInfoWidget, ZixWidgetContainer, ZixWorkingHoursWidget } from '@zix/ui/widgets';
+import { ZixLocationInfoWidget, ZixWidgetContainer } from '@zix/ui/widgets';
 import React from 'react';
 import { useRouter } from 'solito/router';
 
@@ -15,6 +16,7 @@ export const AboutUserTab: React.FC<AboutUserTabProps> = ({
   user
 }) => {
   const router = useRouter()
+  const { user: authUser } = useAuth()
   const { isServiceProvider, getUrlPrefix } = useAuth()
 
   const renderAbout = () => (isServiceProvider(user) && !!user.about?.length) && (
@@ -66,10 +68,8 @@ export const AboutUserTab: React.FC<AboutUserTabProps> = ({
     </ZixWidgetContainer>
   )
 
-  const renderWorkingHours = () => isServiceProvider(user) && (
-    <ZixWidgetContainer label='Working Hours'>
-      <ZixWorkingHoursWidget />
-    </ZixWidgetContainer>
+  const renderWorkingHours = () => (isServiceProvider(user) && user.working_hours_id) && (
+    <ZixWorkingHoursWidget workingHourId={user.working_hours_id} canEdit={authUser?.id === user?.id} />
   )
 
   return (
