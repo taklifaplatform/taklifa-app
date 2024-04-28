@@ -5,7 +5,7 @@ import ZixWorkingHoursWidget from './zix-working-hours-widget';
 
 describe('ZixWorkingHoursWidget', () => {
   it('should render successfully', () => {
-    const { root } = render(< ZixWorkingHoursWidget />);
+    const { root } = render(< ZixWorkingHoursWidget workingHourId='' />);
     expect(root).toBeTruthy();
   });
 });

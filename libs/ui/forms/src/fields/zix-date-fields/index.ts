@@ -1,4 +1,5 @@
 export * from "./zix-date-picker";
+export * from "./zix-time-picker";
 export * from "./zix-date-selection";
 export * from "./zix-day-selection";
 export * from "./zix-month-selection";

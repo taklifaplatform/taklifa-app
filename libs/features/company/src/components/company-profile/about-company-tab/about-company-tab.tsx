@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { CompanyMembersService, CompanyTransformer } from '@zix/api';
+import { ZixWorkingHoursWidget } from '@zix/features/working-hours';
 import { USER_ROLES, useAuth } from '@zix/services/auth';
 import { UserAvatar } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
-import { ZixLocationInfoWidget, ZixWidgetContainer, ZixWorkingHoursWidget } from '@zix/ui/widgets';
+import { ZixLocationInfoWidget, ZixWidgetContainer } from '@zix/ui/widgets';
 import React from 'react';
 import { FlatList } from 'react-native';
 import { useRouter } from 'solito/router';
@@ -18,7 +19,7 @@ export const AboutCompanyTab: React.FC<AboutCompanyTabProps> = ({
   company
 }) => {
   const router = useRouter()
-  const { getUrlPrefix } = useAuth()
+  const { getUrlPrefix, user: authUser } = useAuth()
 
   const { data } = useQuery({
     queryFn: () => CompanyMembersService.list({
@@ -42,10 +43,8 @@ export const AboutCompanyTab: React.FC<AboutCompanyTabProps> = ({
     </ZixWidgetContainer>
   )
 
-  const renderWorkingHours = () => (
-    <ZixWidgetContainer label='Working Hours'>
-      <ZixWorkingHoursWidget />
-    </ZixWidgetContainer>
+  const renderWorkingHours = () => company.working_hours_id && (
+    <ZixWorkingHoursWidget workingHourId={company.working_hours_id} canEdit={!!data?.data?.find(i => i.user?.id === authUser?.id)} />
   )
 
   const renderDriversList = () => !!data?.data?.length && (

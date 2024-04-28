@@ -44,6 +44,9 @@
         "recipient-phone": "Enter the recipient's phone"
       }
     },
+    "success": {
+      "updated": "Updated successfully"
+    },
     "errors": {
       "something-went-wrong": "Something went wrong"
     },
@@ -56,6 +59,21 @@
         "title": "Recipient Details",
         "description": "Please define the destination."
       }
+    },
+    "days": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    },
+    "common": {
+      "business-hours": "Business Hours",
+      "working-day": "Working Day",
+      "from": "From",
+      "to": "To"
     }
   },
   "about": {
