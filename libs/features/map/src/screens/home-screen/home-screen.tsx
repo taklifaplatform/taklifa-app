@@ -18,7 +18,7 @@ const initialCamera = {
   pitch: 0,
   heading: 0,
   altitude: 100000,
-  zoom: 20,
+  zoom: 10,
 };
 
 export function HomeScreen() {

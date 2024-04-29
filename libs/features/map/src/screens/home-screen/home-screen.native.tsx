@@ -72,7 +72,8 @@ export const HomeScreen = React.memo(
         if (!a.location || !b.location) return 0;
         const aDistance = getDistance(selectedDriver.location, a.location);
         const bDistance = getDistance(selectedDriver.location, b.location);
-        return aDistance - bDistance;
+        //return aDistance - bDistance;
+        return aDistance < bDistance ? a : b;
       });
     }, [data?.data, selectedDriver]);
 
@@ -106,7 +107,7 @@ export const HomeScreen = React.memo(
       if (mapRef && mapRef.current) {
         mapRef.current.animateCamera(
           {
-            zoom: 6,
+            zoom: 10,
           },
           { duration: 1000 },
         );
@@ -238,12 +239,21 @@ export const HomeScreen = React.memo(
             onPress={onCloseCarouselButtonPress}
           />
           <Carousel
+            key={driversList.length}
             ref={carouselRef}
             width={USER_CARD_WIDTH}
             height={USER_CARD_HEIGHT}
-            data={data?.data || []}
+            autoPlay={false}
+            //data={data?.data || []}
+            data={driversList || []}
             renderItem={renderCarouselItem}
             onSnapToItem={onSnapToItem}
+            onScrollBegin={() => {
+              console.log('===1');
+            }}
+            onScrollEnd={() => {
+              console.log('===2');
+            }}
           />
         </YStack>
       );
