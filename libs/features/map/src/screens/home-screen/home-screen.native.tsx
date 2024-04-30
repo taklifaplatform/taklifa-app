@@ -4,7 +4,7 @@ import { CompaniesService, DriverTransformer, DriversService } from '@zix/api';
 import { UserCard } from '@zix/features/users';
 import { useAuth } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
-import { AppHeader } from '@zix/ui/layouts';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { MapCompanyMarker, MapDriverMarker } from '@zix/ui/sawaeed';
 import { getDistance } from '@zix/utils';
 import React from 'react';
@@ -259,20 +259,22 @@ export const HomeScreen = React.memo(
       );
 
     return (
-      <YStack flex={1}>
-        <AppHeader
-          showSearchBar
-          searchProps={{
-            value: search,
-            onChangeText: setSearch,
-            rightIcon: () => (showMap ? <ScanBarcode size="$1.5" /> : null),
-          }}
-        />
-        {renderMap()}
-        {renderList()}
-        {renderCarousel()}
-        {renderSwitcher()}
-      </YStack>
+      <ScreenLayout>
+        <YStack flex={1}>
+          <AppHeader
+            showSearchBar
+            searchProps={{
+              value: search,
+              onChangeText: setSearch,
+              rightIcon: () => (showMap ? <ScanBarcode size="$1.5" /> : null),
+            }}
+          />
+          {renderMap()}
+          {renderList()}
+          {renderCarousel()}
+          {renderSwitcher()}
+        </YStack>
+      </ScreenLayout>
     );
   },
   () => true,

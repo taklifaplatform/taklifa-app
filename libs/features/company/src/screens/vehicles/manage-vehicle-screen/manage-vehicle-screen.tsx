@@ -12,7 +12,7 @@ import {
   formFields,
   handleFormErrors,
 } from '@zix/ui/forms';
-import { AppHeader } from '@zix/ui/layouts';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
@@ -180,14 +180,14 @@ export const ManageVehicleScreen: React.FC = () => {
   );
 
   return (
-    <>
+    <ScreenLayout safeAreaBottom authProtected>
       <AppHeader
         showBackButton
         title={vehicleId ? t('common:edit-vehicle') :  t('common:add-vehicle')}
       />
       {renderForm()}
       {renderLoading()}
-    </>
+    </ScreenLayout>
   )
 };
 

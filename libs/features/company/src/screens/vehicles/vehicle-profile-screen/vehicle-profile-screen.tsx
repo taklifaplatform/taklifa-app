@@ -5,7 +5,7 @@ import { createParam } from 'solito';
 import { useQuery } from '@tanstack/react-query';
 import { CompanyVehiclesService } from '@zix/api';
 import { FullScreenSpinner, MediaFile } from '@zix/ui/common';
-import { AppHeader } from '@zix/ui/layouts';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { ZixMediasListWidget, ZixWidgetContainer } from '@zix/ui/widgets';
 import { Dimensions, RefreshControl } from 'react-native';
 import { ScrollView, Text, View, XStack, YStack } from 'tamagui';
@@ -209,11 +209,11 @@ export function VehicleProfileScreen() {
   const renderLoadingSpinner = () => !data?.data?.id && <FullScreenSpinner />;
 
   return (
-    <>
+    <ScreenLayout authProtected>
       <AppHeader title={t('common:vehicle-information')} showBackButton />
       {renderLoadingSpinner()}
       {renderVehicleInformation()}
-    </>
+    </ScreenLayout>
   )
 }
 

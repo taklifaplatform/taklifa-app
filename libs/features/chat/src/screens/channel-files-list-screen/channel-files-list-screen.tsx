@@ -1,4 +1,5 @@
 
+import { ScreenLayout } from '@zix/ui/layouts';
 import React from 'react';
 
 import { View, Text } from 'react-native';
@@ -10,9 +11,9 @@ export interface ChannelFilesListScreenProps {
 
 export function ChannelFilesListScreen(props: ChannelFilesListScreenProps) {
   return (
-    <View>
+    <ScreenLayout>
       <Text>Welcome to channel-files-list-screen!</Text>
-    </View>
+    </ScreenLayout>
   );
 }
 

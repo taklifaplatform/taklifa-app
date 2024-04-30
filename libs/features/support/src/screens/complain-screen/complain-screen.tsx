@@ -9,6 +9,7 @@ import {
   handleFormErrors,
 } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
+import { ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -47,107 +48,109 @@ export const ComplainScreen = () => {
   });
 
   return (
-    <YStack
-      justifyContent="center"
-      alignItems="center"
-      paddingVertical="$8"
-      gap="$2"
-    >
-      <CustomIcon name="alert" size={'$9'} color={'$red9'} />
-      <Text
-        fontSize={25}
-        fontWeight={'bold'}
-        textAlign="center"
-        color={'$red9'}
-        $sm={{ fontSize: 18 }}
+    <ScreenLayout safeAreaBottom>
+      <YStack
+        justifyContent="center"
+        alignItems="center"
+        paddingVertical="$8"
+        gap="$2"
       >
-        {t('web-home:complain-text')}
-      </Text>
-      <View
-        width={'70%'}
-        $sm={{ width: '100%' }}
-        backgroundColor={'$color1'}
-        borderRadius={'$4'}
-        paddingVertical={'$4'}
-        marginTop={'$6'}
-      >
-        <FormProvider {...form}>
-          <SchemaForm
-            form={form}
-            schema={ComplainSchema}
-            defaultValues={{
-              username: '',
-              name: '',
-              phone_number: '+966',
-              subject: '',
-              message: '',
-            }}
-            onSubmit={mutateAsync}
-            renderBefore={() => (
-              <View width={'100%'} paddingHorizontal="$4">
-                <XStack justifyContent="space-between">
-                  <YStack
-                    gap="$2"
-                    justifyContent="center"
-                    alignItems="center"
-                    backgroundColor={'$red3'}
-                    borderRadius={'$4'}
-                    width="30%"
-                    paddingVertical="$2"
+        <CustomIcon name="alert" size={'$9'} color={'$red9'} />
+        <Text
+          fontSize={25}
+          fontWeight={'bold'}
+          textAlign="center"
+          color={'$red9'}
+          $sm={{ fontSize: 18 }}
+        >
+          {t('web-home:complain-text')}
+        </Text>
+        <View
+          width={'70%'}
+          $sm={{ width: '100%' }}
+          backgroundColor={'$color1'}
+          borderRadius={'$4'}
+          paddingVertical={'$4'}
+          marginTop={'$6'}
+        >
+          <FormProvider {...form}>
+            <SchemaForm
+              form={form}
+              schema={ComplainSchema}
+              defaultValues={{
+                username: '',
+                name: '',
+                phone_number: '+966',
+                subject: '',
+                message: '',
+              }}
+              onSubmit={mutateAsync}
+              renderBefore={() => (
+                <View width={'100%'} paddingHorizontal="$4">
+                  <XStack justifyContent="space-between">
+                    <YStack
+                      gap="$2"
+                      justifyContent="center"
+                      alignItems="center"
+                      backgroundColor={'$red3'}
+                      borderRadius={'$4'}
+                      width="30%"
+                      paddingVertical="$2"
+                    >
+                      <CustomIcon name="call" size={'$1'} color={'$red9'} />
+                      <Text fontSize={12} $sm={{ fontSize: 8 }} color={'$red9'}>
+                        +966655 55 55
+                      </Text>
+                    </YStack>
+                    <YStack
+                      gap="$2"
+                      justifyContent="center"
+                      alignItems="center"
+                      backgroundColor={'$red3'}
+                      borderRadius={'$4'}
+                      width="30%"
+                      paddingVertical="$2"
+                    >
+                      <CustomIcon name="location" size={'$1'} color={'$red9'} />
+                      <Text fontSize={12} $sm={{ fontSize: 8 }} color={'$red9'}>
+                        Saudi Arabi
+                      </Text>
+                    </YStack>
+                    <YStack
+                      gap="$2"
+                      justifyContent="center"
+                      alignItems="center"
+                      backgroundColor={'$red3'}
+                      borderRadius={'$4'}
+                      width="30%"
+                      paddingVertical="$2"
+                    >
+                      <CustomIcon name="mail" size={'$1'} color={'$red9'} />
+                      <Text fontSize={12} $sm={{ fontSize: 8 }} color={'$red9'}>
+                        +966655 55 55
+                      </Text>
+                    </YStack>
+                  </XStack>
+                </View>
+              )}
+              renderAfter={({ submit }) => (
+                <Theme>
+                  <SubmitButton
+                    backgroundColor={'$red9'}
+                    color={'$color1'}
+                    onPress={() => submit()}
+                    borderRadius="$10"
+                    icon={<SendHorizontal size={'$1'} />}
                   >
-                    <CustomIcon name="call" size={'$1'} color={'$red9'} />
-                    <Text fontSize={12} $sm={{ fontSize: 8 }} color={'$red9'}>
-                      +966655 55 55
-                    </Text>
-                  </YStack>
-                  <YStack
-                    gap="$2"
-                    justifyContent="center"
-                    alignItems="center"
-                    backgroundColor={'$red3'}
-                    borderRadius={'$4'}
-                    width="30%"
-                    paddingVertical="$2"
-                  >
-                    <CustomIcon name="location" size={'$1'} color={'$red9'} />
-                    <Text fontSize={12} $sm={{ fontSize: 8 }} color={'$red9'}>
-                      Saudi Arabi
-                    </Text>
-                  </YStack>
-                  <YStack
-                    gap="$2"
-                    justifyContent="center"
-                    alignItems="center"
-                    backgroundColor={'$red3'}
-                    borderRadius={'$4'}
-                    width="30%"
-                    paddingVertical="$2"
-                  >
-                    <CustomIcon name="mail" size={'$1'} color={'$red9'} />
-                    <Text fontSize={12} $sm={{ fontSize: 8 }} color={'$red9'}>
-                      +966655 55 55
-                    </Text>
-                  </YStack>
-                </XStack>
-              </View>
-            )}
-            renderAfter={({ submit }) => (
-              <Theme>
-                <SubmitButton
-                  backgroundColor={'$red9'}
-                  color={'$color1'}
-                  onPress={() => submit()}
-                  borderRadius="$10"
-                  icon={<SendHorizontal size={'$1'} />}
-                >
-                  {t('forms:complain-send')}
-                </SubmitButton>
-              </Theme>
-            )}
-          />
-        </FormProvider>
-      </View>
-    </YStack>
+                    {t('forms:complain-send')}
+                  </SubmitButton>
+                </Theme>
+              )}
+            />
+          </FormProvider>
+        </View>
+      </YStack>
+    </ScreenLayout>
   );
 };
 

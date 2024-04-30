@@ -1,9 +1,15 @@
-
 import React from 'react';
 
 import { UserAvatar } from '@zix/ui/common';
-import { AppHeader } from '@zix/ui/layouts';
-import { Channel, Thread, ThreadContextValue, useChannelContext, useThreadContext, useTypingString } from 'stream-chat-expo';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
+import {
+  Channel,
+  Thread,
+  ThreadContextValue,
+  useChannelContext,
+  useThreadContext,
+  useTypingString,
+} from 'stream-chat-expo';
 import { H4, Text, View, YStack } from 'tamagui';
 
 export function ChannelThreadScreen() {
@@ -26,8 +32,6 @@ export function ChannelThreadScreen() {
   );
 }
 
-
-
 export type ThreadHeaderProps = {
   thread: ThreadContextValue['thread'];
 };
@@ -35,25 +39,22 @@ const ThreadHeader: React.FC<ThreadHeaderProps> = ({ thread }) => {
   const typing = useTypingString();
 
   return (
-    <AppHeader
-      showBackButton
-      headerTitle={() => (
-        <YStack alignItems='center'>
-          <H4 fontSize='$1.5' numberOfLines={1}>
-            Thread Reply
-          </H4>
-          <Text fontSize='$1' numberOfLines={1}>
-
-            {typing ? typing : `with ${thread?.user?.name}`}
-          </Text>
-        </YStack>
-      )}
-      headerRight={() => (
-        <UserAvatar
-          user={thread?.user}
-        />
-      )}
-    />
+    <ScreenLayout>
+      <AppHeader
+        showBackButton
+        headerTitle={() => (
+          <YStack alignItems="center">
+            <H4 fontSize="$1.5" numberOfLines={1}>
+              Thread Reply
+            </H4>
+            <Text fontSize="$1" numberOfLines={1}>
+              {typing ? typing : `with ${thread?.user?.name}`}
+            </Text>
+          </YStack>
+        )}
+        headerRight={() => <UserAvatar user={thread?.user} />}
+      />
+    </ScreenLayout>
   );
 };
 

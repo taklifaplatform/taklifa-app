@@ -6,6 +6,7 @@ import { useAuth } from '@zix/services/auth';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 import InlineItemSelect from '../../components/inline-item-select/inline-item-select';
 import { FormWrapper } from '@zix/ui/forms';
+import { ScreenLayout } from '@zix/ui/layouts';
 
 /**
  * Renders the screen for selecting the user type during the registration process.
@@ -13,7 +14,8 @@ import { FormWrapper } from '@zix/ui/forms';
  */
 export const SelectUserTypeScreen = () => {
   const router = useRouter();
-  const { isLoggedIn, requestedAccountType, setRequestedAccountType, user } = useAuth()
+  const { isLoggedIn, requestedAccountType, setRequestedAccountType, user } =
+    useAuth();
 
   function onRedirectUser(value: string) {
     if (isLoggedIn) {
@@ -28,17 +30,23 @@ export const SelectUserTypeScreen = () => {
   }
 
   return (
-    <FormWrapper.Body flex={1}>
-      <AuthHeader
-        iconName="avatar"
-        canGoNext={!!requestedAccountType}
-        onGoNext={() => requestedAccountType && onRedirectUser(requestedAccountType)}
-        title={isLoggedIn ? t('auth:add_new_account') : t('auth:create_new_account')}
-      />
+    <ScreenLayout>
+      <FormWrapper.Body flex={1}>
+        <AuthHeader
+          iconName="avatar"
+          canGoNext={!!requestedAccountType}
+          onGoNext={() =>
+            requestedAccountType && onRedirectUser(requestedAccountType)
+          }
+          title={
+            isLoggedIn
+              ? t('auth:add_new_account')
+              : t('auth:create_new_account')
+          }
+        />
 
-      <YStack gap="$4" marginHorizontal="$4" marginTop="$10">
-        {
-          !user?.roles?.find(role => role.name === 'solo_driver') && (
+        <YStack gap="$4" marginHorizontal="$4" marginTop="$10">
+          {!user?.roles?.find((role) => role.name === 'solo_driver') && (
             <InlineItemSelect
               icon="solo_transporter_car"
               title={t('common:user_types.individual')}
@@ -49,20 +57,20 @@ export const SelectUserTypeScreen = () => {
                 onRedirectUser(value);
               }}
             />
-          )
-        }
-        <InlineItemSelect
-          icon="company_cars"
-          title={t('common:user_types.company')}
-          value="company_owner"
-          selectedValue={requestedAccountType}
-          onSelect={(value) => {
-            setRequestedAccountType(value);
-            onRedirectUser(value);
-          }}
-        />
-      </YStack>
-    </FormWrapper.Body>
+          )}
+          <InlineItemSelect
+            icon="company_cars"
+            title={t('common:user_types.company')}
+            value="company_owner"
+            selectedValue={requestedAccountType}
+            onSelect={(value) => {
+              setRequestedAccountType(value);
+              onRedirectUser(value);
+            }}
+          />
+        </YStack>
+      </FormWrapper.Body>
+    </ScreenLayout>
   );
 };
 

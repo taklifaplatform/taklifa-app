@@ -12,7 +12,7 @@ import { Alert, Linking } from 'react-native';
 
 import { useAuth } from '@zix/services/auth';
 import { useLink } from 'solito/link';
-import { AppHeader } from '@zix/ui/layouts';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 
 const brandColors = {
   twitter: '#1DA1F2',
@@ -186,7 +186,7 @@ const SettingsLanguageAction = () => {
   );
 
   return (
-    <>
+    <ScreenLayout>
       {renderLanguages()}
       <Settings.Item
         icon={(props: IconProps) => (
@@ -199,7 +199,7 @@ const SettingsLanguageAction = () => {
       >
         {t('account:language.title')}
       </Settings.Item>
-    </>
+    </ScreenLayout>
   );
 };
 

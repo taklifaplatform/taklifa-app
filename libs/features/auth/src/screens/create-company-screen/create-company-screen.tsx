@@ -13,6 +13,7 @@ import { useRouter } from 'solito/router';
 import { Theme } from 'tamagui';
 import { z } from 'zod';
 import { AuthHeader } from '../../components/auth-header/auth-header';
+import { ScreenLayout } from '@zix/ui/layouts';
 
 const CreateCompanyFormSchema = z
   .object({
@@ -54,6 +55,7 @@ export const CreateCompanyScreen: React.FC = () => {
   });
 
   return (
+    <ScreenLayout safeAreaBottom>
     <FormProvider {...form}>
       <SchemaForm
         schema={CreateCompanyFormSchema}
@@ -89,6 +91,7 @@ export const CreateCompanyScreen: React.FC = () => {
         )}
       </SchemaForm>
     </FormProvider>
+    </ScreenLayout>
   );
 };
 

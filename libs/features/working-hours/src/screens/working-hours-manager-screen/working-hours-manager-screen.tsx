@@ -6,7 +6,7 @@ import {
   formFields,
   handleFormErrors
 } from '@zix/ui/forms';
-import { AppHeader } from '@zix/ui/layouts';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { Theme, XStack, YStack } from 'tamagui';
@@ -137,11 +137,11 @@ export function WorkingHoursManagerScreen() {
     <FullScreenSpinner />
   )
   return (
-    <>
+    <ScreenLayout safeAreaBottom authProtected>
       <AppHeader showBackButton title={t('app:common.business-hours')} />
       {renderForm()}
       {renderLoadingScreen()}
-    </>
+    </ScreenLayout>
   );
 }
 

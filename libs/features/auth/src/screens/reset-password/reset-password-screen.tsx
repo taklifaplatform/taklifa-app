@@ -17,6 +17,7 @@ import { Link } from 'solito/link';
 import { useRouter } from 'solito/router';
 import { z } from 'zod';
 import { AuthHeader } from '../../components/auth-header/auth-header';
+import { ScreenLayout } from '@zix/ui/layouts';
 
 const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
 
@@ -46,7 +47,7 @@ export const ResetPasswordScreen = () => {
       router.push(
         `/auth/reset-password/verify?${new URLSearchParams({
           phone: variables?.phone_number,
-        })}`
+        })}`,
       );
     },
     onError(error: any) {
@@ -67,10 +68,7 @@ export const ResetPasswordScreen = () => {
           return (
             <Stack gap="$4">
               <Theme inverse>
-                <SubmitButton
-                  onPress={() => submit()}
-                  borderRadius="$10"
-                >
+                <SubmitButton onPress={() => submit()} borderRadius="$10">
                   {t('common:next')}
                 </SubmitButton>
               </Theme>
@@ -102,28 +100,30 @@ const SignInLink = () => {
   });
 
   return (
-    <Link
-      href={`/auth/login?${new URLSearchParams(phone ? { phone } : undefined)}`}
-    >
-      <Stack
-        flexDirection="row"
-        alignItems="center"
-        gap="$2"
-        justifyContent="center"
+    <ScreenLayout safeAreaBottom>
+      <Link
+        href={`/auth/login?${new URLSearchParams(phone ? { phone } : undefined)}`}
       >
-        <Paragraph textAlign="center" theme="alt1">
-          {t('auth:reset_password.done_resetting')}
-        </Paragraph>
-        <Theme name="light">
-          <Text textDecorationLine="underline" color="$color5">
-            {t('auth:sign_in')}
-          </Text>
-        </Theme>
-        <Theme name="light">
-          <CustomIcon name="arrow_right" color="$color5" />
-        </Theme>
-      </Stack>
-    </Link>
+        <Stack
+          flexDirection="row"
+          alignItems="center"
+          gap="$2"
+          justifyContent="center"
+        >
+          <Paragraph textAlign="center" theme="alt1">
+            {t('auth:reset_password.done_resetting')}
+          </Paragraph>
+          <Theme name="light">
+            <Text textDecorationLine="underline" color="$color5">
+              {t('auth:sign_in')}
+            </Text>
+          </Theme>
+          <Theme name="light">
+            <CustomIcon name="arrow_right" color="$color5" />
+          </Theme>
+        </Stack>
+      </Link>
+    </ScreenLayout>
   );
 };
 

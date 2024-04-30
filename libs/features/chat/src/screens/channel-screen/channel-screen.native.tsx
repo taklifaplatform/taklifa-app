@@ -4,6 +4,7 @@ import { MessageInput, MessageList, useChannelContext } from 'stream-chat-expo';
 import ChannelHeader from '../../components/channel-header/channel-header';
 import { useRouter } from 'solito/router';
 import { useAuth } from '@zix/services/auth';
+import { ScreenLayout } from '@zix/ui/layouts';
 
 export function ChannelScreen() {
   const router = useRouter();
@@ -11,7 +12,7 @@ export function ChannelScreen() {
   const { channel } = useChannelContext();
 
   return (
-    <>
+    <ScreenLayout authProtected>
       <ChannelHeader />
       <MessageList
         onThreadSelect={(thread) => {
@@ -19,7 +20,7 @@ export function ChannelScreen() {
         }}
       />
       <MessageInput />
-    </>
+    </ScreenLayout>
   );
 }
 

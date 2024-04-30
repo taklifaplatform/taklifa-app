@@ -3,10 +3,11 @@ import { useRouter } from 'solito/router';
 import { UserTransformer } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import VerifyPhoneNumberForm from '../../forms/verify-phone-number-form/verify-phone-number-form';
+import { ScreenLayout } from '@zix/ui/layouts';
 
 export const SignUpPhoneNumberVerificationScreen = () => {
   const router = useRouter();
-  const { registerSteps, requestedAccountType, } = useAuth()
+  const { registerSteps, requestedAccountType } = useAuth();
 
   async function onSuccess(user?: UserTransformer) {
     if (requestedAccountType === 'customer') {
@@ -21,11 +22,13 @@ export const SignUpPhoneNumberVerificationScreen = () => {
   }
 
   return (
-    <VerifyPhoneNumberForm
-      activeStep={2}
-      totalSteps={registerSteps || 1}
-      onSuccess={onSuccess}
-    />
+    <ScreenLayout safeAreaBottom>
+      <VerifyPhoneNumberForm
+        activeStep={2}
+        totalSteps={registerSteps || 1}
+        onSuccess={onSuccess}
+      />
+    </ScreenLayout>
   );
 };
 

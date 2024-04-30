@@ -17,17 +17,18 @@ import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { createParam } from 'solito';
 import { Link } from 'solito/link';
 import { z } from 'zod';
+import { ScreenLayout } from '@zix/ui/layouts';
 
 const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
 
-const LoginSchema = z
-  .object({
-    phone_number: formFields.phone.describe(t('forms:phone_number').toString()),
-    password: formFields.secure_text.describe(t('forms:password')),
-  });
+const LoginSchema = z.object({
+  phone_number: formFields.phone.describe(t('forms:phone_number').toString()),
+  password: formFields.secure_text.describe(t('forms:password')),
+});
 
 export const LoginScreen: React.FC = () => {
-  const { setAuthAccessToken, setAuthUser, redirectUserToActiveDashboard } = useAuth();
+  const { setAuthAccessToken, setAuthUser, redirectUserToActiveDashboard } =
+    useAuth();
 
   const { params } = useParams();
   const updateParams = useUpdateParams();
@@ -44,7 +45,7 @@ export const LoginScreen: React.FC = () => {
       setAuthUser(data?.user);
       redirectUserToActiveDashboard({
         user: data?.user,
-      })
+      });
     },
     onError(error: any) {
       handleFormErrors(form, error?.body?.errors);
@@ -59,47 +60,46 @@ export const LoginScreen: React.FC = () => {
   }, [params?.phone, updateParams]);
 
   return (
-    <FormProvider {...form}>
-      <SchemaForm
-        form={form}
-        schema={LoginSchema}
-        defaultValues={{
-          phone_number: params?.phone || '+966',
-          password: '',
-        }}
-        onSubmit={mutateAsync}
-        props={{
-          password: {
-            afterElement: <ForgotPasswordLink />,
-          },
-        }}
-        renderAfter={({ submit }) => {
-          return (
-            <Stack gap="$4">
-              <Theme inverse>
-                <SubmitButton
-                  onPress={() => submit()}
-                  borderRadius="$10"
-                >
-                  {t('auth:sign_in')}
-                </SubmitButton>
-              </Theme>
-              <SignUpLink />
-            </Stack>
-          );
-        }}
-      >
-        {(fields) => (
-          <>
-            <AuthHeader
-              title={t('common:app_name')}
-              description={t('common:welcome')}
-            />
-            {Object.values(fields)}
-          </>
-        )}
-      </SchemaForm>
-    </FormProvider>
+    <ScreenLayout safeAreaBottom>
+      <FormProvider {...form}>
+        <SchemaForm
+          form={form}
+          schema={LoginSchema}
+          defaultValues={{
+            phone_number: params?.phone || '+966',
+            password: '',
+          }}
+          onSubmit={mutateAsync}
+          props={{
+            password: {
+              afterElement: <ForgotPasswordLink />,
+            },
+          }}
+          renderAfter={({ submit }) => {
+            return (
+              <Stack gap="$4">
+                <Theme inverse>
+                  <SubmitButton onPress={() => submit()} borderRadius="$10">
+                    {t('auth:sign_in')}
+                  </SubmitButton>
+                </Theme>
+                <SignUpLink />
+              </Stack>
+            );
+          }}
+        >
+          {(fields) => (
+            <>
+              <AuthHeader
+                title={t('common:app_name')}
+                description={t('common:welcome')}
+              />
+              {Object.values(fields)}
+            </>
+          )}
+        </SchemaForm>
+      </FormProvider>
+    </ScreenLayout>
   );
 };
 
@@ -109,7 +109,7 @@ const SignUpLink = () => {
   return (
     <Link
       href={`/auth/register?${new URLSearchParams(
-        phone ? { phone } : {}
+        phone ? { phone } : {},
       ).toString()}`}
     >
       <Stack
@@ -140,7 +140,7 @@ const ForgotPasswordLink = () => {
     <Theme name="accent">
       <Link
         href={`/auth/reset-password?${new URLSearchParams(
-          phone ? { phone } : {}
+          phone ? { phone } : {},
         ).toString()}`}
       >
         <Stack flex={1} alignItems="flex-end" marginTop="$3">

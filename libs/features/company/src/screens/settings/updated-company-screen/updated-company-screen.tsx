@@ -11,7 +11,7 @@ import {
   formFields,
   handleFormErrors,
 } from '@zix/ui/forms';
-import { AppHeader } from '@zix/ui/layouts';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
@@ -87,11 +87,11 @@ export const UpdateCompanyScreen: React.FC = () => {
   )
 
   return (
-    <>
+    <ScreenLayout safeAreaBottom authProtected>
       <AppHeader showBackButton title="Update Company" />
       {renderForm()}
       {renderLoading()}
-    </>
+    </ScreenLayout>
   )
 };
 

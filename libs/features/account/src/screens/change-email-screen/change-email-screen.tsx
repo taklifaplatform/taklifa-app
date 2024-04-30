@@ -8,7 +8,7 @@ import {
   formFields,
   handleFormErrors,
 } from '@zix/ui/forms';
-import { AppHeader } from '@zix/ui/layouts';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { useAuth } from '@zix/services/auth';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
@@ -47,29 +47,27 @@ export const ChangeEmailScreen = () => {
   });
 
   return (
-    <SchemaForm
-      form={form}
-      onSubmit={mutateAsync}
-      schema={ChangeEmailSchema}
-      renderBefore={() => (
-        <AppHeader
-          showBackButton
-
-          title={t('account:change_email.title')}
-        />
-      )}
-      defaultValues={{
-        current_email: user?.email,
-        email: '',
-      }}
-      renderAfter={({ submit }) => (
-        <Theme inverse>
-          <SubmitButton onPress={() => submit()}>
-            {t('common:confirm')}
-          </SubmitButton>
-        </Theme>
-      )}
-    />
+    <ScreenLayout safeAreaBottom>
+      <SchemaForm
+        form={form}
+        onSubmit={mutateAsync}
+        schema={ChangeEmailSchema}
+        renderBefore={() => (
+          <AppHeader showBackButton title={t('account:change_email.title')} />
+        )}
+        defaultValues={{
+          current_email: user?.email,
+          email: '',
+        }}
+        renderAfter={({ submit }) => (
+          <Theme inverse>
+            <SubmitButton onPress={() => submit()}>
+              {t('common:confirm')}
+            </SubmitButton>
+          </Theme>
+        )}
+      />
+    </ScreenLayout>
   );
 };
 

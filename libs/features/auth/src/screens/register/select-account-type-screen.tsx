@@ -6,6 +6,7 @@ import { useAuth } from '@zix/services/auth';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 import InlineItemSelect from '../../components/inline-item-select/inline-item-select';
 import { FormWrapper } from '@zix/ui/forms';
+import { ScreenLayout } from '@zix/ui/layouts';
 
 /**
  * Represents the screen for selecting the account type during the registration process.
@@ -13,7 +14,7 @@ import { FormWrapper } from '@zix/ui/forms';
  */
 export const SelectAccountTypeScreen: React.FC = () => {
   const router = useRouter();
-  const { requestedAccountType, setRequestedAccountType } = useAuth()
+  const { requestedAccountType, setRequestedAccountType } = useAuth();
 
   function onRedirectUser(role: string) {
     if (role === 'customer') {
@@ -24,37 +25,41 @@ export const SelectAccountTypeScreen: React.FC = () => {
   }
 
   return (
-    <FormWrapper.Body>
-      <AuthHeader
-        iconName="avatar"
-        canGoNext={!!requestedAccountType}
-        onGoNext={() => requestedAccountType && onRedirectUser(requestedAccountType)}
-        title={t('auth:create_new_account')}
-      />
+    <ScreenLayout>
+      <FormWrapper.Body>
+        <AuthHeader
+          iconName="avatar"
+          canGoNext={!!requestedAccountType}
+          onGoNext={() =>
+            requestedAccountType && onRedirectUser(requestedAccountType)
+          }
+          title={t('auth:create_new_account')}
+        />
 
-      <YStack gap="$4" marginHorizontal="$4" marginTop="$10">
-        <InlineItemSelect
-          icon="looking_for_service"
-          title={t('common:account_types.seek.service_requestor')}
-          value="customer"
-          selectedValue={requestedAccountType}
-          onSelect={(value) => {
-            setRequestedAccountType(value);
-            onRedirectUser(value);
-          }}
-        />
-        <InlineItemSelect
-          icon="service_provider"
-          title={t('common:account_types.seek.service_provider')}
-          value="solo_driver"
-          selectedValue={requestedAccountType}
-          onSelect={(value) => {
-            setRequestedAccountType(value);
-            onRedirectUser(value);
-          }}
-        />
-      </YStack>
-    </FormWrapper.Body>
+        <YStack gap="$4" marginHorizontal="$4" marginTop="$10">
+          <InlineItemSelect
+            icon="looking_for_service"
+            title={t('common:account_types.seek.service_requestor')}
+            value="customer"
+            selectedValue={requestedAccountType}
+            onSelect={(value) => {
+              setRequestedAccountType(value);
+              onRedirectUser(value);
+            }}
+          />
+          <InlineItemSelect
+            icon="service_provider"
+            title={t('common:account_types.seek.service_provider')}
+            value="solo_driver"
+            selectedValue={requestedAccountType}
+            onSelect={(value) => {
+              setRequestedAccountType(value);
+              onRedirectUser(value);
+            }}
+          />
+        </YStack>
+      </FormWrapper.Body>
+    </ScreenLayout>
   );
 };
 

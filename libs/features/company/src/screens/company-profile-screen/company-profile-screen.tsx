@@ -2,7 +2,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { CompaniesService } from '@zix/api';
 import { FullScreenSpinner } from '@zix/ui/common';
-import { AppHeader } from '@zix/ui/layouts';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { RefreshControl } from 'react-native';
 import { createParam } from 'solito';
 
@@ -52,11 +52,11 @@ export function CompanyProfileScreen() {
   const renderLoadingSpinner = () => !data?.data?.id && <FullScreenSpinner />;
 
   return (
-    <>
+    <ScreenLayout authProtected>
       <AppHeader title="Company Profile" showBackButton />
       {renderLoadingSpinner()}
       {renderCompanyProfile()}
-    </>
+    </ScreenLayout>
   );
 }
 
