@@ -200,4 +200,24 @@ export class ShipmentService {
             },
         });
     }
+    /**
+     * confirm a shipment.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static confirmShipment({
+        shipment,
+    }: {
+        shipment: string,
+    }): CancelablePromise<{
+        data?: ShipmentTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/shipments/{shipment}/confirm',
+            path: {
+                'shipment': shipment,
+            },
+        });
+    }
 }

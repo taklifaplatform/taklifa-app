@@ -6,7 +6,8 @@ import type { CityTransformer } from './CityTransformer';
 import type { CountryTransformer } from './CountryTransformer';
 import type { StateTransformer } from './StateTransformer';
 export type LocationTransformer = {
-    id?: number;
+    id?: string;
+    owner_id?: string;
     latitude?: string;
     longitude?: string;
     address?: string;

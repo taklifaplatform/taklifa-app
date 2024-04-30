@@ -1,17 +1,23 @@
-import { Button, ScrollView, YStack, Text, View } from 'tamagui';
-import { createParam } from 'solito';
-import { useQuery } from '@tanstack/react-query';
+import { useToastController } from '@tamagui/toast';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { ShipmentService } from '@zix/api';
-import { DebugObject, FullScreenSpinner } from '@zix/ui/common';
+import { FullScreenSpinner } from '@zix/ui/common';
+import { handleFormErrors, SubmitButton } from '@zix/ui/forms';
 import { AppHeader } from '@zix/ui/layouts';
 import { ZixWidgetContainer } from '@zix/ui/widgets';
+import { t } from 'i18next';
 import { useMemo } from 'react';
+import { createParam } from 'solito';
+import { useRouter } from 'solito/router';
+import { ScrollView, Text, Theme, View, YStack } from 'tamagui';
 import { ShipmentDetails, ShipmentDirection } from '../../../components';
 
 const { useParam } = createParam<{ shipment: string }>();
 
 export function ShipmentSummaryScreen() {
   const [shipmentId] = useParam('shipment');
+  const toast = useToastController();
+  const router = useRouter();
   const { data } = useQuery({
     queryFn() {
       if (!shipmentId) {
@@ -23,48 +29,56 @@ export function ShipmentSummaryScreen() {
       });
     },
     queryKey: ['ShipmentService.retrieveShipment', `-${shipmentId}`],
-  })
+  });
 
-  const shipment = useMemo(() => data?.data, [data])
+  const shipment = useMemo(() => data?.data, [data]);
 
-  const renderLoadingSpinner = () => !shipment && (
-    <FullScreenSpinner />
-  )
+  const { mutate } = useMutation({
+    mutationFn: () =>
+      ShipmentService.confirmShipment({
+        shipment: shipmentId as string,
+      }),
+    onSuccess() {
+      toast.show('Shipment confirmed');
+      router.push('/');
+    },
+    onError(error: any) {
+      handleFormErrors(error?.body?.errors);
+    },
+  });
 
-  const renderShipmentSummary = () => shipment?.id && (
-    <ScrollView flex={1} padding='$4'>
-      <ZixWidgetContainer
-        label='Shipment Detail'
-      >
-        <YStack>
-          {
-            shipment.items?.map((item, index) => (
-              <Text>
-                {item.notes}
-              </Text>
-            ))
-          }
-        </YStack>
-      </ZixWidgetContainer>
-      <ShipmentDirection shipment={shipment} status={shipment.status} />
-      <ShipmentDetails shipment={shipment} paddingVertical="$4" />
+  const renderLoadingSpinner = () => !shipment && <FullScreenSpinner />;
 
-      <View height='$6' />
-      <DebugObject object={shipment} />
+  const renderShipmentSummary = () =>
+    shipment?.id && (
+      <ScrollView flex={1} padding="$4">
+        <ZixWidgetContainer label="Shipment Detail">
+          <YStack>
+            {shipment.items?.map((item, index) => <Text>{item.notes}</Text>)}
+          </YStack>
+        </ZixWidgetContainer>
+        <ShipmentDirection shipment={shipment} status={shipment.status} />
+        <ShipmentDetails shipment={shipment} paddingVertical="$4" />
 
-
-
-    </ScrollView>
-  )
+        <View height="$6" />
+      </ScrollView>
+    );
 
   return (
     <>
-      <AppHeader
-        title='مراجعة البيانات'
-        showBackButton
-      />
+      <AppHeader title="مراجعة البيانات" showBackButton />
       {renderLoadingSpinner()}
       {renderShipmentSummary()}
+
+      <Theme inverse>
+        <SubmitButton
+          onPress={() => {
+            mutate();
+          }}
+        >
+          {t('common:confirm')}
+        </SubmitButton>
+      </Theme>
     </>
   );
 }
