@@ -81,7 +81,7 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
                   : '$gray6'
             }
             padding="$3"
-            borderRadius="50%"
+            borderRadius="$5"
           >
             <View
               width={1}
@@ -94,7 +94,7 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
                     : '$color9'
               }
               padding="$2"
-              borderRadius="50%"
+              borderRadius="$5"
             />
           </View>
         </Marker>
@@ -112,14 +112,14 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
             height={1}
             backgroundColor={'$color3'}
             padding="$3"
-            borderRadius="50%"
+            borderRadius="$5"
           >
             <View
               width={1}
               height={1}
               backgroundColor={'$color5'}
               padding="$2"
-              borderRadius="50%"
+              borderRadius="$5"
             />
           </View>
         </Marker>
@@ -129,16 +129,16 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
 };
 
 export default ZixMapDirectionWidget;
-const styles = StyleSheet.create({
-  cluster: {
-    backgroundColor: 'salmon',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 20,
-    height: 20,
-    borderRadius: 999,
-  },
-  clusterText: {
-    fontWeight: '700',
-  },
-});
+// const styles = StyleSheet.create({
+//   cluster: {
+//     backgroundColor: 'salmon',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//     width: 20,
+//     height: 20,
+//     borderRadius: 999,
+//   },
+//   clusterText: {
+//     fontWeight: '700',
+//   },
+// });
