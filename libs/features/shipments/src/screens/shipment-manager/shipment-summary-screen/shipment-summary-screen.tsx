@@ -3,14 +3,20 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { ShipmentService } from '@zix/api';
 import { FullScreenSpinner } from '@zix/ui/common';
 import { handleFormErrors, SubmitButton } from '@zix/ui/forms';
-import { AppHeader } from '@zix/ui/layouts';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { ZixWidgetContainer } from '@zix/ui/widgets';
 import { t } from 'i18next';
 import { useMemo } from 'react';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
 import { ScrollView, Text, Theme, View, YStack } from 'tamagui';
-import { ShipmentDetails, ShipmentDirection } from '../../../components';
+import {
+  BudgetShipment,
+  ShipmentCode,
+  ShipmentDetails,
+  ShipmentDirection,
+} from '../../../components';
+import { useAuth } from '@zix/services/auth';
 
 const { useParam } = createParam<{ shipment: string }>();
 
@@ -18,6 +24,7 @@ export function ShipmentSummaryScreen() {
   const [shipmentId] = useParam('shipment');
   const toast = useToastController();
   const router = useRouter();
+  const { getUrlPrefix } = useAuth();
   const { data } = useQuery({
     queryFn() {
       if (!shipmentId) {
@@ -40,7 +47,7 @@ export function ShipmentSummaryScreen() {
       }),
     onSuccess() {
       toast.show('Shipment confirmed');
-      router.push('/');
+      router.push(`${getUrlPrefix}/shipments`);
     },
     onError(error: any) {
       handleFormErrors(error?.body?.errors);
@@ -59,27 +66,29 @@ export function ShipmentSummaryScreen() {
         </ZixWidgetContainer>
         <ShipmentDirection shipment={shipment} status={shipment.status} />
         <ShipmentDetails shipment={shipment} paddingVertical="$4" />
-
+        <BudgetShipment shipment={shipment} />
         <View height="$6" />
       </ScrollView>
     );
 
   return (
-    <>
+    <ScreenLayout safeAreaBottom authProtected>
       <AppHeader title="مراجعة البيانات" showBackButton />
       {renderLoadingSpinner()}
       {renderShipmentSummary()}
 
-      <Theme inverse>
-        <SubmitButton
-          onPress={() => {
-            mutate();
-          }}
-        >
-          {t('common:confirm')}
-        </SubmitButton>
-      </Theme>
-    </>
+      <View paddingHorizontal='$4'>
+        <Theme inverse>
+          <SubmitButton
+            onPress={() => {
+              mutate();
+            }}
+          >
+            {t('common:confirm')}
+          </SubmitButton>
+        </Theme>
+      </View>
+    </ScreenLayout>
   );
 }
 

@@ -4,7 +4,7 @@ import { ShipmentService } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
 import { SchemaForm, SubmitButton, ZixFieldContainer, formFields, handleFormErrors } from '@zix/ui/forms';
-import { AppHeader } from '@zix/ui/layouts';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
@@ -109,11 +109,11 @@ export const ManageShipmentBudgetScreen: React.FC = () => {
   )
 
   return (
-    <>
+    <ScreenLayout safeAreaBottom authProtected>
       <AppHeader title='Shipment Details' showBackButton />
       {renderForm()}
       {renderLoadingSpinner()}
-    </>
+    </ScreenLayout>
   )
 }
 

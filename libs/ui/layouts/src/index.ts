@@ -1,4 +1,6 @@
 
+export * from './layouts/screen-layout/screen-layout';
+
 export * from './components/app-bottom-bar/app-bottom-bar';
 
 export * from './layouts/app-layout/app-layout';

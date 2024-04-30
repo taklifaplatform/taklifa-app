@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { ShipmentFilterTransformer, ShipmentService } from '@zix/api';
 import { DataNotFound, ZixButton } from '@zix/ui/common';
-import { AppHeader } from '@zix/ui/layouts';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
@@ -102,7 +102,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
     );
 
   return (
-    <>
+    <ScreenLayout>
       <AppHeader
         title={screenTitle}
         showSearchBar
@@ -145,7 +145,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
           }
         />
       </YStack>
-    </>
+    </ScreenLayout>
   );
 };
 
