@@ -44,7 +44,7 @@ export const ZixTab: React.FC<ZixTabProps> = ({
         {tabs
           .filter((tab) => tab.key === activeTab)
           .map((tab) => (
-            <View key={`tab-content-${tab.key}`}>{tab.content}</View>
+            <View flex={1} key={`tab-content-${tab.key}`}>{tab.content}</View>
           ))}
       </View>
     </View>

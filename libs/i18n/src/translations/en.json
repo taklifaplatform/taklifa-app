@@ -73,7 +73,8 @@
       "business-hours": "Business Hours",
       "working-day": "Working Day",
       "from": "From",
-      "to": "To"
+      "to": "To",
+      "location": "Location"
     }
   },
   "about": {

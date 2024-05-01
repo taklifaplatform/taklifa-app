@@ -38,9 +38,7 @@ export const AboutCompanyTab: React.FC<AboutCompanyTabProps> = ({
   )
 
   const renderLocation = () => !!company.location && (
-    <ZixWidgetContainer label='Location'>
-      <ZixLocationInfoWidget location={company.location} />
-    </ZixWidgetContainer>
+    <ZixLocationInfoWidget location={company.location} canEdit={!!data?.data?.find(i => i.user?.id === authUser?.id)} />
   )
 
   const renderWorkingHours = () => company.working_hours_id && (
