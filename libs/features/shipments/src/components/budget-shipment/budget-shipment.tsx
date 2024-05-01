@@ -88,13 +88,13 @@ export const BudgetShipment: React.FC<BudgetShipmentProps> = ({
           gap="$3"
           $gtSm={{ flexDirection: 'row', justifyContent: 'space-between' }}
         >
-          {renderOptionActivity(t('job:Suggestions'), 'Todo')}
-          {renderOptionActivity(t('shipment:conducting-interviews'), 'Todo')}
+          {renderOptionActivity(t('job:Suggestions'), shipment.proposals_count)}
+          {renderOptionActivity(t('shipment:conducting-interviews'), shipment.invitations_count)}
           {renderOptionActivity(
             t('shipment:invitation-have-been-sent'),
-            'Todo',
+            shipment.pending_invitations_count,
           )}
-          {renderOptionActivity(t('shipment:unanswered-invitations'), 'Todo')}
+          {renderOptionActivity(t('shipment:unanswered-invitations'), shipment.accepted_proposals_count)}
         </Stack>
       </YStack>
     </ZixWidgetContainer>
