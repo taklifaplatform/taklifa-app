@@ -3,6 +3,7 @@ import React from 'react';
 import { Dimensions } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import { Button, Stack, View } from 'tamagui';
+import ZixGetDirection from '../zix-get-direction/zix-get-direction';
 
 /* eslint-disable-next-line */
 export type ZixMapDirectionWidgetProps = {
@@ -114,7 +115,7 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
           </View>
         </Marker>
       </MapView>
-      <Button mt='$2' themeInverse>GetDirection</Button>
+      <ZixGetDirection startLocation={startLocation} endLocation={endLocation}  />
     </Stack>
   );
 };

@@ -1,3 +1,5 @@
+
+export * from './components/zix-get-direction/zix-get-direction';
 export * from './components/zix-web-footer/zix-web-footer';
 
 export * from './components/zix-web-header/zix-web-header';
