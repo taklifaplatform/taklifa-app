@@ -8,6 +8,7 @@ import { useChannelContext, useImageGalleryContext } from 'stream-chat-expo';
 import { View } from 'tamagui';
 import ChannelHeader from '../../components/channel-header/channel-header';
 import { usePaginatedAttachments } from '../../hooks/usePaginatedAttachments';
+import { ScreenLayout } from '@zix/ui/layouts';
 
 
 const screen = Dimensions.get('screen').width;
@@ -112,7 +113,7 @@ export function ChannelImagesListScreen() {
 
 
   return (
-    <>
+    <ScreenLayout safeAreaBottom authProtected>
       <ChannelHeader />
       <FlatList
         contentContainerStyle={{ flexGrow: 1 }}
@@ -150,7 +151,7 @@ export function ChannelImagesListScreen() {
           viewAreaCoveragePercentThreshold: 50,
         }}
       />
-    </>
+    </ScreenLayout>
   );
 }
 

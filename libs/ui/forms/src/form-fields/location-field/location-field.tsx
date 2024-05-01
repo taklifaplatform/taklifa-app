@@ -231,7 +231,7 @@ export const LocationField: React.FC<LocationFieldProps> = ({
                 onChange={(state_id) =>
                   onChange({
                     ...value,
-                    state_id,
+                    state_id: parseInt(state_id),
                   })
                 }
               />
@@ -252,7 +252,7 @@ export const LocationField: React.FC<LocationFieldProps> = ({
                 onChange={(city_id) =>
                   onChange({
                     ...value,
-                    city_id,
+                    city_id: parseInt(city_id),
                   })
                 }
               />

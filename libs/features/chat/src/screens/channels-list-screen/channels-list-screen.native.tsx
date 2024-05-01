@@ -1,5 +1,5 @@
 import { useAuth } from '@zix/services/auth';
-import { AppHeader } from '@zix/ui/layouts';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { useCallback } from 'react';
 import { useRouter } from 'solito/router';
@@ -14,12 +14,12 @@ export function ChannelsListScreen() {
   }, [router, getUrlPrefix])
 
   return (
-    <>
+    <ScreenLayout authProtected>
       <AppHeader showBackButton title={t('common:chat')} />
       <ChannelList
         onSelect={onSelect}
       />
-    </>
+    </ScreenLayout>
   );
 }
 

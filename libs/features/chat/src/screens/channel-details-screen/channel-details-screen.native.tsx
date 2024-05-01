@@ -8,6 +8,7 @@ import { Avatar, Button, ListItem, ScrollView, View, YGroup } from 'tamagui';
 import ChannelHeader from '../../components/channel-header/channel-header';
 import { CustomIcon } from '@zix/ui/icons';
 import { ZixFieldContainer, ZixInput } from '@zix/ui/forms';
+import { ScreenLayout } from '@zix/ui/layouts';
 import { useRouter } from 'solito/router';
 import { Alert } from 'react-native';
 import { useAuth } from '@zix/services/auth';
@@ -49,7 +50,7 @@ export function ChannelDetailsScreen() {
   };
 
   return (
-    <>
+    <ScreenLayout>
       <ChannelHeader
         showSearchBar
         searchProps={{
@@ -226,7 +227,7 @@ export function ChannelDetailsScreen() {
           </YGroup.Item>
         </YGroup>
       </ScrollView>
-    </>
+    </ScreenLayout>
   );
 }
 

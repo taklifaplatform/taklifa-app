@@ -1,17 +1,30 @@
-import { Button, ScrollView, YStack, Text, View } from 'tamagui';
-import { createParam } from 'solito';
-import { useQuery } from '@tanstack/react-query';
+import { useToastController } from '@tamagui/toast';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { ShipmentService } from '@zix/api';
-import { DebugObject, FullScreenSpinner } from '@zix/ui/common';
-import { AppHeader } from '@zix/ui/layouts';
+import { FullScreenSpinner } from '@zix/ui/common';
+import { handleFormErrors, SubmitButton } from '@zix/ui/forms';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { ZixWidgetContainer } from '@zix/ui/widgets';
+import { t } from 'i18next';
 import { useMemo } from 'react';
-import { ShipmentDetails, ShipmentDirection } from '../../../components';
+import { createParam } from 'solito';
+import { useRouter } from 'solito/router';
+import { ScrollView, Text, Theme, View, YStack } from 'tamagui';
+import {
+  BudgetShipment,
+  ShipmentCode,
+  ShipmentDetails,
+  ShipmentDirection,
+} from '../../../components';
+import { useAuth } from '@zix/services/auth';
 
 const { useParam } = createParam<{ shipment: string }>();
 
 export function ShipmentSummaryScreen() {
   const [shipmentId] = useParam('shipment');
+  const toast = useToastController();
+  const router = useRouter();
+  const { getUrlPrefix } = useAuth();
   const { data } = useQuery({
     queryFn() {
       if (!shipmentId) {
@@ -23,49 +36,59 @@ export function ShipmentSummaryScreen() {
       });
     },
     queryKey: ['ShipmentService.retrieveShipment', `-${shipmentId}`],
-  })
+  });
 
-  const shipment = useMemo(() => data?.data, [data])
+  const shipment = useMemo(() => data?.data, [data]);
 
-  const renderLoadingSpinner = () => !shipment && (
-    <FullScreenSpinner />
-  )
+  const { mutate } = useMutation({
+    mutationFn: () =>
+      ShipmentService.confirmShipment({
+        shipment: shipmentId as string,
+      }),
+    onSuccess() {
+      toast.show('Shipment confirmed');
+      router.push(`${getUrlPrefix}/shipments`);
+    },
+    onError(error: any) {
+      handleFormErrors(error?.body?.errors);
+    },
+  });
 
-  const renderShipmentSummary = () => shipment?.id && (
-    <ScrollView flex={1} padding='$4'>
-      <ZixWidgetContainer
-        label='Shipment Detail'
-      >
-        <YStack>
-          {
-            shipment.items?.map((item, index) => (
-              <Text>
-                {item.notes}
-              </Text>
-            ))
-          }
-        </YStack>
-      </ZixWidgetContainer>
-      <ShipmentDirection shipment={shipment} status={shipment.status} />
-      <ShipmentDetails shipment={shipment} paddingVertical="$4" />
+  const renderLoadingSpinner = () => !shipment && <FullScreenSpinner />;
 
-      <View height='$6' />
-      <DebugObject object={shipment} />
-
-
-
-    </ScrollView>
-  )
+  const renderShipmentSummary = () =>
+    shipment?.id && (
+      <ScrollView flex={1} padding="$4">
+        <ZixWidgetContainer label="Shipment Detail">
+          <YStack>
+            {shipment.items?.map((item, index) => <Text>{item.notes}</Text>)}
+          </YStack>
+        </ZixWidgetContainer>
+        <ShipmentDirection shipment={shipment} status={shipment.status} />
+        <ShipmentDetails shipment={shipment} paddingVertical="$4" />
+        <BudgetShipment shipment={shipment} />
+        <View height="$6" />
+      </ScrollView>
+    );
 
   return (
-    <>
-      <AppHeader
-        title='مراجعة البيانات'
-        showBackButton
-      />
+    <ScreenLayout safeAreaBottom authProtected>
+      <AppHeader title="مراجعة البيانات" showBackButton />
       {renderLoadingSpinner()}
       {renderShipmentSummary()}
-    </>
+
+      <View paddingHorizontal='$4'>
+        <Theme inverse>
+          <SubmitButton
+            onPress={() => {
+              mutate();
+            }}
+          >
+            {t('common:confirm')}
+          </SubmitButton>
+        </Theme>
+      </View>
+    </ScreenLayout>
   );
 }
 

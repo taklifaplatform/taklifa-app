@@ -1,5 +1,6 @@
 import { useMultiLang } from '@zix/i18n';
 import { CustomIcon } from '@zix/ui/icons';
+import { ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { Stack, Text, Theme, YStack } from 'tamagui';
 
@@ -24,59 +25,33 @@ export const OnboardingAuthScreen = () => {
   ];
 
   const renderWelcomeText = () => (
-    <YStack gap='$2'>
-      <Text
-        fontSize={20}
-        fontWeight="800"
-      >
+    <YStack gap="$2">
+      <Text fontSize={20} fontWeight="800">
         مرحبا بك في
       </Text>
-      <Text
-        fontSize={35}
-        fontWeight="800"
-      >
+      <Text fontSize={35} fontWeight="800">
         سواعد اللوجستية
       </Text>
-      <Text
-        fontWeight="400"
-        fontSize={15}
-        lineHeight={25}
-        marginTop="$3"
-      >
+      <Text fontWeight="400" fontSize={15} lineHeight={25} marginTop="$3">
         {t('web-home:content-2')}
       </Text>
     </YStack>
   );
 
   const renderOptions = () => (
-    <YStack gap='$6'>
-      <Text
-        fontSize={25}
-        fontWeight="800"
-      >
+    <YStack gap="$6">
+      <Text fontSize={25} fontWeight="800">
         {t('web-home:banner-3')}
       </Text>
-      <YStack gap='$8'>
+      <YStack gap="$8">
         {options.map((option, index) => (
-          <Stack
-            key={index}
-            flexDirection='row'
-            gap={'$4'}
-          >
+          <Stack key={index} flexDirection="row" gap={'$4'}>
             {option.icon}
-            <YStack gap='$4'>
-              <Text
-                fontSize={20}
-                fontWeight="700"
-                color='$color9'
-              >
+            <YStack gap="$4">
+              <Text fontSize={20} fontWeight="700" color="$color9">
                 {option.title}
               </Text>
-              <Text
-                fontWeight="400"
-                fontSize={15}
-                lineHeight={25}
-              >
+              <Text fontWeight="400" fontSize={15} lineHeight={25}>
                 {option.description}
               </Text>
             </YStack>
@@ -87,17 +62,14 @@ export const OnboardingAuthScreen = () => {
   );
 
   return (
-    <Theme name='accent'>
-      <YStack
-        flex={1}
-        backgroundColor="$color2"
-        gap={'$8'}
-        padding='$10'
-      >
-        {renderWelcomeText()}
-        {renderOptions()}
-      </YStack>
-    </Theme>
+    <ScreenLayout>
+      <Theme name="accent">
+        <YStack flex={1} backgroundColor="$color2" gap={'$8'} padding="$10">
+          {renderWelcomeText()}
+          {renderOptions()}
+        </YStack>
+      </Theme>
+    </ScreenLayout>
   );
 };
 

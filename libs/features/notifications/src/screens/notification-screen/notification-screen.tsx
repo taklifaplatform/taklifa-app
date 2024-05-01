@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { NotificationService, NotificationTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
-import { AppHeader } from '@zix/ui/layouts';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import moment from 'moment';
 import { useMemo, useState } from 'react';
 import { SectionList, SectionListData, } from 'react-native';
@@ -64,7 +64,7 @@ export function NotificationScreen(props: NotificationScreenProps) {
 
 
   return (
-    <>
+    <ScreenLayout authProtected>
       <AppHeader
         showBackButton
         title="Notifications"
@@ -99,7 +99,7 @@ export function NotificationScreen(props: NotificationScreenProps) {
         sections={sections}
         stickySectionHeadersEnabled
       />
-    </>
+    </ScreenLayout>
   );
 }
 

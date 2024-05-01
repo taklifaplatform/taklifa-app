@@ -4,7 +4,7 @@ import {
   SchemaForm,
   SubmitButton,
   formFields,
-  handleFormErrors
+  handleFormErrors,
 } from '@zix/ui/forms';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
@@ -15,20 +15,20 @@ import { UserVerificationService } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 import { t } from 'i18next';
+import { ScreenLayout } from '@zix/ui/layouts';
 
-const KYCFormSchema = z
-  .object({ //
-    name: formFields.text.describe(t('forms:kyc_name')),
-    birth_date: formFields.date_picker.describe(t('forms:birth_date')),
-    nationality_id: formFields.country.describe(t('forms:select_nationality')),
-    identity_card: formFields.file.describe(t('forms:id_card')),
-    location: formFields.location.describe(t('forms:living_address')),
-
-  });
+const KYCFormSchema = z.object({
+  //
+  name: formFields.text.describe(t('forms:kyc_name')),
+  birth_date: formFields.date_picker.describe(t('forms:birth_date')),
+  nationality_id: formFields.country.describe(t('forms:select_nationality')),
+  identity_card: formFields.file.describe(t('forms:id_card')),
+  location: formFields.location.describe(t('forms:living_address')),
+});
 
 export const KycVerificationScreen = () => {
   const router = useRouter();
-  const { user, registerSteps, refetchUser } = useAuth()
+  const { user, registerSteps, refetchUser } = useAuth();
 
   const form = useForm<z.infer<typeof KYCFormSchema>>();
   const { mutateAsync } = useMutation({
@@ -38,7 +38,7 @@ export const KycVerificationScreen = () => {
       });
     },
     onSuccess() {
-      refetchUser()
+      refetchUser();
       router.push('/auth/verify-driver');
     },
     onError(error: any) {
@@ -47,38 +47,40 @@ export const KycVerificationScreen = () => {
   });
 
   return (
-    <FormProvider {...form}>
-      <SchemaForm
-        form={form}
-        schema={KYCFormSchema}
-        defaultValues={{
-          name: user?.name || '',
-        }}
-        props={{}}
-        onSubmit={mutateAsync}
-        renderAfter={({ submit }) => {
-          return (
-            <Theme inverse>
-              <SubmitButton onPress={() => submit()}>
-                {t('common:confirm')}
-              </SubmitButton>
-            </Theme>
-          );
-        }}
-      >
-        {(fields) => (
-          <>
-            <AuthHeader
-              showIcon={false}
-              activeStep={3}
-              totalSteps={registerSteps || 1}
-              title={t('auth:kyc.title')}
-            />
-            {Object.values(fields)}
-          </>
-        )}
-      </SchemaForm>
-    </FormProvider>
+    <ScreenLayout safeAreaBottom>
+      <FormProvider {...form}>
+        <SchemaForm
+          form={form}
+          schema={KYCFormSchema}
+          defaultValues={{
+            name: user?.name || '',
+          }}
+          props={{}}
+          onSubmit={mutateAsync}
+          renderAfter={({ submit }) => {
+            return (
+              <Theme inverse>
+                <SubmitButton onPress={() => submit()}>
+                  {t('common:confirm')}
+                </SubmitButton>
+              </Theme>
+            );
+          }}
+        >
+          {(fields) => (
+            <>
+              <AuthHeader
+                showIcon={false}
+                activeStep={3}
+                totalSteps={registerSteps || 1}
+                title={t('auth:kyc.title')}
+              />
+              {Object.values(fields)}
+            </>
+          )}
+        </SchemaForm>
+      </FormProvider>
+    </ScreenLayout>
   );
 };
 

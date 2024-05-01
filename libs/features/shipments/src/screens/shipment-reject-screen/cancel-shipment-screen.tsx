@@ -3,6 +3,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { ShipmentService } from '@zix/api';
 import { SchemaForm, SubmitButton, formFields } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
+import { ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
@@ -38,6 +39,7 @@ export const CancelShipmentScreen = () => {
   const { mutateAsync } = useMutation({});
   // mutationFn: (requestBody: z.infer<typeof CancelShipmentSchema>) =>
   return (
+    <ScreenLayout>
     <FormProvider {...form}>
       <SchemaForm
         form={form}
@@ -90,6 +92,7 @@ export const CancelShipmentScreen = () => {
         )}
       />
     </FormProvider>
+    </ScreenLayout>
   );
 };
 

@@ -1,4 +1,4 @@
-import { AppHeader } from '@zix/ui/layouts';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import React, { useState } from 'react';
 import { createParam } from 'solito';
 
@@ -144,7 +144,7 @@ export function ManageShipmentDriversScreen() {
   )
 
   return (
-    <>
+    <ScreenLayout safeAreaBottom authProtected>
       <AppHeader title='Shipment Details' showBackButton />
       <YStack flex={1}>
         <ShipmentManagerHeader
@@ -168,7 +168,7 @@ export function ManageShipmentDriversScreen() {
           </Button>
         </YStack>
       </YStack>
-    </>
+    </ScreenLayout>
 
   );
 }

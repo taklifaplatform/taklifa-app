@@ -10,6 +10,7 @@ import UserContactActions from '../../components/user-contact-actions/user-conta
 import UserInfoRow from '../../components/user-info-row/user-info-row';
 import UserProfileLayout from '../../layouts/user-profile-layout/user-profile-layout';
 import { RefreshControl } from 'react-native-gesture-handler';
+import { ScreenLayout } from '@zix/ui/layouts';
 
 const { useParam } = createParam<{ user: string }>();
 
@@ -57,12 +58,14 @@ export function UserProfileScreen() {
     );
 
   return (
-    <UserProfileLayout user={data?.data}>
-      <>
-        {renderLoadingSpinner()}
-        {renderUserProfile()}
-      </>
-    </UserProfileLayout>
+    <ScreenLayout authProtected>
+      <UserProfileLayout user={data?.data}>
+        <>
+          {renderLoadingSpinner()}
+          {renderUserProfile()}
+        </>
+      </UserProfileLayout>
+    </ScreenLayout>
   );
 }
 

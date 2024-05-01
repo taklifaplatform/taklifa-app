@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { DriverTransformer, DriversService } from '@zix/api';
 import { UserCard } from '@zix/features/users';
 import { CustomIcon } from '@zix/ui/icons';
-import { AppHeader } from '@zix/ui/layouts';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { MapDriverMarker } from '@zix/ui/sawaeed';
 import { t } from 'i18next';
 import { useRef, useState } from 'react';
@@ -18,7 +18,7 @@ const initialCamera = {
   pitch: 0,
   heading: 0,
   altitude: 100000,
-  zoom: 20,
+  zoom: 10,
 };
 
 export function HomeScreen() {
@@ -103,7 +103,7 @@ export function HomeScreen() {
   );
 
   return (
-    <>
+    <ScreenLayout>
       <AppHeader
         title={t('navigation:customer-dashboard.home')}
         showSearchBar
@@ -112,10 +112,11 @@ export function HomeScreen() {
           onChangeText: setSearch,
         }}
       />
+
       {renderMap()}
       {renderList()}
       {renderSwitcher()}
-    </>
+    </ScreenLayout>
   );
 }
 

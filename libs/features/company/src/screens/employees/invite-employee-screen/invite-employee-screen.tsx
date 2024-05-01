@@ -10,7 +10,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Theme } from 'tamagui';
 import { z } from 'zod';
 import { useToastController } from '@tamagui/toast';
-import { AppHeader } from '@zix/ui/layouts';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
 
@@ -63,7 +63,7 @@ export const InviteEmployeeScreen: React.FC = () => {
   });
 
   return (
-    <>
+    <ScreenLayout safeAreaBottom authProtected>
       <AppHeader showBackButton title={
         role === USER_ROLES.company_driver
           ? t('common:invite-driver')
@@ -94,7 +94,7 @@ export const InviteEmployeeScreen: React.FC = () => {
           }}
         />
       </FormProvider>
-    </>
+    </ScreenLayout>
   );
 };
 

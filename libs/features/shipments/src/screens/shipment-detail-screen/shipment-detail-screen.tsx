@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { DriversService, ShipmentService } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
-import { AppHeader } from '@zix/ui/layouts';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { ZixMapDirectionWidget, ZixWidgetContainer } from '@zix/ui/widgets';
 import { t } from 'i18next';
 import { useMemo } from 'react';
@@ -140,10 +140,10 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
     );
 
   return (
-    <>
+    <ScreenLayout>
       <AppHeader showBackButton title={t('job:job-demand')} />
       {renderShipmentDetails()}
-    </>
+    </ScreenLayout>
   );
 };
 

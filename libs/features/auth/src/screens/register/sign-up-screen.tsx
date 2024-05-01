@@ -18,6 +18,7 @@ import { z } from 'zod';
 import { AuthService } from '@zix/api';
 import { USER_ROLES, useAuth } from '@zix/services/auth';
 import { AuthHeader } from '../../components/auth-header/auth-header';
+import { ScreenLayout } from '@zix/ui/layouts';
 
 const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
 
@@ -107,40 +108,42 @@ export const SignUpScreen = () => {
   });
 
   return (
-    <FormProvider {...form}>
-      <SchemaForm
-        form={form}
-        schema={SignUpSchema}
-        defaultValues={{
-          username: '',
-          name: '',
-          phone_number: params?.phone ?? '+966',
-          password: '',
-          password_confirmation: '',
-          accept_terms: false,
-          phone_number_has_whatsapp: false,
-        }}
-        onSubmit={mutateAsync}
-        renderAfter={({ submit }) => (
-          <Theme inverse>
-            <SubmitButton onPress={() => submit()} borderRadius="$10">
-              {t('common:next')}
-            </SubmitButton>
-          </Theme>
-        )}
-      >
-        {(fields) => (
-          <>
-            <AuthHeader
-              showIcon={false}
-              activeStep={1}
-              totalSteps={registerSteps || 1}
-              title={t('auth:create_new_account')}
-            />
-            {Object.values(fields)}
-          </>
-        )}
-      </SchemaForm>
-    </FormProvider>
+    <ScreenLayout safeAreaBottom>
+      <FormProvider {...form}>
+        <SchemaForm
+          form={form}
+          schema={SignUpSchema}
+          defaultValues={{
+            username: '',
+            name: '',
+            phone_number: params?.phone ?? '+966',
+            password: '',
+            password_confirmation: '',
+            accept_terms: false,
+            phone_number_has_whatsapp: false,
+          }}
+          onSubmit={mutateAsync}
+          renderAfter={({ submit }) => (
+            <Theme inverse>
+              <SubmitButton onPress={() => submit()} borderRadius="$10">
+                {t('common:next')}
+              </SubmitButton>
+            </Theme>
+          )}
+        >
+          {(fields) => (
+            <>
+              <AuthHeader
+                showIcon={false}
+                activeStep={1}
+                totalSteps={registerSteps || 1}
+                title={t('auth:create_new_account')}
+              />
+              {Object.values(fields)}
+            </>
+          )}
+        </SchemaForm>
+      </FormProvider>
+    </ScreenLayout>
   );
 };

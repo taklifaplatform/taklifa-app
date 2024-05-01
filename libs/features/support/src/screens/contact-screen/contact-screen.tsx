@@ -9,6 +9,7 @@ import {
   handleFormErrors,
 } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
+import { ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
@@ -47,111 +48,117 @@ export const ContactScreen = () => {
   });
 
   return (
-    <YStack
-      justifyContent="center"
-      alignItems="center"
-      paddingVertical="$8"
-      gap="$2"
-    >
-      <Text
-        fontSize={25}
-        fontWeight="bold"
-        textAlign="center"
-        $sm={{ fontSize: 18 }}
+    <ScreenLayout safeAreaBottom>
+      <YStack
+        justifyContent="center"
+        alignItems="center"
+        paddingVertical="$8"
+        gap="$2"
       >
-        {t('web-home:contact-welcome')}
-      </Text>
-      <Text fontSize={18} fontWeight="bold" $sm={{ fontSize: 15 }}>
-        {t('web-home:contact-question')}
-      </Text>
-      <View
-        width={'70%'}
-        $sm={{ width: '100%' }}
-        backgroundColor={'$color1'}
-        borderRadius={'$4'}
-        paddingVertical={'$4'}
-        marginTop={'$6'}
-      >
-        <FormProvider {...form}>
-          <SchemaForm
-            form={form}
-            schema={ContactUsSchema}
-            defaultValues={{
-              username: '',
-              name: '',
-              phone_number: '+966',
-              subject: '',
-              message: '',
-            }}
-            // props={{
-            //   support_category_id: {
-            //     api: 'geography/cities',
-            //   }
-            // }}
-            onSubmit={mutateAsync}
-            renderBefore={() => (
-              <View width={'100%'} paddingHorizontal="$4">
-                <XStack justifyContent="space-between">
-                  <YStack
-                    gap="$2"
-                    justifyContent="center"
-                    alignItems="center"
-                    backgroundColor={'$color3'}
-                    borderRadius={'$4'}
-                    width="30%"
-                    paddingVertical="$2"
+        <Text
+          fontSize={25}
+          fontWeight="bold"
+          textAlign="center"
+          $sm={{ fontSize: 18 }}
+        >
+          {t('web-home:contact-welcome')}
+        </Text>
+        <Text fontSize={18} fontWeight="bold" $sm={{ fontSize: 15 }}>
+          {t('web-home:contact-question')}
+        </Text>
+        <View
+          width={'70%'}
+          $sm={{ width: '100%' }}
+          backgroundColor={'$color1'}
+          borderRadius={'$4'}
+          paddingVertical={'$4'}
+          marginTop={'$6'}
+        >
+          <FormProvider {...form}>
+            <SchemaForm
+              form={form}
+              schema={ContactUsSchema}
+              defaultValues={{
+                username: '',
+                name: '',
+                phone_number: '+966',
+                subject: '',
+                message: '',
+              }}
+              // props={{
+              //   support_category_id: {
+              //     api: 'geography/cities',
+              //   }
+              // }}
+              onSubmit={mutateAsync}
+              renderBefore={() => (
+                <View width={'100%'} paddingHorizontal="$4">
+                  <XStack justifyContent="space-between">
+                    <YStack
+                      gap="$2"
+                      justifyContent="center"
+                      alignItems="center"
+                      backgroundColor={'$color3'}
+                      borderRadius={'$4'}
+                      width="30%"
+                      paddingVertical="$2"
+                    >
+                      <CustomIcon name="call" size={'$1'} color={'$color5'} />
+                      <Text fontSize={12} $sm={{ fontSize: 8 }}>
+                        +966655 55 55
+                      </Text>
+                    </YStack>
+                    <YStack
+                      gap="$2"
+                      justifyContent="center"
+                      alignItems="center"
+                      backgroundColor={'$color3'}
+                      borderRadius={'$4'}
+                      width="30%"
+                      paddingVertical="$2"
+                    >
+                      <CustomIcon
+                        name="location"
+                        size={'$1'}
+                        color={'$color5'}
+                      />
+                      <Text fontSize={12} $sm={{ fontSize: 8 }}>
+                        Saudi Arabi
+                      </Text>
+                    </YStack>
+                    <YStack
+                      gap="$2"
+                      justifyContent="center"
+                      alignItems="center"
+                      backgroundColor={'$color3'}
+                      borderRadius={'$4'}
+                      width="30%"
+                      paddingVertical="$2"
+                    >
+                      <CustomIcon name="mail" size={'$1'} color={'$color5'} />
+                      <Text fontSize={12} $sm={{ fontSize: 8 }}>
+                        +966655 55 55
+                      </Text>
+                    </YStack>
+                  </XStack>
+                </View>
+              )}
+              renderAfter={({ submit }) => (
+                <Theme>
+                  <SubmitButton
+                    onPress={() => submit()}
+                    borderRadius="$10"
+                    icon={<SendHorizontal size={'$1'} />}
                   >
-                    <CustomIcon name="call" size={'$1'} color={'$color5'} />
-                    <Text fontSize={12} $sm={{ fontSize: 8 }}>
-                      +966655 55 55
-                    </Text>
-                  </YStack>
-                  <YStack
-                    gap="$2"
-                    justifyContent="center"
-                    alignItems="center"
-                    backgroundColor={'$color3'}
-                    borderRadius={'$4'}
-                    width="30%"
-                    paddingVertical="$2"
-                  >
-                    <CustomIcon name="location" size={'$1'} color={'$color5'} />
-                    <Text fontSize={12} $sm={{ fontSize: 8 }}>
-                      Saudi Arabi
-                    </Text>
-                  </YStack>
-                  <YStack
-                    gap="$2"
-                    justifyContent="center"
-                    alignItems="center"
-                    backgroundColor={'$color3'}
-                    borderRadius={'$4'}
-                    width="30%"
-                    paddingVertical="$2"
-                  >
-                    <CustomIcon name="mail" size={'$1'} color={'$color5'} />
-                    <Text fontSize={12} $sm={{ fontSize: 8 }}>
-                      +966655 55 55
-                    </Text>
-                  </YStack>
-                </XStack>
-              </View>
-            )}
-            renderAfter={({ submit }) => (
-              <Theme>
-                <SubmitButton
-                  onPress={() => submit()}
-                  borderRadius="$10"
-                  icon={<SendHorizontal size={'$1'} />}
-                >
-                  {t('forms:send-message')}
-                </SubmitButton>
-              </Theme>
-            )}
-          />
-        </FormProvider>
-      </View>
-    </YStack>
+                    {t('forms:send-message')}
+                  </SubmitButton>
+                </Theme>
+              )}
+            />
+          </FormProvider>
+        </View>
+      </YStack>
+    </ScreenLayout>
   );
 };
 

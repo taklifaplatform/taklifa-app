@@ -4,7 +4,7 @@ import { ShipmentService } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
 import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/ui/forms';
-import { AppHeader } from '@zix/ui/layouts';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
@@ -96,7 +96,7 @@ export function ManageShipmentSenderScreen() {
   }
 
   return (
-    <>
+    <ScreenLayout safeAreaBottom authProtected>
       <AppHeader title={t('app:shipment-manager.sender.title')} showBackButton />
       <FormProvider {...form}>
         <SchemaForm
@@ -129,7 +129,7 @@ export function ManageShipmentSenderScreen() {
           )}
         </SchemaForm>
       </FormProvider>
-    </>
+    </ScreenLayout>
   )
 }
 

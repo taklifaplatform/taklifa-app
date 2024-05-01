@@ -1,7 +1,7 @@
 import { DriverTransformer } from '@zix/api';
 import { UserAvatar } from '@zix/ui/common';
 import { ZixMediasListWidget } from '@zix/ui/widgets';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useRouter } from 'solito/router';
 import { Image, Separator, Text, ThemeableStackProps, XStack, YStack } from 'tamagui';
 import { UserContactActions, UserContactActionsProps } from '../user-contact-actions/user-contact-actions';
@@ -12,7 +12,7 @@ export type UserCardProps = ThemeableStackProps & {
   userContactActionsProps?: Partial<UserContactActionsProps>
 };
 
-export const UserCard: React.FC<UserCardProps> = ({
+export const UserCard: React.FC<UserCardProps> = React.memo(({
   user,
   padding = '$4',
   userContactActionsProps = {},
@@ -74,6 +74,8 @@ export const UserCard: React.FC<UserCardProps> = ({
       <UserContactActions {...userContactActionsProps} user={user} paddingHorizontal={padding} />
     </YStack>
   );
-};
+},
+(prevProps, nextProps) => prevProps.user.id === nextProps.user.id
+);
 
 export default UserCard;
