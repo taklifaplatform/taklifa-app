@@ -2,7 +2,7 @@ import { LocationTransformer } from '@zix/api';
 import React from 'react';
 import { Dimensions } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
-import { Stack, View } from 'tamagui';
+import { Button, Stack, View } from 'tamagui';
 
 /* eslint-disable-next-line */
 export type ZixMapDirectionWidgetProps = {
@@ -28,8 +28,8 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
     longitude: Number(endLocation.longitude) || 0,
   };
   const mapRegion = {
-    latitude: start.latitude,
-    longitude: start.longitude,
+    latitude: (start.latitude + end.latitude) / 2,
+    longitude: (start.longitude + end.longitude) / 2,
     latitudeDelta: Math.abs(start.latitude - end.latitude) * 2,
     longitudeDelta: Math.abs(start.longitude - end.longitude) * ASPECT_RATIO,
   };
@@ -42,27 +42,32 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
       latitude: start.latitude + 0.08,
       longitude: start.longitude + 0.01,
     },
-    ...Array.from({ length: 50 }, (_, i) => ({
-      latitude: start.latitude + (end.latitude - start.latitude) * (i / 50),
-      longitude: start.longitude + (end.longitude - start.longitude) * (i / 50),
-    })),
+    // ...Array.from({ length: 50 }, (_, i) => ({
+    //   latitude: start.latitude + (end.latitude - start.latitude) * (i / 50),
+    //   longitude: start.longitude + (end.longitude - start.longitude) * (i / 50),
+    // })),
     end,
   ];
 
+  function getStatusColor(status: string) {
+    switch (status) {
+      case 'cancelled':
+        return 'error';
+      case 'delivered':
+        return 'success';
+      default:
+        return 'accent';
+    }
+  }
+
   return (
-    <Stack
-      height={200}
-      backgroundColor="$gray6"
-      borderRadius="$5"
-    >
+    <Stack height={200} backgroundColor="$gray6" borderRadius="$5">
       <MapView
         style={{
           flex: 1,
           borderRadius: 10,
         }}
-
         initialRegion={mapRegion}
-
       >
         <Marker
           coordinate={start}
@@ -70,41 +75,25 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
           description={startLocation.address}
         >
           <View
+            theme={getStatusColor(status)}
             justifyContent="center"
             alignItems="center"
             width={1}
             height={1}
-            backgroundColor={
-              status === 'cancelled'
-                ? '$red3'
-                : status === 'delivered'
-                  ? '$color3'
-                  : '$gray6'
-            }
+            backgroundColor={'$color3'}
             padding="$3"
-            borderRadius="$5"
+            borderRadius="$10"
           >
             <View
               width={1}
               height={1}
-              backgroundColor={
-                status === 'cancelled'
-                  ? '$red9'
-                  : status === 'delivered'
-                    ? '$color5'
-                    : '$color9'
-              }
+              backgroundColor={'$color9'}
               padding="$2"
-              borderRadius="$5"
+              borderRadius="$10"
             />
           </View>
         </Marker>
 
-        <Polyline
-          coordinates={polyline}
-          strokeColor={status === 'cancelled' ? 'red' : 'yellow'}
-          strokeWidth={6}
-        />
         <Marker coordinate={end as any} title={endLocation.address}>
           <View
             justifyContent="center"
@@ -113,18 +102,19 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
             height={1}
             backgroundColor={'$color3'}
             padding="$3"
-            borderRadius="$5"
+            borderRadius="$10"
           >
             <View
               width={1}
               height={1}
               backgroundColor={'$color5'}
               padding="$2"
-              borderRadius="$5"
+              borderRadius="$10"
             />
           </View>
         </Marker>
       </MapView>
+      <Button mt='$2' themeInverse>GetDirection</Button>
     </Stack>
   );
 };
