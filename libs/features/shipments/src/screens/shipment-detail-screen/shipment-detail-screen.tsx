@@ -109,8 +109,7 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
             <ZixMapDirectionWidget
               startLocation={shipment.from_location || {}}
               endLocation={shipment.to_location || {}}
-              // status={shipment.status}
-              status={'delivered'}
+              status={shipment.status}
             />
           </ShipmentSectionWrapper>
 

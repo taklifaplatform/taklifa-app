@@ -64,6 +64,8 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
   return (
     <Stack height={200} backgroundColor="$gray6" borderRadius="$5">
       <MapView
+        scrollEnabled={false}
+        zoomEnabled={false}
         style={{
           flex: 1,
           borderRadius: 10,
@@ -115,7 +117,10 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
           </View>
         </Marker>
       </MapView>
-      <ZixGetDirection startLocation={startLocation} endLocation={endLocation}  />
+      <ZixGetDirection
+        startLocation={startLocation}
+        endLocation={endLocation}
+      />
     </Stack>
   );
 };
