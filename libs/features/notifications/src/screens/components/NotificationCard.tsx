@@ -1,9 +1,8 @@
 import { NotificationTransformer } from '@zix/api';
-import { UserAvatar } from '@zix/ui/common';
-import { CustomIcon } from '@zix/ui/icons';
+import { ZixAvatar } from '@zix/ui/common';
 import moment from 'moment';
 import React from 'react';
-import { ListItem, View } from 'tamagui';
+import { Text, XStack, YStack } from 'tamagui';
 
 
 export type NotificationCardProps = {
@@ -15,29 +14,28 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
 }) => {
 
   return (
-    <ListItem
+    <XStack
       backgroundColor={notification.read_at ? 'transparent' : '$color3'}
-      title={notification.data?.title}
-      subTitle={moment(notification.created_at).fromNow()}
-
-      icon={notification.sender ? (
-        <UserAvatar
-          user={notification.sender}
-          size="$3"
+      paddingHorizontal='$4'
+      paddingVertical='$3'
+      borderBottomWidth={1}
+      borderColor='$color5'
+    >
+      <XStack gap='$2' flex={1} alignItems='center'>
+        <ZixAvatar
+          media={notification.data?.image}
+          name={notification.data?.title}
+          size='$3'
         />
-      ) : (
-        <View
-          width="$3"
-          height="$3"
-          borderRadius="$10"
-          alignItems='center'
-          justifyContent='center'
-          backgroundColor="$color2"
-        >
-          <CustomIcon name={notification.data?.icon} size="$1.5" color='$color5' />
-        </View>
-      )}
-    />
+        <YStack gap='$1'>
+          <Text fontWeight='700'>{notification.data?.title}</Text>
+          <Text color='$color10'>{notification.data?.description}</Text>
+        </YStack>
+      </XStack>
+      <YStack>
+        <Text color='$color10'>{moment(notification.created_at).fromNow()}</Text>
+      </YStack>
+    </XStack>
   )
 }
 
