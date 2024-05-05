@@ -117,7 +117,8 @@
       "expo-apple-authentication",
       "expo-router",
       "expo-build-properties",
-      "sentry-expo"
+      "sentry-expo",
+      "react-native-map-link"
     ],
     "extra": {
       "router": {
