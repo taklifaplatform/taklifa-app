@@ -34,6 +34,7 @@ const nextConfig = {
     'expo-web-browser',
     'react-native-gesture-handler',
     'react-native-markdown-display',
+    'react-native-map-link',
 
     'stream-chat',
   ],

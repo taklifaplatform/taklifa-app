@@ -14,7 +14,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import MapView from 'react-native-maps';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useRouter } from 'solito/router';
-import { Button, YStack, View } from 'tamagui';
+import { Button, YStack } from 'tamagui';
 
 const initialCamera = {
   center: {
@@ -30,17 +30,16 @@ const initialCamera = {
 export const HomeScreen = React.memo(
   () => {
     const { width } = Dimensions.get('window');
+    const { height } = Dimensions.get('window');
     const USER_CARD_WIDTH = width;
-    const USER_CARD_HEIGHT = Math.min(250, width / 1.5);
+    const USER_CARD_HEIGHT = Math.max(260, height / 4);
+
     const mapRef = useRef<MapView>(null);
     const carouselRef = useRef<ICarouselInstance>(null);
     const router = useRouter();
     const { getUrlPrefix } = useAuth();
 
     const [showMap, setShowMap] = useState(true);
-    console.log('***************************');
-    console.log('render home screen ==========');
-    console.log('***************************');
     const [search, setSearch] = useState<string>();
     const { data, ...driversQuery } = useQuery({
       queryFn() {
@@ -72,7 +71,6 @@ export const HomeScreen = React.memo(
         if (!a.location || !b.location) return 0;
         const aDistance = getDistance(selectedDriver.location, a.location);
         const bDistance = getDistance(selectedDriver.location, b.location);
-        //return aDistance - bDistance;
         return aDistance < bDistance ? a : b;
       });
     }, [data?.data, selectedDriver]);
@@ -147,7 +145,6 @@ export const HomeScreen = React.memo(
         <MapCompanyMarker
           key={`marker-${index}`}
           company={company}
-          // isSelected={selectedDriver?.id === driver.id}
           onPress={() => {
             router.push(`${getUrlPrefix}/companies/${company.id}`);
           }}
@@ -175,9 +172,10 @@ export const HomeScreen = React.memo(
             <UserCard
               key={`stack-${item.id}-${index}`}
               user={item}
+              flex={1}
               marginHorizontal="$4"
               marginVertical="$2"
-              // backgroundColor='$color2'
+              backgroundColor="$color2"
             />
           )}
         />
@@ -212,7 +210,7 @@ export const HomeScreen = React.memo(
         <UserCard
           key={`view-${item.id}-${index}`}
           user={item}
-          height={USER_CARD_HEIGHT}
+          flex={1}
           marginHorizontal="$4"
           backgroundColor="$color2"
         />
@@ -244,16 +242,14 @@ export const HomeScreen = React.memo(
             width={USER_CARD_WIDTH}
             height={USER_CARD_HEIGHT}
             autoPlay={false}
-            //data={data?.data || []}
             data={driversList || []}
+            defaultIndex={
+              selectedDriver.id
+                ? driversList.findIndex((d) => d.id === selectedDriver.id)
+                : 0
+            }
             renderItem={renderCarouselItem}
             onSnapToItem={onSnapToItem}
-            onScrollBegin={() => {
-              console.log('===1');
-            }}
-            onScrollEnd={() => {
-              console.log('===2');
-            }}
           />
         </YStack>
       );

@@ -65,7 +65,7 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
 
 
   return (
-    <XStack justifyContent="space-between" gap="$2" {...props}>
+    <XStack justifyContent="space-between" gap="$2" paddingHorizontal='$3' {...props}>
       <Button
         theme='accent'
         flex={1.5}

@@ -62,7 +62,7 @@ export const ShipmentDirection: React.FC<ShipmentDirectionProps> = ({
               {t('shipment:to_location')}
             </Text>
           </XStack>
-          <ShipmentCardLocation
+         <ShipmentCardLocation
             location={shipment.to_location || {}}
             date={shipment.pick_date || ''}
             phone_number={shipment.recipient_phone || ''}
