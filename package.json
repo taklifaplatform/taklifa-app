@@ -109,6 +109,7 @@
     "tamagui": "^1.94.4",
     "text-encoding": "^0.7.0",
     "tslib": "^2.6.2",
+    "use-debounce": "^10.0.0",
     "zod-i18n-map": "^2.27.0"
   },
   "devDependencies": {

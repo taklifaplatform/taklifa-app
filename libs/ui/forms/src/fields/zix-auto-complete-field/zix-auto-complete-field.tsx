@@ -5,7 +5,7 @@ import {
   SelectProps
 } from 'tamagui';
 import ZixSelectField, { BaseSelectFieldItem, ZixSelectFieldProps } from '../zix-select-field/zix-select-field';
-
+import { useDebounce } from 'use-debounce';
 /**
  * TODO: implement load more logic
  */
@@ -38,7 +38,7 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
 
   const [search, setSearch] = useState<string>();
   const [localItems, setLocalItems] = useState([])
-
+  const [value] = useDebounce(search, 1000);
   const { data } = useQuery(
     {
       queryFn() {
@@ -99,7 +99,7 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
 
   return (
     <ZixSelectField
-      search={search}
+      search={value}
       onSearch={setSearch}
       options={mappedData}
       {...props}

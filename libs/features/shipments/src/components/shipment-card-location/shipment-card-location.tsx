@@ -51,8 +51,8 @@ export const ShipmentCardLocation: React.FC<ShipmentCardLocationProps> = ({
         {location.address}
       </Text>
 
-      <XStack gap="$4">
-        <XStack gap="$2" alignItems="center">
+      <XStack gap="$4" flexWrap='wrap'>
+        <XStack gap="$2" alignItems="center" >
           <User size="$1" />
           <Text>{userName}</Text>
         </XStack>

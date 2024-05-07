@@ -14,19 +14,22 @@ export const RatingCard: React.FC<RatingCardProps> = ({ item }) => {
       <XStack justifyContent="space-between" alignItems="flex-end">
         <XStack gap="$3">
           <UserAvatar user={item.user} />
-          <YStack gap="$2">
+          <YStack gap="$2" alignItems='flex-start'>
             <Text fontWeight="bold">{item.user?.name}</Text>
-            <Text color={'$color9'} fontWeight="500">
-              {moment(item.created_at).fromNow()}
-            </Text>
+            <XStack gap='$10' >
+              <Text color={'$color9'} fontWeight="500">
+                {moment(item.created_at).fromNow()}
+              </Text>
+              <XStack gap="$2" alignItems="center">
+                <RatingStars score={item.score || 0} size='$1' />
+                <Text color={'$color9'} paddingRight="$2">
+                  <Text theme='accent' fontWeight='bold' color='$color9'>{item.score}</Text> / 5
+                </Text>
+              </XStack>
+            </XStack>
           </YStack>
         </XStack>
-        <XStack gap="$2" alignItems="center">
-          <RatingStars score={item.score || 0} size='$1'/>
-          <Text color={'$color9'} paddingRight="$2">
-            <Text theme='accent' fontWeight='bold' color='$color9'>{item.score}</Text> / 5
-          </Text>
-        </XStack>
+
       </XStack>
       <Text lineHeight="$4">{item.comment}</Text>
     </YStack>
