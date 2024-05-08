@@ -8,6 +8,7 @@ import type { ShipmentItemTransformer } from './ShipmentItemTransformer';
 import type { UserTransformer } from './UserTransformer';
 export type ShipmentTransformer = {
     id?: number;
+    code?: string | null;
     pick_date?: string | null;
     pick_time?: string | null;
     deliver_date?: string | null;
@@ -23,6 +24,10 @@ export type ShipmentTransformer = {
     min_budget?: PriceTransformer;
     max_budget?: PriceTransformer;
     items?: Array<ShipmentItemTransformer>;
+    invitations_count?: number;
+    pending_invitations_count?: number;
+    proposals_count?: number;
+    accepted_proposals_count?: number;
     created_at?: string;
     updated_at?: string;
 };

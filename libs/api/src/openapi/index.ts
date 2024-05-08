@@ -7,6 +7,7 @@ export { CancelablePromise, CancelError } from './core/CancelablePromise';
 export { OpenAPI } from './core/OpenAPI';
 export type { OpenAPIConfig } from './core/OpenAPI';
 
+export type { AcceptInvitationRequest } from './models/AcceptInvitationRequest';
 export type { AcceptInviteRequest } from './models/AcceptInviteRequest';
 export type { AccessTokenTransformer } from './models/AccessTokenTransformer';
 export type { AreasUpdateServiceZoneRequest } from './models/AreasUpdateServiceZoneRequest';
@@ -28,6 +29,7 @@ export type { CompanyInvitationTransformer } from './models/CompanyInvitationTra
 export type { CompanyMemberTransformer } from './models/CompanyMemberTransformer';
 export type { CompanyTransformer } from './models/CompanyTransformer';
 export type { CompanyUserTransformer } from './models/CompanyUserTransformer';
+export type { CostAcceptInvitationRequest } from './models/CostAcceptInvitationRequest';
 export type { CountryDialingTransformer } from './models/CountryDialingTransformer';
 export type { CountryTransformer } from './models/CountryTransformer';
 export type { CreateTemporaryUploadFromDirectS3UploadRequest } from './models/CreateTemporaryUploadFromDirectS3UploadRequest';
@@ -38,6 +40,7 @@ export type { DriverVerificationRequest } from './models/DriverVerificationReque
 export type { DrivingLicenseCardDriverVerificationRequest } from './models/DrivingLicenseCardDriverVerificationRequest';
 export type { EventSendChannelEventRequest } from './models/EventSendChannelEventRequest';
 export type { FaqTransformer } from './models/FaqTransformer';
+export type { FeeAcceptInvitationRequest } from './models/FeeAcceptInvitationRequest';
 export type { FilterConditionsListChannelQueryRequest } from './models/FilterConditionsListChannelQueryRequest';
 export type { FormDataRequest } from './models/FormDataRequest';
 export type { FormRequest } from './models/FormRequest';
@@ -69,6 +72,7 @@ export type { ListNotificationQueryRequest } from './models/ListNotificationQuer
 export type { ListRepliesQueryRequest } from './models/ListRepliesQueryRequest';
 export type { ListReportQueryRequest } from './models/ListReportQueryRequest';
 export type { ListServiceZoneRequest } from './models/ListServiceZoneRequest';
+export type { ListShipmentInvitationQueryRequest } from './models/ListShipmentInvitationQueryRequest';
 export type { ListShipmentQueryRequest } from './models/ListShipmentQueryRequest';
 export type { ListStatesQueryRequest } from './models/ListStatesQueryRequest';
 export type { ListSupportQueryRequest } from './models/ListSupportQueryRequest';
@@ -116,6 +120,7 @@ export type { SetPatchMessageRequest } from './models/SetPatchMessageRequest';
 export type { ShipmentFilterTransformer } from './models/ShipmentFilterTransformer';
 export type { ShipmentInvitationTransformer } from './models/ShipmentInvitationTransformer';
 export type { ShipmentItemTransformer } from './models/ShipmentItemTransformer';
+export type { ShipmentProposalTransformer } from './models/ShipmentProposalTransformer';
 export type { ShipmentTransformer } from './models/ShipmentTransformer';
 export type { SimpleChannelTransformer } from './models/SimpleChannelTransformer';
 export type { SimpleCompanyTransformer } from './models/SimpleCompanyTransformer';
@@ -175,6 +180,8 @@ export { MediaService } from './services/MediaService';
 export { NotificationService } from './services/NotificationService';
 export { RatingService } from './services/RatingService';
 export { ShipmentService } from './services/ShipmentService';
+export { ShipmentInvitationService } from './services/ShipmentInvitationService';
+export { ShipmentProposalService } from './services/ShipmentProposalService';
 export { SupportService } from './services/SupportService';
 export { UserService } from './services/UserService';
 export { UserLocationsService } from './services/UserLocationsService';

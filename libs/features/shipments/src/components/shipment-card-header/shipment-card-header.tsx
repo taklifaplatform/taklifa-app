@@ -30,8 +30,7 @@ export const ShipmentCardHeader: React.FC<ShipmentCardHeaderProps> = ({ shipment
         {`${t('shipment:type:' + shipment?.items_type)}`}
       </H6>
       <Text>
-        {/* TODO REPLACE WITH SHIPMENT CODE */}
-        SWDKSA{shipment.id?.toString().substring(0, 8).toUpperCase()}
+        {shipment.code}
       </Text>
     </XStack>
   )

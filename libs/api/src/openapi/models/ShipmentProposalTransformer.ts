@@ -4,9 +4,10 @@
 /* eslint-disable */
 import type { CompanyTransformer } from './CompanyTransformer';
 import type { DriverTransformer } from './DriverTransformer';
-export type ShipmentInvitationTransformer = {
-    id?: number;
+export type ShipmentProposalTransformer = {
+    id?: string;
     status?: string;
+    channel_id?: string;
     driver?: DriverTransformer;
     company?: CompanyTransformer;
 };

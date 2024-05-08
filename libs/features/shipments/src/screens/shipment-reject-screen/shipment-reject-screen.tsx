@@ -76,8 +76,7 @@ export const ShipmentRejectScreen: React.FC<ShipmentRejectScreenProps> = (
 
                 <YStack gap="$4">
                   <Text fontSize={18} fontWeight={'400'}>
-                    SWDKSA
-                    {shipment?.id?.toString().substring(0, 8).toUpperCase()}
+                    {shipment?.code}
                   </Text>
                   <Text fontSize={18} fontWeight={'600'} color={'$red9'}>
                     {t('forms:cancel-service')} {t('job:job-demand')}{' '}
