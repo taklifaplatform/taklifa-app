@@ -1,6 +1,6 @@
 import { createUniqueFieldSchema } from '@ts-react/form';
 
-import { z } from 'zod';
+import { z, ZodTypeAny } from 'zod';
 import {
   LocationSchema,
   MoneySchema,
@@ -14,6 +14,14 @@ export const mediaSchema = z.object({
   // original_url: z.string(),
 });
 
+export const floatEnter = (schema: ZodTypeAny) => z.preprocess((a) => {
+  if (typeof a === 'string') {
+    return parseFloat(a);
+  }
+  return a;
+
+}, schema);
+
 export const formFields = {
   text: z.string(),
   textarea: createUniqueFieldSchema(z.string(), 'textarea'),
@@ -22,6 +30,12 @@ export const formFields = {
    * input that takes number
    */
   number: z.number(),
+
+  /**
+   * input that takes float
+   */
+  float: floatEnter(z.number()),
+  //float: createUniqueFieldSchema(z.number(), 'float'),
   /**
    * switch field on all platforms
    */
