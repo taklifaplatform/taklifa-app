@@ -2,6 +2,7 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { MediaTransformer } from '@zix/api';
 import { useMultiLang } from '@zix/i18n';
+import { useSafeAreaInsets } from '@zix/utils';
 import React, { useEffect, useRef, useState } from 'react';
 import { FlatList, Pressable } from 'react-native';
 import { useDerivedValue, useSharedValue } from 'react-native-reanimated';
@@ -33,6 +34,8 @@ export const ZixMediasListWidget: React.FC<ZixMediasListWidgetProps> = ({
   // Hooks
   const { isRtl } = useMultiLang()
 
+  const { top, bottom } = useSafeAreaInsets()
+
   // States
   const [imageGalleryAttachments, setImageGalleryAttachments] = useState<
     Photo[]>([]);
@@ -51,7 +54,7 @@ export const ZixMediasListWidget: React.FC<ZixMediasListWidgetProps> = ({
 
   // Constants
   const numberOfImageGalleryGridColumns = 2;
-  const fullWindowHeight = vh(100);
+  const fullWindowHeight = vh(90);
   const fullWindowWidth = vw(100);
 
   // Refs
@@ -187,6 +190,8 @@ export const ZixMediasListWidget: React.FC<ZixMediasListWidgetProps> = ({
       }}
       ref={imageGalleryFooterRef}
       snapPoints={['100%']}
+      topInset={top}
+      bottomInset={bottom}
     >
       <ImageGridHandle
         closeGridView={closeGalleryView}

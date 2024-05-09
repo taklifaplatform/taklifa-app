@@ -23,6 +23,8 @@ import {
   ShipmentSectionWrapper,
   ShipmentStatus,
 } from '../../components';
+import ShipmentInvitationsOverviewCard from '../../components/shipment-invitations-overview-card/shipment-invitations-overview-card';
+import ShipmentProposalsOverviewCard from '../../components/shipment-proposals-overview-card/shipment-proposals-overview-card';
 
 export type ShipmentDetailScreenProps = {
   variant: 'shipments' | 'jobs';
@@ -79,15 +81,11 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
 
           <ShipmentCost shipment={shipment} />
 
-          <ShipmentDeliveringDetail shipment={shipment} />
+          <ShipmentInvitationsOverviewCard shipment={shipment} />
 
-          <ShipmentSectionWrapper>
-            <ZixWidgetContainer label={t('shipment:offer-description')}>
-              <YStack gap="$2">
-                <Text>TODO</Text>
-              </YStack>
-            </ZixWidgetContainer>
-          </ShipmentSectionWrapper>
+          <ShipmentProposalsOverviewCard shipment={shipment} />
+
+          <ShipmentDeliveringDetail shipment={shipment} />
 
           <ShipmentSectionWrapper>
             <ZixWidgetContainer label={t('shipment:service-description')}>

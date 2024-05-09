@@ -102,7 +102,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
     );
 
   return (
-    <ScreenLayout>
+    <ScreenLayout authProtected>
       <AppHeader
         title={screenTitle}
         showSearchBar

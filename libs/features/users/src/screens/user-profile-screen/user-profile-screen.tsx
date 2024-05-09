@@ -58,7 +58,7 @@ export function UserProfileScreen() {
     );
 
   return (
-    <ScreenLayout authProtected>
+    <ScreenLayout>
       <UserProfileLayout user={data?.data}>
         <>
           {renderLoadingSpinner()}

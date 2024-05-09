@@ -1,4 +1,6 @@
 
+export * from './screens/unauthorized-screen/unauthorized-screen';
+
 export * from './layouts/screen-layout/screen-layout';
 
 export * from './components/app-bottom-bar/app-bottom-bar';

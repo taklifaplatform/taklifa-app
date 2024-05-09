@@ -209,7 +209,7 @@ export function VehicleProfileScreen() {
   const renderLoadingSpinner = () => !data?.data?.id && <FullScreenSpinner />;
 
   return (
-    <ScreenLayout authProtected>
+    <ScreenLayout>
       <AppHeader title={t('common:vehicle-information')} showBackButton />
       {renderLoadingSpinner()}
       {renderVehicleInformation()}
