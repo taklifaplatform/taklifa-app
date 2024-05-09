@@ -41,20 +41,20 @@ const ManageVehicleFormSchema = z
 
     fuel_information: z.object({
       fuel_type: formFields.text.describe(t('forms:fuel-type')).optional().nullable(),
-      fuel_capacity: formFields.number.describe(t('forms:fuel-capacity')).optional().nullable(),
-      liter_per_km_in_city: formFields.number.describe(t('forms:liter-per-km-in-city')).optional().nullable(),
-      liter_per_km_in_highway: formFields.number.describe(t('forms:liter-per-km-in-highway')).optional().nullable(),
-      liter_per_km_mixed: formFields.number.describe(t('forms:liter-per-km-in-combined')).optional().nullable(),
+      fuel_capacity: formFields.float.describe(t('forms:fuel-capacity')).optional().nullable(),
+      liter_per_km_in_city: formFields.float.describe(t('forms:liter-per-km-in-city')).optional().nullable(),
+      liter_per_km_in_highway: formFields.float.describe(t('forms:liter-per-km-in-highway')).optional().nullable(),
+      liter_per_km_mixed: formFields.float.describe(t('forms:liter-per-km-in-combined')).optional().nullable(),
     }),
 
     capacity_dimensions: z.object({
-      width: formFields.number.describe(t('forms:vehicle-width')).optional().nullable(),
-      height: formFields.number.describe(t('forms:vehicle-height')).optional().nullable(),
-      length: formFields.number.describe(t('forms:vehicle-length')).optional().nullable(),
+      width: formFields.float.describe(t('forms:vehicle-width')).optional().nullable(),
+      height: formFields.float.describe(t('forms:vehicle-height')).optional().nullable(),
+      length: formFields.float.describe(t('forms:vehicle-length')).optional().nullable(),
       unit: formFields.text.describe(t('forms:unit')).optional().nullable(),
     }),
     capacity_weight: z.object({
-      weight: formFields.number.describe(t('forms:vehicle-capacity-weight')).optional().nullable(),
+      weight: formFields.float.describe(t('forms:vehicle-capacity-weight')).optional().nullable(),
       unit: formFields.text.describe(t('forms:unit')).optional().nullable(),
     }),
   });
