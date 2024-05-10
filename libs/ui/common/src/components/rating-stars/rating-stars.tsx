@@ -23,7 +23,7 @@ export const RatingStars: React.FC<RatingStarsProps> = ({
   };
 
   return (
-    <XStack theme='accent'>
+    <XStack theme='accent' flex={1}>
       {Array.from({ length: 5 }).map((_, index) => {
 
         return onChange ? (
