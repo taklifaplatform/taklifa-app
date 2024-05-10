@@ -465,6 +465,9 @@
     "model": "الموديل",
     "color": "اللون",
     "truck-plate": "رقم اللوحة",
+    "request-service": "طلب الخدمة",
+    "chat": "محادثة",
+    "call": "اتصل",
     "type": {
       "document": "مستند",
       "box": "صندوق",

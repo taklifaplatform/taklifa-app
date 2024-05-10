@@ -39,6 +39,7 @@ export interface AuthHelpers {
   getUrlPrefix: string;
   isServiceProvider: (
     user: AuthenticatedUserTransformer | DriverTransformer,
+    useActiveRoleOnly?: boolean,
   ) => boolean;
 }
 
@@ -147,7 +148,11 @@ export function useAuth(): AuthHelpers {
 
   const isServiceProvider = (
     _user: AuthenticatedUserTransformer | DriverTransformer,
+    useActiveRoleOnly = false,
   ) => {
+    if (useActiveRoleOnly) {
+      return COMPANY_ROLES.includes(user?.active_role?.name as AUTH_ROLE_TYPE);
+    }
     return !!_user?.roles?.some(
       (role) =>
         COMPANY_ROLES.includes(role.name as AUTH_ROLE_TYPE) ||

@@ -43,6 +43,9 @@
     "model": "الموديل",
     "color": "اللون",
     "truck-plate": "رقم اللوحة",
+    "request-service": "طلب خدمة",
+    "chat": "محادثة",
+    "call": "اتصل",
     "type": {
         "document": "مستند",
         "box": "صندوق",

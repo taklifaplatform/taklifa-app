@@ -467,6 +467,9 @@
     "model": "Model",
     "color": "Color",
     "truck-plate": "Truck plate",
+    "request-service": "Request service",
+    "chat": "Chat",
+    "call": "Call",
     "type": {
       "document": "Document",
       "box": "Box",
