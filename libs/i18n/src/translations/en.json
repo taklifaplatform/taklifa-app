@@ -75,6 +75,14 @@
       "from": "From",
       "to": "To",
       "location": "Location"
+    },
+    "company": {
+      "verification_status": {
+        "pending": "Pending",
+        "verified": "Verified",
+        "rejected": "Rejected",
+        "in_review": "In Review"
+      }
     }
   },
   "about": {
