@@ -28,7 +28,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
     return t('common:orders');
   }, [variant]);
 
-  const [status, setStatus] = useState<any>('pending');
+  const [status, setStatus] = useState<any>(undefined);
   const [search, setSearch] = useState('');
   const [activeFilterIndex, setActiveFilterIndex] = useState(0);
   const { data, refetch, isLoading } = useQuery({

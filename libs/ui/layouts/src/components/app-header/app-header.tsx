@@ -1,12 +1,12 @@
 import { Bell, PlusSquare, Search } from '@tamagui/lucide-icons';
-import { useAuth } from '@zix/services/auth';
-import { UserAvatar } from '@zix/ui/common';
+import { COMPANY_ROLES, useAuth } from '@zix/services/auth';
+import { UserAvatar, ZixAvatar } from '@zix/ui/common';
 import { ZixInput, ZixInputProps } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import { useCallback } from 'react';
 import { useRouter } from 'solito/router';
-import { Button, ColorTokens, H4, Theme, View, XStack, YStack } from 'tamagui';
+import { Button, ColorTokens, H4, View, XStack, YStack } from 'tamagui';
 import { AppHeaderWrapper } from './app-header-wrapper';
 
 export type AppHeaderProps = {
@@ -27,7 +27,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   headerTitle,
   title,
 }) => {
-  const { user, isLoggedIn, getUrlPrefix } = useAuth();
+  const { user, activeRole, isLoggedIn, getUrlPrefix } = useAuth();
   const router = useRouter();
 
   const onAvatarPress = useCallback(() => {
@@ -49,14 +49,23 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
       </View>
     );
 
-  const renderUserAvatar = () =>
-    !showBackButton && (
-      <Button
-        unstyled
-        icon={<UserAvatar user={user} size="$2.5" />}
-        onPress={onAvatarPress}
-      />
-    );
+  const renderCompanyAvatar = () => (
+    <Button
+      unstyled
+      icon={<ZixAvatar media={user.active_company?.logo} size="$2.5" />}
+      onPress={() => {
+        router.push(`${getUrlPrefix}/companies/${user.active_company?.id}`);
+      }}
+    />
+  );
+
+  const renderUserAvatar = () => (
+    <Button
+      unstyled
+      icon={<UserAvatar user={user} size="$2.5" />}
+      onPress={onAvatarPress}
+    />
+  );
 
   const renderBackButton = () =>
     showBackButton && (
@@ -67,6 +76,9 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
         onPress={() => router.back()}
       />
     );
+
+  const renderAvatar = () =>
+    !showBackButton ? COMPANY_ROLES.includes(activeRole) ? renderCompanyAvatar() : renderUserAvatar() : null;
 
   const renderNotificationsButton = () =>
     !showBackButton && (
@@ -147,7 +159,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
             justifyContent="space-between"
           >
             <XStack flex={0.25} justifyContent="flex-start">
-              {renderUserAvatar()}
+              {renderAvatar()}
               {renderBackButton()}
             </XStack>
             <XStack flex={0.5} justifyContent="space-around">
