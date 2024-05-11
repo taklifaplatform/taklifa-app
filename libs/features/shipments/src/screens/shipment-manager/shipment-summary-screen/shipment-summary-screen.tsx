@@ -40,7 +40,7 @@ export function ShipmentSummaryScreen() {
 
   const shipment = useMemo(() => data?.data, [data]);
 
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn: () =>
       ShipmentService.confirmShipment({
         shipment: shipmentId as string,
@@ -81,7 +81,7 @@ export function ShipmentSummaryScreen() {
         <Theme inverse>
           <SubmitButton
             onPress={() => {
-              mutate();
+              mutateAsync();
             }}
           >
             {t('common:confirm')}
