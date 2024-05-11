@@ -7,9 +7,9 @@ import {
   CompanyAdminService,
   UserService,
 } from '@zix/api';
-import { DebugObject, MediaAvatar, UserAvatar } from '@zix/ui/common';
-import { CustomIcon } from '@zix/ui/icons';
 import { useAuth } from '@zix/services/auth';
+import { UserAvatar } from '@zix/ui/common';
+import { CustomIcon } from '@zix/ui/icons';
 import { useCallback, useMemo, useState } from 'react';
 import { useRouter } from 'solito/router';
 import {
@@ -24,9 +24,9 @@ import {
   XStack,
   YGroup,
   YStack,
-  isWeb,
-  useTheme,
+  isWeb
 } from 'tamagui';
+import CompanyListItem from './company-list-item/company-list-item';
 
 export const AccountSwitcher: React.FC = () => {
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -49,7 +49,7 @@ export const AccountSwitcher: React.FC = () => {
     },
   });
 
-  const { mutate: changeActiveCompany } = useMutation({
+  const { mutateAsync: changeActiveCompany } = useMutation({
     mutationFn: (company: string) =>
       CompanyAdminService.changeActiveCompany({
         company,
@@ -160,37 +160,7 @@ export const AccountSwitcher: React.FC = () => {
             ))}
 
             {user?.companies?.map((company) => (
-              <YGroup.Item key={company.name}>
-                <ListItem
-                  onPress={() => company.id && changeActiveCompany(company.id)}
-                  theme={
-                    user?.active_company?.id === company.id
-                      ? 'accent'
-                      : undefined
-                  }
-                  //disabled={user?.active_company?.id === company.id}
-                  hoverStyle={{ backgroundColor: '$color5' }}
-                  pressStyle={{ opacity: 0.5 }}
-                  borderBottomColor="$color5"
-                  borderBottomWidth={1}
-                  icon={<MediaAvatar media={company.logo} size="$4" />}
-                  iconAfter={
-                    <Theme name="accent">
-                      <CustomIcon
-                        name="radio_button_checked"
-                        color={
-                          user?.active_company?.id === company.id
-                            ? '$color9'
-                            : '$color3'
-                        }
-                      />
-                    </Theme>
-                  }
-                  scaleIcon={1.3}
-                  title={company.name}
-                  subTitle="Company Account"
-                />
-              </YGroup.Item>
+              <CompanyListItem key={company.name} onPress={changeActiveCompany} company={company} isSelected={user?.active_company?.id === company.id} />
             ))}
             <YGroup.Item>
               <ListItem

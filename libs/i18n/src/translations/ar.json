@@ -75,6 +75,14 @@
       "from": "من",
       "to": "إلى",
       "location": "الموقع"
+    },
+    "company": {
+      "verification_status": {
+      "pending": "قيد الانتظار",
+      "verified": "تم التحقق",
+      "rejected": "مرفوض",
+      "in_review": "قيد المراجعة"
+      }
     }
   },
   "about": {
