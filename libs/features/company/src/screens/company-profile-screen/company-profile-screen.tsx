@@ -2,8 +2,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { CompaniesService } from '@zix/api';
 import { FullScreenSpinner } from '@zix/ui/common';
-import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
-import { RefreshControl } from 'react-native';
+import { AccountSwitcher, AppHeader, ScreenLayout } from '@zix/ui/layouts';
+import { RefreshControl, TouchableOpacity } from 'react-native';
 import { createParam } from 'solito';
 
 import { ScrollView, YStack } from 'tamagui';
@@ -11,11 +11,17 @@ import CompanyInfoRow from '../../components/company-profile/company-info-row/co
 import CompanyProfileHeader from '../../components/company-profile/company-profile-header/company-profile-header';
 import CompanyContactActions from '../../components/company-profile/company-contact-actions/company-contact-actions';
 import CompanyProfileTabs from '../../components/company-profile/company-profile-tabs/company-profile-tabs';
+import { useAuth } from '@zix/services/auth';
+import { useRouter } from 'solito/router';
+import { CustomIcon } from '@zix/ui/icons';
 
 const { useParam } = createParam<{ company: string }>();
 
 export function CompanyProfileScreen() {
   const [companyId] = useParam('company');
+  const router = useRouter();
+  const { user: authUser, getUrlPrefix } = useAuth();
+
 
   const { data, refetch, isLoading } = useQuery({
     queryFn() {
@@ -48,12 +54,38 @@ export function CompanyProfileScreen() {
       <CompanyProfileTabs company={data.data} />
     </ScrollView>
   )
+  const company = data?.data;
+  //
+  const renderLoadingSpinner = () => !company?.id && <FullScreenSpinner />;
 
-  const renderLoadingSpinner = () => !data?.data?.id && <FullScreenSpinner />;
+  const renderHeader = () =>
+    authUser?.companies?.find(c => c.id === company?.id) ? (
+      <AppHeader
+        showBackButton
+        headerTitle={() => <AccountSwitcher />}
+        headerRight={() => (
+          <TouchableOpacity
+            style={{
+              borderRadius: 4,
+              padding: 5,
+            }}
+            onPress={() => router.push(`${getUrlPrefix}/account/settings`)}
+          >
+            <CustomIcon name="more" color="black" size="$3" />
+          </TouchableOpacity>
+        )}
+      />
+    ) : (
+      <AppHeader
+        showBackButton
+        title={company?.name ?? '...'}
+      />
+    );
+
 
   return (
     <ScreenLayout authProtected>
-      <AppHeader title="Company Profile" showBackButton />
+      {renderHeader()}
       {renderLoadingSpinner()}
       {renderCompanyProfile()}
     </ScreenLayout>
