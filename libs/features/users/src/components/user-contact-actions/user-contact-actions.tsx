@@ -4,7 +4,8 @@ import { ChatService, DriverTransformer } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { ZixButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
-import { Linking, Platform } from 'react-native';
+import { t } from 'i18next';
+import { Dimensions, Linking, Platform } from 'react-native';
 import { useRouter } from 'solito/router';
 import { Button, SizeTokens, ThemeableStackProps, XStack } from 'tamagui';
 
@@ -20,7 +21,8 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
   onServiceRequestPress,
   ...props
 }) => {
-  const { user: authUser, getUrlPrefix } = useAuth()
+  const { user: authUser, getUrlPrefix, isServiceProvider } = useAuth()
+  const { width } = Dimensions.get('window');
   const router = useRouter()
 
   const sharedButtonStyle = {
@@ -66,17 +68,21 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
 
   return (
     <XStack justifyContent="space-between" gap="$2" paddingHorizontal='$3' {...props}>
-      <Button
-        theme='accent'
-        flex={1.5}
-        icon={(props: IconProps) => <CustomIcon {...props} name="followed" color='$color12' />}
-        onPress={_onServiceRequestPress}
-        {...sharedButtonStyle}
-      >
-        ارسال الدعوة
-      </Button>
+      {
+        !isServiceProvider(authUser, true) && (
+          <Button
+            theme='accent'
+            flex={1}
+            icon={(props: IconProps) => <CustomIcon {...props} name="followed" color='$color12' />}
+            onPress={_onServiceRequestPress}
+            {...sharedButtonStyle}
+          >
+            {t('shipment:request-service')}
+          </Button>
+        )
+      }
       <ZixButton
-        flex={1}
+        flex={ width > 400 ? 0.5 : 0.2}
         backgroundColor='$gray7'
         icon={(props: IconProps) => <CustomIcon {...props} name="chat" color='$color12' />}
         disabled={isPending}
@@ -84,16 +90,16 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
         onPress={() => startChat()}
         {...sharedButtonStyle}
       >
-        محادثة
+        {width > 400 ? t('shipment:chat') : null}
       </ZixButton>
       <Button
-        flex={1}
+        flex={ width > 400 ? 0.5 : 0.2}
         backgroundColor='$gray7'
         icon={(props: IconProps) => <CustomIcon {...props} name="call" color='$color12' />}
         onPress={onCallPress}
         {...sharedButtonStyle}
       >
-        اتصل
+        {width > 400 ? t('shipment:call') : null}
       </Button>
     </XStack>
   );

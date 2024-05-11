@@ -42,6 +42,9 @@
     "model": "Model",
     "color": "Color",
     "truck-plate": "Truck plate",
+    "request-service": "Request Service",
+    "chat": "Chat",
+    "call": "Call",
     "type": {
         "document": "Document",
         "box": "Box",
