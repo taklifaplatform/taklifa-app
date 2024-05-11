@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { Search, X } from '@tamagui/lucide-icons';
+import { useToastController } from '@tamagui/toast';
 import { GeographyService, LocationTransformer } from '@zix/api';
 import { ZixButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
@@ -13,12 +14,14 @@ import {
   H4,
   ListItem,
   Sheet,
+  Spinner,
   Text,
   Theme,
   View,
   XStack,
   YStack,
 } from 'tamagui';
+import { useDebounce } from 'use-debounce';
 import { ZixFieldContainer } from '../../common';
 import { ZixInput } from '../../fields';
 import ZixMapPointerField from '../../fields/zix-map-pointer-field/zix-map-pointer-field';
@@ -38,36 +41,37 @@ const MapLocationPickerHeader: React.FC<MapLocationPickerHeaderProps> = ({
   onClose,
 }) => {
   const { top } = useSafeAreaInsets();
+  const toast = useToastController();
 
   const [search, setSearch] = useState<string>();
+  const [debouncedSearchValue] = useDebounce(search, 1000);
+  const [searching, setSearching] = useState(false)
 
-  /**
-   * Search Google Map Location
-   */
-  // const { data } = useQuery({
-  //   queryKey: ['search-location', search],
-  //   queryFn: () => {
-  //     return fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${search}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`)
-  //       .then(response => response.json())
-  //   }
-  // })
 
-  const [data, setData] = useState<any>(null);
+  const [results, setResults] = useState<any[]>([])
+  const fetchData = async (address: string) => {
+    setSearching(true)
+    try {
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`,
+      ).then((response) => response.json())
+      if (response?.status === 'OK') {
+        setResults(response.results)
+      }
+    } catch (error) {
+      toast.show(t('app:errors.something-went-wrong'), { preset: 'error' })
+    }
+    setSearching(false);
+  }
 
   useEffect(() => {
-    if (search) {
-      fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${search}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`,
-      )
-        .then((response) => response.json())
-        .then((responseData) => {
-          setData(responseData);
-        })
-        .catch((error) => {
-          console.log('Error fetching data:', error);
-        });
+    if (debouncedSearchValue) {
+      fetchData(debouncedSearchValue)
+    } else {
+      setSearching(false);
     }
-  }, [search]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearchValue]);
 
   function onSelectSearchResult(item: any) {
     setSearch('');
@@ -80,7 +84,7 @@ const MapLocationPickerHeader: React.FC<MapLocationPickerHeaderProps> = ({
 
   const renderMapSearchResults = () => (
     <FlatList
-      data={search ? data?.results : []}
+      data={search ? results : []}
       renderItem={({ item, index }) => (
         <ListItem
           key={`${item.place_id}-${index}`}
@@ -129,6 +133,7 @@ const MapLocationPickerHeader: React.FC<MapLocationPickerHeaderProps> = ({
               <Search size="$1.5" color="$color10" />
             </Theme>
           )}
+          rightIcon={() => searching && <Spinner size="small" color="$green10" />}
           containerProps={{
             flex: 1,
           }}
