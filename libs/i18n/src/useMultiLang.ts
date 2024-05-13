@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Constants from "expo-constants";
-import * as Updates from "expo-updates";
+// import * as Updates from "expo-updates";
 
 import { useContext } from "react";
 import { DevSettings, I18nManager, Linking, Platform } from "react-native";
@@ -31,7 +31,7 @@ export function useMultiLang() {
       if (Constants.appOwnership === "expo") {
         DevSettings.reload();
       } else {
-        Updates.reloadAsync();
+        // Updates.reloadAsync();
       }
     }
   }

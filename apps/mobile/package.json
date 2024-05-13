@@ -61,7 +61,6 @@
     "expo-splash-screen": "~0.20.5",
     "expo-standard-web-crypto": "^1.7.0",
     "expo-status-bar": "~1.6.0",
-    "expo-updates": "~0.18.19",
     "expo-web-browser": "~12.3.2",
     "google-libphonenumber": "^3.2.34",
     "i18next": "^23.7.16",

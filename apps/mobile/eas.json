@@ -50,6 +50,6 @@
     "preview": {}
   },
   "cli": {
-    "version": ">= 7.3.0"
+    "version": ">=9.0.3"
   }
 }
