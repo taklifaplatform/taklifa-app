@@ -98,7 +98,7 @@ export function ChannelDetailsScreen() {
           }
 
           <View
-            height='$0.5'
+            height='$1'
             backgroundColor='$gray5'
           />
 
@@ -126,7 +126,7 @@ export function ChannelDetailsScreen() {
           </ZixFieldContainer>
 
           <View
-            height='$0.5'
+            height='$1'
             backgroundColor='$gray5'
           />
           <YGroup.Item>

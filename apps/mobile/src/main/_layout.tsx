@@ -14,7 +14,9 @@ LogBox.ignoreAllLogs();
 
 SplashScreen.preventAutoHideAsync();
 
-export default function HomeLayout() {
+export default function MainAppLayout() {
+  console.log("=============")
+  console.log("MainAppLayout RENDER", Date.now())
   const [fontLoaded] = useFonts({
     Almarai_300Light: Almarai_300Light,
     Almarai: Almarai_400Regular,

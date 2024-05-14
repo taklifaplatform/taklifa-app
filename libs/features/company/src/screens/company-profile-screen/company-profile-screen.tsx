@@ -84,7 +84,7 @@ export function CompanyProfileScreen() {
 
 
   return (
-    <ScreenLayout authProtected>
+    <ScreenLayout>
       {renderHeader()}
       {renderLoadingSpinner()}
       {renderCompanyProfile()}

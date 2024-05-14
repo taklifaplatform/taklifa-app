@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Dimensions, Image, Platform, View } from 'react-native';
+import { Dimensions, Image, View } from 'react-native';
 import { useRouter } from 'solito/router';
 
 export default function Screen() {
@@ -14,13 +14,9 @@ export default function Screen() {
         backgroundColor: '#333333',
       }}
       onLayout={() => {
-        if (Platform.OS === 'ios') {
-          setTimeout(() => {
-            router.replace('/app');
-          }, 4000);
-        } else {
+        setTimeout(() => {
           router.replace('/app');
-        }
+        }, 4000);
       }}
     >
       <Image
