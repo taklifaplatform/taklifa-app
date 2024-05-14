@@ -200,7 +200,8 @@
     "qrcode": "*",
     "expo-camera": "*",
     "react-native-map-link": "*",
-    "use-debounce": "*"
+    "use-debounce": "*",
+    "querystring": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",
