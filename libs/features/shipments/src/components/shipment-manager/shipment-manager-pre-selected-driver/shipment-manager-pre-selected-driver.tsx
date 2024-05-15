@@ -27,6 +27,12 @@ export const ShipmentManagerPreSelectedDriver: React.FC<ShipmentManagerPreSelect
     return user?.companies?.filter((company) => company?.logo?.url).shift();
   }, [user?.companies]);
 
+  if (!user && shipment.selected_driver_id) {
+    return (
+      <XStack backgroundColor='$color2' height='$8' padding='$4' borderRadius='$4'></XStack>
+    )
+  }
+
   if (!user) {
     return null
   }

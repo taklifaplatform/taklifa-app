@@ -23,6 +23,14 @@ export const ShipmentManagerPreSelectedCompany: React.FC<ShipmentManagerPreSelec
 
   const company = data?.data
 
+
+
+  if (!company && shipment.selected_company_id) {
+    return (
+      <XStack backgroundColor='$color2' height='$8' padding='$4' borderRadius='$4'></XStack>
+    )
+  }
+
   if (!company) {
     return null
   }
