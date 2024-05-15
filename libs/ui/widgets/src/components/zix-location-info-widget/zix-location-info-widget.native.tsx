@@ -10,30 +10,34 @@ export const ZixLocationInfoWidget: React.FC<ZixLocationInfoWidgetWrapperProps> 
     location
   } = props;
 
+  const renderMap = () => (location?.latitude && location?.longitude) && (
+    <MapView
+      style={{ flex: 1, height: 200, borderRadius: 14 }}
+      initialRegion={{
+        latitude: location?.latitude,
+        longitude: location?.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      }}
+    >
+      <Marker
+        coordinate={{
+          latitude: location?.latitude,
+          longitude: location?.longitude
+        }}
+        title={location?.address}
+        description={location?.address}
+      />
+    </MapView>
+  )
+
   return (
     <ZixLocationInfoWidgetWrapper {...props}>
       <YStack gap='$4'>
         <Text>
-          {location?.address}
+          {location?.address ?? 'No address'}
         </Text>
-        <MapView
-          style={{ flex: 1, height: 200, borderRadius: 14 }}
-          initialRegion={{
-            latitude: parseFloat(location?.latitude ?? '0'),
-            longitude: parseFloat(location?.longitude ?? '0'),
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-        >
-          <Marker
-            coordinate={{
-              latitude: parseFloat(location?.latitude ?? '0'),
-              longitude: parseFloat(location?.longitude ?? '0')
-            }}
-            title={location?.address}
-            description={location?.address}
-          />
-        </MapView>
+        {renderMap()}
       </YStack>
     </ZixLocationInfoWidgetWrapper>
   );

@@ -33,8 +33,8 @@ export const AboutUserTab: React.FC<AboutUserTabProps> = ({
     },
   } as const);
 
-  const renderAbout = () => (isServiceProvider(user) && !!user.about?.length) && (
-    <ZixWidgetContainer label='About Driver'>
+  const renderAbout = () => (!!user.about?.length) && (
+    <ZixWidgetContainer label={isServiceProvider(user) ? 'About Driver' : 'About'}>
       <Text flex={1} color='black'>
         {user.about}
       </Text>

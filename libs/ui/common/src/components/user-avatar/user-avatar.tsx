@@ -1,6 +1,7 @@
 import { UserTransformer } from '@zix/api';
 import { SizeTokens } from 'tamagui';
 import ZixAvatar from '../zix-avatar/zix-avatar';
+import { getLastActivityStatus } from '@zix/utils';
 
 export type UserAvatarProps = {
   size?: SizeTokens;
@@ -18,6 +19,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
       media={user?.avatar}
       name={user?.name}
       size={size}
+      borderColor={getLastActivityStatus(user).color}
       {...props}
     />
   )

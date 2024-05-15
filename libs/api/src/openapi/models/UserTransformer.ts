@@ -8,6 +8,7 @@ export type UserTransformer = {
     username?: string;
     name?: string;
     phone_number?: string;
+    latest_activity?: string;
     about?: string;
     avatar?: MediaTransformer;
 };
