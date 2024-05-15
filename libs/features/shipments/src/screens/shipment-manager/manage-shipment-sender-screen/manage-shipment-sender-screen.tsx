@@ -18,6 +18,7 @@ import { SHARED_SHIPMENT_MANAGER_FIELD_PROPS } from '../configs';
 const { useParam } = createParam<{
   shipment?: string,
   selected_driver_id?: string,
+  selected_company_id?: string,
 }>();
 
 const CreateShipmentSchema = z.object({
@@ -39,6 +40,7 @@ export function ManageShipmentSenderScreen() {
   const { getUrlPrefix } = useAuth()
   const [shipmentId] = useParam('shipment');
   const [selectedDriverId] = useParam('selected_driver_id');
+  const [selectedCompanyId] = useParam('selected_company_id');
 
   const { mutateAsync } = useMutation({
     mutationFn(requestBody: z.infer<typeof CreateShipmentSchema>) {
@@ -52,6 +54,7 @@ export function ManageShipmentSenderScreen() {
         requestBody: {
           ...requestBody,
           selected_driver_id: selectedDriverId,
+          selected_company_id: selectedCompanyId,
         }
       })
     },
@@ -87,8 +90,9 @@ export function ManageShipmentSenderScreen() {
 
   const shipment = useMemo(() => ({
     selected_driver_id: selectedDriverId,
+    selected_company_id: selectedCompanyId,
     ...(data?.data || {}),
-  }), [data?.data, selectedDriverId])
+  }), [data?.data, selectedDriverId, selectedCompanyId])
 
 
   if (shipmentId && !data?.data) {

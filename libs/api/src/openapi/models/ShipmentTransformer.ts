@@ -16,6 +16,7 @@ export type ShipmentTransformer = {
     recipient_name?: string | null;
     recipient_phone?: string | null;
     selected_driver_id?: string | null;
+    selected_company_id?: string | null;
     items_type?: string;
     status?: string;
     user?: UserTransformer;

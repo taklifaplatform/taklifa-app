@@ -8,8 +8,8 @@ import type { StateTransformer } from './StateTransformer';
 export type LocationTransformer = {
     id?: string;
     owner_id?: string;
-    latitude?: string;
-    longitude?: string;
+    latitude?: number;
+    longitude?: number;
     address?: string;
     phone_number?: string;
     name?: string;

@@ -12,6 +12,7 @@ export type UpdateShipmentRequest = {
     from_location?: FromLocationUpdateShipmentRequest;
     to_location?: ToLocationUpdateShipmentRequest;
     selected_driver_id?: string;
+    selected_company_id?: string;
     pick_date?: string;
     pick_time?: string;
     deliver_date?: string;
