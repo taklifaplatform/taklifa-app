@@ -85,7 +85,6 @@ export const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
                 flexDirection='row'
                 justifyContent="flex-start"
                 alignItems='center'
-                borderTopWidth={1}
                 borderColor='$color4'
                 pressStyle={{
                   backgroundColor: '$color7',

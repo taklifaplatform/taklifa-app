@@ -88,7 +88,6 @@ export function TeamMemberCard({
       width={'100%'}
       justifyContent="space-between"
       paddingVertical="$4"
-      borderTopWidth={1}
       borderColor="$color3"
       alignItems="center"
     >

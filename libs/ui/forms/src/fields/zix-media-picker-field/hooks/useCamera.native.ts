@@ -1,7 +1,7 @@
-import { Camera } from 'expo-camera';
+import { useCameraPermissions } from 'expo-camera';
 
 export function useCamera() {
-  const [permission, requestPermission] = Camera.useCameraPermissions();
+  const [permission, requestPermission] = useCameraPermissions();
 
   return {
     permission,

@@ -33,7 +33,6 @@ export function TeamMemberInvitationCard({
       width={'100%'}
       justifyContent="space-between"
       paddingVertical="$4"
-      borderTopWidth={1}
       borderColor="$color9"
       alignItems="center"
     >
