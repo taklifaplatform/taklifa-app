@@ -27,6 +27,7 @@ import {
   isWeb
 } from 'tamagui';
 import CompanyListItem from './company-list-item/company-list-item';
+import UserRoleListItem from './user-role-list-item/user-role-list-item';
 
 export const AccountSwitcher: React.FC = () => {
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -126,37 +127,15 @@ export const AccountSwitcher: React.FC = () => {
                 onPress={() => setSheetOpen(false)}
               />
             </XStack>
-            {/* <DebugObject object={userRoles} /> */}
             {userRoles?.map((role) => (
-              <YGroup.Item key={role.id}>
-                <ListItem
-                  //disabled={user?.active_role?.name === role.name}
-                  theme={
-                    user?.active_role?.name === role.name ? 'accent' : undefined
-                  }
-                  onPress={() => changeActiveRole({ name: role.name })}
-                  hoverStyle={{ backgroundColor: '$color5' }}
-                  pressStyle={{ opacity: 0.5 }}
-                  borderBottomColor="$color5"
-                  borderBottomWidth={1}
-                  icon={<UserAvatar user={user} size="$4" />}
-                  iconAfter={
-                    <Theme name="accent">
-                      <CustomIcon
-                        name="radio_button_checked"
-                        color={
-                          user?.active_role?.name === role.name
-                            ? '$color9'
-                            : '$color3'
-                        }
-                      />
-                    </Theme>
-                  }
-                  scaleIcon={1.3}
-                  title={user.name}
-                  subTitle={role.name}
-                />
-              </YGroup.Item>
+              <UserRoleListItem
+                key={`user-role-${role.id}`}
+                role={role}
+                user={user}
+                onPress={() => changeActiveRole({ name: role.name })}
+                onClose={() => setSheetOpen(false)}
+                isSelected={user?.active_role?.name === role.name}
+              />
             ))}
 
             {user?.companies?.map((company) => (

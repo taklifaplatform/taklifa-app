@@ -16,7 +16,7 @@ export function getLastActivityStatus(
 
   if (moment(user.latest_activity).isBefore(moment().subtract(1, 'day'))) {
     return {
-      color: '#ffeeb2',
+      color: '#afafaf',
       text: t('app:common.offline'),
     };
   }
