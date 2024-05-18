@@ -77,6 +77,24 @@ export const UserRoleListItem: React.FC<UserRoleListItemProps> = ({
     </Button>
   ) : null
 
+  const renderVerificationStatus = () => role.name === USER_ROLES.solo_driver && (
+    <XStack gap='$2'>
+      <Button
+        size='$2'
+        fontSize='$1'
+        fontWeight='700'
+        color='$color10'
+        scaleIcon={1.5}
+        theme={getVerificationThemeName(user.verification_status)}
+        icon={getVerificationIcon(user.verification_status)}
+      >
+        {t(`app:company.verification_status.${user.verification_status ?? 'pending'}`)}
+      </Button>
+
+      {renderSubmitDocumentsButton()}
+    </XStack>
+  )
+
   return (
     <XStack
       onPress={() => onPress()}
@@ -106,21 +124,7 @@ export const UserRoleListItem: React.FC<UserRoleListItemProps> = ({
             {user.name ?? user.username ? `@${user.username}` : ''}
           </Text>
 
-          <XStack gap='$2'>
-            <Button
-              size='$2'
-              fontSize='$1'
-              fontWeight='700'
-              color='$color10'
-              scaleIcon={1.5}
-              theme={getVerificationThemeName(user.verification_status)}
-              icon={getVerificationIcon(user.verification_status)}
-            >
-              {t(`app:company.verification_status.${user.verification_status ?? 'pending'}`)}
-            </Button>
-
-            {renderSubmitDocumentsButton()}
-          </XStack>
+          {renderVerificationStatus()}
 
         </YStack>
       </XStack>
