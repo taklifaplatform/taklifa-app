@@ -1,0 +1,133 @@
+
+import { MediaAvatar, ZixAdvancedFilters } from '@zix/ui/common';
+import { useMemo } from 'react';
+
+import { CarFront } from '@tamagui/lucide-icons';
+import { useQuery } from '@tanstack/react-query';
+import { VehicleModelService } from '@zix/api';
+import { CustomIcon } from '@zix/ui/icons';
+import { USER_ROLES } from '@zix/services/auth';
+
+export type MapFiltersProps = {
+  values: Record<string, string>;
+  onChange: (values: Record<string, string>) => void;
+}
+
+
+export const MapFilters: React.FC<MapFiltersProps> = ({
+  values,
+  onChange,
+}) => {
+  const vehicleModelsQuery = useQuery({
+    queryFn() {
+      return VehicleModelService.list();
+    },
+    queryKey: ['VehicleModelService.list'],
+  })
+
+  const filters = useMemo(() => ([
+    {
+      key: 'vehicle_model',
+      label: 'Vehicle Model',
+      options: [
+        {
+          label: 'All',
+          value: 'all',
+          activeValue: (
+            <CarFront />
+          ),
+          icon: (
+            <CarFront />
+          )
+        },
+
+        ...vehicleModelsQuery.data?.data?.map((item) => ({
+          label: item.name ?? '',
+          value: item.id ?? '',
+          activeValue: (
+            <MediaAvatar
+              media={item.map_icon}
+              size='$4'
+            />
+          ),
+          icon: (
+            <MediaAvatar
+              media={item.map_icon}
+              size='$4'
+            />
+          )
+        })) || []
+      ],
+    },
+    {
+      key: 'provider_type',
+      label: 'Provider Type',
+      options: [
+        {
+          label: 'All', value: 'all',
+          icon: (
+            <CustomIcon name='service_provider' size='$4' />
+          ),
+          activeValue: (
+            <CustomIcon name='service_provider' size='$4' />
+          ),
+        },
+        {
+          label: 'Company', value: 'company', icon: (
+            <CustomIcon name='company_cars' size='$4' />
+          ),
+          activeValue: (
+            <CustomIcon name='company_cars' size='$4' />
+          ),
+        },
+        {
+          label: 'Solo Driver', value: USER_ROLES.solo_driver, icon: (
+            <CustomIcon name='solo_transporter_car' size='$4' />
+          ),
+          activeValue: (
+            <CustomIcon name='solo_transporter_car' size='$4' />
+          ),
+        },
+      ]
+    },
+    // {
+    //   key: 'rating',
+    //   label: 'Rating',
+    //   options: [
+    //     { label: 'All', value: 'all' },
+    //     { label: '1', value: '1' },
+    //     { label: '2', value: '2' },
+    //     { label: '3', value: '3' },
+    //     { label: '4', value: '4' },
+    //     { label: '5', value: '5' },
+    //   ]
+    // },
+    // // working days
+    // {
+    //   key: 'working_days',
+    //   label: 'Working Days',
+    //   options: [
+    //     { label: 'All', value: 'all' },
+    //     { label: 'Mon', value: 'mon' },
+    //     { label: 'Tue', value: 'tue' },
+    //     { label: 'Wed', value: 'wed' },
+    //     { label: 'Thu', value: 'thu' },
+    //     { label: 'Fri', value: 'fri' },
+    //     { label: 'Sat', value: 'sat' },
+    //     { label: 'Sun', value: 'sun' },
+    //   ]
+    // },
+  ]), [vehicleModelsQuery?.data?.data])
+
+
+  return (
+    <ZixAdvancedFilters
+      filters={filters}
+      values={values}
+      onChange={onChange}
+    />
+  );
+}
+
+
+export default MapFilters;

@@ -37,7 +37,7 @@ export const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
     const SCREEN_HEIGHT = Dimensions.get('window').height - ACTION_HEIGHT;
     const ACTION_HEIGHT_POINTS =
       Number(SCREEN_HEIGHT / (ACTION_HEIGHT * 2)) + (props.modal ? 0 : 1);
-    const SNAP_POINTS = [ACTION_HEIGHT_POINTS * (props.actions.length + 1)];
+    const SNAP_POINTS = [Math.min(ACTION_HEIGHT_POINTS * (props.actions.length + 1), 90)];
 
     useImperativeHandle(ref, () => ({
       open: () => setIsOpen(true),

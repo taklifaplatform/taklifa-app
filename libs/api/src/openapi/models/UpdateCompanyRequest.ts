@@ -6,6 +6,7 @@ import type { LegalDocumentsUpdateCompanyRequest } from './LegalDocumentsUpdateC
 import type { LogoUpdateCompanyRequest } from './LogoUpdateCompanyRequest';
 export type UpdateCompanyRequest = {
     name?: string;
+    about?: string;
     legal_documents?: Array<LegalDocumentsUpdateCompanyRequest>;
     logo?: LogoUpdateCompanyRequest;
     location_id?: string;

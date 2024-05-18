@@ -185,6 +185,7 @@ export { SupportService } from './services/SupportService';
 export { UserService } from './services/UserService';
 export { UsersService } from './services/UsersService';
 export { UserVerificationService } from './services/UserVerificationService';
+export { VehicleModelService } from './services/VehicleModelService';
 export { VehiclesService } from './services/VehiclesService';
 export { WorkingHoursService } from './services/WorkingHoursService';
 export { ZoneServicesService } from './services/ZoneServicesService';

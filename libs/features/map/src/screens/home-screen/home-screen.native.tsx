@@ -2,7 +2,7 @@ import { ScanBarcode, X } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { CompaniesService, DriverTransformer, DriversService } from '@zix/api';
 import { UserCard } from '@zix/features/users';
-import { useAuth } from '@zix/services/auth';
+import { USER_ROLES, useAuth } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { MapCompanyMarker, MapDriverMarker } from '@zix/ui/sawaeed';
@@ -13,7 +13,8 @@ import { FlatList } from 'react-native-gesture-handler';
 import MapView from 'react-native-maps';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useRouter } from 'solito/router';
-import { Button, YStack } from 'tamagui';
+import { Button, View, YStack } from 'tamagui';
+import MapFilters from '../../components/map-filters/map-filters';
 
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
@@ -41,17 +42,24 @@ export function HomeScreen() {
   const router = useRouter();
   const { getUrlPrefix } = useAuth();
 
+  const [filters, setFilters] = useState({
+    vehicle_model: 'all',
+    provider_type: 'all',
+  })
   const [showMap, setShowMap] = useState(true);
   const [search, setSearch] = useState<string>();
+  const filtersKey = useMemo(() => Object.values(filters).join('-'), [filters]);
   const { data, ...driversQuery } = useQuery({
     queryFn() {
       return DriversService.fetchAllDrivers({
         perPage: Platform.select({ web: 80, ios: 50, android: 20 }),
+        vehicleModel: '9c1255f4-f760-451a-92e3-913606a69bfa',
+        // vehicleModel: filters.vehicle_model,
         search,
       });
     },
-    queryKey: ['DriversService.fetchAllDrivers', search],
-    staleTime: 5 * 1000,
+    queryKey: ['DriversService.fetchAllDrivers', search, filtersKey],
+    // staleTime: 5 * 1000,
   });
   const companiesQuery = useQuery({
     queryFn() {
@@ -131,27 +139,29 @@ export function HomeScreen() {
   }
 
   const renderMapDrivers = () =>
-    driversList.map((driver, index) => (
-      <MapDriverMarker
-        key={`marker-${index}`}
-        driver={driver}
-        isSelected={selectedDriver?.id === driver.id}
-        onPress={() => {
-          onMarkerPress(driver, index);
-        }}
-      />
-    ));
+    (filters.provider_type === 'all' || filters.provider_type === USER_ROLES.solo_driver) ?
+      driversList.map((driver, index) => (
+        <MapDriverMarker
+          key={`marker-${index}`}
+          driver={driver}
+          isSelected={selectedDriver?.id === driver.id}
+          onPress={() => {
+            onMarkerPress(driver, index);
+          }}
+        />
+      )) : null;
 
   const renderMapCompanies = () =>
-    companiesQuery.data?.data?.map((company, index) => (
-      <MapCompanyMarker
-        key={`marker-${index}`}
-        company={company}
-        onPress={() => {
-          router.push(`${getUrlPrefix}/companies/${company.id}`);
-        }}
-      />
-    ));
+    (filters.provider_type === 'all' || filters.provider_type === 'company') ?
+      companiesQuery.data?.data?.map((company, index) => (
+        <MapCompanyMarker
+          key={`marker-${index}`}
+          company={company}
+          onPress={() => {
+            router.push(`${getUrlPrefix}/companies/${company.id}`);
+          }}
+        />
+      )) : null;
 
   const renderMap = () =>
     showMap && (
@@ -200,6 +210,12 @@ export function HomeScreen() {
         {showMap ? 'القائمة' : 'الخريطة'}
       </Button>
     );
+
+  const renderFilters = () => (
+    <View position='absolute' top={1}>
+      <MapFilters values={filters} onChange={setFilters} />
+    </View>
+  )
 
   const renderCarouselItem = ({
     item,
@@ -270,10 +286,13 @@ export function HomeScreen() {
             rightIcon: () => (showMap ? <ScanBarcode size="$1.5" /> : null),
           }}
         />
-        {renderMap()}
-        {renderList()}
-        {renderCarousel()}
-        {renderSwitcher()}
+        <YStack flex={1} position='relative'>
+          {renderMap()}
+          {renderList()}
+          {renderCarousel()}
+          {renderSwitcher()}
+          {renderFilters()}
+        </YStack>
       </YStack>
     </ScreenLayout>
   );

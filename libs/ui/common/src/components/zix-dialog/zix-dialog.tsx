@@ -46,7 +46,7 @@ export function ZixDialog({
       {trigger && <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>}
       <Dialog.Adapt platform="touch">
         <Dialog.Sheet zIndex={200000} modal dismissOnSnapToBottom>
-          <Dialog.Sheet.Frame padding="$10">
+          <Dialog.Sheet.Frame>
             <Dialog.Adapt.Contents />
           </Dialog.Sheet.Frame>
           <Dialog.Sheet.Overlay />
@@ -85,8 +85,8 @@ export function ZixDialog({
               height,
             }
             : {
-              maxHeight: '90%',
-              maxWidth: '90%',
+              // maxHeight: '90%',
+              // maxWidth: '90%',
               width: dialogWidth,
               height: dialogHeight,
             })}
@@ -102,11 +102,8 @@ export function ZixDialog({
         >
           {(!hideCloseButton || title) && (
             <XStack
-              space
               justifyContent={'space-between'}
-              paddingRight={contentPadding}
-              paddingLeft={contentPadding}
-              paddingTop={contentPadding}
+              padding={contentPadding}
             >
               {title ? (
                 <Dialog.Title>{title}</Dialog.Title>

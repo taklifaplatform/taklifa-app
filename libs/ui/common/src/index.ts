@@ -1,4 +1,6 @@
 
+export * from './components/zix-advanced-filters/zix-advanced-filters';
+
 export * from './components/zix-map-marker/zix-map-marker';
 
 export * from './components/zix-avatar/zix-avatar';
