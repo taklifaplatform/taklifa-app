@@ -7,3 +7,4 @@ export * from './zix-phone-field/zix-phone-field';
 export * from './zix-money-field/zix-money-field';
 export * from './zix-select-field/zix-select-field';
 export * from './zix-date-fields';
+export * from './zix-map-location-picker-field/zix-map-location-picker-field';

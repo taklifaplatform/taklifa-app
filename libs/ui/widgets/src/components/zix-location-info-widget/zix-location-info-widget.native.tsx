@@ -10,7 +10,7 @@ export const ZixLocationInfoWidget: React.FC<ZixLocationInfoWidgetWrapperProps> 
     location
   } = props;
 
-  const renderMap = () => (location?.latitude && location?.longitude) && (
+  const renderMap = () => (!!location?.latitude && !!location?.longitude) && (
     <MapView
       style={{ flex: 1, height: 200, borderRadius: 14 }}
       initialRegion={{

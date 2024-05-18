@@ -3,12 +3,11 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { LegalDocumentsUpdateCompanyRequest } from './LegalDocumentsUpdateCompanyRequest';
-import type { LocationUpdateCompanyRequest } from './LocationUpdateCompanyRequest';
 import type { LogoUpdateCompanyRequest } from './LogoUpdateCompanyRequest';
 export type UpdateCompanyRequest = {
     name?: string;
     legal_documents?: Array<LegalDocumentsUpdateCompanyRequest>;
     logo?: LogoUpdateCompanyRequest;
-    location?: LocationUpdateCompanyRequest;
+    location_id?: string;
 };
 

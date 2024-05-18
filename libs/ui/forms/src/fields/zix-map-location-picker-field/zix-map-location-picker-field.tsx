@@ -23,20 +23,20 @@ import {
 } from 'tamagui';
 import { useDebounce } from 'use-debounce';
 import { ZixFieldContainer } from '../../common';
-import { ZixInput } from '../../fields';
-import ZixMapPointerField from '../../fields/zix-map-pointer-field/zix-map-pointer-field';
+import { ZixInput } from '..';
+import ZixMapPointerField from '../zix-map-pointer-field/zix-map-pointer-field';
 
-export type MapLocationPickerProps = {
+export type ZixMapLocationPickerFieldProps = {
   value: LocationTransformer;
   onChange: (val: LocationTransformer) => void;
 };
 
-type MapLocationPickerHeaderProps = {
+type ZixMapLocationPickerFieldHeaderProps = {
   onChange: (props: any) => void;
   onClose: () => void;
 };
 
-const MapLocationPickerHeader: React.FC<MapLocationPickerHeaderProps> = ({
+const ZixMapLocationPickerFieldHeader: React.FC<ZixMapLocationPickerFieldHeaderProps> = ({
   onChange,
   onClose,
 }) => {
@@ -151,7 +151,7 @@ const MapLocationPickerHeader: React.FC<MapLocationPickerHeaderProps> = ({
   );
 };
 
-export const MapLocationPickerContent: React.FC<MapLocationPickerProps> = ({
+export const ZixMapLocationPickerFieldContent: React.FC<ZixMapLocationPickerFieldProps> = ({
   value,
   onChange,
   onClose,
@@ -258,7 +258,7 @@ export const MapLocationPickerContent: React.FC<MapLocationPickerProps> = ({
           mutate(location);
         }}
       />
-      <MapLocationPickerHeader
+      <ZixMapLocationPickerFieldHeader
         onChange={mutate}
         onClose={() => onClose(false)}
       />
@@ -267,7 +267,7 @@ export const MapLocationPickerContent: React.FC<MapLocationPickerProps> = ({
   );
 };
 
-export const MapLocationPicker: React.FC<MapLocationPickerProps> = ({
+export const ZixMapLocationPickerField: React.FC<ZixMapLocationPickerFieldProps> = ({
   value,
   onChange,
 }) => {
@@ -301,9 +301,12 @@ export const MapLocationPicker: React.FC<MapLocationPickerProps> = ({
         disableDrag
       >
         <Sheet.Frame>
-          <MapLocationPickerContent
+          <ZixMapLocationPickerFieldContent
             value={value}
-            onChange={onChange}
+            onChange={(val) => {
+              onChange(val)
+              setOpen(false)
+            }}
             onClose={() => setOpen(false)}
           />
         </Sheet.Frame>
@@ -311,3 +314,5 @@ export const MapLocationPicker: React.FC<MapLocationPickerProps> = ({
     </>
   );
 };
+
+export default ZixMapLocationPickerField
