@@ -1,15 +1,16 @@
 
 import React from 'react';
-import MapView, { Marker } from 'react-native-maps';
+import MapView from 'react-native-maps';
 
+import { LocationTransformer } from '@zix/api';
+import { ZixMapMarker } from '@zix/ui/common';
 import { Text, YStack } from 'tamagui';
 import ZixLocationInfoWidgetWrapper, { ZixLocationInfoWidgetWrapperProps } from './zix-location-info-widget-wrapper';
-import { LocationTransformer } from '@zix/api';
 
 export const ZixLocationInfoWidget: React.FC<ZixLocationInfoWidgetWrapperProps> = (props) => {
-
   const renderMap = (location: LocationTransformer) => (!!location?.latitude && !!location?.longitude) && (
     <MapView
+      key={`map-${location?.latitude}-${location?.longitude}`}
       style={{ flex: 1, height: 200, borderRadius: 14 }}
       initialRegion={{
         latitude: location?.latitude,
@@ -18,14 +19,7 @@ export const ZixLocationInfoWidget: React.FC<ZixLocationInfoWidgetWrapperProps> 
         longitudeDelta: 0.0421,
       }}
     >
-      <Marker
-        coordinate={{
-          latitude: location?.latitude,
-          longitude: location?.longitude
-        }}
-        title={location?.address}
-        description={location?.address}
-      />
+      <ZixMapMarker location={location} />
     </MapView>
   )
 

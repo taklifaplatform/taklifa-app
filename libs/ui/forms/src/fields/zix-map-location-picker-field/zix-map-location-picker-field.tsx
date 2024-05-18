@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Search, X } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
 import { GeographyService, LocationTransformer } from '@zix/api';
-import { ZixButton } from '@zix/ui/common';
+import { ZixButton, ZixMapMarker } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { useSafeAreaInsets } from '@zix/utils';
 import { t } from 'i18next';
@@ -25,6 +25,7 @@ import { useDebounce } from 'use-debounce';
 import { ZixFieldContainer } from '../../common';
 import { ZixInput } from '..';
 import ZixMapPointerField from '../zix-map-pointer-field/zix-map-pointer-field';
+import MapView from 'react-native-maps';
 
 export type ZixMapLocationPickerFieldProps = {
   value: LocationTransformer;
@@ -157,7 +158,11 @@ export const ZixMapLocationPickerFieldContent: React.FC<ZixMapLocationPickerFiel
   onClose,
 }) => {
   const { bottom } = useSafeAreaInsets();
-
+  const [localLocation, setLocalLocation] = useState<LocationTransformer>(
+    {
+      ...value
+    }
+  )
   const [isPending, setIsPending] = useState(false);
 
   async function mutate({ latitude, longitude }: LocationTransformer) {
@@ -168,15 +173,18 @@ export const ZixMapLocationPickerFieldContent: React.FC<ZixMapLocationPickerFiel
       )
         .then((response) => response.json())
         .then(({ results }) => ({ results, latitude, longitude }));
-
       const result = results[0];
-      let country_id: any = value?.country_id;
-      let city_id: any = value?.city_id;
+      console.log("=====")
+      console.log("results::", JSON.stringify(result, null, 2))
+      console.log("=====")
+
+      let country_id: any = localLocation?.country_id;
+      let city_id: any = localLocation?.city_id;
 
       const postcode =
         result.address_components.find((component: any) =>
           component.types.includes('postal_code'),
-        )?.long_name || value?.postcode;
+        )?.long_name || localLocation?.postcode;
       const countryName = result.address_components.find((component: any) =>
         component.types.includes('country'),
       )?.long_name;
@@ -212,14 +220,14 @@ export const ZixMapLocationPickerFieldContent: React.FC<ZixMapLocationPickerFiel
         city_id = null;
       }
 
-      onChange({
-        ...value,
+      setLocalLocation({
+        ...localLocation,
         latitude,
         longitude,
         country_id,
         city_id,
         postcode,
-        address: results[0].formatted_address,
+        address: result.formatted_address,
       });
     } catch (error) {
       console.log('error', error);
@@ -229,7 +237,7 @@ export const ZixMapLocationPickerFieldContent: React.FC<ZixMapLocationPickerFiel
   }
 
   const renderAddressConfirmation = () =>
-    !!value?.address && (
+    !!localLocation?.address && (
       <YStack
         padding="$4"
         paddingBottom={bottom}
@@ -237,9 +245,12 @@ export const ZixMapLocationPickerFieldContent: React.FC<ZixMapLocationPickerFiel
         backgroundColor="$color1"
       >
         <H4>{t('common:address')}</H4>
-        <Text>{value?.address}</Text>
+        <Text>{localLocation?.address}</Text>
         <Theme inverse>
-          <ZixButton loading={isPending} onPress={() => onClose(false)}>
+          <ZixButton loading={isPending} onPress={() => {
+            onChange(localLocation);
+            onClose();
+          }}>
             {t('common:confirm')}
           </ZixButton>
         </Theme>
@@ -249,10 +260,11 @@ export const ZixMapLocationPickerFieldContent: React.FC<ZixMapLocationPickerFiel
   return (
     <View flex={1} backgroundColor="$background1">
       <ZixMapPointerField
-        value={value || {}}
+        value={localLocation || {}}
         onChange={(location) => {
-          onChange({
+          setLocalLocation({
             ...value,
+            ...localLocation,
             ...location,
           });
           mutate(location);
@@ -272,12 +284,24 @@ export const ZixMapLocationPickerField: React.FC<ZixMapLocationPickerFieldProps>
   onChange,
 }) => {
   const [open, setOpen] = useState(false);
+  const [localLocation, setLocalLocation] = useState(value)
   return (
     <>
       <View position="relative">
         <ZixFieldContainer label={t('common:select-location-on-map')} labelBold>
           <View height="$15">
-            <ZixMapPointerField value={value} />
+            <MapView
+              key={`map-${localLocation?.latitude}-${localLocation?.longitude}`}
+              style={{ flex: 1, height: 200, borderRadius: 14 }}
+              initialRegion={{
+                latitude: localLocation?.latitude,
+                longitude: localLocation?.longitude,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+            >
+              <ZixMapMarker location={localLocation} />
+            </MapView>
           </View>
         </ZixFieldContainer>
         <View
@@ -304,6 +328,7 @@ export const ZixMapLocationPickerField: React.FC<ZixMapLocationPickerFieldProps>
           <ZixMapLocationPickerFieldContent
             value={value}
             onChange={(val) => {
+              setLocalLocation(val)
               onChange(val)
               setOpen(false)
             }}
