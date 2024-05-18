@@ -53,8 +53,7 @@ export function HomeScreen() {
     queryFn() {
       return DriversService.fetchAllDrivers({
         perPage: Platform.select({ web: 80, ios: 50, android: 20 }),
-        vehicleModel: '9c1255f4-f760-451a-92e3-913606a69bfa',
-        // vehicleModel: filters.vehicle_model,
+        vehicleModel: filters.vehicle_model,
         search,
       });
     },
