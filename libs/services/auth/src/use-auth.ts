@@ -23,6 +23,7 @@ export type RedirectUserOptions = {
 
 export interface AuthHelpers {
   activeRole: AUTH_ROLE_TYPE;
+  activeCompanyId: string;
   user: AuthenticatedUserTransformer;
   refetchUser: () => void;
   avatarUrl: string;
@@ -41,6 +42,8 @@ export interface AuthHelpers {
     user: AuthenticatedUserTransformer | DriverTransformer,
     useActiveRoleOnly?: boolean,
   ) => boolean;
+
+  isAuthMemberInThisCompany: (companyId?: string) => boolean;
 }
 
 export function useAuth(): AuthHelpers {
@@ -92,6 +95,10 @@ export function useAuth(): AuthHelpers {
   const activeRole = useMemo<AUTH_ROLE_TYPE>(() => {
     return (user?.active_role?.name as AUTH_ROLE_TYPE) || 'customer';
   }, [user]);
+
+  const activeCompanyId = useMemo<string>(() => {
+    return user?.active_company?.id || '';
+  }, [user])
 
   const isLoggedIn = useMemo(
     () => !!authAccessToken && !!user?.id,
@@ -183,6 +190,10 @@ export function useAuth(): AuthHelpers {
     });
   }
 
+  function isAuthMemberInThisCompany(companyId: string) {
+    return !!user?.companies?.find((company) => company.id === companyId);
+  }
+
   useEffect(() => {
     if (authAccessToken && !user?.id) {
       refetchUser();
@@ -210,5 +221,7 @@ export function useAuth(): AuthHelpers {
 
     getUrlPrefix,
     isServiceProvider,
+    isAuthMemberInThisCompany,
+    activeCompanyId,
   };
 }
