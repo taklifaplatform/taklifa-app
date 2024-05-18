@@ -2,6 +2,7 @@ import { Pencil } from '@tamagui/lucide-icons';
 import { CompanyTransformer } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { ZixAvatar } from '@zix/ui/common';
+import { t } from 'i18next';
 import React from 'react';
 import { useRouter } from 'solito/router';
 import { Button, H4, Text, View, XStack, YStack } from 'tamagui';
@@ -29,7 +30,7 @@ export const CompanyProfileHeader: React.FC<CompanyProfileHeaderProps> = ({ comp
         {
           isAuthMemberInThisCompany(company?.id) ? (
             <Button width="$8" size='$2' icon={Pencil} onPress={onEditCompanyPress}>
-              Edit
+              {t('common:edit')}
             </Button>
           ) : (
             <View width="$8" />
@@ -38,9 +39,6 @@ export const CompanyProfileHeader: React.FC<CompanyProfileHeaderProps> = ({ comp
       </XStack>
       <YStack gap="$2">
         <H4 textAlign="center">{company.name ?? 'N/A'}</H4>
-        <Text textAlign="center" fontWeight="bold" color="$color8">
-          Online now
-        </Text>
       </YStack>
     </YStack>
   );

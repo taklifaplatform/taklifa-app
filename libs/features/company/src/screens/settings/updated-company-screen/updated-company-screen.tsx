@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 
 import { useToastController } from '@tamagui/toast';
@@ -21,7 +21,6 @@ import { z } from 'zod';
 
 const { useParam } = createParam<{ company: string }>();
 
-//
 const UpdateCompanyFormSchema = z
   .object({
     logo: formFields.image.describe('Logo // Add Company Logo').optional(),
@@ -39,6 +38,7 @@ export const UpdateCompanyScreen: React.FC = () => {
   const form = useForm<z.infer<typeof UpdateCompanyFormSchema>>();
   const { user, refetchUser } = useAuth();
   const toast = useToastController();
+  const queryClient = useQueryClient();
 
   const router = useRouter();
 
@@ -57,6 +57,9 @@ export const UpdateCompanyScreen: React.FC = () => {
       });
     },
     onSuccess() {
+      queryClient.invalidateQueries({
+        queryKey: ['CompaniesService.retrieveCompany', companyId]
+      });
       refetchUser();
       toast.show('Company Updated Successfully!');
       router.back();

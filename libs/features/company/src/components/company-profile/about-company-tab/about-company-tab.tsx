@@ -1,13 +1,15 @@
+import { Pencil } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { CompanyMembersService, CompanyTransformer } from '@zix/api';
 import { ZixWorkingHoursWidget } from '@zix/features/working-hours';
 import { USER_ROLES, useAuth } from '@zix/services/auth';
-import { UserAvatar } from '@zix/ui/common';
+import { UserAvatar, ZixButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { ZixLocationInfoWidget, ZixWidgetContainer } from '@zix/ui/widgets';
 import React, { useRef } from 'react';
 import { Dimensions, FlatList } from 'react-native';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
+import { t } from 'i18next';
 import { useRouter } from 'solito/router';
 
 import { Text, Theme, View, XStack, YStack } from 'tamagui';
@@ -20,7 +22,7 @@ export const AboutCompanyTab: React.FC<AboutCompanyTabProps> = ({
   company
 }) => {
   const router = useRouter()
-  const { getUrlPrefix, user: authUser } = useAuth()
+  const { getUrlPrefix, isAuthMemberInThisCompany } = useAuth()
   const carouselRef = useRef<ICarouselInstance>(null);
   const USER_CARD_WIDTH = Dimensions.get('window').width;
   const USER_CARD_HEIGHT = 140;
@@ -41,20 +43,28 @@ export const AboutCompanyTab: React.FC<AboutCompanyTabProps> = ({
     queryKey: ['CompanyMembersService.list', company.id],
   })
 
-  const renderAbout = () => !!company.about?.length && (
-    <ZixWidgetContainer label='About Company'>
+  const renderAboutEditButton = () => isAuthMemberInThisCompany(company.id) ? (
+    <ZixButton icon={Pencil} size='$2' onPress={() => {
+      router.push(`${getUrlPrefix}/companies/${company.id}/settings`)
+    }}>
+      {t('common:edit')}
+    </ZixButton>
+  ) : null
+
+  const renderAbout = () => (!!company.about?.length || isAuthMemberInThisCompany(company.id)) && (
+    <ZixWidgetContainer label='About Company' labelPrepend={renderAboutEditButton()}>
       <Text flex={1} color='black'>
-        {company.about}
+        {company.about ?? 'N/A'}
       </Text>
     </ZixWidgetContainer>
   )
 
   const renderLocation = () => (!!company.location_id) && (
-    <ZixLocationInfoWidget locationId={company.location_id} canEdit={!!authUser?.companies?.find(c => c.id === company.id)} />
+    <ZixLocationInfoWidget locationId={company.location_id} canEdit={isAuthMemberInThisCompany(company.id)} />
   )
 
   const renderWorkingHours = () => company.working_hours_id && (
-    <ZixWorkingHoursWidget workingHourId={company.working_hours_id} canEdit={!!authUser?.companies?.find(c => c.id === company.id)} />
+    <ZixWorkingHoursWidget workingHourId={company.working_hours_id} canEdit={isAuthMemberInThisCompany(company.id)} />
   )
 
   const renderDriversListCarousel = () => !!data?.data?.length && (
