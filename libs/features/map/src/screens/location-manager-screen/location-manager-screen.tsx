@@ -24,6 +24,8 @@ const { useParam } = createParam<{ location: string }>();
 
 const LocationManagerSchema = z
   .object({
+    latitude: z.number(),
+    longitude: z.number(),
     address: formFields.textarea.describe(
       `${t('app:forms.labels.address')} // ${t('app:forms.placeholders.address')}`
     ),
@@ -119,22 +121,22 @@ export function LocationManagerScreen() {
     >
       {({ address, building_name, floor_number, house_number, country_id, state_id, city_id, notes }) => (
         <YStack gap="$2">
+          <ZixMapLocationPickerField
+            value={data?.data} onChange={(val) => {
+              console.log("location manager screen: location ob:: ", val)
+              Object.keys(val).forEach(key => {
+                form.setValue(key, val[key])
+              })
+            }}
+          />
+          <Separator marginTop="$4" />
+
           <ZixFieldContainer
             label={t('common:address-information')}
             labelBold
             collapsible
           >
             <YStack gap="$4">
-              <ZixMapLocationPickerField
-                value={data?.data} onChange={(val) => {
-                  console.log("location manager screen: location ob:: ", val)
-                  Object.keys(val).forEach(key => {
-                    form.setValue(key, val[key])
-                  })
-                }}
-              />
-
-              <Separator marginTop="$4" />
               {address}
               {building_name}
               <XStack alignItems="flex-start" gap="$4">
