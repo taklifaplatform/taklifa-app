@@ -34,6 +34,7 @@ export const ZixTab: React.FC<ZixTabProps> = ({
             borderRadius="$0"
             fontWeight="bold"
             fontSize="$1"
+            paddingHorizontal={tabs?.length > 3 ? "$1" : "$2"}
           >
             {tab.title}
           </Button>

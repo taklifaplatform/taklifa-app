@@ -1,39 +1,67 @@
 
-import { LocationTransformer } from '@zix/api';
-import React from 'react';
+import { LocationService, LocationTransformer } from '@zix/api';
+import React, { useState } from 'react';
 
-import { t } from 'i18next';
-import ZixWidgetContainer from '../zix-widget-container/zix-widget-container';
-import { useRouter } from 'solito/router';
-import { useAuth } from '@zix/services/auth';
 import { Pencil } from '@tamagui/lucide-icons';
-import { Button } from 'tamagui';
+import { useQuery } from '@tanstack/react-query';
+import { useAuth } from '@zix/services/auth';
+import { ZixButton } from '@zix/ui/common';
+import { t } from 'i18next';
+import { useRouter } from 'solito/router';
+import { View } from 'tamagui';
+import ZixWidgetContainer from '../zix-widget-container/zix-widget-container';
 
 export type ZixLocationInfoWidgetWrapperProps = {
-  location: LocationTransformer,
+  locationId?: string;
   canEdit?: boolean;
-  children?: React.ReactNode;
+  children?: (location: LocationTransformer) => React.ReactNode;
+  onAddNewLocation?: (location: LocationTransformer) => Promise<string>;
 }
 
 export const ZixLocationInfoWidgetWrapper: React.FC<ZixLocationInfoWidgetWrapperProps> = ({
   children,
-  location,
-  canEdit
+  locationId,
+  canEdit,
+  onAddNewLocation,
 }) => {
   const router = useRouter()
   const { getUrlPrefix } = useAuth()
 
+
+  const { data, isLoading } = useQuery({
+    queryFn: () => locationId ? LocationService.retrieve({
+      location: locationId,
+    }) : undefined,
+    queryKey: ['LocationService.retrieve', locationId],
+  })
+
+  const [loadingEditAction, setLoadingEditAction] = useState(false)
   const renderEditButton = () => canEdit ? (
-    <Button icon={Pencil} size='$2' onPress={() => {
-      router.push(`${getUrlPrefix}/locations/${location.id}/edit`)
+    <ZixButton icon={Pencil} size='$2' loading={loadingEditAction} onPress={() => {
+      if (!locationId) {
+        setLoadingEditAction(true)
+        LocationService.create({
+          requestBody: {},
+        }).then(async ({ data }) => {
+          if (!data) return
+          await onAddNewLocation?.(data)
+          setLoadingEditAction(false)
+          router.push(`${getUrlPrefix}/locations/${data?.id}/edit`)
+        })
+      } else {
+        router.push(`${getUrlPrefix}/locations/${locationId}/edit`)
+      }
+
     }}>
       {t('common:edit')}
-    </Button>
+    </ZixButton>
   ) : null
 
   return (
     <ZixWidgetContainer label={t('app:common.location')} labelPrepend={renderEditButton()}>
-      {children}
+      {
+        (isLoading || !data?.data) ? (<View height='$4' backgroundColor='$color3' />) : children?.(data?.data)
+      }
     </ZixWidgetContainer>
   );
 }

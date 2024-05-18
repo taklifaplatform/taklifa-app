@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { OpenAPI, request } from '@zix/api';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   SelectProps
 } from 'tamagui';
-import ZixSelectField, { BaseSelectFieldItem, ZixSelectFieldProps } from '../zix-select-field/zix-select-field';
 import { useDebounce } from 'use-debounce';
+import ZixSelectField, { BaseSelectFieldItem, ZixSelectFieldProps } from '../zix-select-field/zix-select-field';
 /**
  * TODO: implement load more logic
  */
@@ -37,7 +37,6 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
   }
 
   const [search, setSearch] = useState<string>();
-  const [localItems, setLocalItems] = useState([])
   const [value] = useDebounce(search, 1000);
   const { data } = useQuery(
     {
@@ -59,43 +58,12 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
 
   const mappedData = useMemo<BaseSelectFieldItem[]>(() => {
     return [
-      ...localItems,
       ...data?.data || []
     ].map(dataMapper ? dataMapper : (item: any) => ({
       id: item[itemKey || 'id'],
       name: item[itemValue || 'name'],
     })) || [];
-  }, [localItems, data?.data, dataMapper, itemKey, itemValue])
-
-  const objectExistsLocally = useMemo(() => {
-    return !props.value || mappedData.find(item => item.id === props.value)
-  }, [props.value, mappedData])
-
-  const [loadingLocalItems, setLoadingLocalItems] = useState(false)
-  useEffect(() => {
-    if (!objectExistsLocally) {
-      setLoadingLocalItems(true)
-      request<any>(OpenAPI, {
-        method: 'GET',
-        url: `/api/${api}`,
-        query: {
-          search: props.value,
-          page: 1,
-          per_page: 1
-        },
-      }).then((res) => {
-        if (res.data.length) {
-          setLocalItems(res.data)
-        }
-      }).finally(() => {
-        setLoadingLocalItems(false)
-      })
-    }
-  }, [api, objectExistsLocally, props.value])
-
-  // if (loadingLocalItems && !objectExistsLocally) {
-  //   return null
-  // }
+  }, [data?.data, dataMapper, itemKey, itemValue])
 
   return (
     <ZixSelectField

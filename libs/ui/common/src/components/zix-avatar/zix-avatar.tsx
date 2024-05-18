@@ -1,9 +1,10 @@
 import { MediaTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
 import { useMemo } from 'react';
-import { Avatar, Image, SizeTokens, useStyle } from 'tamagui';
+import { Avatar, Image, SizeTokens, ThemeableStackProps, useStyle } from 'tamagui';
 
-export type ZixAvatarProps = {
+
+export type ZixAvatarProps = ThemeableStackProps & {
   size?: SizeTokens;
   media?: MediaTransformer;
   name?: string;

@@ -38,7 +38,7 @@ export const InlineItemSelect: React.FC<InlineItemSelectProps> = ({
       justifyContent="space-between"
       alignItems="center"
       borderColor={selectedValue === value ? '$color5' : '$color2'}
-      borderWidth="$0.5"
+      borderWidth="$1"
       borderRadius="$6"
       backgroundColor="$color2"
       cursor="pointer"

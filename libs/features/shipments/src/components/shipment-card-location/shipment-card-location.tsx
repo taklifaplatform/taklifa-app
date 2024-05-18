@@ -25,7 +25,7 @@ export const ShipmentCardLocation: React.FC<ShipmentCardLocationProps> = ({
       gap="$3"
       paddingHorizontal='$4'
       paddingVertical='$3'
-      borderWidth="$0.5"
+      borderWidth="$1"
       borderColor='$color9'
       borderRadius='$4'
       {...props}

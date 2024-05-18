@@ -86,6 +86,7 @@ export const SignUpScreen = () => {
       AuthService.register({
         requestBody: {
           is_customer: requestedAccountType === USER_ROLES.customer,
+          is_solo_driver: requestedAccountType === USER_ROLES.solo_driver,
           ...variables,
         },
       }),

@@ -9,7 +9,6 @@ import React from 'react';
 import { useRouter } from 'solito/router';
 import { Button, Text, Theme, XStack, YStack } from 'tamagui';
 
-/* eslint-disable-next-line */
 export type CompanyListItemProps = {
   company: SimpleCompanyTransformer
   isSelected: boolean,
@@ -68,8 +67,7 @@ export const CompanyListItem: React.FC<CompanyListItemProps> = ({
       onPress={async () => {
         if (!company.id) return
         await onPress(company.id)
-        router.push(`${getUrlPrefix}/company`)
-        router.push(`${getUrlPrefix}/company/settings`)
+        router.push(`${getUrlPrefix}/companies/${company.id}/settings`)
       }}
     >
       Update Documents

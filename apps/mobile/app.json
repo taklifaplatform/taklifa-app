@@ -19,7 +19,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.zixdev.demo.sawaeed",
-      "buildNumber": "98",
+      "buildNumber": "100",
       "infoPlist": {
         "CFBundleDevelopmentRegion": "en",
         "ExpoLocalization_supportsRTL": true,
@@ -58,7 +58,7 @@
         "backgroundColor": "#FECA16"
       },
       "package": "com.zixdev.demo.sawaeed",
-      "versionCode": 31,
+      "versionCode": 39,
       "permissions": [
         "android.permission.RECORD_AUDIO",
         "android.permission.CAMERA"
@@ -103,12 +103,6 @@
         }
       ],
       [
-        "expo-updates",
-        {
-          "username": "zixdev"
-        }
-      ],
-      [
         "expo-location",
         {
           "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
@@ -128,9 +122,7 @@
         "projectId": "e42af032-da25-4337-9836-69ea04279e11"
       }
     },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
+    "runtimeVersion": "1.0.0",
     "owner": "zixdev",
     "hooks": {
       "postPublish": [
@@ -142,9 +134,6 @@
           }
         }
       ]
-    },
-    "updates": {
-      "url": "https://u.expo.dev/e42af032-da25-4337-9836-69ea04279e11"
     }
   }
 }

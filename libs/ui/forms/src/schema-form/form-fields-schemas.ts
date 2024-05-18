@@ -1,11 +1,7 @@
 import { createUniqueFieldSchema } from '@ts-react/form';
 
 import { z, ZodTypeAny } from 'zod';
-import {
-  LocationSchema,
-  MoneySchema,
-  ShipmentItemsSchema,
-} from '../form-fields';
+import { MoneySchema, ShipmentItemsSchema } from '../form-fields';
 
 export const mediaSchema = z.object({
   id: z.any().optional().nullable(),
@@ -14,13 +10,21 @@ export const mediaSchema = z.object({
   // original_url: z.string(),
 });
 
-export const floatEnter = (schema: ZodTypeAny) => z.preprocess((a) => {
-  if (typeof a === 'string') {
-    return parseFloat(a);
-  }
-  return a;
+export const floatEnter = (schema: ZodTypeAny) =>
+  z.preprocess((a) => {
+    if (typeof a === 'string') {
+      return parseFloat(a);
+    }
+    return a;
+  }, schema);
 
-}, schema);
+export const forceStringType = () =>
+  z.preprocess((a) => {
+    if (typeof a === 'number') {
+      return String(a);
+    }
+    return a;
+  }, z.any());
 
 export const formFields = {
   text: z.string(),
@@ -53,7 +57,8 @@ export const formFields = {
   /**
    * make sure to pass tableName='' to props for this, default is states
    */
-  autocomplete: createUniqueFieldSchema(z.string(), 'autocomplete'),
+  // autocomplete: forceStringType(z.any()),
+  autocomplete: createUniqueFieldSchema(forceStringType(), 'autocomplete'),
 
   /**
    * Medias (images, videos, audios, etc.)
@@ -91,13 +96,10 @@ export const formFields = {
   ),
   row_date_picker: createUniqueFieldSchema(z.string(), 'row_date_picker'),
 
-  country: createUniqueFieldSchema(z.string(), 'country'),
+  country: createUniqueFieldSchema(forceStringType(), 'country'),
 
-  location: createUniqueFieldSchema(LocationSchema, 'location'),
-  advanced_location: createUniqueFieldSchema(
-    LocationSchema,
-    'advanced_location',
-  ),
+  location: createUniqueFieldSchema(z.string(), 'location'),
+  advanced_location: createUniqueFieldSchema(z.string(), 'advanced_location'),
 
   shipment_items: createUniqueFieldSchema(
     ShipmentItemsSchema,

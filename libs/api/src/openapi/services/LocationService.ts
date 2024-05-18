@@ -55,4 +55,26 @@ export class LocationService {
             },
         });
     }
+    /**
+     * User Store Location.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static create({
+        requestBody,
+    }: {
+        requestBody: UpdateLocationRequest,
+    }): CancelablePromise<{
+        data?: LocationTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/locations',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation errors`,
+            },
+        });
+    }
 }

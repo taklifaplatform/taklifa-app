@@ -74,7 +74,10 @@
       "working-day": "Working Day",
       "from": "From",
       "to": "To",
-      "location": "Location"
+      "location": "Location",
+      "online": "Online now",
+      "offline": "Offline",
+      "last-seen": "Last seen"
     },
     "company": {
       "verification_status": {

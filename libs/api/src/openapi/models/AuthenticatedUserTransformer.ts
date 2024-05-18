@@ -13,6 +13,7 @@ export type AuthenticatedUserTransformer = {
     phone_number_has_whatsapp?: boolean;
     email?: string;
     email_verified_at?: string;
+    verification_status?: string;
     about?: string;
     roles?: Array<UserSimpleRoleTransformer>;
     active_role?: UserSimpleRoleTransformer;

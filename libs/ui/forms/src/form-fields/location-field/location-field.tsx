@@ -1,18 +1,14 @@
 import { useFieldInfo, useTsController } from '@ts-react/form';
-import { z } from 'zod';
 
 import { LocateFixed, Pen } from '@tamagui/lucide-icons';
-import { CountryTransformer } from '@zix/api';
+import { useQuery } from '@tanstack/react-query';
+import { LocationService } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
-import { Button, Separator, Text, Theme, View, XStack, YStack } from 'tamagui';
+import { useRouter } from 'solito/router';
+import { Button, Text, Theme, View, XStack, YStack } from 'tamagui';
 import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common';
-import ZixFieldContainer from '../../common/zix-field-container/zix-field-container';
-import { ZixAutoCompleteField, ZixInput } from '../../fields';
+import { ZixInput } from '../../fields';
 import ZixMapPointerField from '../../fields/zix-map-pointer-field/zix-map-pointer-field';
-import { GroupFieldsSheet } from '../../wrappers';
-import { MapLocationPicker } from './map-location-picker';
-import { t } from 'i18next';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 export type LocationFieldProps = {
   containerProps?: BaseFormFieldContainerProps;
@@ -20,44 +16,30 @@ export type LocationFieldProps = {
   type?: 'advanced' | 'simple';
 };
 
-export const LocationSchema = z.object({
-  id: z.string().optional().nullable(),
-  name: z.string().optional().nullable(),
-  address: z.string(),
-  address_complement: z.string().optional().nullable(),
-
-  building_name: z.string().optional().nullable(),
-  floor_number: z.string().optional().nullable(),
-  house_number: z.string().optional().nullable(),
-  postcode: z.string().optional().nullable(),
-
-  notes: z.string().optional().nullable(),
-
-  country_id: z.number(),
-  state_id: z.number().optional().nullable(),
-  city_id: z.number().optional().nullable(),
-  phone_number: z.string().optional().nullable(),
-  is_primary: z.boolean().optional().nullable(),
-
-  latitude: z.any().optional().nullable(),
-  longitude: z.any().optional().nullable(),
-});
-const client = new QueryClient();
 export const LocationField: React.FC<LocationFieldProps> = ({
   containerProps = {},
   type = 'simple',
-  // type = 'advanced',
   ...props
 }) => {
   const {
     field: { onChange, value },
     error,
-  } = useTsController<z.infer<typeof LocationSchema>>();
+  } = useTsController<string>();
   const { placeholder } = useFieldInfo();
+  const router = useRouter();
+
+  const { data } = useQuery({
+    queryFn: () => value ? LocationService.retrieve({
+      location: value,
+    }) : { data: {} },
+    queryKey: ['LocationService.retrieve', value],
+  })
+
+  const locationData = data?.data ?? {}
 
   const renderAddressCard = () =>
     type === 'advanced' &&
-    value?.address && (
+    locationData?.address && (
       <YStack
         borderWidth="$0.5"
         borderColor="$color8"
@@ -72,27 +54,27 @@ export const LocationField: React.FC<LocationFieldProps> = ({
             <Theme name="accent">
               <CustomIcon name="location" size="$1" color="$color9" />
             </Theme>
-            <Text fontWeight="700">{value?.name ?? 'Home'}</Text>
+            <Text fontWeight="700">{locationData?.name ?? 'Home'}</Text>
           </XStack>
 
           <XStack alignItems="center" gap="$2">
             <View
-              theme={value?.is_primary ? 'accent' : undefined}
+              theme={locationData?.is_primary ? 'accent' : undefined}
               backgroundColor="$color4"
               paddingHorizontal="$4"
               paddingVertical="$2"
               borderRadius="$3"
             >
               <Text fontWeight="700">
-                {value?.is_primary ? 'Primary' : 'Secondary'}
+                {locationData?.is_primary ? 'Primary' : 'Secondary'}
               </Text>
             </View>
             <Button size="$2" icon={Pen} />
           </XStack>
         </XStack>
-        {value?.address && <Text>{value?.address}</Text>}
+        {locationData?.address && <Text>{locationData?.address}</Text>}
 
-        {value?.phone_number && <Text>{value?.phone_number}</Text>}
+        {locationData?.phone_number && <Text>{locationData?.phone_number}</Text>}
 
         {/* <DebugObject object={value} /> */}
       </YStack>
@@ -100,216 +82,50 @@ export const LocationField: React.FC<LocationFieldProps> = ({
 
   const renderAddressMap = () =>
     type === 'advanced' &&
-    value?.latitude &&
-    value?.longitude && (
+    locationData?.latitude &&
+    locationData?.longitude && (
       <View height="$12">
-        <ZixMapPointerField value={value} />
+        <ZixMapPointerField value={locationData} />
       </View>
     );
 
-  const renderFormContent = () => (
-    <YStack gap="$2">
-
-      <MapLocationPicker value={value} onChange={(val) => onChange({
-        ...value,
-        ...val
-      })} />
-
-
-      <Separator marginTop="$4" />
-
-      <ZixFieldContainer
-        label={t('common:address-information')}
-        labelBold
-        collapsible
-      >
-        <YStack gap="$4">
-          <ZixFieldContainer
-            label={t('app:forms.labels.address')}
-            error={error?.address}
-          >
-            <ZixInput
-              placeholder={t('app:forms.placeholders.address')}
-              value={value?.address}
-              onChangeText={(address) =>
-                onChange({
-                  ...value,
-                  address,
-                })
-              }
-            />
-          </ZixFieldContainer>
-
-          <ZixFieldContainer
-            label={t('app:forms.labels.building-name')}
-            isOptional
-            error={error?.building_name}
-          >
-            <ZixInput
-              placeholder={t('app:forms.placeholders.building-name')}
-              value={value?.building_name}
-              onChangeText={(building_name) =>
-                onChange({
-                  ...value,
-                  building_name,
-                })
-              }
-            />
-          </ZixFieldContainer>
-
-          <XStack alignItems="flex-start" gap="$4">
-            <ZixFieldContainer
-              label={t('app:forms.labels.floor-number')}
-              isOptional
-              error={error?.floor_number}
-            >
-              <ZixInput
-                placeholder={t('app:forms.placeholders.floor-number')}
-                value={value?.floor_number}
-                onChangeText={(floor_number) =>
-                  onChange({
-                    ...value,
-                    floor_number,
-                  })
-                }
-              />
-            </ZixFieldContainer>
-
-            <ZixFieldContainer
-              label={t('app:forms.labels.house-number')}
-              isOptional
-              error={error?.house_number}
-            >
-              <ZixInput
-                placeholder={t('app:forms.placeholders.house-number')}
-                value={value?.house_number}
-                onChangeText={(house_number) =>
-                  onChange({
-                    ...value,
-                    house_number,
-                  })
-                }
-              />
-            </ZixFieldContainer>
-          </XStack>
-
-          <ZixFieldContainer
-            label={t('app:forms.labels.country')}
-            error={error?.country_id}
-          >
-            <ZixAutoCompleteField
-              placeholder={t('app:forms.placeholders.country')}
-              api="geography/countries"
-              value={`${value?.country_id}`}
-              dataMapper={(item: CountryTransformer) => ({
-                id: `${item.id}`,
-                name: item.name,
-                icon: item.flag,
-              })}
-              onChange={(country_id) =>
-                onChange({
-                  ...value,
-                  country_id: parseInt(country_id),
-                })
-              }
-            />
-          </ZixFieldContainer>
-
-          <XStack alignItems="flex-start" gap="$4">
-            <ZixFieldContainer
-              label={t('app:forms.labels.state')}
-              isOptional
-              error={error?.state_id}
-            >
-              <ZixAutoCompleteField
-                placeholder={t('app:forms.placeholders.state')}
-                api="geography/states"
-                query={{
-                  country_id: value?.country_id,
-                }}
-                value={value?.state_id}
-                onChange={(state_id) =>
-                  onChange({
-                    ...value,
-                    state_id: parseInt(state_id),
-                  })
-                }
-              />
-            </ZixFieldContainer>
-
-            <ZixFieldContainer
-              label={t('app:forms.labels.city')}
-              isOptional
-              error={error?.city_id}
-            >
-              <ZixAutoCompleteField
-                placeholder={t('app:forms.placeholders.city')}
-                api="geography/cities"
-                query={{
-                  country_id: value?.country_id,
-                }}
-                value={value?.city_id}
-                onChange={(city_id) =>
-                  onChange({
-                    ...value,
-                    city_id: parseInt(city_id),
-                  })
-                }
-              />
-            </ZixFieldContainer>
-          </XStack>
-        </YStack>
-      </ZixFieldContainer>
-
-      <Separator marginTop="$4" />
-
-      <ZixFieldContainer
-        label={t('app:forms.labels.notes')}
-        labelBold
-        collapsible
-        error={error?.notes}
-        isOptional
-      >
-        <ZixInput
-          placeholder={t('app:forms.placeholders.notes')}
-          isMultiline
-          value={value?.notes}
-          onChangeText={(notes) =>
-            onChange({
-              ...value,
-              notes,
-            })
-          }
-        />
-      </ZixFieldContainer>
-    </YStack>
-  );
-
   const renderInputActivator = () =>
-    (type === 'simple' || !value?.address) && (
+    (type === 'simple' || !locationData?.address) && (
       <ZixInput
         rightIcon={(props) => <LocateFixed {...props} />}
         placeholder={placeholder}
-        value={value?.address}
+        value={locationData?.address}
       />
     );
 
   return (
-    <FormFieldContainer {...containerProps}>
-      <GroupFieldsSheet
-        title={t('common:address-information')}
-        activator={
-          <YStack gap="$4">
-            {renderAddressCard()}
-            {renderAddressMap()}
-            {renderInputActivator()}
-          </YStack>
-        }
-      >
-        <QueryClientProvider client={client}>
-          {renderFormContent()}
-        </QueryClientProvider>
-      </GroupFieldsSheet>
+    <FormFieldContainer {...containerProps} error={error}>
+      <YStack gap="$4" position="relative">
+        {renderAddressCard()}
+        {renderAddressMap()}
+        {renderInputActivator()}
+        <View
+          onPress={() => {
+            if (!value) {
+              LocationService.create({
+                requestBody: {},
+              }).then(({ data }) => {
+                if (data?.id) {
+                  onChange(data.id)
+                  router.push(`/app/locations/${data.id}/edit`)
+                }
+              })
+            } else {
+              router.push(`/app/locations/${value}/edit`)
+            }
+          }}
+          position="absolute"
+          top={0}
+          right={0}
+          bottom={0}
+          left={0}
+        />
+      </YStack>
     </FormFieldContainer>
   );
 };

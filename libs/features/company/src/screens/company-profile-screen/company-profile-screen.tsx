@@ -67,7 +67,7 @@ export function CompanyProfileScreen() {
           <TouchableOpacity
             style={{
               borderRadius: 4,
-              padding: 5,
+                padding: 5,
             }}
             onPress={() => router.push(`${getUrlPrefix}/account/settings`)}
           >
@@ -84,7 +84,7 @@ export function CompanyProfileScreen() {
 
 
   return (
-    <ScreenLayout authProtected>
+    <ScreenLayout>
       {renderHeader()}
       {renderLoadingSpinner()}
       {renderCompanyProfile()}

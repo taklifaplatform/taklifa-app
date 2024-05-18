@@ -2,7 +2,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { LocationTransformer } from './LocationTransformer';
 import type { MediaTransformer } from './MediaTransformer';
 export type CompanyTransformer = {
     id?: string;
@@ -11,7 +10,7 @@ export type CompanyTransformer = {
     working_hours_id?: string;
     vehicles_count?: number;
     logo?: MediaTransformer;
-    location?: LocationTransformer;
+    location_id?: string;
     rating_stats?: {
         score?: number;
         count?: number;

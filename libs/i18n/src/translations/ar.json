@@ -74,7 +74,10 @@
       "working-day": "يوم عمل",
       "from": "من",
       "to": "إلى",
-      "location": "الموقع"
+      "location": "الموقع",
+      "online": "متصل الآن",
+      "offline": "غير متصل",
+      "last-seen": "آخر ظهور"
     },
     "company": {
       "verification_status": {

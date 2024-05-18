@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 
 import { useToastController } from '@tamagui/toast';
@@ -14,43 +14,52 @@ import {
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { FormProvider, useForm } from 'react-hook-form';
+import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
 import { Theme } from 'tamagui';
 import { z } from 'zod';
+
+const { useParam } = createParam<{ company: string }>();
 
 const UpdateCompanyFormSchema = z
   .object({
     logo: formFields.image.describe('Logo // Add Company Logo').optional(),
     name: formFields.text.min(2).max(150).describe(t('forms:company_name')),
     about: formFields.textarea.describe('About // Enter company description'),
-    location: formFields.advanced_location.describe('Company Location // Enter company location'),
+    location_id: formFields.location.describe('Company Location // Enter company location'),
   })
   .required({
     name: true,
   });
 
 export const UpdateCompanyScreen: React.FC = () => {
+  const [companyId] = useParam('company');
+
   const form = useForm<z.infer<typeof UpdateCompanyFormSchema>>();
   const { user, refetchUser } = useAuth();
   const toast = useToastController();
+  const queryClient = useQueryClient();
 
   const router = useRouter();
 
   const { data } = useQuery({
-    queryFn: () => CompaniesService.retrieveCompany({
-      company: user?.active_company?.id || '',
-    }),
-    queryKey: ['CompaniesService.retrieveCompany', user?.active_company?.id]
+    queryFn: () => companyId ? CompaniesService.retrieveCompany({
+      company: companyId,
+    }) : undefined,
+    queryKey: ['CompaniesService.retrieveCompany', companyId]
   })
 
   const { mutateAsync } = useMutation({
     async mutationFn(requestBody: z.infer<typeof UpdateCompanyFormSchema>) {
       return CompanyAdminService.update({
-        company: user?.active_company?.id,
+        company: companyId,
         requestBody,
       });
     },
     onSuccess() {
+      queryClient.invalidateQueries({
+        queryKey: ['CompaniesService.retrieveCompany', companyId]
+      });
       refetchUser();
       toast.show('Company Updated Successfully!');
       router.back();

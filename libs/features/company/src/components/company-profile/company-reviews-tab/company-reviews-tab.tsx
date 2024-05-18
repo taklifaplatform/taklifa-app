@@ -104,7 +104,7 @@ export const CompanyReviewsTab: React.FC<CompanyReviewsTabProps> = ({
       </XStack>
       <View
         backgroundColor="$color2"
-        height="$0.25"
+        height="$1"
         width='100%'
         marginVertical='$3'
       />

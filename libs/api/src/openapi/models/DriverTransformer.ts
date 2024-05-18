@@ -12,11 +12,13 @@ export type DriverTransformer = {
     username?: string;
     name?: string;
     phone_number?: string;
+    latest_activity?: string;
     working_hours_id?: string;
     about?: string;
     avatar?: MediaTransformer;
     companies?: Array<SimpleCompanyTransformer>;
     location?: LocationTransformer;
+    location_id?: string;
     rating_stats?: {
         score?: number;
         count?: number;

@@ -82,9 +82,48 @@ export const ManageShipmentRecipientScreen: React.FC = () => {
     },
   });
 
-  if (shipmentId && !data?.data) {
-    return <FullScreenSpinner />;
-  }
+  const renderForm = () => !!data?.data && (
+    <SchemaForm
+      form={form}
+      schema={SendFromSchema}
+      props={{
+        to_location: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
+        deliver_date: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
+        deliver_time: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
+      }}
+      defaultValues={data.data}
+      onSubmit={mutateAsync}
+      renderAfter={({ submit }) => (
+        <Theme inverse>
+          <SubmitButton onPress={() => submit()}>Confirm</SubmitButton>
+        </Theme>
+      )}
+    >
+      {({ to_location, recipient_name, recipient_phone, ...fields }) => (
+        <>
+          <ShipmentManagerHeader
+            activeStep={2}
+            shipment={data?.data}
+            title={t('app:shipment-manager.recipient.description')}
+          />
+
+          {to_location}
+
+          <ZixFieldContainer
+            label={t('app:forms.labels.recipient-info')}
+            {...SHARED_SHIPMENT_MANAGER_FIELD_PROPS.containerProps}
+          >
+            {recipient_name}
+            {recipient_phone}
+          </ZixFieldContainer>
+
+          {Object.values(fields)}
+        </>
+      )}
+    </SchemaForm>
+  )
+
+  const renderLoading = () => (shipmentId && !data?.data) && <FullScreenSpinner />;
 
   return (
     <ScreenLayout safeAreaBottom authProtected>
@@ -92,44 +131,8 @@ export const ManageShipmentRecipientScreen: React.FC = () => {
         title={t('app:shipment-manager.recipient.title')}
         showBackButton
       />
-      <SchemaForm
-        form={form}
-        schema={SendFromSchema}
-        props={{
-          to_location: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
-          deliver_date: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
-          deliver_time: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
-        }}
-        defaultValues={data.data}
-        onSubmit={mutateAsync}
-        renderAfter={({ submit }) => (
-          <Theme inverse>
-            <SubmitButton onPress={() => submit()}>Confirm</SubmitButton>
-          </Theme>
-        )}
-      >
-        {({ to_location, recipient_name, recipient_phone, ...fields }) => (
-          <>
-            <ShipmentManagerHeader
-              activeStep={2}
-              shipment={data?.data}
-              title={t('app:shipment-manager.recipient.description')}
-            />
-
-            {to_location}
-
-            <ZixFieldContainer
-              label={t('app:forms.labels.recipient-info')}
-              {...SHARED_SHIPMENT_MANAGER_FIELD_PROPS.containerProps}
-            >
-              {recipient_name}
-              {recipient_phone}
-            </ZixFieldContainer>
-
-            {Object.values(fields)}
-          </>
-        )}
-      </SchemaForm>
+      {renderLoading()}
+      {renderForm()}
     </ScreenLayout>
   );
 };

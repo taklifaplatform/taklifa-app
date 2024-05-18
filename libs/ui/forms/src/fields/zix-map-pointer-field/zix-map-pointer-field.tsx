@@ -1,7 +1,8 @@
 import { LocationTransformer } from '@zix/api';
+import { ZixMapMarker } from '@zix/ui/common';
 import React, { useEffect, useRef } from 'react';
 
-import MapView, { Marker } from 'react-native-maps';
+import MapView from 'react-native-maps';
 import { View } from 'tamagui';
 
 export type ZixMapPointerFieldProps = {
@@ -33,6 +34,22 @@ export const ZixMapPointerField: React.FC<ZixMapPointerFieldProps> = (
     }
   }, [props.value?.latitude, props.value?.longitude]);
 
+  const mapPressTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  function onCoordinateUpdate(coordinate) {
+    if (mapPressTimeout.current) {
+      clearTimeout(mapPressTimeout.current);
+    }
+    mapPressTimeout.current = setTimeout(() => {
+      if (coordinate) {
+        props.onChange?.({
+          latitude: coordinate.latitude,
+          longitude: coordinate.longitude,
+        });
+      }
+    }, 1000);
+  }
+
   return (
     <View flex={1} borderRadius="$4" overflow="hidden">
       <MapView
@@ -49,45 +66,13 @@ export const ZixMapPointerField: React.FC<ZixMapPointerFieldProps> = (
           altitude: 100000,
           zoom: 10,
         }}
-        onPress={(e) => {
-          if (!props.value?.latitude || !props.value?.longitude) {
-            props.onChange?.({
-              latitude: e.nativeEvent.coordinate.latitude,
-              longitude: e.nativeEvent.coordinate.longitude,
-            });
-          }
-        }}
+        onPress={(e) => onCoordinateUpdate(e.nativeEvent.coordinate)}
       >
-        {props.value?.latitude && props.value?.longitude ? (
-          <Marker
-            coordinate={props.value}
-            draggable={!!props.onChange}
-            onDragEnd={(e) => {
-              props.onChange?.({
-                latitude: e.nativeEvent.coordinate.latitude,
-                longitude: e.nativeEvent.coordinate.longitude,
-              });
-            }}
-          >
-            <View
-              theme="accent"
-              backgroundColor="rgba(254, 202, 22, 0.3)"
-              width="$4"
-              height="$4"
-              borderRadius="$20"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <View
-                theme="accent"
-                backgroundColor="$color9"
-                width="$1.5"
-                height="$1.5"
-                borderRadius="$20"
-              />
-            </View>
-          </Marker>
-        ) : null}
+        <ZixMapMarker
+          location={props.value}
+          draggable={!!props.onChange}
+          onDragEnd={(e) => onCoordinateUpdate(e.nativeEvent.coordinate)}
+        />
       </MapView>
     </View>
   );

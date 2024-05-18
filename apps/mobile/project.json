@@ -48,7 +48,8 @@
       "options": {
         "profile": "development",
         "platform": "android",
-        "local": true
+        "local": true,
+        "clearCache": true
       }
     },
     "release:ios": {

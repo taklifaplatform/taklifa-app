@@ -13,7 +13,7 @@ import { t } from 'i18next';
 
 export function ManageCompanyDataScreen() {
   const router = useRouter();
-  const { getUrlPrefix } = useAuth();
+  const { getUrlPrefix, activeCompanyId } = useAuth();
 
   const [search, setSearch] = useState<string>();
 
@@ -56,7 +56,7 @@ export function ManageCompanyDataScreen() {
         }}
         headerRight={() => (
           <TouchableOpacity
-            onPress={() => router.push(`${getUrlPrefix}/company/settings`)}
+            onPress={() => router.push(`${getUrlPrefix}/companies/${activeCompanyId}/settings`)}
           >
             <Cog size="$2" />
           </TouchableOpacity>

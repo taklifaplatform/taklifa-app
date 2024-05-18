@@ -1,4 +1,6 @@
-import { DriverTransformer } from '@zix/api';
+import { useToastController } from '@tamagui/toast';
+import { useQueryClient } from '@tanstack/react-query';
+import { DriverTransformer, LocationTransformer, UserService } from '@zix/api';
 import { ZixWorkingHoursWidget } from '@zix/features/working-hours';
 import { useAuth } from '@zix/services/auth';
 import { MediaFile } from '@zix/ui/common';
@@ -6,6 +8,7 @@ import { ZixLocationInfoWidget, ZixWidgetContainer } from '@zix/ui/widgets';
 import React, { useRef } from 'react';
 import { Dimensions } from 'react-native';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
+import { t } from 'i18next';
 import { useRouter } from 'solito/router';
 
 import { Stack, Text, YStack } from 'tamagui';
@@ -32,9 +35,30 @@ export const AboutUserTab: React.FC<AboutUserTabProps> = ({
       width: USER_CARD_WIDTH,
     },
   } as const);
+  const queryClient = useQueryClient();
+  const toast = useToastController()
 
-  const renderAbout = () => (isServiceProvider(user) && !!user.about?.length) && (
-    <ZixWidgetContainer label='About Driver'>
+  async function onAddNewLocation(location: LocationTransformer) {
+    try {
+      await UserService.updateLocation({
+        requestBody: {
+          location_id: location.id
+        }
+      })
+      queryClient.invalidateQueries({
+        queryKey: ['DriversService.retrieveDriver', user.id]
+      })
+      return location.id
+    } catch (error: any) {
+      toast.show(error?.message || t('app:errors.something-went-wrong'), {
+        preset: 'error',
+      });
+      return null
+    }
+  }
+
+  const renderAbout = () => (!!user.about?.length) && (
+    <ZixWidgetContainer label={isServiceProvider(user) ? 'About Driver' : 'About'}>
       <Text flex={1} color='black'>
         {user.about}
       </Text>
@@ -113,8 +137,8 @@ export const AboutUserTab: React.FC<AboutUserTabProps> = ({
     </ZixWidgetContainer>
   )
 
-  const renderLocation = () => !!user.location && (
-    <ZixLocationInfoWidget location={user.location} canEdit={authUser?.id === user?.id} />
+  const renderLocation = () => (!!user.location_id || authUser?.id === user?.id) && (
+    <ZixLocationInfoWidget locationId={user.location_id} canEdit={authUser?.id === user?.id} onAddNewLocation={onAddNewLocation} />
   )
 
   const renderWorkingHours = () => (isServiceProvider(user) && user.working_hours_id) && (

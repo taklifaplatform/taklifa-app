@@ -7,6 +7,7 @@ import {
   SchemaForm,
   SubmitButton,
   ZixFieldContainer,
+  ZixMapLocationPickerField,
   formFields,
   handleFormErrors
 } from '@zix/ui/forms';
@@ -15,7 +16,7 @@ import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
-import { Theme, XStack, YStack } from 'tamagui';
+import { Separator, Theme, XStack, YStack } from 'tamagui';
 import { z } from 'zod';
 
 const { useParam } = createParam<{ location: string }>();
@@ -23,6 +24,8 @@ const { useParam } = createParam<{ location: string }>();
 
 const LocationManagerSchema = z
   .object({
+    latitude: z.number(),
+    longitude: z.number(),
     address: formFields.textarea.describe(
       `${t('app:forms.labels.address')} // ${t('app:forms.placeholders.address')}`
     ),
@@ -39,10 +42,10 @@ const LocationManagerSchema = z
     country_id: formFields.country.describe(
       `${t('app:forms.labels.country')} // ${t('app:forms.placeholders.country')}`
     ),
-    state_id: formFields.country.describe(
+    state_id: formFields.autocomplete.describe(
       `${t('app:forms.labels.state')} // ${t('app:forms.placeholders.state')}`
     ).optional().nullable(),
-    city_id: formFields.country.describe(
+    city_id: formFields.autocomplete.describe(
       `${t('app:forms.labels.city')} // ${t('app:forms.placeholders.city')}`
     ).optional().nullable(),
     notes: formFields.textarea.describe(
@@ -74,7 +77,7 @@ export function LocationManagerScreen() {
     onSuccess({ data }) {
       toast.show(t('app:success.updated'))
       queryClient.refetchQueries({
-        queryKey: ['LocationService.retrieve', locationId, data?.owner_id],
+        queryKey: ['LocationService.retrieve', locationId],
       });
       router.back()
     },
@@ -84,7 +87,7 @@ export function LocationManagerScreen() {
     },
   })
 
-  const renderForm = () => data?.data && (
+  const renderForm = () => !!data?.data && (
     <SchemaForm
       form={form}
       schema={LocationManagerSchema}
@@ -95,6 +98,12 @@ export function LocationManagerScreen() {
             labelBold: true,
             collapsible: true,
           }
+        },
+        state_id: {
+          api: 'geography/states',
+        },
+        city_id: {
+          api: 'geography/cities',
         }
       }}
       onSubmit={mutateAsync}
@@ -112,6 +121,16 @@ export function LocationManagerScreen() {
     >
       {({ address, building_name, floor_number, house_number, country_id, state_id, city_id, notes }) => (
         <YStack gap="$2">
+          <ZixMapLocationPickerField
+            value={data?.data} onChange={(val) => {
+              console.log("location manager screen: location ob:: ", val)
+              Object.keys(val).forEach(key => {
+                form.setValue(key, val[key])
+              })
+            }}
+          />
+          <Separator marginTop="$4" />
+
           <ZixFieldContainer
             label={t('common:address-information')}
             labelBold
