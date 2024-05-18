@@ -6,10 +6,10 @@ import { USER_ROLES, useAuth } from '@zix/services/auth';
 import { UserAvatar, ZixButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { ZixLocationInfoWidget, ZixWidgetContainer } from '@zix/ui/widgets';
-import React, { useRef } from 'react';
-import { Dimensions, FlatList } from 'react-native';
-import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { t } from 'i18next';
+import React, { useRef } from 'react';
+import { Dimensions } from 'react-native';
+import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useRouter } from 'solito/router';
 
 import { Text, Theme, View, XStack, YStack } from 'tamagui';
@@ -29,7 +29,7 @@ export const AboutCompanyTab: React.FC<AboutCompanyTabProps> = ({
   const baseOptions = ({
     vertical: false,
     width: USER_CARD_WIDTH / 3,
-    height: USER_CARD_HEIGHT ,
+    height: USER_CARD_HEIGHT,
     style: {
       width: USER_CARD_WIDTH,
     },
@@ -107,7 +107,7 @@ export const AboutCompanyTab: React.FC<AboutCompanyTabProps> = ({
                     <CustomIcon name='half_star' size={16} color='$color9' />
                   </Theme>
                 </XStack>
-              ): <View height={'$1'}/>
+              ) : <View height={'$1'} />
             }
 
           </YStack>
@@ -116,51 +116,6 @@ export const AboutCompanyTab: React.FC<AboutCompanyTabProps> = ({
     </ZixWidgetContainer>
   )
 
-  const renderDriversList = () => !!data?.data?.length && (
-    <ZixWidgetContainer label='Drivers'>
-      <FlatList
-        data={data.data}
-        horizontal
-        renderItem={({ item, index }) => (
-          <YStack
-            onPress={() => {
-              router.push(`${getUrlPrefix}/users/${item.user?.id}`)
-            }}
-            key={`${item.id}-${index}`}
-            marginRight='$4'
-            backgroundColor='$color2'
-            paddingVertical='$3'
-            paddingHorizontal='$2'
-            borderRadius='$4'
-            alignItems='center'
-            gap='$2'
-            width='$10'
-          >
-            <UserAvatar user={item.user} />
-            <Text fontWeight='700' numberOfLines={1}>
-              {item.user?.name}
-            </Text>
-            {
-              !!item.user?.rating_stats?.count && (
-                <XStack gap='$1'>
-                  <Text>
-                    ({item.user?.rating_stats?.count})
-                    {' '}
-                    {item.user?.rating_stats?.score}
-                  </Text>
-                  <Theme name='accent'>
-                    <CustomIcon name='half_star' size={16} color='$color9' />
-                  </Theme>
-                </XStack>
-              )
-            }
-
-          </YStack>
-        )}
-        keyExtractor={(item) => item.id}
-      />
-    </ZixWidgetContainer>
-  )
   return (
     <YStack gap='$2'>
       {renderAbout()}
