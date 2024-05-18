@@ -134,7 +134,6 @@ export function LocationManagerScreen() {
                 }}
               />
 
-
               <Separator marginTop="$4" />
               {address}
               {building_name}

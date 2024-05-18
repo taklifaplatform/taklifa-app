@@ -1,31 +1,39 @@
 
-import { LocationTransformer } from '@zix/api';
+import { LocationService, LocationTransformer } from '@zix/api';
 import React from 'react';
 
-import { t } from 'i18next';
-import ZixWidgetContainer from '../zix-widget-container/zix-widget-container';
-import { useRouter } from 'solito/router';
-import { useAuth } from '@zix/services/auth';
 import { Pencil } from '@tamagui/lucide-icons';
-import { Button } from 'tamagui';
+import { useQuery } from '@tanstack/react-query';
+import { useAuth } from '@zix/services/auth';
+import { t } from 'i18next';
+import { useRouter } from 'solito/router';
+import { Button, View } from 'tamagui';
+import ZixWidgetContainer from '../zix-widget-container/zix-widget-container';
 
 export type ZixLocationInfoWidgetWrapperProps = {
-  location: LocationTransformer,
+  locationId: string;
   canEdit?: boolean;
-  children?: React.ReactNode;
+  children?: (location: LocationTransformer) => React.ReactNode;
 }
 
 export const ZixLocationInfoWidgetWrapper: React.FC<ZixLocationInfoWidgetWrapperProps> = ({
   children,
-  location,
+  locationId,
   canEdit
 }) => {
   const router = useRouter()
   const { getUrlPrefix } = useAuth()
 
+  const { data, isLoading } = useQuery({
+    queryFn: () => LocationService.retrieve({
+      location: locationId,
+    }),
+    queryKey: ['LocationService.retrieve', locationId],
+  })
+
   const renderEditButton = () => canEdit ? (
     <Button icon={Pencil} size='$2' onPress={() => {
-      router.push(`${getUrlPrefix}/locations/${location.id}/edit`)
+      router.push(`${getUrlPrefix}/locations/${locationId}/edit`)
     }}>
       {t('common:edit')}
     </Button>
@@ -33,7 +41,9 @@ export const ZixLocationInfoWidgetWrapper: React.FC<ZixLocationInfoWidgetWrapper
 
   return (
     <ZixWidgetContainer label={t('app:common.location')} labelPrepend={renderEditButton()}>
-      {children}
+      {
+        (isLoading || !data?.data) ? (<View height='$4' backgroundColor='$color3' />) : children?.(data?.data)
+      }
     </ZixWidgetContainer>
   );
 }

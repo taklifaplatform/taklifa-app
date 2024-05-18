@@ -49,12 +49,12 @@ export const AboutCompanyTab: React.FC<AboutCompanyTabProps> = ({
     </ZixWidgetContainer>
   )
 
-  const renderLocation = () => !!company.location && (
-    <ZixLocationInfoWidget location={company.location} canEdit={!!data?.data?.find(i => i.user?.id === authUser?.id)} />
+  const renderLocation = () => (!!company.location_id) && (
+    <ZixLocationInfoWidget locationId={company.location_id} canEdit={!!authUser?.companies?.find(c => c.id === company.id)} />
   )
 
   const renderWorkingHours = () => company.working_hours_id && (
-    <ZixWorkingHoursWidget workingHourId={company.working_hours_id} canEdit={!!data?.data?.find(i => i.user?.id === authUser?.id)} />
+    <ZixWorkingHoursWidget workingHourId={company.working_hours_id} canEdit={!!authUser?.companies?.find(c => c.id === company.id)} />
   )
 
   const renderDriversListCarousel = () => !!data?.data?.length && (
