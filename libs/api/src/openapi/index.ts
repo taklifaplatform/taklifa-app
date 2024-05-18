@@ -142,6 +142,7 @@ export type { UpdateRatingRequest } from './models/UpdateRatingRequest';
 export type { UpdateReactionRequest } from './models/UpdateReactionRequest';
 export type { UpdateServiceZoneRequest } from './models/UpdateServiceZoneRequest';
 export type { UpdateShipmentRequest } from './models/UpdateShipmentRequest';
+export type { UpdateUserLocationRequest } from './models/UpdateUserLocationRequest';
 export type { UpdateUserRequest } from './models/UpdateUserRequest';
 export type { UpdateUserVerificationRequest } from './models/UpdateUserVerificationRequest';
 export type { UpdateVehicleRequest } from './models/UpdateVehicleRequest';
@@ -182,7 +183,6 @@ export { ShipmentInvitationService } from './services/ShipmentInvitationService'
 export { ShipmentProposalService } from './services/ShipmentProposalService';
 export { SupportService } from './services/SupportService';
 export { UserService } from './services/UserService';
-export { UserLocationsService } from './services/UserLocationsService';
 export { UsersService } from './services/UsersService';
 export { UserVerificationService } from './services/UserVerificationService';
 export { VehiclesService } from './services/VehiclesService';

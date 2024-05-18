@@ -7,6 +7,7 @@ import type { ChangeActiveRoleRequest } from '../models/ChangeActiveRoleRequest'
 import type { UpdateEmailRequest } from '../models/UpdateEmailRequest';
 import type { UpdatePasswordRequest } from '../models/UpdatePasswordRequest';
 import type { UpdatePhoneNumberRequest } from '../models/UpdatePhoneNumberRequest';
+import type { UpdateUserLocationRequest } from '../models/UpdateUserLocationRequest';
 import type { UpdateUserRequest } from '../models/UpdateUserRequest';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -97,6 +98,25 @@ export class UserService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/auth/user/update-phone-number',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * Update the authenticated user.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static updateLocation({
+        requestBody,
+    }: {
+        requestBody: UpdateUserLocationRequest,
+    }): CancelablePromise<{
+        data?: AuthenticatedUserTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/auth/user/update-location',
             body: requestBody,
             mediaType: 'application/json',
         });
