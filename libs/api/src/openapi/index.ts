@@ -80,7 +80,6 @@ export type { ListUsersQueryRequest } from './models/ListUsersQueryRequest';
 export type { ListUserVerificationRequest } from './models/ListUserVerificationRequest';
 export type { ListVehicleQueryRequest } from './models/ListVehicleQueryRequest';
 export type { LocationTransformer } from './models/LocationTransformer';
-export type { LocationUpdateUserVerificationRequest } from './models/LocationUpdateUserVerificationRequest';
 export type { LoginRequest } from './models/LoginRequest';
 export type { LogoUpdateCompanyRequest } from './models/LogoUpdateCompanyRequest';
 export type { MaxBudgetUpdateShipmentRequest } from './models/MaxBudgetUpdateShipmentRequest';

@@ -113,8 +113,8 @@ export const AboutUserTab: React.FC<AboutUserTabProps> = ({
     </ZixWidgetContainer>
   )
 
-  const renderLocation = () => !!user.location && (
-    <ZixLocationInfoWidget location={user.location} canEdit={authUser?.id === user?.id} />
+  const renderLocation = () => !!user.location_id && (
+    <ZixLocationInfoWidget locationId={user.location_id} canEdit={authUser?.id === user?.id} />
   )
 
   const renderWorkingHours = () => (isServiceProvider(user) && user.working_hours_id) && (

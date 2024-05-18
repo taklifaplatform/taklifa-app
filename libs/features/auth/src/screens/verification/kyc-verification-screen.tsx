@@ -23,7 +23,7 @@ const KYCFormSchema = z.object({
   birth_date: formFields.date_picker.describe(t('forms:birth_date')),
   nationality_id: formFields.country.describe(t('forms:select_nationality')),
   identity_card: formFields.file.describe(t('forms:id_card')),
-  location: formFields.location.describe(t('forms:living_address')),
+  location_id: formFields.location.describe(t('forms:living_address')),
 });
 
 export const KycVerificationScreen = () => {

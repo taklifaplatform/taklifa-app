@@ -18,6 +18,7 @@ export type DriverTransformer = {
     avatar?: MediaTransformer;
     companies?: Array<SimpleCompanyTransformer>;
     location?: LocationTransformer;
+    location_id?: string;
     rating_stats?: {
         score?: number;
         count?: number;
