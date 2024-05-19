@@ -18,6 +18,7 @@ export class DriversService {
         search,
         latitude,
         longitude,
+        vehicleModel,
     }: {
         /**
          * Page number
@@ -30,6 +31,7 @@ export class DriversService {
         search?: string,
         latitude?: any,
         longitude?: any,
+        vehicleModel?: string,
     }): CancelablePromise<{
         data?: Array<DriverTransformer>;
         links?: {
@@ -62,6 +64,7 @@ export class DriversService {
                 'search': search,
                 'latitude': latitude,
                 'longitude': longitude,
+                'vehicle_model': vehicleModel,
             },
         });
     }

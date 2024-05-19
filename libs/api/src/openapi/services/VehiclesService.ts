@@ -3,7 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { UpdateVehicleRequest } from '../models/UpdateVehicleRequest';
-import type { VehicleModelTransformer } from '../models/VehicleModelTransformer';
 import type { VehicleTransformer } from '../models/VehicleTransformer';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -145,19 +144,6 @@ export class VehiclesService {
             path: {
                 'vehicle': vehicle,
             },
-        });
-    }
-    /**
-     * Fetch listing of the Vehicle Models.
-     * @returns any Successful response
-     * @throws ApiError
-     */
-    public static fetchAllVehicleModels(): CancelablePromise<{
-        data?: VehicleModelTransformer;
-    }> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/vehicle-models',
         });
     }
 }
