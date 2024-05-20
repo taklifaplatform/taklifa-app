@@ -1,6 +1,6 @@
 import { createTsForm } from '@ts-react/form';
+import { ComponentProps } from 'react';
 import { Form, FormProps, Theme } from 'tamagui';
-import { ComponentProps, ReactElement } from 'react';
 
 import { useFormContext } from 'react-hook-form';
 import FieldError from '../common/field-error/field-error';

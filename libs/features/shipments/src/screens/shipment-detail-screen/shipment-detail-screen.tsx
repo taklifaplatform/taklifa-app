@@ -1,5 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
-import { DriversService, ShipmentService } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
@@ -7,7 +5,6 @@ import { ZixMapDirectionWidget, ZixWidgetContainer } from '@zix/ui/widgets';
 import { t } from 'i18next';
 import { useMemo } from 'react';
 import { RefreshControl } from 'react-native';
-import { createParam } from 'solito';
 import { ScrollView, Text, View, YStack } from 'tamagui';
 import {
   ShipmentBudget,
@@ -21,42 +18,24 @@ import {
   ShipmentSectionWrapper,
   ShipmentStatus
 } from '../../components';
+import { useShipment } from '../../hooks';
 
 export type ShipmentDetailScreenProps = {
   variant: 'shipments' | 'jobs';
 };
 
-const { useParam } = createParam<{ shipment: string; job: string }>();
 
 export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
   variant = 'shipments',
 }) => {
   const { activeRole, getUrlPrefix } = useAuth();
+  const { shipment, isLoading, refetch } = useShipment({ variant })
 
-  const [shipmentId] = useParam(variant === 'shipments' ? 'shipment' : 'job');
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: ['ShipmentService.retrieveShipment', { id: shipmentId }],
-    queryFn: () =>
-      ShipmentService.retrieveShipment({ shipment: shipmentId || '' }),
-  });
-  const shipment = data?.data;
-  // TODO:: remove this once it's been added to shipment
-  const driverQuery = useQuery({
-    queryKey: ['DriversService.retrieveDriver', shipment?.user?.id],
-    queryFn: () =>
-      DriversService.retrieveDriver({
-        driver: shipment?.user?.id || '',
-      }),
-  });
 
   const urlPrefix = useMemo(() => {
     return `${getUrlPrefix}/${variant}`;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeRole, variant]);
-  // const driver = shipment.driver;
-  const driver = driverQuery.data?.data || {};
-
-  const status = shipment?.status;
 
   const renderShipmentDetails = () =>
     !shipment ? (
@@ -99,7 +78,6 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
             <ZixMapDirectionWidget
               startLocation={shipment.from_location || {}}
               endLocation={shipment.to_location || {}}
-              status={shipment.status}
             />
           </ShipmentSectionWrapper>
 

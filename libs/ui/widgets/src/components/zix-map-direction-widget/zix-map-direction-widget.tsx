@@ -1,6 +1,6 @@
 import { LocationTransformer } from '@zix/api';
 import React from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import { Stack, View } from 'tamagui';
 /* eslint-disable-next-line */
@@ -10,7 +10,6 @@ export type ZixMapDirectionWidgetProps = {
 };
 const { width, height } = Dimensions.get('window');
 
-//const height = 400;
 const ASPECT_RATIO = width / height;
 
 export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({

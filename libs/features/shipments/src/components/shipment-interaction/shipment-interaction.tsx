@@ -1,8 +1,10 @@
+import { Eye } from '@tamagui/lucide-icons';
 import { ShipmentTransformer } from '@zix/api';
 import { ZixWidgetContainer } from '@zix/ui/widgets';
-import { t } from 'i18next';
 import React from 'react';
-import { Text, View, XStack, YStack } from 'tamagui';
+import { Button, Text, XStack, YStack } from 'tamagui';
+import { useShipmentHelper } from '../../hooks';
+import { useRouter } from 'solito/router';
 
 export type ShipmentInteractionProps = {
   shipment: ShipmentTransformer;
@@ -12,29 +14,31 @@ export const ShipmentInteraction: React.FC<ShipmentInteractionProps> = ({
   shipment,
   ...props
 }) => {
+  const router = useRouter()
+  const { canViewShipmentInteractions } = useShipmentHelper({ shipment })
 
   const renderOptionActivity = (title: string, value: string | number) => (
     <XStack
       justifyContent="space-between"
-      $gtSm={{ gap: '$4', justifyContent: 'flex-start' }}
     >
-      <View>
-        <Text fontSize={15} color={'$color'} fontWeight={'400'}>
-          {title}:
-        </Text>
-      </View>
+      <Text fontWeight='600'>
+        {title}:
+      </Text>
 
-      <View width={50} alignItems="flex-start">
-        <Text fontSize={15} color={'$color'} fontWeight={'400'}>
-          {value}
-        </Text>
-      </View>
+      <Text>
+        {value}
+      </Text>
     </XStack>
   );
 
+  const renderRenderViewInteractionButton = () => canViewShipmentInteractions && (
+    <Button size='$2' icon={Eye} onPress={() => router.push(`/app/shipment-manager/${shipment.id}/invitations`)}>
+      View
+    </Button>
+  )
 
   return (
-    <ZixWidgetContainer label='Activities in this shipment' collapsible={false}>
+    <ZixWidgetContainer label='Activities in this shipment' collapsible={false} labelPrepend={renderRenderViewInteractionButton()}>
       <YStack gap='$3'>
         {renderOptionActivity('Proposals', shipment.proposals_count ?? 0)}
         {renderOptionActivity('Invitations', shipment.invitations_count ?? 0)}

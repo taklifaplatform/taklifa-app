@@ -11,12 +11,14 @@ import { getLastActivityStatus } from '@zix/utils';
 export type UserCardProps = ThemeableStackProps & {
   user: DriverTransformer;
   userContactActionsProps?: Partial<UserContactActionsProps>
+  showContactActions?: boolean;
 };
 
 export const UserCard: React.FC<UserCardProps> = React.memo(({
   user,
   padding = '$4',
   userContactActionsProps = {},
+  showContactActions = true,
   ...props
 }) => {
   const router = useRouter();
@@ -75,8 +77,8 @@ export const UserCard: React.FC<UserCardProps> = React.memo(({
 
       <UserInfoRow user={user} paddingHorizontal={padding} />
       <ZixMediasListWidget medias={user?.vehicle?.images || []} paddingHorizontal={padding} />
-      <Separator borderColor="$gray6" />
-      <UserContactActions {...userContactActionsProps} user={user} paddingHorizontal={padding} />
+      {showContactActions && <Separator borderColor="$gray6" />}
+      {showContactActions && <UserContactActions {...userContactActionsProps} user={user} paddingHorizontal={padding} />}
     </YStack>
   );
 },

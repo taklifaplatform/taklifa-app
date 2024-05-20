@@ -90,6 +90,29 @@ export class ShipmentInvitationService {
      * @returns any Successful response
      * @throws ApiError
      */
+    public static removeShipmentInvitation({
+        shipment,
+        shipmentInvitation,
+    }: {
+        shipment: string,
+        shipmentInvitation: string,
+    }): CancelablePromise<{
+        data?: ShipmentInvitationTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/shipments/{shipment}/invitations/{shipmentInvitation}',
+            path: {
+                'shipment': shipment,
+                'shipmentInvitation': shipmentInvitation,
+            },
+        });
+    }
+    /**
+     * Reject shipment invitation.
+     * @returns any Successful response
+     * @throws ApiError
+     */
     public static acceptShipmentInvitation({
         shipment,
         shipmentInvitation,

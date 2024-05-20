@@ -5,7 +5,8 @@
 import type { CompanyTransformer } from './CompanyTransformer';
 import type { DriverTransformer } from './DriverTransformer';
 export type ShipmentInvitationTransformer = {
-    id?: number;
+    id?: string;
+    shipment_id?: string;
     status?: string;
     driver?: DriverTransformer;
     company?: CompanyTransformer;

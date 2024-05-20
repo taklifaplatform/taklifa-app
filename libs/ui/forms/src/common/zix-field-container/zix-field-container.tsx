@@ -95,7 +95,7 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
 
   const renderLabel = () =>
     (label && !labelHidden) && (
-      <XStack alignItems='center' gap='$2'>
+      <XStack alignItems='center' justifyContent='space-between' gap='$2'>
         <Label
           htmlFor={id}
           size={size || '$3'}
