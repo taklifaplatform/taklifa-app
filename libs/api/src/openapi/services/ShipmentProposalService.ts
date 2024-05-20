@@ -112,7 +112,7 @@ export class ShipmentProposalService {
      * @returns any Successful response
      * @throws ApiError
      */
-    public static declineShipmentInvitation({
+    public static declineShipmentProposal({
         shipment,
         shipmentProposal,
     }: {

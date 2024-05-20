@@ -9,6 +9,10 @@ export function useShipmentHelper({
 }) {
   const { user } = useAuth();
 
+  const canEditShipment = useMemo(() => {
+    return shipment.user?.id === user?.id;
+  }, [user, shipment]);
+
   /**
    * Check if the current user can view the shipment interactions
    */
@@ -18,7 +22,7 @@ export function useShipmentHelper({
 
   return {
     shipment,
-
+    canEditShipment,
     canViewShipmentInteractions,
   };
 }

@@ -4,7 +4,8 @@ import { useAuth } from '@zix/services/auth';
 import { t } from 'i18next';
 import React, { useMemo } from 'react';
 import { useRouter } from 'solito/router';
-import { Button, XStack } from 'tamagui';
+import { Button, XStack, YStack } from 'tamagui';
+import { useShipmentHelper } from '../../hooks';
 
 export type ShipmentCardActionsProps = {
   shipment: ShipmentTransformer;
@@ -20,13 +21,12 @@ export const ShipmentCardActions: React.FC<ShipmentCardActionsProps> = ({
   isDetail,
 }) => {
   const router = useRouter();
-  const { user, getUrlPrefix } = useAuth()
+  const { getUrlPrefix } = useAuth()
+  const { canEditShipment, canViewShipmentInteractions } = useShipmentHelper({ shipment })
 
-  const isAuthCreator = useMemo(() => {
-    return user?.id === shipment.user?.id
-  }, [user, shipment.user])
 
-  const renderShipmentEdit = () => isAuthCreator && (
+
+  const renderShipmentEdit = () => canEditShipment && (
     <Button
       theme='accent'
       flex={1}
@@ -82,13 +82,37 @@ export const ShipmentCardActions: React.FC<ShipmentCardActionsProps> = ({
       </Button>
     );
 
+  const renderViewProposalsButton = () => canViewShipmentInteractions && shipment.proposals_count ? (
+    <Button
+      flex={1}
+      onPress={() => router.push(`/app/shipment-manager/${shipment.id}/proposals`)}
+    >
+      View Proposals
+    </Button>
+  ) : null
+
+  const renderViewInvitationsButton = () => canViewShipmentInteractions && shipment.invitations_count ? (
+    <Button
+      flex={1}
+      onPress={() => router.push(`/app/shipment-manager/${shipment.id}/invitations`)}
+    >
+      View Invitations
+    </Button>
+  ) : null
+
   return (
-    <XStack flex={1} alignItems="center" gap="$2">
-      {renderShipmentEdit()}
-      {renderAcceptShipment()}
-      {renderViewShipment()}
-      {renderRejectShipmentInvite()}
-    </XStack>
+    <YStack gap="$2">
+      <XStack flex={1} alignItems="center" gap="$2">
+        {renderShipmentEdit()}
+        {/* {renderAcceptShipment()} */}
+        {renderViewShipment()}
+        {/* {renderRejectShipmentInvite()} */}
+      </XStack>
+      <XStack gap="$2">
+        {renderViewProposalsButton()}
+        {renderViewInvitationsButton()}
+      </XStack>
+    </YStack>
   );
 };
 
