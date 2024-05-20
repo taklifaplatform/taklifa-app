@@ -294,8 +294,8 @@ export const ZixMapLocationPickerField: React.FC<ZixMapLocationPickerFieldProps>
               key={`map-${localLocation?.latitude}-${localLocation?.longitude}`}
               style={{ flex: 1, height: 200, borderRadius: 14 }}
               initialRegion={{
-                latitude: localLocation?.latitude,
-                longitude: localLocation?.longitude,
+                latitude: localLocation?.latitude || 24.713552,
+                longitude: localLocation?.longitude || 46.675296,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               }}
