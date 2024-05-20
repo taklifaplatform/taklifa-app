@@ -38,8 +38,8 @@ export const LocationField: React.FC<LocationFieldProps> = ({
   const locationData = data?.data ?? {}
 
   const renderAddressCard = () =>
-    type === 'advanced' &&
-    locationData?.address && (
+    (type === 'advanced' &&
+      locationData?.address) ? (
       <YStack
         borderWidth="$0.5"
         borderColor="$color8"
@@ -78,16 +78,16 @@ export const LocationField: React.FC<LocationFieldProps> = ({
 
         {/* <DebugObject object={value} /> */}
       </YStack>
-    );
+    ) : null;
 
   const renderAddressMap = () =>
-    type === 'advanced' &&
-    locationData?.latitude &&
-    locationData?.longitude && (
+    (type === 'advanced' &&
+      locationData?.latitude &&
+      locationData?.longitude) ? (
       <View height="$12">
         <ZixMapPointerField value={locationData} />
       </View>
-    );
+    ) : null;
 
   const renderInputActivator = () =>
     (type === 'simple' || !locationData?.address) && (

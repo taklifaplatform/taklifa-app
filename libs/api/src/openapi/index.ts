@@ -44,7 +44,6 @@ export type { FeeAcceptInvitationRequest } from './models/FeeAcceptInvitationReq
 export type { FilterConditionsListChannelQueryRequest } from './models/FilterConditionsListChannelQueryRequest';
 export type { FormDataRequest } from './models/FormDataRequest';
 export type { FormRequest } from './models/FormRequest';
-export type { FromLocationUpdateShipmentRequest } from './models/FromLocationUpdateShipmentRequest';
 export type { FuelInformationUpdateVehicleRequest } from './models/FuelInformationUpdateVehicleRequest';
 export type { GeoLocationTransformer } from './models/GeoLocationTransformer';
 export type { IdentityCardUpdateUserVerificationRequest } from './models/IdentityCardUpdateUserVerificationRequest';
@@ -130,7 +129,6 @@ export type { StoreReportRequest } from './models/StoreReportRequest';
 export type { StoreSupportRequest } from './models/StoreSupportRequest';
 export type { SupportCategoryTransformer } from './models/SupportCategoryTransformer';
 export type { SupportTransformer } from './models/SupportTransformer';
-export type { ToLocationUpdateShipmentRequest } from './models/ToLocationUpdateShipmentRequest';
 export type { UpdateCompanyRequest } from './models/UpdateCompanyRequest';
 export type { UpdateEmailRequest } from './models/UpdateEmailRequest';
 export type { UpdateInvitationRequest } from './models/UpdateInvitationRequest';

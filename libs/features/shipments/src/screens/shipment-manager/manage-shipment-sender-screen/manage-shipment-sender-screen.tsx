@@ -22,7 +22,7 @@ const { useParam } = createParam<{
 }>();
 
 const CreateShipmentSchema = z.object({
-  from_location: formFields.advanced_location.describe(
+  from_location_id: formFields.advanced_location.describe(
     `${t('app:forms.labels.shipping-from')} // ${t('app:forms.placeholders.shipping-from')}`
   ),
   pick_date: formFields.row_date_picker.describe(

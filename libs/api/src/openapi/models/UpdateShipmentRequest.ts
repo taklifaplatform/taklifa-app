@@ -2,15 +2,13 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { FromLocationUpdateShipmentRequest } from './FromLocationUpdateShipmentRequest';
 import type { InvitationsUpdateShipmentRequest } from './InvitationsUpdateShipmentRequest';
 import type { ItemsUpdateShipmentRequest } from './ItemsUpdateShipmentRequest';
 import type { MaxBudgetUpdateShipmentRequest } from './MaxBudgetUpdateShipmentRequest';
 import type { MinBudgetUpdateShipmentRequest } from './MinBudgetUpdateShipmentRequest';
-import type { ToLocationUpdateShipmentRequest } from './ToLocationUpdateShipmentRequest';
 export type UpdateShipmentRequest = {
-    from_location?: FromLocationUpdateShipmentRequest;
-    to_location?: ToLocationUpdateShipmentRequest;
+    from_location_id?: string;
+    to_location_id?: string;
     selected_driver_id?: string;
     selected_company_id?: string;
     pick_date?: string;

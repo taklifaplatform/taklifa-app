@@ -23,7 +23,7 @@ import { SHARED_SHIPMENT_MANAGER_FIELD_PROPS } from '../configs';
 const { useParam } = createParam<{ shipment: string }>();
 
 const SendFromSchema = z.object({
-  to_location: formFields.advanced_location.describe(
+  to_location_id: formFields.advanced_location.describe(
     `${t('app:forms.labels.shipping-to')} // ${t('app:forms.placeholders.shipping-to')}`,
   ),
   recipient_name: formFields.text.describe(
