@@ -57,9 +57,8 @@ export const ZixMapPointerField: React.FC<ZixMapPointerFieldProps> = (
         style={{ flex: 1 }}
         initialCamera={{
           center: {
-            latitude: 24.713552,
-            longitude: 46.675296,
-            ...props.value,
+            latitude: props.value?.latitude || 24.713552,
+            longitude: props.value?.longitude || 46.675296,
           },
           pitch: 0,
           heading: 0,
