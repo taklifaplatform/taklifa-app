@@ -12,7 +12,7 @@ export * from './shipment-code/shipment-code';
 
 export * from './shipment-card-location/shipment-card-location';
 
-export * from './budget-shipment/budget-shipment';
+export * from './shipment-budget/shipment-budget';
 
 export * from './shipment-cost/shipment-cost';
 
@@ -20,7 +20,9 @@ export * from './definition-sender/definition-sender';
 
 export * from './shipment-direction/shipment-direction';
 
-export * from './shipment-details/shipment-details';
+export * from './shipment-information/shipment-information';
+
+export * from './shipment-interaction/shipment-interaction';
 
 export * from './shipment-card/shipment-card';
 

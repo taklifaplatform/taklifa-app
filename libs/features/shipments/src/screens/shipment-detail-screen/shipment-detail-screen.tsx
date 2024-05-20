@@ -10,21 +10,17 @@ import { RefreshControl } from 'react-native';
 import { createParam } from 'solito';
 import { ScrollView, Text, View, YStack } from 'tamagui';
 import {
-  BudgetShipment,
-  DefinitionSender,
-  InformationAboutDriver,
+  ShipmentBudget,
   ShipmentCardActions,
   ShipmentCardHeader,
-  ShipmentCode,
   ShipmentCost,
   ShipmentDeliveringDetail,
-  ShipmentDetails,
   ShipmentDirection,
+  ShipmentInformation,
+  ShipmentInteraction,
   ShipmentSectionWrapper,
-  ShipmentStatus,
+  ShipmentStatus
 } from '../../components';
-import ShipmentInvitationsOverviewCard from '../../components/shipment-invitations-overview-card/shipment-invitations-overview-card';
-import ShipmentProposalsOverviewCard from '../../components/shipment-proposals-overview-card/shipment-proposals-overview-card';
 
 export type ShipmentDetailScreenProps = {
   variant: 'shipments' | 'jobs';
@@ -81,10 +77,6 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
 
           <ShipmentCost shipment={shipment} />
 
-          <ShipmentInvitationsOverviewCard shipment={shipment} />
-
-          <ShipmentProposalsOverviewCard shipment={shipment} />
-
           <ShipmentDeliveringDetail shipment={shipment} />
 
           <ShipmentSectionWrapper>
@@ -112,18 +104,22 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
           </ShipmentSectionWrapper>
 
           <ShipmentSectionWrapper>
-            <ShipmentDetails shipment={shipment} />
+            <ShipmentInformation shipment={shipment} />
           </ShipmentSectionWrapper>
 
           <ShipmentSectionWrapper>
-            <BudgetShipment shipment={shipment} />
+            <ShipmentBudget shipment={shipment} />
           </ShipmentSectionWrapper>
 
-          <InformationAboutDriver driver={driver} status={status} />
+          <ShipmentSectionWrapper>
+            <ShipmentInteraction shipment={shipment} />
+          </ShipmentSectionWrapper>
 
-          <ShipmentCode codeId={shipment?.id || ''} marginVertical="$4" />
+          {/* <InformationAboutDriver driver={driver} status={status} /> */}
 
-          <DefinitionSender shipment={shipment} />
+          {/* <ShipmentCode codeId={shipment?.id || ''} marginVertical="$4" /> */}
+
+          {/* <DefinitionSender shipment={shipment} /> */}
 
           <View>
             <ShipmentCardActions

@@ -1,8 +1,9 @@
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { ShipmentService } from '@zix/api';
+import { useAuth } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
-import { handleFormErrors, SubmitButton } from '@zix/ui/forms';
+import { SubmitButton, handleFormErrors } from '@zix/ui/forms';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { ZixWidgetContainer } from '@zix/ui/widgets';
 import { t } from 'i18next';
@@ -11,12 +12,10 @@ import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
 import { ScrollView, Text, Theme, View, YStack } from 'tamagui';
 import {
-  BudgetShipment,
-  ShipmentCode,
-  ShipmentDetails,
+  ShipmentBudget,
   ShipmentDirection,
+  ShipmentInformation
 } from '../../../components';
-import { useAuth } from '@zix/services/auth';
 
 const { useParam } = createParam<{ shipment: string }>();
 
@@ -64,9 +63,9 @@ export function ShipmentSummaryScreen() {
             {shipment.items?.map((item, index) => <Text>{item.notes}</Text>)}
           </YStack>
         </ZixWidgetContainer>
-        <ShipmentDirection shipment={shipment} status={shipment.status} />
-        <ShipmentDetails shipment={shipment} paddingVertical="$4" />
-        <BudgetShipment shipment={shipment} />
+        <ShipmentDirection shipment={shipment} />
+        <ShipmentInformation shipment={shipment} paddingVertical="$4" />
+        <ShipmentBudget shipment={shipment} />
         <View height="$6" />
       </ScrollView>
     );

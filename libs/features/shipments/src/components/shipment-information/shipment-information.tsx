@@ -20,11 +20,11 @@ import moment from 'moment';
 import React, { useMemo } from 'react';
 import { Text, ThemeableStackProps, XStack, YStack } from 'tamagui';
 
-export type ShipmentDetailsProps = ThemeableStackProps & {
+export type ShipmentInformationProps = ThemeableStackProps & {
   shipment: ShipmentTransformer;
 };
 
-export const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
+export const ShipmentInformation: React.FC<ShipmentInformationProps> = ({
   shipment,
   ...props
 }) => {
@@ -164,4 +164,4 @@ export const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
   );
 };
 
-export default ShipmentDetails;
+export default ShipmentInformation;
