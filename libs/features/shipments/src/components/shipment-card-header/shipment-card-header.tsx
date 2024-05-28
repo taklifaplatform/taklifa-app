@@ -5,7 +5,8 @@ import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import moment from 'moment';
 import React from 'react';
-import { H6, Text, XStack, YStack } from 'tamagui';
+import { Button, H6, Text, XStack, YStack } from 'tamagui';
+import { useShipmentHelper } from '../../hooks';
 
 
 export interface ShipmentCardHeaderProps {
@@ -14,6 +15,8 @@ export interface ShipmentCardHeaderProps {
 
 
 export const ShipmentCardHeader: React.FC<ShipmentCardHeaderProps> = ({ shipment }) => {
+  const { isAuthOwner, getShipmentStatusColor } = useShipmentHelper({ shipment })
+
   const renderSender = () => (
     <XStack alignItems='center' gap='$2'>
       <UserAvatar size='$1' user={shipment.user} />
@@ -21,6 +24,15 @@ export const ShipmentCardHeader: React.FC<ShipmentCardHeaderProps> = ({ shipment
         {shipment.user?.name}
       </Text>
     </XStack>
+  )
+
+  const renderShipmentStatusBadge = () => isAuthOwner && (
+    <Button
+      size='$2'
+      theme={getShipmentStatusColor}
+    >
+      {shipment.status}
+    </Button>
   )
 
   const renderTitle = () => (
@@ -43,13 +55,17 @@ export const ShipmentCardHeader: React.FC<ShipmentCardHeaderProps> = ({ shipment
       />
       <Text fontSize={10} color='$color9'>
         {t('job:job-published')} {moment(shipment.created_at).fromNow()}
+        {isAuthOwner ? ' by You' : ''}
       </Text>
     </XStack>
   )
 
   return (
     <YStack gap='$2'>
-      {renderSender()}
+      <XStack alignItems='center' justifyContent='space-between'>
+        {renderSender()}
+        {renderShipmentStatusBadge()}
+      </XStack>
       {renderTitle()}
       {renderPublishedDate()}
     </YStack>

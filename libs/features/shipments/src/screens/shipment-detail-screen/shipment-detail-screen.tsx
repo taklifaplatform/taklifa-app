@@ -5,7 +5,7 @@ import { ZixMapDirectionWidget, ZixWidgetContainer } from '@zix/ui/widgets';
 import { t } from 'i18next';
 import { useMemo } from 'react';
 import { RefreshControl } from 'react-native';
-import { ScrollView, Text, View, YStack } from 'tamagui';
+import { Button, ScrollView, Text, View, YStack } from 'tamagui';
 import {
   ShipmentBudget,
   ShipmentCardActions,
@@ -19,6 +19,8 @@ import {
   ShipmentStatus
 } from '../../components';
 import { useShipment } from '../../hooks';
+import ShipmentOwnerActions from '../../components/shipment-owner-actions/shipment-owner-actions';
+import { Settings } from '@tamagui/lucide-icons';
 
 export type ShipmentDetailScreenProps = {
   variant: 'shipments' | 'jobs';
@@ -113,7 +115,24 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
 
   return (
     <ScreenLayout>
-      <AppHeader showBackButton title={t('job:job-demand')} />
+      <AppHeader
+        showBackButton
+        title={t('job:job-demand')}
+        headerRight={() => !!shipment?.id && (
+          <ShipmentOwnerActions shipment={shipment}>
+            {({ onPress }) => (
+              <Button
+                theme='accent'
+                flex={0.2}
+                scaleIcon={1.5}
+                icon={Settings}
+                fontWeight="bold"
+                onPress={onPress}
+              />
+            )}
+          </ShipmentOwnerActions>
+        )}
+      />
       {renderShipmentDetails()}
     </ScreenLayout>
   );

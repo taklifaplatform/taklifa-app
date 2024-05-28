@@ -1,11 +1,12 @@
-import { Check, Eye, Pen, Settings2, X } from '@tamagui/lucide-icons';
+import { Check, Eye, Settings, X } from '@tamagui/lucide-icons';
 import { ShipmentTransformer } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { t } from 'i18next';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useRouter } from 'solito/router';
 import { Button, XStack, YStack } from 'tamagui';
 import { useShipmentHelper } from '../../hooks';
+import ShipmentOwnerActions from '../shipment-owner-actions/shipment-owner-actions';
 
 export type ShipmentCardActionsProps = {
   shipment: ShipmentTransformer;
@@ -21,21 +22,21 @@ export const ShipmentCardActions: React.FC<ShipmentCardActionsProps> = ({
   isDetail,
 }) => {
   const router = useRouter();
-  const { getUrlPrefix } = useAuth()
-  const { canEditShipment, canViewShipmentInteractions } = useShipmentHelper({ shipment })
+  const { isAuthOwner } = useShipmentHelper({ shipment })
 
 
-
-  const renderShipmentEdit = () => canEditShipment && (
-    <Button
-      theme='accent'
-      flex={1}
-      icon={Pen}
-      fontWeight="bold"
-      onPress={() => router.push(`${getUrlPrefix}/shipment-manager/${shipment.id}`)}
-    >
-      {t('common:edit')}
-    </Button>
+  const renderShipmentEdit = () => (isAuthOwner && !isDetail) && (
+    <ShipmentOwnerActions shipment={shipment}>
+      {({ onPress }) => (
+        <Button
+          flex={0.2}
+          scaleIcon={1.5}
+          icon={Settings}
+          fontWeight="bold"
+          onPress={onPress}
+        />
+      )}
+    </ShipmentOwnerActions>
   )
 
   /**
@@ -82,36 +83,21 @@ export const ShipmentCardActions: React.FC<ShipmentCardActionsProps> = ({
       </Button>
     );
 
-  const renderViewProposalsButton = () => canViewShipmentInteractions && shipment.proposals_count ? (
-    <Button
-      flex={1}
-      onPress={() => router.push(`/app/shipment-manager/${shipment.id}/proposals`)}
-    >
-      View Proposals
-    </Button>
-  ) : null
 
-  const renderViewInvitationsButton = () => canViewShipmentInteractions && shipment.invitations_count ? (
-    <Button
-      flex={1}
-      onPress={() => router.push(`/app/shipment-manager/${shipment.id}/invitations`)}
-    >
-      View Invitations
-    </Button>
-  ) : null
 
   return (
     <YStack gap="$2">
       <XStack flex={1} alignItems="center" gap="$2">
+        {renderViewShipment()}
         {renderShipmentEdit()}
         {/* {renderAcceptShipment()} */}
-        {renderViewShipment()}
+
         {/* {renderRejectShipmentInvite()} */}
       </XStack>
-      <XStack gap="$2">
+      {/* <XStack gap="$2">
         {renderViewProposalsButton()}
         {renderViewInvitationsButton()}
-      </XStack>
+      </XStack> */}
     </YStack>
   );
 };
