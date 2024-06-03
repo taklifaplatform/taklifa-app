@@ -92,6 +92,7 @@ export type { MessageUpdateMessageRequest } from './models/MessageUpdateMessageR
 export type { MinBudgetUpdateShipmentRequest } from './models/MinBudgetUpdateShipmentRequest';
 export type { ModerateChannelRequest } from './models/ModerateChannelRequest';
 export type { MuteChannelRequest } from './models/MuteChannelRequest';
+export type { NotificationStatusTransformer } from './models/NotificationStatusTransformer';
 export type { NotificationTransformer } from './models/NotificationTransformer';
 export type { PatchMessageRequest } from './models/PatchMessageRequest';
 export type { PriceTransformer } from './models/PriceTransformer';

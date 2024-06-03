@@ -10,11 +10,7 @@ import {
 } from 'stream-chat/src/utils';
 
 import Echo from 'laravel-echo';
-import Pusher from 'pusher-js';
 import { DefaultGenerics, ExtendableGenerics } from 'stream-chat/src/types';
-import { OpenAPI } from '@zix/api';
-
-global.Pusher = Pusher;
 
 export class ZixChatEcho<
   StreamChatGenerics extends ExtendableGenerics = DefaultGenerics,
