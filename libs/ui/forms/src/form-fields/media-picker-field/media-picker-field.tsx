@@ -8,7 +8,9 @@ import { ZixMediaPickerField, ZixMediaPickerFieldProps } from '../../fields'
 
 export const MediaPickerFieldSchema = z.object({
   // id: z.number(),
-  uuid: z.string().optional(),
+  id: z.any().optional().nullable(),
+  uuid: z.any().optional().nullable(),
+  url: z.any().optional().nullable(),
   // url: z.string().optional(),
   // original_url: z.string(),
 });

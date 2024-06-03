@@ -13,11 +13,11 @@ export const ShipmentItemsSchema = z.array(z.object({
   medias: z.array(MediaPickerFieldSchema),
   notes: z.string(),
 
-  dim_height: z.any().optional(),
-  dim_width: z.any().optional(),
-  dim_length: z.any().optional(),
+  dim_height: z.any().nullable().optional(),
+  dim_width: z.any().nullable().optional(),
+  dim_length: z.any().nullable().optional(),
 
-  content: z.string().optional(),
+  content: z.any().nullable().optional(),
 }))
 
 

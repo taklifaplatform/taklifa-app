@@ -2,7 +2,7 @@ import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import React, { useState } from 'react';
 import { createParam } from 'solito';
 
-import { View, Text, YStack, Button } from 'tamagui';
+import { View, Text, YStack, Button, H4 } from 'tamagui';
 import ShipmentManagerHeader from '../../../components/shipment-manager/shipment-manager-header/shipment-manager-header';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { CompaniesService, CompanyTransformer, DriverTransformer, DriversService, ShipmentService, UpdateShipmentRequest } from '@zix/api';
@@ -14,6 +14,7 @@ import { CompanyCard } from '@zix/features/company';
 import { useToastController } from '@tamagui/toast';
 import { useRouter } from 'solito/router';
 import { useAuth } from '@zix/services/auth';
+import { CustomIcon } from '@zix/ui/icons';
 
 const { useParam } = createParam<{ shipment: string }>();
 
@@ -91,6 +92,8 @@ export function ManageShipmentDriversScreen() {
           title: t('common:drivers'),
           content: (
             <FlatList
+              onRefresh={driversQuery.refetch}
+              refreshing={driversQuery.isFetching}
               data={driversQuery.data?.data || []}
               renderItem={({ item, index }) => (
                 <UserCard
@@ -110,6 +113,12 @@ export function ManageShipmentDriversScreen() {
                   }}
                 />
               )}
+              ListEmptyComponent={() => (
+                <View flex={1} alignItems='center' gap="$8">
+                  <CustomIcon name="empty_data" size="$18" color="$color5" />
+                  <H4>No Drivers Found!</H4>
+                </View>
+              )}
             />
           )
         },
@@ -118,6 +127,8 @@ export function ManageShipmentDriversScreen() {
           title: t('common:companies'),
           content: (
             <FlatList
+              onRefresh={companiesQuery.refetch}
+              refreshing={companiesQuery.isFetching}
               data={companiesQuery.data?.data || []}
               renderItem={({ item, index }) => (
                 <CompanyCard
@@ -135,6 +146,12 @@ export function ManageShipmentDriversScreen() {
 
                   }}
                 />
+              )}
+              ListEmptyComponent={() => (
+                <View flex={1} alignItems='center' gap="$8">
+                  <CustomIcon name="empty_data" size="$18" color="$color5" />
+                  <H4>No Companies Found!</H4>
+                </View>
               )}
             />
           )

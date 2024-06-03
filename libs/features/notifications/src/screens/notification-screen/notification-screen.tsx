@@ -14,7 +14,7 @@ export function NotificationScreen(props: NotificationScreenProps) {
 
   const [search, setSearch] = useState('');
 
-  const { data: apiData } = useQuery({
+  const { data: apiData, ...notificationQuery } = useQuery({
     queryFn() {
       return NotificationService.listNotifications({ perPage: 50, search });
     },
@@ -76,6 +76,8 @@ export function NotificationScreen(props: NotificationScreenProps) {
       />
       <SectionList
         style={{ flex: 1 }}
+        refreshing={notificationQuery?.isFetching}
+        onRefresh={notificationQuery?.refetch}
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={() => (
