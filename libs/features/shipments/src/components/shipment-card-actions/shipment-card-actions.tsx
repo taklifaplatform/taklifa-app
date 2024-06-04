@@ -1,12 +1,13 @@
 import { Check, Eye, Settings, X } from '@tamagui/lucide-icons';
 import { ShipmentTransformer } from '@zix/api';
-import { useAuth } from '@zix/services/auth';
 import { t } from 'i18next';
 import React from 'react';
 import { useRouter } from 'solito/router';
 import { Button, XStack, YStack } from 'tamagui';
 import { useShipmentHelper } from '../../hooks';
 import ShipmentOwnerActions from '../shipment-owner-actions/shipment-owner-actions';
+import { ShipmentProposalActions } from './shipment-proposal-actions';
+import ShipmentInvitationActions from './shipment-invitation-actions';
 
 export type ShipmentCardActionsProps = {
   shipment: ShipmentTransformer;
@@ -15,12 +16,14 @@ export type ShipmentCardActionsProps = {
   isDetail?: boolean;
 };
 
-export const ShipmentCardActions: React.FC<ShipmentCardActionsProps> = ({
-  shipment,
-  urlPrefix,
-  variant,
-  isDetail,
-}) => {
+export const ShipmentCardActions: React.FC<ShipmentCardActionsProps> = (props) => {
+  const {
+    shipment,
+    variant,
+    urlPrefix,
+    isDetail = false,
+  } = props;
+
   const router = useRouter();
   const { isAuthOwner } = useShipmentHelper({ shipment })
 
@@ -94,10 +97,12 @@ export const ShipmentCardActions: React.FC<ShipmentCardActionsProps> = ({
 
         {/* {renderRejectShipmentInvite()} */}
       </XStack>
-      {/* <XStack gap="$2">
-        {renderViewProposalsButton()}
-        {renderViewInvitationsButton()}
-      </XStack> */}
+      <ShipmentProposalActions
+        {...props}
+      />
+      <ShipmentInvitationActions
+        {...props}
+      />
     </YStack>
   );
 };

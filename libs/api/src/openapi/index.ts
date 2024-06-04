@@ -50,6 +50,7 @@ export type { IdentityCardUpdateUserVerificationRequest } from './models/Identit
 export type { ImagesUpdateVehicleRequest } from './models/ImagesUpdateVehicleRequest';
 export type { ImageUpdateVehicleRequest } from './models/ImageUpdateVehicleRequest';
 export type { InformationUpdateVehicleRequest } from './models/InformationUpdateVehicleRequest';
+export type { InvitationPermissionTransformer } from './models/InvitationPermissionTransformer';
 export type { InvitationsUpdateShipmentRequest } from './models/InvitationsUpdateShipmentRequest';
 export type { ItemRatingTransformer } from './models/ItemRatingTransformer';
 export type { ItemsUpdateShipmentRequest } from './models/ItemsUpdateShipmentRequest';
@@ -96,6 +97,7 @@ export type { NotificationStatusTransformer } from './models/NotificationStatusT
 export type { NotificationTransformer } from './models/NotificationTransformer';
 export type { PatchMessageRequest } from './models/PatchMessageRequest';
 export type { PriceTransformer } from './models/PriceTransformer';
+export type { ProposalPermissionTransformer } from './models/ProposalPermissionTransformer';
 export type { QueryRequest } from './models/QueryRequest';
 export type { RatesUpdateRatingRequest } from './models/RatesUpdateRatingRequest';
 export type { RatingScoreTransformer } from './models/RatingScoreTransformer';

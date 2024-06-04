@@ -57,91 +57,12 @@ export const ShipmentRejectScreen: React.FC<ShipmentRejectScreenProps> = (
             message: '',
           }}
           onSubmit={mutateAsync}
-          renderBefore={() => (
-            <YStack >
-              <Stack
-                flexDirection="column"
-                alignItems="center"
-                paddingVertical="$4"
-                gap="$4"
-                $gtSm={{
-                  flexDirection: 'row-reverse',
-                  justifyContent: 'space-between',
-                  padding: '$4',
-                  backgroundColor: '$red3',
-                  borderRadius: '$4',
-                }}
-              >
-                <CustomIcon name="alert_cercle" size={'$12'} />
-
-                <YStack gap="$4">
-                  <Text fontSize={18} fontWeight={'400'}>
-                    {shipment?.code}
-                  </Text>
-                  <Text fontSize={18} fontWeight={'600'} color={'$red9'}>
-                    {t('forms:cancel-service')} {t('job:job-demand')}{' '}
-                    {t('shipment:type:' + shipment?.items_type)}
-                  </Text>
-                  <XStack
-                    alignItems="center"
-                    gap="$6"
-                    marginBottom="$3"
-                    $sm={{ display: 'none' }}
-                  >
-                    <XStack gap="$2" alignItems="center">
-                      {/* TODO change to UserAvatar */}
-
-                      <UserAvatar size={'$1'} user={shipment?.user} />
-                      <Text
-                        fontSize={12}
-                        fontWeight={'600'}
-                        color={'$color9'}
-                        $sm={{
-                          fontSize: 12,
-                          fontWeight: '600',
-                        }}
-                      >
-                        {shipment?.user?.name}
-                      </Text>
-                    </XStack>
-                    <XStack gap="$2" alignItems="center">
-                      <CustomIcon
-                        name="chronic"
-                        size="$1"
-                        $sm={{
-                          display: 'none',
-                        }}
-                      />
-                      <Text
-                        fontSize={12}
-                        fontWeight={'600'}
-                        color={'$color9'}
-                        $sm={{
-                          fontSize: 9,
-                          fontWeight: '600',
-                        }}
-                      >
-                        {t('job:job-published')}{' '}
-                        {moment(shipment?.created_at).fromNow()}
-                      </Text>
-                    </XStack>
-                  </XStack>
-                </YStack>
-              </Stack>
-              <Separator
-                borderColor={'$gray7'}
-                width={'100%'}
-                $gtSm={{ display: 'none' }}
-              />
-            </YStack>
-          )}
           renderAfter={({ submit }) => (
-            <Theme>
+            <Theme name='error'>
               <SubmitButton
-                backgroundColor={'$red9'}
-                color={'$color1'}
                 onPress={() => submit()}
-                borderRadius="$10"
+                themeInverse
+                backgroundColor='$color10'
                 icon={<Check size={'$1'} />}
               >
                 {t('forms:confirmation')}
@@ -149,16 +70,72 @@ export const ShipmentRejectScreen: React.FC<ShipmentRejectScreenProps> = (
             </Theme>
           )}
         >
+
           {(fields) => (
-            <YStack
-              gap="$4"
-              padding="$4"
-              backgroundColor={'$color1'}
-              borderRadius={'$4'}
-              $sm={{ backgroundColor: 'transparent' }}
-            >
-              {Object.values(fields)}
+            <YStack >
+              <XStack justifyContent='space-around'>
+                <CustomIcon name="alert_cercle" size={'$12'} />
+              </XStack>
+              <YStack gap="$4">
+                <Text fontSize='$1'>
+                  {shipment?.code}
+                </Text>
+                <Text theme='error' color="$color10">
+                  {t('forms:cancel-service')} {t('job:job-demand')}{' '}
+                  {t('shipment:type:' + shipment?.items_type)}
+                </Text>
+                <XStack
+                  gap="$6"
+                  alignItems="center"
+                  marginBottom="$3"
+                >
+                  <XStack gap="$2" alignItems="center">
+                    <UserAvatar size={'$1'} user={shipment?.user} />
+                    <Text
+                      fontSize={12}
+                      fontWeight={'600'}
+                      color={'$color9'}
+                      $sm={{
+                        fontSize: 12,
+                        fontWeight: '600',
+                      }}
+                    >
+                      {shipment?.user?.name}
+                    </Text>
+                  </XStack>
+                  <XStack gap="$2" alignItems="center">
+                    <CustomIcon
+                      name="chronic"
+                      size="$1"
+                      $sm={{
+                        display: 'none',
+                      }}
+                    />
+                    <Text
+                      fontSize={12}
+                      fontWeight={'600'}
+                      color={'$color9'}
+                      $sm={{
+                        fontSize: 9,
+                        fontWeight: '600',
+                      }}
+                    >
+                      {t('job:job-published')}{' '}
+                      {moment(shipment?.created_at).fromNow()}
+                    </Text>
+                  </XStack>
+                </XStack>
+              </YStack>
+              <Separator
+                borderColor={'$gray7'}
+                width={'100%'}
+                $gtSm={{ display: 'none' }}
+              />
+              <YStack>
+                {Object.values(fields)}
+              </YStack>
             </YStack>
+
           )}
         </SchemaForm>
       </FormProvider>

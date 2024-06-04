@@ -23,10 +23,7 @@ export const ZixNotificationHeaderButton = () => {
   useEffect(() => {
 
     echo.private(`notifications.${user?.id}`)
-      .notification((data) => {
-        console.log('data notification received::', data)
-        refetch()
-      })
+      .notification(() => refetch())
     return () => {
       // channel.uns()
     }

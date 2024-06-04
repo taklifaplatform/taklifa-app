@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { AcceptInvitationRequest } from '../models/AcceptInvitationRequest';
+import type { InvitationPermissionTransformer } from '../models/InvitationPermissionTransformer';
 import type { ShipmentInvitationTransformer } from '../models/ShipmentInvitationTransformer';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -63,7 +64,29 @@ export class ShipmentInvitationService {
         });
     }
     /**
+     * Retrieve current user invitation permissions.
+     * Can be used by (provider, customer)
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static getPermissions({
+        shipment,
+    }: {
+        shipment: string,
+    }): CancelablePromise<{
+        data?: InvitationPermissionTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/shipments/{shipment}/invitations/permissions',
+            path: {
+                'shipment': shipment,
+            },
+        });
+    }
+    /**
      * Retrieve a shipment invitation.
+     * TODO: make sure current auth can view this invitation.
      * @returns any Successful response
      * @throws ApiError
      */

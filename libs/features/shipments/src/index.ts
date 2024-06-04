@@ -2,6 +2,8 @@ export * from './hooks';
 
 export * from './components';
 
+export * from './screens/provider';
+
 export * from './screens/shipment-manager';
 
 export * from './screens/shipment-reject-screen/shipment-reject-screen';

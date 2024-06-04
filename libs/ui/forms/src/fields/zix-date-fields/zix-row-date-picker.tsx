@@ -12,8 +12,10 @@ import {
 import { ZixDateFieldProps } from './types'
 import ZixMonthSelection from './zix-month-selection'
 
-const PAGE_WIDTH = 90
-const PAGE_HEIGHT = 110
+const PAGE_WIDTH = 65
+// const PAGE_WIDTH = 90
+const PAGE_HEIGHT = 80
+// const PAGE_HEIGHT = 110
 
 export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
   onChange,
@@ -51,7 +53,7 @@ export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
       paddingVertical='$2'
       paddingHorizontal='$1'
       alignItems="center"
-      marginRight="$2"
+      marginRight={8}
       flexDirection="column"
       theme={activeDayIndex === index ? 'accent' : undefined}
       backgroundColor={activeDayIndex === index ? '$color9' : '$color3'}
@@ -60,13 +62,13 @@ export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
       }}
     >
       <YStack alignItems='center' justifyContent='space-between' flex={1}>
-        <Text fontSize='$1' fontWeight='800'>
+        <Text fontSize={8}>
           {moment(date).locale(activeLang).date(item).format('dddd')}
         </Text>
-        <Text fontSize='$10' fontWeight='900'>
+        <Text fontSize='$9' fontWeight='900'>
           {item}
         </Text>
-        <Text fontSize='$1' fontWeight='800'>
+        <Text fontSize={10}>
           {moment(date).locale(activeLang).date(item).format('MMMM')}
         </Text>
       </YStack>
