@@ -1,6 +1,8 @@
 import { OpenAPI, request } from '@zix/api';
 import Echo from 'laravel-echo';
 
+(global as any).Pusher = require("pusher-js");
+
 export const echo = new Echo({
   broadcaster: 'reverb',
   key: 'connect',

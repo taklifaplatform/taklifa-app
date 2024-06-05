@@ -8,5 +8,3 @@ Object.assign(global, {
   TextEncoder: TextEncodingPolyfill.TextEncoder,
   TextDecoder: TextEncodingPolyfill.TextDecoder,
 });
-
-global.Pusher = require("pusher-js");

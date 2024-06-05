@@ -20,13 +20,13 @@ export function Header() {
       </ZixLinkButton>
       <ZixLinkButton
         headerMenu
-        href={'/customer/shipments'}
+        href={'/app/shipments'}
       >
         {t('web-home:payments')}
       </ZixLinkButton>
       <ZixLinkButton
         headerMenu
-        href={'/customer/orders'}
+        href={'/app/orders'}
         $lg={{ paddingHorizontal: '$4' }}
       >
         {t('web-home:followers')}
