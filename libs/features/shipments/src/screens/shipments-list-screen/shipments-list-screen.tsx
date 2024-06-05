@@ -51,10 +51,10 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
 
   const carouselRef = useRef<ICarouselInstance>(null);
   useEffect(() => {
-    if (activeFilterIndex > 3) {
+    if (activeFilterIndex > 3 && activeFilterIndex > (shipmentFilterQuery?.data?.data?.length || 0)) {
       carouselRef.current?.scrollTo({ index: activeFilterIndex, animated: true });
     }
-  }, [activeFilterIndex]);
+  }, [activeFilterIndex, shipmentFilterQuery?.data?.data?.length]);
 
   const renderShipment = (item: ShipmentFilterTransformer, index: number) => (
     <ZixButton

@@ -1,26 +1,28 @@
 import { LocationTransformer } from '@zix/api';
-import { t } from 'i18next';
-import React, { useRef } from 'react';
-import { set } from 'react-hook-form';
+import React from 'react';
 
-import { Text, Pressable, StyleSheet } from 'react-native';
-import { Popup, showLocation } from 'react-native-map-link';
-import { View, Button } from 'tamagui';
+import { Popup, ShowLocationProps } from 'react-native-map-link';
+import { Button, View } from 'tamagui';
 
-/* eslint-disable-next-line */
 export interface ZixGetDirectionProps {
   startLocation: LocationTransformer;
   endLocation: LocationTransformer;
   title?: string;
 }
 
-export function ZixGetDirection({
+export const ZixGetDirection: React.FC<ZixGetDirectionProps> = ({
   startLocation,
   endLocation,
   title = 'Destination',
-}: ZixGetDirectionProps) {
+}) => {
   const [isVisible, setIsVisible] = React.useState(false);
-  const options = {
+
+
+  if (!startLocation?.latitude || !endLocation?.latitude || !endLocation?.longitude) {
+    return null;
+  }
+
+  const options: ShowLocationProps = {
     sourceLatitude: startLocation.latitude,
     sourceLongitude: startLocation.longitude,
     latitude: endLocation.latitude,
@@ -28,15 +30,16 @@ export function ZixGetDirection({
     title,
     googleForceLatLon: true, // optionally force GoogleMaps to use the latlon for the query instead of the title
     alwaysIncludeGoogle: true, // optional, true will always add Google Maps to iOS and open in Safari, even if app is not installed (default: false)
-
   };
+
+
   return (
     <View>
       <Popup
         isVisible={isVisible}
+        setIsVisible={setIsVisible}
         onCancelPressed={() => setIsVisible(false)}
         onAppPressed={() => setIsVisible(false)}
-        onBackButtonPressed={() => setIsVisible(false)}
         options={options}
         customFooter={
           <Button
@@ -50,7 +53,7 @@ export function ZixGetDirection({
       />
 
       <Button
-        mt="$4"
+        marginTop="$4"
         fontWeight="bold"
         onPress={() => {
           setIsVisible(true);

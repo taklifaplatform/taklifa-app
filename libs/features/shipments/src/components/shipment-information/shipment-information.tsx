@@ -5,6 +5,7 @@ import {
   Package,
   PackageOpen,
   Route,
+  ScrollText,
   Weight,
 } from '@tamagui/lucide-icons';
 import { ShipmentTransformer } from '@zix/api';
@@ -28,19 +29,6 @@ export const ShipmentInformation: React.FC<ShipmentInformationProps> = ({
   shipment,
   ...props
 }) => {
-  const weight = useMemo(
-    () => shipment?.items?.map((item) => item.cap_weight + ' ' + item.cap_unit),
-    [shipment?.items],
-  );
-
-  const size = useMemo(
-    () =>
-      shipment?.items?.map(
-        (item) => `${item.dim_width}x${item.dim_height}x${item.dim_length}cm `,
-      ),
-    [shipment?.items],
-  );
-
   /* Delivery Time */
   const deliveryTime = useMemo(() => {
     return moment.duration(
@@ -79,7 +67,7 @@ export const ShipmentInformation: React.FC<ShipmentInformationProps> = ({
     <ZixWidgetContainer label={t('shipment:shipment-details')}>
       <YStack gap="$6" {...props}>
         <ZixVariantOptionsWidget
-          icon={<Inbox size="$1" color={'$color5'} />}
+          icon={<Inbox size="$1" color='$color10' />}
           label={t('shipment:shipment')}
           labelContainerProps={{
             theme: 'accent',
@@ -97,20 +85,38 @@ export const ShipmentInformation: React.FC<ShipmentInformationProps> = ({
               name: t('job:shipment-type'),
               value: `${shipment?.items_type}`,
             },
-            {
-              icons: (
-                <CustomIcon name="aspect_ratio" size="$1" color="$color10" />
-              ),
-              name: t('job:package-size'),
-              value: `${size}`,
-            },
-            {
-              icons: <Weight size="$1" color='$color10' />,
-              name: t('job:package-weight'),
-              value: `${weight}`,
-            },
           ]}
         />
+        {
+          shipment?.items?.map((item, index) => (
+            <ZixVariantOptionsWidget
+              key={`index-${item.id}-${index}`}
+              icon={<Package size="$1" color={'$color10'} />}
+              label={`Package ${index + 1}`}
+              optionVariant="location"
+              variant="details"
+              options={[
+                {
+                  icons: (
+                    <CustomIcon name="aspect_ratio" size="$1" color="$color10" />
+                  ),
+                  name: t('job:package-size'),
+                  value: `${item.dim_width} x ${item.dim_height} x ${item.dim_length}cm`,
+                },
+                {
+                  icons: <Weight size="$1" color='$color10' />,
+                  name: t('job:package-weight'),
+                  value: `${item.cap_weight} ${item.cap_unit}`,
+                },
+                {
+                  icons: <ScrollText size="$1" color='$color10' />,
+                  name: 'Notes',
+                  value: item.notes,
+                },
+              ]}
+            />
+          ))
+        }
         <ZixVariantOptionsWidget
           icon={<CustomIcon name="time" size="$1" color="$color10" />}
           label={t('shipment:time-and-distance')}
@@ -143,7 +149,7 @@ export const ShipmentInformation: React.FC<ShipmentInformationProps> = ({
             {
               icons: <CalendarDays size="$1" color='$color10' />,
               name: t('job:deliver-date'),
-              value: `${shipment?.pick_date}`,
+              value: `${moment(shipment?.pick_date).format('DD/MM/YYYY')}`,
             },
             {
               icons: <CustomIcon name="time" size="$1" color='$color10' />,
@@ -153,7 +159,7 @@ export const ShipmentInformation: React.FC<ShipmentInformationProps> = ({
             {
               icons: <CalendarDays size="$1" color='$color10' />,
               name: t('job:delivery-date'),
-              value: `${shipment?.deliver_date}`,
+              value: `${moment(shipment?.deliver_date).format('DD/MM/YYYY')}`,
             },
           ]}
         />

@@ -36,62 +36,66 @@ export const CancelShipmentScreen = () => {
   const shipment = data?.data;
 
   const form = useForm<z.infer<typeof CancelShipmentSchema>>();
-  const { mutateAsync } = useMutation({});
-  // mutationFn: (requestBody: z.infer<typeof CancelShipmentSchema>) =>
+  const { mutateAsync } = useMutation({
+    mutationFn: () => {
+      alert('UNDER DEV')
+      return undefined;
+    }
+  });
   return (
     <ScreenLayout>
-    <FormProvider {...form}>
-      <SchemaForm
-        form={form}
-        schema={CancelShipmentSchema}
-        defaultValues={{
-          email: '',
-          message: '',
-        }}
-        onSubmit={mutateAsync}
-        renderBefore={() => (
-          <YStack gap="$6" paddingHorizontal="$5">
-            <Stack alignItems="center" paddingVertical="$4">
-              <CustomIcon name="alert_cercle" size={'$12'} />
-            </Stack>
-            <XStack justifyContent="space-between" alignItems="flex-end">
-              <YStack gap="$2" alignItems="flex-start">
-                <Text fontSize={18} fontWeight={'600'} color={'$red9'}>
-                  {t('forms:cancel-service')}{' '}
+      <FormProvider {...form}>
+        <SchemaForm
+          form={form}
+          schema={CancelShipmentSchema}
+          defaultValues={{
+            email: '',
+            message: '',
+          }}
+          onSubmit={mutateAsync}
+          renderBefore={() => (
+            <YStack gap="$6" paddingHorizontal="$5">
+              <Stack alignItems="center" paddingVertical="$4">
+                <CustomIcon name="alert_cercle" size={'$12'} />
+              </Stack>
+              <XStack justifyContent="space-between" alignItems="flex-end">
+                <YStack gap="$2" alignItems="flex-start">
+                  <Text fontSize={18} fontWeight={'600'} color={'$red9'}>
+                    {t('forms:cancel-service')}{' '}
+                  </Text>
+                  <Text fontSize={18} fontWeight={'400'} color={'$color'}>
+                    {t('job:job-demand')}{' '}
+                    {t('shipment:type:' + shipment?.items_type)}
+                  </Text>
+                </YStack>
+                <Text
+                  fontSize={18}
+                  fontWeight={'400'}
+                  color={'$color'}
+                  width={100}
+                  numberOfLines={1}
+                >
+                  {shipment?.id}
                 </Text>
-                <Text fontSize={18} fontWeight={'400'} color={'$color'}>
-                  {t('job:job-demand')}{' '}
-                  {t('shipment:type:' + shipment?.items_type)}
-                </Text>
-              </YStack>
-              <Text
-                fontSize={18}
-                fontWeight={'400'}
-                color={'$color'}
-                width={100}
-                numberOfLines={1}
+              </XStack>
+              <Separator borderColor={'$gray7'} width={'100%'} />
+            </YStack>
+          )}
+          renderAfter={({ submit }) => (
+            <Theme>
+              <SubmitButton
+                backgroundColor={'$red9'}
+                color={'$color1'}
+                onPress={() => submit()}
+                borderRadius="$10"
+                icon={<Check size={'$1'} />}
               >
-                {shipment?.id}
-              </Text>
-            </XStack>
-            <Separator borderColor={'$gray7'} width={'100%'} />
-          </YStack>
-        )}
-        renderAfter={({ submit }) => (
-          <Theme>
-            <SubmitButton
-              backgroundColor={'$red9'}
-              color={'$color1'}
-              onPress={() => submit()}
-              borderRadius="$10"
-              icon={<Check size={'$1'} />}
-            >
-              {t('forms:confirmation')}
-            </SubmitButton>
-          </Theme>
-        )}
-      />
-    </FormProvider>
+                {t('forms:confirmation')}
+              </SubmitButton>
+            </Theme>
+          )}
+        />
+      </FormProvider>
     </ScreenLayout>
   );
 };

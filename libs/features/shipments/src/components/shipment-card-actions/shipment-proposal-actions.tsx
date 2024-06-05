@@ -93,9 +93,9 @@ export const ShipmentProposalActions: React.FC<ShipmentProposalActionsProps> = (
 
 
 
-  return (
-    <DebugObject object={permission} />
-  );
+  // return (
+  //   <DebugObject object={permission} />
+  // );
   return null;
 };
 
