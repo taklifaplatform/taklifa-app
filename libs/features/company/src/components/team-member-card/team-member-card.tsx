@@ -94,7 +94,7 @@ export function TeamMemberCard({
       <XStack gap="$3" alignItems="center">
         <UserAvatar user={user} size="$5" />
         <YStack gap="$2">
-          <Text fontWeight="bold">{user.name}</Text>
+          <Text fontWeight="bold">{user.name ?? `@${user.username}`}</Text>
           <Text color={'$color10'} fontWeight={'$10'}>
             Last activity: {moment(user.latest_activity).fromNow()}
           </Text>

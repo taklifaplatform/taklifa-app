@@ -51,7 +51,9 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
 
   const carouselRef = useRef<ICarouselInstance>(null);
   useEffect(() => {
-    carouselRef.current?.scrollTo({ index: activeFilterIndex, animated: true });
+    if (activeFilterIndex > 3) {
+      carouselRef.current?.scrollTo({ index: activeFilterIndex, animated: true });
+    }
   }, [activeFilterIndex]);
 
   const renderShipment = (item: ShipmentFilterTransformer, index: number) => (
@@ -85,7 +87,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
 
   const renderShipmentFilters = () =>
     variant === 'shipments' && (
-      <View padding="$4" $gtMd={{ display: 'none' }}>
+      <View padding="$4" height='$6' $gtMd={{ display: 'none' }}>
         <Carousel
           ref={carouselRef}
           loop={false}
@@ -119,7 +121,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
           onRefresh={refetch}
           style={useStyle({
             flex: 1,
-            padding: '$2',
+            // padding: '$2',
           })}
           data={data?.data}
           numColumns={media.gtMd ? 2 : 1}

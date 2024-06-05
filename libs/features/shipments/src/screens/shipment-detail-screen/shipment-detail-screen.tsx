@@ -1,5 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
-import { DriversService, ShipmentService } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
@@ -7,60 +5,39 @@ import { ZixMapDirectionWidget, ZixWidgetContainer } from '@zix/ui/widgets';
 import { t } from 'i18next';
 import { useMemo } from 'react';
 import { RefreshControl } from 'react-native';
-import { createParam } from 'solito';
-import { ScrollView, Text, View, YStack } from 'tamagui';
+import { Button, ScrollView, Text, View, YStack } from 'tamagui';
 import {
-  BudgetShipment,
-  DefinitionSender,
-  InformationAboutDriver,
+  ShipmentBudget,
   ShipmentCardActions,
   ShipmentCardHeader,
-  ShipmentCode,
   ShipmentCost,
   ShipmentDeliveringDetail,
-  ShipmentDetails,
   ShipmentDirection,
+  ShipmentInformation,
+  ShipmentInteraction,
   ShipmentSectionWrapper,
-  ShipmentStatus,
+  ShipmentStatus
 } from '../../components';
-import ShipmentInvitationsOverviewCard from '../../components/shipment-invitations-overview-card/shipment-invitations-overview-card';
-import ShipmentProposalsOverviewCard from '../../components/shipment-proposals-overview-card/shipment-proposals-overview-card';
+import { useShipment } from '../../hooks';
+import ShipmentOwnerActions from '../../components/shipment-owner-actions/shipment-owner-actions';
+import { Settings } from '@tamagui/lucide-icons';
 
 export type ShipmentDetailScreenProps = {
   variant: 'shipments' | 'jobs';
 };
 
-const { useParam } = createParam<{ shipment: string; job: string }>();
 
 export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
   variant = 'shipments',
 }) => {
   const { activeRole, getUrlPrefix } = useAuth();
+  const { shipment, isLoading, refetch } = useShipment({ variant })
 
-  const [shipmentId] = useParam(variant === 'shipments' ? 'shipment' : 'job');
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: ['ShipmentService.retrieveShipment', { id: shipmentId }],
-    queryFn: () =>
-      ShipmentService.retrieveShipment({ shipment: shipmentId || '' }),
-  });
-  const shipment = data?.data;
-  // TODO:: remove this once it's been added to shipment
-  const driverQuery = useQuery({
-    queryKey: ['DriversService.retrieveDriver', shipment?.user?.id],
-    queryFn: () =>
-      DriversService.retrieveDriver({
-        driver: shipment?.user?.id || '',
-      }),
-  });
 
   const urlPrefix = useMemo(() => {
     return `${getUrlPrefix}/${variant}`;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeRole, variant]);
-  // const driver = shipment.driver;
-  const driver = driverQuery.data?.data || {};
-
-  const status = shipment?.status;
 
   const renderShipmentDetails = () =>
     !shipment ? (
@@ -80,10 +57,6 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
           <ShipmentCardHeader shipment={shipment} />
 
           <ShipmentCost shipment={shipment} />
-
-          <ShipmentInvitationsOverviewCard shipment={shipment} />
-
-          <ShipmentProposalsOverviewCard shipment={shipment} />
 
           <ShipmentDeliveringDetail shipment={shipment} />
 
@@ -107,23 +80,26 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
             <ZixMapDirectionWidget
               startLocation={shipment.from_location || {}}
               endLocation={shipment.to_location || {}}
-              status={shipment.status}
             />
           </ShipmentSectionWrapper>
 
           <ShipmentSectionWrapper>
-            <ShipmentDetails shipment={shipment} />
+            <ShipmentInformation shipment={shipment} />
           </ShipmentSectionWrapper>
 
           <ShipmentSectionWrapper>
-            <BudgetShipment shipment={shipment} />
+            <ShipmentBudget shipment={shipment} />
           </ShipmentSectionWrapper>
 
-          <InformationAboutDriver driver={driver} status={status} />
+          <ShipmentSectionWrapper>
+            <ShipmentInteraction shipment={shipment} />
+          </ShipmentSectionWrapper>
 
-          <ShipmentCode codeId={shipment?.id || ''} marginVertical="$4" />
+          {/* <InformationAboutDriver driver={driver} status={status} /> */}
 
-          <DefinitionSender shipment={shipment} />
+          {/* <ShipmentCode codeId={shipment?.id || ''} marginVertical="$4" /> */}
+
+          {/* <DefinitionSender shipment={shipment} /> */}
 
           <View>
             <ShipmentCardActions
@@ -139,7 +115,24 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
 
   return (
     <ScreenLayout>
-      <AppHeader showBackButton title={t('job:job-demand')} />
+      <AppHeader
+        showBackButton
+        title={t('job:job-demand')}
+        headerRight={() => !!shipment?.id && (
+          <ShipmentOwnerActions shipment={shipment}>
+            {({ onPress }) => (
+              <Button
+                theme='accent'
+                flex={0.2}
+                scaleIcon={1.5}
+                icon={Settings}
+                fontWeight="bold"
+                onPress={onPress}
+              />
+            )}
+          </ShipmentOwnerActions>
+        )}
+      />
       {renderShipmentDetails()}
     </ScreenLayout>
   );

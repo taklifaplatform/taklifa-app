@@ -4,7 +4,6 @@ import React, { useMemo, useState } from 'react';
 import {
   SelectProps
 } from 'tamagui';
-import { useDebounce } from 'use-debounce';
 import ZixSelectField, { BaseSelectFieldItem, ZixSelectFieldProps } from '../zix-select-field/zix-select-field';
 /**
  * TODO: implement load more logic
@@ -36,8 +35,7 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
     throw new Error('api is required');
   }
 
-  const [search, setSearch] = useState<string>();
-  const [value] = useDebounce(search, 1000);
+  const [search, setSearch] = useState<string>(props.value || '');
   const { data } = useQuery(
     {
       queryFn() {
@@ -52,7 +50,7 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
           },
         });
       },
-      queryKey: [api, search, perPage, `-${props.value}`, Object.values(query)],
+      queryKey: [api, perPage, search, `-${props.value}`, Object.values(query)],
     }
   );
 
@@ -67,7 +65,7 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
 
   return (
     <ZixSelectField
-      search={value}
+      search={search}
       onSearch={setSearch}
       options={mappedData}
       {...props}

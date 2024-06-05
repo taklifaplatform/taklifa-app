@@ -1,10 +1,13 @@
-import { Check, Eye, Pen, Settings2, X } from '@tamagui/lucide-icons';
+import { Check, Eye, Settings, X } from '@tamagui/lucide-icons';
 import { ShipmentTransformer } from '@zix/api';
-import { useAuth } from '@zix/services/auth';
 import { t } from 'i18next';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useRouter } from 'solito/router';
-import { Button, XStack } from 'tamagui';
+import { Button, XStack, YStack } from 'tamagui';
+import { useShipmentHelper } from '../../hooks';
+import ShipmentOwnerActions from '../shipment-owner-actions/shipment-owner-actions';
+import { ShipmentProposalActions } from './shipment-proposal-actions';
+import ShipmentInvitationActions from './shipment-invitation-actions';
 
 export type ShipmentCardActionsProps = {
   shipment: ShipmentTransformer;
@@ -13,29 +16,30 @@ export type ShipmentCardActionsProps = {
   isDetail?: boolean;
 };
 
-export const ShipmentCardActions: React.FC<ShipmentCardActionsProps> = ({
-  shipment,
-  urlPrefix,
-  variant,
-  isDetail,
-}) => {
+export const ShipmentCardActions: React.FC<ShipmentCardActionsProps> = (props) => {
+  const {
+    shipment,
+    variant,
+    urlPrefix,
+    isDetail = false,
+  } = props;
+
   const router = useRouter();
-  const { user, getUrlPrefix } = useAuth()
+  const { isAuthOwner } = useShipmentHelper({ shipment })
 
-  const isAuthCreator = useMemo(() => {
-    return user?.id === shipment.user?.id
-  }, [user, shipment.user])
 
-  const renderShipmentEdit = () => isAuthCreator && (
-    <Button
-      theme='accent'
-      flex={1}
-      icon={Pen}
-      fontWeight="bold"
-      onPress={() => router.push(`${getUrlPrefix}/shipment-manager/${shipment.id}`)}
-    >
-      {t('common:edit')}
-    </Button>
+  const renderShipmentEdit = () => (isAuthOwner && !isDetail) && (
+    <ShipmentOwnerActions shipment={shipment}>
+      {({ onPress }) => (
+        <Button
+          flex={0.2}
+          scaleIcon={1.5}
+          icon={Settings}
+          fontWeight="bold"
+          onPress={onPress}
+        />
+      )}
+    </ShipmentOwnerActions>
   )
 
   /**
@@ -82,13 +86,24 @@ export const ShipmentCardActions: React.FC<ShipmentCardActionsProps> = ({
       </Button>
     );
 
+
+
   return (
-    <XStack flex={1} alignItems="center" gap="$2">
-      {renderShipmentEdit()}
-      {renderAcceptShipment()}
-      {renderViewShipment()}
-      {renderRejectShipmentInvite()}
-    </XStack>
+    <YStack gap="$2">
+      <XStack flex={1} alignItems="center" gap="$2">
+        {renderViewShipment()}
+        {renderShipmentEdit()}
+        {/* {renderAcceptShipment()} */}
+
+        {/* {renderRejectShipmentInvite()} */}
+      </XStack>
+      <ShipmentProposalActions
+        {...props}
+      />
+      <ShipmentInvitationActions
+        {...props}
+      />
+    </YStack>
   );
 };
 

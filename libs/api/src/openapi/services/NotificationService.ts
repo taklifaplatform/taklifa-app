@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { NotificationStatusTransformer } from '../models/NotificationStatusTransformer';
 import type { NotificationTransformer } from '../models/NotificationTransformer';
 import type { StorePushNotificationTokenRequest } from '../models/StorePushNotificationTokenRequest';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -52,12 +53,38 @@ export class NotificationService {
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/notifications/notifications',
+            url: '/api/notifications',
             query: {
                 'page': page,
                 'per_page': perPage,
                 'search': search,
             },
+        });
+    }
+    /**
+     * Mark notification as read.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static markAllNotificationsAsRead(): CancelablePromise<{
+        data?: NotificationTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/notifications/mark-all-as-read',
+        });
+    }
+    /**
+     * Get unread notification count.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static getUnreadNotificationCount(): CancelablePromise<{
+        data?: NotificationStatusTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/notifications/unread-count',
         });
     }
     /**

@@ -1,9 +1,9 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { NotificationService, NotificationTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import moment from 'moment';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { SectionList, SectionListData, } from 'react-native';
 import { H4, Text, View, XStack } from 'tamagui';
 import { NotificationCard } from '../components/NotificationCard';
@@ -13,13 +13,30 @@ export interface NotificationScreenProps { }
 export function NotificationScreen(props: NotificationScreenProps) {
 
   const [search, setSearch] = useState('');
+  const queryClient = useQueryClient();
 
-  const { data: apiData } = useQuery({
+  const { data: apiData, ...notificationQuery } = useQuery({
     queryFn() {
       return NotificationService.listNotifications({ perPage: 50, search });
     },
     queryKey: ['NotificationService.listNotifications', search]
   });
+
+  const { mutate: markAllNotificationsAsRead } = useMutation({
+    mutationFn() {
+      return NotificationService.markAllNotificationsAsRead();
+    },
+    onSuccess(data, variables, context) {
+      queryClient.refetchQueries({
+        queryKey: ['NotificationService.listNotifications', 'NotificationService.getUnreadNotificationCount']
+      });
+    },
+
+  })
+
+  useEffect(() => {
+    markAllNotificationsAsRead();
+  }, [])
 
   const listViewDateFormat = (date: string) => {
     return moment(date).calendar(null, {
@@ -76,6 +93,8 @@ export function NotificationScreen(props: NotificationScreenProps) {
       />
       <SectionList
         style={{ flex: 1 }}
+        refreshing={notificationQuery?.isFetching}
+        onRefresh={notificationQuery?.refetch}
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={() => (

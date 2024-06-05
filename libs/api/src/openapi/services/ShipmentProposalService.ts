@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { ProposalPermissionTransformer } from '../models/ProposalPermissionTransformer';
 import type { ShipmentProposalTransformer } from '../models/ShipmentProposalTransformer';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -62,6 +63,27 @@ export class ShipmentProposalService {
         });
     }
     /**
+     * Retrieve current user proposal permissions.
+     * Can be used by (provider, customer)
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static getPermissions({
+        shipment,
+    }: {
+        shipment: string,
+    }): CancelablePromise<{
+        data?: ProposalPermissionTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/shipments/{shipment}/proposals/permissions',
+            path: {
+                'shipment': shipment,
+            },
+        });
+    }
+    /**
      * Retrieve a shipment invitation.
      * @returns any Successful response
      * @throws ApiError
@@ -112,7 +134,7 @@ export class ShipmentProposalService {
      * @returns any Successful response
      * @throws ApiError
      */
-    public static declineShipmentInvitation({
+    public static declineShipmentProposal({
         shipment,
         shipmentProposal,
     }: {

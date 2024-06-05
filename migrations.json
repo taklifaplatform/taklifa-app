@@ -1,12 +1,12 @@
 {
   "migrations": [
     {
-      "version": "19.0.0-beta.9",
       "cli": "nx",
-      "description": "Change webpack to metro in expo projects",
-      "factory": "./src/migrations/update-19-0-0/change-webpack-to-metro",
-      "package": "@nx/expo",
-      "name": "update-19-0-0-change-webpack-to-metro"
+      "version": "19.1.0-beta.6",
+      "description": "Migrate no-extra-semi rules into user config, out of nx extendable configs",
+      "implementation": "./src/migrations/update-19-1-0-migrate-no-extra-semi/migrate-no-extra-semi",
+      "package": "@nx/eslint-plugin",
+      "name": "update-19-1-0-rename-no-extra-semi"
     }
   ]
 }

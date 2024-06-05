@@ -25,6 +25,10 @@ export const ZixMoneyField: React.FC<ZixMoneyFieldProps> = ({
           <ZixAutoCompleteField
             value={value.currency_id}
             onChange={(currency_id) => onValueChange({ ...value, currency_id })}
+            dataMapper={(item) => ({
+              id: item.id,
+              name: `${item.code} - ${item.name}`,
+            })}
             api="geography/currencies"
             selectTriggerProps={{
               padding: '$2.5',

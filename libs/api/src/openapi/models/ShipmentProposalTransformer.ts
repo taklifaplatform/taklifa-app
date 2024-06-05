@@ -4,11 +4,15 @@
 /* eslint-disable */
 import type { CompanyTransformer } from './CompanyTransformer';
 import type { DriverTransformer } from './DriverTransformer';
+import type { PriceTransformer } from './PriceTransformer';
 export type ShipmentProposalTransformer = {
     id?: string;
-    status?: string;
+    shipment_id?: string;
     channel_id?: string;
+    status?: string;
     driver?: DriverTransformer;
     company?: CompanyTransformer;
+    cost?: PriceTransformer;
+    fee?: PriceTransformer;
 };
 

@@ -11,10 +11,12 @@ import {
   Separator,
   Text,
   ThemeableStackProps,
+  XStack,
   YStack
 } from 'tamagui';
 import ShipmentCardActions from '../shipment-card-actions/shipment-card-actions';
 import ShipmentCardHeader from '../shipment-card-header/shipment-card-header';
+import { useShipmentHelper } from '../../hooks';
 
 export type ShipmentCardProps = ThemeableStackProps & {
   shipment: ShipmentTransformer; // TODO: change to shipment, and add
@@ -31,6 +33,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
   ...props
 }) => {
   const { isRtl } = useMultiLang();
+  const { isAuthOwner } = useShipmentHelper({ shipment });
 
   const deliveryTime = useMemo(() => {
     return moment.duration(
@@ -39,7 +42,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
   }, [shipment.pick_date, shipment.deliver_date]);
 
 
-  const renderDescription = () => (
+  const renderDescription = () => !isAuthOwner && (
     <YStack gap='$1.5'>
       {
         shipment.items?.map((item) => (
@@ -51,7 +54,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
     </YStack>
   )
 
-  const renderDetail = () => (
+  const renderDetail = () => !isAuthOwner && (
     <ZixVariantOptionsWidget
       variant="card"
       optionVariant="card"
@@ -80,7 +83,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
             <Settings2 size="$1" color={'$color9'} $sm={{ display: 'none' }} />
           ),
           name: t('job:Suggestions'),
-          value: 'TODO',
+          value: String(shipment.invitations_count || 0),
         },
         {
           icons: (
@@ -98,7 +101,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
     />
   );
 
-  const renderLocation = () => (
+  const renderLocation = () => !isAuthOwner && (
     <ZixVariantOptionsWidget
       variant="location"
       optionVariant="location"
@@ -124,6 +127,35 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
     />
   )
 
+  const renderInteractions = () => !!isAuthOwner && (
+    <XStack gap='$4'>
+      <YStack>
+        <Text fontWeight='bold'>
+          {shipment.proposals_count} ({shipment.proposals_count} new)
+        </Text>
+        <Text>
+          Proposals
+        </Text>
+      </YStack>
+      <YStack>
+        <Text fontWeight='bold'>
+          {shipment.invitations_count}
+        </Text>
+        <Text>
+          Invitations
+        </Text>
+      </YStack>
+      <YStack>
+        <Text fontWeight='bold'>
+          {shipment.accepted_proposals_count}
+        </Text>
+        <Text>
+          Hired
+        </Text>
+      </YStack>
+    </XStack>
+  )
+
   return (
     <YStack
       padding="$4"
@@ -140,6 +172,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
 
       {renderDetail()}
       {renderLocation()}
+      {renderInteractions()}
 
       <Separator borderColor='$gray7' />
 

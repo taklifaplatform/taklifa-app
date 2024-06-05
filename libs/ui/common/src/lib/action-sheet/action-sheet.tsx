@@ -21,6 +21,7 @@ export type IAction = ThemeableStackProps & {
 export interface ActionSheetProps extends React.ComponentProps<typeof Sheet> {
   title?: string;
   actions: IAction[];
+  snapPoints?: number[];
 }
 
 export type ActionSheetRef = {
@@ -85,6 +86,7 @@ export const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
                 flexDirection='row'
                 justifyContent="flex-start"
                 alignItems='center'
+                borderBottomWidth='$1'
                 borderColor='$color4'
                 pressStyle={{
                   backgroundColor: '$color7',
@@ -92,6 +94,7 @@ export const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
                 hoverStyle={{
                   backgroundColor: '$color7',
                 }}
+                color='$color12'
 
                 {...prop}
               >

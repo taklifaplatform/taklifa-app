@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import ShipmentDetails from './shipment-details';
+import ShipmentOwnerActions from './shipment-owner-actions';
 
-describe('ShipmentDetails', () => {
+describe('ShipmentOwnerActions', () => {
   it('should render successfully', () => {
-    const { root } = render(< ShipmentDetails />);
+    const { root } = render(< ShipmentOwnerActions />);
     expect(root).toBeTruthy();
   });
 });

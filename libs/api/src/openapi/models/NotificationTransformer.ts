@@ -6,9 +6,13 @@ import type { UserTransformer } from './UserTransformer';
 export type NotificationTransformer = {
     id?: number;
     data?: {
+        filter?: string;
+        from_user_id?: string;
+        type?: string;
         title?: string;
-        message?: string;
-        icon?: string;
+        description?: string;
+        model_type?: string;
+        model_id?: string;
     };
     read_at?: string;
     created_at?: string;

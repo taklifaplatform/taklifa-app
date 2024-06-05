@@ -23,7 +23,7 @@ export const ScreenLayout: React.FC<ScreenLayoutProps> = ({
     }
 
     return [];
-  }, [safeAreaBottom]);
+  }, [safeAreaBottom, fullSafeArea]);
 
   const showContent = useMemo(
     () => !authProtected || isLoggedIn,

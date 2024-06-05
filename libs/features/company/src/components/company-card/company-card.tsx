@@ -8,12 +8,14 @@ import { useAuth } from '@zix/services/auth';
 export type CompanyCardProps = ThemeableStackProps & {
   company: CompanyTransformer;
   companyContactActionsProps?: Partial<CompanyContactActionsProps>
+  showContactActions?: boolean;
 };
 
 export const CompanyCard: React.FC<CompanyCardProps> = ({
   company,
   padding = '$4',
   companyContactActionsProps = {},
+  showContactActions = true,
   ...props
 }) => {
   const router = useRouter();
@@ -81,8 +83,8 @@ export const CompanyCard: React.FC<CompanyCardProps> = ({
         </XStack>
 
       </XStack>
-      <Separator borderColor="$gray6" />
-      <CompanyContactActions {...companyContactActionsProps} company={company} paddingHorizontal={padding} />
+      {showContactActions && <Separator borderColor="$gray6" />}
+      {showContactActions && <CompanyContactActions {...companyContactActionsProps} company={company} paddingHorizontal={padding} />}
     </YStack>
   );
 };
