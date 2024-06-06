@@ -10,6 +10,7 @@ export type ShipmentProposalTransformer = {
     shipment_id?: string;
     channel_id?: string;
     status?: string;
+    message?: string;
     driver?: DriverTransformer;
     company?: CompanyTransformer;
     cost?: PriceTransformer;

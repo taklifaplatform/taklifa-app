@@ -117,6 +117,7 @@ export type { SendResetPasswordPinCodeRequest } from './models/SendResetPassword
 export type { ServiceAreaTransformer } from './models/ServiceAreaTransformer';
 export type { ServiceZoneTransformer } from './models/ServiceZoneTransformer';
 export type { SetPatchMessageRequest } from './models/SetPatchMessageRequest';
+export type { ShipmentContractTransformer } from './models/ShipmentContractTransformer';
 export type { ShipmentFilterTransformer } from './models/ShipmentFilterTransformer';
 export type { ShipmentInvitationTransformer } from './models/ShipmentInvitationTransformer';
 export type { ShipmentItemTransformer } from './models/ShipmentItemTransformer';
@@ -180,6 +181,7 @@ export { MediaService } from './services/MediaService';
 export { NotificationService } from './services/NotificationService';
 export { RatingService } from './services/RatingService';
 export { ShipmentService } from './services/ShipmentService';
+export { ShipmentContractService } from './services/ShipmentContractService';
 export { ShipmentInvitationService } from './services/ShipmentInvitationService';
 export { ShipmentProposalService } from './services/ShipmentProposalService';
 export { SupportService } from './services/SupportService';
