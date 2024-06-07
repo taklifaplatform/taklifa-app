@@ -70,7 +70,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
         setStatus(item.status);
         setActiveFilterIndex(index);
       }}
-      iconAfter={() => (
+      iconAfter={() => !!item.count && (
         <Circle
           size="$2"
           backgroundColor={status === item.status ? '$color12' : '$color10'}
@@ -91,7 +91,15 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
         <Carousel
           ref={carouselRef}
           loop={false}
-          data={shipmentFilterQuery?.data?.data || []}
+          data={[
+            {
+              key: 'all',
+              status: 'all',
+            },
+            ... (
+              shipmentFilterQuery?.data?.data || []
+            )
+          ]}
           defaultIndex={activeFilterIndex}
           style={{
             width: '100%',

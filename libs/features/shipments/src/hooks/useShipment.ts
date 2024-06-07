@@ -18,7 +18,7 @@ export function useShipment(
   const [shipmentId] = useParam(variant === 'shipments' ? 'shipment' : 'job');
 
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ['ShipmentService.retrieveShipment', { id: shipmentId }],
+    queryKey: ['ShipmentService.retrieveShipment', shipmentId],
     queryFn: () =>
       ShipmentService.retrieveShipment({ shipment: shipmentId || '' }),
   });

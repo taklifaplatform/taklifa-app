@@ -19,6 +19,7 @@ export type ShipmentTransformer = {
     selected_company_id?: string | null;
     items_type?: string;
     status?: string;
+    active_contract_id?: string;
     user?: UserTransformer;
     from_location?: LocationTransformer;
     to_location?: LocationTransformer;

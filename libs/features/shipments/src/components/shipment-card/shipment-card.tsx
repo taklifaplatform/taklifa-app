@@ -150,9 +150,22 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
           {shipment.accepted_proposals_count}
         </Text>
         <Text>
-          Hired
+          Interviewing
         </Text>
       </YStack>
+
+      {
+        !!shipment?.active_contract_id && (
+          <YStack>
+            <Text fontWeight='bold'>
+              1
+            </Text>
+            <Text>
+              Hired
+            </Text>
+          </YStack>
+        )
+      }
     </XStack>
   )
 
