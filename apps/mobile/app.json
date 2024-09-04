@@ -19,7 +19,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.zixdev.demo.sawaeed",
-      "buildNumber": "108",
+      "buildNumber": "109",
       "infoPlist": {
         "CFBundleDevelopmentRegion": "en",
         "ExpoLocalization_supportsRTL": true,
@@ -58,7 +58,7 @@
         "backgroundColor": "#FECA16"
       },
       "package": "com.zixdev.demo.sawaeed",
-      "versionCode": 41,
+      "versionCode": 42,
       "permissions": [
         "android.permission.RECORD_AUDIO",
         "android.permission.CAMERA"
