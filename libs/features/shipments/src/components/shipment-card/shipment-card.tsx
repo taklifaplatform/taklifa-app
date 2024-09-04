@@ -131,10 +131,10 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
     <XStack gap='$4'>
       <YStack>
         <Text fontWeight='bold'>
-          {shipment.proposals_count} ({shipment.proposals_count} new)
+          {shipment.proposals_count} ({shipment.proposals_count} {t('plain:New')})
         </Text>
         <Text>
-          Proposals
+          {t('plain:Proposals')}
         </Text>
       </YStack>
       <YStack>
@@ -142,7 +142,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
           {shipment.invitations_count}
         </Text>
         <Text>
-          Invitations
+          {t('plain:Invitations')}
         </Text>
       </YStack>
       <YStack>
@@ -150,7 +150,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
           {shipment.accepted_proposals_count}
         </Text>
         <Text>
-          Interviewing
+          {t('plain:Interviewing')}
         </Text>
       </YStack>
 
@@ -161,7 +161,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
               1
             </Text>
             <Text>
-              Hired
+              {t('plain:Hired')}
             </Text>
           </YStack>
         )

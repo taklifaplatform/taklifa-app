@@ -61,11 +61,11 @@ export const ShipmentOwnerActions: React.FC<ShipmentOwnerActionsProps> = ({
       }
       <ActionSheet
         ref={actionSheetRef}
-        title="Select"
+        title={t('plain:Select an action')}
         snapPoints={[50, 50]}
         actions={[
           {
-            name: 'View Request',
+            name: t('plain:View Request'),
             icon: <Eye size="$2" color="$color10" />,
             onPress: () => {
               actionSheetRef.current?.close();
@@ -73,7 +73,7 @@ export const ShipmentOwnerActions: React.FC<ShipmentOwnerActionsProps> = ({
             },
           },
           {
-            name: 'View Proposals',
+            name: t('plain:View Proposals'),
             icon: <UsersRound size="$2" color="$color10" />,
             onPress: () => {
               actionSheetRef.current?.close();
@@ -81,7 +81,7 @@ export const ShipmentOwnerActions: React.FC<ShipmentOwnerActionsProps> = ({
             },
           },
           {
-            name: 'View Invitations',
+            name: t('plain:View Invitations'),
             icon: <Send size="$2" color="$color10" />,
             onPress: () => {
               actionSheetRef.current?.close();
@@ -89,7 +89,7 @@ export const ShipmentOwnerActions: React.FC<ShipmentOwnerActionsProps> = ({
             },
           },
           {
-            name: t('common:edit'),
+            name: t('plain:Edit'),
             icon: <Pencil size="$2" color="$color10" />,
             onPress: () => {
               actionSheetRef.current?.close();
@@ -97,22 +97,22 @@ export const ShipmentOwnerActions: React.FC<ShipmentOwnerActionsProps> = ({
             },
           },
           {
-            name: t('common:delete'),
+            name: t('plain:Delete'),
             icon: <Trash2 size="$2" color="$color10" />,
             onPress: () => {
               Alert.alert(
-                'Delete Shipment',
-                'Are you sure you want to delete this shipment?',
+                t('plain:Delete Shipment'),
+                t('plain:Are you sure you want to delete this shipment?'),
                 [
                   {
-                    text: 'Cancel',
+                    text: t('plain:Cancel'),
                     onPress: () => {
                       actionSheetRef.current?.close();
                     },
                     style: 'cancel'
                   },
                   {
-                    text: 'Delete',
+                    text: t('plain:Delete'),
                     onPress: () => {
                       mutateAsync()
                       actionSheetRef.current?.close();

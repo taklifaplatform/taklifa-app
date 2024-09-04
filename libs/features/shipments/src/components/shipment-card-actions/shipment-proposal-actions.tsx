@@ -3,10 +3,11 @@ import { useQuery } from '@tanstack/react-query';
 import { ShipmentProposalService, ShipmentTransformer } from '@zix/api';
 import { CompanyCard } from '@zix/features/company';
 import { UserCard } from '@zix/features/users';
-import { DebugObject, ZixButton } from '@zix/ui/common';
+import { ZixButton } from '@zix/ui/common';
+import { t } from 'i18next';
 import React, { useMemo } from 'react';
 import { useRouter } from 'solito/router';
-import { Button, XStack, YStack, View, Text } from 'tamagui';
+import { Button, Text, XStack, YStack } from 'tamagui';
 
 export type ShipmentProposalActionsProps = {
   shipment: ShipmentTransformer;
@@ -44,7 +45,8 @@ export const ShipmentProposalActions: React.FC<ShipmentProposalActionsProps> = (
         fontWeight="bold"
         themeInverse
       >
-        Submit Proposal
+
+        {t('plain:Submit Proposal')}
       </Button>
     );
   }
@@ -58,12 +60,12 @@ export const ShipmentProposalActions: React.FC<ShipmentProposalActionsProps> = (
         <XStack padding='$2' gap='$2' alignItems="center">
 
           <XStack gap='$1' flex={0.5}>
-            <Text fontWeight='700'>Cost: </Text>
+            <Text fontWeight='700'>{t('plain:Cost')}: </Text>
             <Text>{proposal.cost?.value}</Text>
             <Text fontWeight='600'>{proposal.cost?.currency?.code}</Text>
           </XStack>
           <XStack gap='$1'>
-            <Text fontWeight='700'>Fee: </Text>
+            <Text fontWeight='700'>{t('plain:Fee')}: </Text>
             <Text>{proposal.fee?.value}</Text>
             <Text fontWeight='600'>{proposal.fee?.currency?.code}</Text>
           </XStack>
@@ -75,7 +77,7 @@ export const ShipmentProposalActions: React.FC<ShipmentProposalActionsProps> = (
             fontWeight="bold"
             themeInverse
           >
-            Edit Proposal
+            {t('plain:Edit Proposal')}
           </Button>
 
           <ZixButton
@@ -91,11 +93,6 @@ export const ShipmentProposalActions: React.FC<ShipmentProposalActionsProps> = (
     );
   }
 
-
-
-  // return (
-  //   <DebugObject object={permission} />
-  // );
   return null;
 };
 
