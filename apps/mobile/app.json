@@ -18,8 +18,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.zixdev.demo.sawaeed",
-      "buildNumber": "109",
+      "bundleIdentifier": "com.sawaeedlogistics.app",
+      "buildNumber": "2",
       "infoPlist": {
         "CFBundleDevelopmentRegion": "en",
         "ExpoLocalization_supportsRTL": true,
@@ -57,8 +57,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FECA16"
       },
-      "package": "com.zixdev.demo.sawaeed",
-      "versionCode": 42,
+      "package": "com.sawaeedlogistics.app",
+      "versionCode": 1,
       "permissions": [
         "android.permission.RECORD_AUDIO",
         "android.permission.CAMERA"
