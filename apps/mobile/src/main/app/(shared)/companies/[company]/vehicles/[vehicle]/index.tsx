@@ -1,4 +1,4 @@
-import { VehicleProfileScreen } from '@zix/features/company';
+import { VehicleProfileScreen } from '@zix/features/vehicles';
 import React from 'react';
 
 export default function Screen() {

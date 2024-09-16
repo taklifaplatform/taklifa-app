@@ -1,4 +1,4 @@
-import { ManageVehicleScreen } from '@zix/features/company';
+import { ManageVehicleScreen } from '@zix/features/vehicles';
 import React from 'react';
 
 export default function Screen() {

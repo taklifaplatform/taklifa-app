@@ -1,15 +1,15 @@
 import { Cog } from '@tamagui/lucide-icons';
+import { VehiclesListScreen } from '@zix/features/vehicles';
 import { useAuth } from '@zix/services/auth';
 import { ZixTab } from '@zix/ui/common';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
+import { t } from 'i18next';
 import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useRouter } from 'solito/router';
 import { YStack } from 'tamagui';
 import { ManageTeamFabButton } from '../../components/manage-team-fab-button/manage-team-fab-button';
 import EmployeesListScreen from '../employees/employees-list-screen/employees-list-screen';
-import VehiclesListScreen from '../vehicles/vehicles-list-screen/vehicles-list-screen';
-import { t } from 'i18next';
 
 export function ManageCompanyDataScreen() {
   const router = useRouter();

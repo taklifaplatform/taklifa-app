@@ -6,6 +6,4 @@ export * from './screens/manage-company-data-screen/manage-company-data-screen';
 
 export * from './screens/employees';
 
-export * from './screens/vehicles';
-
 export * from './components';
