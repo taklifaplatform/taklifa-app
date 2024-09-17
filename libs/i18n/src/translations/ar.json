@@ -1,4 +1,54 @@
 {
+  "Proposals": "العروض",
+  "Invitations": "الدعوات",
+  "Interviewing": "المقابلات",
+  "Hired": "تم التوظيف",
+  "New": "جديد",
+  "Submit Proposal": "تقديم عرض",
+  "Edit Proposal": "تعديل العرض",
+  "Accept Invitation": "قبول الدعوة",
+  "Decline Invitation": "رفض الدعوة",
+  "Cost": "التكلفة",
+  "Fee": "الرسوم",
+  "Decline": "رفض",
+  "Cancel": "إلغاء",
+  "Are you sure you want to decline this invitation?": "هل أنت متأكد من رفض هذه الدعوة؟",
+  "You will not be able to access this shipment after declining.": "لن تتمكن من الوصول إلى هذه الشحنة بعد الرفض.",
+  "Invitation declined": "تم رفض الدعوة",
+  "Select an action": "اختر إجراء",
+  "View Request": "عرض الطلب",
+  "View Proposals": "عرض العروض",
+  "View Invitations": "عرض الدعوات",
+  "Edit": "تعديل",
+  "Delete": "حذف",
+  "Delete Shipment": "حذف الشحنة",
+  "Are you sure you want to delete this shipment?": "هل أنت متأكد من حذف هذه الشحنة؟",
+  "plain": {
+    "Proposals": "العروض",
+    "Invitations": "الدعوات",
+    "Interviewing": "المقابلات",
+    "Hired": "تم التوظيف",
+    "New": "جديد",
+    "Submit Proposal": "تقديم عرض",
+    "Edit Proposal": "تعديل العرض",
+    "Accept Invitation": "قبول الدعوة",
+    "Decline Invitation": "رفض الدعوة",
+    "Cost": "التكلفة",
+    "Fee": "الرسوم",
+    "Decline": "رفض",
+    "Cancel": "إلغاء",
+    "Are you sure you want to decline this invitation?": "هل أنت متأكد من رفض هذه الدعوة؟",
+    "You will not be able to access this shipment after declining.": "لن تتمكن من الوصول إلى هذه الشحنة بعد الرفض.",
+    "Invitation declined": "تم رفض الدعوة",
+    "Select an action": "اختر إجراء",
+    "View Request": "عرض الطلب",
+    "View Proposals": "عرض العروض",
+    "View Invitations": "عرض الدعوات",
+    "Edit": "تعديل",
+    "Delete": "حذف",
+    "Delete Shipment": "حذف الشحنة",
+    "Are you sure you want to delete this shipment?": "هل أنت متأكد من حذف هذه الشحنة؟"
+  },
   "app": {
     "forms": {
       "labels": {
@@ -77,14 +127,18 @@
       "location": "الموقع",
       "online": "متصل الآن",
       "offline": "غير متصل",
-      "last-seen": "آخر ظهور"
+      "last-seen": "آخر ظهور",
+      "all": "الكل",
+      "service-provider-type": "نوع مقدم الخدمة",
+      "company": "شركة",
+      "solo-driver": "سائق فردي"
     },
     "company": {
       "verification_status": {
-      "pending": "قيد الانتظار",
-      "verified": "تم التحقق",
-      "rejected": "مرفوض",
-      "in_review": "قيد المراجعة"
+        "pending": "قيد الانتظار",
+        "verified": "تم التحقق",
+        "rejected": "مرفوض",
+        "in_review": "قيد المراجعة"
       }
     }
   },

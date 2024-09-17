@@ -1,7 +1,7 @@
 import { MessageCircle, X } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ShipmentProposalService, ShipmentProposalTransformer } from "@zix/api";
+import { ShipmentContractService, ShipmentProposalService, ShipmentProposalTransformer } from "@zix/api";
 import { CompanyCard } from "@zix/features/company";
 import { UserCard } from "@zix/features/users";
 import { ZixButton } from "@zix/ui/common";
@@ -43,6 +43,33 @@ export const ShipmentProposalCard: React.FC<ShipmentProposalCardProps> = ({
     },
   })
 
+  const createProposalContractMutation = useMutation({
+    mutationFn() {
+      return ShipmentContractService.createProposalContract({
+        shipmentProposal: proposal.id
+      })
+    },
+    onSuccess() {
+      queryClient.refetchQueries({
+        queryKey: [
+          'ShipmentProposalService.fetchShipmentProposals',
+          proposal.shipment_id,
+        ]
+      })
+      queryClient.refetchQueries({
+        queryKey: [
+          'ShipmentService.retrieveShipment',
+          proposal.shipment_id,
+        ]
+      })
+      router.replace(`/app/shipments`)
+      router.push(`/app/shipments/${proposal.shipment_id}`)
+    },
+    onError(error: any) {
+      toast.show(error?.body?.message || t('app:errors.something-went-wrong'), { preset: 'error' });
+    },
+  })
+
   const declineShipmentProposalMutation = useMutation({
     mutationFn() {
       return ShipmentProposalService.declineShipmentProposal({
@@ -74,6 +101,21 @@ export const ShipmentProposalCard: React.FC<ShipmentProposalCardProps> = ({
         text: 'Accept',
         style: 'cancel',
         onPress: () => acceptShipmentProposalMutation.mutateAsync()
+      }
+    ])
+  }
+
+  function onAcceptContractPress() {
+    Alert.alert('Accept', 'Are you sure to accept this proposal?', [
+      {
+        text: 'Cancel',
+        style: 'default'
+
+      },
+      {
+        text: 'Accept',
+        style: 'cancel',
+        onPress: () => createProposalContractMutation.mutateAsync()
       }
     ])
   }
@@ -156,8 +198,8 @@ export const ShipmentProposalCard: React.FC<ShipmentProposalCardProps> = ({
             theme='accent'
             flex={1}
             fontWeight='700'
-            onPress={onAcceptPress}
-            loading={acceptShipmentProposalMutation.isPending}
+            onPress={onAcceptContractPress}
+            loading={createProposalContractMutation.isPending}
           >
             Start Contract
           </ZixButton>

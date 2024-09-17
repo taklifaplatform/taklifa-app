@@ -44,7 +44,12 @@ export const ShipmentRejectScreen: React.FC<ShipmentRejectScreenProps> = (
   const shipment = data?.data;
 
   const form = useForm<z.infer<typeof CancelShipmentSchema>>();
-  const { mutateAsync } = useMutation({});
+  const { mutateAsync } = useMutation({
+    mutationFn: () => {
+      alert('UNDER DEV')
+      return undefined;
+    }
+  });
   return (
     <>
       <AppHeader showBackButton title="Cancellation Details " />

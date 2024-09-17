@@ -6,6 +6,7 @@ import { CompanyCard } from "@zix/features/company";
 import { UserCard } from "@zix/features/users";
 import { ZixButton } from "@zix/ui/common";
 import { t } from "i18next";
+import { useRouter } from "solito/router";
 import { Separator, View, XStack } from "tamagui";
 
 export type ShipmentInvitationCardProps = {
@@ -18,6 +19,7 @@ export const ShipmentInvitationCard: React.FC<ShipmentInvitationCardProps> = ({
 
   const queryClient = useQueryClient()
   const toast = useToastController()
+  const router = useRouter()
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn() {
@@ -65,6 +67,7 @@ export const ShipmentInvitationCard: React.FC<ShipmentInvitationCardProps> = ({
               themeInverse
               flex={1}
               fontWeight='700'
+              onPress={() => router.push(`/app/shipment-manager/${invitation.shipment_id}/proposals/${invitation.proposal_id}`)}
             >
               View Proposal
             </ZixButton>

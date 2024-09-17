@@ -1,3 +1,4 @@
+import { Settings } from '@tamagui/lucide-icons';
 import { useAuth } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
@@ -18,9 +19,9 @@ import {
   ShipmentSectionWrapper,
   ShipmentStatus
 } from '../../components';
-import { useShipment } from '../../hooks';
+import CustomerShipmentContractActions from '../../components/@customer/customer-shipment-contract-actions/customer-shipment-contract-actions';
 import ShipmentOwnerActions from '../../components/shipment-owner-actions/shipment-owner-actions';
-import { Settings } from '@tamagui/lucide-icons';
+import { useShipment } from '../../hooks';
 
 export type ShipmentDetailScreenProps = {
   variant: 'shipments' | 'jobs';
@@ -87,13 +88,30 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
             <ShipmentInformation shipment={shipment} />
           </ShipmentSectionWrapper>
 
-          <ShipmentSectionWrapper>
-            <ShipmentBudget shipment={shipment} />
-          </ShipmentSectionWrapper>
+          {
+            !shipment.active_contract_id && (
+              <ShipmentSectionWrapper>
+                <ShipmentBudget shipment={shipment} />
+              </ShipmentSectionWrapper>
+            )
+          }
 
-          <ShipmentSectionWrapper>
-            <ShipmentInteraction shipment={shipment} />
-          </ShipmentSectionWrapper>
+          {
+            !shipment.active_contract_id && (
+              <ShipmentSectionWrapper>
+                <ShipmentInteraction shipment={shipment} />
+              </ShipmentSectionWrapper>
+            )
+          }
+
+          {
+            !!shipment.active_contract_id && (
+              <ShipmentSectionWrapper>
+                <CustomerShipmentContractActions shipment={shipment} />
+              </ShipmentSectionWrapper>
+            )
+          }
+
 
           {/* <InformationAboutDriver driver={driver} status={status} /> */}
 

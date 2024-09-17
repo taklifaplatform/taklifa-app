@@ -6,6 +6,7 @@ import type { ShipmentProposalTransformer } from './ShipmentProposalTransformer'
 export type ProposalPermissionTransformer = {
     can_submit?: boolean;
     has_proposal?: boolean;
+    can_edit?: boolean;
     proposal?: ShipmentProposalTransformer;
 };
 

@@ -103,7 +103,7 @@ const VariantValueText = styled(Text, {
 });
 
 export const VariantOption: React.FC<VariantOptionProps> = ({
-  option: { icons, name, value, theme },
+  option: { icons, name, value, theme, ...props },
   variant,
 }) => {
   return (
@@ -120,7 +120,6 @@ export const VariantOption: React.FC<VariantOptionProps> = ({
         !!name && (
           <VariantText
             {...(variant ? { [variant]: true } : {})}
-
           >
             {name}
           </VariantText>

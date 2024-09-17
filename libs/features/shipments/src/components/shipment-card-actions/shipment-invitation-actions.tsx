@@ -1,5 +1,5 @@
 import { useToastController } from '@tamagui/toast';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { ShipmentInvitationService, ShipmentTransformer } from '@zix/api';
 import { ZixButton } from '@zix/ui/common';
 import { t } from 'i18next';
@@ -37,7 +37,7 @@ export const ShipmentInvitationActions: React.FC<ShipmentInvitationActionsProps>
       shipmentInvitation: data?.data?.invitation?.id,
     }),
     onSuccess() {
-      toast.show('Invitation declined', { preset: 'success' });
+      toast.show(t('plain:Invitation declined'), { preset: 'success' });
       permissionQuery.refetch()
     },
     onError(error: any) {
@@ -47,15 +47,15 @@ export const ShipmentInvitationActions: React.FC<ShipmentInvitationActionsProps>
 
   function onDeclinePress() {
     Alert.alert(
-      'Are you sure you want to decline this invitation?',
-      'You will not be able to access this shipment',
+      t('plain:Are you sure you want to decline this invitation?'),
+      t('plain:You will not be able to access this shipment after declining.'),
       [
         {
-          text: 'Cancel',
+          text: t('plain:Cancel'),
           style: 'cancel',
         },
         {
-          text: 'Decline',
+          text: t('plain:Decline'),
           style: 'destructive',
           onPress: () => mutateAsync(),
         },
@@ -76,7 +76,7 @@ export const ShipmentInvitationActions: React.FC<ShipmentInvitationActionsProps>
       fontSize='$1'
       onPress={() => router.push(`${urlPrefix}/${shipment.id}/invitations/${data?.data?.invitation?.id}/accept`)}
     >
-      Accept Invitation
+      {t('plain:Accept Invitation')}
     </ZixButton>
   )
 
@@ -91,7 +91,7 @@ export const ShipmentInvitationActions: React.FC<ShipmentInvitationActionsProps>
       loading={isPending}
       onPress={onDeclinePress}
     >
-      Decline Invitation
+      {t('plain:Decline Invitation')}
     </ZixButton>
   )
 

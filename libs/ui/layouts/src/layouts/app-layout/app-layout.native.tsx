@@ -62,6 +62,17 @@ export const AppLayout = () => {
         }}
       />
       <Tabs.Screen
+        name="driver-vehicles"
+        options={USER_ROLES.solo_driver === activeRole ? {
+          title: t('Vehicle'),
+          tabBarIcon: ({ size, color }) => (
+            <CustomIcon name="car" color={color} size={size} />
+          ),
+        } : {
+          href: null
+        }}
+      />
+      <Tabs.Screen
         name="stores"
         options={activeRole === USER_ROLES.customer ? {
           title: t('navigation:customer-dashboard.store'),

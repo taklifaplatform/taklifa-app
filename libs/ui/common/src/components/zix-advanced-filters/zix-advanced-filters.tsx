@@ -112,7 +112,7 @@ export const ZixFilter: React.FC<ZixFiltersProps> = ({
     >
       <XStack gap='$4' alignItems='center' flex={1}>
         {item.icon}
-        <YStack gap='$2' flex={1}>
+        <YStack gap='$2'>
           <Text fontWeight='700'>{item.label}</Text>
         </YStack>
       </XStack>

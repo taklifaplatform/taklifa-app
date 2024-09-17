@@ -16,12 +16,13 @@ import { ShipmentSectionWrapper } from '../shipment-section-wrapper/shipment-sec
 
 export type InformationAboutDriverProps = ThemeableStackProps & {
   driver: DriverTransformer;
-  status: string;
+  channelId?: string;
+
 };
 
 export const InformationAboutDriver: React.FC<InformationAboutDriverProps> = ({
   driver,
-  status,
+  channelId,
   ...props
 }) => {
   const renderDriver = () => (
@@ -47,14 +48,13 @@ export const InformationAboutDriver: React.FC<InformationAboutDriverProps> = ({
           </XStack>
         </YStack>
       </XStack>
-      <Link href={`/chat/${driver?.id}`}>
+      {!!channelId && <Link href={`/app/chat/channels/${channelId}`}>
         <Stack backgroundColor={'$gray6'} padding="$2" borderRadius="$4">
           <CustomIcon name="comment" size="$1" color={'white'} />
         </Stack>
-      </Link>
+      </Link>}
     </XStack>
   );
-  if (status !== 'delivering') return null;
 
   return (
     <ShipmentSectionWrapper>

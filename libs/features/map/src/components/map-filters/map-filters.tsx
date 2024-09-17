@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { VehicleModelService } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
 import { USER_ROLES } from '@zix/services/auth';
+import { t } from 'i18next';
 
 export type MapFiltersProps = {
   values: Record<string, string>;
@@ -28,10 +29,10 @@ export const MapFilters: React.FC<MapFiltersProps> = ({
   const filters = useMemo(() => ([
     {
       key: 'vehicle_model',
-      label: 'Vehicle Model',
+      label: t('common:model'),
       options: [
         {
-          label: 'All',
+          label: t('app:common.all'),
           value: 'all',
           activeValue: (
             <CarFront />
@@ -61,10 +62,10 @@ export const MapFilters: React.FC<MapFiltersProps> = ({
     },
     {
       key: 'provider_type',
-      label: 'Provider Type',
+      label: t('app:common.service-provider-type'),
       options: [
         {
-          label: 'All', value: 'all',
+          label: t('app:common.all'), value: 'all',
           icon: (
             <CustomIcon name='service_provider' size='$4' />
           ),
@@ -73,7 +74,7 @@ export const MapFilters: React.FC<MapFiltersProps> = ({
           ),
         },
         {
-          label: 'Company', value: 'company', icon: (
+          label: t('app:common.company'), value: 'company', icon: (
             <CustomIcon name='company_cars' size='$4' />
           ),
           activeValue: (
@@ -81,7 +82,7 @@ export const MapFilters: React.FC<MapFiltersProps> = ({
           ),
         },
         {
-          label: 'Solo Driver', value: USER_ROLES.solo_driver, icon: (
+          label: t('app:common.solo-driver'), value: USER_ROLES.solo_driver, icon: (
             <CustomIcon name='solo_transporter_car' size='$4' />
           ),
           activeValue: (
