@@ -10,6 +10,7 @@ export type ProfileHeaderProps = {
 
 export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user }) => {
   const activityStatus = useMemo(() => getLastActivityStatus(user), [user])
+
   return (
     <YStack gap="$2">
       <XStack gap="$2" justifyContent="center" $sm={{ marginTop: '$4' }}>

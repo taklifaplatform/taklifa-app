@@ -78,7 +78,11 @@ export const ShipmentItemsField: React.FC<ShipmentItemsFieldProps> = ({
               index={index}
               value={item}
               onChange={(newValue) => {
-                onChange(value.map((v, i) => i === index ? newValue : v))
+                // Convert newValue to an integer
+                const intValue = parseInt(newValue, 10);
+                // Ensure we only set valid integers, or handle NaN if necessary
+                const updatedValue = Number.isNaN(intValue) ? item : intValue;
+                onChange(value.map((v, i) => i === index ? updatedValue : v));
               }}
               error={error?.[index] || {}}
             />

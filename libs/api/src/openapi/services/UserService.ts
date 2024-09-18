@@ -140,4 +140,17 @@ export class UserService {
             mediaType: 'application/json',
         });
     }
+    /**
+     * Delete User Account.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static deleteAccount(): CancelablePromise<{
+        data?: AuthenticatedUserTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/auth/user/delete-account',
+        });
+    }
 }

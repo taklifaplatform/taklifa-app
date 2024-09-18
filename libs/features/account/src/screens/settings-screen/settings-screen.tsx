@@ -13,6 +13,7 @@ import { Alert, Linking } from 'react-native';
 import { useAuth } from '@zix/services/auth';
 import { useLink } from 'solito/link';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
+import { UserService } from '@zix/api';
 
 const brandColors = {
   twitter: '#1DA1F2',
@@ -146,6 +147,7 @@ export const SettingsScreen = () => {
 
               <Settings.Group>
                 <SettingsThemeAction />
+                <SettingsDeleteAccountAction />
                 <SettingsItemLogoutAction />
               </Settings.Group>
             </Settings.Items>
@@ -252,6 +254,41 @@ const SettingsItemLogoutAction = () => {
 
     >
       {t('account:logout')}
+    </Settings.Item>
+  );
+};
+const SettingsDeleteAccountAction = () => {
+  const { logout } = useAuth();
+
+  return (
+    <Settings.Item
+      theme='error'
+      icon={(props: IconProps) => (
+        <CustomIcon name="secure" color="$color9" {...props} />
+      )}
+      accentColor="$color9"
+      //onPress={() => logout()}
+      onPress={async () => {
+        Alert.alert(
+          'Delete Account',
+          `Are you sure you want to delete your account?`,
+          [
+            {
+              text: 'Confirm',
+              onPress: () => UserService.deleteAccount()
+                .then(() => logout()),
+              style: 'cancel',
+            },
+            {
+              text: 'Cancel',
+              style: 'destructive',
+            },
+          ]
+        )
+      }}
+
+    >
+      Delete Account
     </Settings.Item>
   );
 };
