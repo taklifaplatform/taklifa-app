@@ -19,7 +19,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "app.sawaeed",
-      "buildNumber": "1",
+      "buildNumber": "2",
       "infoPlist": {
         "CFBundleDevelopmentRegion": "ar",
         "ExpoLocalization_supportsRTL": true,
@@ -49,7 +49,11 @@
           "dgis",
           "lftgpas"
         ]
-      }
+      },
+      "associatedDomains": [
+        "applinks:sawaeed.app",
+        "applinks:staging.sawaeed.app"
+      ]
     },
     "android": {
       "softwareKeyboardLayoutMode": "pan",
@@ -58,7 +62,7 @@
         "backgroundColor": "#FECA16"
       },
       "package": "app.sawaeed",
-      "versionCode": 1,
+      "versionCode": 2,
       "permissions": [
         "android.permission.RECORD_AUDIO",
         "android.permission.CAMERA"

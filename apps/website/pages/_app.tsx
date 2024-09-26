@@ -50,6 +50,7 @@ const ZixApp: React.FC<SolitoAppProps> = ({ Component, pageProps }) => {
       </Head>
       <MultiLangAppProvider defaultLang={defaultLang}>
         <NextThemeProvider
+          defaultTheme="light"
           onChangeTheme={(next) => {
             setTheme(next as ColorScheme);
           }}

@@ -52,7 +52,7 @@
         "clearCache": true
       }
     },
-    "release:ios": {
+    "preview:ios": {
       "executor": "@nx/expo:build",
       "dependsOn": ["ensure-symlink", "sync-deps"],
       "options": {
@@ -61,12 +61,29 @@
         "platform": "ios"
       }
     },
-    "release:android": {
+    "preview:android": {
       "executor": "@nx/expo:build",
       "dependsOn": ["ensure-symlink", "sync-deps"],
       "options": {
         "profile": "preview",
         "platform": "android"
+      }
+    },
+    "release:ios": {
+      "executor": "@nx/expo:build",
+      "dependsOn": ["ensure-symlink", "sync-deps"],
+      "options": {
+        "autoSubmit": true,
+        "profile": "production",
+        "platform": "ios"
+      }
+    },
+    "release:android": {
+      "executor": "@nx/expo:build",
+      "dependsOn": ["ensure-symlink", "sync-deps"],
+      "options": {
+        "profile": "preview",
+        "platform": "production"
       }
     },
     "build": {
