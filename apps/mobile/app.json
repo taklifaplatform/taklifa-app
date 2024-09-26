@@ -18,10 +18,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.sawaeedlogistics.app",
-      "buildNumber": "2",
+      "bundleIdentifier": "app.sawaeed",
+      "buildNumber": "1",
       "infoPlist": {
-        "CFBundleDevelopmentRegion": "en",
+        "CFBundleDevelopmentRegion": "ar",
         "ExpoLocalization_supportsRTL": true,
         "CFBundleLocalizations": [
           "ar",
@@ -57,7 +57,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FECA16"
       },
-      "package": "com.sawaeedlogistics.app",
+      "package": "app.sawaeed",
       "versionCode": 1,
       "permissions": [
         "android.permission.RECORD_AUDIO",
