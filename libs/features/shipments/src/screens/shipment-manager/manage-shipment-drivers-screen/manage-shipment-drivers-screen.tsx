@@ -99,7 +99,7 @@ export function ManageShipmentDriversScreen() {
                 <UserCard
                   user={item}
                   key={`${index}-${item.id}`}
-                  borderWidth={selectedDrivers.some(d => d.id === item.id) ? 2 : 0}
+                  borderWidth={selectedDrivers.some(d => d.id === item.id) ? "$2" : "$0"}
                   marginBottom='$4'
                   userContactActionsProps={{
                     onServiceRequestPress: () => {
@@ -134,7 +134,7 @@ export function ManageShipmentDriversScreen() {
                 <CompanyCard
                   company={item}
                   key={`${index}-${item.id}`}
-                  borderWidth={selectedCompanies.some(d => d.id === item.id) ? 2 : 0}
+                  borderWidth={selectedCompanies.some(d => d.id === item.id) ? "$2" : "$0"}
                   marginBottom='$4'
                   companyContactActionsProps={{
                     onServiceRequestPress: () => {

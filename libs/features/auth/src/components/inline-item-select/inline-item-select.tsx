@@ -55,7 +55,7 @@ export const InlineItemSelect: React.FC<InlineItemSelectProps> = ({
       <Button
         pressStyle={{
           backgroundColor: 'transparent',
-          borderWidth: 0,
+          borderWidth: "$0",
           padding: 0,
         }}
         icon={(props) => (

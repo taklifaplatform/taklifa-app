@@ -49,7 +49,7 @@ export function TrackShipments() {
         <XStack
           alignItems="center"
           gap="$2"
-          borderBottomWidth={selectedShipment === 0 ? 2 : 0}
+          borderBottomWidth={selectedShipment === 0 ? "$1" : 0}
           borderColor="$color5"
           paddingBottom="$2"
         >

@@ -98,7 +98,7 @@ export function Header() {
       justifyContent="space-between"
       backgroundColor='$color1'
       alignItems="center"
-      borderTopWidth={1}
+      borderTopWidth='$1'
       borderTopColor={'$gray7'}
       paddingHorizontal="$4"
       height={80}

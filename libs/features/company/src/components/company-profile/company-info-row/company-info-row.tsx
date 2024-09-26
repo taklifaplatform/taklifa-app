@@ -26,7 +26,7 @@ export const CompanyInfoRow: React.FC<CompanyInfoRowProps> = ({
 
       {
         !!company?.location?.id && (
-          <Separator vertical borderColor="$color4" borderWidth={0.3} />
+          <Separator vertical borderColor="$color4" borderWidth={"$1"} />
         )
       }
     </>
@@ -44,7 +44,7 @@ export const CompanyInfoRow: React.FC<CompanyInfoRowProps> = ({
       </XStack>
       {
         !!company.rating_stats?.count && (
-          <Separator vertical borderColor="$color4" borderWidth={0.3} />
+          <Separator vertical borderColor="$color4" borderWidth={"$1"} />
         )
       }
     </>

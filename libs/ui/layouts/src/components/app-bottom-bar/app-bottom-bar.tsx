@@ -24,7 +24,7 @@ export const AppBottomBar: React.FC<AppBottomBarProps> = (props) => {
       elevation='$4'
       backgroundColor='$color1'
       borderTopColor='$color5'
-      borderTopWidth={1}
+      borderTopWidth='$1'
       {...props}
     >
       {

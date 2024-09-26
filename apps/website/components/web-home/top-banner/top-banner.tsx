@@ -72,7 +72,7 @@ export function TopBanner() {
         linkItem
         href={'/app'}
         borderRadius='$4'
-        borderWidth={1}
+        borderWidth={"$1"}
         borderColor='$color12'
         width={150}
         justifyContent="center"
@@ -86,7 +86,7 @@ export function TopBanner() {
         linkItem
         href={'/app'}
         borderRadius='$4'
-        borderWidth={1}
+        borderWidth={"$1"}
         borderColor='$color12'
         width={150}
         justifyContent="center"

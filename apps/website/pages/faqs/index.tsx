@@ -59,7 +59,7 @@ export const Page: NextPageWithLayout = () => {
           borderRadius={10}
           padding="$2"
           w={164}
-          borderWidth={1}
+          borderWidth={"$1"}
           borderColor="$color12"
           icon={<CustomIcon name="ringing" size="$2" />}
           onPress={() => router.push('/contact')}

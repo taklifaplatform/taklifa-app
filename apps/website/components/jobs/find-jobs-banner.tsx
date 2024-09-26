@@ -36,7 +36,7 @@ export function FindJobsBanner() {
             padding="$2"
             w={164}
             position="absolute"
-            borderWidth={1}
+            borderWidth={"$1"}
             borderColor="$color10"
             left={'20px'}
             icon={<CustomIcon name="account" size="$2" />}
@@ -85,7 +85,7 @@ export function FindJobsBanner() {
             borderRadius={10}
             padding="$2"
             width={'100%'}
-            borderWidth={1}
+            borderWidth={"$1"}
             borderColor="$color10"
             iconAfter={<CustomIcon name="account" size="$1" />}
           >

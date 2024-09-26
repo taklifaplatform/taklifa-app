@@ -51,7 +51,7 @@ export const BoxDimension: React.FC<BoxDimensionProps> = ({
             dimensions.map(({ label, value }, index) => (
               <YStack
                 flex={1}
-                borderWidth='1'
+                borderWidth='$1'
                 paddingVertical='$2'
                 paddingHorizontal='$1'
                 borderRadius='$2'

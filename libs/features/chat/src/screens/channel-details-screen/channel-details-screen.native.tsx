@@ -70,7 +70,7 @@ export function ChannelDetailsScreen() {
               members?.map((member, index) => (
                 <ListItem
                   borderBottomColor='$gray5'
-                  borderBottomWidth={1}
+                  borderBottomWidth={"$1"}
                   key={`${member.user?.id}-${index}`}
                   title={member.user?.name}
                   subTitle={member.user?.online || member.role}
@@ -144,7 +144,7 @@ export function ChannelDetailsScreen() {
               }}
 
               borderBottomColor='$gray5'
-              borderBottomWidth={1}
+              borderBottomWidth={"$1"}
               icon={(
                 <Avatar
                   size="$4"
@@ -172,7 +172,7 @@ export function ChannelDetailsScreen() {
               }}
 
               borderBottomColor='$gray5'
-              borderBottomWidth={1}
+              borderBottomWidth={"$1"}
               icon={(
                 <Avatar
                   size="$4"
@@ -211,7 +211,7 @@ export function ChannelDetailsScreen() {
               }}
 
               borderBottomColor='$gray5'
-              borderBottomWidth={1}
+              borderBottomWidth={"$1"}
               icon={(
                 <Avatar
                   size="$4"

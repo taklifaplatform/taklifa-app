@@ -31,7 +31,7 @@ export function ManageShipments() {
             width: '100%',
             height: 180
           }}
-          borderRadius={10}
+          borderRadius={"$1"}
         />
         <Stack
           position={'absolute'}
@@ -85,10 +85,10 @@ export function ManageShipments() {
           <Button
             theme={'accent'}
             backgroundColor="transparent"
-            borderRadius={10}
+            borderRadius={"$1"}
             padding="$2"
             width={164}
-            borderWidth={1}
+            borderWidth={"$1"}
             borderColor="$color11"
             icon={<UserCircle size="$2" />}
             onPress={() => router.push('/contact')}

@@ -68,7 +68,7 @@ export const JobsListScreen: React.FC<JobsListScreenProps> = ({
               <Stack>
                 <ZixSelectField
                   selectTriggerProps={{
-                    borderWidth: 0,
+                    borderWidth: "$0",
                     justifyContent: 'space-between',
                   }}
                   fontSize="$4"
