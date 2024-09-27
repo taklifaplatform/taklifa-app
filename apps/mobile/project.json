@@ -82,8 +82,8 @@
       "executor": "@nx/expo:build",
       "dependsOn": ["ensure-symlink", "sync-deps"],
       "options": {
-        "profile": "preview",
-        "platform": "production"
+        "profile": "production",
+        "platform": "android"
       }
     },
     "build": {

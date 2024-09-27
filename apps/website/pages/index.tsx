@@ -5,7 +5,7 @@ import { SecondBanner } from '../components/web-home/second-banner/second-banner
 import { StartToday } from '../components/web-home/start-today/start-today';
 import { TopBanner } from '../components/web-home/top-banner/top-banner';
 import { TrackShipments } from '../components/web-home/track-shipments/track-shipments';
-import { WarningBanner } from '../components/web-home/warning-banner/warning-banner';
+//import { WarningBanner } from '../components/web-home/warning-banner/warning-banner';
 import MainLayout from '../layouts/main-layout';
 import { NextPageWithLayout } from './_app';
 
@@ -18,7 +18,7 @@ export const Page: NextPageWithLayout = () => {
       <ManageShipments />
       <StartToday />
       <OurPartners />
-      <WarningBanner />
+      {/*<WarningBanner />*/}
       <FrequentlyQuestions />
     </>
   );
