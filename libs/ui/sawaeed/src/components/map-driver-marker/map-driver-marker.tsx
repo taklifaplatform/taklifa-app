@@ -1,11 +1,8 @@
 import { DriverTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
-import React from 'react';
-// import { ZixMap } from '@zix/ui/common';
+import React, { useState } from 'react';
 import { Marker } from 'react-native-maps';
-
 import { Image, View } from 'tamagui';
-
 
 export type MapDriverMarkerProps = {
   driver: DriverTransformer;
@@ -18,15 +15,19 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = React.memo(({
   isSelected,
   onPress
 }: MapDriverMarkerProps) => {
+  const [showCustomIcon, setShowCustomIcon] = useState(false)
 
-  const renderCarIcon = () => driver?.vehicle?.model?.map_icon?.url ? (
+  const renderCarIcon = () => (driver?.vehicle?.model?.map_icon?.url && !showCustomIcon) ? (
     <Image
       source={{ uri: driver.vehicle.model.map_icon.url }}
       width={driver.vehicle.model.map_icon_width || '$4'}
       height={driver.vehicle.model.map_icon_height || '$4'}
+      onError={() => {
+        setShowCustomIcon(true)
+      }}
     />
   ) : (
-    <CustomIcon name='vehicle_a' size="$4" />
+    <CustomIcon name='solo_transporter_car' size="$4" />
   )
 
   if (!driver.location) {
@@ -48,15 +49,14 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = React.memo(({
         alignItems='center'
         justifyContent='center'
         borderColor='$color5'
-        // rotate vehicle icon based on its direction
         style={
           isSelected
             ? {
-              borderWidth: 1,
-              borderColor: 'rgba(254, 202, 22, 0.1)',
-              backgroundColor: 'rgba(254, 202, 22, 0.3)',
-              borderRadius: 50,
-            }
+                borderWidth: 1,
+                borderColor: 'rgba(254, 202, 22, 0.1)',
+                backgroundColor: 'rgba(254, 202, 22, 0.3)',
+                borderRadius: 50,
+              }
             : null
         }
       >
@@ -64,8 +64,6 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = React.memo(({
       </View>
     </Marker>
   );
-},
-  (prevProps, nextProps) => prevProps.isSelected === nextProps.isSelected
-);
+}, (prevProps, nextProps) => prevProps.isSelected === nextProps.isSelected);
 
 export default MapDriverMarker;

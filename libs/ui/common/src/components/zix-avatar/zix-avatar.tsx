@@ -1,8 +1,7 @@
 import { MediaTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Avatar, Image, SizeTokens, ThemeableStackProps, useStyle } from 'tamagui';
-
 
 export type ZixAvatarProps = ThemeableStackProps & {
   size?: SizeTokens;
@@ -21,16 +20,19 @@ export const ZixAvatar: React.FC<ZixAvatarProps> = ({
     height: size,
   });
 
+
   const mediaUrl = useMemo(() => {
-    if (media?.original_url) return media?.original_url;
+    if (media?.original_url) return media.original_url;
 
     if (!name) return null;
 
     const params = new URLSearchParams();
     params.append('name', name);
-    params.append('size', '256'); // will be resized again by NextImage/SolitoImage
+    params.append('size', '256');
     return `https://ui-avatars.com/api.jpg?${params.toString()}`;
   }, [name, media]);
+
+  const [showCustomIcon, setShowCustomIcon] = useState(false)
 
   return (
     <Avatar
@@ -42,12 +44,15 @@ export const ZixAvatar: React.FC<ZixAvatarProps> = ({
       justifyContent="center"
       {...props}
     >
-      {mediaUrl ? (
+      {mediaUrl && !showCustomIcon ? (
         <Image
           source={{ uri: mediaUrl }}
           alt={name ?? ''}
           style={style}
           resizeMode='contain'
+          onError={() => {
+            setShowCustomIcon(true)
+          }}
         />
       ) : (
         <CustomIcon name="avatar" size={size} color="$color2" />
@@ -55,6 +60,5 @@ export const ZixAvatar: React.FC<ZixAvatarProps> = ({
     </Avatar>
   );
 };
-
 
 export default ZixAvatar;
