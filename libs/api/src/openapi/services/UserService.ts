@@ -39,7 +39,7 @@ export class UserService {
         data?: AuthenticatedUserTransformer;
     }> {
         return __request(OpenAPI, {
-            method: 'POST',
+            method: 'PUT',
             url: '/api/auth/user',
             body: requestBody,
             mediaType: 'application/json',
