@@ -7,8 +7,8 @@ import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { MapCompanyMarker, MapDriverMarker } from '@zix/ui/sawaeed';
 import { getDistance } from '@zix/utils';
-import { useMemo, useRef, useState } from 'react';
-import { Dimensions, Platform } from 'react-native';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Dimensions, Keyboard, Platform } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import MapView from 'react-native-maps';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
@@ -137,6 +137,29 @@ export function HomeScreen() {
     });
   }
 
+  // Keyboard Detect
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true); // or some other action
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false); // or some other action
+      }
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
   const renderMapDrivers = () =>
     (filters.provider_type === 'all' || filters.provider_type === USER_ROLES.solo_driver) ?
       driversList.map((driver, index) => (
@@ -164,7 +187,12 @@ export function HomeScreen() {
 
   const renderMap = () =>
     showMap && (
-      <MapView ref={mapRef} style={{ flex: 1 }} initialCamera={initialCamera}>
+      <MapView
+        ref={mapRef}
+        style={{ flex: 1 }}
+        initialCamera={initialCamera}
+        onPress={() => Keyboard.dismiss()}
+      >
         {renderMapDrivers()}
         {renderMapCompanies()}
       </MapView>
@@ -172,24 +200,28 @@ export function HomeScreen() {
   //List
   const renderList = () =>
     !showMap && (
-      <FlatList
-        refreshing={driversQuery.isFetching}
-        onRefresh={driversQuery.refetch}
-        style={{ flex: 1 }}
-        data={driversList}
-        initialNumToRender={5}
-        maxToRenderPerBatch={5}
-        renderItem={({ item, index }) => (
-          <UserCard
-            key={`stack-${item.id}-${index}`}
-            user={item}
-            flex={1}
-            marginHorizontal="$4"
-            marginVertical="$2"
-            backgroundColor="$color2"
-          />
-        )}
-      />
+      <View flex={1}
+        marginTop={isKeyboardVisible ? 0 : "$10"}
+      >
+        <FlatList
+          refreshing={driversQuery.isFetching}
+          onRefresh={driversQuery.refetch}
+          style={{ flex: 1 }}
+          data={driversList}
+          initialNumToRender={5}
+          maxToRenderPerBatch={5}
+          renderItem={({ item, index }) => (
+            <UserCard
+              key={`stack-${item.id}-${index}`}
+              user={item}
+              flex={1}
+              marginHorizontal="$4"
+              marginVertical="$2"
+              backgroundColor="$color2"
+            />
+          )}
+        />
+      </View>
     );
 
   //switch button Map / List
@@ -288,9 +320,9 @@ export function HomeScreen() {
         <YStack flex={1} position='relative'>
           {renderMap()}
           {renderList()}
-          {renderCarousel()}
-          {renderSwitcher()}
-          {renderFilters()}
+          {!isKeyboardVisible && renderCarousel()}
+          {!isKeyboardVisible && renderSwitcher()}
+          {!isKeyboardVisible && renderFilters()}
         </YStack>
       </YStack>
     </ScreenLayout>

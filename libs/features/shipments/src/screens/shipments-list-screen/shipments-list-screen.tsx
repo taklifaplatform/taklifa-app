@@ -67,8 +67,8 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
         textTransform: 'capitalize',
       }}
       onPress={() => {
-        setStatus(item.status);
-        setActiveFilterIndex(index);
+        setStatus(status === item.status ? undefined : item.status);
+        setActiveFilterIndex(status === item.status ? 0 : index);
       }}
       iconAfter={() => !!item.count && (
         <Circle
@@ -76,7 +76,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
           backgroundColor={status === item.status ? '$color12' : '$color10'}
         >
           <Text color="white" fontSize="$1">
-            {item.count}
+            {index}
           </Text>
         </Circle>
       )}
