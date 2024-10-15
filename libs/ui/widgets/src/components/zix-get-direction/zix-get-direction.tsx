@@ -41,6 +41,11 @@ export const ZixGetDirection: React.FC<ZixGetDirectionProps> = ({
         onCancelPressed={() => setIsVisible(false)}
         onAppPressed={() => setIsVisible(false)}
         options={options}
+        style={{
+          modalView: {
+            height: 400
+          }
+        }}
         customFooter={
           <Button
             fontWeight="bold"
