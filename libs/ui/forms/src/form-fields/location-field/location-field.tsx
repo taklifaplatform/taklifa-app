@@ -95,6 +95,7 @@ export const LocationField: React.FC<LocationFieldProps> = ({
         rightIcon={(props) => <LocateFixed {...props} />}
         placeholder={placeholder}
         value={locationData?.address}
+        height='$4'
       />
     );
 

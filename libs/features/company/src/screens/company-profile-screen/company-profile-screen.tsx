@@ -49,7 +49,7 @@ export function CompanyProfileScreen() {
           <CompanyProfileHeader company={data.data} />
           <CompanyInfoRow company={data.data} />
         </YStack>
-        <CompanyContactActions company={data.data} />
+      {!authUser?.companies?.find(c => c.id === company?.id) && <CompanyContactActions company={data.data} />}
       </YStack>
       <CompanyProfileTabs company={data.data} />
     </ScrollView>
