@@ -159,6 +159,7 @@ export const AccountSwitcher: React.FC = () => {
               />
             ))}
 
+
             {user?.companies?.map((company) => (
               <CompanyListItem key={company.name} onPress={changeActiveCompany} company={company} isSelected={user?.active_company?.id === company.id} />
             ))}

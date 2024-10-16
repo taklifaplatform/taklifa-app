@@ -21,7 +21,6 @@ export const CompanyListItem: React.FC<CompanyListItemProps> = ({
   isSelected,
   onPress
 }) => {
-  const { getUrlPrefix } = useAuth()
   const router = useRouter()
 
   function getVerificationThemeName(status?: string) {
@@ -67,7 +66,7 @@ export const CompanyListItem: React.FC<CompanyListItemProps> = ({
       onPress={async () => {
         if (!company.id) return
         await onPress(company.id)
-        router.push(`${getUrlPrefix}/companies/${company.id}/settings`)
+        router.push(`/app/companies/${company.id}/settings`)
       }}
     >
       Update Documents
