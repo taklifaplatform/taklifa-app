@@ -5,6 +5,7 @@ import { useAuth } from '@zix/services/auth';
 import { RatingCard, RatingStars, ZixButton } from '@zix/ui/common';
 import { ZixInput } from '@zix/ui/forms';
 import { ZixWidgetContainer } from '@zix/ui/widgets';
+import { t } from 'i18next';
 import { useCallback, useState } from 'react';
 import {
   Button,
@@ -51,6 +52,16 @@ export const UserReviewsTab: React.FC<UserReviewsTabProps> = ({
     onSuccess(data, variables, context) {
       toast.show('Rating submitted successfully')
       refetch()
+    },
+    onError(error: any) {
+      toast.show(
+        error?.body?.message ||
+        error?.message ||
+        t('app:errors.something-went-wrong'),
+        {
+          preset: 'error',
+        },
+      );
     },
   })
 

@@ -1,16 +1,88 @@
-import { MoreHorizontal } from '@tamagui/lucide-icons';
-import { CompanyInvitationTransformer } from '@zix/api';
-import { UserAvatar } from '@zix/ui/common';
+import { Eye, MoreHorizontal, Trash2 } from '@tamagui/lucide-icons';
+import { useToastController } from '@tamagui/toast';
+import { CompanyInvitationsService, CompanyInvitationTransformer, CompanyMembersService, CompanyTransformer } from '@zix/api';
+import { ActionSheet, ActionSheetRef, UserAvatar } from '@zix/ui/common';
+import { useRef } from 'react';
 import { Button, Text, View, XStack, YStack } from 'tamagui';
+import { useRouter } from 'solito/router';
+import { t } from 'i18next';
+import { useMutation } from '@tanstack/react-query';
+import { useAuth } from '@zix/services/auth';
+import { Alert } from 'react-native';
+
 
 /* eslint-disable-next-line */
 export interface TeamMemberInvitationCardProps {
   invitation: CompanyInvitationTransformer;
+  company: CompanyTransformer
 }
 
 export function TeamMemberInvitationCard({
   invitation,
+  company,
 }: TeamMemberInvitationCardProps) {
+  const actionSheetManagerRef = useRef<ActionSheetRef>(null);
+  const { user: authUser, getUrlPrefix } = useAuth();
+  const toast = useToastController();
+  const router = useRouter();
+  const { mutate } = useMutation({
+    mutationFn(variables) {
+      return CompanyInvitationsService.delete(variables);
+    },
+    onSuccess: (data, variables, context) => {
+      toast.show('Member removed successfully!');
+    },
+    onError(error: any) {
+      toast.show(
+        error?.body?.message ||
+        error?.message ||
+        t('app:errors.something-went-wrong'),
+        {
+          preset: 'error',
+        },
+      );
+    },
+  });
+  console.log(invitation)
+
+  const renderActionSheetForSettingManager = () => (
+    <ActionSheet
+      ref={actionSheetManagerRef}
+      title={t('common:settings')}
+      actions={[
+        {
+          name: t('common:delete'),
+          icon: <Trash2 size="$1" color="$color10" />,
+          theme: 'error',
+          onPress: () => {
+            Alert.alert(
+              t('common:delete'),
+              t('common:confirm-delete'),
+              [
+                {
+                  text: t('common:cancel'),
+                  onPress: () => actionSheetManagerRef.current?.close(),
+                  style: 'cancel',
+                },
+                {
+                  text: t('common:remove'),
+                  style: 'destructive',
+                  onPress: () => {
+                    actionSheetManagerRef.current?.close();
+                    mutate({
+                      company: company.id,
+                      companyInvitation: invitation.id,
+                    } as any);
+                  },
+                },
+              ],
+            );
+          },
+        },
+      ]}
+    />
+  );
+
   const renderInvitationStatus = () => (
     <View
       backgroundColor={invitation.is_rejected ? '$red3' : '$yellow3'}
@@ -50,8 +122,8 @@ export function TeamMemberInvitationCard({
         <Button
           iconAfter={<MoreHorizontal />}
           onPress={() => {
-            console.log('press');
-            // actionSheetManagerRef.current?.open()
+            console.log('press//')
+            actionSheetManagerRef.current?.open()
           }}
           backgroundColor={'transparent'}
           pressStyle={{
@@ -60,7 +132,7 @@ export function TeamMemberInvitationCard({
           }}
         />
       </XStack>
-      {/* {renderActionSheetForSettingManager()} */}
+      {renderActionSheetForSettingManager()}
     </XStack>
   );
 }

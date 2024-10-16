@@ -77,6 +77,7 @@ export function EmployeesListScreen({
           <TeamMemberInvitationCard
             key={`${item.id}-${index}`}
             invitation={item}
+            company={user.active_company}
           />
         ),
       });

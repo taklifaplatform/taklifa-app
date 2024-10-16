@@ -30,6 +30,16 @@ export function TeamMemberCard({
     onSuccess: (data, variables, context) => {
       toast.show('Member removed successfully!');
     },
+    onError(error: any) {
+      toast.show(
+        error?.body?.message ||
+        error?.message ||
+        t('app:errors.something-went-wrong'),
+        {
+          preset: 'error',
+        },
+      );
+    },
   });
 
   const renderActionSheetForSettingManager = () => user?.id && (

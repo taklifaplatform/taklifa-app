@@ -28,6 +28,7 @@ import {
 } from 'tamagui';
 import CompanyListItem from './company-list-item/company-list-item';
 import UserRoleListItem from './user-role-list-item/user-role-list-item';
+import { t } from 'i18next';
 
 export const AccountSwitcher: React.FC = () => {
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -48,6 +49,16 @@ export const AccountSwitcher: React.FC = () => {
         user: data.data,
       });
     },
+    onError(error: any) {
+      toast.show(
+        error?.body?.message ||
+        error?.message ||
+        t('app:errors.something-went-wrong'),
+        {
+          preset: 'error',
+        },
+      );
+    },
   });
 
   const { mutateAsync: changeActiveCompany } = useMutation({
@@ -62,6 +73,16 @@ export const AccountSwitcher: React.FC = () => {
       redirectUserToActiveDashboard({
         user: data.data,
       });
+    },
+    onError(error: any) {
+      toast.show(
+        error?.body?.message ||
+        error?.message ||
+        t('app:errors.something-went-wrong'),
+        {
+          preset: 'error',
+        },
+      );
     },
   });
 
