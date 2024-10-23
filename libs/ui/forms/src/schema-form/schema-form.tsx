@@ -32,8 +32,6 @@ export const SchemaForm = (props: ComponentProps<typeof MappedSchemaForm>) => {
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      // enabled
-      // keyboardVerticalOffset={modalOffsetFromTop}
     >
       <MappedSchemaForm {...props} renderAfter={renderAfter}>
         {(fields) => (
