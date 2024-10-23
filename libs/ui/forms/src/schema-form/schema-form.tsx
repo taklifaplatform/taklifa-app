@@ -6,6 +6,7 @@ import { useFormContext } from 'react-hook-form';
 import FieldError from '../common/field-error/field-error';
 import FormWrapper from '../common/form-wrapper/form-wrapper';
 import { formFieldsMappings } from './form-fields-mappings';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 
 const FormComponent = (props: FormProps) => {
   return (
@@ -19,24 +20,29 @@ const MappedSchemaForm = createTsForm(formFieldsMappings, {
   FormComponent: FormComponent,
 });
 
-
-
 export const SchemaForm = (props: ComponentProps<typeof MappedSchemaForm>) => {
   const renderAfter: ComponentProps<typeof MappedSchemaForm>['renderAfter'] =
     props.renderAfter
       ? (vars) => (
-        <FormWrapper.Footer>{props.renderAfter?.(vars)}</FormWrapper.Footer>
-      )
+          <FormWrapper.Footer>{props.renderAfter?.(vars)}</FormWrapper.Footer>
+        )
       : undefined;
 
   return (
-    <MappedSchemaForm {...props} renderAfter={renderAfter}>
-      {(fields) => (
-        <FormWrapper.Body>
-          {props.children ? props.children(fields) : Object.values(fields)}
-        </FormWrapper.Body>
-      )}
-    </MappedSchemaForm>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      // enabled
+      // keyboardVerticalOffset={modalOffsetFromTop}
+    >
+      <MappedSchemaForm {...props} renderAfter={renderAfter}>
+        {(fields) => (
+          <FormWrapper.Body>
+            {props.children ? props.children(fields) : Object.values(fields)}
+          </FormWrapper.Body>
+        )}
+      </MappedSchemaForm>
+    </KeyboardAvoidingView>
   );
 };
 

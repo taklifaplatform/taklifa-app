@@ -1,22 +1,11 @@
-import { useHeaderHeight as useHeaderHeightOG } from '@react-navigation/elements';
-import { createContext, forwardRef, useContext, useState } from 'react';
-import { KeyboardAvoidingView, Platform } from 'react-native';
+import { createContext, forwardRef, useState } from 'react';
 import {
   ScrollView,
   TamaguiElement,
   YStack,
   YStackProps,
-  useWindowDimensions,
-  withStaticProperties,
+  withStaticProperties
 } from 'tamagui';
-
-const useHeaderHeight = () => {
-  try {
-    return useHeaderHeightOG();
-  } catch (error) {
-    return 0;
-  }
-};
 
 const FormWrapperContext = createContext<{ height: number } | null>(null);
 /**
@@ -72,18 +61,7 @@ const Footer = forwardRef<TamaguiElement, YStackProps>(function Footer(
   props,
   ref
 ) {
-  const dimensions = useWindowDimensions();
-  const headerHeight = useHeaderHeight();
-  const formWrapperContext = useContext(FormWrapperContext);
-  const modalOffsetFromTop = formWrapperContext
-    ? dimensions.height - formWrapperContext.height
-    : headerHeight;
-
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={modalOffsetFromTop}
-    >
       <YStack
         ref={ref}
         pb="$4"
@@ -93,7 +71,6 @@ const Footer = forwardRef<TamaguiElement, YStackProps>(function Footer(
         flexDirection="column-reverse"
         {...props}
       />
-    </KeyboardAvoidingView>
   );
 });
 
