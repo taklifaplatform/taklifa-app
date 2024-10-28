@@ -53,6 +53,14 @@ export function HomeScreen() {
             isSelected={selectedDriver?.id === driver.id}
             onPress={() => {
               setSelectedDriver(driver);
+              // center the map
+              mapRef.current?.animateCamera({
+                center: {
+                  latitude: parseFloat(driver?.location?.latitude),
+                  longitude: parseFloat(driver?.location?.longitude),
+                },
+                zoom: 11,
+              });
             }}
           />
         ))}
