@@ -25,6 +25,7 @@ export const ShipmentOwnerActions: React.FC<ShipmentOwnerActionsProps> = ({ ship
   const { getUrlPrefix } = useAuth();
   const { isAuthOwner } = useShipmentHelper({ shipment });
   const [dropdownVisible, setDropdownVisible] = useState(false); // For web dropdown visibility
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null); // To track which item is hovered
 
   const { mutateAsync } = useMutation({
     mutationFn: () => ShipmentService.destroyShipment({ shipment: shipment.id }),
@@ -85,6 +86,37 @@ export const ShipmentOwnerActions: React.FC<ShipmentOwnerActionsProps> = ({ ship
     }
   };
 
+  const renderWebDropdown = () => (
+    <View
+      width={180}
+      position='absolute'
+      zIndex={1}
+      backgroundColor='white'
+      left={0}
+      top={50}
+      borderWidth={1.5}
+      borderRadius={5}
+    >
+      {actions.map((action, index) => (
+        <View
+          key={index}
+          onPress={action.onPress}
+          borderBottomWidth={0.5}
+          backgroundColor={hoveredIndex === index ? 'black' : 'white'}
+          cursor='pointer'
+          padding={10}
+          style={{
+            color: hoveredIndex === index ? 'white' : 'black', // Change text color on hover
+          }}
+          onMouseEnter={() => setHoveredIndex(index)} // Set hovered index on mouse enter
+          onMouseLeave={() => setHoveredIndex(null)} // Reset hover on mouse leave
+        >
+          {action.name}
+        </View>
+      ))}
+    </View>
+  )
+
   return (
     <>
       {children({ onPress: handleSettingsClick })}
@@ -96,29 +128,7 @@ export const ShipmentOwnerActions: React.FC<ShipmentOwnerActionsProps> = ({ ship
 
       {/* For web platform */}
       {Platform.OS === 'web' && dropdownVisible && (
-        <View
-          width={180}
-          style={{
-            position: 'absolute',
-            zIndex: 100,
-            backgroundColor: 'white',
-            left: 0,
-            top: 50,
-            borderWidth: 1,
-            borderRadius: 5
-
-          }}>
-          {actions.map((action, index) => (
-            <View
-              key={index}
-              onPress={action.onPress}
-              borderBottomWidth={0.5}
-              borderColor={'$color6'}
-              style={{ padding: '10px', cursor: 'pointer' }}>
-              {action.name}
-            </View>
-          ))}
-        </View>
+        renderWebDropdown()
       )}
     </>
   );
