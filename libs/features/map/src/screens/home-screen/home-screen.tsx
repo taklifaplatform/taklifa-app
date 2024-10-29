@@ -6,9 +6,12 @@ import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { MapDriverMarker } from '@zix/ui/sawaeed';
 import { t } from 'i18next';
 import { useRef, useState } from 'react';
+import { Dimensions } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import MapView from 'react-native-maps';
-import { Button, Stack, useStyle } from 'tamagui';
+import { Button, YStack } from 'tamagui';
+
+const { height } = Dimensions.get('window');
 
 const initialCamera = {
   center: {
@@ -25,7 +28,6 @@ export function HomeScreen() {
   const mapRef = useRef<MapView>(null);
 
   const [showMap, setShowMap] = useState(true);
-
   const [search, setSearch] = useState<string>();
   const { data, ...driversQuery } = useQuery({
     queryFn() {
@@ -37,60 +39,79 @@ export function HomeScreen() {
     queryKey: ['DriversService.fetchAllDrivers', search],
   });
   const [selectedDriver, setSelectedDriver] = useState<DriverTransformer>();
+  const flatListRef = useRef(null);
+  const scrollToItemId = (itemId:any) => {
+    const index = data?.data?.findIndex((item) => item.id === itemId);
+    console.info('index', index)
+    if (index !== -1) {
+      setTimeout(() => {
+        flatListRef?.current?.scrollToIndex({
+          animated: true,
+          index: index,
+        });
+      }, 1000); // Adjust the timeout duration as needed
+    }
+  };
+
 
   const renderMap = () =>
-    showMap && (
-      <MapView
-        provider="google"
-        ref={mapRef}
-        style={{ flex: 1 }}
-        initialCamera={initialCamera}
-      >
-        {data?.data?.map((driver, index) => (
-          <MapDriverMarker
-            key={`marker-${index}`}
-            driver={driver}
-            isSelected={selectedDriver?.id === driver.id}
-            onPress={() => {
-              setSelectedDriver(driver);
-              // center the map
-              mapRef.current?.animateCamera({
-                center: {
-                  latitude: parseFloat(driver?.location?.latitude),
-                  longitude: parseFloat(driver?.location?.longitude),
-                },
-                zoom: 11,
-              });
-            }}
-          />
-        ))}
-      </MapView>
-    );
+  (
+    <MapView
+      provider="google"
+      ref={mapRef}
+      style={{ flex: 1 }}
+      initialCamera={initialCamera}
+    >
+      {data?.data?.map((driver, index) => (
+        <MapDriverMarker
+          key={`marker-${index}`}
+          driver={driver}
+          isSelected={selectedDriver?.id === driver.id}
+          onPress={() => {
+            setSelectedDriver(driver);
+            showMap &&  scrollToItemId(driver.id);
+            mapRef.current?.animateCamera({
+              center: {
+                latitude: parseFloat(driver?.location?.latitude),
+                longitude: parseFloat(driver?.location?.longitude),
+              },
+              zoom: 11,
+            });
+          }}
+        />
+
+      ))}
+    </MapView>
+  );
   //List
-  const listStyle = useStyle({
-    flex: '1',
-    padding: '$2',
-  });
   const renderList = () =>
-    !showMap && (
+  ( showMap &&
+    <YStack
+      position='absolute'
+      zIndex={2}
+      height={height}
+      left={0}
+      paddingTop={70}
+    >
       <FlatList
         refreshing={driversQuery.isFetching}
         onRefresh={driversQuery.refetch}
-        style={listStyle}
+        ref={flatListRef}
         data={data?.data || []}
-        numColumns={3}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item, index }) => (
-          <Stack $gtSm={{ flex: 1, flexBasis: 1 }}>
-            <UserCard
-              key={`stack-${item.id}-${index}`}
-              user={item}
-              margin="$2"
-              flex={1}
-            />
-          </Stack>
+          <UserCard
+            key={`stack-${item.id}-${index}`}
+            user={item}
+            borderWidth={selectedDriver?.id === item.id ? 4 : 0}
+            borderColor={'$color8'}
+            margin="$2"
+            flex={1}
+          />
         )}
       />
-    );
+    </YStack>
+  );
 
   //switch button Map / List
   const renderSwitcher = () => (
@@ -110,6 +131,7 @@ export function HomeScreen() {
     </Button>
   );
 
+
   return (
     <ScreenLayout>
       <AppHeader
@@ -120,7 +142,6 @@ export function HomeScreen() {
           onChangeText: setSearch,
         }}
       />
-
       {renderMap()}
       {renderList()}
       {renderSwitcher()}
