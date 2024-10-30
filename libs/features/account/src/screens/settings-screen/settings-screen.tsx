@@ -1,7 +1,7 @@
 import { IconProps } from '@tamagui/helpers-icon';
 import { Languages } from '@tamagui/lucide-icons';
 import { ActionSheet, ActionSheetRef, Settings } from '@zix/ui/common';
-import { Paragraph, ScrollView, Theme, View, YStack, useMedia,Text } from 'tamagui';
+import { Paragraph, ScrollView, Theme, View, YStack, useMedia, Text } from 'tamagui';
 import { CustomIcon } from '@zix/ui/icons';
 import { usePathname } from '@zix/utils';
 import { useMultiLang } from '@zix/i18n';
@@ -23,7 +23,7 @@ export const SettingsScreen = () => {
   const media = useMedia();
   const pathname = usePathname();
   const { getUrlPrefix } = useAuth();
-  const {languages, changeLanguage } = useMultiLang();
+  const { languages, changeLanguage } = useMultiLang();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -208,7 +208,7 @@ export const SettingsScreen = () => {
   );
 };
 
-const SettingsWebLanguageAction = ({onPress}) => {
+const SettingsWebLanguageAction = ({ onPress }) => {
   const { activeLang } = useMultiLang();
 
   return (
@@ -299,21 +299,21 @@ const SettingsItemLogoutAction = () => {
       //onPress={() => logout()}
       onPress={async () => {
         Platform.OS === 'web' ? logout() :
-        Alert.alert(
-          'Sign Out',
-          `Are you sure you want to Sign Out?`,
-          [
-            {
-              text: 'Sign Out',
-              onPress: () => logout(),
-              style: 'cancel',
-            },
-            {
-              text: 'Cancel',
-              style: 'destructive',
-            },
-          ]
-        )
+          Alert.alert(
+            'Sign Out',
+            `Are you sure you want to Sign Out?`,
+            [
+              {
+                text: 'Sign Out',
+                onPress: () => logout(),
+                style: 'cancel',
+              },
+              {
+                text: 'Cancel',
+                style: 'destructive',
+              },
+            ]
+          )
       }}
 
     >
@@ -333,22 +333,23 @@ const SettingsDeleteAccountAction = () => {
       accentColor="$color9"
       //onPress={() => logout()}
       onPress={async () => {
-        Alert.alert(
-          'Delete Account',
-          `Are you sure you want to delete your account?`,
-          [
-            {
-              text: 'Confirm',
-              onPress: () => UserService.deleteAccount()
-                .then(() => logout()),
-              style: 'cancel',
-            },
-            {
-              text: 'Cancel',
-              style: 'destructive',
-            },
-          ]
-        )
+        Platform.OS === 'web' ? UserService.deleteAccount().then(() => logout()) :
+          Alert.alert(
+            'Delete Account',
+            `Are you sure you want to delete your account?`,
+            [
+              {
+                text: 'Confirm',
+                onPress: () => UserService.deleteAccount()
+                  .then(() => logout()),
+                style: 'cancel',
+              },
+              {
+                text: 'Cancel',
+                style: 'destructive',
+              },
+            ]
+          )
       }}
 
     >
