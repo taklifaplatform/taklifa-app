@@ -17,7 +17,9 @@ export const ZixImageMediaPickerPreviewer: React.FC<ZixMediaPreviewerProps> = ({
     height: size,
   });
   return (
-    <Button unstyled onPress={onPress}>
+    <Button unstyled hoverStyle={{
+      cursor: 'pointer',
+    }} onPress={onPress}>
       <XStack justifyContent="space-around">
         <YStack alignItems="center" gap='$3'>
           <Avatar
