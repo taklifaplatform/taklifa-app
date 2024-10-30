@@ -117,18 +117,17 @@ export function HomeScreen() {
   const renderSwitcher = () => (
     <Button
       theme="accent"
-      zIndex={300}
-      position="fixed"
-      bottom="$8"
-      right="$8"
-      icon={<CustomIcon name={showMap ? 'list' : 'map'} size="$2" />}
+      zIndex={1}
+      position="absolute"
+      bottom="$10"
+      right={60}
+      icon={<CustomIcon name={showMap ? 'list' : 'map'} size="$1" />}
       fontWeight="600"
       fontSize="$2"
       size="$4"
       onPress={() => setShowMap(!showMap)}
-    >
-      {showMap ? 'القائمة' : 'الخريطة'}
-    </Button>
+    />
+      
   );
 
 
