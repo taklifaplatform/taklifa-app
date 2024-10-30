@@ -298,6 +298,7 @@ const SettingsItemLogoutAction = () => {
       accentColor="$color9"
       //onPress={() => logout()}
       onPress={async () => {
+        Platform.OS === 'web' ? logout() :
         Alert.alert(
           'Sign Out',
           `Are you sure you want to Sign Out?`,
