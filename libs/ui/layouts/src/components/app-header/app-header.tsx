@@ -70,12 +70,16 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
 
   const renderBackButton = () =>
     showBackButton && (
-      <Button
+      <View
+      cursor='pointer'
+      >
+        <Button
         unstyled
         size="$2"
         icon={<CustomIcon name="arrow_left" size="$2" />}
         onPress={() => router.back()}
       />
+      </View>
     );
 
   const renderAvatar = () =>
