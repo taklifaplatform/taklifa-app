@@ -89,6 +89,7 @@ export const SettingsScreen = () => {
                   {...useLink({
                     href: media.sm
                       ? getUrl('account/settings/general')
+                      : Platform.OS === 'web' ? getUrl('account/settings/general') 
                       : getUrl('account/settings'),
                   })}
                   accentColor="$green9"
