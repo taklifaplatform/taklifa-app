@@ -68,10 +68,11 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         zIndex={1}
         theme={'accent'}
         padding={'$2'}
-        borderRadius={5}
+        borderRadius={15}
+        borderTopLeftRadius={0}
         style={{ transform: [{ rotate: '230deg' }] }}
       >
-        <CustomIcon name='arrow_left' size={20} color='black' />
+        <CustomIcon name='arrow_left' size={'$1'} color='black' />
       </Button>}
     </View>
   );
