@@ -46,7 +46,7 @@ export const SettingsScreen = () => {
       zIndex={1}
       backgroundColor="white"
       left={0}
-      bottom={150}
+      bottom={60}
       borderWidth={1.5}
       borderRadius={5}
     >
