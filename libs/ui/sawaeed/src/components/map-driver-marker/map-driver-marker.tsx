@@ -50,6 +50,7 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = React.memo(({
         alignItems='center'
         justifyContent='center'
         borderColor='$color5'
+        cursor='pointer'
         style={
           isSelected
             ? {
