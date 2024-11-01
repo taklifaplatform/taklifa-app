@@ -7,6 +7,7 @@ import { ZixInput } from '@zix/ui/forms';
 import { ZixWidgetContainer } from '@zix/ui/widgets';
 import { t } from 'i18next';
 import { useCallback, useState } from 'react';
+import { Platform } from 'react-native';
 import {
   Button,
   Text,
@@ -92,6 +93,8 @@ export const UserReviewsTab: React.FC<UserReviewsTabProps> = ({
       <RatingStars score={score} onChange={setScore} size='$1.5' />
 
       <ZixInput
+        width={Platform.OS === 'web' ? 600 : null}
+        textAlign='center'
         placeholder="Enter your details..."
         isMultiline
         value={comment}

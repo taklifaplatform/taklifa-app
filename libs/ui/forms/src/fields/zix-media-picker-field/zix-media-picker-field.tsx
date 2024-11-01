@@ -1,6 +1,5 @@
 import { randomUUID } from 'expo-crypto';
-
-import { Camera as CameraIcon, Image, Paperclip } from '@tamagui/lucide-icons';
+import { Camera as CameraIcon, Image as LucideImage, Paperclip } from '@tamagui/lucide-icons';
 import { MediaService, MediaTransformer } from '@zix/api';
 import { ActionSheet, ActionSheetRef } from '@zix/ui/common';
 import { getDocumentAsync } from 'expo-document-picker';
@@ -11,22 +10,14 @@ import {
 } from 'expo-image-picker';
 import { t } from 'i18next';
 import { useEffect, useRef, useState } from 'react';
-import { Alert, Linking, Platform } from 'react-native';
+import { Alert, Linking, Platform, Image as RNImage } from 'react-native';
+import Image from 'next/image'; // Import Next.js Image for web
 import { UploadableMediaFile, uploadMediaFile } from '../../utils';
 import { useCamera } from './hooks/useCamera';
 import { ZixFilesInputMediaPickerPreviewer, ZixImageMediaPickerPreviewer, ZixRowMediaPickerPreviewer } from './previewers';
 import { ZixMediaPickerTransformer } from './types';
 
-/**
- * Previewers Specifications:
- * - image:
- *    Centered circular image with a plus icon in the middle
- *    Can be used for company logo, profile picture, etc.
- * - files:
- *    ZixInput with a plus icon in the left to select multiple files or a single file
- * - medias:
- *    Multiple images displayed in a row with a plus icon in the last
- */
+// Previewers specifications
 export const MediaPreviewers = {
   image: ZixImageMediaPickerPreviewer,
   medias: ZixRowMediaPickerPreviewer,
@@ -52,28 +43,23 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
   placeholder,
   isOptional
 }) => {
-  const Previewer = MediaPreviewers[type]
+  const Previewer = MediaPreviewers[type];
   const { permission, requestPermission } = useCamera();
 
   const actionRef = useRef<ActionSheetRef>(null);
-
   const [previews, setPreviews] = useState<Record<string | number, ZixMediaPickerTransformer>>({});
 
   useEffect(() => {
-    console.log('==== ZixMediaPickerField =========')
-    console.log('value::', JSON.stringify(value, null, 2))
-    console.log('isArray::', Array.isArray(value))
-    console.log('=============')
     if (value) {
       const files = Array.isArray(value) ? value : [value];
-      const _medias: Record<string, any> = {}
+      const _medias: Record<string, any> = {};
       files.forEach(file => {
         if (file.uuid) {
-          _medias[file.uuid] = file
+          _medias[file.uuid] = file;
         } else {
-          _medias[file.id] = file
+          _medias[file.id] = file;
         }
-      })
+      });
       setPreviews(_medias);
     }
   }, [value]);
@@ -87,10 +73,10 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
       },
       {
         name: t(`core:media_picker.select_media`),
-        icon: <Image size="$1.5" color="$color10" />,
+        icon: <LucideImage size="$1.5" color="$color10" />,
         onPress: launchMediaPicker,
       },
-    ]
+    ];
 
     if (type === 'files' || type === 'file') {
       actions.push({
@@ -100,45 +86,60 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
       });
     }
 
-
     return (
       <ActionSheet
         title={t(`core:media_picker.title`)}
         actions={actions}
         ref={actionRef}
       />
-    )
+    );
   };
 
-  /**
-   * Handles the selection of files in the media picker.
-   * @param files The selected files.
-   */
+  const renderImage = (imageUri: string) => {
+    if (Platform.OS === 'web') {
+      return (
+        <Image
+          src={imageUri}
+          width={200}  // Specify the width
+          height={200} // Specify the height
+          alt="Preview"
+          style={{ borderRadius: '50%' }} // Example of styling
+        />
+      );
+    } else {
+      return (
+        <RNImage
+          source={{ uri: imageUri }}
+          style={{ width: 200, height: 200, borderRadius: 100 }} // Styling for mobile
+        />
+      );
+    }
+  };
+
   async function onFilesSelected(files: ZixMediaPickerTransformer[]) {
-    const _medias: Record<string, any> = {}
+    const _medias: Record<string, any> = {};
 
     files.forEach(file => {
-      const uuid = randomUUID()
-
+      const uuid = randomUUID();
       _medias[uuid] = {
         ...file,
         url: file.uri,
         original_url: file.uri,
         uuid,
         uploadProgress: 0.2,
-      }
-    })
+      };
+    });
 
     if (isMultiple) {
       setPreviews((prev) => ({
         ...prev,
         ..._medias,
-      }))
+      }));
     } else {
-      setPreviews(_medias)
+      setPreviews(_medias);
     }
 
-    const failedMedias: Record<string, string[]> = {}
+    const failedMedias: Record<string, string[]> = {};
 
     const finalResults = await Promise.all(Object.values(_medias).map((media) => {
       return new Promise((resolve, reject) => {
@@ -149,72 +150,51 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
               ...media,
               uploadProgress: progress,
             },
-          }))
+          }));
         }).then((result) => {
-          console.log('result::', JSON.stringify(result, null, 2))
           resolve({
             ...media,
             ...result,
-            uploadProgress: 1
-          })
+            uploadProgress: 1,
+          });
         }).catch((error) => {
-          console.log('error::', JSON.stringify(error, null, 2))
-          failedMedias[media.uuid] = error?.errors?.file || []
-        })
-      })
-    }))
+          failedMedias[media.uuid] = error?.errors?.file || [];
+        });
+      });
+    }));
 
-    onChange?.(isMultiple ? finalResults : finalResults[0])
+    onChange?.(isMultiple ? finalResults : finalResults[0]);
 
     if (Object.keys(failedMedias).length) {
-      let errors: string[] = []
+      let errors: string[] = [];
       Object.keys(failedMedias).forEach((uuid) => {
-        onRemoveMedia(_medias[uuid])
-        errors = [...errors, ...failedMedias[uuid]]
-      })
+        onRemoveMedia(_medias[uuid]);
+        errors = [...errors, ...failedMedias[uuid]];
+      });
       Alert.alert(
         'Oops!!',
-        errors?.length ? errors.join(', ') : 'Failed to upload file',
-        [
-          {
-            text: 'OK',
-            style: 'cancel',
-          },
-        ],
-        {
-          cancelable: true,
-        },
+        errors.length ? errors.join(', ') : 'Failed to upload file',
+        [{ text: 'OK', style: 'cancel' }],
+        { cancelable: true }
       );
     }
   }
 
-  /**
-   * Launches the media picker to select files.
-   *
-   * @returns {Promise<void>} A promise that resolves when the media picker is closed.
-   */
   async function launchMediaPicker() {
     actionRef.current?.close();
-
     let mediaTypes = MediaTypeOptions.All;
-
     if (type === 'image') {
       mediaTypes = MediaTypeOptions.Images;
     }
-
     const result = await launchImageLibraryAsync({
       mediaTypes,
       allowsEditing: !isMultiple,
       quality: 0.8,
       allowsMultipleSelection: isMultiple,
     });
-
-    if (result?.canceled) {
-      return;
-    }
-
+    if (result?.canceled) return;
     if (result.assets.length) {
-      const files: Partial<UploadableMediaFile>[] = result.assets.map((file) => ({
+      const files = result.assets.map((file) => ({
         id: '',
         uri: file.uri,
         file_name: file.fileName || file.assetId || file.uri,
@@ -224,26 +204,14 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     }
   }
 
-  /**
-   * Launches the document picker to select files.
-   * No permissions request is necessary for launching the image library.
-   *
-   * @returns {Promise<void>} A promise that resolves when the document picker is closed.
-   */
   async function launchDocumentPicker() {
-    // No permissions request is necessary for launching the image library
     actionRef.current?.close();
-
     const result = await getDocumentAsync({
       multiple: isMultiple,
     });
-
-    if (result?.canceled) {
-      return;
-    }
-
+    if (result?.canceled) return;
     if (result.assets.length) {
-      const files: Partial<UploadableMediaFile>[] = result.assets.map((file) => ({
+      const files = result.assets.map((file) => ({
         id: '',
         uri: file.uri,
         file_name: file.name,
@@ -253,48 +221,30 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     }
   }
 
-  /**
-   * Launches the camera to capture a photo or record a video.
-   *
-   * @returns {Promise<void>} A promise that resolves when the camera is launched.
-   */
   async function launchCamera() {
-
     if (!permission?.granted) {
-      const grant = await requestPermission()
-
+      const grant = await requestPermission();
       if (!grant.granted) {
         Alert.alert(
           'Oops!!',
           'Camera permission is required to take photo',
           [
-            {
-              text: 'Cancel',
-              style: 'cancel',
-            },
-            {
-              text: 'Open Settings',
-              onPress: () => Linking.openSettings(),
-            },
+            { text: 'Cancel', style: 'cancel' },
+            { text: 'Open Settings', onPress: () => Linking.openSettings() },
           ],
-          {
-            cancelable: true,
-          },
+          { cancelable: true }
         );
-        return
+        return;
       }
     }
 
     actionRef.current?.close();
-
     let mediaTypes = MediaTypeOptions.All;
-
     if (type === 'image') {
       mediaTypes = MediaTypeOptions.Images;
     }
 
     try {
-      // No permissions request is necessary for launching the image library
       const result = await launchCameraAsync({
         mediaTypes,
         allowsEditing: !isMultiple,
@@ -302,7 +252,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
         quality: 1,
       });
       if (!result.canceled) {
-        const files: Partial<UploadableMediaFile>[] = result.assets.map((file) => ({
+        const files = result.assets.map((file) => ({
           id: '',
           uri: file.uri,
           file_name: file.fileName || file.assetId || file.uri,
@@ -311,68 +261,50 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
         onFilesSelected(files);
       }
     } catch (error: any) {
-      Alert.alert(
-        'Oops!!',
-        error?.message || 'Failed to take photo',
-        [
-          {
-            text: 'OK',
-            style: 'cancel',
-          },
-        ],
-        {
-          cancelable: true,
-        },
-      );
+      Alert.alert('Oops!!', error?.message || 'Failed to take photo', [
+        { text: 'OK', style: 'cancel' },
+      ]);
     }
   }
 
-  /**
-   * Opens the media picker based on the specified type.
-   * If the type is 'documents', it launches the document picker.
-   * If the platform is web, it launches the media picker.
-   * Otherwise, it opens the action sheet using the ref.
-   */
   function onOpenMediaPicker() {
     if (Platform.OS === 'web') {
-      launchMediaPicker()
+      launchMediaPicker();
     } else {
       actionRef.current?.open();
     }
-    return;
   }
 
-
-  /**
-   * Removes the specified media from the previews and deletes it using the MediaService.
-   * @param media - The media to be removed.
-   */
   function onRemoveMedia(media: MediaTransformer) {
-    onChange?.(Object.values(previews).filter((preview) => (
-      (!media.uuid || preview.uuid !== media.uuid)
-      && (
-        !media.id || preview.id !== media.id
+    onChange?.(
+      Object.values(previews).filter(
+        (preview) =>
+          (!media.uuid || preview.uuid !== media.uuid) &&
+          (!media.id || preview.id !== media.id)
       )
-    )));
+    );
     if (media.uuid) {
-      MediaService.deleteMedia({
-        requestBody: {
-          uuid: media.uuid,
-        }
-      })
+      MediaService.deleteMedia(media.uuid);
     }
+    setPreviews((prev) => {
+      const _new = { ...prev };
+      delete _new[media.uuid || media.id];
+      return _new;
+    });
   }
 
   return (
     <>
-      {renderImagePicker()}
       <Previewer
         onPress={onOpenMediaPicker}
-        previews={Object.values(previews)}
+        previews={Object.values(previews).map((preview) => (
+          renderImage(preview.url)  // Render image depending on platform
+        ))}
         onRemoveMedia={onRemoveMedia}
         placeholder={placeholder}
         isOptional={isOptional}
       />
+      {renderImagePicker()}
     </>
   );
 };

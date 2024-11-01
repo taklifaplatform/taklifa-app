@@ -5,7 +5,7 @@ import {
   formFields,
   handleFormErrors,
 } from '@zix/ui/forms';
-import { Theme } from 'tamagui';
+import { Theme, View } from 'tamagui';
 
 import { useToastController } from '@tamagui/toast';
 import { UserService } from '@zix/api';
@@ -68,9 +68,12 @@ export const EditAccountScreen = () => {
   if (!user?.id) {
     return <FullScreenSpinner />;
   }
+  
 
   return (
     <ScreenLayout safeAreaBottom>
+      <View flex={1}>
+      <AppHeader showBackButton title="Edit Profile" />
       <SchemaForm
         form={form}
         schema={ProfileSchema}
@@ -84,7 +87,6 @@ export const EditAccountScreen = () => {
         }}
         defaultValues={user}
         onSubmit={mutateAsync}
-        renderBefore={() => <AppHeader showBackButton title="Edit Profile" />}
         renderAfter={({ submit }) => (
           <Theme inverse>
             <SubmitButton onPress={() => submit()}>
@@ -93,6 +95,7 @@ export const EditAccountScreen = () => {
           </Theme>
         )}
       />
+      </View>
     </ScreenLayout>
   );
 };

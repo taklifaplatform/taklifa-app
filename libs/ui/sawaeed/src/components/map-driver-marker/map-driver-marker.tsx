@@ -1,6 +1,7 @@
 import { DriverTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
 import React, { useState } from 'react';
+import { Platform } from 'react-native';
 import { Marker } from 'react-native-maps';
 import { Image, View } from 'tamagui';
 
@@ -27,7 +28,7 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = React.memo(({
       }}
     />
   ) : (
-    <CustomIcon name='solo_transporter_car' size="$4" />
+    <CustomIcon name='solo_transporter_car' size={Platform.OS === 'web' ? "$8" : "$4"} />
   )
 
   if (!driver.location) {
@@ -49,6 +50,7 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = React.memo(({
         alignItems='center'
         justifyContent='center'
         borderColor='$color5'
+        cursor='pointer'
         style={
           isSelected
             ? {

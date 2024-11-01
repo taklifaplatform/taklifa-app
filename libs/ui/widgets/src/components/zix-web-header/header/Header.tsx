@@ -26,7 +26,7 @@ export function Header() {
       </ZixLinkButton>
       <ZixLinkButton
         headerMenu
-        href={'/app/orders'}
+        href={'/app/shipments'}
         $lg={{ paddingHorizontal: '$4' }}
       >
         {t('web-home:followers')}

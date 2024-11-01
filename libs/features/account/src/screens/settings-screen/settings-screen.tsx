@@ -1,14 +1,14 @@
 import { IconProps } from '@tamagui/helpers-icon';
 import { Languages } from '@tamagui/lucide-icons';
 import { ActionSheet, ActionSheetRef, Settings } from '@zix/ui/common';
-import { Paragraph, ScrollView, Theme, YStack, useMedia } from 'tamagui';
+import { Paragraph, ScrollView, Theme, View, YStack, useMedia, Text } from 'tamagui';
 import { CustomIcon } from '@zix/ui/icons';
 import { usePathname } from '@zix/utils';
 import { useMultiLang } from '@zix/i18n';
 import { useThemeSetting } from '@zix/providers';
 import { t } from 'i18next';
-import { useCallback, useRef } from 'react';
-import { Alert, Linking } from 'react-native';
+import { useCallback, useRef, useState } from 'react';
+import { Alert, Linking, Platform } from 'react-native';
 
 import { useAuth } from '@zix/services/auth';
 import { useLink } from 'solito/link';
@@ -23,12 +23,51 @@ export const SettingsScreen = () => {
   const media = useMedia();
   const pathname = usePathname();
   const { getUrlPrefix } = useAuth();
+  const { languages, changeLanguage } = useMultiLang();
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const handleLanguageChange = (lang: string) => {
+    changeLanguage(lang);
+    setDropdownVisible(false);
+  };
 
   const getUrl = useCallback(
     (path: string) => {
       return `${getUrlPrefix}/${path}`;
     },
     [getUrlPrefix],
+  );
+
+  const renderWebDropdown = () => (
+    <View
+      width={180}
+      position="absolute"
+      zIndex={1}
+      backgroundColor="white"
+      left={0}
+      bottom={60}
+      borderWidth={1.5}
+      borderRadius={5}
+    >
+      {languages && languages?.length ? languages.map((lang, index) => (
+        <View
+          key={lang}
+          onPress={() => handleLanguageChange(lang)}
+          borderBottomWidth={0.5}
+          backgroundColor={hoveredIndex === index ? 'black' : 'white'}
+          cursor="pointer"
+          padding={10}
+          style={{
+            color: hoveredIndex === index ? 'white' : 'black', // Change text color on hover
+          }}
+          onMouseEnter={() => setHoveredIndex(index)} // Set hovered index on mouse enter
+          onMouseLeave={() => setHoveredIndex(null)} // Reset hover on mouse leave
+        >
+          {t(`account:language.${lang}`)}
+        </View>
+      )) : null}
+    </View>
   );
 
   return (
@@ -50,6 +89,7 @@ export const SettingsScreen = () => {
                   {...useLink({
                     href: media.sm
                       ? getUrl('account/settings/general')
+                      : Platform.OS === 'web' ? getUrl('account/settings/general') 
                       : getUrl('account/settings'),
                   })}
                   accentColor="$green9"
@@ -142,9 +182,12 @@ export const SettingsScreen = () => {
               </Settings.Group>
 
               <Settings.Group>
-                <SettingsLanguageAction />
+                {Platform.OS === 'web' ?
+                  <SettingsWebLanguageAction
+                    onPress={() => setDropdownVisible(!dropdownVisible)}
+                  /> : <SettingsLanguageAction />}
               </Settings.Group>
-
+              {Platform.OS === 'web' && dropdownVisible && renderWebDropdown()}
               <Settings.Group>
                 <SettingsThemeAction />
                 <SettingsDeleteAccountAction />
@@ -157,11 +200,32 @@ export const SettingsScreen = () => {
       NOTE: you should probably get the actual native version here using https://www.npmjs.com/package/react-native-version-info
       we just did a simple package.json read since we want to keep things simple for the starter
        */}
+
         <Paragraph paddingVertical="$2" textAlign="center" theme="alt2">
           v1.0.0
         </Paragraph>
       </YStack>
     </>
+  );
+};
+
+const SettingsWebLanguageAction = ({ onPress }) => {
+  const { activeLang } = useMultiLang();
+
+  return (
+    <ScreenLayout>
+      <Settings.Item
+        icon={(props: IconProps) => (
+          <Theme name='accent'>
+            <Languages  {...props} color="$color9" />
+          </Theme>
+        )}
+        onPress={onPress}
+        rightLabel={t(`account:language.${activeLang}`).toString()}
+      >
+        {t('account:language.title')}
+      </Settings.Item>
+    </ScreenLayout>
   );
 };
 
@@ -235,21 +299,22 @@ const SettingsItemLogoutAction = () => {
       accentColor="$color9"
       //onPress={() => logout()}
       onPress={async () => {
-        Alert.alert(
-          'Sign Out',
-          `Are you sure you want to Sign Out?`,
-          [
-            {
-              text: 'Sign Out',
-              onPress: () => logout(),
-              style: 'cancel',
-            },
-            {
-              text: 'Cancel',
-              style: 'destructive',
-            },
-          ]
-        )
+        Platform.OS === 'web' ? logout() :
+          Alert.alert(
+            'Sign Out',
+            `Are you sure you want to Sign Out?`,
+            [
+              {
+                text: 'Sign Out',
+                onPress: () => logout(),
+                style: 'cancel',
+              },
+              {
+                text: 'Cancel',
+                style: 'destructive',
+              },
+            ]
+          )
       }}
 
     >
@@ -269,22 +334,23 @@ const SettingsDeleteAccountAction = () => {
       accentColor="$color9"
       //onPress={() => logout()}
       onPress={async () => {
-        Alert.alert(
-          'Delete Account',
-          `Are you sure you want to delete your account?`,
-          [
-            {
-              text: 'Confirm',
-              onPress: () => UserService.deleteAccount()
-                .then(() => logout()),
-              style: 'cancel',
-            },
-            {
-              text: 'Cancel',
-              style: 'destructive',
-            },
-          ]
-        )
+        Platform.OS === 'web' ? UserService.deleteAccount().then(() => logout()) :
+          Alert.alert(
+            'Delete Account',
+            `Are you sure you want to delete your account?`,
+            [
+              {
+                text: 'Confirm',
+                onPress: () => UserService.deleteAccount()
+                  .then(() => logout()),
+                style: 'cancel',
+              },
+              {
+                text: 'Cancel',
+                style: 'destructive',
+              },
+            ]
+          )
       }}
 
     >
