@@ -53,6 +53,7 @@
     "preview": {}
   },
   "cli": {
-    "version": ">=11.0.3"
+    "version": ">=11.0.3",
+    "appVersionSource": "local"
   }
 }
