@@ -1,6 +1,6 @@
 import { Building } from '@tamagui/lucide-icons';
 import { CompanyTransformer } from '@zix/api';
-import React from 'react';
+import React, { useState } from 'react';
 import { Marker } from 'react-native-maps';
 
 import { Image, View } from 'tamagui';
@@ -17,16 +17,20 @@ export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = React.memo(({
   isSelected,
   onPress
 }: MapCompanyMarkerProps) => {
+  const [showCustomIcon, setShowCustomIcon] = useState(false)
 
-  const renderCarIcon = () => company.logo?.original_url ? (
+  const renderCarIcon = () =>  (company?.logo?.original_url && !showCustomIcon) ? (
     <Image
-      source={{ uri: company.logo.original_url }}
+      source={{ uri: company.logo?.original_url }}
       width='100%'
       height='100%'
       resizeMode='contain'
+      onError={() => {
+        setShowCustomIcon(true)
+      }}
     />
   ) : (
-    <Building size="$4" />
+    <Building size="$2"/>
   )
 
   if (!company.location) {
