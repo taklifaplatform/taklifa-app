@@ -81,7 +81,6 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
   const [lastSentTime, setLastSentTime] = useState(null);
   const cooldownPeriod = 60 * 1000; // 1 minute in milliseconds
   const currentTime = new Date().getTime();
-  const timeLeft = !!Math.ceil((cooldownPeriod - (currentTime - lastSentTime)) / 1000) || 0;
   const [canResed, setCanResed] = useState(true);
 
   const handleResendCode = () => {
@@ -92,7 +91,7 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
       setCanResed(false)
       setTimeout(() => {
         setCanResed(true)
-      }, cooldownPeriod)
+      }, 60000)
     } else {
       const timeLeft = Math.ceil((cooldownPeriod - (currentTime - lastSentTime)) / 1000);
       toast.show(`Please wait ${timeLeft} more seconds before resending the code`, {
