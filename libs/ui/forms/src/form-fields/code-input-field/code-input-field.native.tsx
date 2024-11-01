@@ -26,6 +26,10 @@ export const CodeInputField: React.FC<CodeInputFieldProps> = ({
   const { field, error } = useTsController<string>();
   const theme = useTheme();
 
+  const textStyle = useStyle({
+    color: '$color11'
+  })
+
   const cellStyle = useMemo(
     () => ({
       width: CELL_WIDTH,
@@ -38,6 +42,8 @@ export const CodeInputField: React.FC<CodeInputFieldProps> = ({
       borderRadius: 12,
       textAlign: 'center',
       padding: (CELL_WIDTH + CELL_HEIGHT) * 0.1,
+      // theme: theme,
+      // color: theme.colors..get(),
     }),
     [error?.errorMessage, theme.borderColor]
   );
@@ -69,7 +75,7 @@ export const CodeInputField: React.FC<CodeInputFieldProps> = ({
           renderCell={({ index, symbol, isFocused }) => (
             <Text
               key={index}
-              style={[cellStyle as any, isFocused && focusStyle]}
+              style={[textStyle, cellStyle as any, isFocused && focusStyle]}
               onLayout={getCellOnLayoutHandler(index)}
             >
               {symbol || (isFocused ? <Cursor /> : null)}

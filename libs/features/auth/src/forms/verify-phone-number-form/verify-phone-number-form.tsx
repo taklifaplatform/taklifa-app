@@ -10,7 +10,7 @@ import {
   handleFormErrors,
 } from '@zix/ui/forms';
 import { t } from 'i18next';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { z } from 'zod';
@@ -78,10 +78,34 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
       });
   }
 
+  const [lastSentTime, setLastSentTime] = useState(null);
+  const cooldownPeriod = 60 * 1000; // 1 minute in milliseconds
+  const currentTime = new Date().getTime();
+  const timeLeft = !!Math.ceil((cooldownPeriod - (currentTime - lastSentTime)) / 1000) || 0;
+  const [canResed, setCanResed] = useState(true);
+
+  const handleResendCode = () => {
+    if (!lastSentTime || currentTime - lastSentTime >= cooldownPeriod) {
+      resendCode();
+      setLastSentTime(currentTime);
+      // setCanResed(true) after 60 seconds
+      setCanResed(false)
+      setTimeout(() => {
+        setCanResed(true)
+      }, cooldownPeriod)
+    } else {
+      const timeLeft = Math.ceil((cooldownPeriod - (currentTime - lastSentTime)) / 1000);
+      toast.show(`Please wait ${timeLeft} more seconds before resending the code`, {
+        preset: 'error',
+      });
+    }
+  };
+
+
   const ResendCodeNumber = () => {
     return (
       <XStack
-        onPress={() => resendCode()}
+        onPress={handleResendCode}
         margin="$4"
         gap="$2"
         alignItems="center"
@@ -92,8 +116,8 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
           {t('auth:pin_code.didnt_receive_code')}
         </Text>
         <Theme name="accent">
-          <Text fontSize="$4" color="$color9">
-            {t('auth:pin_code.resend')}
+          <Text fontSize="$4" color={canResed ? "$color10" : "gray"}>
+            {t('auth:pin_code.resend')} 
           </Text>
         </Theme>
       </XStack>
