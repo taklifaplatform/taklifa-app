@@ -1,7 +1,7 @@
 import { useMultiLang } from '@zix/i18n';
-import { t } from 'i18next';
-import { Button, Image, Stack, Text, Theme, XStack } from 'tamagui';
 import { ZixLinkButton } from '@zix/ui/common';
+import { t } from 'i18next';
+import { Image, Stack, Text, Theme, XStack } from 'tamagui';
 /**
  * /customer
  * /solo-driver
