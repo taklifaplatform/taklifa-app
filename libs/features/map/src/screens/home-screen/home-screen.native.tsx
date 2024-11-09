@@ -15,6 +15,8 @@ import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useRouter } from 'solito/router';
 import { Button, View, YStack } from 'tamagui';
 import MapFilters from '../../components/map-filters/map-filters';
+import { useIsFocused } from '@react-navigation/native';
+import { set } from 'react-hook-form';
 
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
@@ -139,26 +141,29 @@ export function HomeScreen() {
 
   // Keyboard Detect
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      () => {
-        setKeyboardVisible(true); // or some other action
-      }
-    );
-    const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      () => {
-        setKeyboardVisible(false); // or some other action
-      }
-    );
+    if (isFocused) {
+      const keyboardDidShowListener = Keyboard.addListener(
+        'keyboardDidShow',
+        () => setKeyboardVisible(true)
+      );
+      const keyboardDidHideListener = Keyboard.addListener(
+        'keyboardDidHide',
+        () => setKeyboardVisible(false)
+      );
 
-    return () => {
-      keyboardDidHideListener.remove();
-      keyboardDidShowListener.remove();
-    };
-  }, []);
+      return () => {
+        keyboardDidHideListener.remove();
+        keyboardDidShowListener.remove();
+      };
+    } else {
+      setKeyboardVisible(false);
+    }
+
+  }, [isFocused]);
+
 
   const renderMapDrivers = () =>
     (filters.provider_type === 'all' || filters.provider_type === USER_ROLES.solo_driver) ?
