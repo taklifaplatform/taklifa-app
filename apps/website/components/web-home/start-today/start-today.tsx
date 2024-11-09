@@ -3,6 +3,11 @@ import { ZixLinkButton } from '@zix/ui/common';
 import { t } from 'i18next';
 import { Image, Stack, Text, XStack, YStack } from 'tamagui';
 
+const banners = {
+  ar: require('../../../public/images/banner-3-ar.png'),
+  en: require('../../../public/images/banner-3-en.png'),
+}
+
 export function StartToday() {
   const { activeLang } = useMultiLang();
   const renderTextStartToday = () => (
@@ -118,9 +123,7 @@ export function StartToday() {
       <Image
         alt="Banner"
         borderRadius={'$4'}
-        source={{
-          uri: `/images/banner-3-${activeLang}.png`,
-        }}
+        source={banners[activeLang]}
         width="100%"
         height="100%"
         resizeMode="responsive"

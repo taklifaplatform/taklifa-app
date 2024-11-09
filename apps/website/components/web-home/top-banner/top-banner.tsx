@@ -8,15 +8,17 @@ import { Image, Stack, Text, Theme, XStack } from 'tamagui';
  * /company
  * @returns
  */
+const banners = {
+  ar: require('../../../public/images/Rectangle-1-ar.png'),
+  en: require('../../../public/images/Rectangle-1-en.png'),
+}
 export function TopBanner() {
   const { activeLang } = useMultiLang();
 
   const renderImageBackground = () => (
     <Image
       alt="Banner"
-      source={{
-        uri: `/images/Rectangle-1-${activeLang}.png`,
-      }}
+      source={banners[activeLang]}
       width="100%"
       borderRadius='$4'
       resizeMode="cover"
