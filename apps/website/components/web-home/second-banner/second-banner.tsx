@@ -4,6 +4,11 @@ import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import { Image, Stack, Text, XStack, YStack } from 'tamagui';
 
+const banners = {
+  ar: require('../../../public/images/banner-2-ar.png'),
+  en: require('../../../public/images/banner-2-en.png'),
+}
+
 export function SecondBanner() {
   const { activeLang } = useMultiLang();
   const renderImageBackground = () => (
@@ -16,9 +21,7 @@ export function SecondBanner() {
     >
       <Image
         alt="Banner"
-        source={{
-          uri: `/images/banner-2-${activeLang}.png`,
-        }}
+        source={banners[activeLang]}
         style={{
           width: '100%',
           height: '100%',
