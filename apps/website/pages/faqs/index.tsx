@@ -1,15 +1,16 @@
 import { CustomIcon } from '@zix/ui/icons';
-import { useRouter } from 'next/router';
-import { Button, Image, Stack, Text, View, YStack } from 'tamagui';
+import { t } from 'i18next';
+import { useRouter } from 'solito/router';
+import { Button, Image, Stack, Text, YStack } from 'tamagui';
 import { FrequentlyQuestions } from '../../components/web-home/questions/frequently-question';
 import { MainLayout } from '../../layouts/main-layout';
 import { NextPageWithLayout } from '../_app';
-import { t } from 'i18next';
+
 export const Page: NextPageWithLayout = () => {
   const router = useRouter();
   const renderBanner = () => (
     <YStack
-    theme={'accent'}
+      theme={'accent'}
       justifyContent="center"
       marginBottom="$8"
       width={'100%'}

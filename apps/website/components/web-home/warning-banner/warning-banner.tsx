@@ -1,10 +1,8 @@
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
-import { useRouter } from 'next/router';
 import { Button, Image, Stack, Text, Theme, YStack } from 'tamagui';
 
 export function WarningBanner() {
-  const router = useRouter();
 
   const renderOptionText = () => (
     <YStack

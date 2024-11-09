@@ -1,7 +1,7 @@
 import { useMultiLang } from '@zix/i18n';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
-import { useRouter } from 'next/router';
+import { useRouter } from 'solito/router';
 import { Pressable } from 'react-native';
 import { Button, Image, Stack, Text, Theme, View, XStack, YStack } from 'tamagui';
 import { ManageShipments } from '../../components/web-home/management-shipments/manage-shipments';

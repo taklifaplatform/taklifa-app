@@ -1,6 +1,6 @@
 import { UserCircle } from '@tamagui/lucide-icons';
 import { t } from 'i18next';
-import { useRouter } from 'next/router';
+import { useRouter } from 'solito/router';
 import { Button, Image, Stack, Text, View, YStack } from 'tamagui';
 
 

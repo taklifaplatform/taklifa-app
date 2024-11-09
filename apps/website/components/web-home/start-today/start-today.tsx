@@ -1,14 +1,10 @@
 import { useMultiLang } from '@zix/i18n';
 import { ZixLinkButton } from '@zix/ui/common';
-import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
-import { useRouter } from 'next/router';
-import { Pressable } from 'react-native';
 import { Image, Stack, Text, XStack, YStack } from 'tamagui';
 
 export function StartToday() {
   const { activeLang } = useMultiLang();
-  const router = useRouter();
   const renderTextStartToday = () => (
     <YStack
       pos={'absolute'}
