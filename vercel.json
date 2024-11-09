@@ -1,3 +1,0 @@
-{
-  "installCommand": "yum install hostname && npm ci"
-}
