@@ -39,6 +39,7 @@ const nextConfig = {
     'stream-chat',
   ],
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         hostname: 'ui-avatars.com',
@@ -53,7 +54,10 @@ const nextConfig = {
         hostname: '192.168.0.23',
       },
       {
-        hostname: 'admin-sawaeed.zixdev.com'
+        hostname: 'sawaeed.com'
+      },
+      {
+        hostname: 'api.sawaeed.com'
       }
     ],
   },
