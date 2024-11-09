@@ -1,22 +1,24 @@
 import { useMultiLang } from '@zix/i18n';
-import { t } from 'i18next';
-import { Button, Image, Stack, Text, Theme, XStack } from 'tamagui';
 import { ZixLinkButton } from '@zix/ui/common';
+import { t } from 'i18next';
+import { Image, Stack, Text, Theme, XStack } from 'tamagui';
 /**
  * /customer
  * /solo-driver
  * /company
  * @returns
  */
+const banners = {
+  ar: require('../../../public/images/Rectangle-1-ar.png'),
+  en: require('../../../public/images/Rectangle-1-en.png'),
+}
 export function TopBanner() {
   const { activeLang } = useMultiLang();
 
   const renderImageBackground = () => (
     <Image
       alt="Banner"
-      source={{
-        uri: `/images/Rectangle-1-${activeLang}.png`,
-      }}
+      source={banners[activeLang]}
       width="100%"
       borderRadius='$4'
       resizeMode="cover"

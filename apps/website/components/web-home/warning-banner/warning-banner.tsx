@@ -53,11 +53,9 @@ export function WarningBanner() {
     >
       <Image
         alt="Banner"
-        source={{
-          uri: '/images/cheating.png',
-          width: '100%',
-          height: '100%',
-        }}
+        source={require('../../../public/images/cheating.png')}
+        width={'100%'}
+        height={'100%'}
         resizeMode="cover"
         borderRadius={'$4'}
       />

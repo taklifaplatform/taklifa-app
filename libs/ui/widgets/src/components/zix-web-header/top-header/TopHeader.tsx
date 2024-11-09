@@ -80,12 +80,14 @@ export function TopHeader() {
       </Text>
       <ZixLinkButton
         menuItem
-        href={'/'}
+        href={'https://apps.apple.com/us/app/sawaeed/id6720725925'}
+        target='_blank'
         icon={<CustomIcon name={'google_play'} size={'$8'} />}
       />
       <ZixLinkButton
         menuItem
-        href={'/'}
+        href={'https://apps.apple.com/us/app/sawaeed/id6720725925'}
+        target='_blank'
         icon={<CustomIcon name={'app_store'} size={'$8'} />}
       />
     </XStack>
