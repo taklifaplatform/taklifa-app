@@ -2,8 +2,7 @@ import { useMultiLang } from '@zix/i18n';
 import { ZixLinkButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
-import { Image } from 'react-native';
-import { Stack, Text, XStack, YStack } from 'tamagui';
+import { Image, Stack, Text, XStack, YStack } from 'tamagui';
 
 export function SecondBanner() {
   const { activeLang } = useMultiLang();
@@ -28,7 +27,7 @@ export function SecondBanner() {
       />
     </Stack>
   );
-  const renderWelcomeText = () => ( 
+  const renderWelcomeText = () => (
     <YStack
       alignItems="center"
       width={'100%'}
