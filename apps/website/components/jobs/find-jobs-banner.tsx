@@ -13,11 +13,9 @@ export function FindJobsBanner() {
       >
         <Image
           alt="Banner"
-          source={{
-            uri: '/images/banner-5.png',
-            width: '100%',
-            height: 196,
-          }}
+          source={require('../../public/images/banner-5.png')}
+          width={'100%'}
+          height={196}
           resizeMode="contain"
         />
         <YStack

@@ -122,7 +122,7 @@ export function OurPartners() {
 
 
 
-
+  return null;
   return (
     <YStack
       w={'100%'}

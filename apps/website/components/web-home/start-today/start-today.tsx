@@ -75,11 +75,9 @@ export function StartToday() {
           <Image
             alt="Google Play"
             borderRadius={'$4'}
-            source={{
-              uri: '/images/googlePlay1.png',
-              width: 200,
-              height: 60,
-            }}
+            source={require('../../../public/images/googlePlay1.png')}
+            width={200}
+            height={60}
             $sm={{
               width: 100,
             }}
@@ -94,11 +92,9 @@ export function StartToday() {
           <Image
             alt="App Store"
             borderRadius={'$4'}
-            source={{
-              uri: '/images/Frame.png',
-              width: 200,
-              height: 60,
-            }}
+            source={require('../../../public/images/Frame.png')}
+            width={200}
+            height={60}
             $sm={{
               width: 100,
             }}

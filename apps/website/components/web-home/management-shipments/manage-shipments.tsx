@@ -16,9 +16,7 @@ export function ManageShipments() {
       >
         <Image
           alt="Banner"
-          source={{
-            uri: '/images/banner-3.png',
-          }}
+          source={require('../../../public/images/banner-3.png')}
           width={1260}
           height={180}
           resizeMode="cover"
