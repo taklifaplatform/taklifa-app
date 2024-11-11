@@ -4,13 +4,13 @@ import { AppHeader } from '@zix/ui/layouts';
 
 export const PrivacyPolicyScreen = () => {
   return (
-    <>
-      <AppHeader
-        title={t('account:privacy_policy.title')}
-        showBackButton
-        hideOnWeb
-      />
-      <ScrollView>
+      <ScrollView
+      paddingTop="$6"
+      >
+        <AppHeader
+          title={t('account:privacy_policy.title')}
+          showBackButton
+        />
       <YStack gap="$4" padding="$4">
         {/* only show title on web since mobile has navigator title */}
         {isWeb && <H1>{t('account:privacy_policy.title')}</H1>}
@@ -136,7 +136,5 @@ export const PrivacyPolicyScreen = () => {
         </Paragraph>
       </YStack>
       </ScrollView>
-    </>
-
   );
 };
