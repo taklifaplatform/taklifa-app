@@ -62,7 +62,7 @@
         "backgroundColor": "#FECA16"
       },
       "package": "app.sawaeed",
-      "versionCode": 2,
+      "versionCode": 3,
       "permissions": [
         "android.permission.RECORD_AUDIO",
         "android.permission.CAMERA"
