@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "366432782397",
+    "project_id": "sawaeed-712a8",
+    "storage_bucket": "sawaeed-712a8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:366432782397:android:7ff5692d7cdde6e1058254",
+        "android_client_info": {
+          "package_name": "app.sawaeed"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCivYWxpMBFI59BYFXK7c9hBHrgn3GHM-Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -68,6 +68,9 @@
         "android.permission.CAMERA"
       ],
       "config": {
+        "googleSignIn": {
+          "apiKey": "AIzaSyCivYWxpMBFI59BYFXK7c9hBHrgn3GHM-Q"
+        },
         "googleMaps": {
           "apiKey": "AIzaSyBw3sZh4uFyLbi9sKTzKYn3BqIS_b-vGeA"
         }
