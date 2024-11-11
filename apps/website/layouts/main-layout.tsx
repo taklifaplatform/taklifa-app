@@ -17,9 +17,13 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
     if (currentScrollY > lastScrollY.current) {
       // Scrolling down
-      setHeaderVisible(false);
+      // after 100px, hide the header
+      if (currentScrollY > 100) {
+        setHeaderVisible(false);
+      }
     } else if (currentScrollY < lastScrollY.current) {
       // Scrolling up
+      // show the header
       setHeaderVisible(true);
     }
 
@@ -59,7 +63,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       </ZixContainer>
 
       <ZixWebFooter />
-      {!headerVisible && 
+      
       <Button
         onPress={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         position='fixed'
@@ -73,7 +77,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         style={{ transform: [{ rotate: '230deg' }] }}
       >
         <CustomIcon name='arrow_left' size={'$1'} color='black' />
-      </Button>}
+      </Button>
     </View>
   );
 };

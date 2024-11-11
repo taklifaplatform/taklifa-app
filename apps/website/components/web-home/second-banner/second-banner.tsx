@@ -2,34 +2,34 @@ import { useMultiLang } from '@zix/i18n';
 import { ZixLinkButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
-import { Image, Stack, Text, XStack, YStack } from 'tamagui';
+import { Stack, Text, XStack, YStack } from 'tamagui';
+import SecondBannerEn from '../../../images/second-banner-en.svg';
+import SecondBannerAr from '../../../images/second-banner-ar.svg';
 
-const banners = {
-  ar: require('../../../public/images/banner-2-ar.png'),
-  en: require('../../../public/images/banner-2-en.png'),
-}
 
 export function SecondBanner() {
   const { activeLang } = useMultiLang();
-  const renderImageBackground = () => (
-    <Stack
-      width={'100%'}
-      height={300}
-      $sm={{
-        height: 200,
-      }}
-    >
-      <Image
-        alt="Banner"
-        source={banners[activeLang]}
-        style={{
-          width: '100%',
-          height: '100%',
+
+  const renderImageBackground = () => {
+    const BannerImage = activeLang === 'ar' ? SecondBannerAr : SecondBannerEn;
+
+    return (
+      <Stack
+        width={'100%'}
+        height={300}
+        $sm={{
+          height: 200,
         }}
-        resizeMode="cover"
-      />
-    </Stack>
-  );
+      >
+        <BannerImage
+          style={{
+            width: '100%',
+            height: '100%',
+          }}
+        />
+      </Stack>
+    );
+  };
   const renderWelcomeText = () => (
     <YStack
       alignItems="center"
