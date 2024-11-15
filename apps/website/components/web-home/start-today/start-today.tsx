@@ -1,8 +1,9 @@
 import { useMultiLang } from '@zix/i18n';
 import { ZixLinkButton } from '@zix/ui/common';
 import { t } from 'i18next';
-import { Image, Stack, Text, XStack, YStack } from 'tamagui';
-
+import { Image, Stack, Text, View, XStack, YStack } from 'tamagui';
+import StartTodayEn from '../../../images/start-today-banner-en.svg';
+import StartTodayAr from '../../../images/start-today-banner-ar.svg';
 const banners = {
   ar: require('../../../public/images/banner-3-ar.png'),
   en: require('../../../public/images/banner-3-en.png'),
@@ -110,6 +111,33 @@ export function StartToday() {
     </YStack>
   );
 
+  const renderImageBackground = () => {
+    const BannerImage = activeLang === 'ar' ? StartTodayAr : StartTodayEn;
+
+    return (
+      <View
+        width={'100%'}
+        borderRadius={'$4'}
+        $xs={{ display: 'none' }}
+        theme={'accent'}
+        height={560}
+        $md={{ height: 400 }}
+        $sm={{ height: 200 }}
+        backgroundColor={'$color6'}
+        borderRadius={'$4'}
+        justifyContent='center'
+
+      >
+        <BannerImage
+          style={{
+            width: '100%',
+            height: '100%',
+          }}
+        />
+      </View>
+    );
+  };
+
   return (
     <Stack
       theme={'accent'}
@@ -120,7 +148,8 @@ export function StartToday() {
       borderRadius={'$4'}
       justifyContent='center'
     >
-      <Image
+      {renderImageBackground()}
+     {/* <Image
         alt="Banner"
         borderRadius={'$4'}
         source={banners[activeLang]}
@@ -128,7 +157,7 @@ export function StartToday() {
         height="100%"
         resizeMode="responsive"
         $xs={{ display: 'none' }}
-      />
+      />*/}
       {renderTextStartToday()}
     </Stack>
 

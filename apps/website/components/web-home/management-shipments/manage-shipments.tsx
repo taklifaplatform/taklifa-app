@@ -2,7 +2,7 @@ import { UserCircle } from '@tamagui/lucide-icons';
 import { t } from 'i18next';
 import { useRouter } from 'solito/router';
 import { Button, Image, Stack, Text, View, YStack } from 'tamagui';
-
+import ShipmentBanner from '../../../images/manage-shipment-banner.svg';
 
 export function ManageShipments() {
   const router = useRouter();
@@ -14,7 +14,29 @@ export function ManageShipments() {
         marginBottom="$8"
         width={'100%'}
       >
-        <Image
+        <View
+        $sm={{
+          width: '100%',
+          height: 180
+        }}
+        $lg={{
+          width: '100%',
+          height: 180
+        }}
+        position="responsive"
+        borderRadius={"$1"}
+        width={1260}
+        height={180}
+        >
+        <ShipmentBanner
+        style={{
+          width: '100%',
+          height: '100%',
+        }}
+        
+        />
+        </View>
+      { /* <Image
           alt="Banner"
           source={require('../../../public/images/banner-3.png')}
           width={1260}
@@ -30,7 +52,7 @@ export function ManageShipments() {
             height: 180
           }}
           borderRadius={"$1"}
-        />
+        />*/}
         <Stack
           position={'absolute'}
           flexDirection="row"
