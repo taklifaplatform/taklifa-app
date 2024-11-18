@@ -20,7 +20,7 @@ const CreateCompanyFormSchema = z
     name: formFields.text.min(2).max(150).describe(t('forms:company_name')),
     legal_documents: formFields.files.describe(
       t('forms:company_legal_documents')
-    ),
+    ).optional(),
 
     location_id: formFields.location.describe(t('forms:company_location')),
     accept_terms: formFields.accept_terms.describe(t('forms:accept_terms')),

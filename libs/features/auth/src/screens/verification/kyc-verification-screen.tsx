@@ -22,7 +22,7 @@ const KYCFormSchema = z.object({
   name: formFields.text.describe(t('forms:kyc_name')),
   birth_date: formFields.date_picker.describe(t('forms:birth_date')),
   nationality_id: formFields.country.describe(t('forms:select_nationality')),
-  identity_card: formFields.file.describe(t('forms:id_card')),
+  identity_card: formFields.file.describe(t('forms:id_card')).optional(),
   location_id: formFields.location.describe(t('forms:living_address')),
 });
 

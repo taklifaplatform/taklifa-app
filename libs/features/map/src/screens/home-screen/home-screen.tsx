@@ -128,7 +128,7 @@ export function HomeScreen() {
       size="$4"
       onPress={() => setShowMap(!showMap)}
     />
-      
+
   );
 
 

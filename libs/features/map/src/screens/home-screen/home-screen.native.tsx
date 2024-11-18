@@ -8,7 +8,7 @@ import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { MapCompanyMarker, MapDriverMarker } from '@zix/ui/sawaeed';
 import { getDistance } from '@zix/utils';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Dimensions, Keyboard, Platform } from 'react-native';
+import { Animated, Dimensions, Keyboard, Platform } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import MapView from 'react-native-maps';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
@@ -16,7 +16,6 @@ import { useRouter } from 'solito/router';
 import { Button, View, YStack } from 'tamagui';
 import MapFilters from '../../components/map-filters/map-filters';
 import { useIsFocused } from '@react-navigation/native';
-import { set } from 'react-hook-form';
 
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
@@ -80,8 +79,8 @@ export function HomeScreen() {
     }
     return data.data.sort((a, b) => {
       if (!a.location || !b.location) return 0;
-      const aDistance = getDistance(selectedDriver.location, a.location);
-      const bDistance = getDistance(selectedDriver.location, b.location);
+      const aDistance = getDistance(selectedDriver?.location, a.location);
+      const bDistance = getDistance(selectedDriver?.location, b.location);
       return aDistance < bDistance ? a : b;
     });
   }, [data?.data, selectedDriver]);
@@ -164,6 +163,27 @@ export function HomeScreen() {
 
   }, [isFocused]);
 
+    // Full-screen animation state
+    const [isMapFullScreen, setIsMapFullScreen] = useState(false);
+    const animationValue = useRef(new Animated.Value(1)).current;
+
+    const animateOut = () => {
+      setIsMapFullScreen(true);
+      Animated.timing(animationValue, {
+        toValue: 0, // Fully transparent
+        duration: 1,
+        useNativeDriver: true,
+      }).start();
+    };
+
+    const animateIn = () => {
+      Animated.timing(animationValue, {
+        toValue: 1, // Fully visible
+        duration: 1,
+        useNativeDriver: true,
+      }).start(() => setIsMapFullScreen(false));
+    };
+
 
   const renderMapDrivers = () =>
     (filters.provider_type === 'all' || filters.provider_type === USER_ROLES.solo_driver) ?
@@ -197,6 +217,16 @@ export function HomeScreen() {
         style={{ flex: 1 }}
         initialCamera={initialCamera}
         onPress={() => Keyboard.dismiss()}
+        onTouchStart={() => {
+          if (!isMapFullScreen) animateOut();
+          console.log('onTouchStart');
+          }
+        }
+        onTouchEnd={() => {
+          if (isMapFullScreen) animateIn();
+          console.log('onTouchEnd');
+        }
+        }
       >
         {renderMapDrivers()}
         {renderMapCompanies()}
@@ -301,7 +331,7 @@ export function HomeScreen() {
           autoPlay={false}
           data={driversList || []}
           defaultIndex={
-            selectedDriver.id
+            selectedDriver?.id
               ? driversList.findIndex((d) => d.id === selectedDriver.id)
               : 0
           }
@@ -314,20 +344,28 @@ export function HomeScreen() {
   return (
     <ScreenLayout>
       <YStack flex={1}>
+      {!isMapFullScreen && (
+         <Animated.View
+         style={{
+           opacity: animationValue, // Control visibility with opacity
+         }}
+       >
         <AppHeader
-          showSearchBar
-          searchProps={{
-            value: search,
-            onChangeText: setSearch,
-            rightIcon: () => (showMap ? <ScanBarcode size="$1.5" /> : null),
-          }}
-        />
+            showSearchBar
+            searchProps={{
+              value: search,
+              onChangeText: setSearch,
+              rightIcon: () => (showMap ? <ScanBarcode size="$1.5" /> : null),
+            }}
+          />
+        </Animated.View>
+        )}
         <YStack flex={1} position='relative'>
           {renderMap()}
-          {renderList()}
-          {!isKeyboardVisible && renderCarousel()}
-          {!isKeyboardVisible && renderSwitcher()}
-          {!isKeyboardVisible && renderFilters()}
+          {!isMapFullScreen && renderList()}
+          {!isMapFullScreen && !isKeyboardVisible && renderCarousel()}
+          {!isMapFullScreen && !isKeyboardVisible && renderSwitcher()}
+          {!isMapFullScreen && !isKeyboardVisible && renderFilters()}
         </YStack>
       </YStack>
     </ScreenLayout>
