@@ -8,7 +8,6 @@ export type RegisterRequest = {
     phone_number?: string;
     password?: string;
     password_confirmation?: string;
-    phone_number_has_whatsapp?: boolean;
     is_customer?: boolean;
     is_solo_driver?: boolean;
 };

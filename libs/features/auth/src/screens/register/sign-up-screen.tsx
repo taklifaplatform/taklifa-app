@@ -26,9 +26,6 @@ const SignUpSchema = z
   .object({
     username: formFields.text.min(3).describe(t('forms:username')),
     phone_number: formFields.phone.describe(t('forms:phone_number')),
-    phone_number_has_whatsapp: formFields.boolean_switch
-      .optional()
-      .describe(t('forms:is_whatsapp')),
     password: formFields.secure_text.describe(t('forms:password')),
     password_confirmation: formFields.secure_text.describe(
       t('forms:password_confirmation'),
@@ -121,7 +118,6 @@ export const SignUpScreen = () => {
             password: '',
             password_confirmation: '',
             accept_terms: false,
-            phone_number_has_whatsapp: false,
           }}
           onSubmit={mutateAsync}
           renderAfter={({ submit }) => (

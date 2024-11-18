@@ -10,7 +10,6 @@ export type AuthenticatedUserTransformer = {
     username?: string;
     name?: string;
     phone_number?: string;
-    phone_number_has_whatsapp?: boolean;
     email?: string;
     email_verified_at?: string;
     verification_status?: string;
