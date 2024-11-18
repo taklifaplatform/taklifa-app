@@ -1,7 +1,7 @@
 import Constants from 'expo-constants';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
-import { Platform } from 'react-native';
+import { Alert, Platform } from 'react-native';
 
 export async function registerForPushNotificationsAsync() {
   let token;
@@ -34,8 +34,10 @@ export async function registerForPushNotificationsAsync() {
         projectId: Constants?.expoConfig?.extra?.eas.projectId,
       })
     ).data;
+    console.log(token,'token');
   } else {
     console.log('Must use physical device for Push Notifications');
+
   }
 
   return token;

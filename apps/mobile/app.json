@@ -61,11 +61,15 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FECA16"
       },
+      "googleServicesFile": "./google-services.json",
+      "useNextNotificationsApi": true,
       "package": "app.sawaeed",
-      "versionCode": 3,
+      "versionCode": 6,
       "permissions": [
+        "NOTIFICATION",
         "android.permission.RECORD_AUDIO",
-        "android.permission.CAMERA"
+        "android.permission.CAMERA",
+        "android.permission.SCHEDULE_EXACT_ALARM"
       ],
       "config": {
         "googleSignIn": {
@@ -94,7 +98,8 @@
         "expo-notifications",
         {
           "icon": "./assets/icon.png",
-          "color": "#FECA16"
+          "color": "#FECA16",
+          "defaultChannel": "default"
         }
       ],
       [
