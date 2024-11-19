@@ -14,6 +14,7 @@ export type AppHeaderProps = {
   searchProps?: ZixInputProps;
   showSearchBar?: boolean;
   showBackButton?: boolean;
+  goBack?: () => void;
   headerTitle?: () => React.ReactNode;
   headerRight?: () => React.ReactNode;
   title?: string;
@@ -24,6 +25,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   searchProps = {},
   showSearchBar,
   showBackButton,
+  goBack,
   headerRight,
   headerTitle,
   title,
@@ -71,14 +73,20 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   const renderBackButton = () =>
     showBackButton && (
       <View
-      cursor='pointer'
+        cursor='pointer'
       >
         <Button
-        unstyled
-        size="$2"
-        icon={<CustomIcon name="arrow_left" size="$2" />}
-        onPress={() => router.back()}
-      />
+          unstyled
+          size="$2"
+          icon={<CustomIcon name="arrow_left" size="$2" />}
+          onPress={() => {
+            if (goBack) {
+              goBack();
+            } else {
+              router.back();
+            }
+          }}
+        />
       </View>
     );
 
