@@ -95,27 +95,6 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     );
   };
 
-  const renderImage = (imageUri: string) => {
-    if (Platform.OS === 'web') {
-      return (
-        <Image
-          src={imageUri}
-          width={200}  // Specify the width
-          height={200} // Specify the height
-          alt="Preview"
-          style={{ borderRadius: '50%' }} // Example of styling
-        />
-      );
-    } else {
-      return (
-        <RNImage
-          source={{ uri: imageUri }}
-          style={{ width: 200, height: 200, borderRadius: 100 }} // Styling for mobile
-        />
-      );
-    }
-  };
-
   async function onFilesSelected(files: ZixMediaPickerTransformer[]) {
     const _medias: Record<string, any> = {};
 
@@ -303,9 +282,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     <>
       <Previewer
         onPress={onOpenMediaPicker}
-        previews={Object.values(previews).map((preview) => (
-          renderImage(preview.url)  // Render image depending on platform
-        ))}
+        previews={Object.values(previews)}
         onRemoveMedia={onRemoveMedia}
         placeholder={placeholder}
         isOptional={isOptional}
