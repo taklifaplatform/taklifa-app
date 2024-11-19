@@ -71,7 +71,9 @@ export function LocationManagerScreen() {
   })
 
   function onGoBack() {
-    if (backUrl) {
+
+    if (typeof backUrl === 'string' && backUrl !== 'undefined') {
+      console.log("location manager screen: back url b2:: ", backUrl, typeof backUrl)
       router.push(backUrl);
     } else {
       router.back();
@@ -88,6 +90,7 @@ export function LocationManagerScreen() {
       queryClient.refetchQueries({
         queryKey: ['LocationService.retrieve', locationId],
       });
+      console.log("location manager screen: data:: ", data)
       onGoBack()
     },
     onError(error: any) {
