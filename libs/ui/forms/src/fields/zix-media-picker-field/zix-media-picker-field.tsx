@@ -276,21 +276,27 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
   }
 
   function onRemoveMedia(media: MediaTransformer) {
-    onChange?.(
-      Object.values(previews).filter(
-        (preview) =>
-          (!media.uuid || preview.uuid !== media.uuid) &&
-          (!media.id || preview.id !== media.id)
-      )
-    );
-    if (media.uuid) {
-      MediaService.deleteMedia(media.uuid);
+    if (type === 'file') {
+      onChange?.(null);
+      setPreviews({});
+    } else {
+      onChange?.(
+        Object.values(previews).filter(
+          (preview) =>
+            (!media.uuid || preview.uuid !== media.uuid) &&
+            (!media.id || preview.id !== media.id)
+        )
+      );
+      if (media.uuid) {
+        MediaService.deleteMedia(media.uuid);
+      }
+      setPreviews((prev) => {
+        const _new = { ...prev };
+        delete _new[media.uuid || media.id];
+        return _new;
+      });
     }
-    setPreviews((prev) => {
-      const _new = { ...prev };
-      delete _new[media.uuid || media.id];
-      return _new;
-    });
+
   }
 
   return (
