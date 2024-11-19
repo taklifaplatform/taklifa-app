@@ -14,11 +14,13 @@ export type LocationFieldProps = {
   containerProps?: BaseFormFieldContainerProps;
 
   type?: 'advanced' | 'simple';
+  backUrl?: string;
 };
 
 export const LocationField: React.FC<LocationFieldProps> = ({
   containerProps = {},
   type = 'simple',
+  backUrl,
   ...props
 }) => {
   const {
@@ -113,11 +115,11 @@ export const LocationField: React.FC<LocationFieldProps> = ({
               }).then(({ data }) => {
                 if (data?.id) {
                   onChange(data.id)
-                  router.push(`/app/locations/${data.id}/edit`)
+                  router.push(`/app/locations/${data.id}/edit?backUrl=${backUrl}`)
                 }
               })
             } else {
-              router.push(`/app/locations/${value}/edit`)
+              router.push(`/app/locations/${value}/edit?backUrl=${backUrl}`)
             }
           }}
           position="absolute"
