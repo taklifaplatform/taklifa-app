@@ -117,7 +117,7 @@ export default function CustomDrawerContent() {
             onPress={() => onProfilePress()}
             accentColor="$purple9"
           >
-            Profile
+            {t('account:settings.profile')}
           </Settings.Item>}
           {isLoggedIn && <Settings.Item
             backgroundColor={'transparent'}
