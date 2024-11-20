@@ -8,7 +8,7 @@ import { t } from 'i18next';
 import React, { useCallback } from 'react';
 import { Alert, Dimensions, Linking } from 'react-native';
 import { useRouter } from 'solito/router';
-import { Button, Theme, View } from 'tamagui';
+import { Button, Theme, View, XStack } from 'tamagui';
 export default function CustomDrawerContent() {
 
   const { user, activeRole, isLoggedIn, getUrlPrefix, logout } = useAuth();
@@ -60,18 +60,19 @@ export default function CustomDrawerContent() {
     <View
       justifyContent='flex-end'
       flex={1}
-      padding={'$10'}
+      padding={'$4'}
     >
-      <View
-        flexDirection='row'
+      <XStack
         alignItems='center'
-        width={'100%'}
-        justifyContent='center'
         gap='$4'
       >
         {COMPANY_ROLES.includes(activeRole) ? renderCompanyAvatar() : renderUserAvatar()}
-        <AccountSwitcher />
-      </View>
+        <View flex={1}>
+          <AccountSwitcher containerProps={{
+            justifyContent: 'space-between',
+          }} />
+        </View>
+      </XStack>
     </View>
   ) : (
     <View
@@ -84,28 +85,24 @@ export default function CustomDrawerContent() {
         onPress={() => router.push('/auth/login')}
         color={'$colo5'}
       >
-       {t('web-home:signup')}
+        {t('web-home:signup')}
       </Button>
     </View>
   );
 
   return (
     <View
-      backgroundColor={'$white'}
-      theme={'accent'}
       flex={1}
       width={SCREEN_WIDTH * 0.8}
     >
       <View
-        padding={'$6'}
-        flexDirection='row'
-        justifyContent='center'
+        paddingHorizontal={'$4'}
+      // flexDirection='row'
+      // justifyContent='center'
       >
         <CustomIcon name={`web-logo-${activeLang}`} size={'$15'} color={'black'} />
       </View>
-      <View
-
-      >
+      <View>
         <Settings.Group>
           {isLoggedIn && <Settings.Item
             backgroundColor={'transparent'}
