@@ -9,11 +9,15 @@ import { useRouter } from 'solito/router';
 import { Button, ColorTokens, H4, View, XStack, YStack } from 'tamagui';
 import ZixNotificationHeaderButton from '../zix-notification-header-button/zix-notification-header-button';
 import { AppHeaderWrapper } from './app-header-wrapper';
+import { useNavigation } from 'expo-router';
+import { useDrawer } from './useDrawer';
+import { Platform } from 'react-native';
 
 export type AppHeaderProps = {
   searchProps?: ZixInputProps;
   showSearchBar?: boolean;
   showBackButton?: boolean;
+  goBack?: () => void;
   headerTitle?: () => React.ReactNode;
   headerRight?: () => React.ReactNode;
   title?: string;
@@ -24,12 +28,14 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   searchProps = {},
   showSearchBar,
   showBackButton,
+  goBack,
   headerRight,
   headerTitle,
   title,
 }) => {
   const { user, activeRole, isLoggedIn, getUrlPrefix } = useAuth();
   const router = useRouter();
+  const { toggleDrawer } = useDrawer()
 
   const onAvatarPress = useCallback(() => {
     if (isLoggedIn) {
@@ -71,14 +77,20 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   const renderBackButton = () =>
     showBackButton && (
       <View
-      cursor='pointer'
+        cursor='pointer'
       >
         <Button
-        unstyled
-        size="$2"
-        icon={<CustomIcon name="arrow_left" size="$2" />}
-        onPress={() => router.back()}
-      />
+          unstyled
+          size="$2"
+          icon={<CustomIcon name="arrow_left" size="$2" />}
+          onPress={() => {
+            if (goBack) {
+              goBack();
+            } else {
+              router.back();
+            }
+          }}
+        />
       </View>
     );
 
@@ -159,7 +171,15 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
             justifyContent="space-between"
           >
             <XStack flex={0.25} justifyContent="flex-start">
-              {renderAvatar()}
+              {Platform.OS === 'web' ? renderAvatar() :
+                !showBackButton && <Button
+                  unstyled
+                  size="$2"
+                  icon={<CustomIcon name="list" size="$2" color={'$color'} />}
+                  onPress={() => {
+                    toggleDrawer()
+                  }}
+                />}
               {renderBackButton()}
             </XStack>
             <XStack flex={0.5} justifyContent="space-around">

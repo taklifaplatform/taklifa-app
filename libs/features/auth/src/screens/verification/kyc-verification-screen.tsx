@@ -55,7 +55,11 @@ export const KycVerificationScreen = () => {
           defaultValues={{
             name: user?.name || '',
           }}
-          props={{}}
+          props={{
+            location_id: {
+              backUrl: '/auth/verify-kyc',
+            }
+          }}
           onSubmit={mutateAsync}
           renderAfter={({ submit }) => {
             return (

@@ -127,7 +127,8 @@
   "account": {
     "settings": {
       "title": "Settings",
-      "general": "General"
+      "general": "General",
+      "profile": "Profile"
     },
     "general": {
       "title": "General"

@@ -16,10 +16,10 @@ import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
-import { Separator, Theme, XStack, YStack } from 'tamagui';
+import { Separator, Theme, XStack, YStack, Text } from 'tamagui';
 import { z } from 'zod';
 
-const { useParam } = createParam<{ location: string }>();
+const { useParam } = createParam<{ location: string, backUrl?:string }>();
 
 
 const LocationManagerSchema = z
@@ -56,6 +56,7 @@ const LocationManagerSchema = z
 
 export function LocationManagerScreen() {
   const [locationId] = useParam('location');
+  const [backUrl] = useParam('backUrl');
 
   const form = useForm<z.infer<typeof LocationManagerSchema>>();
   const toast = useToastController();
@@ -69,6 +70,16 @@ export function LocationManagerScreen() {
     queryKey: ['LocationService.retrieve', locationId],
   })
 
+  function onGoBack() {
+
+    if (typeof backUrl === 'string' && backUrl !== 'undefined') {
+      console.log("location manager screen: back url b2:: ", backUrl, typeof backUrl)
+      router.push(backUrl);
+    } else {
+      router.back();
+    }
+  }
+
   const { mutateAsync } = useMutation({
     mutationFn: (requestBody) => LocationService.update({
       location: locationId,
@@ -79,7 +90,8 @@ export function LocationManagerScreen() {
       queryClient.refetchQueries({
         queryKey: ['LocationService.retrieve', locationId],
       });
-      router.back()
+      console.log("location manager screen: data:: ", data)
+      onGoBack()
     },
     onError(error: any) {
       toast.show(error?.body?.message || t('app:errors.something-went-wrong'), { preset: 'error' })
@@ -163,7 +175,7 @@ export function LocationManagerScreen() {
   )
   return (
     <>
-      <AppHeader showBackButton title={t('app:common.location')} />
+      <AppHeader showBackButton goBack={onGoBack} title={t('app:common.location')} />
       {renderForm()}
       {renderLoadingScreen()}
     </>

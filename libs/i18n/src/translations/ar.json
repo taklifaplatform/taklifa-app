@@ -176,7 +176,8 @@
   "account": {
     "settings": {
       "title": "الإعدادات",
-      "general": "عام"
+      "general": "عام",
+      "profile": "الملف الشخصي"
     },
     "general": {
       "title": "عام"

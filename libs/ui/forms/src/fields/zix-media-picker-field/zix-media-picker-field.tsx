@@ -95,27 +95,6 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     );
   };
 
-  const renderImage = (imageUri: string) => {
-    if (Platform.OS === 'web') {
-      return (
-        <Image
-          src={imageUri}
-          width={200}  // Specify the width
-          height={200} // Specify the height
-          alt="Preview"
-          style={{ borderRadius: '50%' }} // Example of styling
-        />
-      );
-    } else {
-      return (
-        <RNImage
-          source={{ uri: imageUri }}
-          style={{ width: 200, height: 200, borderRadius: 100 }} // Styling for mobile
-        />
-      );
-    }
-  };
-
   async function onFilesSelected(files: ZixMediaPickerTransformer[]) {
     const _medias: Record<string, any> = {};
 
@@ -276,30 +255,34 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
   }
 
   function onRemoveMedia(media: MediaTransformer) {
-    onChange?.(
-      Object.values(previews).filter(
-        (preview) =>
-          (!media.uuid || preview.uuid !== media.uuid) &&
-          (!media.id || preview.id !== media.id)
-      )
-    );
-    if (media.uuid) {
-      MediaService.deleteMedia(media.uuid);
+    if (type === 'file') {
+      onChange?.(null);
+      setPreviews({});
+    } else {
+      onChange?.(
+        Object.values(previews).filter(
+          (preview) =>
+            (!media.uuid || preview.uuid !== media.uuid) &&
+            (!media.id || preview.id !== media.id)
+        )
+      );
+      if (media.uuid) {
+        MediaService.deleteMedia(media.uuid);
+      }
+      setPreviews((prev) => {
+        const _new = { ...prev };
+        delete _new[media.uuid || media.id];
+        return _new;
+      });
     }
-    setPreviews((prev) => {
-      const _new = { ...prev };
-      delete _new[media.uuid || media.id];
-      return _new;
-    });
+
   }
 
   return (
     <>
       <Previewer
         onPress={onOpenMediaPicker}
-        previews={Object.values(previews).map((preview) => (
-          renderImage(preview.url)  // Render image depending on platform
-        ))}
+        previews={Object.values(previews)}
         onRemoveMedia={onRemoveMedia}
         placeholder={placeholder}
         isOptional={isOptional}

@@ -4,7 +4,7 @@
     "slug": "sawaeed",
     "jsEngine": "hermes",
     "scheme": "sawaeed",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -19,7 +19,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "app.sawaeed",
-      "buildNumber": "1",
+      "buildNumber": "3",
       "infoPlist": {
         "CFBundleDevelopmentRegion": "ar",
         "ExpoLocalization_supportsRTL": true,

@@ -1,3 +1,4 @@
+import { useIsFocused } from '@react-navigation/native';
 import { ScanBarcode, X } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { CompaniesService, DriverTransformer, DriversService } from '@zix/api';
@@ -13,10 +14,8 @@ import { FlatList } from 'react-native-gesture-handler';
 import MapView from 'react-native-maps';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useRouter } from 'solito/router';
-import { Button, View, YStack } from 'tamagui';
+import { Button, H4, View, YStack } from 'tamagui';
 import MapFilters from '../../components/map-filters/map-filters';
-import { useIsFocused } from '@react-navigation/native';
-
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
 
@@ -163,26 +162,26 @@ export function HomeScreen() {
 
   }, [isFocused]);
 
-    // Full-screen animation state
-    const [isMapFullScreen, setIsMapFullScreen] = useState(false);
-    const animationValue = useRef(new Animated.Value(1)).current;
+  // Full-screen animation state
+  const [isMapFullScreen, setIsMapFullScreen] = useState(false);
+  const animationValue = useRef(new Animated.Value(1)).current;
 
-    const animateOut = () => {
-      setIsMapFullScreen(true);
-      Animated.timing(animationValue, {
-        toValue: 0, // Fully transparent
-        duration: 1,
-        useNativeDriver: true,
-      }).start();
-    };
+  const animateOut = () => {
+    setIsMapFullScreen(true);
+    Animated.timing(animationValue, {
+      toValue: 0, // Fully transparent
+      duration: 1,
+      useNativeDriver: true,
+    }).start();
+  };
 
-    const animateIn = () => {
-      Animated.timing(animationValue, {
-        toValue: 1, // Fully visible
-        duration: 1,
-        useNativeDriver: true,
-      }).start(() => setIsMapFullScreen(false));
-    };
+  const animateIn = () => {
+    Animated.timing(animationValue, {
+      toValue: 1, // Fully visible
+      duration: 1,
+      useNativeDriver: true,
+    }).start(() => setIsMapFullScreen(false));
+  };
 
 
   const renderMapDrivers = () =>
@@ -220,7 +219,7 @@ export function HomeScreen() {
         onTouchStart={() => {
           if (!isMapFullScreen) animateOut();
           console.log('onTouchStart');
-          }
+        }
         }
         onTouchEnd={() => {
           if (isMapFullScreen) animateIn();
@@ -255,6 +254,12 @@ export function HomeScreen() {
               backgroundColor="$color2"
             />
           )}
+          ListEmptyComponent={
+            <View flex={1} alignItems='center' gap="$8">
+              <CustomIcon name="empty_data" size="$18" color="$color5" />
+              <H4>No Data Found!</H4>
+            </View>
+          }
         />
       </View>
     );
@@ -344,21 +349,21 @@ export function HomeScreen() {
   return (
     <ScreenLayout>
       <YStack flex={1}>
-      {!isMapFullScreen && (
-         <Animated.View
-         style={{
-           opacity: animationValue, // Control visibility with opacity
-         }}
-       >
-        <AppHeader
-            showSearchBar
-            searchProps={{
-              value: search,
-              onChangeText: setSearch,
-              rightIcon: () => (showMap ? <ScanBarcode size="$1.5" /> : null),
+        {!isMapFullScreen && (
+          <Animated.View
+            style={{
+              opacity: animationValue, // Control visibility with opacity
             }}
-          />
-        </Animated.View>
+          >
+            <AppHeader
+              showSearchBar
+              searchProps={{
+                value: search,
+                onChangeText: setSearch,
+                rightIcon: () => (showMap ? <ScanBarcode size="$1.5" /> : null),
+              }}
+            />
+          </Animated.View>
         )}
         <YStack flex={1} position='relative'>
           {renderMap()}
