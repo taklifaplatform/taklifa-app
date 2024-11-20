@@ -10,7 +10,7 @@ import { MainAppProvider } from '@zix/providers';
 import { SplashScreen } from 'expo-router';
 import { Drawer } from 'expo-router/drawer';
 import React, { useCallback } from 'react';
-import { LogBox, View } from 'react-native';
+import { Dimensions, LogBox, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import CustomDrawerContent from './CustomDrawerContent';
 LogBox.ignoreAllLogs();
@@ -19,6 +19,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function MainAppLayout() {
   const { activeLang } = useMultiLang();
+  const SCREEN_WIDTH = Dimensions.get('screen').width;
   console.log("=============")
   console.log("MainAppLayout RENDER", Date.now())
   const [fontLoaded] = useFonts({
@@ -48,7 +49,7 @@ export default function MainAppLayout() {
             headerShown: false,
             drawerPosition: activeLang === 'ar' ? 'right' : 'left',
             drawerStyle: {
-              width: activeLang === 'ar' ? '80%' : '80%',
+              width: SCREEN_WIDTH * 0.8,
               paddingLeft: activeLang === 'en' ? 0 : 70
             },
             swipeEnabled: false

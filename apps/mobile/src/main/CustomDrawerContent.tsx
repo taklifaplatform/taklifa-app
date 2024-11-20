@@ -6,7 +6,7 @@ import { AccountSwitcher } from '@zix/ui/layouts';
 import { usePathname } from '@zix/utils';
 import { t } from 'i18next';
 import React, { useCallback } from 'react';
-import { Alert, Linking } from 'react-native';
+import { Alert, Dimensions, Linking } from 'react-native';
 import { useRouter } from 'solito/router';
 import { Button, Theme, View } from 'tamagui';
 export default function CustomDrawerContent() {
@@ -15,6 +15,7 @@ export default function CustomDrawerContent() {
   const { activeLang } = useMultiLang();
   const router = useRouter();
   const pathname = usePathname();
+  const SCREEN_WIDTH = Dimensions.get('screen').width;
   const brandColors = {
     twitter: '#1DA1F2',
   };
@@ -83,7 +84,7 @@ export default function CustomDrawerContent() {
         onPress={() => router.push('/auth/login')}
         color={'$colo5'}
       >
-        LOGIN
+       {t('web-home:signup')}
       </Button>
     </View>
   );
@@ -93,7 +94,7 @@ export default function CustomDrawerContent() {
       backgroundColor={'$white'}
       theme={'accent'}
       flex={1}
-      width={activeLang === 'ar' ? '132%' : '100%'}
+      width={SCREEN_WIDTH * 0.8}
     >
       <View
         padding={'$6'}
