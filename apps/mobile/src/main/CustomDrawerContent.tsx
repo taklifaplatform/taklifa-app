@@ -100,7 +100,7 @@ export default function CustomDrawerContent() {
       // flexDirection='row'
       // justifyContent='center'
       >
-        <CustomIcon name={`web-logo-${activeLang}`} size={'$15'} color={'black'} />
+        <CustomIcon name={`web-logo-${activeLang}`} size={'$15'} color={'$color0'} />
       </View>
       <View>
         <Settings.Group>
