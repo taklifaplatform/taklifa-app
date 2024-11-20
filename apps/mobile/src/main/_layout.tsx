@@ -50,7 +50,6 @@ export default function MainAppLayout() {
             drawerPosition: activeLang === 'ar' ? 'right' : 'left',
             drawerStyle: {
               width: SCREEN_WIDTH * 0.8,
-              paddingLeft: activeLang === 'en' ? 0 : 70
             },
             swipeEnabled: false
           }}
