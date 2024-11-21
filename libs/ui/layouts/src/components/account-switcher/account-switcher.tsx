@@ -9,7 +9,7 @@ import {
 } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { UserAvatar } from '@zix/ui/common';
-import { CustomIcon } from '@zix/ui/icons';
+import { t } from 'i18next';
 import { useCallback, useMemo, useState } from 'react';
 import { useRouter } from 'solito/router';
 import {
@@ -19,7 +19,7 @@ import {
   H4,
   ListItem,
   Text,
-  Theme,
+  ThemeableStackProps,
   View,
   XStack,
   YGroup,
@@ -28,9 +28,14 @@ import {
 } from 'tamagui';
 import CompanyListItem from './company-list-item/company-list-item';
 import UserRoleListItem from './user-role-list-item/user-role-list-item';
-import { t } from 'i18next';
 
-export const AccountSwitcher: React.FC = () => {
+export interface AccountSwitcherProps {
+  containerProps?: ThemeableStackProps;
+}
+
+export const AccountSwitcher: React.FC<AccountSwitcherProps> = ({
+  containerProps = {},
+}) => {
   const [sheetOpen, setSheetOpen] = useState(false);
   const router = useRouter();
   const { user, refetchUser, redirectUserToActiveDashboard } = useAuth();
@@ -122,6 +127,7 @@ export const AccountSwitcher: React.FC = () => {
           alignItems="center"
           gap="$2"
           onPress={() => setSheetOpen(true)}
+          {...containerProps}
         >
           {isWeb && <UserAvatar user={user} size="$4" />}
           <YStack>

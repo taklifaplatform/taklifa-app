@@ -183,7 +183,6 @@ export function HomeScreen() {
     }).start(() => setIsMapFullScreen(false));
   };
 
-
   const renderMapDrivers = () =>
     (filters.provider_type === 'all' || filters.provider_type === USER_ROLES.solo_driver) ?
       driversList.map((driver, index) => (
