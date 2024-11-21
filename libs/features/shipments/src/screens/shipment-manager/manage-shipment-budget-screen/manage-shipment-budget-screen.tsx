@@ -17,8 +17,8 @@ import { t } from 'i18next';
 const { useParam } = createParam<{ shipment: string }>();
 
 const SendFromSchema = z.object({
-  min_budget: formFields.money.describe('Min Budget'),
-  max_budget: formFields.money.describe('Max Budget'),
+  min_budget: formFields.money.describe(t('common:min-budget')),
+  max_budget: formFields.money.describe(t('common:max-budget')),
 
 })
 
@@ -91,7 +91,7 @@ export const ManageShipmentBudgetScreen: React.FC = () => {
       {(fields) => (
         <>
           <ShipmentManagerHeader
-            activeStep={2}
+            activeStep={5}
             shipment={data?.data}
             title='يرجى تحديد السعر المناسب لك'
           />

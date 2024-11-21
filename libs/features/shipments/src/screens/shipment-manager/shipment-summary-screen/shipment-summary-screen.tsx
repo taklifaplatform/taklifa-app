@@ -57,7 +57,10 @@ export function ShipmentSummaryScreen() {
 
   const renderShipmentSummary = () =>
     shipment?.id && (
-      <ScrollView flex={1} padding="$4">
+      <YStack flex={1} padding="$4">
+        <ScrollView
+        showsVerticalScrollIndicator={false}
+         flex={1}>
         <ZixWidgetContainer label="Shipment Detail">
           <YStack>
             {shipment.items?.map((item, index) => <Text>{item.notes}</Text>)}
@@ -68,6 +71,7 @@ export function ShipmentSummaryScreen() {
         <ShipmentBudget shipment={shipment} />
         <View height="$6" />
       </ScrollView>
+      </YStack>
     );
 
   return (

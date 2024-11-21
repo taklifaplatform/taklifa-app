@@ -1,18 +1,20 @@
+import { MinusSquare, PlusSquare } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { ShipmentService } from '@zix/api';
+import { ShipmentService, ShipmentTransformer } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
-import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/ui/forms';
+import { SubmitButton, ZixFieldContainer, ZixSelectRowOptionField, formFields } from '@zix/ui/forms';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
+import { t } from 'i18next';
+import { ShipmentItem } from 'libs/ui/forms/src/form-fields';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
-import { Theme } from 'tamagui';
+import { Button, ScrollView, Separator, View, YStack } from 'tamagui';
 import { z } from 'zod';
 import ShipmentManagerHeader from '../../../components/shipment-manager/shipment-manager-header/shipment-manager-header';
-import { SHARED_SHIPMENT_MANAGER_FIELD_PROPS } from '../configs';
-import { t } from 'i18next';
 
 const { useParam } = createParam<{ shipment: string }>();
 
@@ -23,11 +25,17 @@ const SendFromSchema = z.object({
 })
 
 export const ManageShipmentItemsScreen: React.FC = () => {
-  const form = useForm<z.infer<typeof SendFromSchema>>()
   const router = useRouter()
   const { getUrlPrefix } = useAuth()
   const [shipmentId] = useParam('shipment');
   const toast = useToastController()
+
+  const [shipment, setShipment] = useState<ShipmentTransformer>({
+    items_type: 'document',
+    items: [
+      {}
+    ]
+  })
 
   const { data } = useQuery({
     queryFn() {
@@ -41,6 +49,10 @@ export const ManageShipmentItemsScreen: React.FC = () => {
     },
     queryKey: ['ShipmentService.retrieveShipment', `-${shipmentId}`],
   })
+
+  useEffect(() => {
+    setShipment(data?.data ?? {})
+  }, [data])
 
   const { mutateAsync } = useMutation({
     mutationFn(requestBody: z.infer<typeof SendFromSchema>) {
@@ -64,82 +76,162 @@ export const ManageShipmentItemsScreen: React.FC = () => {
     },
     onError(error: any) {
       toast.show(error?.body?.message || t('app:errors.something-went-wrong'), { preset: 'error' });
-      handleFormErrors(form, error?.body?.errors);
     },
   })
+
+
+  useEffect(() => {
+    if (shipment?.items_type !== 'multiple_boxes') {
+      setShipment((prev) => ({
+        ...prev,
+        items: prev.items?.slice(0, 1) ?? []
+      }))
+    }
+  }, [shipment.items_type])
+
+  useEffect(() => {
+    if (shipment?.items?.length === 0) {
+      setShipment((prev) => ({
+        ...prev,
+        items: [
+          {}
+        ]
+      }))
+    }
+  }, [shipment.items])
 
 
   const renderLoading = () => shipmentId && !data?.data && (
     <FullScreenSpinner />
   )
 
-  const renderForm = () => data?.data?.id && (
-    <SchemaForm
-      form={form}
-      schema={SendFromSchema}
-      props={{
-        items_type: {
-          options: [
-            {
-              name: 'document',
-              id: 'document',
-              icon: 'document'
-            },
-            {
-              name: 'box',
-              id: 'box',
-              icon: 'box'
-            },
-            {
-              name: 'boxes',
-              id: 'multiple_boxes',
-              icon: 'box-add'
-            },
-            {
-              name: 'other',
-              id: 'other',
-              icon: 'other'
-            }
-          ]
-        },
-        to_location: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
-        deliver_date: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
-        deliver_time: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
-      }}
-      defaultValues={{
-        ...data.data,
-        items: data?.data?.items?.length ? data.data.items : [{ content: '' }]
-      }}
-      onSubmit={mutateAsync}
-      renderAfter={({ submit }) => (
-        <Theme inverse>
-          <SubmitButton onPress={() => submit()}>
-            {t('common:confirm')}
-          </SubmitButton>
-        </Theme>
-      )}
-    >
-      {({ ...fields }) => (
-        <>
-          <ShipmentManagerHeader
-            activeStep={2}
-            shipment={data?.data}
-            title='يرجى تحديد ما تقوم بشحنه'
-          />
+  const renderFullForm = () => (
+    <YStack flex={1}>
+      <ScrollView flex={1} >
 
-          {Object.values(fields)}
-        </>
-      )}
-    </SchemaForm>
+        <ZixFieldContainer label='Shipment Type' labelBold collapsible stackContainerProps={{ padding: '$4' }}>
+          <ZixSelectRowOptionField
+            value={shipment?.items_type}
+            onChange={(items_type) => setShipment((prev) => ({ ...prev, items_type }))}
+            options={[
+              {
+                name: 'document',
+                id: 'document',
+                icon: 'document'
+              },
+              {
+                name: 'box',
+                id: 'box',
+                icon: 'box'
+              },
+              {
+                name: 'boxes',
+                id: 'multiple_boxes',
+                icon: 'box-add'
+              },
+              {
+                name: 'other',
+                id: 'other',
+                icon: 'other'
+              }
+            ]}
+          />
+        </ZixFieldContainer>
+
+        <ZixFieldContainer stackContainerProps={{ padding: '$4' }}>
+          <ShipmentItemsField
+            selectedType={shipment?.items_type}
+            value={shipment?.items}
+            onChange={(items) => setShipment((prev) => ({ ...prev, items }))}
+          />
+        </ZixFieldContainer>
+      </ScrollView >
+      <SubmitButton
+        themeInverse
+        margin='$4'
+        onPress={() => mutateAsync(shipment)}>
+        {t('common:next')}
+      </SubmitButton>
+    </YStack >
   )
 
   return (
-    <ScreenLayout>
+    <ScreenLayout safeAreaBottom>
       <AppHeader title='Shipment Details' showBackButton />
-      {renderForm()}
+      <ShipmentManagerHeader
+        activeStep={2}
+        shipment={data?.data}
+        title='يرجى تحديد ما تقوم بشحنه'
+      />
+      {renderFullForm()}
       {renderLoading()}
     </ScreenLayout>
   )
+}
+
+
+export const ShipmentItemsField: React.FC = ({
+  onChange, value, selectedType
+}) => {
+
+  const renderAddItemButton = () => (
+    <Button
+      marginTop='$4'
+      icon={PlusSquare}
+      onPress={() => {
+        onChange([
+          ...(value || []),
+          {
+            images: [],
+            notes: '',
+            dim_height: '',
+            dim_width: '',
+            dim_length: '',
+            content: '',
+          }
+        ])
+      }}
+      fontWeight={600}
+    >
+      {t('common:add-box')}
+    </Button>
+  )
+
+  const renderRemoveItemButton = (itemIndex: number) => (
+    <Button
+      theme='error'
+      marginTop='$4'
+      icon={MinusSquare}
+      onPress={() => {
+        onChange(value?.filter((_, i) => i !== itemIndex))
+      }}
+      fontWeight={600}
+    >
+      {t('common:remove-box')}
+    </Button>
+  )
+
+  return (
+    <View>
+      {
+        value?.map((item, index) => (
+          <YStack key={`item-${index}`}>
+            <ShipmentItem
+              index={index}
+              value={item}
+              onChange={(newValue) => {
+                onChange(value.map((v, i) => i === index ? newValue : v));
+              }}
+            />
+            {renderRemoveItemButton(index)}
+          </YStack>
+        ))
+      }
+
+      <Separator marginTop='$4' />
+      {(selectedType === 'multiple_boxes' || value.length === 0) && renderAddItemButton()}
+    </View>
+  );
 }
 
 export default ManageShipmentItemsScreen;

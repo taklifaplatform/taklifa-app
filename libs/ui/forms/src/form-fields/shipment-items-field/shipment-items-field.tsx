@@ -8,6 +8,7 @@ import { Button, Separator, View, YStack } from 'tamagui';
 import { BaseFormFieldContainerProps } from '../../common';
 import { MediaPickerFieldSchema } from '../media-picker-field/media-picker-field';
 import { ShipmentItem } from './shipment-item';
+import { t } from 'i18next';
 
 export const ShipmentItemsSchema = z.array(z.object({
   medias: z.array(MediaPickerFieldSchema),
@@ -26,6 +27,7 @@ export type ShipmentItemsFieldProps = {
 }
 
 
+// TODO: remove
 export const ShipmentItemsField: React.FC<ShipmentItemsFieldProps> = ({
   containerProps = {},
   ...props
@@ -52,7 +54,7 @@ export const ShipmentItemsField: React.FC<ShipmentItemsFieldProps> = ({
         ])
       }}
     >
-      Add Box
+      {t('common:add-box')}
     </Button>
   )
 
@@ -65,7 +67,7 @@ export const ShipmentItemsField: React.FC<ShipmentItemsFieldProps> = ({
         onChange(value?.filter((_, i) => i !== itemIndex))
       }}
     >
-      Remove Box
+      {t('common:remove-box')}
     </Button>
   )
 

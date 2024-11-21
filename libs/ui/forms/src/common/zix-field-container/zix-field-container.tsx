@@ -122,6 +122,7 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
       value={activeAccordions}
       type="multiple"
       onValueChange={setActiveAccordions}
+      {...stackContainerProps}
     >
       <Accordion.Item value={id as string}>
         <Accordion.Trigger
