@@ -22,6 +22,7 @@
       "@zix/features/company": ["libs/features/company/src/index.ts"],
       "@zix/features/complain": ["libs/features/complain/src/index.ts"],
       "@zix/features/contact-us": ["libs/features/contact-us/src/index.ts"],
+      "@zix/features/location": ["libs/features/location/src/index.ts"],
       "@zix/features/map": ["libs/features/map/src/index.ts"],
       "@zix/features/notifications": [
         "libs/features/notifications/src/index.ts"
@@ -39,6 +40,7 @@
       "@zix/services/auth": ["libs/services/auth/src/index.ts"],
       "@zix/services/chat": ["libs/services/chat/src/index.ts"],
       "@zix/services/laravel-echo": ["libs/services/laravel-echo/src/index.ts"],
+      "@zix/services/location": ["libs/services/location/src/index.ts"],
       "@zix/services/push-notification": [
         "libs/services/push-notification/src/index.ts"
       ],
