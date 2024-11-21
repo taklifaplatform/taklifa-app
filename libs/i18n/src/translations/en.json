@@ -226,6 +226,10 @@
     "welcome": "Welcome",
     "next": "Next",
     "confirm": "Confirm",
+    "document": "Document",
+    "box": "Box",
+    "boxes": "Boxes",
+    "other": "Other",
     "confirm-location": "Confirm Location",
     "user_types": {
       "individual": "Individual",

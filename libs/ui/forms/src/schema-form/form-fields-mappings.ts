@@ -21,6 +21,7 @@ import {
   TextField,
   TextSecureField,
 } from '../form-fields';
+import SelectRowOptionField from '../form-fields/select-row-option-field/select-row-option-field';
 
 import { formFields } from './form-fields-schemas';
 
@@ -34,6 +35,7 @@ export const formFieldsMappings = [
   [formFields.boolean_checkbox, BooleanCheckboxField] as const,
   [formFields.accept_terms, AcceptTermsField] as const,
   [formFields.select, SelectField] as const,
+  [formFields.select_row, SelectRowOptionField] as const,
   [formFields.autocomplete, AutoCompleteField] as const,
 
   /**

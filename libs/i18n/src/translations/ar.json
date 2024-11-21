@@ -275,6 +275,10 @@
     "welcome": "مرحبًا",
     "next": "التالي",
     "confirm": "تأكيد",
+    "document": "وثيقة",
+    "box": "طرد واحد",
+    "boxes": "الطرود المتعددة",
+    "other": "اخرى",
     "confirm-location": "تأكيد الموقع",
     "user_types": {
       "individual": "فرد",

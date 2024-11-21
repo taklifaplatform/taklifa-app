@@ -17,8 +17,9 @@ import { t } from 'i18next';
 const { useParam } = createParam<{ shipment: string }>();
 
 const SendFromSchema = z.object({
-  items_type: formFields.text.describe('Shipment Type // Enter the type of the shipment'),
-  items: formFields.shipment_items.describe('Items // Enter the items details'),
+  items_type: formFields.select_row.describe('Shipment Type // Enter the type of the shipment'),
+  // items_type: formFields.text.describe('Shipment Type // Enter the type of the shipment'),
+  items: formFields.shipment_items.describe('Items // Enter the items details'), //
 })
 
 export const ManageShipmentItemsScreen: React.FC = () => {
@@ -77,6 +78,30 @@ export const ManageShipmentItemsScreen: React.FC = () => {
       form={form}
       schema={SendFromSchema}
       props={{
+        items_type: {
+          options: [
+            {
+              name: 'document',
+              id: 'document',
+              icon: 'document'
+            },
+            {
+              name: 'box',
+              id: 'box',
+              icon: 'box'
+            },
+            {
+              name: 'boxes',
+              id: 'multiple_boxes',
+              icon: 'box-add'
+            },
+            {
+              name: 'other',
+              id: 'other',
+              icon: 'other'
+            }
+          ]
+        },
         to_location: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
         deliver_date: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
         deliver_time: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,

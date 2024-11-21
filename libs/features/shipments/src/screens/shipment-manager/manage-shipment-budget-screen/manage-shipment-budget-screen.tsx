@@ -110,7 +110,7 @@ export const ManageShipmentBudgetScreen: React.FC = () => {
 
   return (
     <ScreenLayout safeAreaBottom authProtected>
-      <AppHeader title='Shipment Details' showBackButton />
+      <AppHeader title='Shipment Budget' showBackButton />
       {renderForm()}
       {renderLoadingSpinner()}
     </ScreenLayout>

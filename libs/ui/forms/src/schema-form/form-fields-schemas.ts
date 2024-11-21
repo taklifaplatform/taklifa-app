@@ -53,6 +53,7 @@ export const formFields = {
    * make sure to pass options={} to props for this
    */
   select: createUniqueFieldSchema(z.string(), 'select'),
+  select_row: createUniqueFieldSchema(z.string(), 'select_row'),
 
   /**
    * make sure to pass tableName='' to props for this, default is states
