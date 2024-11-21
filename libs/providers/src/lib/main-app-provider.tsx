@@ -13,6 +13,7 @@ import {
 import { ChatProvider } from '@zix/features/chat';
 import { LaravelEchoProvider } from '@zix/services/laravel-echo';
 import { AuthProvider } from '@zix/services/auth';
+import { LocationProvider } from '@zix/features/location';
 
 export interface MainAppProviderProps {
   children: React.ReactNode;
@@ -41,6 +42,7 @@ export const MainAppProvider: React.FC<MainAppProviderProps> = ({
         LaravelEchoProvider,
         ChatProvider,
         PushNotification,
+        LocationProvider,
       ]}
     >
       {children}

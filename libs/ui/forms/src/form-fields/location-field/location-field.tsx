@@ -3,8 +3,8 @@ import { useFieldInfo, useTsController } from '@ts-react/form';
 import { LocateFixed, Pen } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { LocationService } from '@zix/api';
+import { useLocationManager } from '@zix/services/location';
 import { CustomIcon } from '@zix/ui/icons';
-import { useRouter } from 'solito/router';
 import { Button, Text, Theme, View, XStack, YStack } from 'tamagui';
 import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common';
 import { ZixInput } from '../../fields';
@@ -28,7 +28,7 @@ export const LocationField: React.FC<LocationFieldProps> = ({
     error,
   } = useTsController<string>();
   const { placeholder } = useFieldInfo();
-  const router = useRouter();
+  const { editLocation } = useLocationManager();
 
   const { data } = useQuery({
     queryFn: () => value ? LocationService.retrieve({
@@ -109,18 +109,7 @@ export const LocationField: React.FC<LocationFieldProps> = ({
         {renderInputActivator()}
         <View
           onPress={() => {
-            if (!value) {
-              LocationService.create({
-                requestBody: {},
-              }).then(({ data }) => {
-                if (data?.id) {
-                  onChange(data.id)
-                  router.push(`/app/locations/${data.id}/edit?backUrl=${backUrl}`)
-                }
-              })
-            } else {
-              router.push(`/app/locations/${value}/edit?backUrl=${backUrl}`)
-            }
+            editLocation(value)
           }}
           position="absolute"
           top={0}

@@ -4,10 +4,9 @@ import React, { useState } from 'react';
 
 import { Pencil } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
-import { useAuth } from '@zix/services/auth';
+import { useLocationManager } from '@zix/services/location';
 import { ZixButton } from '@zix/ui/common';
 import { t } from 'i18next';
-import { useRouter } from 'solito/router';
 import { View } from 'tamagui';
 import ZixWidgetContainer from '../zix-widget-container/zix-widget-container';
 
@@ -24,9 +23,7 @@ export const ZixLocationInfoWidgetWrapper: React.FC<ZixLocationInfoWidgetWrapper
   canEdit,
   onAddNewLocation,
 }) => {
-  const router = useRouter()
-  const { getUrlPrefix } = useAuth()
-
+  const { editLocation } = useLocationManager();
 
   const { data, isLoading } = useQuery({
     queryFn: () => locationId ? LocationService.retrieve({
@@ -36,23 +33,15 @@ export const ZixLocationInfoWidgetWrapper: React.FC<ZixLocationInfoWidgetWrapper
   })
 
   const [loadingEditAction, setLoadingEditAction] = useState(false)
+  async function onEditLocation() {
+    setLoadingEditAction(true)
+    await editLocation(locationId)
+    setLoadingEditAction(false)
+  }
   const renderEditButton = () => canEdit ? (
-    <ZixButton icon={Pencil} size='$2' loading={loadingEditAction} onPress={() => {
-      if (!locationId) {
-        setLoadingEditAction(true)
-        LocationService.create({
-          requestBody: {},
-        }).then(async ({ data }) => {
-          if (!data) return
-          await onAddNewLocation?.(data)
-          setLoadingEditAction(false)
-          router.push(`${getUrlPrefix}/locations/${data?.id}/edit`)
-        })
-      } else {
-        router.push(`${getUrlPrefix}/locations/${locationId}/edit`)
-      }
-
-    }}>
+    <ZixButton icon={Pencil} size='$2' loading={loadingEditAction} onPress={() =>
+      onEditLocation()
+    }>
       {t('common:edit')}
     </ZixButton>
   ) : null
