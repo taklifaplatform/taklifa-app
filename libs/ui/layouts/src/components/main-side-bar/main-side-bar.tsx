@@ -19,7 +19,7 @@ export type MainSideBarProps = ThemeableStackProps & {
 export const MainSideBar: React.FC<MainSideBarProps> = (props) => {
   const { activeLang } = useMultiLang();
   const { activeRole, getUrlPrefix } = useAuth()
-
+  const { isLoggedIn } = useAuth()
   const { data: shipmentsData } = useQuery({
     queryFn: () =>
       ShipmentService.fetchShipmentFilters({
@@ -119,7 +119,7 @@ export const MainSideBar: React.FC<MainSideBarProps> = (props) => {
 
         </YStack>
         <View padding='$4'>
-          <AccountSwitcher />
+         {isLoggedIn && <AccountSwitcher />}
         </View>
       </YStack>
     </View >

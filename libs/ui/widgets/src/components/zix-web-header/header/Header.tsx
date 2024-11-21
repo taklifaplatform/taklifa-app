@@ -108,7 +108,7 @@ export function Header() {
       <XStack >
         {renderSearch()}
         {renderCall()}
-        {renderSignup()}
+        {!isLoggedIn && renderSignup()}
       </XStack>
     </XStack>
   );

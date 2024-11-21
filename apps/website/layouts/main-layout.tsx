@@ -63,7 +63,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       </ZixContainer>
 
       <ZixWebFooter />
-      
+
       <Button
         onPress={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         position='fixed'

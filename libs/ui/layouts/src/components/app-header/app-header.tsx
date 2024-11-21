@@ -139,6 +139,8 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
             {headerRight ? (
               headerRight()
             ) : (
+              null
+              /*
               <Button
                 flex={1}
                 theme="accent"
@@ -146,7 +148,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
                 icon={PlusSquare}
               >
                 Send New Shipments
-              </Button>
+              </Button>*/
             )}
           </XStack>
         </XStack>
