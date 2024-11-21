@@ -1,7 +1,7 @@
 
 import { useToastController } from '@tamagui/toast';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { LocationService } from '@zix/api';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { LocationService, LocationTransformer } from '@zix/api';
 import { FullScreenSpinner } from '@zix/ui/common';
 import {
   SchemaForm,
@@ -14,12 +14,9 @@ import {
 import { AppHeader } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
-import { createParam } from 'solito';
-import { useRouter } from 'solito/router';
-import { Separator, Theme, XStack, YStack, Text } from 'tamagui';
+import { Separator, Theme, XStack, YStack } from 'tamagui';
 import { z } from 'zod';
 
-const { useParam } = createParam<{ location: string, backUrl?:string }>();
 
 
 const LocationManagerSchema = z
@@ -54,41 +51,33 @@ const LocationManagerSchema = z
 
   });
 
-export function LocationManagerScreen() {
-  const [locationId] = useParam('location');
-  const [backUrl] = useParam('backUrl');
+export type LocationManagerProps = {
+  location: LocationTransformer,
+  onComplete?: () => void;
+}
+// extract
+export const LocationManager: React.FC<LocationManagerProps> = ({
+  location,
+  onComplete
+}) => {
 
   const form = useForm<z.infer<typeof LocationManagerSchema>>();
   const toast = useToastController();
-  const router = useRouter();
   const queryClient = useQueryClient();
 
-  const { data } = useQuery({
-    queryFn: () => LocationService.retrieve({
-      location: locationId,
-    }),
-    queryKey: ['LocationService.retrieve', locationId],
-  })
-
   function onGoBack() {
-
-    if (typeof backUrl === 'string' && backUrl !== 'undefined') {
-      console.log("location manager screen: back url b2:: ", backUrl, typeof backUrl)
-      router.push(backUrl);
-    } else {
-      router.back();
-    }
+    onComplete?.()
   }
 
   const { mutateAsync } = useMutation({
     mutationFn: (requestBody) => LocationService.update({
-      location: locationId,
+      location: location.id,
       requestBody,
     }),
     onSuccess({ data }) {
       toast.show(t('app:success.updated'))
       queryClient.refetchQueries({
-        queryKey: ['LocationService.retrieve', locationId],
+        queryKey: ['LocationService.retrieve', location.id],
       });
       console.log("location manager screen: data:: ", data)
       onGoBack()
@@ -99,11 +88,11 @@ export function LocationManagerScreen() {
     },
   })
 
-  const renderForm = () => !!data?.data && (
+  const renderForm = () => !!location && (
     <SchemaForm
       form={form}
       schema={LocationManagerSchema}
-      defaultValues={data?.data}
+      defaultValues={location}
       props={{
         notes: {
           containerProps: {
@@ -134,7 +123,7 @@ export function LocationManagerScreen() {
       {({ address, building_name, floor_number, house_number, country_id, state_id, city_id, notes }) => (
         <YStack gap="$2">
           <ZixMapLocationPickerField
-            value={data?.data} onChange={(val) => {
+            value={location} onChange={(val) => {
               console.log("location manager screen: location ob:: ", val)
               Object.keys(val).forEach(key => {
                 form.setValue(key, val[key])
@@ -170,7 +159,7 @@ export function LocationManagerScreen() {
     </SchemaForm>
   )
 
-  const renderLoadingScreen = () => !data?.data && (
+  const renderLoadingScreen = () => !location && (
     <FullScreenSpinner />
   )
   return (
@@ -184,4 +173,4 @@ export function LocationManagerScreen() {
 
 
 
-export default LocationManagerScreen;
+export default LocationManager;

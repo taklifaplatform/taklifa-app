@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import LocationManagerScreen from './location-manager-screen';
+import LocationManager from './location-manager';
 
-describe('LocationManagerScreen', () => {
+describe('LocationManager', () => {
   it('should render successfully', () => {
-    const { root } = render(< LocationManagerScreen />);
+    const { root } = render(< LocationManager />);
     expect(root).toBeTruthy();
   });
 });
