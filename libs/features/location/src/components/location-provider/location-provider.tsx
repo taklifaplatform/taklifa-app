@@ -1,10 +1,9 @@
 
 import React, { useState } from 'react';
 
-import LocationManagerSheet from '../location-manager-sheet/location-manager-sheet';
-import { LocationManagerContext } from '@zix/services/location';
-import { Alert } from 'react-native';
 import { LocationService, LocationTransformer } from '@zix/api';
+import { LocationManagerContext } from '@zix/services/location';
+import LocationManagerSheet from '../location-manager-sheet/location-manager-sheet';
 
 /* eslint-disable-next-line */
 export interface LocationProviderProps {
@@ -24,11 +23,13 @@ export const LocationProvider: React.FC<LocationProviderProps> = ({
         location: locationId,
       })
       setLocation(result.data);
+      return result.data;
     } else {
       const result = await LocationService.create({
         requestBody: {},
       })
       setLocation(result.data);
+      return result.data;
     }
     // do nothing
   }

@@ -108,8 +108,9 @@ export const LocationField: React.FC<LocationFieldProps> = ({
         {renderAddressMap()}
         {renderInputActivator()}
         <View
-          onPress={() => {
-            editLocation(value)
+          onPress={async () => {
+            const loc = await editLocation(value)
+            onChange(loc?.id)
           }}
           position="absolute"
           top={0}

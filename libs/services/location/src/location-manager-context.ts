@@ -11,12 +11,13 @@ import { Alert } from 'react-native';
 export const LocationManagerContext = createContext<{
   location?: LocationTransformer;
   locationEditorVisible?: boolean;
-  editLocation: (location_id?: string) => void;
+  editLocation: (location_id?: string) => Promise<LocationTransformer>;
   onCloseLocationEditor: () => void;
 }>({
   editLocation: () => {
     // do nothing
     Alert.alert('LocationManagerContext', 'editLocation not implemented');
+    return Promise.resolve({} as LocationTransformer);
   },
   onCloseLocationEditor: () => {
     // do nothing
