@@ -35,7 +35,8 @@ export const ZixLocationInfoWidgetWrapper: React.FC<ZixLocationInfoWidgetWrapper
   const [loadingEditAction, setLoadingEditAction] = useState(false)
   async function onEditLocation() {
     setLoadingEditAction(true)
-    await editLocation(locationId)
+    const loc = await editLocation(locationId)
+    onAddNewLocation?.(loc)
     setLoadingEditAction(false)
   }
   const renderEditButton = () => canEdit ? (
