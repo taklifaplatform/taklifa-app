@@ -173,7 +173,8 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
             justifyContent="space-between"
           >
             <XStack flex={0.25} justifyContent="flex-start">
-              {Platform.OS === 'web' ? renderAvatar() :
+              {renderAvatar()}
+              {/*Platform.OS === 'web' ? renderAvatar() :
                 !showBackButton && <Button
                   unstyled
                   size="$2"
@@ -181,7 +182,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
                   onPress={() => {
                     toggleDrawer()
                   }}
-                />}
+                />*/}
               {renderBackButton()}
             </XStack>
             <XStack flex={0.5} justifyContent="space-around">

@@ -30,7 +30,7 @@ export const VehiclesListScreen: React.FC<VehiclesListScreenProps> = ({
 
   return (
     <ScreenLayout>
-      <AppHeader title="Manage Vehicles" />
+     {showHeader && <AppHeader title="Manage Vehicles" />}
       <FlatList
         refreshing={isLoading}
         onRefresh={refetch}

@@ -95,7 +95,9 @@ export const ManageShipmentRecipientScreen: React.FC = () => {
       onSubmit={mutateAsync}
       renderAfter={({ submit }) => (
         <Theme inverse>
-          <SubmitButton onPress={() => submit()}>Confirm</SubmitButton>
+          <SubmitButton onPress={() => submit()}>
+            {t('common:next')}
+          </SubmitButton>
         </Theme>
       )}
     >

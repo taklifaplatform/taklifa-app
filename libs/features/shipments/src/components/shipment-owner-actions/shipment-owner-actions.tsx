@@ -33,9 +33,11 @@ export const ShipmentOwnerActions: React.FC<ShipmentOwnerActionsProps> = ({ ship
       toast.show('Shipment deleted successfully', { preset: 'success' });
       queryClient.refetchQueries({ queryKey: ['ShipmentService.fetchAllShipment'] });
       router.push(`${getUrlPrefix}/shipments`);
+      actionSheetRef.current?.close()
     },
     onError(error: any) {
       toast.show(error?.body?.message || t('app:errors.something-went-wrong'), { preset: 'error' });
+      actionSheetRef.current?.close()
     },
   });
 
@@ -44,24 +46,36 @@ export const ShipmentOwnerActions: React.FC<ShipmentOwnerActionsProps> = ({ ship
   // Define actions for both ActionSheet and web dropdown
   const actions = [
     {
-      name: t('plain:View Request'),
+      name: t('common:view-proposals'),
       icon: <Eye size="$2" color="$color10" />,
-      onPress: () => router.push(`${getUrlPrefix}/shipments/${shipment.id}`),
+      onPress: () => {
+        router.push(`${getUrlPrefix}/shipments/${shipment.id}`)
+        actionSheetRef.current?.close()
+      },
     },
     {
-      name: t('plain:View Proposals'),
+      name: t('common:view-proposals'),
       icon: <UsersRound size="$2" color="$color10" />,
-      onPress: () => router.push(`${getUrlPrefix}/shipment-manager/${shipment.id}/proposals`),
+      onPress: () => {
+        router.push(`${getUrlPrefix}/shipment-manager/${shipment.id}/proposals`)
+        actionSheetRef.current?.close()
+      },
     },
     {
-      name: t('plain:View Invitations'),
+      name: t('common:view-invitations'),
       icon: <Send size="$2" color="$color10" />,
-      onPress: () => router.push(`${getUrlPrefix}/shipment-manager/${shipment.id}/invitations`),
+      onPress: () => {
+        router.push(`${getUrlPrefix}/shipment-manager/${shipment.id}/invitations`)
+        actionSheetRef.current?.close()
+      },
     },
     {
       name: t('plain:Edit'),
       icon: <Pencil size="$2" color="$color10" />,
-      onPress: () => router.push(`${getUrlPrefix}/shipment-manager/${shipment.id}`),
+      onPress: () => {
+        router.push(`${getUrlPrefix}/shipment-manager/${shipment.id}`)
+        actionSheetRef.current?.close()
+      },
     },
     {
       name: t('plain:Delete'),
@@ -123,7 +137,7 @@ export const ShipmentOwnerActions: React.FC<ShipmentOwnerActionsProps> = ({ ship
 
       {/* For mobile platforms (iOS/Android) */}
       {Platform.OS !== 'web' && (
-        <ActionSheet ref={actionSheetRef} title={t('plain:Select an action')} snapPoints={[50, 50]} actions={actions} />
+        <ActionSheet ref={actionSheetRef} title={t('common:select-action')} snapPoints={[50, 50]} actions={actions} />
       )}
 
       {/* For web platform */}

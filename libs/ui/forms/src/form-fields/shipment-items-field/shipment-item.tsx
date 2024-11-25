@@ -4,12 +4,13 @@ import { ZixFieldContainer } from "../../common"
 import { ZixInput, ZixMediaPickerField } from "../../fields"
 import BoxDimension from "./box-dimension"
 import { RecursiveErrorType } from "@ts-react/form/lib/src/zodObjectErrors"
+import { t } from "i18next"
 
 export type ShipmentItemProps = {
   value: ShipmentItemTransformer
   onChange: (value: ShipmentItemTransformer) => void
   index: number
-  error: Record<string, RecursiveErrorType<any>>
+  error?: Record<string, RecursiveErrorType<any>>
 }
 
 export const ShipmentItem: React.FC<ShipmentItemProps> = ({
@@ -31,7 +32,7 @@ export const ShipmentItem: React.FC<ShipmentItemProps> = ({
           <ZixMediaPickerField
             type="medias"
             isMultiple
-            value={value.medias || []}
+            value={value?.medias || []}
             onChange={medias => onChange({ ...value, medias })}
           />
         </ZixFieldContainer>
@@ -39,7 +40,10 @@ export const ShipmentItem: React.FC<ShipmentItemProps> = ({
           <ZixInput
             isMultiline
             value={value.notes}
-            onChangeText={notes => onChange({ ...value, notes })}
+            onChangeText={notes => {
+              console.log('==notes', notes)
+              onChange({ ...value, notes })
+            }}
             placeholder="Enter the notes of the item"
           />
         </ZixFieldContainer>
@@ -53,7 +57,7 @@ export const ShipmentItem: React.FC<ShipmentItemProps> = ({
             <BoxDimension item={value} />
 
             <XStack alignItems='flex-start' gap='$3'>
-              <ZixFieldContainer label="Length (CM)" isOptional error={error.dim_length}>
+              <ZixFieldContainer label={t('common:length-ship')} isOptional error={error.dim_length}>
                 <ZixInput
                   keyboardType="numeric"
                   value={value.dim_length}
@@ -61,7 +65,7 @@ export const ShipmentItem: React.FC<ShipmentItemProps> = ({
                 />
               </ZixFieldContainer>
 
-              <ZixFieldContainer label="Width (CM)" isOptional error={error.dim_width}>
+              <ZixFieldContainer label={t('common:width-ship')} isOptional error={error.dim_width}>
                 <ZixInput
                   keyboardType="numeric"
                   value={value.dim_width}
@@ -69,7 +73,7 @@ export const ShipmentItem: React.FC<ShipmentItemProps> = ({
                 />
               </ZixFieldContainer>
 
-              <ZixFieldContainer label="Height (CM)" isOptional error={error.dim_height}>
+              <ZixFieldContainer label={t('common:height-ship')} isOptional error={error.dim_height}>
                 <ZixInput
                   keyboardType="numeric"
                   value={value.dim_height}
@@ -78,7 +82,7 @@ export const ShipmentItem: React.FC<ShipmentItemProps> = ({
               </ZixFieldContainer>
             </XStack>
 
-            <ZixFieldContainer label="Approx Weight  (KG)" isOptional error={error.cap_weight}>
+            <ZixFieldContainer label={t('common:approx')} isOptional error={error.cap_weight}>
               <ZixInput
                 keyboardType="numeric"
                 value={value.cap_weight}
@@ -86,7 +90,7 @@ export const ShipmentItem: React.FC<ShipmentItemProps> = ({
               />
             </ZixFieldContainer>
 
-            <ZixFieldContainer label="Content" isOptional error={error.content}>
+            <ZixFieldContainer label={t('common:content')} isOptional error={error.content}>
               <ZixInput
                 value={value.content}
                 onChangeText={content => onChange({ ...value, content })}
