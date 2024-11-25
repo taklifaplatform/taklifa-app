@@ -5,21 +5,16 @@ import {
   Almarai_800ExtraBold,
   useFonts,
 } from '@expo-google-fonts/almarai';
-import { useMultiLang } from '@zix/i18n';
 import { MainAppProvider } from '@zix/providers';
-import { SplashScreen } from 'expo-router';
-import { Drawer } from 'expo-router/drawer';
+import { SplashScreen, Stack } from 'expo-router';
 import React, { useCallback } from 'react';
-import { Dimensions, LogBox, View } from 'react-native';
+import { LogBox, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import CustomDrawerContent from './CustomDrawerContent';
 LogBox.ignoreAllLogs();
 
 SplashScreen.preventAutoHideAsync();
 
 export default function MainAppLayout() {
-  const { activeLang } = useMultiLang();
-  const SCREEN_WIDTH = Dimensions.get('screen').width;
   console.log("=============")
   console.log("MainAppLayout RENDER", Date.now())
   const [fontLoaded] = useFonts({
@@ -44,18 +39,9 @@ export default function MainAppLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
         <MainAppProvider>
-
-          <Drawer screenOptions={{
-            headerShown: false,
-            drawerPosition: activeLang === 'ar' ? 'right' : 'left',
-            drawerStyle: {
-              width: SCREEN_WIDTH * 0.8,
-            },
-            swipeEnabled: false
-          }}
-            drawerContent={() => <CustomDrawerContent />}
-          >
-          </Drawer>
+        <Stack screenOptions={{
+          headerShown: false,
+        }}/>
         </MainAppProvider>
       </View>
     </GestureHandlerRootView >
