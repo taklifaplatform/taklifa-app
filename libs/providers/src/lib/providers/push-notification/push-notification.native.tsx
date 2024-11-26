@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { registerForPushNotificationsAsync } from './registerForPushNotificationsAsync';
 import { NotificationService } from '@zix/api';
 import * as Notifications from 'expo-notifications';
+import { useNotification } from '@zix/services/push-notification';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -20,6 +21,8 @@ export const PushNotification: React.FC<PushNotificationProps> = ({
   children,
 }) => {
   const { authAccessToken } = useAuth();
+  const { handleNotificationRedirection } = useNotification()
+
 
   async function registerPushNotificationToken() {
     const token = await registerForPushNotificationsAsync();
@@ -35,6 +38,15 @@ export const PushNotification: React.FC<PushNotificationProps> = ({
 
   useEffect(() => {
     registerPushNotificationToken();
+
+    Notifications.addNotificationResponseReceivedListener(response => {
+      handleNotificationRedirection(response.notification.request.content.data);
+    });
+    Notifications.getLastNotificationResponseAsync().then((response) => {
+      if (response) {
+        handleNotificationRedirection(response.notification.request.content.data);
+      }
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authAccessToken]);
   return children;
