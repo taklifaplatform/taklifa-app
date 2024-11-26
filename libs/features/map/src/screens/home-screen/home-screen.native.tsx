@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { CompaniesService, DriverTransformer, DriversService, LocationService } from '@zix/api';
 import { UserCard } from '@zix/features/users';
 import { USER_ROLES, useAuth } from '@zix/services/auth';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { MapCompanyMarker, MapDriverMarker } from '@zix/ui/sawaeed';
@@ -86,6 +87,7 @@ export function HomeScreen() {
 
   // TODO:: Get user location when role is driver
 
+  const [driverLocation, setDriverLocation] = useState({})
   const getDriverLocation = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
@@ -95,6 +97,7 @@ export function HomeScreen() {
 
     const location = await Location.getCurrentPositionAsync({});
     console.log('location::', location);
+    setDriverLocation(location.coords);
     LocationService.updateLiveLocation({
       requestBody: {
         latitude: location.coords.latitude,
@@ -109,10 +112,12 @@ export function HomeScreen() {
       ![USER_ROLES.solo_driver, USER_ROLES.company_driver].includes(user.active_role?.name as any)) {
       return;
     }
-    updateLocationInterval.current = setInterval(() => {
-      getDriverLocation();
-    }, 1000 * 60 * 5);
-
+    if(driverLocation.latitude) {
+      updateLocationInterval.current = setInterval(() => {
+        getDriverLocation();
+      }, 1000 * 60 * 5);
+    }
+    getDriverLocation();
     return () => {
       if (updateLocationInterval.current) {
         clearInterval(updateLocationInterval.current);
@@ -252,6 +257,7 @@ export function HomeScreen() {
         style={{ flex: 1 }}
         initialCamera={initialCamera}
         onPress={() => Keyboard.dismiss()}
+        showsUserLocation
         onTouchStart={() => {
           if (!isMapFullScreen) animateOut();
         }
@@ -315,6 +321,27 @@ export function HomeScreen() {
         {showMap ? 'القائمة' : 'الخريطة'}
       </Button>
     );
+
+  // center user location
+  const renderCenterButton = () => driverLocation?.latitude && (
+    <Button
+      theme="accent"
+      icon={<MaterialIcons name="my-location" size={20} color="black" />}
+      circular
+      position="absolute"
+      bottom="$3"
+      right="$4"
+      onPress={() => {
+        mapRef?.current?.animateCamera({
+          center: {
+            latitude: parseFloat(driverLocation?.latitude),
+            longitude: parseFloat(driverLocation?.longitude),
+          },
+          zoom: 16,
+        });
+      }}
+    />
+  )
 
   const renderFilters = () => (
     <View position='absolute' top={1}>
@@ -404,6 +431,7 @@ export function HomeScreen() {
           {!isMapFullScreen && renderList()}
           {!isMapFullScreen && !isKeyboardVisible && renderCarousel()}
           {!isMapFullScreen && !isKeyboardVisible && renderSwitcher()}
+          {driverLocation && renderCenterButton()}
           {!isMapFullScreen && !isKeyboardVisible && renderFilters()}
         </YStack>
       </YStack>

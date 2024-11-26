@@ -22,8 +22,9 @@ export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = React.memo(({
   const renderCarIcon = () =>  (company?.logo?.original_url && !showCustomIcon) ? (
     <Image
       source={{ uri: company.logo?.original_url }}
-      width='100%'
-      height='100%'
+      width={50}
+      height={50}
+      borderRadius={100}
       resizeMode='contain'
       onError={() => {
         setShowCustomIcon(true)
