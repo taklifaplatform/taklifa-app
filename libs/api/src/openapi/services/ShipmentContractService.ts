@@ -50,6 +50,26 @@ export class ShipmentContractService {
         });
     }
     /**
+     * Cancel contract.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static cancelContract({
+        shipmentContract,
+    }: {
+        shipmentContract: string,
+    }): CancelablePromise<{
+        data?: ShipmentProposalTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/shipment-contract/{shipmentContract}',
+            path: {
+                'shipmentContract': shipmentContract,
+            },
+        });
+    }
+    /**
      * Retrieve current user contract permissions.
      * Can be used by (provider, customer)
      * @returns any Successful response

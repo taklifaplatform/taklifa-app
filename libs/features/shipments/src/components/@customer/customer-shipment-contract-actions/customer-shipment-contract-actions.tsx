@@ -1,13 +1,13 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { ShipmentContractService, ShipmentTransformer } from '@zix/api';
-import { DebugObject, ZixButton } from '@zix/ui/common';
-
+import { ZixButton } from '@zix/ui/common';
 import InformationAboutDriver from '../../information-about-driver/information-about-driver';
 import { XStack, View } from 'tamagui';
-import { Check, MessageCircle, X } from '@tamagui/lucide-icons';
+import { MessageCircle, X } from '@tamagui/lucide-icons';
 import { InformationAboutCompany } from '../../information-about-company/information-about-company';
 import { useRouter } from 'solito/router';
+import { Alert } from 'react-native';
 
 export type CustomerShipmentContractActionsProps = {
   shipment: ShipmentTransformer
@@ -24,6 +24,39 @@ export const CustomerShipmentContractActions: React.FC<CustomerShipmentContractA
     }) : undefined,
     queryKey: ['ShipmentContractService.fetchShipmentContract', shipment.active_contract_id]
   })
+
+
+  const isCancelled = shipment.status === 'cancelled';
+  // on Cancel Contract
+  const onCancelContract = () => {
+    if (isCancelled) {
+      return;
+    }
+    if (shipment.active_contract_id) {
+      // alert to confirm with confirm or cancel
+      Alert.alert(
+        'Cancel Contract',
+        'Are you sure you want to cancel the contract?',
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel'
+          },
+          {
+            text: 'Confirm',
+            style: 'destructive',
+            onPress: async () => {
+              await ShipmentContractService.cancelContract({
+                shipmentContract: shipment?.active_contract_id
+              });
+              router.back();
+            }
+          }
+        ]
+      )
+    }
+  }
+
   return (
     <View>
       {!!data?.data?.driver?.id && <InformationAboutDriver driver={data?.data?.driver} channelId={data?.data?.channel_id} />}
@@ -44,15 +77,15 @@ export const CustomerShipmentContractActions: React.FC<CustomerShipmentContractA
 
         <ZixButton
           flex={1}
-          theme='error'
+          theme={isCancelled ? null : 'error'}
           themeInverse
           fontWeight="bold"
           backgroundColor='$color10'
           fontSize='$1'
           icon={X}
-          onPress={() => alert('Under development')}
+          onPress={onCancelContract}
         >
-          Cancel Contract
+          {isCancelled ? "Cancelled" : "Cancel Contract"}
         </ZixButton>
       </XStack>
     </View>

@@ -96,7 +96,6 @@ export function HomeScreen() {
     }
 
     const location = await Location.getCurrentPositionAsync({});
-    console.log('location::', location);
     setDriverLocation(location.coords);
     LocationService.updateLiveLocation({
       requestBody: {
@@ -431,7 +430,7 @@ export function HomeScreen() {
           {!isMapFullScreen && renderList()}
           {!isMapFullScreen && !isKeyboardVisible && renderCarousel()}
           {!isMapFullScreen && !isKeyboardVisible && renderSwitcher()}
-          {driverLocation && renderCenterButton()}
+          {driverLocation && showMap && renderCenterButton()}
           {!isMapFullScreen && !isKeyboardVisible && renderFilters()}
         </YStack>
       </YStack>
