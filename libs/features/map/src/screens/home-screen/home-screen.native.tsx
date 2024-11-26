@@ -1,7 +1,8 @@
 import { useIsFocused } from '@react-navigation/native';
 import { ScanBarcode, X } from '@tamagui/lucide-icons';
+import * as Location from 'expo-location';
 import { useQuery } from '@tanstack/react-query';
-import { CompaniesService, DriverTransformer, DriversService } from '@zix/api';
+import { CompaniesService, DriverTransformer, DriversService, LocationService } from '@zix/api';
 import { UserCard } from '@zix/features/users';
 import { USER_ROLES, useAuth } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
@@ -33,14 +34,13 @@ const initialCamera = {
 export function HomeScreen() {
   console.log("======================")
   console.log("HomeScreen->RENDER ::", Date.now())
-
   const USER_CARD_WIDTH = width;
   const USER_CARD_HEIGHT = Math.max(260, height / 4);
 
   const mapRef = useRef<MapView>(null);
   const carouselRef = useRef<ICarouselInstance>(null);
   const router = useRouter();
-  const { getUrlPrefix } = useAuth();
+  const { getUrlPrefix, user } = useAuth();
 
   const [filters, setFilters] = useState({
     vehicle_model: 'all',
@@ -83,6 +83,35 @@ export function HomeScreen() {
       return aDistance < bDistance ? a : b;
     });
   }, [data?.data, selectedDriver]);
+
+  // TODO:: Get user location when role is driver
+
+  const getDriverLocation = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      console.log('Permission to access location was denied');
+      return;
+    }
+
+    const location = await Location.getCurrentPositionAsync({});
+    console.log('location::', location);
+    LocationService.updateLiveLocation({
+      requestBody: {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+      }
+    })
+  }
+
+  useEffect(() => {
+    if (
+      ![USER_ROLES.solo_driver, USER_ROLES.company_driver].includes(user.active_role?.name as any)) {
+      return;
+    }
+    getDriverLocation();
+
+  }, [user]);
+
 
   const [showCarousel, setShowCarousel] = useState(false);
 

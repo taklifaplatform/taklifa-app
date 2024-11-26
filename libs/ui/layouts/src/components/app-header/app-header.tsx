@@ -90,7 +90,6 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
       </View>
     );
 
-    console.log(JSON.stringify(user,null,2))
 
   const renderAvatar = () =>
     !showBackButton ? COMPANY_ROLES.includes(activeRole) ? renderCompanyAvatar() : renderUserAvatar() : null;
