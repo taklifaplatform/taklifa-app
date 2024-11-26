@@ -68,7 +68,7 @@ export const EditAccountScreen = () => {
   if (!user?.id) {
     return <FullScreenSpinner />;
   }
-  
+
 
   return (
     <ScreenLayout safeAreaBottom>

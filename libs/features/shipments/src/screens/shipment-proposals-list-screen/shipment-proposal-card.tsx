@@ -141,13 +141,13 @@ export const ShipmentProposalCard: React.FC<ShipmentProposalCardProps> = ({
       <View flex={1}>
         <XStack gap='$1'>
           <Text fontWeight='700'>Cost: </Text>
-          <Text>{proposal.cost?.value}</Text>
+          <Text>{proposal?.cost?.value || 0}</Text>
           <Text fontWeight='600'>{proposal.cost?.currency?.code}</Text>
         </XStack>
         <XStack gap='$1'>
           <Text fontWeight='700'>Fee: </Text>
-          <Text>{proposal.fee?.value}</Text>
-          <Text fontWeight='600'>{proposal.fee?.currency?.code}</Text>
+          <Text>{proposal?.fee?.value || 0}</Text>
+          <Text fontWeight='600'>{proposal?.fee?.currency?.code}</Text>
         </XStack>
       </View>
 

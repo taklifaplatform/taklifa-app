@@ -1,4 +1,4 @@
-import { Phone, SquareUserRound } from '@tamagui/lucide-icons';
+import { Phone, SquareUserRound, X } from '@tamagui/lucide-icons';
 import { CompanyTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
 import {
@@ -34,19 +34,26 @@ export const InformationAboutCompany: React.FC<InformationAboutCompanyProps> = (
       <XStack gap="$3" alignItems="center">
         <ZixAvatar size={'$4'} media={company.logo} />
         <YStack gap="$3" flex={1}>
-          <Text fontSize={16} fontWeight={'600'}>
-            {company.name}
-          </Text>
+          <XStack
+            justifyContent='space-between'
+            alignItems='center'
+          >
+            <Text fontSize={16} fontWeight={'600'}>
+              {company.name}
+            </Text>
+            {!!channelId && <Link href={`/app/chat/channels/${channelId}`}>
+              <Stack backgroundColor={'$gray6'} padding="$2" borderRadius="$4">
+                <CustomIcon name="comment" size="$1" color={'white'} />
+              </Stack>
+            </Link>}
+          </XStack>
+
           <Text flex={1} fontSize={15} fontWeight={'600'} color={'$color9'}>
             {company.about}
           </Text>
         </YStack>
       </XStack>
-      {!!channelId && <Link href={`/app/chat/channels/${channelId}`}>
-        <Stack backgroundColor={'$gray6'} padding="$2" borderRadius="$4">
-          <CustomIcon name="comment" size="$1" color={'white'} />
-        </Stack>
-      </Link>}
+
     </XStack>
   );
 

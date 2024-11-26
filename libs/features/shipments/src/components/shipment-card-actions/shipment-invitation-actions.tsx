@@ -74,9 +74,9 @@ export const ShipmentInvitationActions: React.FC<ShipmentInvitationActionsProps>
       fontWeight="bold"
       backgroundColor='$color10'
       fontSize='$1'
-      onPress={() => router.push(`${urlPrefix}/${shipment.id}/invitations/${data?.data?.invitation?.id}/accept`)}
+      onPress={() => router.push(`/app/shipments/${shipment.id}/invitations/${data?.data?.invitation?.id}/accept`)}
     >
-      {t('plain:Accept Invitation')}
+     Accept Invitation
     </ZixButton>
   )
 
@@ -91,7 +91,7 @@ export const ShipmentInvitationActions: React.FC<ShipmentInvitationActionsProps>
       loading={isPending}
       onPress={onDeclinePress}
     >
-      {t('plain:Decline Invitation')}
+      Decline Invitation
     </ZixButton>
   )
 

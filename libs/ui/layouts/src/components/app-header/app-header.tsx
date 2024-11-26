@@ -1,4 +1,4 @@
-import { PlusSquare, Search } from '@tamagui/lucide-icons';
+import { Search } from '@tamagui/lucide-icons';
 import { COMPANY_ROLES, useAuth } from '@zix/services/auth';
 import { UserAvatar, ZixAvatar } from '@zix/ui/common';
 import { ZixInput, ZixInputProps } from '@zix/ui/forms';
@@ -9,9 +9,6 @@ import { useRouter } from 'solito/router';
 import { Button, ColorTokens, H4, View, XStack, YStack } from 'tamagui';
 import ZixNotificationHeaderButton from '../zix-notification-header-button/zix-notification-header-button';
 import { AppHeaderWrapper } from './app-header-wrapper';
-import { useNavigation } from 'expo-router';
-import { useDrawer } from './useDrawer';
-import { Platform } from 'react-native';
 
 export type AppHeaderProps = {
   searchProps?: ZixInputProps;
@@ -35,7 +32,6 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
 }) => {
   const { user, activeRole, isLoggedIn, getUrlPrefix } = useAuth();
   const router = useRouter();
-  const { toggleDrawer } = useDrawer()
 
   const onAvatarPress = useCallback(() => {
     if (isLoggedIn) {
@@ -93,6 +89,8 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
         />
       </View>
     );
+
+    console.log(JSON.stringify(user,null,2))
 
   const renderAvatar = () =>
     !showBackButton ? COMPANY_ROLES.includes(activeRole) ? renderCompanyAvatar() : renderUserAvatar() : null;

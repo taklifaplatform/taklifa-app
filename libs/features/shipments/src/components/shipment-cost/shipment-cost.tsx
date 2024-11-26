@@ -28,10 +28,10 @@ export const ShipmentCost: React.FC<ShipmentCostProps> = ({
       </XStack>
       <XStack gap="$1" alignItems='flex-end' $gtSm={{ gap: '$3' }}>
         <Text fontSize={20} fontWeight='bold'>
-          {shipment?.max_budget?.value}
+          {shipment?.max_budget?.value || 0}
         </Text>
         <Text fontSize={15} fontWeight='bold'>
-          {shipment.max_budget?.currency?.code}
+          {shipment.max_budget?.currency?.code || 0}
         </Text>
       </XStack>
     </XStack>

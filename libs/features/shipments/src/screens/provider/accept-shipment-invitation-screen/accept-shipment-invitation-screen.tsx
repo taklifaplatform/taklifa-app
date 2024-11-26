@@ -58,7 +58,7 @@ export function AcceptShipmentInvitationScreen() {
   const { mutateAsync } = useMutation({
     mutationFn: (requestBody) => ShipmentInvitationService.acceptShipmentInvitation({
       shipment: shipmentId || '',
-      shipmentInvitation: invitationId || '',
+      shipmentInvitation: invitationId || proposalQuery?.data?.data?.shipment_id || '',
       requestBody
     }),
     onSuccess() {

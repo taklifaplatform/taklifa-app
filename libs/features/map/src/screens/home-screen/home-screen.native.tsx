@@ -217,12 +217,10 @@ export function HomeScreen() {
         onPress={() => Keyboard.dismiss()}
         onTouchStart={() => {
           if (!isMapFullScreen) animateOut();
-          console.log('onTouchStart');
         }
         }
         onTouchEnd={() => {
           if (isMapFullScreen) animateIn();
-          console.log('onTouchEnd');
         }
         }
       >
