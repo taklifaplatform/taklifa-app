@@ -109,7 +109,7 @@ export class ShipmentInvitationService {
         });
     }
     /**
-     * Reject shipment invitation.
+     * Remove shipment invitation.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -132,7 +132,7 @@ export class ShipmentInvitationService {
         });
     }
     /**
-     * Reject shipment invitation.
+     * Accept shipment invitation.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -162,7 +162,7 @@ export class ShipmentInvitationService {
         });
     }
     /**
-     * Reject shipment invitation.
+     * Decline shipment invitation.
      * @returns any Successful response
      * @throws ApiError
      */

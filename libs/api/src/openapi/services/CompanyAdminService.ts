@@ -10,7 +10,7 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class CompanyAdminService {
     /**
-     * Fetch all companies.
+     * Fetch all list admin companies.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -62,7 +62,7 @@ export class CompanyAdminService {
         });
     }
     /**
-     * Create new company.
+     * Admin Create a company.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -84,7 +84,7 @@ export class CompanyAdminService {
         });
     }
     /**
-     * Retrieve a company.
+     * Retrieve admin company.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -104,7 +104,7 @@ export class CompanyAdminService {
         });
     }
     /**
-     * Update a company.
+     * Admin Update a company.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -118,7 +118,7 @@ export class CompanyAdminService {
         data?: CompanyTransformer;
     }> {
         return __request(OpenAPI, {
-            method: 'POST',
+            method: 'PUT',
             url: '/api/admin/companies/{company}',
             path: {
                 'company': company,
@@ -131,7 +131,7 @@ export class CompanyAdminService {
         });
     }
     /**
-     * Delete a company.
+     * Admin Delete a company.
      * @returns any Successful response
      * @throws ApiError
      */

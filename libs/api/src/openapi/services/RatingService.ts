@@ -23,7 +23,7 @@ export class RatingService {
         });
     }
     /**
-     * Fetch Ratings Types.
+     * Fetch All Ratings.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -80,7 +80,7 @@ export class RatingService {
         });
     }
     /**
-     * store Rating.
+     * Store Rating.
      * @returns void
      * @throws ApiError
      */

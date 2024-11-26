@@ -25,9 +25,12 @@ export const PushNotification: React.FC<PushNotificationProps> = ({
 
 
   async function registerPushNotificationToken() {
+    if (!authAccessToken) {
+      return;
+    }
     const token = await registerForPushNotificationsAsync();
 
-    if (token && authAccessToken) {
+    if (token) {
       NotificationService.storeExpoToken({
         requestBody: {
           token,

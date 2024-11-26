@@ -84,7 +84,7 @@ export class ShipmentProposalService {
         });
     }
     /**
-     * Retrieve a shipment invitation.
+     * Retrieve a shipment proposal.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -107,7 +107,7 @@ export class ShipmentProposalService {
         });
     }
     /**
-     * Reject shipment invitation.
+     * Accept shipment invitation.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -145,7 +145,7 @@ export class ShipmentProposalService {
     }> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/shipments/{shipment}/proposals/{shipmentProposal}/reject',
+            url: '/api/shipments/{shipment}/proposals/{shipmentProposal}/decline',
             path: {
                 'shipment': shipment,
                 'shipmentProposal': shipmentProposal,

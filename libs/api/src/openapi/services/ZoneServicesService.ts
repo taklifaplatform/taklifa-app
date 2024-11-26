@@ -9,7 +9,7 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class ZoneServicesService {
     /**
-     * display the list of zone services
+     * Display the list of zone services
      * @returns any Successful response
      * @throws ApiError
      */
@@ -61,7 +61,7 @@ export class ZoneServicesService {
         });
     }
     /**
-     * Create a zone service
+     * Create new zone service.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -103,7 +103,7 @@ export class ZoneServicesService {
         });
     }
     /**
-     * Update a zone service
+     * Update a zone service.
      * @returns any Successful response
      * @throws ApiError
      */

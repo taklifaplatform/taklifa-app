@@ -6,8 +6,8 @@ import type { MediaTransformer } from './MediaTransformer';
 export type VehicleModelTransformer = {
     id?: string;
     name?: string;
-    map_icon?: MediaTransformer;
     map_icon_width?: string;
     map_icon_height?: string;
+    map_icon?: MediaTransformer;
 };
 

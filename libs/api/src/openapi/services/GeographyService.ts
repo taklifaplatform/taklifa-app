@@ -63,7 +63,7 @@ export class GeographyService {
         });
     }
     /**
-     * Display the specified country.
+     * Show the specified country.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -83,7 +83,7 @@ export class GeographyService {
         });
     }
     /**
-     * Display the specified country.
+     * Display the specified country by dial code.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -265,7 +265,7 @@ export class GeographyService {
         });
     }
     /**
-     * Display the specified currency.
+     * Retrieve the specified currency.
      * @returns any Successful response
      * @throws ApiError
      */
