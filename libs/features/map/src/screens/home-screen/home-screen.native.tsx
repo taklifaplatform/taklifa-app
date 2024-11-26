@@ -103,13 +103,21 @@ export function HomeScreen() {
     })
   }
 
+  const updateLocationInterval = useRef<NodeJS.Timeout | null>(null);
   useEffect(() => {
     if (
       ![USER_ROLES.solo_driver, USER_ROLES.company_driver].includes(user.active_role?.name as any)) {
       return;
     }
-    getDriverLocation();
+    updateLocationInterval.current = setInterval(() => {
+      getDriverLocation();
+    }, 1000 * 60 * 5);
 
+    return () => {
+      if (updateLocationInterval.current) {
+        clearInterval(updateLocationInterval.current);
+      }
+    }
   }, [user]);
 
 
