@@ -20,6 +20,7 @@ const PAGE_HEIGHT = 80
 export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
   onChange,
   value,
+  min_date
 }) => {
   const { activeLang, isRtl } = useMultiLang()
   const carouselRef = useRef<ICarouselInstance>(null)
@@ -55,6 +56,10 @@ export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
       alignItems="center"
       marginRight={8}
       flexDirection="column"
+      disabled={min_date ? moment(date).date(item).isBefore(min_date) : false}
+      disabledStyle={{
+        opacity: 0.5
+      }}
       theme={activeDayIndex === index ? 'accent' : undefined}
       backgroundColor={activeDayIndex === index ? '$color9' : '$color3'}
       onPress={() => {
