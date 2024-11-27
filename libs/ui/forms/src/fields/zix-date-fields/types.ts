@@ -3,4 +3,5 @@ export type ZixDateFieldProps = {
   onChange: (value: string) => void;
   onBlur: () => void;
   hasError?: boolean;
+  min_date?: Date;
 };

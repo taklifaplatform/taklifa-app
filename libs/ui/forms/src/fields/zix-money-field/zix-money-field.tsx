@@ -3,6 +3,7 @@ import { Stack, Theme, XStack, useThemeName } from 'tamagui';
 import { PriceTransformer } from '@zix/api';
 import ZixAutoCompleteField from '../zix-auto-complete-field/zix-auto-complete-field';
 import ZixInput from '../zix-input/zix-input';
+import { useEffect } from 'react';
 
 
 export type ZixMoneyFieldProps = {
@@ -17,6 +18,12 @@ export const ZixMoneyField: React.FC<ZixMoneyFieldProps> = ({
   error,
 }) => {
   const themeName = useThemeName();
+  useEffect(() => {
+    // Set default value to "1 - Rial Saudi" if no currency is selected
+    if (!value.currency_id) {
+      onValueChange({ ...value, currency_id: '1' });
+    }
+  }, [value, onValueChange]);
 
   return (
     <Theme name={error ? 'red' : themeName} forceClassName>
@@ -25,6 +32,7 @@ export const ZixMoneyField: React.FC<ZixMoneyFieldProps> = ({
           <ZixAutoCompleteField
             value={value.currency_id}
             onChange={(currency_id) => onValueChange({ ...value, currency_id })}
+            defaultValue={'1'}
             dataMapper={(item) => ({
               id: item.id,
               name: `${item.code} - ${item.name}`,

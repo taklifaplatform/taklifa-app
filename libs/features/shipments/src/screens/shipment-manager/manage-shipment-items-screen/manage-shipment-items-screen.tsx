@@ -67,7 +67,7 @@ export const ManageShipmentItemsScreen: React.FC = () => {
     onSuccess(data, variables, context) {
       toast.show('Shipment items updated successfully', { preset: 'success' })
       if (data?.data?.selected_driver_id || data?.data?.selected_company_id) {
-        router.push(`${getUrlPrefix}/shipment-manager/${shipmentId}/summary`)
+        router.push(`${getUrlPrefix}/shipment-manager/${shipmentId}/budget`)
       } else {
         router.push(`${getUrlPrefix}/shipment-manager/${shipmentId}/assign-driver`)
       }
