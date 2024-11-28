@@ -44,7 +44,6 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
     }
   })
 
-
   return (
     <XStack
       width='100%'
@@ -82,7 +81,6 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
         <Button
           iconAfter={<MoreHorizontal />}
           onPress={() => {
-            console.log('press');
             actionSheetManagerRef.current?.open();
           }}
         />
@@ -95,7 +93,9 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
               icon: <Eye size="$1" color="$color10" />,
               onPress: () => {
                 actionSheetManagerRef.current?.close();
-                router.push(`${getUrlPrefix}/companies/${user?.active_company?.id}/vehicles/${vehicle.id}`)
+                router.push(`${getUrlPrefix}/vehicles/${vehicle.id}`)
+                // router.push(`${getUrlPrefix}/companies/${user?.active_company?.id}/vehicles/${vehicle.id}`)
+                //
               },
             },
             {

@@ -87,7 +87,7 @@ export function HomeScreen() {
 
   // TODO:: Get user location when role is driver
 
-  const [driverLocation, setDriverLocation] = useState({})
+  const [driverLocation, setDriverLocation] = useState(null)
   const getDriverLocation = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
@@ -96,7 +96,7 @@ export function HomeScreen() {
     }
 
     const location = await Location.getCurrentPositionAsync({});
-    setDriverLocation(location.coords);
+    setDriverLocation(location?.coords);
     LocationService.updateLiveLocation({
       requestBody: {
         latitude: location.coords.latitude,
@@ -107,11 +107,12 @@ export function HomeScreen() {
 
   const updateLocationInterval = useRef<NodeJS.Timeout | null>(null);
   useEffect(() => {
+    setDriverLocation(null)
     if (
       ![USER_ROLES.solo_driver, USER_ROLES.company_driver].includes(user.active_role?.name as any)) {
       return;
     }
-    if(driverLocation.latitude) {
+    if(driverLocation?.latitude) {
       updateLocationInterval.current = setInterval(() => {
         getDriverLocation();
       }, 1000 * 60 * 5);
@@ -256,7 +257,7 @@ export function HomeScreen() {
         style={{ flex: 1 }}
         initialCamera={initialCamera}
         onPress={() => Keyboard.dismiss()}
-        showsUserLocation
+        showsUserLocation={!!driverLocation}
         onTouchStart={() => {
           if (!isMapFullScreen) animateOut();
         }

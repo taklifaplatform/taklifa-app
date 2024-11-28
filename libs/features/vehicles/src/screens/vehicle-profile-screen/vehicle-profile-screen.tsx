@@ -3,16 +3,16 @@ import { useMemo } from 'react';
 import { createParam } from 'solito';
 
 import { useQuery } from '@tanstack/react-query';
-import { CompanyVehiclesService } from '@zix/api';
+import { VehiclesService } from '@zix/api';
 import { FullScreenSpinner, MediaFile } from '@zix/ui/common';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { ZixMediasListWidget, ZixWidgetContainer } from '@zix/ui/widgets';
+import { t } from 'i18next';
 import { Dimensions, RefreshControl } from 'react-native';
 import { ScrollView, Text, View, XStack, YStack } from 'tamagui';
-import { t } from 'i18next';
 
 
-const { useParam } = createParam<{ company: string, vehicle: string }>();
+const { useParam } = createParam<{ vehicle: string }>();
 
 type VehicleRowInfo = {
   label: string;
@@ -27,21 +27,15 @@ type VehicleInfoSection = {
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 
 export function VehicleProfileScreen() {
-  const [companyId] = useParam('company');
   const [vehicleId] = useParam('vehicle');
 
   const { data, refetch, isLoading } = useQuery({
     queryFn() {
-      if (!companyId || !vehicleId) {
-        return;
-      }
-
-      return CompanyVehiclesService.retrieve({
-        company: companyId,
+      return VehiclesService.retrieveVehicle({
         vehicle: vehicleId,
       });
     },
-    queryKey: ['CompanyVehiclesService.retrieve', companyId, vehicleId],
+    queryKey: ['CompanyVehiclesService.retrieve', vehicleId],
   });
 
   const vehicle = useMemo(() => data?.data || {}, [data?.data])
@@ -150,6 +144,7 @@ export function VehicleProfileScreen() {
     },
   ]), [vehicle])
 
+  console.info(data, 'data===')
   const renderVehicleInformation = () => data?.data && (
     <ScrollView flex={1} refreshControl={<RefreshControl refreshing={isLoading} onRefresh={refetch} />}>
       <YStack gap='$3' padding='$4'>
