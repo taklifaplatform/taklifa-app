@@ -112,7 +112,7 @@ export function HomeScreen() {
       ![USER_ROLES.solo_driver, USER_ROLES.company_driver].includes(user.active_role?.name as any)) {
       return;
     }
-    if(driverLocation?.latitude) {
+    if (driverLocation?.latitude) {
       updateLocationInterval.current = setInterval(() => {
         getDriverLocation();
       }, 1000 * 60 * 5);
@@ -410,22 +410,14 @@ export function HomeScreen() {
   return (
     <ScreenLayout>
       <YStack flex={1}>
-        {!isMapFullScreen && (
-          <Animated.View
-            style={{
-              opacity: animationValue, // Control visibility with opacity
-            }}
-          >
-            <AppHeader
-              showSearchBar
-              searchProps={{
-                value: search,
-                onChangeText: setSearch,
-                rightIcon: () => (showMap ? <ScanBarcode size="$1.5" /> : null),
-              }}
-            />
-          </Animated.View>
-        )}
+        <AppHeader
+          showSearchBar
+          searchProps={{
+            value: search,
+            onChangeText: setSearch,
+            rightIcon: () => (showMap ? <ScanBarcode size="$1.5" /> : null),
+          }}
+        />
         <YStack flex={1} position='relative'>
           {renderMap()}
           {!isMapFullScreen && renderList()}
