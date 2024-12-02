@@ -33,8 +33,6 @@ const initialCamera = {
 };
 
 export function HomeScreen() {
-  console.log("======================")
-  console.log("HomeScreen->RENDER ::", Date.now())
   const USER_CARD_WIDTH = width;
   const USER_CARD_HEIGHT = Math.max(260, height / 4);
 
@@ -140,8 +138,8 @@ export function HomeScreen() {
       mapRef.current.animateCamera(
         {
           center: {
-            latitude: Number(driver.location.latitude),
-            longitude: Number(driver.location.longitude),
+            latitude: Number(driver.live_location?.latitude || driver.location.latitude),
+            longitude: Number(driver.live_location?.longitude || driver.location.longitude),
           },
           zoom: 16,
         },
