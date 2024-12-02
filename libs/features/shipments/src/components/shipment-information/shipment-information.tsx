@@ -96,22 +96,22 @@ export const ShipmentInformation: React.FC<ShipmentInformationProps> = ({
               optionVariant="location"
               variant="details"
               options={[
-                {
+                 {
                   icons: (
                     <CustomIcon name="aspect_ratio" size="$1" color="$color10" />
                   ),
                   name: t('job:package-size'),
-                  value: `${item.dim_width} x ${item.dim_height} x ${item.dim_length}cm`,
+                  value: `${item.dim_width || 0} x ${item.dim_height || 0} x ${item.dim_length || 0}cm`,
                 },
                 {
                   icons: <Weight size="$1" color='$color10' />,
                   name: t('job:package-weight'),
-                  value: `${item.cap_weight} ${item.cap_unit}`,
+                  value: `${item.cap_weight || 0} ${item.cap_unit || ''}`,
                 },
-                {
+                 {
                   icons: <ScrollText size="$1" color='$color10' />,
                   name: 'Notes',
-                  value: item.notes,
+                  value: item.notes || ',,,',
                 },
               ]}
             />
