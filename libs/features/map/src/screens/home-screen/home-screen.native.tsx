@@ -258,6 +258,7 @@ export function HomeScreen() {
         initialCamera={initialCamera}
         onPress={() => Keyboard.dismiss()}
         showsUserLocation={!!driverLocation}
+        showsMyLocationButton={false}
         onTouchStart={() => {
           if (!isMapFullScreen) animateOut();
         }
@@ -423,7 +424,7 @@ export function HomeScreen() {
           {!isMapFullScreen && renderList()}
           {!isMapFullScreen && !isKeyboardVisible && renderCarousel()}
           {!isMapFullScreen && !isKeyboardVisible && renderSwitcher()}
-          {driverLocation && showMap && renderCenterButton()}
+          {!isMapFullScreen && driverLocation && showMap && renderCenterButton()}
           {!isMapFullScreen && !isKeyboardVisible && renderFilters()}
         </YStack>
       </YStack>
