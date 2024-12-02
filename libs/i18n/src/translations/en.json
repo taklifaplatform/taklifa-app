@@ -346,7 +346,8 @@
     "are-you-sure-decline-invitation": "Are you sure you want to decline this invitation?",
     "decline-message": "You will not be able to access this shipment after declining",
     "no-notification-found": "No Notification Found!",
-    "notification": "Notifications"
+    "notification": "Notifications",
+    "login-to-access-app": "Login to access the app"
   },
   "cookies-banner": {
     "section-1": {
