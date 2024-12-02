@@ -6,6 +6,7 @@ import {
   VariantOption,
   VariantOptionType,
 } from './variant-option';
+import { Dimensions } from 'react-native';
 
 export interface ZixVariantOptionsWidgetProps {
   icon?: React.ReactNode;
@@ -77,16 +78,18 @@ const ZixVariantOptionsWidgetText = styled(Text, {
   }
 });
 
+const SCREEN_WIDTH = Dimensions.get('window').width;
+
 export const ZixVariantOptionsWidget: React.FC<
   ZixVariantOptionsWidgetProps
 > = ({ icon, label, options, labelBold, optionVariant, variant, labelContainerProps = {}, ...props }) => {
   return (
-    <YStack width={'100%'}>
+    <YStack width={SCREEN_WIDTH * 0.6}>
       {
         !!label && (
           <Stack
             {...labelContainerProps}
-            flexDirection='row' flexWrap='wrap' gap="$3" alignItems="center"
+            flexDirection='row' gap="$3"
           >
             {icon}
             <ZixVariantOptionsWidgetText
