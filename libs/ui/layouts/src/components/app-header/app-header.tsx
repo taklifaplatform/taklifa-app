@@ -78,7 +78,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
         <Button
           unstyled
           size="$2"
-          icon={<CustomIcon name="arrow_left" size="$2" />}
+          icon={<CustomIcon name="arrow_left" size="$2" color={"black"} />}
           onPress={() => {
             if (goBack) {
               goBack();

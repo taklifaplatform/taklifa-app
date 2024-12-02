@@ -292,6 +292,11 @@
     "select-action": "حدد الإجراء",
     "view-proposals": "عرض المقترحات",
     "view-invitations": "عرض الدعوات",
+    "work-with": "يعمل مع",
+    "about-driver": "عن السائق",
+    "tab-about": "معلومات عنا",
+    "tab-vehicles": "السيارات",
+    "tab-review": "تعليقات المستخدمين",
     "user_types": {
       "individual": "فرد",
       "company": "شركة"

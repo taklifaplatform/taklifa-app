@@ -309,7 +309,12 @@
     "month": "Month",
     "address-information": "Address Information",
     "address": "Address",
-    "select-location-on-map": "Select location on map"
+    "select-location-on-map": "Select location on map",
+    "about-driver": "About Driver",
+    "work-with": "Work with",
+    "tab-about": "About",
+    "tab-vehicles": "Vehicle",
+    "tab-review": "Reviews"
   },
   "cookies-banner": {
     "section-1": {
