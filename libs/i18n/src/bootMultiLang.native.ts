@@ -5,7 +5,7 @@ export function bootMultiLang() {
   // TODO: enable this line
   // const defaultLang = 'en';
   // const defaultLang = 'ar'
-  const defaultLang = getLocales()?.[0]?.languageCode || 'en'
+  const defaultLang = getLocales()?.[0]?.languageCode || 'ar'
 
   if (Platform.OS === 'ios') {
     const isRtl = defaultLang === 'ar'
