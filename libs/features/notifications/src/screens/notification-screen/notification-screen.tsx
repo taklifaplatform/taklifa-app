@@ -85,7 +85,7 @@ export function NotificationScreen(props: NotificationScreenProps) {
     <ScreenLayout authProtected>
       <AppHeader
         showBackButton
-        title="Notifications"
+        title={t('common:notification')}
         showSearchBar
         searchProps={{
           value: search,

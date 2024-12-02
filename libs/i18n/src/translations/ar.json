@@ -393,7 +393,8 @@
     "delivery-cost": "تكلفة التوصيل",
     "are-you-sure-decline-invitation": "هل أنت متأكد من رفض الدعوة؟",
     "decline-message": "لن تتمكن من الوصول إلى هذه الشحنة بعد رفضها",
-    "no-notification-found": "لم يتم العثور على إشعارات"
+    "no-notification-found": "لم يتم العثور على إشعارات",
+    "notification": "الإشعارات",
   },
   "cookies-banner": {
     "section-1": {
