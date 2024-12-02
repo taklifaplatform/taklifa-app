@@ -95,7 +95,7 @@ export const ZixWorkingHoursWidget: React.FC<ZixWorkingHoursWidgetProps> = ({
               paddingRight="$2"
               width={100}
             >
-              {moment(day, 'dddd').format('dddd')}
+              {t(`app:days.${day}`)}
             </Text>
             {renderWorkingHours(day)}
           </XStack>
