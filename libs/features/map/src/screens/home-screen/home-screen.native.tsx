@@ -416,7 +416,16 @@ export function HomeScreen() {
           searchProps={{
             value: search,
             onChangeText: setSearch,
-            rightIcon: () => (showMap ? <ScanBarcode size="$1.5" /> : null),
+            rightIcon: () => (
+              search && search.length > 0 ? (
+                <Button
+                unstyled
+                  theme="accent"
+                  icon={<MaterialIcons name="cancel" size={24} color={'grey'} />}
+                  onPress={() => setSearch('')}
+                />
+              ) : null
+            ),
           }}
         />
         <YStack flex={1} position='relative'>
