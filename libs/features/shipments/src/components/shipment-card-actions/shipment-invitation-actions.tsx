@@ -47,8 +47,8 @@ export const ShipmentInvitationActions: React.FC<ShipmentInvitationActionsProps>
 
   function onDeclinePress() {
     Alert.alert(
-      t('plain:Are you sure you want to decline this invitation?'),
-      t('plain:You will not be able to access this shipment after declining.'),
+      t('common:are-you-sure-decline-invitation'),
+      t('common:decline-message'),
       [
         {
           text: t('plain:Cancel'),

@@ -120,14 +120,14 @@ export function AcceptShipmentInvitationScreen() {
         {({ ship_date, ship_time, cost, fee, ...fields }) => (
           <YStack >
             <ZixFieldContainer
-              label={'Pickup Date & Time'}
+              label={t('common:pickup-date-time')}
               {...SHARED_SHIPMENT_MANAGER_FIELD_PROPS.containerProps}
             >
               {ship_date}
               {ship_time}
             </ZixFieldContainer>
             <ZixFieldContainer
-              label={'Delivery Cost'}
+              label={t('common:delivery-cost')}
               {...SHARED_SHIPMENT_MANAGER_FIELD_PROPS.containerProps}
             >
               {cost}
@@ -144,7 +144,7 @@ export function AcceptShipmentInvitationScreen() {
 
   return (
     <>
-      <AppHeader showBackButton title={proposalId ? "Edit Proposal" : "Accept Invitation"} />
+      <AppHeader showBackButton title={proposalId ? "Edit Proposal" : `${t('common:accept-invitation')}`} />
       {renderForm()}
     </>
   );
