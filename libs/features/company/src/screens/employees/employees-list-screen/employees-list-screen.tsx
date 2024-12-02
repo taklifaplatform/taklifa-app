@@ -9,6 +9,7 @@ import { H4, Stack, useStyle } from 'tamagui';
 import { TeamMemberCard } from '../../../components/team-member-card/team-member-card';
 import { TeamMemberInvitationCard } from '../../../components/team-member-invitation-card/team-member-invitation-card';
 import { ScreenLayout } from '@zix/ui/layouts';
+import { t } from 'i18next';
 
 export interface EmployeesListScreenProps {
   memberRole: COMPANY_ROLE_TYPES;
@@ -99,7 +100,7 @@ export function EmployeesListScreen({
         ListEmptyComponent={() => (
           <Stack flex={1} alignItems="center" marginBottom="$6">
             <CustomIcon name="empty_data" size="$20" color={'#757575'} />
-            <H4>No members yet</H4>
+            <H4>{t('common:no-member-yet')}</H4>
           </Stack>
         )}
       />

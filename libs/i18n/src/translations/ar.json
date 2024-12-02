@@ -376,7 +376,9 @@
     "month": "الشهر",
     "address-information": "معلومات العنوان",
     "address": "العنوان",
-    "select-location-on-map": "حدد الموقع على الخريطة"
+    "select-location-on-map": "حدد الموقع على الخريطة",
+    "no-vehicles-found": "لم يتم العثور على مركبات",
+    "no-member-yet": "لا يوجد أعضاء بعد"
   },
   "cookies-banner": {
     "section-1": {

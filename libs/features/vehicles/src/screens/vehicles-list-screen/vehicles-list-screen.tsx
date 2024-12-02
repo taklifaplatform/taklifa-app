@@ -8,6 +8,7 @@ import { Button, H4, Theme, View } from 'tamagui';
 import { CustomIcon } from '@zix/ui/icons';
 import { useRouter } from 'solito/router';
 import { Plus } from '@tamagui/lucide-icons';
+import { t } from 'i18next';
 export type VehiclesListScreenProps = {
   showHeader?: boolean;
 };
@@ -57,7 +58,7 @@ export const VehiclesListScreen: React.FC<VehiclesListScreenProps> = ({
         ListEmptyComponent={
           <View flex={1} alignItems='center' gap="$8" paddingTop="$8">
             <CustomIcon name="empty_data" size="$18" color="$color5" />
-            <H4>No Vehicles Found!</H4>
+            <H4>{t('common:no-vehicles-found')}</H4>
           </View>
         }
       />

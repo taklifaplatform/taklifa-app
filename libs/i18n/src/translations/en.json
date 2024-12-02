@@ -328,7 +328,9 @@
     "about-company": "About Company",
     "working-hours": "Working Hours",
     "how-was-your-experience-with": "How was your experience with",
-    "enter-your-detail-input-placeholder": "Enter your details..."
+    "enter-your-detail-input-placeholder": "Enter your details...",
+    "no-vehicles-found": "No vehicles found",
+    "no-member-yet": "No members yet"
   },
   "cookies-banner": {
     "section-1": {
