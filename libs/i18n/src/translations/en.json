@@ -344,7 +344,8 @@
     "pickup-date-time": "Pickup Date & Time",
     "delivery-cost": "Delivery Cost",
     "are-you-sure-decline-invitation": "Are you sure you want to decline this invitation?",
-    "decline-message": "You will not be able to access this shipment after declining"
+    "decline-message": "You will not be able to access this shipment after declining",
+    "no-notification-found": "No Notification Found!"
   },
   "cookies-banner": {
     "section-1": {
