@@ -29,7 +29,7 @@ export class WorkingHoursService {
         });
     }
     /**
-     * Get Working hours by id
+     * Update working hours
      * @returns any Successful response
      * @throws ApiError
      */

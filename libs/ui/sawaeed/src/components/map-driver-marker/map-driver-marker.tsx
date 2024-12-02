@@ -31,7 +31,9 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = React.memo(({
     <CustomIcon name='solo_transporter_car' size={Platform.OS === 'web' ? "$8" : "$4"} />
   )
 
-  if (!driver.location) {
+  const liveLocation = driver?.live_location || driver?.location;
+
+  if (!liveLocation) {
     return null;
   }
 
@@ -39,8 +41,8 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = React.memo(({
     <Marker
       key={driver.id}
       coordinate={{
-        latitude: parseFloat(driver.location.latitude ?? '0'),
-        longitude: parseFloat(driver.location.longitude ?? '0'),
+        latitude: parseFloat(liveLocation.latitude ?? '0'),
+        longitude: parseFloat(liveLocation.longitude ?? '0'),
       }}
       onPress={() => onPress?.()}
     >

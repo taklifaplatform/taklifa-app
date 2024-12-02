@@ -85,7 +85,7 @@ export const UserReviewsTab: React.FC<UserReviewsTabProps> = ({
   const renderRatingInput = () => (authUser?.id !== user.id && !isSuccess) && (
     <YStack alignItems="center" gap='$4'>
       <Text fontWeight="600" fontSize="$4" paddingTop="$4">
-        How was your experience with
+      {t('common:how-was-your-experience-with')}
       </Text>
       <Text fontWeight="bold" fontSize="$4">
         {user.name}
@@ -95,7 +95,7 @@ export const UserReviewsTab: React.FC<UserReviewsTabProps> = ({
       <ZixInput
         width={Platform.OS === 'web' ? 600 : null}
         textAlign='center'
-        placeholder="Enter your details..."
+        placeholder={t('common:enter-your-detail-input-placeholder')}
         isMultiline
         value={comment}
         onChangeText={setComment}
@@ -132,7 +132,7 @@ export const UserReviewsTab: React.FC<UserReviewsTabProps> = ({
   return (
     <YStack flex={1}>
       {renderRatingInput()}
-      <ZixWidgetContainer label='Customer evaluation'>
+      <ZixWidgetContainer label={`${t('common:customer-evaulation')}`}>
         <YStack gap='$4'>
           {data?.data?.map((item, index) => (
             <RatingCard item={item} key={`${item.id}-${index}`} />

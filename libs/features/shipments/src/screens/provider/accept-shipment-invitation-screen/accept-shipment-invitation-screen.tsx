@@ -1,6 +1,6 @@
 import { Check } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ShipmentInvitationService, ShipmentProposalService, ShipmentService } from '@zix/api';
 import { SchemaForm, SubmitButton, ZixFieldContainer, formFields, handleFormErrors } from '@zix/ui/forms';
 import { AppHeader } from '@zix/ui/layouts';
@@ -14,6 +14,8 @@ import {
 } from 'tamagui';
 import { z } from 'zod';
 import { SHARED_SHIPMENT_MANAGER_FIELD_PROPS } from '../../shipment-manager/configs';
+import { Router } from 'next/router';
+import { useRouter } from 'solito/router';
 
 const { useParam } = createParam<{ shipment: string, invitation?: string, proposal?: string }>();
 
@@ -35,6 +37,8 @@ export function AcceptShipmentInvitationScreen() {
   const [shipmentId] = useParam('shipment');
   const [invitationId] = useParam('invitation');
   const [proposalId] = useParam('proposal');
+  const queryClient = useQueryClient()
+  const router = useRouter();
 
   const toast = useToastController();
   const { data } = useQuery({
@@ -56,15 +60,23 @@ export function AcceptShipmentInvitationScreen() {
 
   const form = useForm<z.infer<typeof AcceptShipmentInvitationSchema>>();
   const { mutateAsync } = useMutation({
-    mutationFn: (requestBody) => ShipmentInvitationService.acceptShipmentInvitation({
+    mutationFn: (requestBody) => proposalId ? ShipmentProposalService.editShipmentProposal({
       shipment: shipmentId || '',
-      shipmentInvitation: invitationId || '',
+      shipmentProposal: proposalId || '',
+      requestBody
+    }) : ShipmentInvitationService.acceptShipmentInvitation({
+      shipment: shipmentId || '',
+      shipmentInvitation: invitationId || proposalQuery?.data?.data?.shipment_id || '',
       requestBody
     }),
     onSuccess() {
+      queryClient.refetchQueries({
+        queryKey: [shipmentId]
+      })
       toast.show(t('app:messages.invitation-accepted'), {
         preset: 'success',
       });
+      router.back()
     },
     onError(error: any) {
       toast.show(error?.body?.message || t('app:errors.something-went-wrong'), {
@@ -74,6 +86,7 @@ export function AcceptShipmentInvitationScreen() {
     },
   });
 
+
   const renderForm = () => (!proposalId || proposalId && proposalQuery.data?.data?.id) && (
     <FormProvider {...form}>
       <SchemaForm
@@ -81,10 +94,12 @@ export function AcceptShipmentInvitationScreen() {
         schema={AcceptShipmentInvitationSchema}
         defaultValues={{
           cost: {
-            currency_id: 117
+            currency_id: 1,
+            value: proposalQuery?.data?.data?.cost?.value || 0
           },
           fee: {
-            currency_id: 117
+            currency_id: 1,
+            value: proposalQuery?.data?.data?.fee?.value || 0
           },
           ...(proposalQuery.data?.data || {})
         }}
@@ -105,14 +120,14 @@ export function AcceptShipmentInvitationScreen() {
         {({ ship_date, ship_time, cost, fee, ...fields }) => (
           <YStack >
             <ZixFieldContainer
-              label={'Pickup Date & Time'}
+              label={t('common:pickup-date-time')}
               {...SHARED_SHIPMENT_MANAGER_FIELD_PROPS.containerProps}
             >
               {ship_date}
               {ship_time}
             </ZixFieldContainer>
             <ZixFieldContainer
-              label={'Delivery Cost'}
+              label={t('common:delivery-cost')}
               {...SHARED_SHIPMENT_MANAGER_FIELD_PROPS.containerProps}
             >
               {cost}
@@ -129,7 +144,7 @@ export function AcceptShipmentInvitationScreen() {
 
   return (
     <>
-      <AppHeader showBackButton title={proposalId ? "Edit Proposal" : "Accept Invitation"} />
+      <AppHeader showBackButton title={proposalId ? "Edit Proposal" : `${t('common:accept-invitation')}`} />
       {renderForm()}
     </>
   );

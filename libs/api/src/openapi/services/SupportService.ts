@@ -49,7 +49,7 @@ export class SupportService {
      * @returns any Successful response
      * @throws ApiError
      */
-    public static fetchSupportCategories1(): CancelablePromise<{
+    public static fetchReportReason(): CancelablePromise<{
         data?: ReportReasonTransformer;
     }> {
         return __request(OpenAPI, {

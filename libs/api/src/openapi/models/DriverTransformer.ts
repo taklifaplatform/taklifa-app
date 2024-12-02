@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { LiveLocationTransformer } from './LiveLocationTransformer';
 import type { LocationTransformer } from './LocationTransformer';
 import type { MediaTransformer } from './MediaTransformer';
 import type { SimpleCompanyTransformer } from './SimpleCompanyTransformer';
@@ -18,6 +19,7 @@ export type DriverTransformer = {
     avatar?: MediaTransformer;
     companies?: Array<SimpleCompanyTransformer>;
     location?: LocationTransformer;
+    live_location?: LiveLocationTransformer;
     location_id?: string;
     rating_stats?: {
         score?: number;

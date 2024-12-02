@@ -2,7 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { LiveLocationTransformer } from '../models/LiveLocationTransformer';
 import type { LocationTransformer } from '../models/LocationTransformer';
+import type { UpdateLiveLocationRequest } from '../models/UpdateLiveLocationRequest';
 import type { UpdateLocationRequest } from '../models/UpdateLocationRequest';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -70,6 +72,28 @@ export class LocationService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/locations',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation errors`,
+            },
+        });
+    }
+    /**
+     * User Store Location.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static updateLiveLocation({
+        requestBody,
+    }: {
+        requestBody: UpdateLiveLocationRequest,
+    }): CancelablePromise<{
+        data?: LiveLocationTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/locations/live-location/create',
             body: requestBody,
             mediaType: 'application/json',
             errors: {

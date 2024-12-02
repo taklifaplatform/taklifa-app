@@ -5,6 +5,7 @@ import React from 'react';
 import { Button, Text, XStack, YStack } from 'tamagui';
 import { useShipmentHelper } from '../../hooks';
 import { useRouter } from 'solito/router';
+import { t } from 'i18next';
 
 export type ShipmentInteractionProps = {
   shipment: ShipmentTransformer;
@@ -38,15 +39,15 @@ export const ShipmentInteraction: React.FC<ShipmentInteractionProps> = ({
   )
 
   return (
-    <ZixWidgetContainer label='Activities in this shipment' collapsible={false} labelPrepend={renderRenderViewInteractionButton()}>
+    <ZixWidgetContainer label={t('common:activity-in-this-shipment')} collapsible={false} labelPrepend={renderRenderViewInteractionButton()}>
       <YStack gap='$3'>
-        {renderOptionActivity('Proposals', shipment.proposals_count ?? 0)}
-        {renderOptionActivity('Invitations', shipment.invitations_count ?? 0)}
+        {renderOptionActivity(`${t('common:proposals')}`, shipment.proposals_count ?? 0)}
+        {renderOptionActivity(`${t('common:invitations')}`, shipment.invitations_count ?? 0)}
         {renderOptionActivity(
-          'Non answered invitations',
+          `${t('common:no-answered-invitations')}`,
           shipment.pending_invitations_count ?? 0,
         )}
-        {renderOptionActivity('Interviewing', shipment.accepted_proposals_count ?? 0)}
+        {renderOptionActivity(`${t('common:interviewing')}`, shipment.accepted_proposals_count ?? 0)}
       </YStack>
     </ZixWidgetContainer>
   );

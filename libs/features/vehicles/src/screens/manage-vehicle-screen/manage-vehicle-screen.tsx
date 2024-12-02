@@ -99,6 +99,7 @@ export const ManageVehicleScreen: React.FC = () => {
       refetchUser();
       toast.show('Company Updated Successfully!');
       router.back();
+      console.log('onSuccess::')
     },
     onError(error: any) {
       console.log('============')

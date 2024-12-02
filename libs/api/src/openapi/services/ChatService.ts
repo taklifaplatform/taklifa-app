@@ -21,7 +21,7 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class ChatService {
     /**
-     * Display a listing of the resource.
+     * Chat App Configuration.
      * @throws ApiError
      */
     public static chatApp(): CancelablePromise<void> {
@@ -50,7 +50,7 @@ export class ChatService {
         });
     }
     /**
-     * Display a listing of the resource.
+     * start chat.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -70,7 +70,7 @@ export class ChatService {
         });
     }
     /**
-     * Display a listing of the resource.
+     * Channel messages.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -94,7 +94,7 @@ export class ChatService {
         });
     }
     /**
-     * Display a listing of the resource.
+     * Create a new message in the chat channel.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -118,7 +118,7 @@ export class ChatService {
         });
     }
     /**
-     * Display a listing of the resource.
+     * Update a message in the chat channel.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -130,14 +130,14 @@ export class ChatService {
         data?: MessageTransformer;
     }> {
         return __request(OpenAPI, {
-            method: 'POST',
+            method: 'PUT',
             url: '/api/chat/messages/{messageId}',
             body: requestBody,
             mediaType: 'application/json',
         });
     }
     /**
-     * Display a listing of the resource.
+     * Delete a message in the chat channel.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -150,7 +150,7 @@ export class ChatService {
         });
     }
     /**
-     * Display a listing of the resource.
+     * Create a reaction for a message.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -169,7 +169,7 @@ export class ChatService {
         });
     }
     /**
-     * Display a listing of the resource.
+     * Display List of Replies for the chat message.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -188,7 +188,7 @@ export class ChatService {
         });
     }
     /**
-     * Display a listing of the resource.
+     * Upload an image to the chat channel.
      * @throws ApiError
      */
     public static uploadImage({
@@ -209,7 +209,6 @@ export class ChatService {
         });
     }
     /**
-     * Display a listing of the resource.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -233,7 +232,7 @@ export class ChatService {
         });
     }
     /**
-     * Display a listing of the resource.
+     * Mute a channel.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -252,7 +251,7 @@ export class ChatService {
         });
     }
     /**
-     * Display a listing of the resource.
+     * Unmute a channel.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -271,7 +270,7 @@ export class ChatService {
         });
     }
     /**
-     * Display a listing of the resource.
+     * Display List of Users for the chat.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -304,7 +303,7 @@ export class ChatService {
         });
     }
     /**
-     * Display a listing of the resource.
+     * Send an event to the chat channel.
      * @returns any Successful response
      * @throws ApiError
      */

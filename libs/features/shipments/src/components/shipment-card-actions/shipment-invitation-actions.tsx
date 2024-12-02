@@ -47,8 +47,8 @@ export const ShipmentInvitationActions: React.FC<ShipmentInvitationActionsProps>
 
   function onDeclinePress() {
     Alert.alert(
-      t('plain:Are you sure you want to decline this invitation?'),
-      t('plain:You will not be able to access this shipment after declining.'),
+      t('common:are-you-sure-decline-invitation'),
+      t('common:decline-message'),
       [
         {
           text: t('plain:Cancel'),
@@ -74,9 +74,9 @@ export const ShipmentInvitationActions: React.FC<ShipmentInvitationActionsProps>
       fontWeight="bold"
       backgroundColor='$color10'
       fontSize='$1'
-      onPress={() => router.push(`${urlPrefix}/${shipment.id}/invitations/${data?.data?.invitation?.id}/accept`)}
+      onPress={() => router.push(`/app/shipments/${shipment.id}/invitations/${data?.data?.invitation?.id}/accept`)}
     >
-      {t('plain:Accept Invitation')}
+     {t('common:accept-invitation')}
     </ZixButton>
   )
 
@@ -91,7 +91,7 @@ export const ShipmentInvitationActions: React.FC<ShipmentInvitationActionsProps>
       loading={isPending}
       onPress={onDeclinePress}
     >
-      {t('plain:Decline Invitation')}
+      {t('common:decline-invitation')}
     </ZixButton>
   )
 

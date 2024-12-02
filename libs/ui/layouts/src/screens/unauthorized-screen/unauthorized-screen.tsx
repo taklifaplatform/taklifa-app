@@ -40,7 +40,7 @@ export function UnauthorizedScreen(props: UnauthorizedScreenProps) {
         </Avatar>
         <H3>{t('common:app_name')}</H3>
         <Paragraph theme="alt1" textAlign="center">
-          Login to access the app
+         {t('common:login-to-access-app')}
         </Paragraph>
       </YStack>
       <SubmitButton themeInverse onPress={() => router.push('/auth/login')}>Login</SubmitButton>

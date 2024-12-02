@@ -77,7 +77,7 @@ export const ShipmentProposalActions: React.FC<ShipmentProposalActionsProps> = (
             fontWeight="bold"
             themeInverse
           >
-            {t('plain:Edit Proposal')}
+            {t('Edit Proposal')}
           </Button>
 
           <ZixButton

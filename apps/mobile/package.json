@@ -201,7 +201,8 @@
     "expo-camera": "*",
     "react-native-map-link": "*",
     "use-debounce": "*",
-    "querystring": "*"
+    "querystring": "*",
+    "@expo/vector-icons": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",

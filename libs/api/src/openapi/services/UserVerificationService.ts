@@ -45,7 +45,7 @@ export class UserVerificationService {
         });
     }
     /**
-     * Store a new user verification for the authenticated user.
+     * Store a new driver verification for the authenticated user.
      * @returns any Successful response
      * @throws ApiError
      */

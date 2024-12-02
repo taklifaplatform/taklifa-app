@@ -58,15 +58,15 @@ export const AboutUserTab: React.FC<AboutUserTabProps> = ({
   }
 
   const renderAbout = () => (!!user.about?.length) && (
-    <ZixWidgetContainer label={isServiceProvider(user) ? 'About Driver' : 'About'}>
-      <Text flex={1} color='black'>
+    <ZixWidgetContainer label={isServiceProvider(user) ? `${t('common:about-driver')}` : 'About'}>
+      <Text flex={1}>
         {user.about}
       </Text>
     </ZixWidgetContainer>
   )
 
   const renderCompaniesCarousel = () => !!user?.companies?.length && (
-    <ZixWidgetContainer label='Works With'>
+    <ZixWidgetContainer label={t('common:work-with')}>
       <Carousel
         {...baseOptions}
         key={user?.companies.length}

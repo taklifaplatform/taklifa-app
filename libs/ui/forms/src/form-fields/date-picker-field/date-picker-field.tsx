@@ -39,6 +39,7 @@ export const DatePickerField: React.FC<DatePickerFieldProps> = ({
         onChange={field.onChange}
         onBlur={field.onBlur}
         hasError={!!error?.errorMessage}
+        min_date={new Date()}
       />
     </FormFieldContainer>
   )

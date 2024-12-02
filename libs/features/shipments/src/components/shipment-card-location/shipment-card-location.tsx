@@ -2,6 +2,7 @@ import { PhoneCall, User } from '@tamagui/lucide-icons';
 import { LocationTransformer, ShipmentTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
+import moment from 'moment';
 import React from 'react';
 import { XStack, YStack, Text, Stack, ThemeableStackProps, View } from 'tamagui';
 
@@ -31,7 +32,7 @@ export const ShipmentCardLocation: React.FC<ShipmentCardLocationProps> = ({
       {...props}
     >
       <XStack justifyContent="space-between">
-        <Text fontWeight='bold'>{date}</Text>
+        <Text fontWeight='bold'>{moment(date).format('ll')}</Text>
         {location.is_primary ? (
           <View
             theme='accent'

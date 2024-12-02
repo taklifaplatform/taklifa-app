@@ -8,7 +8,7 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class MediaService {
     /**
-     * Update the authenticated user.
+     * Delete a temporary media.
      * @throws ApiError
      */
     public static deleteMedia({

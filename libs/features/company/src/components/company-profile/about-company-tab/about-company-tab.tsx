@@ -52,7 +52,7 @@ export const AboutCompanyTab: React.FC<AboutCompanyTabProps> = ({
   ) : null
 
   const renderAbout = () => (!!company.about?.length || isAuthMemberInThisCompany(company.id)) && (
-    <ZixWidgetContainer label='About Company' labelPrepend={renderAboutEditButton()}>
+    <ZixWidgetContainer label={t('common:about-company')} labelPrepend={renderAboutEditButton()}>
       <Text flex={1} color='black'>
         {company.about ?? 'N/A'}
       </Text>

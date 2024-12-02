@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { AcceptInvitationRequest } from '../models/AcceptInvitationRequest';
 import type { ProposalPermissionTransformer } from '../models/ProposalPermissionTransformer';
 import type { ShipmentProposalTransformer } from '../models/ShipmentProposalTransformer';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -84,7 +85,7 @@ export class ShipmentProposalService {
         });
     }
     /**
-     * Retrieve a shipment invitation.
+     * Retrieve a shipment proposal.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -107,7 +108,7 @@ export class ShipmentProposalService {
         });
     }
     /**
-     * Reject shipment invitation.
+     * Accept shipment invitation.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -145,10 +146,40 @@ export class ShipmentProposalService {
     }> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/shipments/{shipment}/proposals/{shipmentProposal}/reject',
+            url: '/api/shipments/{shipment}/proposals/{shipmentProposal}/decline',
             path: {
                 'shipment': shipment,
                 'shipmentProposal': shipmentProposal,
+            },
+        });
+    }
+    /**
+     * Decline shipment invitation.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static editShipmentProposal({
+        shipment,
+        shipmentProposal,
+        requestBody,
+    }: {
+        shipment: string,
+        shipmentProposal: string,
+        requestBody: AcceptInvitationRequest,
+    }): CancelablePromise<{
+        data?: ShipmentProposalTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/shipments/{shipment}/proposals/{shipmentProposal}/edit',
+            path: {
+                'shipment': shipment,
+                'shipmentProposal': shipmentProposal,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation errors`,
             },
         });
     }

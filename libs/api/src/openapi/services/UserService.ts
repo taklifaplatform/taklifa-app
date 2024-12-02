@@ -84,7 +84,7 @@ export class UserService {
         });
     }
     /**
-     * Update User email .
+     * Update User phone number .
      * @returns any Successful response
      * @throws ApiError
      */
@@ -103,7 +103,7 @@ export class UserService {
         });
     }
     /**
-     * Update the authenticated user.
+     * Update the authenticated user location.
      * @returns any Successful response
      * @throws ApiError
      */

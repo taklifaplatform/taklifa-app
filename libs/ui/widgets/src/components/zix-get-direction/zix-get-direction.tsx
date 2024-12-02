@@ -1,4 +1,5 @@
 import { LocationTransformer } from '@zix/api';
+import { t } from 'i18next';
 import React from 'react';
 
 import { Popup, ShowLocationProps } from 'react-native-map-link';
@@ -65,7 +66,7 @@ export const ZixGetDirection: React.FC<ZixGetDirectionProps> = ({
         }}
         themeInverse
       >
-        Get Direction
+        {t('common:get-direction')}
       </Button>
     </View>
   );

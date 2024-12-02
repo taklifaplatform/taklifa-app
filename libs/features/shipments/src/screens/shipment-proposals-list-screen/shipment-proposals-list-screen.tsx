@@ -1,11 +1,10 @@
 
 
 import { useQuery } from '@tanstack/react-query';
-import { ShipmentInvitationService, ShipmentProposalService } from '@zix/api';
+import { ShipmentProposalService } from '@zix/api';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { FlatList } from 'react-native';
 import { useShipment } from '../../hooks';
-import ShipmentInvitationCard from '../shipment-invitations-list-screen/shipment-invitation-card';
 import ShipmentProposalCard from './shipment-proposal-card';
 
 

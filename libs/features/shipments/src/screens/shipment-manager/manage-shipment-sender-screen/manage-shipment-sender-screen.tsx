@@ -14,6 +14,7 @@ import { FormProvider, Theme } from 'tamagui';
 import { z } from 'zod';
 import { ShipmentManagerHeader } from '../../../components/shipment-manager/shipment-manager-header/shipment-manager-header';
 import { SHARED_SHIPMENT_MANAGER_FIELD_PROPS } from '../configs';
+import moment from 'moment';
 
 const { useParam } = createParam<{
   shipment?: string,
@@ -50,9 +51,17 @@ export function ManageShipmentSenderScreen() {
           requestBody
         })
       }
+      const invitations = []
+      if (selectedDriverId) {
+        invitations.push({ driver_id: selectedDriverId })
+      }
+      if (selectedCompanyId) {
+        invitations.push({ company_id: selectedCompanyId })
+      }
       return ShipmentService.storeShipment({
         requestBody: {
           ...requestBody,
+          invitations,
           selected_driver_id: selectedDriverId,
           selected_company_id: selectedCompanyId,
         }
@@ -91,7 +100,10 @@ export function ManageShipmentSenderScreen() {
   const shipment = useMemo(() => ({
     selected_driver_id: selectedDriverId,
     selected_company_id: selectedCompanyId,
-    ...(data?.data || {}),
+    ...(data?.data || {
+      pick_date: moment().add(1, 'days').toDate(),
+      drop_date: moment().add(2, 'days').toDate(),
+    }),
   }), [data?.data, selectedDriverId, selectedCompanyId])
 
 
@@ -108,7 +120,10 @@ export function ManageShipmentSenderScreen() {
           schema={CreateShipmentSchema}
           props={{
             from_location: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
-            pick_date: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
+            pick_date: {
+              ...SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
+              min_date: moment().toDate()
+            },
             pick_time: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
           }}
           defaultValues={shipment}

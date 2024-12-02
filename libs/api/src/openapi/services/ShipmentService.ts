@@ -10,7 +10,7 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class ShipmentService {
     /**
-     * Fetch all shipments.
+     * Fetch all shipments filters.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -112,7 +112,7 @@ export class ShipmentService {
         });
     }
     /**
-     * store a new shipment.
+     * Store a new shipment.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -154,7 +154,7 @@ export class ShipmentService {
         });
     }
     /**
-     * update a shipment.
+     * Update a shipment.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -181,7 +181,7 @@ export class ShipmentService {
         });
     }
     /**
-     * destroy a shipment.
+     * Destroy a shipment.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -201,7 +201,7 @@ export class ShipmentService {
         });
     }
     /**
-     * confirm a shipment.
+     * Confirm a shipment.
      * @returns any Successful response
      * @throws ApiError
      */

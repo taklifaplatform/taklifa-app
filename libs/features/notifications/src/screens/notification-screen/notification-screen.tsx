@@ -7,6 +7,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { SectionList, SectionListData, } from 'react-native';
 import { H4, Text, View, XStack } from 'tamagui';
 import { NotificationCard } from '../components/NotificationCard';
+import { t } from 'i18next';
 
 /* eslint-disable-next-line */
 export interface NotificationScreenProps { }
@@ -84,7 +85,7 @@ export function NotificationScreen(props: NotificationScreenProps) {
     <ScreenLayout authProtected>
       <AppHeader
         showBackButton
-        title="Notifications"
+        title={t('common:notification')}
         showSearchBar
         searchProps={{
           value: search,
@@ -100,7 +101,7 @@ export function NotificationScreen(props: NotificationScreenProps) {
         ListEmptyComponent={() => (
           <View flex={1} alignItems='center' gap="$8">
             <CustomIcon name="empty_notification" size="$18" color="$color5" />
-            <H4>No Notification Found!</H4>
+            <H4>{t('common:no-notification-found')}</H4>
           </View>
         )}
         renderItem={({ item, index }) => <NotificationCard key={`${item.id}-${index}`} notification={item} />}

@@ -26,12 +26,10 @@ const ProfileSchema = z
       .describe('Avatar // Upload avatar')
       .nullable()
       .optional(),
-    username: formFields.text.describe('Username // Enter your username'),
-    name: formFields.text.describe('Name // John Doe'),
-    phone_number: formFields.phone.describe('Phone Number // 1234567890'),
-    about: formFields.textarea.describe(
-      'About // Tell us a bit about yourself',
-    ),
+    username: formFields.text.describe(`${t('forms:username')}`),
+    name: formFields.text.describe(`${t('forms:name')}`),
+    phone_number: formFields.phone.describe(`${t('forms:phone_number')}`),
+    about: formFields.textarea.describe(`${t('forms:about')}`),
   })
   .required({
     name: true,
@@ -68,7 +66,7 @@ export const EditAccountScreen = () => {
   if (!user?.id) {
     return <FullScreenSpinner />;
   }
-  
+
 
   return (
     <ScreenLayout safeAreaBottom>

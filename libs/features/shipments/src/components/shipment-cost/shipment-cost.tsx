@@ -1,5 +1,6 @@
 import { ShipmentTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
+import { t } from 'i18next';
 import React from 'react';
 import { H6, Text, XStack } from 'tamagui';
 
@@ -23,15 +24,15 @@ export const ShipmentCost: React.FC<ShipmentCostProps> = ({
       <XStack gap="$3" alignItems="center">
         <CustomIcon name="paper_money" size='$1.5' color={'$color1'} />
         <H6 textTransform='none'>
-          Total cost of shipment
+          {t('common:total-cost-of-shipment')}
         </H6>
       </XStack>
       <XStack gap="$1" alignItems='flex-end' $gtSm={{ gap: '$3' }}>
         <Text fontSize={20} fontWeight='bold'>
-          {shipment?.max_budget?.value}
+          {shipment?.max_budget?.value || 0}
         </Text>
         <Text fontSize={15} fontWeight='bold'>
-          {shipment.max_budget?.currency?.code}
+          {shipment.max_budget?.currency?.code || 0}
         </Text>
       </XStack>
     </XStack>

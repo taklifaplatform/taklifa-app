@@ -1,9 +1,11 @@
 import { useIsFocused } from '@react-navigation/native';
 import { ScanBarcode, X } from '@tamagui/lucide-icons';
+import * as Location from 'expo-location';
 import { useQuery } from '@tanstack/react-query';
-import { CompaniesService, DriverTransformer, DriversService } from '@zix/api';
+import { CompaniesService, DriverTransformer, DriversService, LocationService } from '@zix/api';
 import { UserCard } from '@zix/features/users';
 import { USER_ROLES, useAuth } from '@zix/services/auth';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { MapCompanyMarker, MapDriverMarker } from '@zix/ui/sawaeed';
@@ -31,16 +33,13 @@ const initialCamera = {
 };
 
 export function HomeScreen() {
-  console.log("======================")
-  console.log("HomeScreen->RENDER ::", Date.now())
-
   const USER_CARD_WIDTH = width;
   const USER_CARD_HEIGHT = Math.max(260, height / 4);
 
   const mapRef = useRef<MapView>(null);
   const carouselRef = useRef<ICarouselInstance>(null);
   const router = useRouter();
-  const { getUrlPrefix } = useAuth();
+  const { getUrlPrefix, user } = useAuth();
 
   const [filters, setFilters] = useState({
     vehicle_model: 'all',
@@ -84,6 +83,47 @@ export function HomeScreen() {
     });
   }, [data?.data, selectedDriver]);
 
+  // TODO:: Get user location when role is driver
+
+  const [driverLocation, setDriverLocation] = useState(null)
+  const getDriverLocation = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      console.log('Permission to access location was denied');
+      return;
+    }
+
+    const location = await Location.getCurrentPositionAsync({});
+    setDriverLocation(location?.coords);
+    LocationService.updateLiveLocation({
+      requestBody: {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+      }
+    })
+  }
+
+  const updateLocationInterval = useRef<NodeJS.Timeout | null>(null);
+  useEffect(() => {
+    setDriverLocation(null)
+    if (
+      ![USER_ROLES.solo_driver, USER_ROLES.company_driver].includes(user.active_role?.name as any)) {
+      return;
+    }
+    if (driverLocation?.latitude) {
+      updateLocationInterval.current = setInterval(() => {
+        getDriverLocation();
+      }, 1000 * 60 * 5);
+    }
+    getDriverLocation();
+    return () => {
+      if (updateLocationInterval.current) {
+        clearInterval(updateLocationInterval.current);
+      }
+    }
+  }, [user]);
+
+
   const [showCarousel, setShowCarousel] = useState(false);
 
   // on, Swipe item MAP Animation
@@ -98,8 +138,8 @@ export function HomeScreen() {
       mapRef.current.animateCamera(
         {
           center: {
-            latitude: Number(driver.location.latitude),
-            longitude: Number(driver.location.longitude),
+            latitude: Number(driver.live_location?.latitude || driver.location.latitude),
+            longitude: Number(driver.live_location?.longitude || driver.location.longitude),
           },
           zoom: 16,
         },
@@ -215,14 +255,14 @@ export function HomeScreen() {
         style={{ flex: 1 }}
         initialCamera={initialCamera}
         onPress={() => Keyboard.dismiss()}
+        showsUserLocation={!!driverLocation}
+        showsMyLocationButton={false}
         onTouchStart={() => {
           if (!isMapFullScreen) animateOut();
-          console.log('onTouchStart');
         }
         }
         onTouchEnd={() => {
           if (isMapFullScreen) animateIn();
-          console.log('onTouchEnd');
         }
         }
       >
@@ -280,6 +320,27 @@ export function HomeScreen() {
         {showMap ? 'القائمة' : 'الخريطة'}
       </Button>
     );
+
+  // center user location
+  const renderCenterButton = () => driverLocation?.latitude && (
+    <Button
+      theme="accent"
+      icon={<MaterialIcons name="my-location" size={20} color="black" />}
+      circular
+      position="absolute"
+      bottom="$3"
+      right="$4"
+      onPress={() => {
+        mapRef?.current?.animateCamera({
+          center: {
+            latitude: parseFloat(driverLocation?.latitude),
+            longitude: parseFloat(driverLocation?.longitude),
+          },
+          zoom: 16,
+        });
+      }}
+    />
+  )
 
   const renderFilters = () => (
     <View position='absolute' top={1}>
@@ -348,27 +409,29 @@ export function HomeScreen() {
   return (
     <ScreenLayout>
       <YStack flex={1}>
-        {!isMapFullScreen && (
-          <Animated.View
-            style={{
-              opacity: animationValue, // Control visibility with opacity
-            }}
-          >
-            <AppHeader
-              showSearchBar
-              searchProps={{
-                value: search,
-                onChangeText: setSearch,
-                rightIcon: () => (showMap ? <ScanBarcode size="$1.5" /> : null),
-              }}
-            />
-          </Animated.View>
-        )}
+        <AppHeader
+          showSearchBar
+          searchProps={{
+            value: search,
+            onChangeText: setSearch,
+            rightIcon: () => (
+              search && search.length > 0 ? (
+                <Button
+                unstyled
+                  theme="accent"
+                  icon={<MaterialIcons name="cancel" size={24} color={'grey'} />}
+                  onPress={() => setSearch('')}
+                />
+              ) : null
+            ),
+          }}
+        />
         <YStack flex={1} position='relative'>
           {renderMap()}
           {!isMapFullScreen && renderList()}
           {!isMapFullScreen && !isKeyboardVisible && renderCarousel()}
           {!isMapFullScreen && !isKeyboardVisible && renderSwitcher()}
+          {!isMapFullScreen && driverLocation && showMap && renderCenterButton()}
           {!isMapFullScreen && !isKeyboardVisible && renderFilters()}
         </YStack>
       </YStack>

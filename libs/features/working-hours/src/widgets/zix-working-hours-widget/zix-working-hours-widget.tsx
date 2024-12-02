@@ -78,7 +78,7 @@ export const ZixWorkingHoursWidget: React.FC<ZixWorkingHoursWidgetProps> = ({
   }
 
   return (
-    <ZixWidgetContainer label='Working Hours' labelPrepend={renderEditButton()}>
+    <ZixWidgetContainer label={t('common:working-hours')} labelPrepend={renderEditButton()}>
       <YStack gap='$2'>
         {days.map((day, index) => (
           <XStack
@@ -95,7 +95,7 @@ export const ZixWorkingHoursWidget: React.FC<ZixWorkingHoursWidgetProps> = ({
               paddingRight="$2"
               width={100}
             >
-              {moment(day, 'dddd').format('dddd')}
+              {t(`app:days.${day}`)}
             </Text>
             {renderWorkingHours(day)}
           </XStack>

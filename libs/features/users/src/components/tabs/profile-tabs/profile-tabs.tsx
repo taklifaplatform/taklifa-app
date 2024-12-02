@@ -1,5 +1,6 @@
 import { DriverTransformer } from '@zix/api';
 import React, { useMemo } from 'react';
+import { t } from 'i18next';
 
 import { ZixTab } from '@zix/ui/common';
 import AboutUserTab from '../about-user-tab/about-user-tab';
@@ -18,7 +19,7 @@ export const ProfileTabs: React.FC<ProfileTabsProps> = ({
     const _tabs = [
       {
         key: 'about',
-        title: 'About',
+        title: `${t('common:tab-about')}`,
         content: <AboutUserTab user={user} />
       }
     ]
@@ -26,14 +27,14 @@ export const ProfileTabs: React.FC<ProfileTabsProps> = ({
     if (user.vehicle) {
       _tabs.push({
         key: 'vehicle',
-        title: 'Vehicle',
+        title: `${t('common:tab-vehicles')}`,
         content: <UserVehicleTab user={user} />
       })
     }
 
     _tabs.push({
       key: 'reviews',
-      title: 'Reviews',
+      title: `${t('common:tab-review')}`,
       content: <UserReviewsTab user={user} />
     })
     return _tabs

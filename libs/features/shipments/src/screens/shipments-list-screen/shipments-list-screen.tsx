@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { ShipmentFilterTransformer, ShipmentService } from '@zix/api';
-import { DataNotFound, ZixButton } from '@zix/ui/common';
+import { ZixButton } from '@zix/ui/common';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
@@ -8,8 +8,9 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useAuth } from '@zix/services/auth';
 import { FlatList } from 'react-native';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
-import { Circle, Stack, Text, View, YStack, useMedia, useStyle } from 'tamagui';
+import { Circle, H4, Text, Stack, View, YStack, useMedia, useStyle } from 'tamagui';
 import ShipmentCard from '../../components/shipment-card/shipment-card';
+import { CustomIcon } from '@zix/ui/icons';
 
 export type ShipmentsListScreenProps = {
   variant: 'shipments' | 'jobs';
@@ -146,11 +147,12 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
           )}
           ListEmptyComponent={() =>
             !isLoading ? (
-              <DataNotFound
-                message={t('shipment:shipment-not-found')}
-                description={t('shipment:shipment-not-found-description')}
-                imageUrl="/assets/shipmentNotFound.png"
-              />
+              <View flex={1} alignItems='center' gap="$8" paddingTop="$8">
+                <CustomIcon name="empty_data" size="$18" color="$color5" />
+                <H4>{t('shipment:shipment-not-found')}</H4>
+                <Text>{t('shipment:shipment-not-found-description')}</Text>
+              </View>
+
             ) : null
           }
         />

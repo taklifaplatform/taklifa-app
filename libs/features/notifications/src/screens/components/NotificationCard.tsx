@@ -1,9 +1,9 @@
 import { NotificationTransformer } from '@zix/api';
+import { useNotification } from '@zix/services/push-notification';
 import { UserAvatar, ZixAvatar } from '@zix/ui/common';
 import moment from 'moment';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { useRouter } from 'solito/router';
 import { Text, XStack, YStack } from 'tamagui';
 
 
@@ -14,16 +14,9 @@ export type NotificationCardProps = {
 export const NotificationCard: React.FC<NotificationCardProps> = ({
   notification,
 }) => {
-  const router = useRouter()
-
+  const { handleNotificationRedirection } = useNotification()
   function onPress() {
-    switch (notification.data?.type) {
-      case 'DriverShipmentNewInvitationNotification':
-        router.push(`/app/shipments/${notification.data.model_id}`)
-        break
-      default:
-        break
-    }
+    handleNotificationRedirection(notification.data)
   }
 
   return (

@@ -9,7 +9,7 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class CompanyInvitationsService {
     /**
-     * Fetch All Company New Members Invitations.
+     * Fetch All Company Invitations.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -69,7 +69,7 @@ export class CompanyInvitationsService {
         });
     }
     /**
-     * Invite New Driver to Company
+     * Invite Driver to Company.
      * @returns void
      * @throws ApiError
      */
@@ -94,7 +94,7 @@ export class CompanyInvitationsService {
         });
     }
     /**
-     * Retrieve a Manager of Company.
+     * Retrieve Company Invitation.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -131,7 +131,7 @@ export class CompanyInvitationsService {
         requestBody: UpdateInvitationRequest,
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
-            method: 'POST',
+            method: 'PUT',
             url: '/api/admin/companies/{company}/invitation/{companyInvitation}',
             path: {
                 'company': company,
