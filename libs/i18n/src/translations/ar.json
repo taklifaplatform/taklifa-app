@@ -378,7 +378,17 @@
     "address": "العنوان",
     "select-location-on-map": "حدد الموقع على الخريطة",
     "no-vehicles-found": "لم يتم العثور على مركبات",
-    "no-member-yet": "لا يوجد أعضاء بعد"
+    "no-member-yet": "لا يوجد أعضاء بعد",
+    "total-cost-of-shipment": "التكلفة الإجمالية للشحن",
+    "get-direction": "الحصول على الاتجاه",
+    "accept-invitation": "قبول الدعوة",
+    "decline-invitation": "رفض الدعوة",
+    "activity-in-this-shipment": "النشاط في هذه الشحنة",
+    "proposals": "العروض",
+    "invitations": "الدعوات",
+    "no-answered-invitations": "لا توجد دعوات مجابة",
+    "interviewing": "المقابلات",
+    "budget": "الميزانية"
   },
   "cookies-banner": {
     "section-1": {

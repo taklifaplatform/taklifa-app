@@ -330,7 +330,17 @@
     "how-was-your-experience-with": "How was your experience with",
     "enter-your-detail-input-placeholder": "Enter your details...",
     "no-vehicles-found": "No vehicles found",
-    "no-member-yet": "No members yet"
+    "no-member-yet": "No members yet",
+    "total-cost-of-shipment": "Total cost of shipment",
+    "get-direction": "Get Direction",
+    "accept-invitation": "Accept Invitation",
+    "decline-invitation": "Delete Invitation",
+    "activity-in-this-shipment": "Activities in this shipment",
+    "proposals": "Proposals",
+    "invitations": "Invitations",
+    "no-answered-invitations": "No answered invitations",
+    "interviewing": "Interviewing",
+    "budget": "Budget"
   },
   "cookies-banner": {
     "section-1": {

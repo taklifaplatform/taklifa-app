@@ -38,7 +38,7 @@ export const ShipmentBudget: React.FC<ShipmentBudgetProps> = ({
 
 
   return (
-    <ZixWidgetContainer label={t('job:budget')}>
+    <ZixWidgetContainer label={t('common:budget')}>
       <XStack gap="$4" paddingVertical="$4">
         {renderCardBudget(
           t('shipment:lower'),
