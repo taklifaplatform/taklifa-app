@@ -271,6 +271,7 @@
     "add": "Add",
     "cancel": "Cancel",
     "remove": "Remove",
+    "submite-review": "Submite",
     "view": "View",
     "edit": "Edit",
     "delete": "Delete",
@@ -314,7 +315,14 @@
     "work-with": "Work with",
     "tab-about": "About",
     "tab-vehicles": "Vehicle",
-    "tab-review": "Reviews"
+    "tab-drivers": "Drivers",
+    "tab-review": "Reviews",
+    "vehicle-images": "Vehicle Images",
+    "customer-evaulation": "Customer evaluation",
+    "about-company": "About Company",
+    "working-hours": "Working Hours",
+    "how-was-your-experience-with": "How was your experience with",
+    "enter-your-detail-input-placeholder": "Enter your details..."
   },
   "cookies-banner": {
     "section-1": {

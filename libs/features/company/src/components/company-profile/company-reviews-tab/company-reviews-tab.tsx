@@ -4,6 +4,7 @@ import { CompanyTransformer, RatingService, UpdateRatingRequest } from '@zix/api
 import { RatingCard, RatingStars, ZixButton } from '@zix/ui/common';
 import { ZixInput } from '@zix/ui/forms';
 import { ZixWidgetContainer } from '@zix/ui/widgets';
+import { t } from 'i18next';
 import { useCallback, useState } from 'react';
 import {
   Button,
@@ -70,7 +71,7 @@ export const CompanyReviewsTab: React.FC<CompanyReviewsTabProps> = ({
   const renderRatingInput = () => (!isSuccess) && (
     <YStack alignItems="center" gap='$4'>
       <Text fontWeight="600" fontSize="$4" paddingTop="$4">
-        How was your experience with
+        {t('common:how-was-your-experience-with')}
       </Text>
       <Text fontWeight="bold" fontSize="$4">
         {company.name}
@@ -78,7 +79,7 @@ export const CompanyReviewsTab: React.FC<CompanyReviewsTabProps> = ({
       <RatingStars score={score} onChange={setScore} size='$1.5' />
 
       <ZixInput
-        placeholder="Enter your details..."
+        placeholder={t('common:enter-your-detail-input-placeholder')}
         isMultiline
         value={comment}
         onChangeText={setComment}
@@ -91,7 +92,7 @@ export const CompanyReviewsTab: React.FC<CompanyReviewsTabProps> = ({
           theme='accent'
           onPress={onSubmitRatings}
         >
-          Submit
+          {t('common:submite-review')}
         </ZixButton>
         <Button
           size='$5'
@@ -99,7 +100,7 @@ export const CompanyReviewsTab: React.FC<CompanyReviewsTabProps> = ({
           themeInverse
           onPress={onRatingRemove}
         >
-          Remove
+          {t('common:remove')}
         </Button>
       </XStack>
       <View
@@ -115,7 +116,7 @@ export const CompanyReviewsTab: React.FC<CompanyReviewsTabProps> = ({
   return (
     <YStack flex={1}>
       {renderRatingInput()}
-      <ZixWidgetContainer label='Customer evaluation'>
+      <ZixWidgetContainer label={`${t('common:customer-evaulation')}`}>
         <YStack gap='$4'>
           {data?.data?.map((item, index) => (
             <RatingCard item={item} key={`${item.id}-${index}`} />

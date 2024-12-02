@@ -296,7 +296,14 @@
     "about-driver": "عن السائق",
     "tab-about": "معلومات عنا",
     "tab-vehicles": "السيارات",
+    "tab-drivers": "السائقين",
     "tab-review": "تعليقات المستخدمين",
+    "vehicle-images": "صور السيارات",
+    "customer-evaulation": "تقييم العميل",
+    "about-company": "عن الشركة",
+    "working-hours": "ساعات العمل",
+    "how-was-your-experience-with": "كيف كانت تجربتك مع",
+    "enter-your-detail-input-placeholder": "أدخل تفاصيلك هنا",
     "user_types": {
       "individual": "فرد",
       "company": "شركة"
@@ -325,6 +332,7 @@
     "add": "إضافة",
     "cancel": "إلغاء",
     "remove": "حذف",
+    "submite-review": "أضفه",
     "view": "عرض",
     "edit": "تعديل",
     "delete": "حذف",

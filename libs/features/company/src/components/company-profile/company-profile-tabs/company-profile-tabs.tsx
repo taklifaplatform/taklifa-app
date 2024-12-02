@@ -7,6 +7,7 @@ import AboutCompanyTab from '../about-company-tab/about-company-tab';
 import CompanyVehiclesTab from '../company-vehicles-tab/company-vehicles-tab';
 import CompanyDriversTab from '../company-drivers-tab/company-drivers-tab';
 import CompanyReviewsTab from '../company-reviews-tab/company-reviews-tab';
+import { t } from 'i18next';
 
 export type ProfileTabsProps = {
   company: CompanyTransformer
@@ -20,7 +21,7 @@ export const CompanyProfileTabs: React.FC<ProfileTabsProps> = ({
     const _tabs = [
       {
         key: 'about',
-        title: 'About',
+        title: `${t('common:tab-about')}`,
         content: <AboutCompanyTab company={company} />
       }
     ]
@@ -28,20 +29,20 @@ export const CompanyProfileTabs: React.FC<ProfileTabsProps> = ({
     if (company.vehicles_count) {
       _tabs.push({
         key: 'vehicles',
-        title: 'Vehicles',
+        title: `${t('common:tab-vehicles')}`,
         content: <CompanyVehiclesTab company={company} />
       })
     }
 
     _tabs.push({
       key: 'drivers',
-      title: 'Drivers',
+      title: `${t('common:tab-drivers')}`,
       content: <CompanyDriversTab company={company} />
     })
 
     _tabs.push({
       key: 'reviews',
-      title: 'Reviews',
+      title: `${t('common:tab-review')}`,
       content: <CompanyReviewsTab company={company} />
     })
     return _tabs
