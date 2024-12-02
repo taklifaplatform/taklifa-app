@@ -23,10 +23,10 @@ const { useParam } = createParam<{ company: string }>();
 
 const UpdateCompanyFormSchema = z
   .object({
-    logo: formFields.image.describe('Logo // Add Company Logo').optional(),
+    logo: formFields.image.describe(`Logo // ${t('common:add-company-logo')}`).optional(),
     name: formFields.text.min(2).max(150).describe(t('forms:company_name')),
-    about: formFields.textarea.describe('About // Enter company description'),
-    location_id: formFields.location.describe('Company Location // Enter company location'),
+    about: formFields.textarea.describe(`${t('common:tab-about')} // ${t('common:enter-your-detail-input-placeholder')}`),
+    location_id: formFields.location.describe(`${t('common:company-location')} // ${t('common:enter-company-location')}`),
   })
   .required({
     name: true,
@@ -97,7 +97,7 @@ export const UpdateCompanyScreen: React.FC = () => {
 
   return (
     <ScreenLayout safeAreaBottom authProtected>
-      <AppHeader showBackButton title="Update Company" />
+      <AppHeader showBackButton title={t('common:update-company')} />
       {renderForm()}
       {renderLoading()}
     </ScreenLayout>
