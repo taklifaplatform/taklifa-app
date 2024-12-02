@@ -61,7 +61,7 @@ export const VehiclesListScreen: React.FC<VehiclesListScreenProps> = ({
           </View>
         }
       />
-      {!data?.data.length && renderFabButton()}
+      {!data?.data.length && showHeader && renderFabButton()}
     </ScreenLayout>
   );
 }
