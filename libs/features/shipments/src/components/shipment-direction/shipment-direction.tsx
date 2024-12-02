@@ -64,7 +64,7 @@ export const ShipmentDirection: React.FC<ShipmentDirectionProps> = ({
           </XStack>
          <ShipmentCardLocation
             location={shipment.to_location || {}}
-            date={shipment.pick_date || ''}
+            date={shipment.deliver_date || ''}
             phone_number={shipment.recipient_phone || ''}
             userName={shipment.recipient_name || ''}
             borderColor={shipment.status === 'cancelled' ? '$red9' : '$color9'}

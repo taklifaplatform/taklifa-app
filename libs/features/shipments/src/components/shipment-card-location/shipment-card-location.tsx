@@ -32,7 +32,7 @@ export const ShipmentCardLocation: React.FC<ShipmentCardLocationProps> = ({
       {...props}
     >
       <XStack justifyContent="space-between">
-        <Text fontWeight='bold'>{moment(date).format('LLLL')}</Text>
+        <Text fontWeight='bold'>{moment(date).format('ll')}</Text>
         {location.is_primary ? (
           <View
             theme='accent'
