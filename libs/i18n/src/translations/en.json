@@ -81,7 +81,9 @@
       "all": "All",
       "service-provider-type": "Service Provider Type",
       "company": "Company",
-      "solo-driver": "Solo Driver"
+      "solo-driver": "Solo Driver",
+      "sign-out": "Sign Out",
+      "sign-out-message": "Are you sure you want to Sign out?"
 
     },
     "company": {

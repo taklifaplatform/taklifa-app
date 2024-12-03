@@ -395,7 +395,9 @@
     "decline-message": "لن تتمكن من الوصول إلى هذه الشحنة بعد رفضها",
     "no-notification-found": "لم يتم العثور على إشعارات",
     "notification": "الإشعارات",
-    "login-to-access-app": "سجل الدخول للوصول إلى التطبيق"
+    "login-to-access-app": "سجل الدخول للوصول إلى التطبيق",
+    "sign-out": "تسجيل الخروج",
+    "sign-out-message": "هل أنت متأكد من تسجيل الخروج؟"
   },
   "cookies-banner": {
     "section-1": {

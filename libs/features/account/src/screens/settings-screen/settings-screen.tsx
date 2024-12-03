@@ -301,16 +301,16 @@ const SettingsItemLogoutAction = () => {
       onPress={async () => {
         Platform.OS === 'web' ? logout() :
           Alert.alert(
-            'Sign Out',
-            `Are you sure you want to Sign Out?`,
+            `${t('common:sign-out')}`,
+            `${t('common:sign-out-message')}`,
             [
               {
-                text: 'Sign Out',
+                text: `${t('common:sign-out')}`,
                 onPress: () => logout(),
                 style: 'cancel',
               },
               {
-                text: 'Cancel',
+                text: `${t('common:cancel')}`,
                 style: 'destructive',
               },
             ]
