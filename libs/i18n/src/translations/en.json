@@ -349,7 +349,8 @@
     "notification": "Notifications",
     "login-to-access-app": "Login to access the app",
     "sign-out": "Sign Out",
-    "sign-out-message": "Are you sure you want to Sign out?"
+    "sign-out-message": "Are you sure you want to Sign out?",
+    "delete-account-message": "Are you sure you want to delete your account?"
   },
   "cookies-banner": {
     "section-1": {

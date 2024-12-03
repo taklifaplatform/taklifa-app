@@ -397,7 +397,8 @@
     "notification": "الإشعارات",
     "login-to-access-app": "سجل الدخول للوصول إلى التطبيق",
     "sign-out": "تسجيل الخروج",
-    "sign-out-message": "هل أنت متأكد من تسجيل الخروج؟"
+    "sign-out-message": "هل أنت متأكد من تسجيل الخروج؟",
+    "delete-account-message": "هل أنت متأكد من حذف الحساب؟"
   },
   "cookies-banner": {
     "section-1": {

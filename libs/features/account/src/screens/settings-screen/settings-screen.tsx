@@ -336,17 +336,17 @@ const SettingsDeleteAccountAction = () => {
       onPress={async () => {
         Platform.OS === 'web' ? UserService.deleteAccount().then(() => logout()) :
           Alert.alert(
-            'Delete Account',
-            `Are you sure you want to delete your account?`,
+            `${t('common:delete-account')}`,
+            `${t('common:delete-account-message')}`,
             [
               {
-                text: 'Confirm',
+                text: `${t('common:delete-account')}`,
                 onPress: () => UserService.deleteAccount()
                   .then(() => logout()),
                 style: 'cancel',
               },
               {
-                text: 'Cancel',
+                text: `${t('common:cancel')}`,
                 style: 'destructive',
               },
             ]
