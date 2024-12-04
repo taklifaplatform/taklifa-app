@@ -26,7 +26,7 @@ export const ShipmentCardActions: React.FC<ShipmentCardActionsProps> = (props) =
 
   const router = useRouter();
   const { isAuthOwner } = useShipmentHelper({ shipment })
-
+  const isCancelled = shipment.status === 'cancelled';
 
   const renderShipmentEdit = () => (isAuthOwner && !isDetail) && (
     <ShipmentOwnerActions shipment={shipment}>
@@ -99,6 +99,7 @@ export const ShipmentCardActions: React.FC<ShipmentCardActionsProps> = (props) =
       </XStack>
       <ShipmentProposalActions
         {...props}
+        isCancelled={isCancelled}
       />
       <ShipmentInvitationActions
         {...props}

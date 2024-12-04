@@ -14,6 +14,7 @@ export type ShipmentProposalActionsProps = {
   variant: 'shipments' | 'jobs';
   urlPrefix: string;
   isDetail?: boolean;
+  isCancelled?: boolean;
 };
 
 export const ShipmentProposalActions: React.FC<ShipmentProposalActionsProps> = ({
@@ -21,6 +22,7 @@ export const ShipmentProposalActions: React.FC<ShipmentProposalActionsProps> = (
   urlPrefix,
   variant,
   isDetail,
+  isCancelled
 }) => {
   const router = useRouter();
 
@@ -70,14 +72,14 @@ export const ShipmentProposalActions: React.FC<ShipmentProposalActionsProps> = (
             <Text fontWeight='600'>{proposal.fee?.currency?.code}</Text>
           </XStack>
         </XStack>
-        <XStack gap='$2'>
+       {!isCancelled && <XStack gap='$2'>
           <Button
             onPress={() => router.push(`${urlPrefix}/${shipment.id}/proposals/${proposal.id}/edit`)}
             flex={1}
             fontWeight="bold"
             themeInverse
           >
-            {t('Edit Proposal')}
+            {t('common:edit-proposal')}
           </Button>
 
           <ZixButton
@@ -87,7 +89,7 @@ export const ShipmentProposalActions: React.FC<ShipmentProposalActionsProps> = (
             disabledStyle={{ backgroundColor: '$color8' }}
             onPress={() => router.push(`/app/chat/channels/${permission.proposal?.channel_id}`)}
           />
-        </XStack>
+        </XStack>}
       </YStack>
 
     );

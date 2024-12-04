@@ -78,13 +78,13 @@ const ZixVariantOptionsWidgetText = styled(Text, {
   }
 });
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
+//const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export const ZixVariantOptionsWidget: React.FC<
   ZixVariantOptionsWidgetProps
 > = ({ icon, label, options, labelBold, optionVariant, variant, labelContainerProps = {}, ...props }) => {
   return (
-    <YStack width={SCREEN_WIDTH * 0.6}>
+    <YStack>
       {
         !!label && (
           <Stack

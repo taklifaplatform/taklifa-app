@@ -33,7 +33,7 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
 }) => {
   const { activeRole, getUrlPrefix } = useAuth();
   const { shipment, isLoading, refetch } = useShipment({ variant })
-
+  const isCancelled = shipment?.status === 'cancelled';
 
   const urlPrefix = useMemo(() => {
     return `${getUrlPrefix}/${variant}`;
@@ -66,7 +66,7 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
               <YStack gap="$2">
                 {shipment?.items?.map((item, index) => (
                   <Text key={`shipment-note-${item.id}-${index}`}>
-                    {item.notes}
+                    {item.notes ||''}
                   </Text>
                 ))}
               </YStack>
@@ -136,7 +136,7 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
       <AppHeader
         showBackButton
         title={t('job:job-demand')}
-        headerRight={() => !!shipment?.id && (
+        headerRight={() => !!shipment?.id && !isCancelled && (
           <ShipmentOwnerActions shipment={shipment}>
             {({ onPress }) => (
               <Button

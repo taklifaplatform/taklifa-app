@@ -398,7 +398,17 @@
     "login-to-access-app": "سجل الدخول للوصول إلى التطبيق",
     "sign-out": "تسجيل الخروج",
     "sign-out-message": "هل أنت متأكد من تسجيل الخروج؟",
-    "delete-account-message": "هل أنت متأكد من حذف الحساب؟"
+    "delete-account-message": "هل أنت متأكد من حذف الحساب؟",
+    "cancel-contract": "إلغاء العقد",
+    "chat-contract": "محادثه",
+    "cancelled-contract": "تم إلغاء العقد",
+    "edit-proposal": "تعديل العرض",
+    "cancel-contract-message": "هل أنت متأكد من إلغاء العقد؟",
+    "contract-removed": "خدمة ملغاة",
+    "contract-removed-message": "سبب إلغاء الخدمة: المستلم غير موجود أو تم الإزالة يدويًا، يرجى التواصل مع الخدمات لمعرفة المزيد.",
+    "start-contract": "بدء العقد",
+    "decline-contract": "رفض",
+    "accept-contract": "قبول"
   },
   "cookies-banner": {
     "section-1": {
