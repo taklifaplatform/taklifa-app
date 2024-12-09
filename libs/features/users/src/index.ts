@@ -11,4 +11,7 @@ export * from './components/tabs/profile-tabs/profile-tabs';
 
 export * from './components/user-card/user-card';
 
+export * from './components/user-card/company-card';
+
 export * from './screens/user-profile-screen/user-profile-screen';
+
