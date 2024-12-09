@@ -15,7 +15,7 @@ import { Animated, Dimensions, Keyboard, Platform, SectionList } from 'react-nat
 import MapView from 'react-native-maps';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useRouter } from 'solito/router';
-import { Button, View, YStack, Text } from 'tamagui';
+import { Button, View, YStack, Text, H4 } from 'tamagui';
 import MapFilters from '../../components/map-filters/map-filters';
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
@@ -308,31 +308,15 @@ export function HomeScreen() {
       >
         <SectionList
           sections={renderListData || []}
-        />
-        {/* <FlatList
           refreshing={driversQuery.isFetching}
           onRefresh={driversQuery.refetch}
-          style={{ flex: 1 }}
-          data={driversList}
-          initialNumToRender={5}
-          maxToRenderPerBatch={5}
-          renderItem={({ item, index }) => (
-            <UserCard
-              key={`stack-${item.id}-${index}`}
-              user={item}
-              flex={1}
-              marginHorizontal="$4"
-              marginVertical="$2"
-              backgroundColor="$color2"
-            />
-          )}
           ListEmptyComponent={
             <View flex={1} alignItems='center' gap="$8">
               <CustomIcon name="empty_data" size="$18" color="$color5" />
               <H4>No Data Found!</H4>
             </View>
           }
-        />*/}
+        />
       </View>
     );
 
