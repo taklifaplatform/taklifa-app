@@ -64,7 +64,7 @@
       "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi": true,
       "package": "app.sawaeed",
-      "versionCode": 22,
+      "versionCode": 23,
       "permissions": [
         "NOTIFICATION",
         "android.permission.RECORD_AUDIO",
