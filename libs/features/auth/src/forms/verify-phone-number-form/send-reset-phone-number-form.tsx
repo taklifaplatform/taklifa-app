@@ -16,24 +16,24 @@ import { createParam } from 'solito';
 import { z } from 'zod';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 
-const VerifyPhoneNumberFormSchema = z.object({
+const SendResetPhoneNumberFormSchema = z.object({
   pin_code: formFields.code,
 });
 const { useParams } = createParam<{ phone?: string }>();
 
-export type VerifyPhoneNumberFormProps = {
+export type SendResetPhoneNumberFormProps = {
   onSuccess: (data?: any) => void;
   activeStep?: number;
   totalSteps?: number;
 };
 
-export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
+export const SendResetPhoneNumberForm: React.FC<SendResetPhoneNumberFormProps> = ({
   onSuccess = () => null,
   activeStep = 1,
   totalSteps,
 }) => {
   const toast = useToastController();
-  const form = useForm<z.infer<typeof VerifyPhoneNumberFormSchema>>();
+  const form = useForm<z.infer<typeof SendResetPhoneNumberFormSchema>>();
 
   const { params } = useParams();
 
@@ -46,7 +46,7 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
   }, [phoneNumber]);
 
   const { mutateAsync } = useMutation({
-    mutationFn: (variables: z.infer<typeof VerifyPhoneNumberFormSchema>) =>
+    mutationFn: (variables: z.infer<typeof SendResetPhoneNumberFormSchema>) =>
       AuthService.verifyPhoneNumber({
         requestBody: {
           phone_number: phoneNumber,
@@ -63,7 +63,7 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
   });
 
   async function resendCode() {
-    AuthService.sendPhoneNumberVerification({
+    AuthService.sendResetPasswordPinCode({
       requestBody: {
         phone_number: phoneNumber,
       },
@@ -72,7 +72,7 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
         toast.show(t('auth:pin_code.code_sent'));
       })
       .catch((error) => {
-        console.log('error', JSON.stringify(error,null,2) , "phone=> ", phoneNumber);
+        console.log('error', JSON.stringify(error, null, 2), "phone=> ", phoneNumber);
         toast.show(error.message, {
           preset: 'error',
         });
@@ -127,7 +127,7 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
   return (
     <FormProvider {...form}>
       <SchemaForm
-        schema={VerifyPhoneNumberFormSchema}
+        schema={SendResetPhoneNumberFormSchema}
         onSubmit={mutateAsync}
         defaultValues={{
           pin_code: '',
@@ -167,4 +167,4 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
   );
 };
 
-export default VerifyPhoneNumberForm;
+export default SendResetPhoneNumberForm;

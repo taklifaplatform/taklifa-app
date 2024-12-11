@@ -3,11 +3,13 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { CompanyTransformer, RatingService, UpdateRatingRequest } from '@zix/api';
 import { RatingCard, RatingStars, ZixButton } from '@zix/ui/common';
 import { ZixInput } from '@zix/ui/forms';
+import { CustomIcon } from '@zix/ui/icons';
 import { ZixWidgetContainer } from '@zix/ui/widgets';
 import { t } from 'i18next';
 import { useCallback, useState } from 'react';
 import {
   Button,
+  H4,
   Text,
   View,
   XStack,
@@ -123,7 +125,10 @@ export const CompanyReviewsTab: React.FC<CompanyReviewsTabProps> = ({
           ))}
           {
             !data?.data?.length && (
-              <Text>No ratings available</Text>
+              <View flex={1} alignItems='center' gap="$8" padding='$4'>
+              <CustomIcon name="empty_data" size="$18" color="$color5" />
+              <H4>{t('common:no-rating-found')}!</H4>
+            </View>
             )
           }
         </YStack>

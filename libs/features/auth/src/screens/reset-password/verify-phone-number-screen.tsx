@@ -1,7 +1,7 @@
-import { useRouter } from 'solito/router';
-import VerifyPhoneNumberForm from '../../forms/verify-phone-number-form/verify-phone-number-form';
 import { useAuth } from '@zix/services/auth';
 import { ScreenLayout } from '@zix/ui/layouts';
+import { useRouter } from 'solito/router';
+import SendResetPhoneNumberForm from '../../forms/verify-phone-number-form/send-reset-phone-number-form';
 
 export const ResetPasswordVerifyPhoneNumberScreen = () => {
   const router = useRouter();
@@ -9,7 +9,7 @@ export const ResetPasswordVerifyPhoneNumberScreen = () => {
 
   return (
     <ScreenLayout>
-      <VerifyPhoneNumberForm
+      <SendResetPhoneNumberForm
         totalSteps={3}
         activeStep={2}
         onSuccess={(data) => {

@@ -3,7 +3,7 @@ import { ScanBarcode, X } from '@tamagui/lucide-icons';
 import * as Location from 'expo-location';
 import { useQuery } from '@tanstack/react-query';
 import { CompaniesService, DriverTransformer, DriversService, LocationService } from '@zix/api';
-import { UserCard } from '@zix/features/users';
+import { UserCard, CompanyCard } from '@zix/features/users';
 import { USER_ROLES, useAuth } from '@zix/services/auth';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { CustomIcon } from '@zix/ui/icons';
@@ -11,12 +11,11 @@ import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { MapCompanyMarker, MapDriverMarker } from '@zix/ui/sawaeed';
 import { getDistance } from '@zix/utils';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Animated, Dimensions, Keyboard, Platform } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { Animated, Dimensions, Keyboard, Platform, SectionList } from 'react-native';
 import MapView from 'react-native-maps';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useRouter } from 'solito/router';
-import { Button, H4, View, YStack } from 'tamagui';
+import { Button, View, YStack, Text, H4 } from 'tamagui';
 import MapFilters from '../../components/map-filters/map-filters';
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
@@ -271,28 +270,46 @@ export function HomeScreen() {
       </MapView>
     );
   //List
+  const showCompany = filters.provider_type === 'all' || filters.provider_type === 'company';
+  const showDrivers = filters.provider_type === 'all' || filters.provider_type === USER_ROLES.solo_driver;
+
+  const renderListData = [
+    {
+      data: !!showDrivers && driversList || [],
+      renderItem: ({ item, index }) => (
+        <UserCard
+          key={`stack-${item.id}-${index}`}
+          user={item}
+          flex={1}
+          marginHorizontal="$4"
+          marginVertical="$2"
+          backgroundColor="$color2"
+        />
+      ),
+    },
+    {
+      data: !!showCompany && companiesQuery.data?.data || [],
+      renderItem: ({ item, index }) => (
+        <CompanyCard
+          key={`stack-company-${item.id}-${index}`}
+          user={item}
+          flex={1}
+          marginHorizontal="$4"
+          marginVertical="$2"
+          backgroundColor="$color2"
+        />
+      ),
+    },
+  ];
   const renderList = () =>
     !showMap && (
       <View flex={1}
         marginTop={isKeyboardVisible ? 0 : "$10"}
       >
-        <FlatList
+        <SectionList
+          sections={renderListData || []}
           refreshing={driversQuery.isFetching}
           onRefresh={driversQuery.refetch}
-          style={{ flex: 1 }}
-          data={driversList}
-          initialNumToRender={5}
-          maxToRenderPerBatch={5}
-          renderItem={({ item, index }) => (
-            <UserCard
-              key={`stack-${item.id}-${index}`}
-              user={item}
-              flex={1}
-              marginHorizontal="$4"
-              marginVertical="$2"
-              backgroundColor="$color2"
-            />
-          )}
           ListEmptyComponent={
             <View flex={1} alignItems='center' gap="$8">
               <CustomIcon name="empty_data" size="$18" color="$color5" />
@@ -417,7 +434,7 @@ export function HomeScreen() {
             rightIcon: () => (
               search && search.length > 0 ? (
                 <Button
-                unstyled
+                  unstyled
                   theme="accent"
                   icon={<MaterialIcons name="cancel" size={24} color={'grey'} />}
                   onPress={() => setSearch('')}

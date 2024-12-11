@@ -5,11 +5,12 @@ import { USER_ROLES, useAuth } from '@zix/services/auth';
 import { UserAvatar } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { ZixVariantOptionsWidget, ZixWidgetContainer } from '@zix/ui/widgets';
+import { t } from 'i18next';
 import React from 'react';
 import { FlatList } from 'react-native';
 import { useRouter } from 'solito/router';
 
-import { XStack, YStack } from 'tamagui';
+import { H4, View, XStack, YStack } from 'tamagui';
 
 export type CompanyDriversTabProps = {
   company: CompanyTransformer
@@ -63,6 +64,12 @@ export const CompanyDriversTab: React.FC<CompanyDriversTabProps> = ({
                 ]}
               />
             </XStack>
+          )}
+          ListEmptyComponent={() => (
+            <View flex={1} alignItems='center' gap="$8" padding='$4'>
+              <CustomIcon name="empty_data" size="$18" color="$color5" />
+              <H4>{t('common:no-vehicles-found')}</H4>
+            </View>
           )}
         />
       </ZixWidgetContainer>

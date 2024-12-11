@@ -360,7 +360,8 @@
     "contract-removed-message": "Reason for cancellation of service: The recipient is not present or it was removed manually please get in touch with the services to know more.",
     "start-contract": "Start Contract",
     "decline-contract": "Decline",
-    "accept-contract": "Accept"
+    "accept-contract": "Accept",
+    "no-rating-found": "No Rating found"
   },
   "cookies-banner": {
     "section-1": {

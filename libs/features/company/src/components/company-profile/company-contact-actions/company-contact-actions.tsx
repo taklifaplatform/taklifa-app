@@ -4,7 +4,7 @@ import { ChatService, CompanyTransformer } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { ZixButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
-import { Platform } from 'react-native';
+import { Linking, Platform } from 'react-native';
 import { useRouter } from 'solito/router';
 import { Button, SizeTokens, ThemeableStackProps, XStack } from 'tamagui';
 
@@ -31,8 +31,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
   }
 
   function onCallPress() {
-    alert('UNDER DEVELOPMENT')
-    // Linking.openURL(`tel:${company.phone_number}`);
+    Linking.openURL(`tel:${company?.phone_number}`);
   }
 
   function _onServiceRequestPress() {
@@ -49,12 +48,16 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
       })
     },
     onSuccess(data) {
+      console.log('startChat', JSON.stringify(data, null, 2))
       if (Platform.OS === 'web') {
         router.push(`${getUrlPrefix}/chat?channel=${data.data?.id}`)
         return
       }
       router.push(`${getUrlPrefix}/chat/channels/${data.data?.id}`)
     },
+    onError(error) {
+      console.log('startChat error', JSON.stringify(error, null, 2))
+    }
   })
 
   return (
@@ -79,7 +82,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
       >
         محادثة
       </ZixButton>
-      <Button
+      {company?.phone_number && <Button
         flex={1}
         backgroundColor='$gray7'
         icon={(props: IconProps) => <CustomIcon {...props} name="call" color='$color12' />}
@@ -87,7 +90,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
         {...sharedButtonStyle}
       >
         اتصل
-      </Button>
+      </Button>}
     </XStack>
   );
 };

@@ -124,7 +124,6 @@ export const LocationManager: React.FC<LocationManagerProps> = ({
         <YStack gap="$2">
           <ZixMapLocationPickerField
             value={location} onChange={(val) => {
-              console.log("location manager screen: location ob:: ", val)
               Object.keys(val).forEach(key => {
                 form.setValue(key, val[key])
               })

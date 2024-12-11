@@ -2,7 +2,6 @@ import { CompanyTransformer } from '@zix/api';
 import React, { useMemo } from 'react';
 
 import { ZixTab } from '@zix/ui/common';
-import { Text, View } from 'tamagui';
 import AboutCompanyTab from '../about-company-tab/about-company-tab';
 import CompanyVehiclesTab from '../company-vehicles-tab/company-vehicles-tab';
 import CompanyDriversTab from '../company-drivers-tab/company-drivers-tab';
