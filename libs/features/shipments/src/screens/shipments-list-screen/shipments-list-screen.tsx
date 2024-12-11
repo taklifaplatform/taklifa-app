@@ -62,10 +62,12 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
       key={index}
       theme={status === item.status ? 'accent' : undefined}
       backgroundColor={status === item.status ? '$color9' : '$color2'}
-      borderRadius="$0"
+      borderRadius={status === item.status ? "$4" : "$0"}
       height="$4"
       textProps={{
         textTransform: 'capitalize',
+        fontWeight: '700',
+        fontSize: '$2',
       }}
       onPress={() => {
         setStatus(status === item.status ? undefined : item.status);
@@ -73,7 +75,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
       }}
       iconAfter={() => !!item.count && (
         <Circle
-          size="$2"
+          size="$1"
           backgroundColor={status === item.status ? '$color12' : '$color10'}
         >
           <Text color="white" fontSize="$1">
@@ -91,6 +93,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
       <View padding="$4" height='$6' $gtMd={{ display: 'none' }}>
         <Carousel
           ref={carouselRef}
+
           loop={false}
           data={[
             {

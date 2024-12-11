@@ -347,7 +347,20 @@
     "decline-message": "You will not be able to access this shipment after declining",
     "no-notification-found": "No Notification Found!",
     "notification": "Notifications",
-    "login-to-access-app": "Login to access the app"
+    "login-to-access-app": "Login to access the app",
+    "sign-out": "Sign Out",
+    "sign-out-message": "Are you sure you want to Sign out?",
+    "delete-account-message": "Are you sure you want to delete your account?",
+    "cancel-contract": "Cancel Contract",
+    "cancel-contract-message": "Are you sure you want to cancel the contract?",
+    "chat-contract": "Chat",
+    "cancelled-contract": "Cancelled",
+    "edit-proposal": "Edit Proposal",
+    "contract-removed": "Contract Removed",
+    "contract-removed-message": "Reason for cancellation of service: The recipient is not present or it was removed manually please get in touch with the services to know more.",
+    "start-contract": "Start Contract",
+    "decline-contract": "Decline",
+    "accept-contract": "Accept"
   },
   "cookies-banner": {
     "section-1": {

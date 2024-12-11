@@ -175,7 +175,7 @@ export const ShipmentProposalCard: React.FC<ShipmentProposalCardProps> = ({
         disabled={proposal.status === 'declined'}
         loading={declineShipmentProposalMutation.isPending}
       >
-        Decline
+        {t('common:decline-contract')}
       </ZixButton>
       {
         proposal.status !== 'accepted' && (
@@ -187,7 +187,7 @@ export const ShipmentProposalCard: React.FC<ShipmentProposalCardProps> = ({
             disabled={proposal.status === 'accepted'}
             loading={acceptShipmentProposalMutation.isPending}
           >
-            Accept
+            {t('common:accept-contract')}
           </ZixButton>
         )
       }
@@ -201,7 +201,7 @@ export const ShipmentProposalCard: React.FC<ShipmentProposalCardProps> = ({
             onPress={onAcceptContractPress}
             loading={createProposalContractMutation.isPending}
           >
-            Start Contract
+           {t('common:start-contract')}
           </ZixButton>
         )
       }

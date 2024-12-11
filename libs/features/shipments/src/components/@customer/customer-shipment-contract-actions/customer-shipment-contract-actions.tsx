@@ -8,6 +8,7 @@ import { MessageCircle, X } from '@tamagui/lucide-icons';
 import { InformationAboutCompany } from '../../information-about-company/information-about-company';
 import { useRouter } from 'solito/router';
 import { Alert } from 'react-native';
+import { t } from 'i18next';
 
 export type CustomerShipmentContractActionsProps = {
   shipment: ShipmentTransformer
@@ -35,15 +36,15 @@ export const CustomerShipmentContractActions: React.FC<CustomerShipmentContractA
     if (shipment.active_contract_id) {
       // alert to confirm with confirm or cancel
       Alert.alert(
-        'Cancel Contract',
-        'Are you sure you want to cancel the contract?',
+        `${t('common:cancel-contract')}`,
+        `${t('common:cancel-contract-message')}`,
         [
           {
-            text: 'Cancel',
+            text: `${t('common:cancel')}`,
             style: 'cancel'
           },
           {
-            text: 'Confirm',
+            text: `${t('common:confirm')}`,
             style: 'destructive',
             onPress: async () => {
               await ShipmentContractService.cancelContract({
@@ -71,7 +72,7 @@ export const CustomerShipmentContractActions: React.FC<CustomerShipmentContractA
             fontSize='$1'
             icon={MessageCircle}
           >
-            Chat
+            {t('common:chat-contract')}
           </ZixButton>
         )}
 
@@ -85,7 +86,7 @@ export const CustomerShipmentContractActions: React.FC<CustomerShipmentContractA
           icon={X}
           onPress={onCancelContract}
         >
-          {isCancelled ? "Cancelled" : "Cancel Contract"}
+          {isCancelled ? `${t('common:cancelled-contract')}` : `${t('common:cancel-contract')}`}
         </ZixButton>
       </XStack>
     </View>

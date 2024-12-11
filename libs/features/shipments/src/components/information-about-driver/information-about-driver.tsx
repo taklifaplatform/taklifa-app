@@ -77,19 +77,19 @@ export const InformationAboutDriver: React.FC<InformationAboutDriverProps> = ({
                   <CustomIcon name="location" size="$1" color={'$color9'} />
                 ),
                 name: t('shipment:place'),
-                value: `${driver.location?.address}`,
+                value: `${driver.location?.address ||''}`,
               },
               {
                 icons: (
                   <CustomIcon name="half-star" size="$1" color={'$color9'} />
                 ),
                 name: t('shipment:ratings'),
-                value: `${driver.rating_stats?.score}`,
+                value: `${driver.rating_stats?.score || ''}`,
               },
               {
                 icons: <CustomIcon name="company" size="$1" color={'$color9'} />,
                 name: t('shipment:company'),
-                value: `${driver.companies?.[0]?.name}`,
+                value: `${driver.companies?.[0]?.name || ''}`,
               },
             ]}
           />
@@ -102,7 +102,7 @@ export const InformationAboutDriver: React.FC<InformationAboutDriverProps> = ({
               {
                 icons: <CustomIcon name="garage" size="$1" color={'$color9'} />,
                 name: t('shipment:truck-type'),
-                value: `${driver.vehicle?.information?.body_type}`,
+                value: `${driver.vehicle?.information?.body_type ||''}`,
               },
               {
                 icons: (
@@ -113,19 +113,19 @@ export const InformationAboutDriver: React.FC<InformationAboutDriverProps> = ({
                   />
                 ),
                 name: t('shipment:model'),
-                value: `${driver.vehicle?.vehicle_model_id?.name}`,
+                value: `${driver.vehicle?.vehicle_model_id?.name ||''}`,
               },
               {
                 icons: <CustomIcon name="opacity" size="$1" color={'$color9'} />,
                 name: t('shipment:color'),
-                value: `${driver.vehicle?.color}`,
+                value: `${driver.vehicle?.color ||''}`,
               },
               {
                 icons: (
                   <CustomIcon name="matricule" size="$1" color={'$color9'} />
                 ),
                 name: t('shipment:truck-plate'),
-                value: `${driver.vehicle?.vin_number}`,
+                value: `${driver.vehicle?.vin_number || ''}`,
               },
             ]}
           />

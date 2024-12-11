@@ -4,7 +4,7 @@ import { useAuth } from '@zix/services/auth';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { FlatList } from 'react-native';
 import { VehicleCard } from '../../components';
-import { Button, H4, Theme, View } from 'tamagui';
+import { Button, H4, Theme, View, YStack } from 'tamagui';
 import { CustomIcon } from '@zix/ui/icons';
 import { useRouter } from 'solito/router';
 import { Plus } from '@tamagui/lucide-icons';
@@ -26,7 +26,7 @@ export const VehiclesListScreen: React.FC<VehiclesListScreenProps> = ({
   });
 
   const renderItem = ({ item, index }) => (
-    <VehicleCard vehicle={item} key={`${item.id}-${index}`} />
+    <VehicleCard vehicle={item} key={`${item.id}-${index}`}  showHeader={showHeader}/>
   );
 
   // Fab Button
@@ -49,10 +49,11 @@ export const VehiclesListScreen: React.FC<VehiclesListScreenProps> = ({
   return (
     <ScreenLayout>
      {showHeader && <AppHeader title="Manage Vehicles" />}
+      <YStack flex={1} padding={15}>
       <FlatList
         refreshing={isLoading}
         onRefresh={refetch}
-        style={{ flex: 1, padding: 15 }}
+        style={{ flex: 1 }}
         data={data?.data || []}
         renderItem={renderItem}
         ListEmptyComponent={
@@ -62,6 +63,7 @@ export const VehiclesListScreen: React.FC<VehiclesListScreenProps> = ({
           </View>
         }
       />
+      </YStack>
       {!data?.data.length && showHeader && renderFabButton()}
     </ScreenLayout>
   );

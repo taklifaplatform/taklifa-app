@@ -14,11 +14,13 @@ import { useRouter } from 'solito/router';
 import { XStack, View, Button } from 'tamagui';
 
 export type VehicleCardProps = {
-  vehicle: VehicleTransformer
+  vehicle: VehicleTransformer,
+  showHeader: boolean
 }
 
 export const VehicleCard: React.FC<VehicleCardProps> = ({
-  vehicle
+  vehicle,
+  showHeader = false
 }) => {
   const { user, getUrlPrefix } = useAuth()
   const router = useRouter()
@@ -53,7 +55,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
       borderBottomColor='$color3'
       borderBottomWidth='$1'
     >
-      <XStack gap='$2' flex={1}>
+      <XStack gap='$2' flex={1} onPress={() => actionSheetManagerRef.current?.open()}>
         <MediaFile media={vehicle.image} width='$10' height='$6' borderRadius='$4' heightQuality />
         <View flex={1}>
           <ZixVariantOptionsWidget
@@ -78,13 +80,14 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
       </XStack>
 
       <XStack>
-        <Button
+       {!showHeader && <Button
           iconAfter={<MoreHorizontal />}
           onPress={() => {
             actionSheetManagerRef.current?.open();
           }}
-        />
+        />}
         <ActionSheet
+          snapPoints={[33,25]}
           ref={actionSheetManagerRef}
           title={t('common:settings')}
           actions={[

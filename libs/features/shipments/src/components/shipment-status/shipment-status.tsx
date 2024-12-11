@@ -1,7 +1,8 @@
 
 import { ShipmentTransformer } from '@zix/api';
+import { t } from 'i18next';
 import React from 'react';
-import { Text, YStack } from 'tamagui';
+import { Text, View } from 'tamagui';
 
 
 export interface ShipmentStatusProps {
@@ -12,10 +13,12 @@ export interface ShipmentStatusProps {
 export const ShipmentStatus: React.FC<ShipmentStatusProps> = ({ shipment }) => {
   if (shipment.status !== 'cancelled') return null;
   return (
-    <YStack padding='$4' backgroundColor={'$red3'} borderColor={'$red9'} borderRadius={'$4'}>
-      <Text color={'$red9'} fontSize={20} fontWeight={600}>ShipmentStatus</Text>
-      <Text>ShipmentStatus</Text>
-    </YStack>
+    <View backgroundColor={'#FFECEB'} padding={"$4"} borderRadius={"$6"} gap={"$2"} marginBottom={'$3'}>
+      <Text textAlign='left' color={'red'} fontSize={20} fontWeight={'bold'}>
+        {t('common:contract-removed')}
+      </Text>
+      <Text textAlign='left'>{t('common:contract-removed-message')}</Text>
+    </View>
   );
 }
 
