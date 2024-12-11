@@ -14,8 +14,8 @@ export const ZixRowTimeRangePicker: React.FC<ZixDateFieldProps> = ({
   value,
 }) => {
   const { activeLang } = useMultiLang()
-  const workTimeSlots = Array.from(Array(8).keys()).map((i) =>
-    moment('09:00', 'HH:mm').add(i, 'hours')
+  const workTimeSlots = Array.from(Array(24).keys()).map((i) =>
+    moment('00:00', 'HH:mm').add(i, 'hours')
   )
 
   const currentSelectedTime = useMemo(() => moment(value, 'HH:mm A'), [value])
