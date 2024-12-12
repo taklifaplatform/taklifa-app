@@ -410,7 +410,8 @@
     "decline-contract": "رفض",
     "accept-contract": "قبول",
     "no-rating-found": "لم يتم العثور على تقييم",
-    "car": "مركبة"
+    "car": "مركبة",
+    "no-reviews-yet": "لا توجد تقييمات بعد"
   },
   "cookies-banner": {
     "section-1": {
