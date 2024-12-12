@@ -33,6 +33,7 @@ export type ZixMediaPickerFieldProps = {
   onChange: (value: MediaTransformer | MediaTransformer[]) => Promise<void> | void;
   placeholder?: string;
   isOptional?: boolean;
+  maxFileSize?: number;
 };
 
 export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
@@ -41,7 +42,8 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
   onChange,
   value,
   placeholder,
-  isOptional
+  isOptional,
+  maxFileSize = 10 * 1024 * 1024,
 }) => {
   const Previewer = MediaPreviewers[type];
   const { permission, requestPermission } = useCamera();
@@ -171,9 +173,26 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
       quality: 0.8,
       allowsMultipleSelection: isMultiple,
     });
+    // TODO: compress mages
     if (result?.canceled) return;
     if (result.assets.length) {
-      const files = result.assets.map((file) => ({
+      if (maxFileSize && result.assets.filter((asset) => asset.fileSize > maxFileSize).length) {
+        Alert.alert(
+          'Oops!!',
+          `File size should not exceed ${maxFileSize / 1024 / 1024} MB`,
+          [
+            {
+              text: 'OK',
+              style: 'cancel',
+            },
+          ],
+          {
+            cancelable: true,
+          },
+        );
+        return;
+      }
+      const files: Partial<UploadableMediaFile>[] = result.assets.map((file) => ({
         id: '',
         uri: file.uri,
         file_name: file.fileName || file.assetId || file.uri,
