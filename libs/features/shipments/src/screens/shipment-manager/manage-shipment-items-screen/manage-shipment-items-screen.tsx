@@ -120,9 +120,9 @@ export const ManageShipmentItemsScreen: React.FC = () => {
                 icon: 'document'
               },
               {
-                name: 'box',
-                id: 'box',
-                icon: 'box'
+                name: 'car',
+                id: 'car',
+                icon: 'car'
               },
               {
                 name: 'boxes',

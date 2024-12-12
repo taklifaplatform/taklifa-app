@@ -361,7 +361,8 @@
     "start-contract": "Start Contract",
     "decline-contract": "Decline",
     "accept-contract": "Accept",
-    "no-rating-found": "No Rating found"
+    "no-rating-found": "No Rating found",
+    "car": "Car"
   },
   "cookies-banner": {
     "section-1": {

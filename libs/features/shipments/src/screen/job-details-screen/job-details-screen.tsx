@@ -205,7 +205,7 @@ export function JobDetailsScreen() {
               {
                 icons: <PackageOpen size="$1" color={'$color9'} />,
                 name: t('job:shipment-type'),
-                value: `${job?.items_type}`,
+                value: t(`common:${job?.items_type}`),
               },
               {
                 icons: (
