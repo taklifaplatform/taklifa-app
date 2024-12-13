@@ -7,7 +7,7 @@ import { ZixButton, ZixMapMarker } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { useSafeAreaInsets } from '@zix/utils';
 import { t } from 'i18next';
-import { FlatList } from 'react-native';
+import { ActivityIndicator, FlatList } from 'react-native';
 import {
   Avatar,
   Button,
@@ -274,7 +274,22 @@ export const ZixMapLocationPickerFieldContent: React.FC<ZixMapLocationPickerFiel
         onChange={mutate}
         onClose={() => onClose(false)}
       />
-      {renderAddressConfirmation()}
+      {isPending ?
+        <View flex={1}
+          position='absolute'
+          top={0}
+          left={0}
+          right={0}
+          bottom={0}
+        >
+          <ActivityIndicator
+            size="large"
+            color="black"
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+          />
+        </View>
+        :
+        renderAddressConfirmation()}
     </View>
   );
 };
@@ -285,6 +300,7 @@ export const ZixMapLocationPickerField: React.FC<ZixMapLocationPickerFieldProps>
 }) => {
   const [open, setOpen] = useState(false);
   const [localLocation, setLocalLocation] = useState(value)
+
   return (
     <>
       <View position="relative">

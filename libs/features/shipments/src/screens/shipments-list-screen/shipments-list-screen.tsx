@@ -3,12 +3,11 @@ import { ShipmentFilterTransformer, ShipmentService } from '@zix/api';
 import { ZixButton } from '@zix/ui/common';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { useAuth } from '@zix/services/auth';
 import { FlatList } from 'react-native';
-import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
-import { Circle, H4, Text, Stack, View, YStack, useMedia, useStyle } from 'tamagui';
+import { Circle, H4, Text, Stack, View, YStack, useMedia, useStyle, ScrollView } from 'tamagui';
 import ShipmentCard from '../../components/shipment-card/shipment-card';
 import { CustomIcon } from '@zix/ui/icons';
 
@@ -31,7 +30,6 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
 
   const [status, setStatus] = useState<any>(undefined);
   const [search, setSearch] = useState('');
-  const [activeFilterIndex, setActiveFilterIndex] = useState(0);
   const { data, refetch, isLoading } = useQuery({
     queryFn: () =>
       ShipmentService.fetchAllShipment({
@@ -50,15 +48,9 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
     queryKey: ['ShipmentService.fetchShipmentFilters', activeRole, search],
   });
 
-  const carouselRef = useRef<ICarouselInstance>(null);
-  useEffect(() => {
-    if (activeFilterIndex > 3 && activeFilterIndex > (shipmentFilterQuery?.data?.data?.length || 0)) {
-      carouselRef.current?.scrollTo({ index: activeFilterIndex, animated: true });
-    }
-  }, [activeFilterIndex, shipmentFilterQuery?.data?.data?.length]);
-
   const renderShipment = (item: ShipmentFilterTransformer, index: number) => (
     <ZixButton
+      width={150}
       key={index}
       theme={status === item.status ? 'accent' : undefined}
       backgroundColor={status === item.status ? '$color9' : '$color2'}
@@ -70,8 +62,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
         fontSize: '$2',
       }}
       onPress={() => {
-        setStatus(status === item.status ? undefined : item.status);
-        setActiveFilterIndex(status === item.status ? 0 : index);
+        setStatus(status === item.status ? undefined : item.status)
       }}
       iconAfter={() => !!item.count && (
         <Circle
@@ -91,27 +82,20 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
   const renderShipmentFilters = () =>
     variant === 'shipments' && (
       <View padding="$4" height='$6' $gtMd={{ display: 'none' }}>
-        <Carousel
-          ref={carouselRef}
-
-          loop={false}
-          data={[
+        <View>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            height={50}
+          >
             {
-              key: 'all',
-              status: 'all',
-            },
-            ... (
-              shipmentFilterQuery?.data?.data || []
-            )
-          ]}
-          defaultIndex={activeFilterIndex}
-          style={{
-            width: '100%',
-          }}
-          width={150}
-          height={50}
-          renderItem={({ item, index }) => renderShipment(item, index)}
-        />
+              [
+                { key: 'all', status: 'all' },
+                ...(shipmentFilterQuery?.data?.data || [])
+              ].map((item, index) => renderShipment(item, index))
+            }
+          </ScrollView>
+        </View>
       </View>
     );
 

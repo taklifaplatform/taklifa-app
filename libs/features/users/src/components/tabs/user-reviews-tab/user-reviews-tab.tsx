@@ -4,6 +4,7 @@ import { DriverTransformer, RatingService, UpdateRatingRequest } from '@zix/api'
 import { useAuth } from '@zix/services/auth';
 import { RatingCard, RatingStars, ZixButton } from '@zix/ui/common';
 import { ZixInput } from '@zix/ui/forms';
+import { CustomIcon } from '@zix/ui/icons';
 import { ZixWidgetContainer } from '@zix/ui/widgets';
 import { t } from 'i18next';
 import { useCallback, useState } from 'react';
@@ -139,7 +140,16 @@ export const UserReviewsTab: React.FC<UserReviewsTabProps> = ({
           ))}
           {
             !data?.data?.length && (
-              <Text>No ratings available</Text>
+              <View flex={1}
+                alignItems="center"
+                justifyContent="center"
+                paddingVertical="$8"
+              >
+                <CustomIcon name="star" size="$4" color="$color10" />
+                <Text fontSize="$4" fontWeight="600">
+                  {t('common:no-reviews-yet')}
+                </Text>
+              </View>
             )
           }
         </YStack>
