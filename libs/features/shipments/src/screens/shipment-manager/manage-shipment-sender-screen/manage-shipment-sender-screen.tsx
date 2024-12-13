@@ -101,8 +101,8 @@ export function ManageShipmentSenderScreen() {
     selected_driver_id: selectedDriverId,
     selected_company_id: selectedCompanyId,
     ...(data?.data || {
-      pick_date: moment().toDate(),
-      drop_date: moment().toDate(),
+      pick_date: moment().toISOString(),
+      drop_date: moment().toISOString(),
     }),
   }), [data?.data, selectedDriverId, selectedCompanyId])
 
