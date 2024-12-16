@@ -63,10 +63,10 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
 
   console.log(JSON.stringify(disabled, null, 2))
 
-  const [selectedPhone, setSelectedPhone] = useState({})
-  const [searchFocus, setSearchFocus] = useState(false)
-  
-  useEffect(() => {
+//  const [selectedPhone, setSelectedPhone] = useState({})
+//  const [searchFocus, setSearchFocus] = useState(false)
+
+/*  useEffect(() => {
     if (searchFocus) return; // Avoid running the function if searchFocus is true
       if (value) {
         onSearch?.(value); // Call the onSearch function with the current value
@@ -75,15 +75,15 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
         setSelectedPhone({}); // Reset selected phone if no value
       }
   }, [searchFocus, value, options]);
-
+*/
   const renderSearchBar = () => onSearch && (
     <YStack width='100%' padding='$4' marginVertical='$4'>
       <ZixInput
         placeholder={t('common:search')}
         value={search}
         onChangeText={onSearch}
-        onFocus={() => setSearchFocus(true)}
-        onBlur={() => setSearchFocus(false)}
+      //  onFocus={() => setSearchFocus(true)}
+      //  onBlur={() => setSearchFocus(false)}
         rightIcon={(props) => <CustomIcon name='search' {...props} />}
       />
     </YStack>
@@ -103,8 +103,8 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
         >
           {prependPlaceHolder}
 
-          <Text>{(selectedPhone?.icon || "") + " " + (selectedPhone?.name || "")}</Text>
-          {/* <Select.Value flex={1} fontSize="$1" placeholder={placeholder} {...props} />*/}
+          {/* <Text>{(selectedPhone?.icon || "") + " " + (selectedPhone?.name || "")}</Text> */}
+          <Select.Value flex={1} fontSize="$1" placeholder={placeholder} {...props} />
           {appendPlaceHolder}
         </Select.Trigger>
 
