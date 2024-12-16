@@ -29,6 +29,9 @@ const SendFromSchema = z.object({
   recipient_name: formFields.text.describe(
     `${t('app:forms.labels.recipient-name')} // ${t('app:forms.placeholders.recipient-name')}`,
   ),
+  should_notify_customer: formFields.boolean_checkbox.describe(
+    `${t('common:notify-customer')}`,
+  ),
   recipient_phone: formFields.phone.describe(
     `${t('app:forms.labels.recipient-phone')} // ${t('app:forms.placeholders.recipient-phone')}`,
   ),
