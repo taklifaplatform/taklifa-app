@@ -35,7 +35,7 @@ export const ZixMoneyField: React.FC<ZixMoneyFieldProps> = ({
             defaultValue={'1'}
             dataMapper={(item) => ({
               id: item.id,
-              name: `${item.units?.major?.name ||item.units?.major?.symbol} - ${item.code}`,
+              name: `${item.units?.major?.name} - ${item.units?.major?.symbol || item.code}`,
             })}
             api="geography/currencies"
             selectTriggerProps={{
