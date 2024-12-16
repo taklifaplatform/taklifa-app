@@ -21,7 +21,7 @@ export const ZixMoneyField: React.FC<ZixMoneyFieldProps> = ({
   useEffect(() => {
     // Set default value to "1 - Rial Saudi" if no currency is selected
     if (!value.currency_id) {
-      onValueChange({ ...value, currency_id: '1' });
+      onValueChange({ ...value, currency_id: '117' });
     }
   }, [value, onValueChange]);
 
@@ -35,7 +35,7 @@ export const ZixMoneyField: React.FC<ZixMoneyFieldProps> = ({
             defaultValue={'1'}
             dataMapper={(item) => ({
               id: item.id,
-              name: `${item.code} - ${item.name}`,
+              name: `${item.units?.major?.name ||item.units?.major?.symbol} - ${item.code}`,
             })}
             api="geography/currencies"
             selectTriggerProps={{
