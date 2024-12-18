@@ -16,7 +16,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
 
   return (
     <ZixAvatar
-      media={user?.avatar}
+      media={user?.avatar || user?.logo}
       name={user?.name}
       size={size}
       borderColor={getLastActivityStatus(user).color}

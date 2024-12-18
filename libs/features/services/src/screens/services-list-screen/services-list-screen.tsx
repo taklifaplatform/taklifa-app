@@ -21,7 +21,7 @@ export function ServicesListScreen(props: ServicesListScreenProps) {
   const router = useRouter();
   const { user } = useAuth();
 
-  console.log(JSON.stringify(user,null,2),"user======")
+  // console.log(JSON.stringify(user,null,2),"user======")
 
 
   const { data, refetch, isLoading } = useQuery({
@@ -30,29 +30,29 @@ export function ServicesListScreen(props: ServicesListScreenProps) {
     queryKey: ['ServicesService.listServices'],
   });
 
- // console.log(JSON.stringify(data, null, 2), "data====//")
+  console.log(JSON.stringify(data, null, 2), "data====//")
 
   // on Contact button press
   const onContactPress = (item: any) => {
     Linking.openURL(`tel:${item?.driver?.phone_number}`);
   }
 
-// Fab Button
-const renderFabButton = () => (
-  <Theme name='accent'>
-    <Button
-      position="absolute"
-      width="$5"
-      height="$5"
-      size="$5"
-      bottom="$3"
-      right="$3"
-      icon={<Plus size="$2.5" />}
-      borderRadius="$10"
-      onPress={() => Alert.alert('Under Development')}
-    />
-  </Theme>
-)
+  // Fab Button
+  const renderFabButton = () => (
+    <Theme name='accent'>
+      <Button
+        position="absolute"
+        width="$5"
+        height="$5"
+        size="$5"
+        bottom="$3"
+        right="$3"
+        icon={<Plus size="$2.5" />}
+        borderRadius="$10"
+        onPress={() => Alert.alert('Under Development')}
+      />
+    </Theme>
+  )
 
   const renderItem = ({ item, index }) => (
     <YStack
@@ -64,19 +64,18 @@ const renderFabButton = () => (
       paddingBottom={'$4'}
     >
       <XStack
-        onPress={() => router.push(`/app/users/${item?.driver?.id}`)}
+        onPress={() => item?.company?.id ? router.push(`/app/companies/${item.company.id }`) : router.push(`/app/users/${item?.driver?.id}`)}
         justifyContent='space-between' alignItems='center' padding={"$4"}>
         <XStack alignItems="center" gap="$2">
-          <UserAvatar user={item?.driver} size="$5" />
+          <UserAvatar user={item?.driver.avatar ? item?.driver : item?.company} size="$5" />
           <Text color='$color12' fontWeight="bold">
-            {item.driver?.name}
+            {item.driver?.name || item?.company.name}
           </Text>
         </XStack>
         <Image source={{ uri: item?.cover?.original_url || "" }}
           width={SCREEN_WIDTH / 2.5}
           height={SCREEN_WIDTH / 5}
           borderRadius={5}
-        // mode cover
         />
       </XStack>
       <YStack gap="$4" paddingHorizontal="$4">
