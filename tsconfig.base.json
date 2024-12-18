@@ -27,6 +27,7 @@
       "@zix/features/notifications": [
         "libs/features/notifications/src/index.ts"
       ],
+      "@zix/features/services": ["libs/features/services/src/index.ts"],
       "@zix/features/shipments": ["libs/features/shipments/src/index.ts"],
       "@zix/features/solo-driver": ["libs/features/solo-driver/src/index.ts"],
       "@zix/features/support": ["libs/features/support/src/index.ts"],

@@ -20,6 +20,7 @@ export type UpdateShipmentRequest = {
     items_type?: string;
     min_budget?: MinBudgetUpdateShipmentRequest;
     max_budget?: MaxBudgetUpdateShipmentRequest;
+    should_notify_customer?: boolean;
     items?: Array<ItemsUpdateShipmentRequest>;
     invitations?: Array<InvitationsUpdateShipmentRequest>;
 };
