@@ -8,6 +8,7 @@ import {
 } from 'tamagui'
 import { ZixDateFieldProps } from './types'
 import { useMultiLang } from '@zix/i18n'
+import { Dimensions } from 'react-native'
 
 export const ZixRowTimeRangePicker: React.FC<ZixDateFieldProps> = ({
   onChange,
@@ -20,6 +21,8 @@ export const ZixRowTimeRangePicker: React.FC<ZixDateFieldProps> = ({
 
   const currentSelectedTime = useMemo(() => moment(value, 'HH:mm A'), [value])
 
+  const SCREEN_WIDTH = Dimensions.get('window').width;
+
   const renderButtonTimeWork = (item: moment.Moment, index: number) => {
     const isActive = (
       currentSelectedTime.isSameOrAfter(item) &&
@@ -29,9 +32,10 @@ export const ZixRowTimeRangePicker: React.FC<ZixDateFieldProps> = ({
     return (
       <Button
         key={index}
-        paddingVertical="$2"
-        paddingHorizontal="$4"
-        height="$2.5"
+        paddingVertical="$1"
+        paddingHorizontal="$3"
+        //height="$2.5"
+        width={SCREEN_WIDTH / 3}
         theme={isActive ? 'accent' : undefined}
         backgroundColor={
           isActive
