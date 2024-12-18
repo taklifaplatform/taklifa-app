@@ -1,58 +1,55 @@
 
 import { useQuery } from '@tanstack/react-query';
-import { AppHeader } from '@zix/ui/layouts';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { H4, View, YStack, Image, XStack, Text, Button, Theme } from 'tamagui';
 import { ServicesService } from '@zix/api';
-import { Alert, Dimensions, FlatList, Linking } from 'react-native';
+import { Dimensions, FlatList, Linking } from 'react-native';
 import { CustomIcon } from '@zix/ui/icons';
 import { UserAvatar } from '@zix/ui/common';
 import { ZixMediasListWidget } from '@zix/ui/widgets';
 import { useRouter } from 'solito/router';
 import { useAuth } from '@zix/services/auth';
-import { Plus } from '@tamagui/lucide-icons';
-/* eslint-disable-next-line */
 export interface ServicesListScreenProps {
+  showHeader: boolean;
+  driver: boolean;
 }
 
-
-export function ServicesListScreen(props: ServicesListScreenProps) {
+export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
+  showHeader = true,
+  driver = false
+}) => {
 
   const SCREEN_WIDTH = Dimensions.get('window').width;
   const router = useRouter();
   const { user } = useAuth();
 
-  // console.log(JSON.stringify(user,null,2),"user======")
-
-
-  const { data, refetch, isLoading } = useQuery({
-    queryFn: () =>
-      ServicesService.listServices({}),
-    queryKey: ['ServicesService.listServices'],
-  });
-
-  console.log(JSON.stringify(data, null, 2), "data====//")
+  console.log('user', JSON.stringify(user, null, 2));
+  const { data, refetch, isLoading } =
+    driver ?
+      useQuery({
+        queryFn: () =>
+          ServicesService.listDriverServices({
+            driver: user?.id,
+          }),
+        queryKey: ['ServicesService.listDriverServices', user?.id],
+      })
+      :
+      user?.active_company ? useQuery({
+        queryFn: () =>
+          ServicesService.listCompanyServices({
+            company: user?.active_company?.id,
+          }),
+        queryKey: ['ServicesService.listCompanyServices', user?.active_company?.id],
+      }) : useQuery({
+        queryFn: () =>
+          ServicesService.listServices({}),
+        queryKey: ['ServicesService.listServices',],
+      });
 
   // on Contact button press
   const onContactPress = (item: any) => {
     Linking.openURL(`tel:${item?.driver?.phone_number}`);
   }
-
-  // Fab Button
-  const renderFabButton = () => (
-    <Theme name='accent'>
-      <Button
-        position="absolute"
-        width="$5"
-        height="$5"
-        size="$5"
-        bottom="$3"
-        right="$3"
-        icon={<Plus size="$2.5" />}
-        borderRadius="$10"
-        onPress={() => Alert.alert('Under Development')}
-      />
-    </Theme>
-  )
 
   const renderItem = ({ item, index }) => (
     <YStack
@@ -60,11 +57,11 @@ export function ServicesListScreen(props: ServicesListScreenProps) {
       borderRadius={5}
       key={index}
       marginBottom={10}
-      marginHorizontal={'$4'}
+      marginHorizontal={showHeader && '$4'}
       paddingBottom={'$4'}
     >
       <XStack
-        onPress={() => item?.company?.id ? router.push(`/app/companies/${item.company.id }`) : router.push(`/app/users/${item?.driver?.id}`)}
+        onPress={() => item?.company?.id ? router.push(`/app/companies/${item.company.id}`) : router.push(`/app/users/${item?.driver?.id}`)}
         justifyContent='space-between' alignItems='center' padding={"$4"}>
         <XStack alignItems="center" gap="$2">
           <UserAvatar user={item?.driver.avatar ? item?.driver : item?.company} size="$5" />
@@ -109,16 +106,14 @@ export function ServicesListScreen(props: ServicesListScreenProps) {
   )
 
   return (
-    <View
-      flex={1}
-      backgroundColor='white'
-    >
-      <AppHeader title="Services" />
+    <ScreenLayout>
+      {showHeader && <AppHeader title="Services" />}
       <YStack flex={1} paddingTop={15}>
         <FlatList
+          showsVerticalScrollIndicator={false}
           refreshing={isLoading}
           onRefresh={refetch}
-          style={{ flex: 1, backgroundColor: 'white' }}
+          style={{ flex: 1 }}
           data={data?.data || []}
           renderItem={renderItem}
           ListEmptyComponent={
@@ -129,8 +124,7 @@ export function ServicesListScreen(props: ServicesListScreenProps) {
           }
         />
       </YStack>
-      {renderFabButton()}
-    </View>
+    </ScreenLayout>
   );
 }
 

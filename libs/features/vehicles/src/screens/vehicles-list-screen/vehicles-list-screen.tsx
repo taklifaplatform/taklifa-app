@@ -9,6 +9,8 @@ import { CustomIcon } from '@zix/ui/icons';
 import { useRouter } from 'solito/router';
 import { Plus } from '@tamagui/lucide-icons';
 import { t } from 'i18next';
+import { ServicesListScreen } from '@zix/features/services';
+import { ZixTab } from '@zix/ui/common';
 export type VehiclesListScreenProps = {
   showHeader?: boolean;
 };
@@ -26,8 +28,26 @@ export const VehiclesListScreen: React.FC<VehiclesListScreenProps> = ({
     queryKey: ['VehiclesService.fetchAllVehicles', user?.active_role?.id, user?.active_company?.id],
   });
 
+  const renderHorizonTabs = () => (
+    <ZixTab
+      defaultActiveTab="vehicles"
+      tabs={[
+        {
+          key: 'vehicles',
+          title: t('common:vehicles'),
+          content: renderVehicleScreen(),
+        },
+        {
+          key: 'services',
+          title: t('common:services'),
+          content: <ServicesListScreen showHeader={false} driver={true}/>,
+        },
+      ]}
+    />
+  );
+
   const renderItem = ({ item, index }) => (
-    <VehicleCard vehicle={item} key={`${item.id}-${index}`}  showHeader={showHeader}/>
+    <VehicleCard vehicle={item} key={`${item.id}-${index}`} showHeader={showHeader} />
   );
 
   // Fab Button
@@ -47,10 +67,10 @@ export const VehiclesListScreen: React.FC<VehiclesListScreenProps> = ({
     </Theme>
   )
 
-  return (
-    <ScreenLayout>
-     {showHeader && <AppHeader title="Manage Vehicles" />}
-      <YStack flex={1} padding={15}>
+  // Vehicle screen
+
+  const renderVehicleScreen = () => (
+    <YStack flex={1}>
       <FlatList
         refreshing={isLoading}
         onRefresh={refetch}
@@ -64,6 +84,14 @@ export const VehiclesListScreen: React.FC<VehiclesListScreenProps> = ({
           </View>
         }
       />
+    </YStack>
+  )
+
+  return (
+    <ScreenLayout>
+      {showHeader && <AppHeader title="Manage Vehicles" />}
+      <YStack flex={1} paddingVertical="$4">
+        {!showHeader ? renderVehicleScreen()  : renderHorizonTabs()}
       </YStack>
       {!data?.data.length && showHeader && renderFabButton()}
     </ScreenLayout>
