@@ -64,7 +64,7 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
         onPress={() => item?.company?.id ? router.push(`/app/companies/${item.company.id}`) : router.push(`/app/users/${item?.driver?.id}`)}
         justifyContent='space-between' alignItems='center' padding={"$4"}>
         <XStack alignItems="center" gap="$2">
-          <UserAvatar user={item?.driver.avatar ? item?.driver : item?.company} size="$5" />
+          <UserAvatar user={item?.driver?.avatar ? item?.driver : item?.company} size="$5" />
           <Text color='$color12' fontWeight="bold">
             {item.driver?.name || item?.company.name}
           </Text>
