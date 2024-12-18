@@ -1,8 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { GeographyService } from "@zix/api";
-import { PhoneNumberUtil } from "google-libphonenumber";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { formatPhone, FormatPhoneConfig, removeNonDigits } from "../utils";
+import { useQuery } from '@tanstack/react-query';
+import { GeographyService } from '@zix/api';
+import { PhoneNumberUtil } from 'google-libphonenumber';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { formatPhone, FormatPhoneConfig, removeNonDigits } from '../utils';
 
 const phoneUtil = PhoneNumberUtil.getInstance();
 
@@ -30,18 +30,32 @@ export function usePhoneNumber({ value, onValueChange }: UsePhoneNumberProps) {
   const { data: defaultConfigData } = useQuery({
     queryFn: async () => {
       return GeographyService.showCountry({
-        country: selectedCountry ?? "185",
+        country: selectedCountry ?? '185',
       });
     },
-    queryKey: [
-      "GeographyService.showCountry",
-      selectedCountry,
-    ],
+    queryKey: ['GeographyService.showCountry', selectedCountry],
   });
 
-  const dialCode = getRegionCodeForNumber(`+${value}`);
+  const getForceValue = (_value: string | undefined) => {
+    if (!_value) return '966';
+    let newValue = _value;
+    // if the value doesn't start with + add it
+    if (!_value?.startsWith('+')) {
+      newValue = `+${_value}`;
+    }
+
+    // if the value lent less 6 add random number
+    if (newValue.length < 6) {
+      newValue = `${newValue} ${Math.floor(Math.random() * 1000)}`;
+    }
+
+    return newValue;
+  };
+  const dialCode = getRegionCodeForNumber(getForceValue(value));
 
   useEffect(() => {
+    console.log('===========');
+    console.log('dialCode:::', dialCode, 'value:::', value);
     if (dialCode && !selectedCountry) {
       GeographyService.getCountryByDialCode({
         dialCode,
@@ -54,22 +68,23 @@ export function usePhoneNumber({ value, onValueChange }: UsePhoneNumberProps) {
   }, [value, dialCode, selectedCountry]);
 
   const defaultConfig = useMemo<FormatPhoneConfig>(
-    () => ({
-      prefix: "+",
-      dial_code: "966",
-      mask: "##-####-#####",
-      mask_char: "#",
-      charAfterDialCode: " ",
-      trimNonDigitsEnd: true,
-      ...(defaultConfigData?.data?.dialling || {}),
-    } as FormatPhoneConfig),
+    () =>
+      ({
+        prefix: '+',
+        dial_code: '966',
+        mask: '##-####-#####',
+        mask_char: '#',
+        charAfterDialCode: ' ',
+        trimNonDigitsEnd: true,
+        ...(defaultConfigData?.data?.dialling || {}),
+      }) as FormatPhoneConfig,
     [defaultConfigData],
   );
 
   // need to extract the country code
   const formattedPhone = useMemo(() => {
     if (!value?.length || !defaultConfig?.dial_code) {
-      return "";
+      return '';
     }
     return formatPhone(value, {
       ...defaultConfig,
@@ -81,7 +96,7 @@ export function usePhoneNumber({ value, onValueChange }: UsePhoneNumberProps) {
     (val: string) => {
       const formattedPhone = val?.length
         ? formatPhone(`+${defaultConfig.dial_code}${val}`, defaultConfig)
-        : "";
+        : '';
 
       onValueChange(removeNonDigits(formattedPhone));
     },

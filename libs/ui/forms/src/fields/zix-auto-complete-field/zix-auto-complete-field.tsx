@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { OpenAPI, request } from '@zix/api';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   SelectProps
 } from 'tamagui';
@@ -53,6 +53,12 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
       queryKey: [api, perPage, search, `-${props.value}`, Object.values(query)],
     }
   );
+
+  useEffect(() => {
+    if (props.value !== search) {
+      setSearch(props.value || '');
+    }
+  }, [props.value]);
 
   const mappedData = useMemo<BaseSelectFieldItem[]>(() => {
     return [

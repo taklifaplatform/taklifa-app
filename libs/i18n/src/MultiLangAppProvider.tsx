@@ -37,6 +37,10 @@ export function MultiLangAppProvider({ children, defaultLang }: ILangProviderPro
       let lang = defaultLang;
       if (Platform.OS !== 'ios') {
         lang = await getActiveLanguage(defaultLang);
+      } else {
+        const isRtl = lang === 'ar'
+        I18nManager.allowRTL(isRtl)
+        I18nManager.forceRTL(isRtl)
       }
 
       i18n.changeLanguage(lang);

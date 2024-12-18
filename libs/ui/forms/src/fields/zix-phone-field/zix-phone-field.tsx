@@ -29,12 +29,14 @@ export const ZixPhoneField: React.FC<ZixPhoneFieldProps> = ({
     onValueChange,
   });
 
+  console.log('selectedCountry::', selectedCountry, 'value::', value);
+
   return (
     <Theme name={error ? 'red' : themeName} forceClassName>
       <XStack flex={1} width="100%" gap="$2">
         <Stack width="30%">
           {
-            (!value || !!value && selectedCountry) && (
+            (
               <ZixAutoCompleteField
                 value={selectedCountry}
                 onChange={setSelectedCountry}
