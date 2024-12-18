@@ -1,8 +1,6 @@
-import { ServicesListScreen } from '@zix/features/services';
-//import { ShipmentsListScreen } from '@zix/features/shipments';
+import { ShipmentsListScreen } from '@zix/features/shipments';
 import React from 'react';
 
 export default function Screen() {
- // return <ShipmentsListScreen variant="jobs" />;
- return <ServicesListScreen />;
+  return <ShipmentsListScreen variant="jobs" />;
 }
