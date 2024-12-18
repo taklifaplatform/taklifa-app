@@ -96,6 +96,9 @@ export const ManageVehicleScreen: React.FC = () => {
       queryClient.invalidateQueries({
         queryKey: ['CompanyVehiclesService.list', user?.active_company?.id],
       });
+      queryClient.invalidateQueries({
+        queryKey: ['VehiclesService.fetchAllVehicles', user?.active_role?.id, user?.active_company?.id],
+      });
       refetchUser();
       toast.show('Company Updated Successfully!');
       router.back();

@@ -19,6 +19,7 @@ export const VehiclesListScreen: React.FC<VehiclesListScreenProps> = ({
   const { user } = useAuth();
   const router = useRouter();
 
+  //
   const { data, refetch, isLoading } = useQuery({
     queryFn: () =>
       VehiclesService.fetchAllVehicles({}),

@@ -39,6 +39,9 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
       queryClient.invalidateQueries({
         queryKey: ['CompanyVehiclesService.list', user?.active_company?.id],
       });
+      queryClient.invalidateQueries({
+        queryKey: ['VehiclesService.fetchAllVehicles', user?.active_role?.id, user?.active_company?.id],
+      });
       toast.show('Vehicle Removed Successfully!');
     },
     onError(error) {
