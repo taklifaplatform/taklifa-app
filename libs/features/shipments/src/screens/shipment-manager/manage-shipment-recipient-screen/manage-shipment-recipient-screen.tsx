@@ -104,7 +104,7 @@ export const ManageShipmentRecipientScreen: React.FC = () => {
         </Theme>
       )}
     >
-      {({ to_location, recipient_name, recipient_phone, ...fields }) => (
+      {({ to_location, recipient_name, recipient_phone, should_notify_customer, ...fields }) => (
         <>
           <ShipmentManagerHeader
             activeStep={2}
@@ -120,6 +120,7 @@ export const ManageShipmentRecipientScreen: React.FC = () => {
           >
             {recipient_name}
             {recipient_phone}
+            {should_notify_customer}
           </ZixFieldContainer>
 
           {Object.values(fields)}
