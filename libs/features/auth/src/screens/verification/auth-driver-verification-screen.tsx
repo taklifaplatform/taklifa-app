@@ -20,12 +20,13 @@ const DriverVerificationFormSchema = z
   .object({
     driving_license_number: formFields.text
       .min(8)
+      .max(15)
       .describe(t('forms:license_number')),
     driving_license_card: formFields.file.describe(
       t('forms:vehicle_driving_license'),
     ),
-    assurance_card: formFields.file.describe(t('forms:insurance_image')),
-    accept_terms: formFields.accept_terms.describe(t('forms:accept_terms')),
+    assurance_card: formFields.file.describe(t('forms:insurance_image')).nullable(),
+    accept_terms: formFields.accept_terms.describe(t('forms:accept_terms')).nullable(),
   })
   .superRefine(({ accept_terms }, ctx) => {
     if (!accept_terms) {
