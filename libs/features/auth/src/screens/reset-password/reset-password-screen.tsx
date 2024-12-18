@@ -35,6 +35,7 @@ export const ResetPasswordScreen = () => {
     }
   }, [params?.phone, updateParams]);
 
+
   const form = useForm<z.infer<typeof ResetPasswordSchema>>();
 
   const { mutateAsync } = useMutation({
@@ -73,6 +74,8 @@ export const ResetPasswordScreen = () => {
                 </SubmitButton>
               </Theme>
               <SignInLink />
+
+
             </Stack>
           );
         }}
@@ -100,7 +103,6 @@ const SignInLink = () => {
   });
 
   return (
-    <ScreenLayout safeAreaBottom>
       <Link
         href={`/auth/login?${new URLSearchParams(phone ? { phone } : undefined)}`}
       >
@@ -113,17 +115,16 @@ const SignInLink = () => {
           <Paragraph textAlign="center" theme="alt1">
             {t('auth:reset_password.done_resetting')}
           </Paragraph>
-          <Theme name="light">
-            <Text textDecorationLine="underline" color="$color5">
+          <Theme name="accent">
+            <Text textDecorationLine="underline" color={'$color1'} theme={'accent'}>
               {t('auth:sign_in')}
             </Text>
           </Theme>
-          <Theme name="light">
-            <CustomIcon name="arrow_right" color="$color5" />
+          <Theme name="accent">
+            <CustomIcon name="arrow_right" color="$color10" />
           </Theme>
         </Stack>
       </Link>
-    </ScreenLayout>
   );
 };
 
