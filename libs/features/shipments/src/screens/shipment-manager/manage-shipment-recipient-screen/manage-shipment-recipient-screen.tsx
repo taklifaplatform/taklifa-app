@@ -29,6 +29,9 @@ const SendFromSchema = z.object({
   recipient_name: formFields.text.describe(
     `${t('app:forms.labels.recipient-name')} // ${t('app:forms.placeholders.recipient-name')}`,
   ),
+  should_notify_customer: formFields.boolean_checkbox.describe(
+    `${t('common:notify-customer')}`,
+  ),
   recipient_phone: formFields.phone.describe(
     `${t('app:forms.labels.recipient-phone')} // ${t('app:forms.placeholders.recipient-phone')}`,
   ),
@@ -101,7 +104,7 @@ export const ManageShipmentRecipientScreen: React.FC = () => {
         </Theme>
       )}
     >
-      {({ to_location, recipient_name, recipient_phone, ...fields }) => (
+      {({ to_location, recipient_name, recipient_phone, should_notify_customer, ...fields }) => (
         <>
           <ShipmentManagerHeader
             activeStep={2}
@@ -117,6 +120,7 @@ export const ManageShipmentRecipientScreen: React.FC = () => {
           >
             {recipient_name}
             {recipient_phone}
+            {should_notify_customer}
           </ZixFieldContainer>
 
           {Object.values(fields)}

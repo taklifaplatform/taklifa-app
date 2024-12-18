@@ -41,7 +41,8 @@
         "time": "Select the time",
         "recipient-info": "Enter the recipient's information",
         "recipient-name": "Enter the recipient's name",
-        "recipient-phone": "Enter the recipient's phone"
+        "recipient-phone": "Enter the recipient's phone",
+        "notify-customer": "Notify Customer"
       }
     },
     "success": {
@@ -363,7 +364,8 @@
     "accept-contract": "Accept",
     "no-rating-found": "No Rating found",
     "car": "Car",
-    "no-reviews-yet": "No reviews yet"
+    "no-reviews-yet": "No reviews yet",
+    "notify-customer": "Notify Customer"
   },
   "cookies-banner": {
     "section-1": {
