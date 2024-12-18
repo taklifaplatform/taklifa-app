@@ -1,13 +1,15 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { AppHeader } from '@zix/ui/layouts';
-import { H4, View, YStack, Image, XStack, Text, Button } from 'tamagui';
+import { H4, View, YStack, Image, XStack, Text, Button, Theme } from 'tamagui';
 import { ServicesService } from '@zix/api';
-import { Dimensions, FlatList, Linking } from 'react-native';
+import { Alert, Dimensions, FlatList, Linking } from 'react-native';
 import { CustomIcon } from '@zix/ui/icons';
 import { UserAvatar } from '@zix/ui/common';
 import { ZixMediasListWidget } from '@zix/ui/widgets';
 import { useRouter } from 'solito/router';
+import { useAuth } from '@zix/services/auth';
+import { Plus } from '@tamagui/lucide-icons';
 /* eslint-disable-next-line */
 export interface ServicesListScreenProps {
 }
@@ -17,6 +19,10 @@ export function ServicesListScreen(props: ServicesListScreenProps) {
 
   const SCREEN_WIDTH = Dimensions.get('window').width;
   const router = useRouter();
+  const { user } = useAuth();
+
+  console.log(JSON.stringify(user,null,2),"user======")
+
 
   const { data, refetch, isLoading } = useQuery({
     queryFn: () =>
@@ -24,14 +30,29 @@ export function ServicesListScreen(props: ServicesListScreenProps) {
     queryKey: ['ServicesService.listServices'],
   });
 
-  console.log(JSON.stringify(data, null, 2), "data====//")
+ // console.log(JSON.stringify(data, null, 2), "data====//")
 
   // on Contact button press
   const onContactPress = (item: any) => {
     Linking.openURL(`tel:${item?.driver?.phone_number}`);
   }
 
-
+// Fab Button
+const renderFabButton = () => (
+  <Theme name='accent'>
+    <Button
+      position="absolute"
+      width="$5"
+      height="$5"
+      size="$5"
+      bottom="$3"
+      right="$3"
+      icon={<Plus size="$2.5" />}
+      borderRadius="$10"
+      onPress={() => Alert.alert('Under Development')}
+    />
+  </Theme>
+)
 
   const renderItem = ({ item, index }) => (
     <YStack
@@ -109,6 +130,7 @@ export function ServicesListScreen(props: ServicesListScreenProps) {
           }
         />
       </YStack>
+      {renderFabButton()}
     </View>
   );
 }
