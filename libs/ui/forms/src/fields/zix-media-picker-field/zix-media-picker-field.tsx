@@ -3,6 +3,8 @@ import { Camera as CameraIcon, Image as LucideImage, Paperclip } from '@tamagui/
 import { MediaService, MediaTransformer } from '@zix/api';
 import { ActionSheet, ActionSheetRef } from '@zix/ui/common';
 import { getDocumentAsync } from 'expo-document-picker';
+import * as ImageManipulator from 'expo-image-manipulator';
+
 import {
   MediaTypeOptions,
   launchCameraAsync,
@@ -121,7 +123,6 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     }
 
     const failedMedias: Record<string, string[]> = {};
-
     const finalResults = await Promise.all(Object.values(_medias).map((media) => {
       return new Promise((resolve, reject) => {
         uploadMediaFile(media as UploadableMediaFile, (progress) => {
@@ -193,6 +194,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
         return;
       }
       const files: Partial<UploadableMediaFile>[] = result.assets.map((file) => ({
+        mediaTypes,
         id: '',
         uri: file.uri,
         file_name: file.fileName || file.assetId || file.uri,
