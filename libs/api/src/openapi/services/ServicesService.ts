@@ -197,6 +197,26 @@ export class ServicesService {
         });
     }
     /**
+     * Retrieve a service
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static retrieveZoneService({
+        service,
+    }: {
+        service: string,
+    }): CancelablePromise<{
+        data?: ServiceTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/services/{service}',
+            path: {
+                'service': service,
+            },
+        });
+    }
+    /**
      * Update the specified Service.
      * @returns any Successful response
      * @throws ApiError

@@ -7,6 +7,7 @@ export type ZixMediaPreviewerProps = {
   onRemoveMedia?: (media: MediaTransformer) => void;
   placeholder?: string;
   isOptional?: boolean;
+  notAvatar?: boolean;
 };
 
 export type ZixMediaPickerTransformer =
