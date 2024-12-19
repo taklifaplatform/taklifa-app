@@ -365,7 +365,13 @@
     "no-rating-found": "No Rating found",
     "car": "Car",
     "no-reviews-yet": "No reviews yet",
-    "notify-customer": "Notify Customer"
+    "notify-customer": "Notify Customer",
+    "service-information": "Service Information",
+    "update-service": "Update Service",
+    "create-service": "Create Service",
+    "service-title": "Service Title",
+    "service-description": "Service Description",
+    "services": "Services",
   },
   "cookies-banner": {
     "section-1": {

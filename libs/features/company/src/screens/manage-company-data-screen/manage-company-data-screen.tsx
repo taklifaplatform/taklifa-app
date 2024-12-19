@@ -39,12 +39,12 @@ export function ManageCompanyDataScreen() {
         {
           key: 'vehicles',
           title: t('common:vehicles'),
-          content: <VehiclesListScreen showHeader={false}/>,
+          content: <VehiclesListScreen showHeader={false} search={search}/>,
         },
         {
           key: 'services',
           title: t('common:services'),
-          content: <ServicesListScreen showHeader={false}/>,
+          content: <ServicesListScreen showHeader={false} edit={true} search={search}/>,
         },
       ]}
     />

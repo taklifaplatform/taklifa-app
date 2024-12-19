@@ -38,6 +38,7 @@
     "code": "Code"
   },
   "vehicle-image": "Vehicle Image // Upload your vehicle image",
+  "service-image": "Service Image // Upload your Service image",
   "images": "Images // Upload images",
   "vehicle-internal-id": "Internal ID // Enter your vehicle internal reference",
   "color": "Color // Enter your vehicle color",
