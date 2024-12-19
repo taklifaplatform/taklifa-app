@@ -29,6 +29,7 @@ export const MediaPreviewers = {
 
 export type ZixMediaPickerFieldProps = {
   type: 'medias' | 'image' | 'files' | 'file';
+  notAvatar?: boolean;
   hasError?: boolean;
   isMultiple?: boolean;
   value?: MediaTransformer | MediaTransformer[];
@@ -46,6 +47,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
   placeholder,
   isOptional,
   maxFileSize = 10 * 1024 * 1024,
+  notAvatar,
 }) => {
   const Previewer = MediaPreviewers[type];
   const { permission, requestPermission } = useCamera();
@@ -306,7 +308,8 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
         previews={Object.values(previews)}
         onRemoveMedia={onRemoveMedia}
         placeholder={placeholder}
-        isOptional={isOptional}
+        isOptional={isOptional} //
+        notAvatar={notAvatar}
       />
       {renderImagePicker()}
     </>
