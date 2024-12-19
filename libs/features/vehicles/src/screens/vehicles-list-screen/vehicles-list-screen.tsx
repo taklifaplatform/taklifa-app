@@ -13,10 +13,12 @@ import { ServicesListScreen } from '@zix/features/services';
 import { ZixTab } from '@zix/ui/common';
 export type VehiclesListScreenProps = {
   showHeader?: boolean;
+  search?: string;
 };
 
 export const VehiclesListScreen: React.FC<VehiclesListScreenProps> = ({
   showHeader,
+  search,
 }) => {
   const { user } = useAuth();
   const router = useRouter();
@@ -24,8 +26,11 @@ export const VehiclesListScreen: React.FC<VehiclesListScreenProps> = ({
   //
   const { data, refetch, isLoading } = useQuery({
     queryFn: () =>
-      VehiclesService.fetchAllVehicles({}),
-    queryKey: ['VehiclesService.fetchAllVehicles', user?.active_role?.id, user?.active_company?.id],
+      VehiclesService.fetchAllVehicles({
+        search
+      }),
+
+    queryKey: ['VehiclesService.fetchAllVehicles', user?.active_role?.id, user?.active_company?.id, `-${search}`,],
   });
 
   const renderHorizonTabs = () => (
