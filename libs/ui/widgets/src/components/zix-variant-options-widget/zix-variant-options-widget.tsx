@@ -84,7 +84,7 @@ export const ZixVariantOptionsWidget: React.FC<
   ZixVariantOptionsWidgetProps
 > = ({ icon, label, options, labelBold, optionVariant, variant, labelContainerProps = {}, ...props }) => {
   return (
-    <YStack>
+    <YStack flex={1}>
       {
         !!label && (
           <Stack

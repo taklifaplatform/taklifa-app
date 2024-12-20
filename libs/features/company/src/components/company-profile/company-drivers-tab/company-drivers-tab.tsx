@@ -48,7 +48,7 @@ export const CompanyDriversTab: React.FC<CompanyDriversTabProps> = ({
               backgroundColor='$color2'
               alignItems='center'
             >
-              <UserAvatar user={item.user} />
+              <UserAvatar user={item?.user} />
               <ZixVariantOptionsWidget
                 optionVariant="location"
                 variant="location"
