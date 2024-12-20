@@ -101,6 +101,7 @@ export type { NotificationStatusTransformer } from './models/NotificationStatusT
 export type { NotificationTransformer } from './models/NotificationTransformer';
 export type { PatchMessageRequest } from './models/PatchMessageRequest';
 export type { PriceTransformer } from './models/PriceTransformer';
+export type { PriceUpdateServiceRequest } from './models/PriceUpdateServiceRequest';
 export type { ProposalPermissionTransformer } from './models/ProposalPermissionTransformer';
 export type { QueryRequest } from './models/QueryRequest';
 export type { RatesUpdateRatingRequest } from './models/RatesUpdateRatingRequest';

@@ -1,23 +1,23 @@
 
+import { useToastController } from '@tamagui/toast';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { ServicesService } from '@zix/api';
+import { useAuth } from '@zix/services/auth';
 import { formFields, handleFormErrors, SchemaForm, SubmitButton, ZixFieldContainer } from '@zix/ui/forms';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
-import { z } from 'zod';
-import { Theme } from 'tamagui';
 import { useForm } from 'react-hook-form';
-import { useToastController } from '@tamagui/toast';
-import { useRouter } from 'solito/router';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { ServicesService } from '@zix/api';
 import { createParam } from 'solito';
-import { useEffect } from 'react';
-import { useAuth } from '@zix/services/auth';
+import { useRouter } from 'solito/router';
+import { Theme } from 'tamagui';
+import { z } from 'zod';
 
 const ManageServiceFormSchema = z
   .object({
     cover: formFields.image.describe(t('forms:service-image')),
     title: formFields.text.describe(t('common:service-title')),
     description: formFields.textarea.describe(t('common:service-description')),
+    price: formFields.money.describe(t('common:price')),
     images: formFields.medias.describe(t('forms:images')),
   });
 
@@ -42,13 +42,13 @@ export function ManageServiceScreen(props: ManageServiceScreenProps) {
       }),
     queryKey: ['ServicesService.retrieveZoneService', serviceId],
   })
-  useEffect(() => {
-    if (serviceId) {
-      Object.keys(data?.data || {}).forEach((key) => {
-        form.setValue(key, data?.data[key]);
-      });
-    }
-  }, [data?.data])
+  /* useEffect(() => {
+     if (serviceId) {
+       Object.keys(data?.data || {}).forEach((key) => {
+         form.setValue(key, data?.data[key]);
+       });
+     }
+   }, [data?.data])*/
 
   const { mutateAsync } = useMutation({
     async mutationFn(requestBody: z.infer<typeof ManageServiceFormSchema>) {
@@ -83,7 +83,7 @@ export function ManageServiceScreen(props: ManageServiceScreenProps) {
     },
   });
 
-  const renderForm = () => (
+  const renderForm = () => (!serviceId || data?.data?.id) && (
     <SchemaForm
       form={form}
       schema={ManageServiceFormSchema}
@@ -92,7 +92,7 @@ export function ManageServiceScreen(props: ManageServiceScreenProps) {
           notAvatar: true
         }
       }}
-      // defaultValues={data?.data || {}}
+      defaultValues={data?.data || {}}
       onSubmit={mutateAsync}
       renderAfter={({ submit }) => {
         return (

@@ -143,9 +143,23 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
             fontSize={'$3'}
           >{item.title}</Text>
           <XStack
+          alignItems='center'
+          >
+          <Text
+            fontWeight={'bold'}
+            fontSize={'$3'}
+          >{item?.price?.value}</Text>
+          <Text
+            fontWeight={'bold'}
+            fontSize={'$3'}
+          > {item?.price?.currency?.code}</Text>
+          </XStack>
+
+        </XStack>
+        <XStack
             gap="$4"
             alignItems='center'
-            justifyContent='flex-end'
+            justifyContent='space-between'
           >
             {/* <ZixButton
               flex={0.1}
@@ -154,6 +168,7 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
               icon={() => <CustomIcon name="chat" color='$color12' size={"$1"} />}
               onPress={startChat}
             />*/}
+
             {item?.driver?.phone_number && <Button
               flex={0.1}
               backgroundColor='$gray7'
@@ -169,7 +184,6 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
               }}
             />}
           </XStack>
-        </XStack>
         <Text
           numberOfLines={3}
         >{item.description}</Text>

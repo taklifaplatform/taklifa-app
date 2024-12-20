@@ -48,7 +48,7 @@ export const ZixMoneyField: React.FC<ZixMoneyFieldProps> = ({
         <ZixInput
           flex={1}
           containerProps={{ flex: 1 }}
-          value={value.value}
+          value={String(value.value)}
           onChangeText={(amount) => onValueChange({ ...value, value: amount })}
           keyboardType="decimal-pad"
           inputMode="numeric"

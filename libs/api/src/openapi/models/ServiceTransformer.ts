@@ -4,6 +4,7 @@
 /* eslint-disable */
 import type { DriverTransformer } from './DriverTransformer';
 import type { MediaTransformer } from './MediaTransformer';
+import type { PriceTransformer } from './PriceTransformer';
 import type { SimpleCompanyTransformer } from './SimpleCompanyTransformer';
 export type ServiceTransformer = {
     id?: number;
@@ -13,5 +14,6 @@ export type ServiceTransformer = {
     description?: string;
     cover?: MediaTransformer;
     images?: MediaTransformer;
+    price?: PriceTransformer;
 };
 
