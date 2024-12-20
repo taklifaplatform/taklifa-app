@@ -1,9 +1,12 @@
 import { LocationTransformer } from '@zix/api';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions } from 'react-native';
-import MapView, { Marker, Polyline } from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
+import MapViewDirections from 'react-native-maps-directions';
 import { Button, Stack, View } from 'tamagui';
 import ZixGetDirection from '../zix-get-direction/zix-get-direction';
+import * as Location from 'expo-location';
+import { X } from '@tamagui/lucide-icons';
 
 /* eslint-disable-next-line */
 export type ZixMapDirectionWidgetProps = {
@@ -12,8 +15,8 @@ export type ZixMapDirectionWidgetProps = {
   status: string;
 };
 const { width, height } = Dimensions.get('window');
-//const height = 400;
 const ASPECT_RATIO = width / height;
+const GOOGLE_MAPS_APIKEY = 'AIzaSyBw3sZh4uFyLbi9sKTzKYn3BqIS_b-vGeA'; // Replace with your actual API key
 
 export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
   startLocation,
@@ -35,20 +38,32 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
     longitudeDelta: Math.abs(start.longitude - end.longitude) * ASPECT_RATIO,
   };
 
-  // generate fake polyline direction fro start to end with 50 pionts
-  const polyline = [
-    start,
-    {
-      ...start,
-      latitude: start.latitude + 0.08,
-      longitude: start.longitude + 0.01,
-    },
-    // ...Array.from({ length: 50 }, (_, i) => ({
-    //   latitude: start.latitude + (end.latitude - start.latitude) * (i / 50),
-    //   longitude: start.longitude + (end.longitude - start.longitude) * (i / 50),
-    // })),
-    end,
-  ];
+  const [currentLocation, setCurrentLocation] = useState(start);
+
+  // Track real-time user location
+  useEffect(() => {
+    (async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+        return;
+      }
+
+      Location.watchPositionAsync(
+        {
+          accuracy: Location.Accuracy.High,
+          timeInterval: 1000, // Update every second
+          distanceInterval: 1, // Update every meter
+        },
+        (location) => {
+          setCurrentLocation({
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+          });
+        }
+      );
+    })();
+  }, []);
 
   function getStatusColor(status: string) {
     switch (status) {
@@ -61,17 +76,36 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
     }
   }
 
+  const [viewMap, setViewMap] = useState(false)
   return (
-    <Stack height={200} backgroundColor="$gray6" borderRadius="$5">
+    <Stack height={viewMap ? 600 : 200} backgroundColor="$gray6" borderRadius="$5">
+     {viewMap && <Button
+      onPress={() => setViewMap(false)}
+      unstyled
+      position='absolute'
+      zIndex={1}
+      theme={'accent'}
+      size={'$2'}
+      >
+      <X size={'$3'} color={'white'} />
+      </Button>}
       <MapView
-        scrollEnabled={false}
-        zoomEnabled={false}
+      onPress={() => setViewMap(!viewMap)}
         style={{
           flex: 1,
           borderRadius: 10,
         }}
         initialRegion={mapRegion}
+        region={{
+          latitude: currentLocation.latitude,
+          longitude: currentLocation.longitude,
+          latitudeDelta: mapRegion.latitudeDelta,
+          longitudeDelta: mapRegion.longitudeDelta,
+        }}
       >
+
+
+        {/* Start and End Markers */}
         <Marker
           coordinate={start}
           title={startLocation.address}
@@ -97,7 +131,7 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
           </View>
         </Marker>
 
-        <Marker coordinate={end as any} title={endLocation.address}>
+        <Marker coordinate={end} title={endLocation.address}>
           <View
             justifyContent="center"
             alignItems="center"
@@ -116,11 +150,18 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
             />
           </View>
         </Marker>
+
+        {/* Direction Path */}
+        <MapViewDirections
+          origin={start}
+          destination={end}
+          apikey={GOOGLE_MAPS_APIKEY}
+          strokeWidth={6}
+          strokeColor="#ffd32c"
+          onError={(errorMessage) => console.log('Error: ', errorMessage)}
+        />
       </MapView>
-      <ZixGetDirection
-        startLocation={startLocation}
-        endLocation={endLocation}
-      />
+      <ZixGetDirection startLocation={startLocation} endLocation={endLocation} />
     </Stack>
   );
 };

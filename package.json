@@ -15,6 +15,7 @@
     "@react-native-community/netinfo": "11.3.1",
     "@react-native-masked-view/masked-view": "0.3.1",
     "@react-native/babel-preset": "^0.73.21",
+    "@react-navigation/drawer": "^6.7.2",
     "@storybook/addon-links": "^7.6.17",
     "@storybook/addon-react-native-web": "^0.0.23",
     "@tamagui/animations-moti": "^1.100.0",
@@ -90,6 +91,7 @@
     "react-native-gesture-handler": "~2.16.1",
     "react-native-map-link": "^3.3.1",
     "react-native-maps": "1.14.0",
+    "react-native-maps-directions": "^1.9.0",
     "react-native-markdown-display": "^7.0.2",
     "react-native-reanimated": "~3.10.1",
     "react-native-reanimated-carousel": "^3.5.1",
@@ -110,8 +112,7 @@
     "text-encoding": "^0.7.0",
     "tslib": "^2.6.2",
     "use-debounce": "^10.0.1",
-    "zod-i18n-map": "^2.27.0",
-    "@react-navigation/drawer": "^6.7.2"
+    "zod-i18n-map": "^2.27.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.5",
