@@ -2,6 +2,7 @@ import { CarFront, Plus, Users, UsersRound } from '@tamagui/lucide-icons';
 import { ActionSheet, ActionSheetRef } from '@zix/ui/common';
 import { useRef } from 'react';
 import { Button, Theme } from 'tamagui';
+import { FileType2 } from '@tamagui/lucide-icons'
 
 import { useRouter } from 'solito/router';
 import { USER_ROLES, useAuth } from '@zix/services/auth';
@@ -59,6 +60,14 @@ export const ManageTeamFabButton: React.FC = () => {
           onPress: () => {
             actionSheetRef.current?.close();
             router.push(`${getUrlPrefix}/company/vehicles/create`);
+          },
+        },
+        {
+          name: t('common:services'),
+          icon: <FileType2 size="$2" color="$color10" />,
+          onPress: () => {
+            actionSheetRef.current?.close();
+            router.push(`${getUrlPrefix}/company/services/create`);
           },
         },
       ]}

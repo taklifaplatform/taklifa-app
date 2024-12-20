@@ -1,4 +1,4 @@
-import { Search } from '@tamagui/lucide-icons';
+import { Search, X } from '@tamagui/lucide-icons';
 import { COMPANY_ROLES, useAuth } from '@zix/services/auth';
 import { UserAvatar, ZixAvatar } from '@zix/ui/common';
 import { ZixInput, ZixInputProps } from '@zix/ui/forms';
@@ -47,6 +47,9 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
         <ZixInput
           leftIcon={() => <Search size="$1.5" />}
           placeholder={t('common:search')}
+          rightIcon={() =>
+            searchProps?.value && <X size="$1.5" onPress={() => searchProps?.onChangeText('')} />
+          }
           {...searchProps}
         />
       </View>

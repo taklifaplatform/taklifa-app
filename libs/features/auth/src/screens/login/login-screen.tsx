@@ -66,7 +66,8 @@ export const LoginScreen: React.FC = () => {
           form={form}
           schema={LoginSchema}
           defaultValues={{
-            phone_number: params?.phone || '+966',
+            phone_number: params?.phone || '+966 ',
+            // phone_number: params?.phone || '+966',
             password: '',
           }}
           onSubmit={mutateAsync}

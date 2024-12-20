@@ -29,31 +29,37 @@ export const ZixPhoneField: React.FC<ZixPhoneFieldProps> = ({
     onValueChange,
   });
 
+  console.log('selectedCountry::', selectedCountry, 'value::', value);
+
   return (
     <Theme name={error ? 'red' : themeName} forceClassName>
       <XStack flex={1} width="100%" gap="$2">
         <Stack width="30%">
-          <ZixAutoCompleteField
-            value={selectedCountry}
-            onChange={setSelectedCountry}
-            api="geography/countries"
-            dataMapper={(item: CountryTransformer) => {
-              const dial_code = item.dialling?.dial_code;
-              const countryCode = dial_code ? `(+${dial_code}) ` : '';
+          {
+            (
+              <ZixAutoCompleteField
+                value={selectedCountry}
+                onChange={setSelectedCountry}
+                api="geography/countries"
+                dataMapper={(item: CountryTransformer) => {
+                  const dial_code = item.dialling?.dial_code;
+                  const countryCode = dial_code ? `(+${dial_code}) ` : '';
 
-              const name = `${countryCode}${item.name}`;
-              return {
-                id: `${item.id}`,
-                name,
-                icon: item.flag,
-              }
-            }}
-            selectTriggerProps={{
-              padding: '$2.5',
-              gap: '$0',
-              scaleIcon: 0.5,
-            }}
-          />
+                  const name = `${countryCode}${item.name}`;
+                  return {
+                    id: `${item.id}`,
+                    name,
+                    icon: item.flag,
+                  }
+                }}
+                selectTriggerProps={{
+                  padding: '$2.5',
+                  gap: '$0',
+                  scaleIcon: 0.5,
+                }}
+              />
+            )
+          }
         </Stack>
         <ZixInput
           flex={1}
