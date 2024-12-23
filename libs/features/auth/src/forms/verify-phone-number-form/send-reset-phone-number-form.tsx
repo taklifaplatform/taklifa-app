@@ -57,7 +57,7 @@ export const SendResetPhoneNumberForm: React.FC<SendResetPhoneNumberFormProps> =
       onSuccess(data);
     },
     onError(error: any) {
-      alert('error');
+      toast.show(error?.body?.message || t('app:errors.something-went-wrong'), { preset: 'error' });
       handleFormErrors(form, error?.body?.errors);
     },
   });

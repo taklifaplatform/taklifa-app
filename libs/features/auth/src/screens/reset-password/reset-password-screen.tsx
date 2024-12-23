@@ -18,6 +18,7 @@ import { useRouter } from 'solito/router';
 import { z } from 'zod';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 import { ScreenLayout } from '@zix/ui/layouts';
+import { useToastController } from '@tamagui/toast';
 
 const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
 
@@ -29,6 +30,7 @@ export const ResetPasswordScreen = () => {
   const { params } = useParams();
   const router = useRouter();
   const updateParams = useUpdateParams();
+  const toast = useToastController();
   useEffect(() => {
     if (params?.phone) {
       updateParams({ phone: undefined }, { web: { replace: true } });
@@ -52,6 +54,9 @@ export const ResetPasswordScreen = () => {
       );
     },
     onError(error: any) {
+      toast.show(error?.body?.message || t('app:errors.something-went-wrong'), {
+        preset: 'error',
+      });
       handleFormErrors(form, error?.body?.errors);
     },
   });

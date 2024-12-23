@@ -65,6 +65,9 @@ export const UpdateCompanyScreen: React.FC = () => {
       router.back();
     },
     onError(error) {
+      toast.show(error?.body?.message || t('app:errors.something-went-wrong'), {
+        preset: 'error',
+      });
       handleFormErrors(form, error?.body?.errors);
     },
   });

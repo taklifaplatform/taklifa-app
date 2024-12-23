@@ -16,6 +16,7 @@ import { useAuth } from '@zix/services/auth';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 import { t } from 'i18next';
 import { ScreenLayout } from '@zix/ui/layouts';
+import { useToastController } from '@tamagui/toast';
 
 const KYCFormSchema = z.object({
   //
@@ -29,7 +30,8 @@ const KYCFormSchema = z.object({
 export const KycVerificationScreen = () => {
   const router = useRouter();
   const { user, registerSteps, refetchUser } = useAuth();
-
+  const toast = useToastController();
+  
   const form = useForm<z.infer<typeof KYCFormSchema>>();
   const { mutateAsync } = useMutation({
     mutationFn(requestBody: z.infer<typeof KYCFormSchema>) {
@@ -42,6 +44,9 @@ export const KycVerificationScreen = () => {
       router.push('/auth/verify-driver');
     },
     onError(error: any) {
+      toast.show(error?.body?.message || t('app:errors.something-went-wrong'), {
+        preset: 'error',
+      });
       handleFormErrors(form, error?.body?.errors);
     },
   });
