@@ -54,9 +54,9 @@ export const InviteEmployeeScreen: React.FC = () => {
       toast.show('Invitation Sent Successfully!');
       router.back()
       queryClient.invalidateQueries({ queryKey: ['CompanyInvitationsService.list'] })
-
     },
     onError(error: any, variables, context) {
+      console.log('=====',JSON.stringify(error,null,2))
       toast.show(error?.body?.message || t('app:errors.something-went-wrong'), { preset: 'error' });
       handleFormErrors(form, error?.body?.errors);
     },

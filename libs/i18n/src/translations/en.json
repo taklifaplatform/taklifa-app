@@ -372,6 +372,11 @@
     "service-title": "Service Title",
     "service-description": "Service Description",
     "services": "Services",
+    "all": "All",
+    "cancelled": "Cancelled",
+    "searching": "Searching",
+    "draft": "Draft",
+    "assigned": "Assigned",
   },
   "cookies-banner": {
     "section-1": {
