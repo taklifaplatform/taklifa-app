@@ -55,17 +55,17 @@ export class ChatService {
      * @throws ApiError
      */
     public static startChat({
-        user,
+        model,
     }: {
-        user: string,
+        model: string,
     }): CancelablePromise<{
         data?: SimpleChannelTransformer;
     }> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/chat/channels/start-chat/{user}',
+            url: '/api/chat/channels/start-chat/{model}',
             path: {
-                'user': user,
+                'model': model,
             },
         });
     }

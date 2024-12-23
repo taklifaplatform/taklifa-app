@@ -65,7 +65,7 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
   const { mutate: startChat, isPending } = useMutation({
     mutationFn() {
       return ChatService.startChat({
-        user: `${user.id}`
+        model: `${user.id}`
       })
     },
     onSuccess(data) {

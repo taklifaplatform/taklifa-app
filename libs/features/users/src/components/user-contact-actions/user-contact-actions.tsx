@@ -46,7 +46,7 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
   const { mutate: startChat, isPending } = useMutation({
     mutationFn() {
       return ChatService.startChat({
-        user: `${user.id}`
+        model: `${user.id}`
       })
     },
     onSuccess(data) {
