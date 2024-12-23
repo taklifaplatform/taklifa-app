@@ -18,12 +18,15 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = React.memo(({
 }: MapDriverMarkerProps) => {
   const [showCustomIcon, setShowCustomIcon] = useState(false)
 
-  const renderCarIcon = () => (driver?.vehicle?.model?.map_icon?.url && !showCustomIcon) ? (
+  console.log(JSON.stringify(driver?.vehicle?.image?.original_url, null, 2))
+
+  const renderCarIcon = () => (!showCustomIcon && (driver?.vehicle?.image?.original_url || driver?.vehicle?.model?.map_icon?.url)) ? (
     <Image
-      source={{ uri: driver.vehicle.model.map_icon.url }}
-      width={driver.vehicle.model.map_icon_width || '$4'}
-      height={driver.vehicle.model.map_icon_height || '$4'}
+      source={{ uri: driver?.vehicle?.image?.original_url || driver?.vehicle?.model?.map_icon?.url }}
+      width={driver?.vehicle?.model?.map_icon_width || '$6'}
+      height={driver?.vehicle?.model?.map_icon_height || '$4'}
       onError={() => {
+        console.log('error loading image')
         setShowCustomIcon(true)
       }}
     />
@@ -56,11 +59,11 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = React.memo(({
         style={
           isSelected
             ? {
-                borderWidth: 1,
-                borderColor: 'rgba(254, 202, 22, 0.1)',
-                backgroundColor: 'rgba(254, 202, 22, 0.3)',
-                borderRadius: 50,
-              }
+              borderWidth: 1,
+              borderColor: 'rgba(254, 202, 22, 0.1)',
+              backgroundColor: 'rgba(254, 202, 22, 0.3)',
+              borderRadius: 50,
+            }
             : null
         }
       >
