@@ -125,6 +125,9 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     }
 
     const failedMedias: Record<string, string[]> = {};
+    console.log('===============')
+    console.log('UPLOADING FILES::', _medias)
+    console.log('===============')
     const finalResults = await Promise.all(Object.values(_medias).map((media) => {
       return new Promise((resolve, reject) => {
         uploadMediaFile(media as UploadableMediaFile, (progress) => {
@@ -196,6 +199,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
         return;
       }
       const files: Partial<UploadableMediaFile>[] = result.assets.map((file) => ({
+        ...file,
         mediaTypes,
         id: '',
         uri: file.uri,
@@ -210,10 +214,13 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     actionRef.current?.close();
     const result = await getDocumentAsync({
       multiple: isMultiple,
+      type: ['image/*',],
+      // type: ['image/*', 'application/pdf'],
     });
     if (result?.canceled) return;
     if (result.assets.length) {
       const files = result.assets.map((file) => ({
+        ...file,
         id: '',
         uri: file.uri,
         file_name: file.name,

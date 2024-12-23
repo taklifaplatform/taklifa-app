@@ -8,6 +8,7 @@ export type UploadableMediaFile = {
   uri: string;
   type: string;
   file_name: string;
+  file_type: string;
   mime_type: string;
   uuid: string;
 };
@@ -29,11 +30,16 @@ export const uploadMediaFile = async (
       ...file,
       ...resizedPhoto,
       file_name: `${randomUUID()}.${ImageManipulator.SaveFormat.JPEG}`,
-      type: 'image/jpeg',
+      file_type: 'image/jpeg',
     };
   }
   return new Promise(function (resolve, reject) {
     const UPLOAD_URL = `${OpenAPI.BASE}/api/media/uploads`;
+
+    console.log('================');
+    console.log('UPLOADING MEDIA::', file);
+    console.log('UPLOAD_URL::', UPLOAD_URL);
+    console.log('================');
 
     if (!file) {
       reject({
@@ -65,6 +71,9 @@ export const uploadMediaFile = async (
     });
     xhr.onload = async function () {
       const data = JSON.parse(xhr.response);
+      console.log('=========');
+      console.log('MEDIA UPLOAD SUCCESS::', data);
+      console.log('=========');
       if (this.status >= 200 && this.status < 300) {
         resolve(data);
       } else {
@@ -72,6 +81,9 @@ export const uploadMediaFile = async (
       }
     };
     xhr.onerror = function (error) {
+      console.log('=========');
+      console.log('MEDIA UPLOAD ERROR::', error);
+      console.log('=========');
       reject({
         status: this.status,
         statusText: xhr.statusText,
@@ -100,17 +112,23 @@ export const uploadMediaFile = async (
         // Create FormData
         formData.append('file', blob, file.file_name);
       } else {
+        console.log('file.uri', file.uri);
+        console.log('file.file_type', file.file_type);
         formData.append('file', {
           // uri: ['ios', 'android'].includes(Platform.OS)
           //   ? file.uri.replace('file://', '')
           //   : file.uri,
-          uri: Platform.OS === 'ios' ? file.uri.replace('file://', '') : file.uri,
+          uri:
+            Platform.OS === 'ios' ? file.uri.replace('file://', '') : file.uri,
           name: file.file_name,
-          type: file.type,
+          type: file.file_type,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any);
       }
     } catch (error) {
+      console.log('=========');
+      console.log('MEDIA UPLOAD BUILDING FORM OBJECT ERROR::', error);
+      console.log('=========');
       reject(error);
     }
 
