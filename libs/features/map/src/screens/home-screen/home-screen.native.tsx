@@ -11,7 +11,7 @@ import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { MapCompanyMarker, MapDriverMarker } from '@zix/ui/sawaeed';
 import { getDistance } from '@zix/utils';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Animated, Dimensions, Keyboard, Platform, SectionList } from 'react-native';
+import { Alert, Animated, Dimensions, Keyboard, Platform, SectionList } from 'react-native';
 import MapView from 'react-native-maps';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useRouter } from 'solito/router';
@@ -47,6 +47,7 @@ export function HomeScreen() {
   const [showMap, setShowMap] = useState(true);
   const [search, setSearch] = useState<string>();
   const filtersKey = useMemo(() => Object.values(filters).join('-'), [filters]);
+
   const { data, ...driversQuery } = useQuery({
     queryFn() {
       return DriversService.fetchAllDrivers({
@@ -58,6 +59,7 @@ export function HomeScreen() {
     queryKey: ['DriversService.fetchAllDrivers', search, filtersKey],
     // staleTime: 5 * 1000,
   });
+
   const companiesQuery = useQuery({
     queryFn() {
       return CompaniesService.fetchAllCompanies({
@@ -200,6 +202,35 @@ export function HomeScreen() {
     }
 
   }, [isFocused]);
+
+  // Check if user verified
+  const isVerified = (user.active_role?.name === USER_ROLES.solo_driver && (
+      !user.verification_status
+      || ['pending', 'rejected'].includes(user.verification_status)
+    ));
+
+
+  useEffect(() => {
+    if (isVerified) {
+      console.log(user.active_role?.name)
+      Alert.alert(
+        'تحذير',
+        'يجب عليك تحديث بياناتك لتتمكن من استخدام التطبيق',
+        [
+          {
+            text: 'تحديث البيانات',
+            onPress: () => router.push(`/auth/verify-kyc`)
+          },
+          {
+            text: 'إلغاء',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'destructive',
+          }
+        ],
+        { cancelable: false }
+      );
+    }
+  },[isVerified])
 
   // Full-screen animation state
   const [isMapFullScreen, setIsMapFullScreen] = useState(false);
