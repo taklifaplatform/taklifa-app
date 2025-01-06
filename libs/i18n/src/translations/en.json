@@ -378,6 +378,9 @@
     "searching": "Searching",
     "draft": "Draft",
     "assigned": "Assigned",
+    "shipment-invitations": "Shipment Invitations",
+    "remove-invitation": "Remove Invitation",
+    "view-proposal": "View Proposal",
   },
   "cookies-banner": {
     "section-1": {

@@ -426,6 +426,9 @@
     "searching": "جاري البحث",
     "draft": "مسودة",
     "assigned": "معين",
+    "shipment-invitations": "دعوة الشحن",
+    "remove-invitation": "إزالة الدعوة",
+    "view-proposal": "عرض العرض",
   },
   "cookies-banner": {
     "section-1": {
