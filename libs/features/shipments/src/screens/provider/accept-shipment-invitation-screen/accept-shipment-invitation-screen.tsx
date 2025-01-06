@@ -94,11 +94,11 @@ export function AcceptShipmentInvitationScreen() {
         schema={AcceptShipmentInvitationSchema}
         defaultValues={{
           cost: {
-            currency_id: 1,
+            currency_id: 117,
             value: proposalQuery?.data?.data?.cost?.value || 0
           },
           fee: {
-            currency_id: 1,
+            currency_id: 117,
             value: proposalQuery?.data?.data?.fee?.value || 0
           },
           ...(proposalQuery.data?.data || {})

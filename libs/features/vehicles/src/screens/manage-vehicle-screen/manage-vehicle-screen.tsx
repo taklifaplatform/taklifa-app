@@ -99,6 +99,12 @@ export const ManageVehicleScreen: React.FC = () => {
       queryClient.invalidateQueries({
         queryKey: ['VehiclesService.fetchAllVehicles', user?.active_role?.id, user?.active_company?.id],
       });
+      // refresh after 5 seconds
+      setTimeout(() => {
+        queryClient.invalidateQueries({
+          queryKey: ['DriversService.fetchAllDrivers'],
+        })
+      }, 5000);
       refetchUser();
       toast.show('Company Updated Successfully!');
       router.back();

@@ -57,7 +57,7 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
       onSuccess(data);
     },
     onError(error: any) {
-      alert('error');
+      toast.show(error?.body?.errors?.pin_code || error?.body?.message || t('app:errors.something-went-wrong'), { preset: 'error' });
       handleFormErrors(form, error?.body?.errors);
     },
   });

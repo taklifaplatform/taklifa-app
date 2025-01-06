@@ -75,7 +75,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
         </Circle>
       )}
     >
-      {t(item.status as any)}
+      {t(`common:${item.status as any}`)}
     </ZixButton>
   );
 

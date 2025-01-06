@@ -8,6 +8,7 @@ export type UploadableMediaFile = {
   uri: string;
   type: string;
   file_name: string;
+  file_type: string;
   mime_type: string;
   uuid: string;
 };
@@ -16,7 +17,10 @@ export const uploadMediaFile = async (
   file: UploadableMediaFile,
   onProgressUpdate: (progress: number) => void = () => null,
 ): Promise<MediaTransformer> => {
-  if (file?.mediaTypes === MediaTypeOptions.Images || file?.file_type === 'image') {
+  if (
+    file?.mediaTypes === MediaTypeOptions.Images ||
+    file?.file_type === 'image'
+  ) {
     const resizedPhoto = await ImageManipulator.manipulateAsync(
       file.uri,
       [{ resize: { width: 600 } }], // resize to width of 300 and preserve aspect ratio
@@ -24,11 +28,18 @@ export const uploadMediaFile = async (
     );
     file = {
       ...file,
-      uri: resizedPhoto.uri,
+      ...resizedPhoto,
+      file_name: `${randomUUID()}.${ImageManipulator.SaveFormat.JPEG}`,
+      file_type: 'image/jpeg',
     };
   }
   return new Promise(function (resolve, reject) {
     const UPLOAD_URL = `${OpenAPI.BASE}/api/media/uploads`;
+
+    console.log('================');
+    console.log('UPLOADING MEDIA::', file);
+    console.log('UPLOAD_URL::', UPLOAD_URL);
+    console.log('================');
 
     if (!file) {
       reject({
@@ -60,6 +71,9 @@ export const uploadMediaFile = async (
     });
     xhr.onload = async function () {
       const data = JSON.parse(xhr.response);
+      console.log('=========');
+      console.log('MEDIA UPLOAD SUCCESS::', data);
+      console.log('=========');
       if (this.status >= 200 && this.status < 300) {
         resolve(data);
       } else {
@@ -67,6 +81,9 @@ export const uploadMediaFile = async (
       }
     };
     xhr.onerror = function (error) {
+      console.log('=========');
+      console.log('MEDIA UPLOAD ERROR::', error);
+      console.log('=========');
       reject({
         status: this.status,
         statusText: xhr.statusText,
@@ -78,28 +95,41 @@ export const uploadMediaFile = async (
     const formData = new FormData();
 
     // Append the file to the FormData object
-    if (file?.uri?.includes('base64,')) {
-      // Remove metadata from base64 string
-      const base64Data = file.uri.split(',')[1];
-      // Convert base64 to binary
-      const binaryData = atob(base64Data);
-      // Convert binary to ArrayBuffer
-      const arrayBuffer = new ArrayBuffer(binaryData.length);
-      const uint8Array = new Uint8Array(arrayBuffer);
-      for (let i = 0; i < binaryData.length; i++) {
-        uint8Array[i] = binaryData.charCodeAt(i);
+    try {
+      if (file?.uri?.includes('base64,')) {
+        // Remove metadata from base64 string
+        const base64Data = file.uri.split(',')[1];
+        // Convert base64 to binary
+        const binaryData = atob(base64Data);
+        // Convert binary to ArrayBuffer
+        const arrayBuffer = new ArrayBuffer(binaryData.length);
+        const uint8Array = new Uint8Array(arrayBuffer);
+        for (let i = 0; i < binaryData.length; i++) {
+          uint8Array[i] = binaryData.charCodeAt(i);
+        }
+        // Create Blob from ArrayBuffer
+        const blob = new Blob([arrayBuffer], { type: file.mime_type }); // Change type accordingly
+        // Create FormData
+        formData.append('file', blob, file.file_name);
+      } else {
+        console.log('file.uri', file.uri);
+        console.log('file.file_type', file.file_type);
+        formData.append('file', {
+          // uri: ['ios', 'android'].includes(Platform.OS)
+          //   ? file.uri.replace('file://', '')
+          //   : file.uri,
+          uri:
+            Platform.OS === 'ios' ? file.uri.replace('file://', '') : file.uri,
+          name: file.file_name,
+          type: file.file_type,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as any);
       }
-      // Create Blob from ArrayBuffer
-      const blob = new Blob([arrayBuffer], { type: file.mime_type }); // Change type accordingly
-      // Create FormData
-      formData.append('file', blob, file.file_name);
-    } else {
-      formData.append('file', {
-        uri: Platform.OS === 'ios' ? file.uri.replace('file://', '') : file.uri,
-        name: file.file_name,
-        type: file.type,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } as any);
+    } catch (error) {
+      console.log('=========');
+      console.log('MEDIA UPLOAD BUILDING FORM OBJECT ERROR::', error);
+      console.log('=========');
+      reject(error);
     }
 
     formData.append('uuid', file.uuid || randomUUID());

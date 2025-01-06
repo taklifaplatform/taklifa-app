@@ -110,32 +110,38 @@ export const ManageShipmentItemsScreen: React.FC = () => {
       <ScrollView flex={1} >
 
         <ZixFieldContainer label='Shipment Type' labelBold collapsible stackContainerProps={{ padding: '$4' }}>
-          <ZixSelectRowOptionField
-            value={shipment?.items_type}
-            onChange={(items_type) => setShipment((prev) => ({ ...prev, items_type }))}
-            options={[
-              {
-                name: 'document',
-                id: 'document',
-                icon: 'document'
-              },
-              {
-                name: 'car',
-                id: 'car',
-                icon: 'car'
-              },
-              {
-                name: 'boxes',
-                id: 'multiple_boxes',
-                icon: 'box-add'
-              },
-              {
-                name: 'other',
-                id: 'other',
-                icon: 'other'
-              }
-            ]}
-          />
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+          >
+            <ZixSelectRowOptionField
+              value={shipment?.items_type}
+              onChange={(items_type) => setShipment((prev) => ({ ...prev, items_type }))}
+              options={[
+                {
+                  name: 'document',
+                  id: 'document',
+                  icon: 'document'
+                },
+                {
+                  name: 'car',
+                  id: 'car',
+                  icon: 'car'
+                },
+                {
+                  name: 'boxes',
+                  id: 'multiple_boxes',
+                  icon: 'box-add'
+                },
+                {
+                  name: 'other',
+                  id: 'other',
+                  icon: 'other'
+                }
+              ]}
+            />
+          </ScrollView>
         </ZixFieldContainer>
 
         <ZixFieldContainer stackContainerProps={{ padding: '$4' }}>

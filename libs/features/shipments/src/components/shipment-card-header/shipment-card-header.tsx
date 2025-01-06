@@ -31,7 +31,7 @@ export const ShipmentCardHeader: React.FC<ShipmentCardHeaderProps> = ({ shipment
       size='$2'
       theme={getShipmentStatusColor}
     >
-      {shipment.status}
+      {t(`common:${shipment.status}`)}
     </Button>
   )
 

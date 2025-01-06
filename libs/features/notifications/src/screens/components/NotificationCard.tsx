@@ -19,6 +19,7 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
     handleNotificationRedirection(notification.data)
   }
 
+
   return (
     <TouchableOpacity onPress={onPress}>
       <XStack

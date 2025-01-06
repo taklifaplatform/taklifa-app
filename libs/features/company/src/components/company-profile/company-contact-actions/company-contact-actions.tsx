@@ -1,9 +1,11 @@
 import { IconProps } from '@tamagui/helpers-icon';
+import { useToastController } from '@tamagui/toast';
 import { useMutation } from '@tanstack/react-query';
 import { ChatService, CompanyTransformer } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { ZixButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
+import { t } from 'i18next';
 import { Linking, Platform } from 'react-native';
 import { useRouter } from 'solito/router';
 import { Button, SizeTokens, ThemeableStackProps, XStack } from 'tamagui';
@@ -23,6 +25,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
 }) => {
   const { getUrlPrefix } = useAuth()
   const router = useRouter()
+  const toast = useToastController();
 
   const sharedButtonStyle = {
     size: actionButtonSize,
@@ -44,7 +47,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
   const { mutate: startChat, isPending } = useMutation({
     mutationFn() {
       return ChatService.startChat({
-        user: `${company.id}`
+        model: `${company.id}`
       })
     },
     onSuccess(data) {
@@ -56,6 +59,9 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
       router.push(`${getUrlPrefix}/chat/channels/${data.data?.id}`)
     },
     onError(error) {
+      toast.show(error?.body?.message || t('app:errors.something-went-wrong'), {
+        preset: 'error',
+      });
       console.log('startChat error', JSON.stringify(error, null, 2))
     }
   })

@@ -15,6 +15,7 @@ import { Theme } from 'tamagui';
 import { z } from 'zod';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 import { ScreenLayout } from '@zix/ui/layouts';
+import { useToastController } from '@tamagui/toast';
 
 const DriverVerificationFormSchema = z
   .object({
@@ -41,7 +42,7 @@ const DriverVerificationFormSchema = z
 export const AuthDriverVerificationScreen = () => {
   const router = useRouter();
   const { registerSteps } = useAuth();
-
+  const toast = useToastController();
   const form = useForm<z.infer<typeof DriverVerificationFormSchema>>();
   const { mutateAsync } = useMutation({
     mutationFn(requestBody: z.infer<typeof DriverVerificationFormSchema>) {
@@ -53,6 +54,9 @@ export const AuthDriverVerificationScreen = () => {
       router.replace('/auth/register/success?redirect=/solo-driver');
     },
     onError(error: any) {
+      toast.show(error?.body?.message || t('app:errors.something-went-wrong'), {
+        preset: 'error',
+      });
       handleFormErrors(form, error?.body?.errors);
     },
   });
