@@ -162,7 +162,7 @@ export function ManageShipmentDriversScreen() {
 
   return (
     <ScreenLayout safeAreaBottom authProtected>
-      <AppHeader title='Shipment Details' showBackButton />
+      <AppHeader title={'common:shipment-detail'} showBackButton />
       <YStack flex={1}>
         <ShipmentManagerHeader
           activeStep={4}
