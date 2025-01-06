@@ -231,6 +231,7 @@
     "box": "Box",
     "boxes": "Boxes",
     "other": "Other",
+    "multiple_boxes": "Multiple Boxes",
     "height-ship": "Height (CM)",
     "width-ship": "Width (CM)",
     "length-ship": "Length (CM)",

@@ -39,7 +39,8 @@ export const ShipmentCardHeader: React.FC<ShipmentCardHeaderProps> = ({ shipment
     <XStack alignItems='center' justifyContent='space-between' gap='$2'>
       <H6 textTransform='none' >
         {t('job:job-demand')}{' '} {'\n'}
-        {`${t('shipment:type:' + shipment?.items_type)}`}
+
+        {t(`common:${shipment?.items_type}`)}
       </H6>
       <Text>
         {shipment.code}
