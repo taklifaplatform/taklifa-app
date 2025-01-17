@@ -39,9 +39,6 @@ const LocationManagerSchema = z
     country_id: formFields.country.describe(
       `${t('app:forms.labels.country')} // ${t('app:forms.placeholders.country')}`
     ),
-    state_id: formFields.autocomplete.describe(
-      `${t('app:forms.labels.state')} // ${t('app:forms.placeholders.state')}`
-    ).optional().nullable(),
     city_id: formFields.autocomplete.describe(
       `${t('app:forms.labels.city')} // ${t('app:forms.placeholders.city')}`
     ).optional().nullable(),

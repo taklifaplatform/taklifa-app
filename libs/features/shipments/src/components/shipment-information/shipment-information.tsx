@@ -83,7 +83,7 @@ export const ShipmentInformation: React.FC<ShipmentInformationProps> = ({
             {
               icons: <PackageOpen size="$1" color='$color10' />,
               name: t('job:shipment-type'),
-              value: `${shipment?.items_type}`,
+              value: t(`common:${shipment?.items_type}`),
             },
           ]}
         />

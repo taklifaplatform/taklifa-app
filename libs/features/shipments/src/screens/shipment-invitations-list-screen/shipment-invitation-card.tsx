@@ -59,7 +59,7 @@ export const ShipmentInvitationCard: React.FC<ShipmentInvitationCardProps> = ({
           loading={isPending}
           onPress={() => mutateAsync()}
         >
-          Remove Invitation
+          {t('common:remove-invitation')}
         </ZixButton>
         {
           invitation.status === 'accepted' && (
@@ -69,7 +69,7 @@ export const ShipmentInvitationCard: React.FC<ShipmentInvitationCardProps> = ({
               fontWeight='700'
               onPress={() => router.push(`/app/shipment-manager/${invitation.shipment_id}/proposals/${invitation.proposal_id}`)}
             >
-              View Proposal
+              {t('common:view-proposal')}
             </ZixButton>
           )
         }

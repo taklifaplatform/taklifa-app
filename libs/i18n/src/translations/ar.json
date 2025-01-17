@@ -280,6 +280,7 @@
     "box": "طرد واحد",
     "boxes": "الطرود المتعددة",
     "other": "اخرى",
+    "multiple_boxes": "صناديق متعددة",
     "height-ship": "الارتفاع (سم)",
     "width-ship": "العرض (سم)",
     "length-ship": "الطول (سم)",
@@ -425,6 +426,12 @@
     "searching": "جاري البحث",
     "draft": "مسودة",
     "assigned": "معين",
+    "shipment-invitations": "دعوة الشحن",
+    "remove-invitation": "إزالة الدعوة",
+    "view-proposal": "عرض العرض",
+    "shipment-budget": "ميزانية الشحن",
+    "skip": "تخطي",
+    "shipment-details": "تفاصيل الشحن",
   },
   "cookies-banner": {
     "section-1": {
@@ -622,7 +629,7 @@
       "document": "مستند",
       "box": "صندوق",
       "multiple_boxes": "صناديق متعددة",
-      "other": ""
+      "other": "أخرى"
     },
     "status": {
       "draft": "مسودة",

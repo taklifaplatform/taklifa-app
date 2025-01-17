@@ -231,6 +231,7 @@
     "box": "Box",
     "boxes": "Boxes",
     "other": "Other",
+    "multiple_boxes": "Multiple Boxes",
     "height-ship": "Height (CM)",
     "width-ship": "Width (CM)",
     "length-ship": "Length (CM)",
@@ -377,6 +378,12 @@
     "searching": "Searching",
     "draft": "Draft",
     "assigned": "Assigned",
+    "shipment-invitations": "Shipment Invitations",
+    "remove-invitation": "Remove Invitation",
+    "view-proposal": "View Proposal",
+    "shipment-budget": "Shipment Budget",
+    "skip": "Skip",
+    "shipment-detail": "Shipment Details",
   },
   "cookies-banner": {
     "section-1": {
@@ -576,7 +583,7 @@
       "document": "Document",
       "box": "Box",
       "multiple_boxes": "Multiple boxes",
-      "other": ""
+      "other": "Others"
     },
     "status": {
       "draft": "Draft",

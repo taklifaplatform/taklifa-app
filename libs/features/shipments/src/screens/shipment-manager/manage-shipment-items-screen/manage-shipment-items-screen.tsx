@@ -163,7 +163,7 @@ export const ManageShipmentItemsScreen: React.FC = () => {
 
   return (
     <ScreenLayout safeAreaBottom>
-      <AppHeader title='Shipment Details' showBackButton />
+      <AppHeader title={t('common:shipment-detail')} showBackButton />
       <ShipmentManagerHeader
         activeStep={2}
         shipment={data?.data}

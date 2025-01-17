@@ -69,11 +69,18 @@ export const ManageShipmentBudgetScreen: React.FC = () => {
     <FullScreenSpinner />
   )
 
-  const renderForm = () => data?.data && (
+  const renderForm = () => data?.data?.id && (
     <SchemaForm
       form={form}
       schema={SendFromSchema}
-      defaultValues={data.data}
+      defaultValues={{
+        min_budget: data?.data?.min_budget || 0,
+        max_budget: data?.data?.max_budget || 0,
+      }}
+      placeholderValues={{
+        min_budget: data?.data?.min_budget || 0,
+        max_budget: data?.data?.max_budget || 0,
+      }}
       onSubmit={mutateAsync}
       renderAfter={({ submit }) => (
         <YStack gap='$4'>
@@ -97,7 +104,7 @@ export const ManageShipmentBudgetScreen: React.FC = () => {
           />
 
           <ZixFieldContainer
-            label='Budget'
+            label={t('common:shipment-budget')}
             {...SHARED_SHIPMENT_MANAGER_FIELD_PROPS.containerProps}
           >
             {Object.values(fields)}
@@ -110,7 +117,7 @@ export const ManageShipmentBudgetScreen: React.FC = () => {
 
   return (
     <ScreenLayout safeAreaBottom authProtected>
-      <AppHeader title='Shipment Budget' showBackButton />
+      <AppHeader title={t('common:shipment-budget')} showBackButton />
       {renderForm()}
       {renderLoadingSpinner()}
     </ScreenLayout>
