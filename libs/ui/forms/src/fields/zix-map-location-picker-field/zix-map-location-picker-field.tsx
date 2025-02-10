@@ -309,6 +309,7 @@ export const ZixMapLocationPickerField: React.FC<ZixMapLocationPickerFieldProps>
             <MapView
               key={`map-${localLocation?.latitude}-${localLocation?.longitude}`}
               style={{ flex: 1, height: 200, borderRadius: 14 }}
+              provider='google'
               initialRegion={{
                 latitude: localLocation?.latitude || 24.713552,
                 longitude: localLocation?.longitude || 46.675296,
