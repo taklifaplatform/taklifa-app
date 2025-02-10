@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { DriverTransformer, DriversService } from '@zix/api';
+import { CompaniesService, DriverTransformer, DriversService } from '@zix/api';
 import { UserCard } from '@zix/features/users';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
-import { MapDriverMarker } from '@zix/ui/sawaeed';
+import { MapCompanyMarker, MapDriverMarker } from '@zix/ui/sawaeed';
 import { t } from 'i18next';
 import { useRef, useState } from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import MapView from 'react-native-maps';
 import { useRouter } from 'solito/router';
@@ -40,9 +40,32 @@ export function HomeScreen() {
     },
     queryKey: ['DriversService.fetchAllDrivers', search],
   });
+  const companiesQuery = useQuery({
+    queryFn() {
+      return CompaniesService.fetchAllCompanies({
+        perPage: Platform.select({ web: 80, ios: 50, android: 20 }),
+        search,
+      });
+    },
+    queryKey: ['CompaniesService.fetchAllCompanies', search],
+    staleTime: 5 * 1000,
+  });
   const [selectedDriver, setSelectedDriver] = useState<DriverTransformer>();
   const flatListRef = useRef(null);
 
+
+  const renderMapCompanies = () =>
+
+    companiesQuery.data?.data?.map((company, index) => (
+      <MapCompanyMarker
+        key={`marker-${index}`}
+        company={company}
+        onPress={() => {
+          router.push(`/app/companies/${company.id}`);
+        }}
+
+      />
+    ));
 
   const renderMap = () =>
   (
@@ -52,6 +75,7 @@ export function HomeScreen() {
       style={{ flex: 1 }}
       initialCamera={initialCamera}
     >
+      {renderMapCompanies()}
       {data?.data?.map((driver, index) => (
         <MapDriverMarker
           key={`marker-${index}`}
@@ -61,7 +85,7 @@ export function HomeScreen() {
             setSelectedDriver(driver);
             mapRef.current?.animateCamera({
               center: {
-                latitude: parseFloat( driver?.live_location?.latitude || driver?.location?.latitude),
+                latitude: parseFloat(driver?.live_location?.latitude || driver?.location?.latitude),
                 longitude: parseFloat(driver?.live_location?.longitude || driver?.location?.longitude),
               },
               zoom: 11,
