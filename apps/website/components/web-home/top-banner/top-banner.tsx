@@ -1,9 +1,11 @@
 import { useMultiLang } from '@zix/i18n';
 import { ZixLinkButton } from '@zix/ui/common';
 import { t } from 'i18next';
-import { Stack, Text, Theme, XStack } from 'tamagui';
+import { Stack, Text, Theme, XStack, YStack, Image } from 'tamagui';
 import BannerMainImageAr from '../../../images/main-banner-ar.svg';
 import BannerMainImageEn from '../../../images/main-banner-en.svg';
+import { Dimensions } from 'react-native';
+import { widths } from '@tamagui/config/types/media';
 
 
 /**
@@ -20,15 +22,17 @@ export function TopBanner() {
     const BannerImage = activeLang === 'ar' ? BannerMainImageAr : BannerMainImageEn;
 
     return (
-      <BannerImage
-        width="100%"
-        borderRadius="$4"
-        resizeMode="cover"
+      <YStack
+        width='100%'
+        alignItems='center'
+        justifyContent='center'
         height={632}
-        $sm={{
-          height: 100,
-        }}
-      />
+      >
+        <BannerImage
+          borderRadius="$4"
+          width={'100%'}
+        />
+      </YStack>
     );
   };
 
