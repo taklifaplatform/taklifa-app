@@ -80,7 +80,7 @@ export function TopHeader() {
       </Text>
       <ZixLinkButton
         menuItem
-        href={'https://apps.apple.com/us/app/sawaeed/id6720725925'}
+        href={'https://play.google.com/store/apps/details?id=app.sawaeed&hl=en'}
         target='_blank'
         icon={<CustomIcon name={'google_play'} size={'$8'} />}
       />

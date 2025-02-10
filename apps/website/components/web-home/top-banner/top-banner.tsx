@@ -26,7 +26,7 @@ export function TopBanner() {
         resizeMode="cover"
         height={632}
         $sm={{
-          height: 400,
+          height: 100,
         }}
       />
     );
