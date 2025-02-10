@@ -9,6 +9,7 @@ import { useRef, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import MapView from 'react-native-maps';
+import { useRouter } from 'solito/router';
 import { Button, YStack } from 'tamagui';
 
 const { height } = Dimensions.get('window');
@@ -27,8 +28,9 @@ const initialCamera = {
 export function HomeScreen() {
   const mapRef = useRef<MapView>(null);
 
-  const [showMap, setShowMap] = useState(true);
+  const [showMap, setShowMap] = useState(false);
   const [search, setSearch] = useState<string>();
+  const router = useRouter();
   const { data, ...driversQuery } = useQuery({
     queryFn() {
       return DriversService.fetchAllDrivers({
@@ -40,7 +42,7 @@ export function HomeScreen() {
   });
   const [selectedDriver, setSelectedDriver] = useState<DriverTransformer>();
   const flatListRef = useRef(null);
-  const scrollToItemId = (itemId:any) => {
+  const scrollToItemId = (itemId: any) => {
     const index = data?.data?.findIndex((item) => item.id === itemId);
     console.info('index', index)
     if (index !== -1) {
@@ -69,14 +71,14 @@ export function HomeScreen() {
           isSelected={selectedDriver?.id === driver.id}
           onPress={() => {
             setSelectedDriver(driver);
-            showMap &&  scrollToItemId(driver.id);
             mapRef.current?.animateCamera({
               center: {
-                latitude: parseFloat(driver?.location?.latitude),
-                longitude: parseFloat(driver?.location?.longitude),
+                latitude: parseFloat( driver?.live_location?.latitude || driver?.location?.latitude),
+                longitude: parseFloat(driver?.live_location?.longitude || driver?.location?.longitude),
               },
               zoom: 11,
             });
+            router.push(`/app/users/${driver.id}`);
           }}
         />
 
@@ -85,10 +87,12 @@ export function HomeScreen() {
   );
   //List
   const renderList = () =>
-  ( showMap &&
+  (showMap &&
     <YStack
       position='absolute'
       zIndex={2}
+      width='100%'
+      backgroundColor={'white'}
       height={height}
       left={0}
       paddingTop={70}
@@ -111,6 +115,7 @@ export function HomeScreen() {
           />
         )}
       />
+      {renderSwitcher()}
     </YStack>
   );
 
