@@ -55,6 +55,7 @@ export const ZixMapPointerField: React.FC<ZixMapPointerFieldProps> = (
       <MapView
         ref={mapRef}
         style={{ flex: 1 }}
+        provider='google'
         initialCamera={{
           center: {
             latitude: props.value?.latitude || 24.713552,
