@@ -48,6 +48,7 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = React.memo(({
         longitude: parseFloat(liveLocation.longitude ?? '0'),
       }}
       onPress={() => onPress?.()}
+      cursor='pointer'
     >
       <View
         width='$8'

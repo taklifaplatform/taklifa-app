@@ -42,18 +42,6 @@ export function HomeScreen() {
   });
   const [selectedDriver, setSelectedDriver] = useState<DriverTransformer>();
   const flatListRef = useRef(null);
-  const scrollToItemId = (itemId: any) => {
-    const index = data?.data?.findIndex((item) => item.id === itemId);
-    console.info('index', index)
-    if (index !== -1) {
-      setTimeout(() => {
-        flatListRef?.current?.scrollToIndex({
-          animated: true,
-          index: index,
-        });
-      }, 1000); // Adjust the timeout duration as needed
-    }
-  };
 
 
   const renderMap = () =>
