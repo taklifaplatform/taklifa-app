@@ -2,7 +2,14 @@ import { MediaTransformer, OpenAPI } from '@zix/api';
 import { randomUUID } from 'expo-crypto';
 import { MediaTypeOptions } from 'expo-image-picker';
 import { Platform } from 'react-native';
-import * as ImageManipulator from 'expo-image-manipulator';
+//import * as ImageManipulator from 'expo-image-manipulator';
+import dynamic from 'next/dynamic';
+
+
+// TODO:: Test for Mobile
+const ImageManipulator = dynamic(() => import('expo-image-manipulator'), {
+  ssr: false,
+});
 
 export type UploadableMediaFile = {
   uri: string;

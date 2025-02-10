@@ -3,7 +3,6 @@ import { Camera as CameraIcon, Image as LucideImage, Paperclip } from '@tamagui/
 import { MediaService, MediaTransformer } from '@zix/api';
 import { ActionSheet, ActionSheetRef } from '@zix/ui/common';
 import { getDocumentAsync } from 'expo-document-picker';
-import * as ImageManipulator from 'expo-image-manipulator';
 
 import {
   MediaTypeOptions,
