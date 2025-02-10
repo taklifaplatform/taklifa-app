@@ -17,7 +17,7 @@ export function getLastActivityStatus(
   const lastActivityDate = moment(user.latest_activity);
   const now = moment();
   const oneDayAgo = now.clone().subtract(1, 'day');
-  const twoHoursAgo = now.clone().subtract(2, 'hours');
+  const twoHoursAgo = now.clone().subtract(12, 'hours');
 
  /* console.log('Last Activity Date:', lastActivityDate.format());
   console.log('Current Date:', now.format());
