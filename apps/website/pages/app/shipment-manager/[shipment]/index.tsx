@@ -1,13 +1,6 @@
-import { ShipmentDetailScreen } from '@zix/features/shipments';
-import { AppLayout } from '@zix/ui/layouts';
-import { NextPageWithLayout } from '../../../_app';
+import { ManageShipmentSenderScreen } from '@zix/features/shipments';
+import React from 'react';
 
-export const Page: NextPageWithLayout = () => {
-  return (
-    <ShipmentDetailScreen variant='shipments' />
-  );
-};
-
-Page.getLayout = (page) => <AppLayout>{page}</AppLayout>
-
-export default Page;
+export default function Screen() {
+  return <ManageShipmentSenderScreen shipment={{}} />;
+}
