@@ -63,27 +63,27 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
 
   console.log(JSON.stringify(disabled, null, 2))
 
-//  const [selectedPhone, setSelectedPhone] = useState({})
-//  const [searchFocus, setSearchFocus] = useState(false)
+  //  const [selectedPhone, setSelectedPhone] = useState({})
+  //  const [searchFocus, setSearchFocus] = useState(false)
 
-/*  useEffect(() => {
-    if (searchFocus) return; // Avoid running the function if searchFocus is true
-      if (value) {
-        onSearch?.(value); // Call the onSearch function with the current value
-        setSelectedPhone(options[0]); // Set the first option as the selected phone
-      } else {
-        setSelectedPhone({}); // Reset selected phone if no value
-      }
-  }, [searchFocus, value, options]);
-*/
+  /*  useEffect(() => {
+      if (searchFocus) return; // Avoid running the function if searchFocus is true
+        if (value) {
+          onSearch?.(value); // Call the onSearch function with the current value
+          setSelectedPhone(options[0]); // Set the first option as the selected phone
+        } else {
+          setSelectedPhone({}); // Reset selected phone if no value
+        }
+    }, [searchFocus, value, options]);
+  */
   const renderSearchBar = () => onSearch && (
     <YStack width='100%' padding='$4' marginVertical='$4'>
       <ZixInput
         placeholder={t('common:search')}
         value={search}
         onChangeText={onSearch}
-      //  onFocus={() => setSearchFocus(true)}
-      //  onBlur={() => setSearchFocus(false)}
+        //  onFocus={() => setSearchFocus(true)}
+        //  onBlur={() => setSearchFocus(false)}
         rightIcon={(props) => <CustomIcon name='search' {...props} />}
       />
     </YStack>
@@ -111,7 +111,6 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
         <Adapt platform="touch">
           <Sheet native modal dismissOnSnapToBottom>
             <Sheet.Frame>
-              {renderSearchBar()}
               <Sheet.ScrollView>
                 <Adapt.Contents />
               </Sheet.ScrollView>
@@ -140,8 +139,9 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
             />
           </Select.ScrollUpButton>
 
-          <Select.Viewport minWidth={200}>
+          <Select.Viewport minWidth={200} minHeight={400}>
             <Select.Group disabled={disabled}>
+              {renderSearchBar()}
               {useMemo(
                 () => options.map((item, i) => {
                   return (
