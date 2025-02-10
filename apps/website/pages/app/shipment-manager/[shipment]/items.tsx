@@ -1,6 +1,16 @@
 import { ManageShipmentItemsScreen } from '@zix/features/shipments';
+import { AppLayout } from '@zix/ui/layouts';
 import React from 'react';
 
-export default function Screen() {
-  return <ManageShipmentItemsScreen />;
+
+export const Screen = () => {
+  return (
+    <ManageShipmentItemsScreen />
+  )
 }
+
+Screen.getLayout = (screen) => (
+  <AppLayout>
+    {screen}
+  </AppLayout>
+)
