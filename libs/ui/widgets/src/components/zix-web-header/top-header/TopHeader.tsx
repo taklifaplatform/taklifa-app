@@ -23,6 +23,8 @@ export function TopHeader() {
       linkItem
       href={'/about'}
       icon={<Home size='$1' color='$color12' />}
+      fontWeight='600'
+      fontSize="$2"
     >
       {t('web-home:about')}
     </ZixLinkButton>
@@ -32,6 +34,8 @@ export function TopHeader() {
       linkItem
       href={'/faqs'}
       icon={<HelpCircle size='$1' color='$color12' />}
+      fontWeight='600'
+      fontSize="$2"
     >
       {t('web-home:question')}
     </ZixLinkButton>
@@ -47,11 +51,12 @@ export function TopHeader() {
           fontSize: '$5',
         }}
         prependPlaceHolder={<Languages size="$1" />}
-        fontSize="$5"
-        fontWeight="500"
+        fontWeight='600'
+        fontSize="$2"
         options={languages}
         onChange={(value) => changeLanguage(value)}
         value={activeLang}
+
       />
     </Stack>
   );
@@ -59,6 +64,8 @@ export function TopHeader() {
     <ZixLinkButton
       linkItem
       href={'/contact'}
+      fontWeight='600'
+      fontSize="$2"
 
     >
       <MapPin size='$1' color='$color12' />
@@ -75,7 +82,10 @@ export function TopHeader() {
   );
   const renderDownload = () => (
     <XStack gap="$1" alignItems="center">
-      <Text $lg={{ display: 'none' }}>
+      <Text $lg={{ display: 'none' }}
+        fontWeight='600'
+        fontSize="$2"
+      >
         {t('web-home:download')}
       </Text>
       <ZixLinkButton
@@ -94,12 +104,15 @@ export function TopHeader() {
   );
   const renderFollows = () => (
     <XStack gap="$1" alignItems="center">
-      <Text $lg={{ display: 'none' }}>
+      <Text $lg={{ display: 'none' }}
+        fontWeight='600'
+        fontSize="$2"
+      >
         {t('web-home:followus')}
       </Text>
       <ZixLinkButton
         menuItem
-        href={'/'}
+        href={'https://www.instagram.com/sawaedlogistics'}
         icon={<CustomIcon name="snapchat" size={'$1.5'} color='$color12' />}
       />
       <ZixLinkButton
