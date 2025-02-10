@@ -1,6 +1,16 @@
 import { ShipmentInvitationDetailScreen } from '@zix/features/shipments';
+import { AppLayout } from '@zix/ui/layouts';
 import React from 'react';
 
-export default function Screen() {
-  return <ShipmentInvitationDetailScreen />;
+export const Screen = () => {
+  return (
+    <ShipmentInvitationDetailScreen />
+  )
 }
+
+Screen.getLayout = (screen) => (
+  <AppLayout>
+    {screen}
+  </AppLayout>
+)
+
