@@ -8,10 +8,9 @@ import { MapCompanyMarker, MapDriverMarker } from '@zix/ui/sawaeed';
 import { t } from 'i18next';
 import { useMemo, useRef, useState } from 'react';
 import { Dimensions, Platform } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
 import MapView from 'react-native-maps';
 import { useRouter } from 'solito/router';
-import { Button, View, YStack } from 'tamagui';
+import { Button, View, XStack, YStack } from 'tamagui';
 import MapFilters from '../../components/map-filters/map-filters';
 
 const { height } = Dimensions.get('window');
@@ -107,37 +106,41 @@ export function HomeScreen() {
 
   //List
   const renderList = () =>
-  (showMap &&
-    <YStack
-      position='absolute'
-      zIndex={2}
-      width='100%'
-      backgroundColor={'white'}
-      height={height}
-      left={0}
-      paddingTop={70}
-    >
-      <FlatList
-        refreshing={driversQuery.isFetching}
-        onRefresh={driversQuery.refetch}
-        ref={flatListRef}
-        data={data?.data || []}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item, index }) => (
-          <UserCard
-            cursor='pointer'
-            key={`stack-${item.id}-${index}`}
-            user={item}
-            borderWidth={selectedDriver?.id === item.id ? 4 : 0}
-            borderColor={'$color8'}
-            margin="$2"
-            flex={1}
-          />
-        )}
-      />
-      {renderSwitcher()}
-    </YStack>
-  );
+    showMap && (
+      <YStack
+        position="absolute"
+        zIndex={2}
+        width="100%"
+        backgroundColor="#F6F6F6"
+        height={height}
+        left={0}
+        paddingTop='$17'
+      >
+        <XStack
+          flexWrap="wrap"
+          justifyContent="center"
+          padding="$2"
+        >
+          {data?.data?.map((item, index) => (
+            <UserCard
+              cursor="pointer"
+              key={`stack-${item.id}-${index}`}
+              user={item}
+              borderWidth={selectedDriver?.id === item.id ? 4 : 0}
+              borderColor="$color8"
+              margin="$4"
+              //flexBasis="30%" // Adjust for responsiveness
+              minWidth={400}
+              $sm={{
+                width: '100%'
+              }}
+            />
+          ))}
+        </XStack>
+        {renderSwitcher()}
+      </YStack>
+    );
+
 
   //switch button Map / List
   const renderSwitcher = () => (
@@ -227,7 +230,14 @@ export function HomeScreen() {
           onChangeText: setSearch,
         }}
       />
-      {renderFilters()}
+      <XStack
+        maxWidth={1100}
+        $sm={{
+          width: '70%',
+        }}
+      >
+        {renderFilters()}
+      </XStack>
       {renderMap()}
       {renderList()}
       {renderSwitcher()}
