@@ -201,6 +201,8 @@ export function HomeScreen() {
   // Filters
   const renderFilters = () => (
     <View
+      theme={'accent'}
+      justifyContent='center'
       position='absolute'
       zIndex={3}
       width='100%'
