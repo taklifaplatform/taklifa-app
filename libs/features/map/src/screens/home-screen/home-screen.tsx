@@ -81,6 +81,13 @@ export function HomeScreen() {
       ref={mapRef}
       style={{ flex: 1 }}
       initialCamera={initialCamera}
+      toolbarEnabled={false}
+      showsUserLocation
+      zoomControlEnabled={false}
+      showsCompass={false}
+      showsMyLocationButton={false}
+      showsTraffic={false}
+
     >
       {renderMapCompanies()}
       {data?.data?.map((driver, index) => (
@@ -208,11 +215,14 @@ export function HomeScreen() {
       justifyContent='center'
       position='absolute'
       zIndex={3}
-      width='100%'
+      width='99%'
+      //  maxWidth={1100}
       top={'10%'}
-      left={-40}
+      left={-10}
       $sm={{
         top: '15%',
+        //width: '70%',
+        maxWidth: 1100
       }}
     >
       <MapFilters values={filters} onChange={setFilters} />
@@ -230,15 +240,14 @@ export function HomeScreen() {
           onChangeText: setSearch,
         }}
       />
-      <XStack
-        maxWidth={1100}
-        $sm={{
-          width: '70%',
-        }}
+      {renderFilters()}
+      <YStack
+        width='100%'
+        flex={1}
+        padding="$4"
       >
-        {renderFilters()}
-      </XStack>
-      {renderMap()}
+        {renderMap()}
+      </YStack>
       {renderList()}
       {renderSwitcher()}
       {selectedDriver && renderSelectedMarker()}
