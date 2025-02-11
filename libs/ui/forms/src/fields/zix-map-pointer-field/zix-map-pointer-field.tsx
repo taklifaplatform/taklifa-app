@@ -67,6 +67,7 @@ export const ZixMapPointerField: React.FC<ZixMapPointerFieldProps> = (
           zoom: 10,
         }}
         onPress={(e) => onCoordinateUpdate(e.nativeEvent.coordinate)}
+        toolbarEnabled={false}
       >
         <ZixMapMarker
           location={props.value}

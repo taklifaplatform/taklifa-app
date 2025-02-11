@@ -9,6 +9,7 @@ import { Button, Text, Theme, View, XStack, YStack } from 'tamagui';
 import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common';
 import { ZixInput } from '../../fields';
 import ZixMapPointerField from '../../fields/zix-map-pointer-field/zix-map-pointer-field';
+import { Platform } from 'react-native';
 
 export type LocationFieldProps = {
   containerProps?: BaseFormFieldContainerProps;
@@ -86,8 +87,9 @@ export const LocationField: React.FC<LocationFieldProps> = ({
     (type === 'advanced' &&
       locationData?.latitude &&
       locationData?.longitude) ? (
-      <View height="$12">
-        <ZixMapPointerField value={locationData} />
+      <View height={Platform.OS === 'web' ? 200 : "$12"}>
+        <ZixMapPointerField value={locationData}
+        />
       </View>
     ) : null;
 
@@ -103,8 +105,16 @@ export const LocationField: React.FC<LocationFieldProps> = ({
 
   return (
     <FormFieldContainer {...containerProps} error={error}>
-      <YStack gap="$4" position="relative">
-        {renderAddressCard()}
+      <YStack gap="$4" position="relative"
+      >
+        <XStack
+          width={Platform.OS === 'web' ? '42%' : '100%'}
+          $sm={{
+            width: '100%'
+          }}
+        >
+          {renderAddressCard()}
+        </XStack>
         {renderAddressMap()}
         {renderInputActivator()}
         <View
