@@ -1,4 +1,4 @@
-import { Search, X } from '@tamagui/lucide-icons';
+import { PlusSquare, Search, X } from '@tamagui/lucide-icons';
 import { COMPANY_ROLES, useAuth } from '@zix/services/auth';
 import { UserAvatar, ZixAvatar } from '@zix/ui/common';
 import { ZixInput, ZixInputProps } from '@zix/ui/forms';
@@ -139,16 +139,16 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
             {headerRight ? (
               headerRight()
             ) : (
-              null
-              /*
               <Button
                 flex={1}
                 theme="accent"
                 variant="outlined"
-                icon={PlusSquare}
+                icon={<PlusSquare color={'$color01'} />}
+                onPress={() => router.push(`${getUrlPrefix}/create-shipment`)}
+                fontWeight='bold'
               >
-                Send New Shipments
-              </Button>*/
+                {t('common:create-shipment')}
+              </Button>
             )}
           </XStack>
         </XStack>

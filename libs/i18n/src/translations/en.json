@@ -383,7 +383,8 @@
     "view-proposal": "View Proposal",
     "shipment-budget": "Shipment Budget",
     "skip": "Skip",
-    "shipment-detail": "Shipment Details"
+    "shipment-detail": "Shipment Details",
+    "create-shipment": "Create New Shipment"
   },
   "cookies-banner": {
     "section-1": {
