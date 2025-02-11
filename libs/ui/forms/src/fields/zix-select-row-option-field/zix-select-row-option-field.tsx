@@ -8,7 +8,7 @@ import {
   Text,
 } from 'tamagui';
 import { BaseSelectFieldItem } from '../zix-select-field/zix-select-field';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { Platform, StyleSheet, TouchableOpacity } from 'react-native';
 
 
 export type ZixSelectRowOptionFieldProps = SelectProps & {
@@ -26,7 +26,8 @@ export const ZixSelectRowOptionField: React.FC<ZixSelectRowOptionFieldProps> = (
 }) => {
 
   return (
-    <XStack>
+    <XStack
+    >
       {
         options && options.map((item, i) => {
           return (
@@ -35,14 +36,37 @@ export const ZixSelectRowOptionField: React.FC<ZixSelectRowOptionFieldProps> = (
                 onChange?.(item.id)
               }}
               key={`${item.id}-${i}`}
-              style={[styles.optionButton, { backgroundColor: value === item.id ? '#FECA16' : '#E0E0E0', }]}
+              style={
+                [
+                  Platform.OS === 'web' ? {
+                    width: 180,
+                    padding: 10,
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginRight: 30,
+                    borderRadius: 10,
+                  } : styles.optionButton,
+                  { backgroundColor: value === item.id ? '#FECA16' : '#E0E0E0', }]
+              }
             >
               <YStack
+                $gtSm={{
+                  flexDirection: 'row',
+                  gap: '$6',
+                  justifyContent: 'space-between',
+                }}
+                $gtMd={{
+                  flexDirection: 'row',
+                  gap: '$2',
+                  justifyContent: 'space-between',
+                }}
                 alignItems='center'
                 gap='$2'
                 justifyContent='space-between'
               >
-                {item.icon && <CustomIcon name={item?.icon} color={'$color0'} size={'$2.5'} />}
+                {item.icon && <CustomIcon name={item?.icon}
+                  color={'$color0'}
+                  size={Platform.OS === 'web' ? "$1.5" : '$2.5'} />}
                 <Text
                   fontSize={10}
                   color='$color0'

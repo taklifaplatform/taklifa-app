@@ -114,6 +114,7 @@ export const ManageShipmentItemsScreen: React.FC = () => {
             horizontal
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
+            padding='$4'
           >
             <ZixSelectRowOptionField
               value={shipment?.items_type}
