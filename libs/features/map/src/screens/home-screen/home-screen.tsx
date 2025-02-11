@@ -1,3 +1,4 @@
+import { X } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { CompaniesService, DriverTransformer, DriversService } from '@zix/api';
 import { UserCard } from '@zix/features/users';
@@ -61,7 +62,8 @@ export function HomeScreen() {
         key={`marker-${index}`}
         company={company}
         onPress={() => {
-          router.push(`/app/companies/${company.id}`);
+          setSelectedDriver(company)
+          //router.push(`/app/companies/${company.id}`);
         }}
 
       />
@@ -90,7 +92,7 @@ export function HomeScreen() {
               },
               zoom: 11,
             });
-            router.push(`/app/users/${driver.id}`);
+            //  router.push(`/app/users/${driver.id}`);
           }}
         />
 
@@ -135,18 +137,57 @@ export function HomeScreen() {
   const renderSwitcher = () => (
     <Button
       theme="accent"
-      zIndex={1}
       position="absolute"
-      bottom="$10"
-      right={60}
-      icon={<CustomIcon name={showMap ? 'list' : 'map'} size="$1" />}
+      bottom="8%"
+      left={'44%'}
+      $sm={{
+        bottom: '10%',
+        left: 13,
+      }}
+      icon={<CustomIcon name={showMap ? 'list' : 'map'} size="$2" />}
       fontWeight="600"
-      fontSize="$2"
+      fontSize="$3"
       size="$4"
       onPress={() => setShowMap(!showMap)}
-    />
+    >
+      {showMap ? 'القائمة' : 'الخريطة'}
+    </Button>
 
   );
+
+  const renderSelectedMarker = () => (
+    <YStack
+      flex={1}
+      width='100%'
+      alignItems='center'
+      justifyContent='center'
+      position='absolute'
+      bottom={'40%'}
+      padding='$2'
+      $sm={{
+        bottom: '10%',
+      }}
+    >
+      <YStack
+        minWidth={450}
+        justifyContent='center'
+      >
+        <Button
+          theme='accent'
+          onPress={() => setSelectedDriver(undefined)}
+          height={40}
+          borderRadius='100%'
+          padding='$2'
+          width={40}
+
+        >
+          <X size={20} />
+        </Button>
+        <UserCard user={selectedDriver} />
+      </YStack>
+
+    </YStack>
+  )
 
 
   return (
@@ -162,6 +203,7 @@ export function HomeScreen() {
       {renderMap()}
       {renderList()}
       {renderSwitcher()}
+      {selectedDriver && renderSelectedMarker()}
     </ScreenLayout>
   );
 }
