@@ -45,8 +45,9 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
     showSearchBar && (
       <View paddingHorizontal="$4" paddingVertical="$2" $gtMd={{ flex: 1 }}>
         <ZixInput
-          leftIcon={() => <Search size="$1.5" />}
+          leftIcon={() => <Search size="$1.5" color="#FECA16"/>}
           placeholder={t('common:search')}
+          fontWeight='600'
           rightIcon={() =>
             searchProps?.value && <X size="$1.5" onPress={() => searchProps?.onChangeText('')} />
           }
@@ -122,19 +123,21 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
           alignItems="center"
           justifyContent="space-between"
         >
-          <XStack flex={0.25} alignItems="center" gap="$4">
+          <XStack
+            alignItems="center"
+            gap="$4">
             {renderBackButton()}
-
             {headerTitle ? (
               headerTitle()
             ) : (
-              <H4 fontSize={15} numberOfLines={1}>
+              <H4 fontSize={'$8'} numberOfLines={1}>
                 {title ?? t('common:app_name')}
               </H4>
             )}
           </XStack>
-          <XStack flex={0.5}>{renderSearchBar()}</XStack>
-
+          <XStack flex={0.3}>
+            {renderSearchBar()}
+          </XStack>
           <XStack>
             {headerRight ? (
               headerRight()
