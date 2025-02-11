@@ -4,6 +4,7 @@ import { PriceTransformer } from '@zix/api';
 import ZixAutoCompleteField from '../zix-auto-complete-field/zix-auto-complete-field';
 import ZixInput from '../zix-input/zix-input';
 import { useEffect } from 'react';
+import { Platform } from 'react-native';
 
 
 export type ZixMoneyFieldProps = {
@@ -27,7 +28,9 @@ export const ZixMoneyField: React.FC<ZixMoneyFieldProps> = ({
 
   return (
     <Theme name={error ? 'red' : themeName} forceClassName>
-      <XStack flex={1} width="100%" gap="$2">
+      <XStack flex={1} width="100%" gap="$2"
+        padding={Platform.OS === 'web' ? '$4' : null}
+      >
         <Stack width="30%">
           <ZixAutoCompleteField
             value={value.currency_id}
