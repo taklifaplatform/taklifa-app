@@ -13,3 +13,5 @@ Screen.getLayout = (Screen) => (
     {Screen}
   </AppLayout>
 )
+
+export default Screen
