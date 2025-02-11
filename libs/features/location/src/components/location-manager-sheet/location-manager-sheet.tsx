@@ -3,6 +3,8 @@ import { useLocationManager } from '@zix/services/location';
 
 import { View } from 'tamagui';
 import LocationManager from '../location-manager/location-manager';
+import { Platform } from 'react-native';
+import { AppLayout } from '@zix/ui/layouts';
 
 
 export function LocationManagerSheet() {
@@ -23,10 +25,19 @@ export function LocationManagerSheet() {
       }}
       backgroundColor='$background'
     >
-      <LocationManager
-        location={location}
-        onComplete={onCloseLocationEditor}
-      />
+      {
+        Platform.OS === 'web' ? (
+          <AppLayout>
+            <LocationManager
+              location={location}
+              onComplete={onCloseLocationEditor}
+            />
+          </AppLayout>
+        ) : <LocationManager
+          location={location}
+          onComplete={onCloseLocationEditor}
+        />
+      }
     </View>
   );
 }
