@@ -1,10 +1,13 @@
 import { ManageShipmentSenderScreen } from '@zix/features/shipments';
 import { AppLayout } from '@zix/ui/layouts';
 import React from 'react';
+import { YStack } from 'tamagui';
 
 export const Screen = () => {
   return (
-    <ManageShipmentSenderScreen />
+   <YStack flex={1}>
+     <ManageShipmentSenderScreen />
+   </YStack>
   )
 }
 

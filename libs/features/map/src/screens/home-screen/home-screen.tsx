@@ -59,7 +59,6 @@ export function HomeScreen() {
     staleTime: 5 * 1000,
   });
   const [selectedDriver, setSelectedDriver] = useState<DriverTransformer>();
-  const flatListRef = useRef(null);
 
 
   const renderMapCompanies = () =>
@@ -216,12 +215,10 @@ export function HomeScreen() {
       position='absolute'
       zIndex={3}
       width='99%'
-      //  maxWidth={1100}
       top={'10%'}
       left={-10}
       $sm={{
         top: '15%',
-        //width: '70%',
         maxWidth: 1100
       }}
     >
