@@ -6,7 +6,7 @@ import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { MapCompanyMarker, MapDriverMarker } from '@zix/ui/sawaeed';
 import { t } from 'i18next';
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Dimensions, Platform } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import MapView from 'react-native-maps';
@@ -36,15 +36,18 @@ export function HomeScreen() {
     vehicle_model: 'all',
     provider_type: 'all',
   })
+  const filtersKey = useMemo(() => Object.values(filters).join('-'), [filters]);
   const router = useRouter();
+
   const { data, ...driversQuery } = useQuery({
     queryFn() {
       return DriversService.fetchAllDrivers({
         perPage: 50,
+        vehicleModel: filters.vehicle_model,
         search,
       });
     },
-    queryKey: ['DriversService.fetchAllDrivers', search],
+    queryKey: ['DriversService.fetchAllDrivers', filtersKey, search],
   });
   const companiesQuery = useQuery({
     queryFn() {
