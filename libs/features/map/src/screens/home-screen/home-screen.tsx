@@ -70,10 +70,8 @@ export function HomeScreen() {
         key={`marker-${index}`}
         company={company}
         onPress={() => {
-          setSelectedDriver(company)
-          //router.push(`/app/companies/${company.id}`);
+          router.push(`/app/companies/${company.id}`);
         }}
-
       />
     ));
 
@@ -100,13 +98,13 @@ export function HomeScreen() {
               },
               zoom: 11,
             });
-            //  router.push(`/app/users/${driver.id}`);
           }}
         />
 
       ))}
     </MapView>
   );
+
   //List
   const renderList = () =>
   (showMap &&
@@ -199,6 +197,8 @@ export function HomeScreen() {
     </YStack>
   )
 
+
+  // Filters
   const renderFilters = () => (
     <View
       position='absolute'
