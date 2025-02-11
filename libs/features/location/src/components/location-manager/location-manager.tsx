@@ -14,7 +14,7 @@ import {
 import { AppHeader } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
-import { Separator, stylePropsAll, Theme, XStack, YStack } from 'tamagui';
+import { Separator, Theme, XStack, YStack } from 'tamagui';
 import { z } from 'zod';
 
 

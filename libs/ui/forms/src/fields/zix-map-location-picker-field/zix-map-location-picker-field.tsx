@@ -7,7 +7,7 @@ import { ZixButton, ZixMapMarker } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { useSafeAreaInsets } from '@zix/utils';
 import { t } from 'i18next';
-import { ActivityIndicator, FlatList } from 'react-native';
+import { ActivityIndicator, FlatList, Platform } from 'react-native';
 import {
   Avatar,
   Button,
@@ -26,6 +26,7 @@ import { ZixFieldContainer } from '../../common';
 import { ZixInput } from '..';
 import ZixMapPointerField from '../zix-map-pointer-field/zix-map-pointer-field';
 import MapView from 'react-native-maps';
+import { AppLayout } from '@zix/ui/layouts';
 
 export type ZixMapLocationPickerFieldProps = {
   value: LocationTransformer;
@@ -239,8 +240,8 @@ export const ZixMapLocationPickerFieldContent: React.FC<ZixMapLocationPickerFiel
   const renderAddressConfirmation = () =>
     !!localLocation?.address && (
       <YStack
-        padding="$4"
-        paddingBottom={bottom}
+        paddingBottom={Platform.OS === 'web' ? '$8' : bottom}
+        padding={Platform.OS === 'web' ? '$8' : '$4'}
         gap="$4"
         backgroundColor="$color1"
       >
@@ -257,8 +258,8 @@ export const ZixMapLocationPickerFieldContent: React.FC<ZixMapLocationPickerFiel
       </YStack>
     );
 
-  return (
-    <View flex={1} backgroundColor="$background1">
+  const renderMapAddressPickerLayout = () => (
+    <>
       <ZixMapPointerField
         value={localLocation || {}}
         onChange={(location) => {
@@ -290,6 +291,18 @@ export const ZixMapLocationPickerFieldContent: React.FC<ZixMapLocationPickerFiel
         </View>
         :
         renderAddressConfirmation()}
+    </>
+  )
+
+  return (
+    <View flex={1} backgroundColor="$background1">
+      {
+        Platform.OS === 'web' ?
+          <AppLayout>
+            {renderMapAddressPickerLayout()}
+          </AppLayout>
+          : renderMapAddressPickerLayout()
+      }
     </View>
   );
 };
