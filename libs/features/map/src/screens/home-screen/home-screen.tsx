@@ -11,7 +11,8 @@ import { Dimensions, Platform } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import MapView from 'react-native-maps';
 import { useRouter } from 'solito/router';
-import { Button, YStack } from 'tamagui';
+import { Button, View, YStack } from 'tamagui';
+import MapFilters from '../../components/map-filters/map-filters';
 
 const { height } = Dimensions.get('window');
 
@@ -31,6 +32,10 @@ export function HomeScreen() {
 
   const [showMap, setShowMap] = useState(false);
   const [search, setSearch] = useState<string>();
+  const [filters, setFilters] = useState({
+    vehicle_model: 'all',
+    provider_type: 'all',
+  })
   const router = useRouter();
   const { data, ...driversQuery } = useQuery({
     queryFn() {
@@ -155,6 +160,8 @@ export function HomeScreen() {
 
   );
 
+
+  // Driver & company CARD
   const renderSelectedMarker = () => (
     <YStack
       flex={1}
@@ -189,6 +196,21 @@ export function HomeScreen() {
     </YStack>
   )
 
+  const renderFilters = () => (
+    <View
+      position='absolute'
+      zIndex={3}
+      width='100%'
+      top={'10%'}
+      left={-40}
+      $sm={{
+        top: '15%',
+      }}
+    >
+      <MapFilters values={filters} onChange={setFilters} />
+    </View>
+  )
+
 
   return (
     <ScreenLayout>
@@ -200,6 +222,7 @@ export function HomeScreen() {
           onChangeText: setSearch,
         }}
       />
+      {renderFilters()}
       {renderMap()}
       {renderList()}
       {renderSwitcher()}
