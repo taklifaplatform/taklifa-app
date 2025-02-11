@@ -7,10 +7,12 @@ import {
   Button,
   Text,
   View,
+  XStack,
   YStack
 } from 'tamagui'
 import { ZixDateFieldProps } from './types'
 import ZixMonthSelection from './zix-month-selection'
+import { Platform } from 'react-native'
 
 const PAGE_WIDTH = 65
 // const PAGE_WIDTH = 90
@@ -54,7 +56,10 @@ export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
       paddingVertical='$2'
       paddingHorizontal='$1'
       alignItems="center"
-      marginRight={8}
+      width={Platform.OS === 'web' ? 70 : null}
+      height={Platform.OS === 'web' ? 70 : null}
+      marginRight={Platform.OS === 'web' ? null : 8}
+      margin={Platform.OS === 'web' ? 5 : null}
       flexDirection="column"
       disabled={min_date ? moment(date).date(item).isBefore(min_date) : false}
       disabledStyle={{
@@ -80,7 +85,10 @@ export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
     </Button>
   )
   return (
-    <>
+    <View
+    paddingVertical='$4'
+    paddingHorizontal='$2'
+    >
       <ZixMonthSelection
         width={150}
         selectTriggerProps={{
@@ -91,8 +99,9 @@ export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
         value={date.format('MM')}
         onChange={(month: string) => onDateChange(date.set('month', parseInt(month) - 1))}
       />
-      <View paddingVertical='$4'>
-        <Carousel
+      <View paddingVertical='$4'
+      >
+        {Platform.OS !== 'web' ? <Carousel
           ref={carouselRef}
           loop={false}
           vertical={false}
@@ -106,9 +115,17 @@ export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
           width={PAGE_WIDTH}
           height={PAGE_HEIGHT}
           renderItem={({ item, index }) => renderDayCard(item, index)}
-        />
+        /> :
+          <XStack
+            flexWrap="wrap"
+            justifyContent="center"
+            padding="$2"
+          >
+            {listDays.map((item, index) => renderDayCard(item, index))}
+          </XStack>
+        }
       </View>
-    </>
+    </View>
   )
 }
 

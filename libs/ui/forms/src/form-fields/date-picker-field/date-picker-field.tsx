@@ -11,7 +11,7 @@ export const DateComponents = {
   month_selector: ZixMonthSelection,
   year_selector: ZixYearSelection,
   row_time_range_picker: ZixRowTimeRangePicker,
-  row_date_picker: ZixRowDatePicker,
+  row_date_picker: ZixRowDatePicker, //
 }
 
 export type DatePickerFieldProps = ZixDateFieldProps & {
