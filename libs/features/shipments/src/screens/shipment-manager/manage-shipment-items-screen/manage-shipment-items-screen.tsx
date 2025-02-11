@@ -235,7 +235,7 @@ export const ShipmentItemsField: React.FC = ({
       }
 
       <Separator marginTop='$4' />
-      {(selectedType === 'multiple_boxes' || value.length === 0) && renderAddItemButton()}
+      {(selectedType === 'multiple_boxes' || value?.length === 0) && renderAddItemButton()}
     </View>
   );
 }
