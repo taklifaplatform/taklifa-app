@@ -5,6 +5,7 @@ import { ZixInput, ZixMediaPickerField } from "../../fields"
 import BoxDimension from "./box-dimension"
 import { RecursiveErrorType } from "@ts-react/form/lib/src/zodObjectErrors"
 import { t } from "i18next"
+import { Platform } from "react-native"
 
 export type ShipmentItemProps = {
   value: ShipmentItemTransformer
@@ -27,7 +28,9 @@ export const ShipmentItem: React.FC<ShipmentItemProps> = ({
       collapsible
       error={false}
     >
-      <YStack>
+      <YStack
+        padding={Platform.OS === 'web' ? '$8' : null}
+      >
         <ZixFieldContainer label="Images" error={error.medias}>
           <ZixMediaPickerField
             type="medias"
