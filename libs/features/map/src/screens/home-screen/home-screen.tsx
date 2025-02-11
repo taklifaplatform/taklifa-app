@@ -28,7 +28,7 @@ const initialCamera = {
 
 export function HomeScreen() {
   const mapRef = useRef<MapView>(null);
-
+  const GOOGLE_MAPS_APIKEY = 'AIzaSyBw3sZh4uFyLbi9sKTzKYn3BqIS_b-vGeA';
   const [showMap, setShowMap] = useState(false);
   const [search, setSearch] = useState<string>();
   const [filters, setFilters] = useState({
@@ -86,6 +86,7 @@ export function HomeScreen() {
       showsCompass={false}
       showsMyLocationButton={false}
       showsTraffic={false}
+      key={GOOGLE_MAPS_APIKEY}
 
     >
       {renderMapCompanies()}
