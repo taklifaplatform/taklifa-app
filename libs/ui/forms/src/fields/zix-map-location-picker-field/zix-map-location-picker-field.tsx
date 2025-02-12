@@ -109,7 +109,7 @@ const ZixMapLocationPickerFieldHeader: React.FC<ZixMapLocationPickerFieldHeaderP
               component.types.includes('country'),
             )?.long_name
           }
-          subTitle={item.formatted_address}
+          subTitle={item?.formatted_address}
           marginBottom="$2"
         />
       )}
@@ -228,7 +228,7 @@ export const ZixMapLocationPickerFieldContent: React.FC<ZixMapLocationPickerFiel
         country_id,
         city_id,
         postcode,
-        address: result.formatted_address,
+        address: result?.formatted_address,
       });
     } catch (error) {
       console.log('error', error);
