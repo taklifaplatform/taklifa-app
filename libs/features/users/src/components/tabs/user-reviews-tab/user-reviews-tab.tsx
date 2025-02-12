@@ -84,17 +84,21 @@ export const UserReviewsTab: React.FC<UserReviewsTabProps> = ({
 
 
   const renderRatingInput = () => (authUser?.id !== user.id && !isSuccess) && (
-    <YStack alignItems="center" gap='$4'>
-      <Text fontWeight="600" fontSize="$4" paddingTop="$4">
-      {t('common:how-was-your-experience-with')}
-      </Text>
-      <Text fontWeight="bold" fontSize="$4">
-        {user.name}
-      </Text>
-      <RatingStars score={score} onChange={setScore} size='$1.5' />
+    <YStack alignItems={Platform.OS === 'web' ? undefined : "center"} gap='$4'>
+      <YStack
+        alignItems='center'
+      >
+        <Text fontWeight="600" fontSize="$4" paddingTop="$4">
+          {t('common:how-was-your-experience-with')}
+        </Text>
+        <Text fontWeight="bold" fontSize="$4">
+          {user.name}
+        </Text>
+        <RatingStars score={score} onChange={setScore} size='$1.5' />
+      </YStack>
 
       <ZixInput
-        width={Platform.OS === 'web' ? 600 : null}
+        width={Platform.OS === 'web' ? 800 : null}
         textAlign='center'
         placeholder={t('common:enter-your-detail-input-placeholder')}
         isMultiline
@@ -111,14 +115,14 @@ export const UserReviewsTab: React.FC<UserReviewsTabProps> = ({
         >
           Submit
         </ZixButton>
-        <Button
+        {Platform.OS === 'web' ? null : <Button
           size='$5'
           flex={1}
           themeInverse
           onPress={onRatingRemove}
         >
           Remove
-        </Button>
+        </Button>}
       </XStack>
       <View
         backgroundColor="$color2"
