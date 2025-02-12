@@ -89,6 +89,7 @@ export function HomeScreen() {
       key={GOOGLE_MAPS_APIKEY}
 
     >
+      {renderFilters()}
       {renderMapCompanies()}
       {data?.data?.map((driver, index) => (
         <MapDriverMarker
@@ -216,7 +217,7 @@ export function HomeScreen() {
       position='absolute'
       zIndex={3}
       width='99%'
-      top={'10%'}
+      top={'4%'}
       left={-10}
       $sm={{
         top: '15%',
@@ -238,7 +239,6 @@ export function HomeScreen() {
           onChangeText: setSearch,
         }}
       />
-      {renderFilters()}
       <YStack
         width='100%'
         flex={1}
