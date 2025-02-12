@@ -105,7 +105,7 @@ const ZixMapLocationPickerFieldHeader: React.FC<ZixMapLocationPickerFieldHeaderP
             </Avatar>
           }
           title={
-            item.address_components?.find((component: any) =>
+            item?.address_components?.find((component: any) =>
               component.types.includes('country'),
             )?.long_name
           }
@@ -183,13 +183,13 @@ export const ZixMapLocationPickerFieldContent: React.FC<ZixMapLocationPickerFiel
       let city_id: any = localLocation?.city_id;
 
       const postcode =
-        result.address_components.find((component: any) =>
+        result?.address_components?.find((component: any) =>
           component.types.includes('postal_code'),
         )?.long_name || localLocation?.postcode;
-      const countryName = result.address_components.find((component: any) =>
+      const countryName = result?.address_components?.find((component: any) =>
         component.types.includes('country'),
       )?.long_name;
-      const cityName = result.address_components.find((component: any) =>
+      const cityName = result?.address_components?.find((component: any) =>
         component.types.includes('locality'),
       )?.long_name;
 
