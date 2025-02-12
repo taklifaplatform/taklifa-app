@@ -217,7 +217,6 @@ export function HomeScreen() {
       position='absolute'
       zIndex={3}
       width='99%'
-      top={'4%'}
       left={-10}
       $sm={{
         top: '15%',

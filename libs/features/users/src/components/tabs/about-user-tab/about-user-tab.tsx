@@ -6,12 +6,12 @@ import { useAuth } from '@zix/services/auth';
 import { MediaFile } from '@zix/ui/common';
 import { ZixLocationInfoWidget, ZixWidgetContainer } from '@zix/ui/widgets';
 import React, { useRef } from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { t } from 'i18next';
 import { useRouter } from 'solito/router';
 
-import { Stack, Text, YStack } from 'tamagui';
+import { Stack, Text, XStack, YStack } from 'tamagui';
 
 export type AboutUserTabProps = {
   user: DriverTransformer
@@ -30,7 +30,7 @@ export const AboutUserTab: React.FC<AboutUserTabProps> = ({
   const baseOptions = ({
     vertical: false,
     width: USER_CARD_WIDTH / 2,
-    height: USER_CARD_HEIGHT ,
+    height: USER_CARD_HEIGHT,
     style: {
       width: USER_CARD_WIDTH,
     },
@@ -145,14 +145,53 @@ export const AboutUserTab: React.FC<AboutUserTabProps> = ({
     <ZixWorkingHoursWidget workingHourId={user.working_hours_id} canEdit={authUser?.id === user?.id} />
   )
 
-  return (
+  return Platform.OS === 'web' ? (
     <YStack gap='$2'>
+     {!!user.about?.length && <XStack
+        padding='$2'
+        backgroundColor={'$color1'}
+        borderRadius='$2'
+        shadowColor={'$color2'}
+        shadowOpacity={0.5}
+      >
+        {renderAbout()}
+      </XStack>}
+      <XStack
+        padding='$2'
+        backgroundColor={'$color1'}
+        borderRadius='$2'
+        shadowColor={'$color2'}
+        shadowOpacity={0.5}
+      >
+        {renderCompaniesCarousel()}
+      </XStack>
+      <XStack
+        padding='$2'
+        backgroundColor={'$color1'}
+        borderRadius='$2'
+        shadowColor={'$color2'}
+        shadowOpacity={0.5}
+      >
+        {renderLocation()}
+      </XStack>
+      <XStack
+        padding='$2'
+        backgroundColor={'$color1'}
+        borderRadius='$2'
+        shadowColor={'$color2'}
+        shadowOpacity={0.5}
+      >
+        {renderWorkingHours()}
+      </XStack>
+    </YStack>
+  ) :
+    <YStack gap='$2' >
       {renderAbout()}
       {renderCompaniesCarousel()}
       {renderLocation()}
       {renderWorkingHours()}
-    </YStack>
-  );
+    </YStack >
+    ;
 }
 
 export default AboutUserTab;
