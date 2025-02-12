@@ -10,6 +10,7 @@ import { t } from 'i18next';
 import { ZixWidgetContainer } from '@zix/ui/widgets';
 import { useRouter } from 'solito/router';
 import { useAuth } from '@zix/services/auth';
+import { Platform } from 'react-native';
 
 const days = [
   'monday',
@@ -79,28 +80,26 @@ export const ZixWorkingHoursWidget: React.FC<ZixWorkingHoursWidgetProps> = ({
 
   return (
     <ZixWidgetContainer label={t('common:working-hours')} labelPrepend={renderEditButton()}>
-      <YStack gap='$2'>
+      <YStack gap="$2" flexDirection={Platform.OS === 'web' ? 'row' : 'column'} flexWrap="wrap">
         {days.map((day, index) => (
           <XStack
             key={index}
             theme={workingHours[day] ? undefined : 'error'}
-            backgroundColor={'$color2'}
+            backgroundColor="$color2"
             padding="$2"
             borderRadius="$1"
             gap="$4"
+            flexWrap="wrap"
+            flexShrink={1}
           >
-            <Text
-              fontSize={'$2'}
-              fontWeight="bold"
-              paddingRight="$2"
-              width={100}
-            >
+            <Text fontSize="$2" fontWeight="bold" paddingRight="$2" width={100}>
               {t(`app:days.${day}`)}
             </Text>
             {renderWorkingHours(day)}
           </XStack>
         ))}
       </YStack>
+
     </ZixWidgetContainer>
   );
 }
