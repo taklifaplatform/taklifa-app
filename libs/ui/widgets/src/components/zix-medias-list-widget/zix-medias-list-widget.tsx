@@ -31,15 +31,15 @@ export const ZixMediasListWidget: React.FC<ZixMediasListWidgetProps> = ({
         showsHorizontalScrollIndicator={false}
         inverted={isRtl}
         renderItem={({ item, index }) => (
-            <Image
-              key={`key-${index}`}
-              source={{ uri: item.original_url }}
-              width={imageWidth}
-              height={imageHeight}
-              borderRadius="$4"
-              marginHorizontal="$2"
-              resizeMode='cover'
-            />
+          <Image
+            key={`key-${index}`}
+            source={{ uri: item.original_url }}
+            width={imageWidth}
+            height={imageHeight}
+            borderRadius="$4"
+            marginHorizontal="$2"
+            resizeMode='cover'
+          />
         )}
       />
     </View>
