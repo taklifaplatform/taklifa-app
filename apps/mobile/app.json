@@ -4,7 +4,7 @@
     "slug": "sawaeed",
     "jsEngine": "hermes",
     "scheme": "sawaeed",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -64,7 +64,7 @@
       "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi": true,
       "package": "app.sawaeed",
-      "versionCode": 38,
+      "versionCode": 39,
       "permissions": [
         "NOTIFICATION",
         "android.permission.RECORD_AUDIO",
