@@ -34,63 +34,25 @@ export const LoginScreen: React.FC = () => {
   const updateParams = useUpdateParams();
   const form = useForm<z.infer<typeof LoginSchema>>();
 
-  /* const { mutateAsync } = useMutation({
-     mutationFn(requestBody: z.infer<typeof LoginSchema>) {
-       return AuthService.login({
-         requestBody,
-       });
-     },
-     onSuccess({ data }) {
-       setAuthAccessToken(data?.plainTextToken);
-       setAuthUser(data?.user);
-       redirectUserToActiveDashboard({
-         user: data?.user,
-       });
-     },
-     onError(error: any) {
-       console.log('error', error);
-       handleFormErrors(form, error?.body?.errors);
-     },
-   });
-   */
-
   const { mutateAsync } = useMutation({
-    mutationFn: async (requestBody: z.infer<typeof LoginSchema>) => {
-      // Validate requestBody before sending
-      const parsedData = LoginSchema.safeParse(requestBody);
-      if (!parsedData.success) {
-        console.log("Validation errors:", parsedData.error.format());
-        throw new Error("Invalid input data");
-      }
-
-      console.log("Sending requestBody:", requestBody); // Debugging
-
-      // Send request to API
-      return AuthService.login({ requestBody });
+    mutationFn(requestBody: z.infer<typeof LoginSchema>) {
+      return AuthService.login({
+        requestBody,
+      });
     },
-    onSuccess: ({ data }) => {
-      console.log("Login successful, response:", data); // Debugging
-
-      // Ensure the required properties exist before setting them
-      if (data?.plainTextToken && data?.user) {
-        setAuthAccessToken(data.plainTextToken);
-        setAuthUser(data.user);
-        redirectUserToActiveDashboard({ user: data.user });
-      } else {
-        console.error("Missing expected data in response:", data);
-      }
+    onSuccess({ data }) {
+      setAuthAccessToken(data?.plainTextToken);
+      setAuthUser(data?.user);
+      redirectUserToActiveDashboard({
+        user: data?.user,
+      });
     },
-    onError: (error: any) => {
-      console.error("Full error response:", JSON.stringify(error, null, 2));
-
-      if (error?.body?.errors) {
-        console.log("Validation errors from backend:", error.body.errors);
-        handleFormErrors(form, error.body.errors);
-      } else {
-        console.error("Unexpected error format:", error);
-      }
+    onError(error: any) {
+      console.log('error', error);
+      handleFormErrors(form, error?.body?.errors);
     },
   });
+
 
 
   useEffect(() => {

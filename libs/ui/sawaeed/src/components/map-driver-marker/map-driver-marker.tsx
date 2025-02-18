@@ -48,7 +48,6 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = React.memo(({
         longitude: parseFloat(liveLocation.longitude ?? '0'),
       }}
       onPress={() => onPress?.()}
-      cursor='pointer'
     >
       <View
         width='$8'
@@ -56,7 +55,6 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = React.memo(({
         alignItems='center'
         justifyContent='center'
         borderColor='$color5'
-        cursor='pointer'
         style={
           isSelected
             ? {
