@@ -1,7 +1,6 @@
-import { H1, Paragraph, YStack, isWeb, Text, ScrollView } from 'tamagui';
+import { H1, YStack, isWeb, Text, ScrollView } from 'tamagui';
 import { t } from 'i18next';
 import { AppHeader } from '@zix/ui/layouts';
-import { use } from 'react';
 import { useMultiLang } from '@zix/i18n';
 
 export const TermsOfServiceScreen = () => {
@@ -10,9 +9,6 @@ export const TermsOfServiceScreen = () => {
     textAlign: isRtl ? 'left' : 'right',
   };
 
-  const colorTextTitle = 'gray.900';
-  const colorTextSemiTitle = 'gray.700';
-  const colorTextConten = 'black';
   const sizeTextTitle = 28;
   const sizeTextSouTilte = 24;
   const sizeTextContent = 16;
@@ -23,7 +19,6 @@ export const TermsOfServiceScreen = () => {
       {...sharedStyle}
       fontSize={sizeTextTitle}
       fontWeight={'800'}
-      color={colorTextTitle}
     >
       {children}
     </Text>
@@ -33,7 +28,6 @@ export const TermsOfServiceScreen = () => {
       {...sharedStyle}
       fontSize={sizeTextSouTilte}
       fontWeight={'800'}
-      color={colorTextSemiTitle}
       paddingVertical={5}
     >
       {children}
@@ -44,7 +38,6 @@ export const TermsOfServiceScreen = () => {
       {...sharedStyle}
       paddingBottom={5}
       fontSize={sizeTextContent}
-      color={colorTextConten}
     >
       {children}
     </Text>

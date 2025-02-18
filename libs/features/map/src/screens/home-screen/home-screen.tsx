@@ -131,7 +131,6 @@ export function HomeScreen() {
         >
           {data?.data?.map((item, index) => (
             <UserCard
-              cursor="pointer"
               key={`stack-${item.id}-${index}`}
               user={item}
               borderWidth={selectedDriver?.id === item.id ? 4 : 0}
