@@ -14,6 +14,7 @@ import { useAuth } from '@zix/services/auth';
 import { useLink } from 'solito/link';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { UserService } from '@zix/api';
+import { useRouter } from 'solito/router';
 
 const brandColors = {
   twitter: '#1DA1F2',
@@ -22,7 +23,8 @@ const brandColors = {
 export const SettingsScreen = () => {
   const media = useMedia();
   const pathname = usePathname();
-  const { getUrlPrefix } = useAuth();
+  const router = useRouter();
+  const { getUrlPrefix, isLoggedIn } = useAuth();
   const { languages, changeLanguage } = useMultiLang();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -78,7 +80,7 @@ export const SettingsScreen = () => {
         <ScrollView>
           <Settings>
             <Settings.Items>
-              <Settings.Group $gtSm={{ space: '$2' }}>
+              {isLoggedIn && <Settings.Group $gtSm={{ space: '$2' }}>
                 <Settings.Item
                   icon={(props: IconProps) => (
                     <Theme name='accent'>
@@ -90,7 +92,7 @@ export const SettingsScreen = () => {
                     href: media.sm
                       ? getUrl('account/settings/general')
                       : Platform.OS === 'web' ? getUrl('account/settings/general')
-                      : getUrl('account/settings'),
+                        : getUrl('account/settings'),
                   })}
                   accentColor="$green9"
                 >
@@ -136,7 +138,7 @@ export const SettingsScreen = () => {
               >
                 Notifications
               </Settings.Item> */}
-              </Settings.Group>
+              </Settings.Group>}
 
               <Settings.Group>
                 <Settings.Item
@@ -190,8 +192,40 @@ export const SettingsScreen = () => {
               {Platform.OS === 'web' && dropdownVisible && renderWebDropdown()}
               <Settings.Group>
                 <SettingsThemeAction />
-                <SettingsDeleteAccountAction />
-                <SettingsItemLogoutAction />
+                {isLoggedIn &&
+                  <>
+                    <SettingsDeleteAccountAction />
+                    <SettingsItemLogoutAction />
+                  </>
+                }
+
+                {
+                  !isLoggedIn &&
+                  <>
+                    <Settings.Item
+                      icon={(props: IconProps) => (
+                        <Theme name='accent'>
+                          <CustomIcon name="followed" color="$color9" {...props} />
+                        </Theme>
+                      )}
+                      onPress={() => router.push('/auth/login')}
+                      accentColor="$green9"
+                    >
+                      {t('auth:sign_in')}
+                    </Settings.Item>
+                    <Settings.Item
+                      icon={(props: IconProps) => (
+                        <Theme name='accent'>
+                          <CustomIcon name="account" color="$color9" {...props} />
+                        </Theme>
+                      )}
+                      onPress={() => router.push('/auth/register')}
+                      accentColor="$green9"
+                    >
+                      {t('auth:sign_up')}
+                    </Settings.Item>
+                  </>
+                }
               </Settings.Group>
             </Settings.Items>
           </Settings>
@@ -201,7 +235,7 @@ export const SettingsScreen = () => {
       we just did a simple package.json read since we want to keep things simple for the starter
        */}
 
-        <Paragraph paddingVertical="$2" textAlign="center" theme="alt2">
+        <Paragraph paddingVertical="$4" textAlign="center" theme="alt2">
           v1.0.0
         </Paragraph>
       </YStack>
