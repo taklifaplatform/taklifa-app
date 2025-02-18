@@ -37,7 +37,8 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
     if (isLoggedIn) {
       router.push(`${getUrlPrefix}/users/${user?.id}`);
     } else {
-      router.push('/auth/login');
+      //   router.push('/auth/login');
+      router.push(`${getUrlPrefix}/account/settings`);
     }
   }, [isLoggedIn, router, user, getUrlPrefix]);
 
@@ -45,7 +46,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
     showSearchBar && (
       <View paddingHorizontal="$4" paddingVertical="$2" $gtMd={{ flex: 1 }}>
         <ZixInput
-          leftIcon={() => <Search size="$1.5" color="#FECA16"/>}
+          leftIcon={() => <Search size="$1.5" color="#FECA16" />}
           placeholder={t('common:search')}
           fontWeight='600'
           rightIcon={() =>
