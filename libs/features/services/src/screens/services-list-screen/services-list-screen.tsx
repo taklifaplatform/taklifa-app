@@ -121,7 +121,7 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
         <XStack alignItems="center" gap="$2">
           <UserAvatar user={item?.driver?.avatar ? item?.driver : item?.company} size="$5" />
           <Text color='$color12' fontWeight="bold">
-            {item.driver?.name || item?.company.name}
+            {item?.driver?.name || item?.company.name}
           </Text>
         </XStack>
         <Image source={{ uri: item?.cover?.original_url || "" }}
