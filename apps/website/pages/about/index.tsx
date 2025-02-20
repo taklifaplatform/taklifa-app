@@ -2,7 +2,7 @@ import { useMultiLang } from '@zix/i18n';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import { useRouter } from 'solito/router';
-import { Pressable } from 'react-native';
+import { Linking, Pressable } from 'react-native';
 import { Button, Image, Stack, Text, Theme, View, XStack, YStack } from 'tamagui';
 import { ManageShipments } from '../../components/web-home/management-shipments/manage-shipments';
 import { OurPartners } from '../../components/web-home/our-partners/our-partners';
@@ -308,18 +308,18 @@ export const Page: NextPageWithLayout = () => {
         justifyContent="flex-start"
         alignItems="flex-start"
       >
-        <Pressable onPress={() => router.push('/')}>
+        <Pressable onPress={() => Linking.openURL('https://play.google.com/store/apps/details?id=app.sawaeed')}>
           <CustomIcon name="google_play" size={'$9'} />
         </Pressable>
-        <Pressable onPress={() => router.push('/')}>
+        <Pressable onPress={() => Linking.openURL('https://apps.apple.com/tn/app/sawaeed/id6720725925')}>
           <CustomIcon name="app_store" size={'$9'} />
         </Pressable>
       </Stack>
       <Stack flexDirection="row" gap="$4" $sm={{ display: 'none' }}>
-        <Pressable onPress={() => router.push('/')}>
+        <Pressable onPress={() => Linking.openURL('https://play.google.com/store/apps/details?id=app.sawaeed')}>
           <CustomIcon name="google_play" size={'$14'} />
         </Pressable>
-        <Pressable onPress={() => router.push('/')}>
+        <Pressable onPress={() => Linking.openURL('https://apps.apple.com/tn/app/sawaeed/id6720725925')}>
           <CustomIcon name="app_store" size={'$14'} />
         </Pressable>
       </Stack>
