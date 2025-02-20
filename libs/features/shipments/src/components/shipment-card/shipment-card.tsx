@@ -83,7 +83,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
             <Settings2 size="$1" color={'$color9'} $sm={{ display: 'none' }} />
           ),
           name: t('job:Suggestions'),
-          value: String(shipment.invitations_count || 0),
+          value: String(shipment?.invitations_count || 0),
         },
         {
           icons: (
@@ -95,7 +95,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
             />
           ),
           name: t('shipment:budget'),
-          value: `${shipment.min_budget?.value} - ${shipment.max_budget?.value} ${shipment.min_budget?.currency?.code}`,
+          value: `${shipment.min_budget?.value || 0} - ${shipment.max_budget?.value || 0} ${shipment.min_budget?.currency?.code || 0}`,
         },
       ]}
     />
@@ -116,12 +116,12 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
             />
           ),
           name: t('shipment:from_location'),
-          value: `${shipment?.from_location?.address}`,
+          value: `${shipment?.from_location?.address || ''}`,
         },
         {
           icons: <CustomIcon name="location" size="$1" color={'$color9'} />,
           name: t('shipment:to_location'),
-          value: `${shipment.to_location?.address}`,
+          value: `${shipment.to_location?.address || ''}`,
         },
       ]}
     />
