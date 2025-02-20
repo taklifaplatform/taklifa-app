@@ -97,6 +97,7 @@ export const Page: NextPageWithLayout = () => {
             <Button
               width='40%'
               icon={<CustomIcon name="account" size={15} />}
+              onPress={() => router.push('/auth/register')}
             >
               {t('about:section-1:signup')}
             </Button>
@@ -105,6 +106,7 @@ export const Page: NextPageWithLayout = () => {
               borderColor="$color11"
               variant="outlined"
               icon={<CustomIcon name="call" size={15} />}
+              onPress={() => router.push('/contact')}
             >
               {t('about:section-1:call')}
             </Button>

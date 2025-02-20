@@ -33,7 +33,7 @@ export function ManageShipments() {
           width: '100%',
           height: '100%',
         }}
-        
+
         />
         </View>
       { /* <Image
@@ -111,7 +111,7 @@ export function ManageShipments() {
             borderWidth={"$1"}
             borderColor="$color11"
             icon={<UserCircle size="$2" />}
-            onPress={() => router.push('/contact')}
+            onPress={() => router.push('/auth/register')}
           >
             <Text fontWeight="600" fontSize={15}>
               {t('web-home:signup')}
