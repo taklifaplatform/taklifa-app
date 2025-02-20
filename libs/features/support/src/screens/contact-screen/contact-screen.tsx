@@ -11,6 +11,7 @@ import {
 import { CustomIcon } from '@zix/ui/icons';
 import { ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
 import { FormProvider, Text, Theme, View, XStack, YStack } from 'tamagui';
@@ -38,7 +39,9 @@ export const ContactScreen = () => {
         requestBody,
       }),
     onSuccess() {
-      router.push('/');
+      setTimeout(() => {
+        router.push('/');
+      }, 2000);
       toast.show(t('forms:contact-us-success'));
     },
     onError(error: any) {
