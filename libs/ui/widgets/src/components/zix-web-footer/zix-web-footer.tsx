@@ -77,7 +77,7 @@ export const ZixWebFooter = () => {
         <XStack gap="$2">
           <ZixLinkButton
             menuItem
-            href="/"
+            href="https://play.google.com/store/apps/details?id=app.sawaeed"
           >
             <Image
               source={{
@@ -93,7 +93,7 @@ export const ZixWebFooter = () => {
           </ZixLinkButton>
           <ZixLinkButton
             menuItem
-            href="/"
+            href="https://apps.apple.com/tn/app/sawaeed/id6720725925"
           >
             <Image
               source={{
@@ -141,7 +141,7 @@ export const ZixWebFooter = () => {
         {t('web-home:legal')}
       </Text>
       <YStack gap="$1">
-        <ZixLinkButton menuItem href={'/'}>
+        <ZixLinkButton menuItem href={'/terms-of-service'}>
           <Text color={'$color2'}>{t('web-home:term')}</Text>
         </ZixLinkButton>
         <ZixLinkButton menuItem href={'/'}>
@@ -203,7 +203,6 @@ export const ZixWebFooter = () => {
           linkItem
           href={'/terms-of-service'}
           linkItem
-          href={'/'}
           color={'$color12'}
           borderColor={'$color12'}
           borderBottomWidth={'$0.25'}
