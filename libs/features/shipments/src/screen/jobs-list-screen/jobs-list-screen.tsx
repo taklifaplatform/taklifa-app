@@ -30,7 +30,7 @@ export const JobsListScreen: React.FC<JobsListScreenProps> = ({
       renderItem={({ item, index }) => (
         <ShipmentCard
           key={index}
-          urlPrefix={urlPrefix}
+          urlPrefix={'/app/shipments'}
           shipment={item}
           isDetail={false}
           variants='job'
