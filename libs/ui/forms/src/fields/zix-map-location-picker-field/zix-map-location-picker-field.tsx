@@ -170,7 +170,7 @@ export const ZixMapLocationPickerFieldContent: React.FC<ZixMapLocationPickerFiel
     setIsPending(true);
     try {
       const { results } = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`,
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyBw3sZh4uFyLbi9sKTzKYn3BqIS_b-vGeA`,
       )
         .then((response) => response.json())
         .then(({ results }) => ({ results, latitude, longitude }));
