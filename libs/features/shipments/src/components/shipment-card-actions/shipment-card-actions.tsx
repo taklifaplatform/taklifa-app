@@ -8,6 +8,7 @@ import { useShipmentHelper } from '../../hooks';
 import ShipmentOwnerActions from '../shipment-owner-actions/shipment-owner-actions';
 import { ShipmentProposalActions } from './shipment-proposal-actions';
 import ShipmentInvitationActions from './shipment-invitation-actions';
+import { useAuth } from '@zix/services/auth';
 
 export type ShipmentCardActionsProps = {
   shipment: ShipmentTransformer;
@@ -27,6 +28,7 @@ export const ShipmentCardActions: React.FC<ShipmentCardActionsProps> = (props) =
   const router = useRouter();
   const { isAuthOwner } = useShipmentHelper({ shipment })
   const isCancelled = shipment.status === 'cancelled';
+  const { isLoggedIn } = useAuth();
 
   const renderShipmentEdit = () => (isAuthOwner && !isDetail) && (
     <ShipmentOwnerActions shipment={shipment}>
@@ -65,7 +67,13 @@ export const ShipmentCardActions: React.FC<ShipmentCardActionsProps> = (props) =
   const renderViewShipment = () =>
     !isDetail && (
       <Button
-        onPress={() => router.push(`${urlPrefix}/${shipment.id}`)}
+        onPress={() => isLoggedIn ? router.push(`${urlPrefix}/${shipment.id}`) :
+          (
+            alert(
+              "You need to be logged in to view this shipment",
+            ),
+            router.push(`/auth/login`)
+          )}
         flex={1}
         icon={<Eye />}
         themeInverse
