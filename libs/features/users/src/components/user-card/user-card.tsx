@@ -84,8 +84,8 @@ export const UserCard: React.FC<UserCardProps> = React.memo(({
 
       <UserInfoRow user={user} paddingHorizontal={padding} />
       <ZixMediasListWidget medias={user?.vehicle?.images || []} paddingHorizontal={padding} />
-      {showContactActions && <Separator borderColor="$gray6" />}
-      {showContactActions && <UserContactActions {...userContactActionsProps} user={user} paddingHorizontal={padding} />}
+      {showContactActions && isLoggedIn && <Separator borderColor="$gray6" />}
+      {showContactActions && isLoggedIn && <UserContactActions {...userContactActionsProps} user={user} paddingHorizontal={padding} />}
     </YStack>
   );
 },

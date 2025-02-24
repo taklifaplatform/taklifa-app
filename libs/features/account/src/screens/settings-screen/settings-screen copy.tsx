@@ -1,7 +1,7 @@
 import { IconProps } from '@tamagui/helpers-icon';
 import { Languages } from '@tamagui/lucide-icons';
 import { ActionSheet, ActionSheetRef, Settings } from '@zix/ui/common';
-import { Paragraph, ScrollView, Theme, View, YStack, useMedia, Text } from 'tamagui';
+import { Paragraph, ScrollView, Theme, View, YStack, useMedia } from 'tamagui';
 import { CustomIcon } from '@zix/ui/icons';
 import { usePathname } from '@zix/utils';
 import { useMultiLang } from '@zix/i18n';
@@ -40,13 +40,6 @@ export const SettingsScreen = () => {
     },
     [getUrlPrefix],
   );
-  const generalLink = useLink({
-    href: media.sm
-      ? getUrl('account/settings/general')
-      : Platform.OS === 'web' ? getUrl('account/settings/general')
-        : getUrl('account/settings'),
-  });
-
 
   const renderWebDropdown = () => (
     <View
@@ -79,6 +72,13 @@ export const SettingsScreen = () => {
     </View>
   );
 
+  const generalLink = useLink({
+    href: media.sm
+      ? getUrl('account/settings/general')
+      : Platform.OS === 'web' ? getUrl('account/settings/general')
+        : getUrl('account/settings'),
+  });
+
   return (
     <>
       <AppHeader showBackButton title={t('account:settings.title')} />
@@ -103,8 +103,7 @@ export const SettingsScreen = () => {
                   </Settings.Item>
                 </Settings.Group>
               )}
-              <Settings.Group>
-                <Settings.Item
+               <Settings.Item
                   icon={(props: IconProps) => (
                     <Theme name='accent'>
                       <CustomIcon name="lock" color="$color9" {...props} />
@@ -136,7 +135,6 @@ export const SettingsScreen = () => {
                 >
                   {t('account:change_email.title')}
                 </Settings.Item>
-              </Settings.Group>
               <Settings.Group>
                 <Settings.Item
                   icon={(props: IconProps) => (
