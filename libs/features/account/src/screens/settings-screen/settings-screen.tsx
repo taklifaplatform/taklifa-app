@@ -1,7 +1,7 @@
 import { IconProps } from '@tamagui/helpers-icon';
 import { Languages } from '@tamagui/lucide-icons';
 import { ActionSheet, ActionSheetRef, Settings } from '@zix/ui/common';
-import { Paragraph, ScrollView, Theme, View, YStack, useMedia, Text } from 'tamagui';
+import { Paragraph, ScrollView, Theme, View, YStack, useMedia } from 'tamagui';
 import { CustomIcon } from '@zix/ui/icons';
 import { usePathname } from '@zix/utils';
 import { useMultiLang } from '@zix/i18n';
@@ -72,6 +72,13 @@ export const SettingsScreen = () => {
     </View>
   );
 
+  const generalLink = useLink({
+    href: media.sm
+      ? getUrl('account/settings/general')
+      : Platform.OS === 'web' ? getUrl('account/settings/general')
+        : getUrl('account/settings'),
+  });
+
   return (
     <>
       <AppHeader showBackButton title={t('account:settings.title')} />
@@ -80,65 +87,22 @@ export const SettingsScreen = () => {
         <ScrollView>
           <Settings>
             <Settings.Items>
-              {isLoggedIn && <Settings.Group $gtSm={{ space: '$2' }}>
-                <Settings.Item
-                  icon={(props: IconProps) => (
-                    <Theme name='accent'>
-                      <CustomIcon {...props} name="settings" color="$color9" />
-                    </Theme>
-                  )}
-                  isActive={pathname === getUrl('account/settings/general')}
-                  {...useLink({
-                    href: media.sm
-                      ? getUrl('account/settings/general')
-                      : Platform.OS === 'web' ? getUrl('account/settings/general')
-                        : getUrl('account/settings'),
-                  })}
-                  accentColor="$green9"
-                >
-                  {t('account:general.title')}
-                </Settings.Item>
-                <Settings.Item
-                  icon={(props: IconProps) => (
-                    <Theme name='accent'>
-                      <CustomIcon name="lock" color="$color9" {...props} />
-                    </Theme>
-                  )}
-                  isActive={
-                    pathname === getUrl('account/settings/change-password')
-                  }
-                  {...useLink({
-                    href: getUrl('account/settings/change-password'),
-                  })}
-                  accentColor="$green9"
-                >
-                  {t('auth:change_password.title')}
-                </Settings.Item>
-                <Settings.Item
-                  icon={(props: IconProps) => (
-                    <Theme name='accent'>
-                      <CustomIcon name="mail" color="$color9" {...props} />
-                    </Theme>
-                  )}
-                  isActive={
-                    pathname === getUrl('account/settings/change-email')
-                  }
-                  {...useLink({
-                    href: getUrl('account/settings/change-email'),
-                  })}
-                  accentColor="$green9"
-                >
-                  {t('account:change_email.title')}
-                </Settings.Item>
-                {/* <Settings.Item
-                icon={Bell}
-                isActive={pathname === '/account/settings/notifications'}
-                {...useLink({ href: '/account/settings/notifications' })}
-                accentColor="$orange9"
-              >
-                Notifications
-              </Settings.Item> */}
-              </Settings.Group>}
+              {isLoggedIn && (
+                <Settings.Group $gtSm={{ space: '$2' }}>
+                  <Settings.Item
+                    icon={(props: IconProps) => (
+                      <Theme name='accent'>
+                        <CustomIcon {...props} name="settings" color="$color9" />
+                      </Theme>
+                    )}
+                    isActive={pathname === getUrl('account/settings/general')}
+                    {...generalLink}
+                    accentColor="$green9"
+                  >
+                    {t('account:general.title')}
+                  </Settings.Item>
+                </Settings.Group>
+              )}
 
               <Settings.Group>
                 <Settings.Item
