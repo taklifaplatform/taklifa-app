@@ -4,8 +4,6 @@ import { t } from 'i18next';
 import { Stack, Text, Theme, XStack, YStack, Image } from 'tamagui';
 import BannerMainImageAr from '../../../images/main-banner-ar.svg';
 import BannerMainImageEn from '../../../images/main-banner-en.svg';
-import { Dimensions } from 'react-native';
-import { widths } from '@tamagui/config/types/media';
 
 
 /**
