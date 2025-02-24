@@ -3,9 +3,11 @@ import { t } from 'i18next';
 import { useRouter } from 'solito/router';
 import { Button, Image, Stack, Text, View, YStack } from 'tamagui';
 import ShipmentBanner from '../../../images/manage-shipment-banner.svg';
+import { useAuth } from '@zix/services/auth';
 
 export function ManageShipments() {
   const router = useRouter();
+  const { isLoggedIn } = useAuth();
 
   return (
     <View>
@@ -102,7 +104,7 @@ export function ManageShipments() {
               {t('web-home:content-4')}
             </Text>
           </YStack>
-          <Button
+         {!isLoggedIn && <Button
             theme={'accent'}
             backgroundColor="transparent"
             borderRadius={"$1"}
@@ -116,7 +118,7 @@ export function ManageShipments() {
             <Text fontWeight="600" fontSize={15}>
               {t('web-home:signup')}
             </Text>
-          </Button>
+          </Button>}
         </Stack>
       </YStack>
     </View>
