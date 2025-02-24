@@ -11,8 +11,6 @@ import { FlatList } from 'react-native';
 import { Separator, ThemeableStackProps, View, YStack } from 'tamagui';
 import AccountSwitcher from '../account-switcher/account-switcher';
 import { MenuItem } from './menu-item';
-import { useRouter } from "solito/router";
-import { usePathname } from '@zix/utils';
 
 export type MainSideBarProps = ThemeableStackProps & {
   //
@@ -22,8 +20,6 @@ export const MainSideBar: React.FC<MainSideBarProps> = (props) => {
   const { activeLang } = useMultiLang();
   const { activeRole, getUrlPrefix, isLoggedIn } = useAuth()
   const { current } = useThemeSetting();
-   const router = useRouter()
-    const pathname = usePathname()
   const iconColor = current !== 'dark' ? '$color11'  : '$color12';
   const { data: shipmentsData } = useQuery({
     queryFn: () =>
