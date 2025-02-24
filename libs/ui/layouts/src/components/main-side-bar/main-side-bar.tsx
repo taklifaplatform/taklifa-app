@@ -24,7 +24,7 @@ export const MainSideBar: React.FC<MainSideBarProps> = (props) => {
   const { current } = useThemeSetting();
    const router = useRouter()
     const pathname = usePathname()
-  const iconColor = current === 'dark' ? '$color11'  : '$color12';
+  const iconColor = current !== 'dark' ? '$color11'  : '$color12';
   const { data: shipmentsData } = useQuery({
     queryFn: () =>
       ShipmentService.fetchShipmentFilters({
