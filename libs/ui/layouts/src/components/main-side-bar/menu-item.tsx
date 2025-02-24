@@ -1,4 +1,3 @@
-import { ChevronDown } from "@tamagui/lucide-icons";
 import { usePathname } from "@zix/utils";
 import React from "react";
 import { useRouter } from "solito/router";
@@ -41,7 +40,9 @@ export const MenuItem: React.FC<MenuItemType> = (props) => {
             <View width='$3'>
               {props.icon}
             </View>
-            <Text>
+            <Text
+            color={pathname === props.href ? '$color11' : '$color12'}
+            >
               {props.title}
             </Text>
           </XStack>
