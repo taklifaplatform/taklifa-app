@@ -83,7 +83,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
         <Button
           unstyled
           size="$2"
-          icon={<CustomIcon name="arrow_left" size="$2" color={"black"} />}
+          icon={<CustomIcon name="arrow_left" size="$2" />}
           onPress={() => {
             if (goBack) {
               goBack();
@@ -145,7 +145,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
             ) : isLoggedIn && (
               <Button
                 flex={1}
-                theme="accent"
+                //theme="accent"
                 variant="outlined"
                 icon={<PlusSquare color={'$color01'} />}
                 onPress={() => router.push(`${getUrlPrefix}/create-shipment`)}
