@@ -33,7 +33,7 @@ export const UserCard: React.FC<UserCardProps> = React.memo(({
 
   function onPress() {
     if (isLoggedIn) {
-      router.push(`/users/${user?.id}`);
+      router.push(`/app/users/${user.id}`);
     } else {
       alert('Please login to view details');
       router.push(`/auth/login`);
