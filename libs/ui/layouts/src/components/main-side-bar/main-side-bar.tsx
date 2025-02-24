@@ -11,6 +11,8 @@ import { FlatList } from 'react-native';
 import { Separator, ThemeableStackProps, View, YStack } from 'tamagui';
 import AccountSwitcher from '../account-switcher/account-switcher';
 import { MenuItem } from './menu-item';
+import { useRouter } from "solito/router";
+import { usePathname } from '@zix/utils';
 
 export type MainSideBarProps = ThemeableStackProps & {
   //
@@ -19,6 +21,10 @@ export type MainSideBarProps = ThemeableStackProps & {
 export const MainSideBar: React.FC<MainSideBarProps> = (props) => {
   const { activeLang } = useMultiLang();
   const { activeRole, getUrlPrefix, isLoggedIn } = useAuth()
+  const { current } = useThemeSetting();
+   const router = useRouter()
+    const pathname = usePathname()
+  const iconColor = current === 'dark' ? '$color11'  : '$color12';
   const { data: shipmentsData } = useQuery({
     queryFn: () =>
       ShipmentService.fetchShipmentFilters({
@@ -50,12 +56,12 @@ export const MainSideBar: React.FC<MainSideBarProps> = (props) => {
           <MenuItem
             title='Home'
             href={getUrlPrefix}
-            icon={<CustomIcon name="home" />}
+            icon={<CustomIcon name="home" color={iconColor}/>}
           />
           {isLoggedIn && <MenuItem
             title='Orders'
             href={`${getUrlPrefix}/shipments`}
-            icon={<CustomIcon name="orders" />}
+            icon={<CustomIcon name="orders" color={iconColor}/>}
             collapsible
           >
             <YStack theme='accent' backgroundColor='$color3' maxHeight='30vh'>
@@ -81,7 +87,7 @@ export const MainSideBar: React.FC<MainSideBarProps> = (props) => {
               <MenuItem
                 title='Jobs'
                 href={`${getUrlPrefix}/jobs`}
-                icon={<CustomIcon name="job" />}
+                icon={<CustomIcon name="job" color={iconColor}/>}
               />
             )
           }
@@ -91,7 +97,7 @@ export const MainSideBar: React.FC<MainSideBarProps> = (props) => {
               <MenuItem
                 title='Stores'
                 href={`${getUrlPrefix}/stores`}
-                icon={<CustomIcon name="store" />}
+                icon={<CustomIcon name="store" color={iconColor}/>}
               />
             )
           }
@@ -101,19 +107,19 @@ export const MainSideBar: React.FC<MainSideBarProps> = (props) => {
           {isLoggedIn && <MenuItem
             title='Notifications'
             href={`${getUrlPrefix}/notifications`}
-            icon={<CustomIcon name="notifications" />}
+            icon={<CustomIcon name="notifications" color={iconColor}/>}
           />}
           {isLoggedIn && <MenuItem
             title='Chat'
             href={`${getUrlPrefix}/chat`}
-            icon={<CustomIcon name="chat" />}
+            icon={<CustomIcon name="chat" color={iconColor}/>}
           />}
           <Separator borderColor="$color5" marginVertical='$4' borderWidth="$0.5" />
 
           <MenuItem
             title='Settings'
             href={`${getUrlPrefix}/account/settings`}
-            icon={<CustomIcon name='settings' />}
+            icon={<CustomIcon name='settings' color={iconColor}/>}
           />
 
         </YStack>
