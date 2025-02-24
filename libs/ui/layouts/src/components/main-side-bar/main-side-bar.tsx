@@ -18,8 +18,7 @@ export type MainSideBarProps = ThemeableStackProps & {
 
 export const MainSideBar: React.FC<MainSideBarProps> = (props) => {
   const { activeLang } = useMultiLang();
-  const { activeRole, getUrlPrefix } = useAuth()
-  const { isLoggedIn } = useAuth()
+  const { activeRole, getUrlPrefix, isLoggedIn } = useAuth()
   const { data: shipmentsData } = useQuery({
     queryFn: () =>
       ShipmentService.fetchShipmentFilters({
@@ -53,7 +52,7 @@ export const MainSideBar: React.FC<MainSideBarProps> = (props) => {
             href={getUrlPrefix}
             icon={<CustomIcon name="home" />}
           />
-          <MenuItem
+          {isLoggedIn && <MenuItem
             title='Orders'
             href={`${getUrlPrefix}/shipments`}
             icon={<CustomIcon name="orders" />}
@@ -74,10 +73,10 @@ export const MainSideBar: React.FC<MainSideBarProps> = (props) => {
               />
 
             </YStack>
-          </MenuItem>
+          </MenuItem>}
 
 
-          {
+          {isLoggedIn &&
             activeRole !== USER_ROLES.customer && (
               <MenuItem
                 title='Jobs'
@@ -87,7 +86,7 @@ export const MainSideBar: React.FC<MainSideBarProps> = (props) => {
             )
           }
 
-          {
+          {isLoggedIn &&
             activeRole === USER_ROLES.customer && (
               <MenuItem
                 title='Stores'
@@ -98,17 +97,17 @@ export const MainSideBar: React.FC<MainSideBarProps> = (props) => {
           }
 
 
-          <Separator borderColor="$color5" marginVertical='$4' borderWidth="$0.5" />
-          <MenuItem
+          {isLoggedIn && <Separator borderColor="$color5" marginVertical='$4' borderWidth="$0.5" />}
+          {isLoggedIn && <MenuItem
             title='Notifications'
             href={`${getUrlPrefix}/notifications`}
             icon={<CustomIcon name="notifications" />}
-          />
-          <MenuItem
+          />}
+          {isLoggedIn && <MenuItem
             title='Chat'
             href={`${getUrlPrefix}/chat`}
             icon={<CustomIcon name="chat" />}
-          />
+          />}
           <Separator borderColor="$color5" marginVertical='$4' borderWidth="$0.5" />
 
           <MenuItem
@@ -119,7 +118,7 @@ export const MainSideBar: React.FC<MainSideBarProps> = (props) => {
 
         </YStack>
         <View padding='$4'>
-         {isLoggedIn && <AccountSwitcher />}
+          {isLoggedIn && <AccountSwitcher />}
         </View>
       </YStack>
     </View >
