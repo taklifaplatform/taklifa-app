@@ -12,6 +12,7 @@ import MapView from 'react-native-maps';
 import { useRouter } from 'solito/router';
 import { Button, View, XStack, YStack } from 'tamagui';
 import MapFilters from '../../components/map-filters/map-filters';
+import { useAuth } from '@zix/services/auth';
 
 const { height } = Dimensions.get('window');
 
@@ -31,6 +32,7 @@ export function HomeScreen() {
   const GOOGLE_MAPS_APIKEY = 'AIzaSyBw3sZh4uFyLbi9sKTzKYn3BqIS_b-vGeA';
   const [showMap, setShowMap] = useState(false);
   const [search, setSearch] = useState<string>();
+  const { isLoggedIn } = useAuth();
   const [filters, setFilters] = useState({
     vehicle_model: 'all',
     provider_type: 'all',
@@ -68,7 +70,12 @@ export function HomeScreen() {
         key={`marker-${index}`}
         company={company}
         onPress={() => {
-          router.push(`/app/companies/${company.id}`);
+          if (isLoggedIn) {
+            router.push(`/app/companies/${company.id}`);
+          } else {
+            alert('Please login to view details');
+            router.push(`/auth/login`);
+          }
         }}
       />
     ));

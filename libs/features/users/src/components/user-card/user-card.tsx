@@ -7,6 +7,7 @@ import { Image, Separator, Text, ThemeableStackProps, XStack, YStack } from 'tam
 import { UserContactActions, UserContactActionsProps } from '../user-contact-actions/user-contact-actions';
 import { UserInfoRow } from '../user-info-row/user-info-row';
 import { getLastActivityStatus } from '@zix/utils';
+import { useAuth } from '@zix/services/auth';
 
 export type UserCardProps = ThemeableStackProps & {
   user: DriverTransformer;
@@ -23,6 +24,7 @@ export const UserCard: React.FC<UserCardProps> = React.memo(({
 }) => {
   const router = useRouter();
   const activityStatus = useMemo(() => getLastActivityStatus(user), [user])
+  const { isLoggedIn } = useAuth();
 
 
   const activeCompany = useMemo(() => {
@@ -30,7 +32,12 @@ export const UserCard: React.FC<UserCardProps> = React.memo(({
   }, [user?.companies]);
 
   function onPress() {
-    router.push(`/app/users/${user.id}`);
+    if (isLoggedIn) {
+      router.push(`/users/${user?.id}`);
+    } else {
+      alert('Please login to view details');
+      router.push(`/auth/login`);
+    }
   }
 
   return (

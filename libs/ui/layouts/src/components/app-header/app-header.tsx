@@ -142,7 +142,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
           <XStack>
             {headerRight ? (
               headerRight()
-            ) : (
+            ) : isLoggedIn && (
               <Button
                 flex={1}
                 theme="accent"
