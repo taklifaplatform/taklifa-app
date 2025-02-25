@@ -129,7 +129,7 @@ export const ZixWebFooter = () => {
         <ZixLinkButton menuItem href={'/terms-of-service'}>
           <Text color={'$color2'}>{t('web-home:certificates')}</Text>
         </ZixLinkButton>
-        <ZixLinkButton menuItem href={'/'} color={'$color2'}>
+        <ZixLinkButton menuItem href={'/about'} color={'$color2'}>
           <Text color={'$color2'}>{t('web-home:aboutsawaed')}</Text>
         </ZixLinkButton>
       </YStack>
