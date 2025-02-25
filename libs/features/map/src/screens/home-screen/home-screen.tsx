@@ -237,7 +237,7 @@ export function HomeScreen() {
         position="absolute"
         zIndex={2}
         width="100%"
-        backgroundColor="#F6F6F6"
+        backgroundColor="$color2"
         height={height}
         left={0}
         paddingTop='$17'
