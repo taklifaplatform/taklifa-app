@@ -1,5 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { t } from 'i18next';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, Stack, YStack, Text, Button } from 'tamagui';
 /* eslint-disable-next-line */
 export interface ZixCookiesBannerProps {
@@ -7,6 +8,25 @@ export interface ZixCookiesBannerProps {
 
 
 export function ZixCookiesBanner(props: ZixCookiesBannerProps) {
+
+  const onCookie = async () => {
+    // save a boolean to async storage
+    await AsyncStorage.setItem('cookies', 'true');
+    setIsCookie(true);
+  }
+  const [isCookie, setIsCookie] = useState(false);
+
+  useEffect(() => {
+    const checkCookie = async () => {
+      const cookie = await AsyncStorage.getItem('cookies');
+      console.log('cookie', cookie);
+      if (cookie) {
+        setIsCookie(true);
+      }
+    }
+    checkCookie();
+  }, [])
+
   const renderButton = () => (
     <Stack
       gap="$4"
@@ -26,6 +46,7 @@ export function ZixCookiesBanner(props: ZixCookiesBannerProps) {
         $sm={{
           width: '100%',
         }}
+        onPress={() => onCookie()}
       >
         {t('cookies-banner:section-1:banner-1')}
       </Button>
@@ -36,6 +57,7 @@ export function ZixCookiesBanner(props: ZixCookiesBannerProps) {
         $sm={{
           width: '100%',
         }}
+        onPress={() => onCookie()}
       >
         {t('cookies-banner:section-1:banner-2')}
       </Button>
@@ -44,6 +66,7 @@ export function ZixCookiesBanner(props: ZixCookiesBannerProps) {
         $sm={{
           width: '100%',
         }}
+        onPress={() => onCookie()}
       >
         {t('cookies-banner:section-1:banner-3')}
       </Button>
@@ -77,7 +100,7 @@ export function ZixCookiesBanner(props: ZixCookiesBannerProps) {
     </YStack>
   );
 
-  return (
+  return !isCookie && (
     <Stack
       theme={'accent'}
       gap="$9"
