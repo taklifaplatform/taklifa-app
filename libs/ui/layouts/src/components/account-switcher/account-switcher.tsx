@@ -28,6 +28,7 @@ import {
 } from 'tamagui';
 import CompanyListItem from './company-list-item/company-list-item';
 import UserRoleListItem from './user-role-list-item/user-role-list-item';
+import { useThemeSetting } from '@zix/providers';
 
 export interface AccountSwitcherProps {
   containerProps?: ThemeableStackProps;
@@ -119,11 +120,13 @@ export const AccountSwitcher: React.FC<AccountSwitcherProps> = ({
     }
   }, [roleNames, router]);
 
+  const { current } = useThemeSetting();
+
   return (
     <Dialog open={sheetOpen} onOpenChange={setSheetOpen}>
       <Dialog.Trigger>
         <XStack
-          theme="light"
+          theme={current === 'dark' ? 'dark' : "light"}
           alignItems="center"
           gap="$2"
           onPress={() => setSheetOpen(true)}
