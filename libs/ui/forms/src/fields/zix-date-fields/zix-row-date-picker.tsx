@@ -37,7 +37,7 @@ export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
   }, [date])
 
   const activeDayIndex = useMemo<number>(
-    () => (value ? Number(moment(value).format('D')) - 0 :  1),
+    () => (value ? Number(moment(value).format('D')) :  0),
     // () => (value ? Number(moment(value).format('D')) - 1 : 15),
     [value]
   )

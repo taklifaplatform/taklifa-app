@@ -63,7 +63,7 @@ export function ShipmentSummaryScreen() {
          flex={1}>
         <ZixWidgetContainer label="Shipment Detail">
           <YStack>
-            {shipment.items?.map((item, index) => <Text>{item.notes}</Text>)}
+            {shipment?.items?.map((item, index) => <Text>{item?.notes}</Text>)}
           </YStack>
         </ZixWidgetContainer>
         <ShipmentDirection shipment={shipment} />
