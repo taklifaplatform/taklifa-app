@@ -23,26 +23,26 @@ const LocationManagerSchema = z
   .object({
     latitude: z.number(),
     longitude: z.number(),
-    address: formFields.textarea.describe(
+    address: formFields?.textarea?.describe(
       `${t('app:forms.labels.address')} // ${t('app:forms.placeholders.address')}`
     ),
-    building_name: formFields.text.describe(
+    building_name: formFields?.text?.describe(
       `${t('app:forms.labels.building-name')} // ${t('app:forms.placeholders.building-name')}`
     ).optional().nullable(),
-    floor_number: formFields.text.describe(
+    floor_number: formFields?.text?.describe(
       `${t('app:forms.labels.floor-number')} // ${t('app:forms.placeholders.floor-number')}`
     ).optional().nullable(),
-    house_number: formFields.text.describe(
+    house_number: formFields?.text?.describe(
       `${t('app:forms.labels.house-number')} // ${t('app:forms.placeholders.house-number')}`
     ).optional().nullable(),
 
-    country_id: formFields.country.describe(
+    country_id: formFields?.country?.describe(
       `${t('app:forms.labels.country')} // ${t('app:forms.placeholders.country')}`
     ),
-    city_id: formFields.autocomplete.describe(
+    city_id: formFields?.autocomplete?.describe(
       `${t('app:forms.labels.city')} // ${t('app:forms.placeholders.city')}`
     ).optional().nullable(),
-    notes: formFields.textarea.describe(
+    notes: formFields?.textarea?.describe(
       `${t('app:forms.labels.notes')} // ${t('app:forms.placeholders.notes')}`
     ).optional().nullable(),
 
