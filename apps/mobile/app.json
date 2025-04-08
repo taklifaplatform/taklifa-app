@@ -19,11 +19,14 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "app.sawaeed",
-      "buildNumber": "26",
+      "buildNumber": "27",
       "infoPlist": {
         "CFBundleDevelopmentRegion": "ar",
         "ExpoLocalization_supportsRTL": true,
         "CFBundleLocalizations": [
+          "ar",
+          "en",
+          "ur",
           "ar",
           "en",
           "ur"
@@ -47,10 +50,32 @@
           "gett",
           "nmap",
           "dgis",
+          "lftgpas",
+          "comgooglemaps",
+          "citymapper",
+          "uber",
+          "lyft",
+          "transit",
+          "truckmap",
+          "waze",
+          "yandexnavi",
+          "moovit",
+          "yandextaxi",
+          "yandexmaps",
+          "kakaomap",
+          "szn-mapy",
+          "mapsme",
+          "osmandmaps",
+          "gett",
+          "nmap",
+          "dgis",
           "lftgpas"
-        ]
+        ],
+        "ITSAppUsesNonExemptEncryption": false
       },
       "associatedDomains": [
+        "applinks:sawaeed.app",
+        "applinks:staging.sawaeed.app",
         "applinks:sawaeed.app",
         "applinks:staging.sawaeed.app"
       ]
@@ -66,10 +91,12 @@
       "package": "app.sawaeed",
       "versionCode": 40,
       "permissions": [
-        "NOTIFICATION",
+        "android.permission.NOTIFICATION",
         "android.permission.RECORD_AUDIO",
         "android.permission.CAMERA",
-        "android.permission.SCHEDULE_EXACT_ALARM"
+        "android.permission.SCHEDULE_EXACT_ALARM",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
       ],
       "config": {
         "googleSignIn": {
