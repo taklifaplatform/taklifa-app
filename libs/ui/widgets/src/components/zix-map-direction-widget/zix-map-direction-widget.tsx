@@ -56,7 +56,7 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
       <MapView
         scrollEnabled={false}
         zoomEnabled={false}
-        provider="google"
+      //  provider="google"
         style={{
           flex: 1,
           borderRadius: 10,

@@ -314,6 +314,7 @@ export const ZixMapLocationPickerField: React.FC<ZixMapLocationPickerFieldProps>
 }) => {
   const [open, setOpen] = useState(false);
   const [localLocation, setLocalLocation] = useState(value)
+  const GOOGLE_MAPS_APIKEY = 'AIzaSyBw3sZh4uFyLbi9sKTzKYn3BqIS_b-vGeA';
   const { current } = useThemeSetting();
   const darkMapStyle = [
     {
@@ -424,10 +425,11 @@ export const ZixMapLocationPickerField: React.FC<ZixMapLocationPickerFieldProps>
         <ZixFieldContainer label={t('common:select-location-on-map')} labelBold>
           <View height="$15">
             <MapView
-              key={`map-${localLocation?.latitude}-${localLocation?.longitude}`}
+              key={GOOGLE_MAPS_APIKEY}
+              //  key={`map-${localLocation?.latitude}-${localLocation?.longitude}`}
               style={{ flex: 1, height: 200, borderRadius: 14 }}
               customMapStyle={current === 'dark' ? darkMapStyle : []}
-              provider='google'
+              // provider='google'
               initialRegion={{
                 latitude: localLocation?.latitude || 24.713552,
                 longitude: localLocation?.longitude || 46.675296,

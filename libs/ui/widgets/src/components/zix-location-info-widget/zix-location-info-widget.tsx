@@ -132,7 +132,7 @@ export const ZixLocationInfoWidget: React.FC<ZixLocationInfoWidgetWrapperProps> 
                 flex={1}
               >
                 <MapView
-                  provider="google"
+                //  provider="google"
                   ref={mapRef}
                   customMapStyle={current === 'dark' ? darkMapStyle : []}
                   style={{ flex: 1 }}
