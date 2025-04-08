@@ -384,7 +384,8 @@
     "shipment-budget": "Shipment Budget",
     "skip": "Skip",
     "shipment-detail": "Shipment Details",
-    "create-shipment": "Create New Shipment"
+    "create-shipment": "Create New Shipment",
+    "shipment-information": "Shipment Information"
   },
   "cookies-banner": {
     "section-1": {

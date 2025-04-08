@@ -23,7 +23,7 @@ export const ShipmentItem: React.FC<ShipmentItemProps> = ({
 
   return (
     <ZixFieldContainer
-      label={`Shipment Information ${index + 1}`}
+      label={t('common:create-shipment') + `${index + 1}`}
       labelBold
       collapsible
       error={false}

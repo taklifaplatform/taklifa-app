@@ -432,7 +432,8 @@
     "shipment-budget": "ميزانية الشحن",
     "skip": "تخطي",
     "shipment-details": "تفاصيل الشحن",
-    "create-shipment": "ارسال شحنة جديدة"
+    "create-shipment": "ارسال شحنة جديدة",
+    "shipment-information": "معلومات الشحنة"
   },
   "cookies-banner": {
     "section-1": {
