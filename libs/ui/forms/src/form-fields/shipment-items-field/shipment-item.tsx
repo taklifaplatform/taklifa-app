@@ -31,7 +31,7 @@ export const ShipmentItem: React.FC<ShipmentItemProps> = ({
       <YStack
         padding={Platform.OS === 'web' ? '$8' : null}
       >
-        <ZixFieldContainer label="Images" error={error.medias}>
+        <ZixFieldContainer label={t('common:images')} error={error.medias}>
           <ZixMediaPickerField
             type="medias"
             isMultiple
@@ -39,7 +39,7 @@ export const ShipmentItem: React.FC<ShipmentItemProps> = ({
             onChange={medias => onChange({ ...value, medias })}
           />
         </ZixFieldContainer>
-        <ZixFieldContainer label="Notes" error={error.notes}>
+        <ZixFieldContainer label={t('common:notes')} error={error.notes}>
           <ZixInput
             isMultiline
             value={value.notes}
@@ -47,12 +47,12 @@ export const ShipmentItem: React.FC<ShipmentItemProps> = ({
               console.log('==notes', notes)
               onChange({ ...value, notes })
             }}
-            placeholder="Enter the notes of the item"
+            placeholder={t('common:enter-your-notes')}
           />
         </ZixFieldContainer>
 
         <ZixFieldContainer
-          label='Advanced Options'
+          label={t('common:advanced-options')}
           labelBold
           collapsible
         >

@@ -385,7 +385,12 @@
     "skip": "Skip",
     "shipment-detail": "Shipment Details",
     "create-shipment": "Create New Shipment",
-    "shipment-information": "Shipment Information"
+    "shipment-information": "Shipment Information",
+    "advanced-options": "Advanced Options",
+    "shipment-type": "Shipment Type",
+    "images": "Images",
+    "notes": "Notes",
+    "enter-your-notes": "Enter your notes",
   },
   "cookies-banner": {
     "section-1": {

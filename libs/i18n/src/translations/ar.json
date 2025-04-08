@@ -433,7 +433,13 @@
     "skip": "تخطي",
     "shipment-details": "تفاصيل الشحن",
     "create-shipment": "ارسال شحنة جديدة",
-    "shipment-information": "معلومات الشحنة"
+    "shipment-information": "معلومات الشحنة",
+    "advanced-options": "خيارات متقدمة",
+    "shipment-type": "نوع الشحنة",
+    "images": "الصور",
+    "notes": "ملاحظات",
+    "enter-your-notes": "أدخل ملاحظاتك"
+
   },
   "cookies-banner": {
     "section-1": {

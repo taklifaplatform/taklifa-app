@@ -109,7 +109,7 @@ export const ManageShipmentItemsScreen: React.FC = () => {
     <YStack flex={1}>
       <ScrollView flex={1} >
 
-        <ZixFieldContainer label='Shipment Type' labelBold collapsible stackContainerProps={{ padding: '$4' }}>
+        <ZixFieldContainer label={t('common:shipment-type')} labelBold collapsible stackContainerProps={{ padding: '$4' }}>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
