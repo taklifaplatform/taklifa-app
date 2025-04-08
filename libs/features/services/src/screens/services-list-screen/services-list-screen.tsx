@@ -121,7 +121,7 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
         <XStack alignItems="center" gap="$2">
           <UserAvatar user={item?.driver?.avatar ? item?.driver : item?.company} size="$5" />
           <Text color='$color12' fontWeight="bold">
-            {item?.driver?.name || item?.company.name}
+            {item?.driver?.name || item?.company?.name}
           </Text>
         </XStack>
         <Image source={{ uri: item?.cover?.original_url || "" }}
@@ -141,18 +141,18 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
           <Text
             fontWeight={'bold'}
             fontSize={'$3'}
-          >{item.title}</Text>
+          >{item?.title || ''}</Text>
           <XStack
           alignItems='center'
           >
           <Text
             fontWeight={'bold'}
             fontSize={'$3'}
-          >{item?.price?.value}</Text>
+          >{item?.price?.value || ''}</Text>
           <Text
             fontWeight={'bold'}
             fontSize={'$3'}
-          > {item?.price?.currency?.code}</Text>
+          > {item?.price?.currency?.code || ''}</Text>
           </XStack>
 
         </XStack>
@@ -186,9 +186,9 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
           </XStack>
         <Text
           numberOfLines={3}
-        >{item.description}</Text>
+        >{item?.description || ''}</Text>
         {
-          item.images && <ZixMediasListWidget medias={item.images || []} paddingHorizontal={5} />
+          item?.images && <ZixMediasListWidget medias={item?.images || []} paddingHorizontal={5} />
         }
       </YStack>
       {
