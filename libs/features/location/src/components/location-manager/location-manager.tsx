@@ -13,6 +13,7 @@ import {
 } from '@zix/ui/forms';
 import { AppHeader } from '@zix/ui/layouts';
 import { t } from 'i18next';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Separator, Theme, XStack, YStack } from 'tamagui';
 import { z } from 'zod';
@@ -85,6 +86,15 @@ export const LocationManager: React.FC<LocationManagerProps> = ({
     },
   })
 
+  const [showMap, setShowMap] = useState(false)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowMap(true)
+    }
+      , 3000)
+  },[location])
+
   const renderForm = () => !!location && (
     <SchemaForm
       form={form}
@@ -119,13 +129,13 @@ export const LocationManager: React.FC<LocationManagerProps> = ({
     >
       {({ address, building_name, floor_number, house_number, country_id, state_id, city_id, notes }) => (
         <YStack gap="$2">
-          <ZixMapLocationPickerField
+         {showMap ? <ZixMapLocationPickerField
             value={location} onChange={(val) => {
               Object.keys(val).forEach(key => {
                 form.setValue(key, val[key])
               })
             }}
-          />
+          /> : null}
           <Separator marginTop="$4" />
 
           <ZixFieldContainer
