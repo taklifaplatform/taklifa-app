@@ -122,7 +122,7 @@ export function ManageShipmentSenderScreen() {
             from_location: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
             pick_date: {
               ...SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
-              min_date: moment().toDate()
+              min_date: moment().add(1, 'day').toDate()
             },
             pick_time: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
           }}
