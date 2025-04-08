@@ -153,7 +153,6 @@ export const LocationManager: React.FC<LocationManagerProps> = ({
               {country_id}
               <XStack alignItems="flex-start" gap="$4">
                 {state_id}
-                {city_id}
               </XStack>
 
             </YStack>
