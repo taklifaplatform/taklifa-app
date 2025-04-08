@@ -37,7 +37,18 @@ export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
   }, [date])
 
   const activeDayIndex = useMemo<number>(
-    () => (value ? Number(moment(value).format('D')) :  0),
+    () => {
+      if (value) {
+        const currentDay = Number(moment(value).format('D'))
+        if (currentDay > 1) {
+          return listDays.findIndex((item) => item === currentDay)
+        }
+      }
+
+
+      return 1;
+    },
+    // () => (value ? Number(moment(value).format('D')) : 1),
     // () => (value ? Number(moment(value).format('D')) - 1 : 15),
     [value]
   )
@@ -86,8 +97,8 @@ export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
   )
   return (
     <View
-    paddingVertical='$4'
-    paddingHorizontal='$2'
+      paddingVertical='$4'
+      paddingHorizontal='$2'
     >
       <ZixMonthSelection
         width={150}
