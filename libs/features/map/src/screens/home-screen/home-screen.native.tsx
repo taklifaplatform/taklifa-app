@@ -480,7 +480,7 @@ export function HomeScreen() {
           {!isMapFullScreen && !isKeyboardVisible && renderCarousel()}
           {!isMapFullScreen && !isKeyboardVisible && renderSwitcher()}
           {!isMapFullScreen && driverLocation && showMap && renderCenterButton()}
-          {!isMapFullScreen && !isKeyboardVisible && renderFilters()}
+          {!isKeyboardVisible && renderFilters()}
         </YStack>
       </YStack>
     </ScreenLayout>
