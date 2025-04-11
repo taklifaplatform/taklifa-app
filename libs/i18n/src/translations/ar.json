@@ -438,7 +438,9 @@
     "shipment-type": "نوع الشحنة",
     "images": "الصور",
     "notes": "ملاحظات",
-    "enter-your-notes": "أدخل ملاحظاتك"
+    "enter-your-notes": "أدخل ملاحظاتك",
+    "companies": "شركات",
+    "shipment-detail": "تفاصيل الشحنة"
 
   },
   "cookies-banner": {

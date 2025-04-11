@@ -61,7 +61,7 @@ export function ShipmentSummaryScreen() {
         <ScrollView
         showsVerticalScrollIndicator={false}
          flex={1}>
-        <ZixWidgetContainer label="Shipment Detail">
+        <ZixWidgetContainer label={t('common:shipment-detail')}>
           <YStack>
             {shipment?.items?.map((item, index) => <Text>{item?.notes}</Text>)}
           </YStack>
