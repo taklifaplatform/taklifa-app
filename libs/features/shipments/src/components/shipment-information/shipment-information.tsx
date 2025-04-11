@@ -92,7 +92,7 @@ export const ShipmentInformation: React.FC<ShipmentInformationProps> = ({
             <ZixVariantOptionsWidget
               key={`index-${item.id}-${index}`}
               icon={<Package size="$1" color={'$color10'} />}
-              label={`Package ${index + 1}`}
+              label={`${t('common:package')} ${index + 1}`}
               optionVariant="location"
               variant="details"
               options={[
