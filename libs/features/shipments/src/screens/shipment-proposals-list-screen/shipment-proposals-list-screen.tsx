@@ -6,6 +6,7 @@ import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { FlatList } from 'react-native';
 import { useShipment } from '../../hooks';
 import ShipmentProposalCard from './shipment-proposal-card';
+import { t } from 'i18next';
 
 
 export function ShipmentProposalsListScreen() {
@@ -28,7 +29,7 @@ export function ShipmentProposalsListScreen() {
 
   return (
     <ScreenLayout authProtected safeAreaBottom>
-      <AppHeader title="Shipment Proposals" showBackButton />
+      <AppHeader title={t('common:shipment-proposals')} showBackButton />
       <FlatList
         refreshing={isLoading}
         onRefresh={refetch}
