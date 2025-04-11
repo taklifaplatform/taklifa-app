@@ -10,6 +10,7 @@ import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common';
 import { ZixInput } from '../../fields';
 import ZixMapPointerField from '../../fields/zix-map-pointer-field/zix-map-pointer-field';
 import { Platform } from 'react-native';
+import { t } from 'i18next';
 
 export type LocationFieldProps = {
   containerProps?: BaseFormFieldContainerProps;
@@ -69,7 +70,7 @@ export const LocationField: React.FC<LocationFieldProps> = ({
               borderRadius="$3"
             >
               <Text fontWeight="700">
-                {locationData?.is_primary ? 'Primary' : 'Secondary'}
+                {locationData?.is_primary ? t('shipment:primary') : t('shipment:secondary')}
               </Text>
             </View>
             <Button size="$2" icon={Pen} />
