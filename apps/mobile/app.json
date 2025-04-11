@@ -19,7 +19,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "app.sawaeed",
-      "buildNumber": "27",
+      "buildNumber": "28",
       "infoPlist": {
         "CFBundleDevelopmentRegion": "ar",
         "ExpoLocalization_supportsRTL": true,
