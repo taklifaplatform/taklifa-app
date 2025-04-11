@@ -442,7 +442,9 @@
     "companies": "شركات",
     "shipment-detail": "تفاصيل الشحنة",
     "package": "طَرد",
-    "shipment-proposals": "مقترحات الشحن"
+    "shipment-proposals": "مقترحات الشحن",
+    "delete": "حذف",
+    "delete-shipment": "هل أنت متأكد أنك تريد حذف هذه الشحنة؟"
 
   },
   "cookies-banner": {

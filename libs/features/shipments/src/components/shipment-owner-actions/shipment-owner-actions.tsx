@@ -81,7 +81,7 @@ export const ShipmentOwnerActions: React.FC<ShipmentOwnerActionsProps> = ({ ship
       name: t('plain:Delete'),
       icon: <Trash2 size="$2" color="$color10" />,
       onPress: () =>
-        Alert.alert(t('plain:Delete Shipment'), t('plain:Are you sure you want to delete this shipment?'), [
+        Alert.alert(t('common:delete'), t('common:delete-shipment'), [
           { text: t('plain:Cancel'), style: 'cancel' },
           {
             text: t('plain:Delete'),

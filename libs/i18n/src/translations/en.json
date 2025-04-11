@@ -393,7 +393,9 @@
     "enter-your-notes": "Enter your notes",
     "companies": "Companies",
     "package": "Package",
-    "shipment-proposals": "Shipment Proposals"
+    "shipment-proposals": "Shipment Proposals",
+    "delete": "Delete",
+    "delete-shipment": "Are you sure you want to delete this shipment"
   },
   "cookies-banner": {
     "section-1": {
