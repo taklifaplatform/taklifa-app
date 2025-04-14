@@ -20,7 +20,7 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = React.memo(({
 
   console.log(JSON.stringify(driver?.vehicle?.image?.original_url, null, 2))
 
-  const renderCarIcon = () => (!showCustomIcon && (driver?.vehicle?.image?.original_url || driver?.vehicle?.model?.map_icon?.url)) ? (
+/*  const renderCarIcon = () => (!showCustomIcon && (driver?.vehicle?.image?.original_url || driver?.vehicle?.model?.map_icon?.url)) ? (
     <Image
       source={{ uri: driver?.vehicle?.image?.original_url || driver?.vehicle?.model?.map_icon?.url }}
       width={driver?.vehicle?.model?.map_icon_width || '$6'}
@@ -32,7 +32,9 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = React.memo(({
     />
   ) : (
     <CustomIcon name='solo_transporter_car' size={Platform.OS === 'web' ? "$8" : "$4"} />
-  )
+  )*/
+ 
+  const renderCarIcon = () => <CustomIcon name='solo_transporter_car' size={Platform.OS === 'web' ? "$8" : "$4"} />
 
   const liveLocation = driver?.live_location || driver?.location;
 

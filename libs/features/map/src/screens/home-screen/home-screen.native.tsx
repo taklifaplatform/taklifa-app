@@ -1,5 +1,5 @@
 import { useIsFocused } from '@react-navigation/native';
-import { ScanBarcode, X } from '@tamagui/lucide-icons';
+import { X } from '@tamagui/lucide-icons';
 import * as Location from 'expo-location';
 import { useQuery } from '@tanstack/react-query';
 import { CompaniesService, DriverTransformer, DriversService, LocationService } from '@zix/api';
