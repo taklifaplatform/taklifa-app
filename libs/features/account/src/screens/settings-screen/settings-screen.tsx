@@ -103,7 +103,8 @@ export const SettingsScreen = () => {
                   </Settings.Item>
                 </Settings.Group>
               )}
-              <Settings.Group>
+             {isLoggedIn && 
+             <Settings.Group>
                 <Settings.Item
                   icon={(props: IconProps) => (
                     <Theme name='accent'>
@@ -136,7 +137,7 @@ export const SettingsScreen = () => {
                 >
                   {t('account:change_email.title')}
                 </Settings.Item>
-              </Settings.Group>
+              </Settings.Group>}
               <Settings.Group>
                 <Settings.Item
                   icon={(props: IconProps) => (
