@@ -55,7 +55,7 @@ export const PrivacyPolicyScreen = () => {
 
           <H2>Changes to This Policy</H2>
           <Paragraph>
-            Last Updated: 2024-02-06{isWeb ? <br /> : '\n'}
+            Last Updated: 2025-05-15{isWeb ? <br /> : '\n'}
             We'll notify users of changes via app updates.
           </Paragraph>
 
