@@ -1,19 +1,18 @@
 import { IconProps } from '@tamagui/helpers-icon';
 import { Languages } from '@tamagui/lucide-icons';
-import { ActionSheet, ActionSheetRef, Settings } from '@zix/ui/common';
-import { Paragraph, ScrollView, Theme, View, YStack, useMedia, Text } from 'tamagui';
-import { CustomIcon } from '@zix/ui/icons';
-import { usePathname } from '@zix/utils';
 import { useMultiLang } from '@zix/i18n';
 import { useThemeSetting } from '@zix/providers';
+import { ActionSheet, ActionSheetRef, Settings } from '@zix/ui/common';
+import { CustomIcon } from '@zix/ui/icons';
+import { usePathname } from '@zix/utils';
 import { t } from 'i18next';
 import { useCallback, useRef, useState } from 'react';
 import { Alert, Linking, Platform } from 'react-native';
+import { Paragraph, ScrollView, Theme, View, YStack, useMedia } from 'tamagui';
 
-import { useAuth } from '@zix/services/auth';
-import { useLink } from 'solito/link';
-import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { UserService } from '@zix/api';
+import { useAuth } from '@zix/services/auth';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { useRouter } from 'solito/router';
 
 const brandColors = {
@@ -40,12 +39,6 @@ export const SettingsScreen = () => {
     },
     [getUrlPrefix],
   );
-  const generalLink = useLink({
-    href: media.sm
-      ? getUrl('account/settings/general')
-      : Platform.OS === 'web' ? getUrl('account/settings/general')
-        : getUrl('account/settings'),
-  });
 
 
   const renderWebDropdown = () => (
@@ -87,7 +80,7 @@ export const SettingsScreen = () => {
         <ScrollView>
           <Settings>
             <Settings.Items>
-              {isLoggedIn && (
+              {(isLoggedIn && Platform.OS === 'web') && (
                 <Settings.Group $gtSm={{ space: '$2' }}>
                   <Settings.Item
                     icon={(props: IconProps) => (
@@ -96,48 +89,47 @@ export const SettingsScreen = () => {
                       </Theme>
                     )}
                     isActive={pathname === getUrl('account/settings/general')}
-                    {...generalLink}
+                    href={getUrl('account/settings/general')}
+                    onPress={() => router.push(getUrl('account/settings'))}
                     accentColor="$green9"
                   >
                     {t('account:general.title')}
                   </Settings.Item>
                 </Settings.Group>
               )}
-             {isLoggedIn && 
-             <Settings.Group>
-                <Settings.Item
-                  icon={(props: IconProps) => (
-                    <Theme name='accent'>
-                      <CustomIcon name="lock" color="$color9" {...props} />
-                    </Theme>
-                  )}
-                  isActive={
-                    pathname === getUrl('account/settings/change-password')
-                  }
-                  {...useLink({
-                    href: getUrl('account/settings/change-password'),
-                  })}
-                  accentColor="$green9"
-                >
-                  {t('auth:change_password.title')}
-                </Settings.Item>
-                <Settings.Item
-                  icon={(props: IconProps) => (
-                    <Theme name='accent'>
-                      <CustomIcon name="mail" color="$color9" {...props} />
-                    </Theme>
-                  )}
-                  isActive={
-                    pathname === getUrl('account/settings/change-email')
-                  }
-                  {...useLink({
-                    href: getUrl('account/settings/change-email'),
-                  })}
-                  accentColor="$green9"
-                >
-                  {t('account:change_email.title')}
-                </Settings.Item>
-              </Settings.Group>}
+              {isLoggedIn &&
+                <Settings.Group>
+                  <Settings.Item
+                    icon={(props: IconProps) => (
+                      <Theme name='accent'>
+                        <CustomIcon name="lock" color="$color9" {...props} />
+                      </Theme>
+                    )}
+                    href={getUrl('account/settings/change-password')}
+                    onPress={() => router.push(getUrl('account/settings/change-password'))}
+                    isActive={
+                      pathname === getUrl('account/settings/change-password')
+                    }
+                    accentColor="$green9"
+                  >
+                    {t('auth:change_password.title')}
+                  </Settings.Item>
+                  <Settings.Item
+                    icon={(props: IconProps) => (
+                      <Theme name='accent'>
+                        <CustomIcon name="mail" color="$color9" {...props} />
+                      </Theme>
+                    )}
+                    isActive={
+                      pathname === getUrl('account/settings/change-email')
+                    }
+                    href={getUrl('account/settings/change-email')}
+                    onPress={() => router.push(getUrl('account/settings/change-email'))}
+                    accentColor="$green9"
+                  >
+                    {t('account:change_email.title')}
+                  </Settings.Item>
+                </Settings.Group>}
               <Settings.Group>
                 <Settings.Item
                   icon={(props: IconProps) => (
@@ -146,7 +138,8 @@ export const SettingsScreen = () => {
                     </Theme>
                   )}
                   isActive={pathname === '/privacy-policy'}
-                  {...useLink({ href: '/privacy-policy' })}
+                  onPress={() => router.push('/privacy-policy')}
+                  href={'/privacy-policy'}
                   accentColor="$purple9"
                 >
                   {t('account:privacy_policy.title')}
@@ -158,7 +151,8 @@ export const SettingsScreen = () => {
                     </Theme>
                   )}
                   isActive={pathname === '/terms-of-service'}
-                  {...useLink({ href: '/terms-of-service' })}
+                  onPress={() => router.push('/terms-of-service')}
+                  href={'/terms-of-service'}
                   accentColor="$purple9"
                 >
                   {t('account:terms_of_service.title')}
@@ -236,7 +230,7 @@ export const SettingsScreen = () => {
         <Paragraph paddingVertical="$4" textAlign="center" theme="alt2">
           v1.0.0
         </Paragraph>
-      </YStack>
+      </YStack >
     </>
   );
 };
