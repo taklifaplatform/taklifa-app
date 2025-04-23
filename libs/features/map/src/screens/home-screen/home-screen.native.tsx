@@ -1,21 +1,21 @@
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useIsFocused } from '@react-navigation/native';
 import { X } from '@tamagui/lucide-icons';
-import * as Location from 'expo-location';
 import { useQuery } from '@tanstack/react-query';
 import { CompaniesService, DriverTransformer, DriversService, LocationService } from '@zix/api';
-import { UserCard, CompanyCard } from '@zix/features/users';
+import { CompanyCard, UserCard } from '@zix/features/users';
 import { USER_ROLES, useAuth } from '@zix/services/auth';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { MapCompanyMarker, MapDriverMarker } from '@zix/ui/sawaeed';
 import { getDistance } from '@zix/utils';
+import * as Location from 'expo-location';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Alert, Animated, Dimensions, Keyboard, Platform, SectionList } from 'react-native';
+import { Dimensions, Keyboard, Platform, SectionList } from 'react-native';
 import MapView from 'react-native-maps';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useRouter } from 'solito/router';
-import { Button, View, YStack, Text, H4 } from 'tamagui';
+import { Button, H4, View, YStack } from 'tamagui';
 import MapFilters from '../../components/map-filters/map-filters';
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
@@ -204,54 +204,34 @@ export function HomeScreen() {
   }, [isFocused]);
 
   // Check if user verified
-  const isVerified = (user.active_role?.name === USER_ROLES.solo_driver && (
-      !user.verification_status
-      || ['pending', 'rejected'].includes(user.verification_status)
-    ));
+  // const isVerified = (user.active_role?.name === USER_ROLES.solo_driver && (
+  //   !user.verification_status
+  //   || ['pending', 'rejected'].includes(user.verification_status)
+  // ));
 
 
-  useEffect(() => {
-    if (isVerified) {
-      console.log(user.active_role?.name)
-      Alert.alert(
-        'تحذير',
-        'يجب عليك تحديث بياناتك لتتمكن من استخدام التطبيق',
-        [
-          {
-            text: 'تحديث البيانات',
-            onPress: () => router.push(`/auth/verify-kyc`)
-          },
-          {
-            text: 'إلغاء',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'destructive',
-          }
-        ],
-        { cancelable: false }
-      );
-    }
-  },[isVerified])
+  // useEffect(() => {
+  //   if (isVerified) {
+  //     console.log(user.active_role?.name)
+  //     Alert.alert(
+  //       'تحذير',
+  //       'يجب عليك تحديث بياناتك لتتمكن من استخدام التطبيق',
+  //       [
+  //         {
+  //           text: 'تحديث البيانات',
+  //           onPress: () => router.push(`/auth/verify-kyc`)
+  //         },
+  //         {
+  //           text: 'إلغاء',
+  //           onPress: () => console.log('Cancel Pressed'),
+  //           style: 'destructive',
+  //         }
+  //       ],
+  //       { cancelable: false }
+  //     );
+  //   }
+  // },[isVerified])
 
-  // Full-screen animation state
-  const [isMapFullScreen, setIsMapFullScreen] = useState(false);
-  const animationValue = useRef(new Animated.Value(1)).current;
-
-  const animateOut = () => {
-    setIsMapFullScreen(true);
-    Animated.timing(animationValue, {
-      toValue: 0, // Fully transparent
-      duration: 1,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const animateIn = () => {
-    Animated.timing(animationValue, {
-      toValue: 1, // Fully visible
-      duration: 1,
-      useNativeDriver: true,
-    }).start(() => setIsMapFullScreen(false));
-  };
 
   const renderMapDrivers = () =>
     (filters.provider_type === 'all' || filters.provider_type === USER_ROLES.solo_driver) ?
@@ -287,14 +267,6 @@ export function HomeScreen() {
         onPress={() => Keyboard.dismiss()}
         showsUserLocation={!!driverLocation}
         showsMyLocationButton={false}
-        onTouchStart={() => {
-          if (!isMapFullScreen) animateOut();
-        }
-        }
-        onTouchEnd={() => {
-          if (isMapFullScreen) animateIn();
-        }
-        }
       >
         {renderMapDrivers()}
         {renderMapCompanies()}
@@ -476,10 +448,10 @@ export function HomeScreen() {
         />
         <YStack flex={1} position='relative'>
           {renderMap()}
-          {!isMapFullScreen && renderList()}
-          {!isMapFullScreen && !isKeyboardVisible && renderCarousel()}
-          {!isMapFullScreen && !isKeyboardVisible && renderSwitcher()}
-          {!isMapFullScreen && driverLocation && showMap && renderCenterButton()}
+          {renderList()}
+          {!isKeyboardVisible && renderCarousel()}
+          {!isKeyboardVisible && renderSwitcher()}
+          {driverLocation && showMap && renderCenterButton()}
           {!isKeyboardVisible && renderFilters()}
         </YStack>
       </YStack>
