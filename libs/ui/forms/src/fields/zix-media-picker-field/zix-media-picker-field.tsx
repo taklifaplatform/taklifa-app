@@ -3,6 +3,7 @@ import { Camera as CameraIcon, Image as LucideImage, Paperclip } from '@tamagui/
 import { MediaService, MediaTransformer } from '@zix/api';
 import { ActionSheet, ActionSheetRef } from '@zix/ui/common';
 import { getDocumentAsync } from 'expo-document-picker';
+import * as ImageManipulator from 'expo-image-manipulator';
 
 import {
   MediaTypeOptions,
@@ -17,6 +18,7 @@ import { UploadableMediaFile, uploadMediaFile } from '../../utils';
 import { useCamera } from './hooks/useCamera';
 import { ZixFilesInputMediaPickerPreviewer, ZixImageMediaPickerPreviewer, ZixRowMediaPickerPreviewer } from './previewers';
 import { ZixMediaPickerTransformer } from './types';
+import { Dialog, Progress, XStack, Text } from 'tamagui';
 
 // Previewers specifications
 export const MediaPreviewers = {
@@ -100,6 +102,8 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     );
   };
 
+  const [isUploading, setIsUploading] = useState(false);
+
   async function onFilesSelected(files: ZixMediaPickerTransformer[]) {
     const _medias: Record<string, any> = {};
 
@@ -127,9 +131,24 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     console.log('===============')
     console.log('UPLOADING FILES::', _medias)
     console.log('===============')
-    const finalResults = await Promise.all(Object.values(_medias).map((media) => {
+    setIsUploading(true);
+    const finalResults = await Promise.all(Object.values(_medias).map(async (_media) => {
+      const resizedPhoto = await ImageManipulator.manipulateAsync(
+        _media.uri,
+        [{ resize: { width: 1024 } }], // resize to width of 300 and preserve aspect ratio
+        { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG },
+      );
+      console.log('resizedPhoto::', resizedPhoto)
+      const media = {
+        ..._media,
+        ...resizedPhoto
+      }
       return new Promise((resolve, reject) => {
+        // compress the image
         uploadMediaFile(media as UploadableMediaFile, (progress) => {
+          console.log('===============')
+          console.log('uploadMediaFil>progress::', progress)
+          console.log('===============')
           setPreviews((prev) => ({
             ...prev,
             [media.uuid]: {
@@ -138,6 +157,9 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
             },
           }));
         }).then((result) => {
+          console.log('===============')
+          console.log('uploadMediaFil>result::', result)
+          console.log('===============')
           resolve({
             ...media,
             ...result,
@@ -148,6 +170,9 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
         });
       });
     }));
+    console.log('===============')
+    console.log('FINAL RESULTS::', finalResults)
+    console.log('===============')
 
     onChange?.(isMultiple ? finalResults : finalResults[0]);
 
@@ -164,14 +189,13 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
         { cancelable: true }
       );
     }
+    setIsUploading(false);
   }
 
   async function launchMediaPicker() {
     actionRef.current?.close();
-    let mediaTypes = MediaTypeOptions.All;
-    if (type === 'image') {
-      mediaTypes = MediaTypeOptions.Images;
-    }
+    const mediaTypes = MediaTypeOptions.Images;
+
     const result = await launchImageLibraryAsync({
       mediaTypes,
       allowsEditing: !isMultiple,
@@ -247,10 +271,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     }
 
     actionRef.current?.close();
-    let mediaTypes = MediaTypeOptions.All;
-    if (type === 'image') {
-      mediaTypes = MediaTypeOptions.Images;
-    }
+    const mediaTypes = MediaTypeOptions.Images;
 
     try {
       const result = await launchCameraAsync({
@@ -307,6 +328,57 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
 
   }
 
+  const renderUploadProgressDialog = () => {
+    const totalFiles = Object.keys(previews).length;
+    const uploadedFiles = Object.values(previews).filter(file => file.uploadProgress === 1).length;
+    const progress = totalFiles > 0 ? (uploadedFiles / totalFiles) * 100 : 0;
+
+    return (
+      <Dialog open={isUploading} modal>
+        <Dialog.Portal>
+          <Dialog.Overlay
+            key="overlay"
+            animation="quick"
+            opacity={0.5}
+            enterStyle={{ opacity: 0 }}
+            exitStyle={{ opacity: 0 }}
+          />
+          <Dialog.Content
+            bordered
+            elevate
+            key="content"
+            animation={[
+              'quick',
+              {
+                opacity: {
+                  overshootClamping: true,
+                },
+              },
+            ]}
+            enterStyle={{ x: 0, y: 20, opacity: 0, scale: 0.9 }}
+            exitStyle={{ x: 0, y: 20, opacity: 0, scale: 0.9 }}
+            gap="$4"
+            width="90%"
+          >
+            <Dialog.Title>{t('core:media_picker.uploading_title')}</Dialog.Title>
+            <Dialog.Description>
+              {t('core:media_picker.uploading_progress', {
+                uploaded: uploadedFiles,
+                total: totalFiles
+              }).replace('{uploaded}', uploadedFiles).replace('{total}', totalFiles)}
+            </Dialog.Description>
+            <XStack space="$4" alignItems="center">
+              <Progress value={progress} width="100%" size="$4">
+                <Progress.Indicator animation="bouncy" />
+              </Progress>
+              <Text>{Math.round(progress)}%</Text>
+            </XStack>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog>
+    );
+  };
+
   return (
     <>
       <Previewer
@@ -318,6 +390,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
         notAvatar={notAvatar}
       />
       {renderImagePicker()}
+      {renderUploadProgressDialog()}
     </>
   );
 };

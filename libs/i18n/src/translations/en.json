@@ -411,7 +411,9 @@
       "title": "Select a media picker",
       "select_document": "Select Document",
       "select_media": "Select Media",
-      "camera": "Camera"
+      "camera": "Camera",
+      "uploading_title": "Uploading Files",
+      "uploading_progress": "{uploaded} of {total} files uploaded"
     }
   },
   "forms": {

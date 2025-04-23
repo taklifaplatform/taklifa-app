@@ -24,22 +24,6 @@ export const uploadMediaFile = async (
   file: UploadableMediaFile,
   onProgressUpdate: (progress: number) => void = () => null,
 ): Promise<MediaTransformer> => {
-  if (
-    file?.mediaTypes === MediaTypeOptions.Images ||
-    file?.file_type === 'image'
-  ) {
-    const resizedPhoto = await ImageManipulator.manipulateAsync(
-      file.uri,
-      [{ resize: { width: 600 } }], // resize to width of 300 and preserve aspect ratio
-      { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG },
-    );
-    file = {
-      ...file,
-      ...resizedPhoto,
-      file_name: `${randomUUID()}.${ImageManipulator.SaveFormat.JPEG}`,
-      file_type: 'image/jpeg',
-    };
-  }
   return new Promise(function (resolve, reject) {
     const UPLOAD_URL = `${OpenAPI.BASE}/api/media/uploads`;
 

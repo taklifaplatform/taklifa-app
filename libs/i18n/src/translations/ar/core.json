@@ -3,6 +3,8 @@
     "title": "اختر أداة اختيار الوسائط",
     "select_document": "اختر مستند",
     "select_media": "اختر وسائط",
-    "camera": "الكاميرا"
+    "camera": "الكاميرا",
+    "uploading_title": "جاري رفع الملفات",
+    "uploading_progress": "{uploaded} من {total} ملف رفع"
   }
 }
