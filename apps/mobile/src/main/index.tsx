@@ -10,6 +10,7 @@ export default function Screen() {
 
   function redirectUser() {
     setTimeout(() => {
+      // router.replace('/auth/verify-kyc');
       router.replace('/app');
     }, 1000);
   }
