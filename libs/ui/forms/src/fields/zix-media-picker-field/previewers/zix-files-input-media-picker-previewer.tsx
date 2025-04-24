@@ -1,4 +1,4 @@
-import { Plus, PlusSquare, X, XCircle } from "@tamagui/lucide-icons";
+import { Check, Plus, PlusSquare, X, XCircle } from "@tamagui/lucide-icons";
 import { Button, Text, XStack, useStyle } from "tamagui";
 
 import { IconProps } from "@tamagui/helpers-icon";
@@ -6,6 +6,7 @@ import { MediaTransformer } from "@zix/api";
 import { useMemo } from "react";
 import { SHARED_FIELDS_STYLE } from "../../fields-config";
 import { ZixMediaPreviewerProps } from "../types";
+import { Alert } from "react-native";
 
 export const ZixFilesInputMediaPickerPreviewer: React.FC<ZixMediaPreviewerProps> = ({
   previews,
@@ -40,13 +41,21 @@ export const ZixFilesInputMediaPickerPreviewer: React.FC<ZixMediaPreviewerProps>
         {
           !!previews?.length && (
             <Button
-              theme='error'
+              theme='success'
               width="$3"
+              backgroundColor='transparent'
               color='$color9'
-              icon={(props: IconProps) => <X {...props} />}
+              icon={(props: IconProps) => <Check {...props} />}
               scaleIcon={1.8}
               onPress={() => {
-                previews?.map((item) => onRemoveMedia?.(item as MediaTransformer))
+                Alert.alert('Are you sure you want to delete this document?', '', [
+                  { text: 'Cancel', style: 'cancel' },
+                  {
+                    text: 'Delete', onPress: () => {
+                      previews?.map((item) => onRemoveMedia?.(item as MediaTransformer))
+                    }
+                  },
+                ])
               }}
             />
           )
