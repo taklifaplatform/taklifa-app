@@ -14,7 +14,8 @@ import {
   View,
   XStack,
   styled,
-  useThemeName
+  useThemeName,
+  Text
 } from 'tamagui';
 import FieldError from '../field-error/field-error';
 import { useMultiLang } from '@zix/i18n';
@@ -102,8 +103,12 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
           textAlign="left"
           theme="alt1"
           labelBold={labelBold}
+          flexDirection='row'
+          alignItems='center'
         >
-          {label} {(!isOptional && labelShowRequiredAsterisk) && `*`}
+          {label} {(!isOptional && labelShowRequiredAsterisk) && (
+            <Text theme='error' fontSize='$4' color='$color10'>*</Text>
+          )}
         </Label>
         {labelPrepend}
       </XStack>
