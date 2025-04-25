@@ -24,6 +24,7 @@ export const AutoCompleteField: React.FC<AutoCompleteFieldProps> = ({
         placeholder={placeholder}
         value={field.value}
         onValueChange={field.onChange}
+        onChange={field.onChange}
       />
     </FormFieldContainer>
   );

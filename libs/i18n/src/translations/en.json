@@ -456,6 +456,7 @@
     "labels": {
       "code": "Code"
     },
+    "vehicle-model": "Vehicle Model // Select your vehicle model",
     "vehicle-image": "Vehicle Image // Upload your vehicle image",
     "images": "Images // Upload images",
     "vehicle-internal-id": "Internal ID // Enter your vehicle internal reference",

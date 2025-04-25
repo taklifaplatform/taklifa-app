@@ -1,10 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useToastController } from '@tamagui/toast';
-import { VehiclesService } from '@zix/api';
+import { VehicleModelTransformer, VehiclesService } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
-import { FullScreenSpinner } from '@zix/ui/common';
+import { DebugObject, FullScreenSpinner } from '@zix/ui/common';
 import {
   SchemaForm,
   SubmitButton,
@@ -17,14 +17,15 @@ import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
-import { Theme } from 'tamagui';
+import { Theme, Image } from 'tamagui';
 import { z } from 'zod';
 
 const ManageVehicleFormSchema = z
   .object({
     image: formFields.image.describe(t('forms:vehicle-image')),
     images: formFields.medias.describe(t('forms:images')),
-    internal_id: formFields.text.describe(t('forms:vehicle-internal-id')).optional().nullable(),
+    model_id: formFields.autocomplete.describe(t('forms:vehicle-model')),
+    // internal_id: formFields.text.describe(t('forms:vehicle-internal-id')).optional().nullable(),
     color: formFields.text.describe(t('forms:color')),
     plate_number: formFields.text.describe(t('forms:plate-number')),
     vin_number: formFields.text.describe(t('forms:vin-number')).optional().nullable(),
@@ -70,6 +71,10 @@ export const ManageVehicleScreen: React.FC = () => {
 
   const router = useRouter();
 
+  // useEffect(() => {
+  //   console.log('form.getValues::', form.getValues('color'))
+  // }, [form])
+
   const { data } = useQuery({
     queryFn: () => VehiclesService.retrieveVehicle({
       vehicle: vehicleId || '',
@@ -81,6 +86,14 @@ export const ManageVehicleScreen: React.FC = () => {
 
   const { mutateAsync } = useMutation({
     async mutationFn(requestBody: z.infer<typeof ManageVehicleFormSchema>) {
+      console.log('requestBody::', JSON.stringify(requestBody, null, 2))
+      console.log('form.getValues::', form.getValues())
+      console.log('form.getValues->model_id::', form.getValues('model_id'))
+      if (!requestBody.model_id) {
+        throw new Error('Model is required');
+        return ;
+      }
+
       if (vehicleId) {
         return VehiclesService.updateVehicle({
           vehicle: vehicleId,
@@ -106,7 +119,7 @@ export const ManageVehicleScreen: React.FC = () => {
         })
       }, 5000);
       refetchUser();
-      toast.show('Company Updated Successfully!');
+      toast.show('Vehicle Updated Successfully!');
       router.back();
       console.log('onSuccess::')
     },
@@ -128,6 +141,22 @@ export const ManageVehicleScreen: React.FC = () => {
       form={form}
       schema={ManageVehicleFormSchema}
       defaultValues={data?.data || {}}
+      props={{
+        model_id: {
+          api: 'vehicle-models',
+          dataMapper: (item: VehicleModelTransformer) => ({
+            id: item.id,
+            name: item.name,
+            icon: item?.map_icon ? (
+              <Image
+                source={{ uri: item.map_icon.url }}
+                resizeMode='contain'
+                style={{ width: 30, height: 25 }}
+              />
+            ) : null
+          }),
+        },
+      }}
       onSubmit={mutateAsync}
       renderAfter={({ submit }) => {
         return (
@@ -195,6 +224,7 @@ export const ManageVehicleScreen: React.FC = () => {
         showBackButton
         title={vehicleId ? t('common:edit-vehicle') :  t('common:add-vehicle')}
       />
+      {/* <DebugObject object={data?.data} /> */}
       {renderForm()}
       {renderLoading()}
     </ScreenLayout>

@@ -35,15 +35,16 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
     throw new Error('api is required');
   }
 
-  const [search, setSearch] = useState<string>(props.value || '');
-  const { data } = useQuery(
+  const [search, setSearch] = useState<string>();
+  // const [search, setSearch] = useState<string>(props.value || '');
+  const { data, refetch, isFetching } = useQuery(
     {
       queryFn() {
         return request<any>(OpenAPI, {
           method: 'GET',
           url: `/api/${api}`,
           query: {
-            search,
+            search: search || props.value,
             page: 1,
             per_page: perPage,
             ...query
@@ -53,12 +54,21 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
       queryKey: [api, perPage, search, `-${props.value}`, Object.values(query)],
     }
   );
-
   useEffect(() => {
-    if (props.value !== search) {
-      setSearch(props.value || '');
-    }
+    console.log("================================================")
+    console.log('props.value::', props.value)
+    console.log("================================================")
+    setTimeout(() => {
+      console.log("REFETCHING")
+      refetch();
+    }, 1000);
   }, [props.value]);
+
+  // useEffect(() => {
+  //   if (props.value !== search) {
+  //     setSearch(props.value || '');
+  //   }
+  // }, [props.value]);
 
   const mappedData = useMemo<BaseSelectFieldItem[]>(() => {
     return [
@@ -74,6 +84,7 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
       search={search}
       onSearch={setSearch}
       options={mappedData}
+      isOptionsLoading={isFetching}
       {...props}
     />
   )
