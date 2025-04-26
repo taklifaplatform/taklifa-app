@@ -19,7 +19,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "app.sawaeed",
-      "buildNumber": "32",
+      "buildNumber": "33",
       "infoPlist": {
         "CFBundleDevelopmentRegion": "ar",
         "ExpoLocalization_supportsRTL": true,
@@ -89,7 +89,7 @@
       "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi": true,
       "package": "app.sawaeed",
-      "versionCode": 46,
+      "versionCode": 47,
       "permissions": [
         "android.permission.NOTIFICATION",
         "android.permission.RECORD_AUDIO",

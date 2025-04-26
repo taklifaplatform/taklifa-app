@@ -153,7 +153,7 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
                     >
                       <Select.ItemText>
                         <XStack alignItems='center' gap='$2' flex={1}>
-                          {item.icon}
+                          <Text fontSize='$4'>{item.icon}</Text>
                           <Text fontSize='$4'>{item.name}</Text>
                         </XStack>
                       </Select.ItemText>
