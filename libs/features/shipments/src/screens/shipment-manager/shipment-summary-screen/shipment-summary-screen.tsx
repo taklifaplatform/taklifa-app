@@ -59,18 +59,18 @@ export function ShipmentSummaryScreen() {
     shipment?.id && (
       <YStack flex={1} padding="$4">
         <ScrollView
-        showsVerticalScrollIndicator={false}
-         flex={1}>
-        <ZixWidgetContainer label={t('common:shipment-detail')}>
-          <YStack>
-            {shipment?.items?.map((item, index) => <Text>{item?.notes}</Text>)}
-          </YStack>
-        </ZixWidgetContainer>
-        <ShipmentDirection shipment={shipment} />
-        <ShipmentInformation shipment={shipment} paddingVertical="$4" />
-        <ShipmentBudget shipment={shipment} />
-        <View height="$6" />
-      </ScrollView>
+          showsVerticalScrollIndicator={false}
+          flex={1}>
+          <ZixWidgetContainer label={t('common:shipment-detail')}>
+            <YStack>
+              {shipment?.items?.map((item, index) => <Text>{item?.notes}</Text>)}
+            </YStack>
+          </ZixWidgetContainer>
+          <ShipmentDirection shipment={shipment} />
+          <ShipmentInformation shipment={shipment} paddingVertical="$4" />
+          <ShipmentBudget shipment={shipment} />
+          <View height="$6" />
+        </ScrollView>
       </YStack>
     );
 
@@ -83,9 +83,7 @@ export function ShipmentSummaryScreen() {
       <View paddingHorizontal='$4'>
         <Theme inverse>
           <SubmitButton
-            onPress={() => {
-              mutateAsync();
-            }}
+            onPress={() => mutateAsync()}
           >
             {t('common:confirm')}
           </SubmitButton>
