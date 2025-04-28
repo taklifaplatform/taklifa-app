@@ -4,7 +4,7 @@
     "slug": "sawaeed",
     "jsEngine": "hermes",
     "scheme": "sawaeed",
-    "version": "1.0.9",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -19,7 +19,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "app.sawaeed",
-      "buildNumber": "34",
+      "buildNumber": "35",
       "infoPlist": {
         "CFBundleDevelopmentRegion": "ar",
         "ExpoLocalization_supportsRTL": true,
@@ -75,9 +75,7 @@
       },
       "associatedDomains": [
         "applinks:sawaeed.app",
-        "applinks:staging.sawaeed.app",
-        "applinks:sawaeed.app",
-        "applinks:staging.sawaeed.app"
+        "applinks:admin.sawaeed.app"
       ]
     },
     "android": {
@@ -89,7 +87,7 @@
       "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi": true,
       "package": "app.sawaeed",
-      "versionCode": 48,
+      "versionCode": 49,
       "permissions": [
         "android.permission.NOTIFICATION",
         "android.permission.RECORD_AUDIO",
