@@ -253,6 +253,13 @@
     "select-action": "Select Action",
     "view-proposals": "View Proposals",
     "view-invitations": "View Invitations",
+    "roles": {
+      "customer": "Customer",
+      "company_owner": "Company Owner",
+      "company_manager": "Company Manager",
+      "company_driver": "Company Driver",
+      "solo_driver": "Solo Driver"
+    },
     "user_types": {
       "individual": "Individual",
       "company": "Company"
@@ -702,5 +709,6 @@
     "complain-text": "If there are any problems you encounter, please do not hesitate to contact us",
     "saudi_arabia": "Saudi Arabia",
     "sawaed_logistics": "Sawaed Logistics"
+    
   }
 }

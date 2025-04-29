@@ -137,27 +137,11 @@ export const AccountSwitcher: React.FC<AccountSwitcherProps> = ({
             <Text fontWeight="bold" fontSize={15} numberOfLines={1}>
               {user?.name || !!user?.username ? `@${user?.username}` : '...'}
             </Text>
-
-
-
-
-            
-            {user?.active_role?.name && <Text>
-              {/* {user?.active_role?.name} */}
-              {user?.active_role?.name === 'customer'
-                ? t('common:customer')
-                : user?.active_role?.name === 'solo_driver'
-                  ? t('common:solo-driver')
-                  : user?.active_role?.name}
-              </Text>}
-
-
-
-
-
-
-
-
+            {user?.active_role?.name && (
+              <Text>
+                {t(`common:roles.${user?.active_role?.name}`)}
+              </Text>
+            )}
           </YStack>
           {isWeb && <View width="$2" />}
           <ChevronDown size="$1" />
@@ -214,7 +198,7 @@ export const AccountSwitcher: React.FC<AccountSwitcherProps> = ({
                 scaleIcon={1.3}
                 title={t('app:account-switcher.add-account')}
                 subTitle={t('app:account-switcher.add-account-subtitle')}
-             
+
               />
             </YGroup.Item>
           </YGroup>

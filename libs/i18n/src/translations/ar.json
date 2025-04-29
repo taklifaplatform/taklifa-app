@@ -320,6 +320,13 @@
     "working-hours": "ساعات العمل",
     "how-was-your-experience-with": "كيف كانت تجربتك مع",
     "enter-your-detail-input-placeholder": "أدخل تفاصيلك هنا",
+    "roles": {
+      "customer": "عميل",
+      "company_owner": "مالك الشركة",
+      "company_manager": "مدير الشركة",
+      "company_driver": "سائق الشركة",
+      "solo_driver": "سائق فردي"
+    },
     "user_types": {
       "individual": "فرد",
       "company": "شركة"
