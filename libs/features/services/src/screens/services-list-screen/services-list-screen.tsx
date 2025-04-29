@@ -258,7 +258,9 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
           ListEmptyComponent={
             <View flex={1} alignItems='center' gap="$8" paddingTop="$8">
               <CustomIcon name="empty_data" size="$18" color="$color5" />
-              <H4>No Services Found</H4>
+              <H4>
+                {t('common:no_services_found')}
+                </H4>
             </View>
           }
         />

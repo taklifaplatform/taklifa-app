@@ -75,7 +75,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
         onPress={_onServiceRequestPress}
         {...sharedButtonStyle}
       >
-        ارسال الدعوة
+    {t('shipment:send-invitation')}
       </Button>
       <ZixButton
         flex={1}
@@ -86,7 +86,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
         onPress={() => startChat()}
         {...sharedButtonStyle}
       >
-        محادثة
+        {t('shipment:chat')}
       </ZixButton>
       {company?.phone_number && <Button
         flex={1}
@@ -95,7 +95,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
         onPress={onCallPress}
         {...sharedButtonStyle}
       >
-        اتصل
+        {t('shipment:call')}
       </Button>}
     </XStack>
   );

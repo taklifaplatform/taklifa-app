@@ -141,6 +141,15 @@
         "rejected": "مرفوض",
         "in_review": "قيد المراجعة"
       }
+    },
+    "working-hours": {
+      "closed": "مغلق"
+    },
+    "account-switcher": {
+      "title": "تبديل الحساب",
+      "add-account-subtitle": "أضف حسابًا جديدًا",
+      "add-account": "إضافة حساب",
+      "account-switching": "تم تبديل الحساب"
     }
   },
   "about": {
@@ -193,7 +202,7 @@
       "title": "شروط الخدمة"
     },
     "social": {
-      "twitter_title": "Twitter"
+      "twitter_title": "تويتر"
     },
     "theme": {
       "title": "السمة",
@@ -212,7 +221,8 @@
   },
   "auth": {
     "validation": {
-      "password_confirmation_mismatch": "يجب أن يكون هذا الحقل مطابقًا لكلمة المرور"
+      "password_confirmation_mismatch": "يجب أن يكون هذا الحقل مطابقًا لكلمة المرور",
+      "accept_terms": "الموافقة على // الشروط والأحكام الخاصة بسواعد"
     },
     "sign_in": "تسجيل الدخول",
     "sign_up": "إنشاء حساب",
@@ -379,6 +389,8 @@
     "address-information": "معلومات العنوان",
     "address": "العنوان",
     "select-location-on-map": "حدد الموقع على الخريطة",
+    "map": "الخريطة",
+    "list": "القائمة",
     "no-vehicles-found": "لم يتم العثور على مركبات",
     "no-member-yet": "لا يوجد أعضاء بعد",
     "total-cost-of-shipment": "التكلفة الإجمالية للشحن",
@@ -412,9 +424,12 @@
     "decline-contract": "رفض",
     "accept-contract": "قبول",
     "no-rating-found": "لم يتم العثور على تقييم",
+    "rating-submitted-successfully": "تم تقديم التقييم بنجاح",
     "car": "مركبة",
     "no-reviews-yet": "لا توجد تقييمات بعد",
     "notify-customer": "إعلام العميل",
+    "customer": "العميل",
+    "solo-driver":"سائق فردي",
     "service-information": "معلومات الخدمة",
     "update-service": "تحديث الخدمة",
     "create-service": "إنشاء خدمة",
@@ -436,16 +451,18 @@
     "shipment-information": "معلومات الشحنة",
     "advanced-options": "خيارات متقدمة",
     "shipment-type": "نوع الشحنة",
-    "images": "الصور",
     "notes": "ملاحظات",
     "enter-your-notes": "أدخل ملاحظاتك",
     "companies": "شركات",
     "shipment-detail": "تفاصيل الشحنة",
     "package": "طَرد",
     "shipment-proposals": "مقترحات الشحن",
-    "delete": "حذف",
-    "delete-shipment": "هل أنت متأكد أنك تريد حذف هذه الشحنة؟"
-
+    "delete-shipment": "هل أنت متأكد أنك تريد حذف هذه الشحنة؟",
+    "please-enter-phone-number": "يرجى إدخال رقم الهاتف",
+    "no_services_found": "لم يتم العثور على خدمات",
+    "document-update": "تم تحديث المستند",
+    "member":"عضو",
+    "online":"متصل"
   },
   "cookies-banner": {
     "section-1": {
@@ -483,7 +500,7 @@
     "pin_code": "رمز التعريف الشخصي // أدخل رمز التعريف الشخصي الخاص بك",
     "company_logo": "شعار الشركة // قم بتحميل شعار الشركة الخاص بك",
     "company_name": "اسم الشركة // أدخل اسم شركتك",
-    "company_legal_document": "الوثيقة القانونية للشركة // قم بتحميل الوثيقة القانونية للشركة الخاصة بك",
+    "company_legal_documents": "الوثيقة القانونية للشركة // قم بتحميل الوثيقة القانونية للشركة الخاصة بك",
     "company_location": "موقع الشركة // أدخل موقع شركتك",
     "is_whatsapp": "هل يتوفر واتساب // هل يتوفر واتساب",
     "email": "البريد الإلكتروني // أدخل بريدك الإلكتروني",
@@ -622,6 +639,7 @@
     "see-more": "شاهد المزيد ",
     "conducting-interviews": "إجراء المقابلات",
     "invitation-have-been-sent": "تم إرسال الدعوة",
+    "send-invitation": "إرسال دعوة",
     "unanswered-invitations": "دعوات لم يتم الرد عليها",
     "primary": "الأولوية",
     "secondary": "الثانوية",

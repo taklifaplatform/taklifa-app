@@ -32,7 +32,7 @@ export const CompanyDriversTab: React.FC<CompanyDriversTabProps> = ({
 
   return (
     <YStack gap='$2'>
-      <ZixWidgetContainer label='Drivers'>
+      <ZixWidgetContainer label={t('common:drivers')}>
         <FlatList
           data={data?.data || []}
           renderItem={({ item, index }) => (

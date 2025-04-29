@@ -83,7 +83,9 @@
       "service-provider-type": "Service Provider Type",
       "company": "Company",
       "solo-driver": "Solo Driver"
-
+    },
+    "working-hours": {
+      "closed": "Closed"
     },
     "company": {
       "verification_status": {
@@ -92,6 +94,12 @@
         "rejected": "Rejected",
         "in_review": "In Review"
       }
+    },
+    "account-switcher": {
+      "title": "Switch Account",
+      "add-account": "Add Account",
+      "add-account-subtitle": "Add new company or account.",
+      "account-switching": "Account changed successfully"
     }
   },
   "about": {
@@ -278,7 +286,6 @@
     "add-company-logo": "Add Company Logo",
     "view": "View",
     "edit": "Edit",
-    "delete": "Delete",
     "edit-vehicle": "Edit Vehicle",
     "add-vehicle": "Add Vehicle",
     "delete-vehicle": "Delete Vehicle",
@@ -288,7 +295,6 @@
     "fuel-information": "Fuel Information",
     "dimensions": "Dimensions",
     "capacity-weight": "Capacity Weight",
-    "images": "Images",
     "model": "Model",
     "year": "Year",
     "color": "Color",
@@ -331,6 +337,8 @@
     "working-hours": "Working Hours",
     "how-was-your-experience-with": "How was your experience with",
     "enter-your-detail-input-placeholder": "Enter your details...",
+    "map": "Map",
+    "list": "List",
     "no-vehicles-found": "No vehicles found",
     "no-member-yet": "No members yet",
     "total-cost-of-shipment": "Total cost of shipment",
@@ -364,9 +372,12 @@
     "decline-contract": "Decline",
     "accept-contract": "Accept",
     "no-rating-found": "No Rating found",
+    "rating-submitted-successfully": "Rating submitted successfully",
     "car": "Car",
     "no-reviews-yet": "No reviews yet",
     "notify-customer": "Notify Customer",
+    "customer": "Customer",
+    "solo-driver": "Solo Driver",
     "service-information": "Service Information",
     "update-service": "Update Service",
     "create-service": "Create Service",
@@ -395,7 +406,12 @@
     "package": "Package",
     "shipment-proposals": "Shipment Proposals",
     "delete": "Delete",
-    "delete-shipment": "Are you sure you want to delete this shipment"
+    "delete-shipment": "Are you sure you want to delete this shipment",
+    "please-enter-phone-number": "Please enter a valid phone number",
+    "no_services_found": "No services found",
+    "document-update": "Document Update",
+    "member": "Member",
+    "online": "Online"
   },
   "cookies-banner": {
     "section-1": {
@@ -574,6 +590,7 @@
     "see-more": "See more",
     "conducting-interviews": "Conducting interviews",
     "invitation-have-been-sent": "Invitation have been sent",
+    "send-invitation": "Send invitation",
     "unanswered-invitations": "Unanswered invitations",
     "primary": "Primary",
     "secondary": "Secondary",

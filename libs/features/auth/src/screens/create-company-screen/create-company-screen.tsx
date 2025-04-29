@@ -16,7 +16,7 @@ import { AuthHeader } from '../../components/auth-header/auth-header';
 
 const CreateCompanyFormSchema = z
   .object({
-    logo: formFields.image.optional().describe('Logo // Add Company Logo'),
+    logo: formFields.image.optional().describe(t('forms:company_logo')),
     name: formFields.text.min(2).max(150).describe(t('forms:company_name')),
     legal_documents: formFields.files.describe(
       t('forms:company_legal_documents')
