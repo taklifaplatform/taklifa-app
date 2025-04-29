@@ -12,6 +12,7 @@ import { ScreenLayout } from '@zix/ui/layouts';
 import { useRouter } from 'solito/router';
 import { Alert } from 'react-native';
 import { useAuth } from '@zix/services/auth';
+import { t } from 'i18next';
 
 const MEMBERS_LIST_LIMIT = 3;
 
@@ -107,7 +108,7 @@ export function ChannelDetailsScreen() {
               paddingHorizontal: '$4',
               paddingBottom: '$4'
             }}
-            label='Name'
+            label={t('forms:name')}
             labelBold
           >
             <ZixInput

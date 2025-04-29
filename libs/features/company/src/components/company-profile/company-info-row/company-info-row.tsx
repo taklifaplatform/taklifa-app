@@ -1,7 +1,7 @@
 import { CompanyTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
 import React from 'react';
-
+import { t } from 'i18next';
 import { Separator, Text, Theme, ThemeableStackProps, XStack } from 'tamagui';
 
 export type CompanyInfoRowProps = ThemeableStackProps & {
@@ -20,7 +20,7 @@ export const CompanyInfoRow: React.FC<CompanyInfoRowProps> = ({
           <CustomIcon name="car" size='$1' color="$color9" />
         </Theme>
         <Text color='$color12' fontWeight="600" fontSize="$1">
-          {company.vehicles_count} vehicles
+          {company.vehicles_count} {t('common:vehicles')}
         </Text>
       </XStack>
 

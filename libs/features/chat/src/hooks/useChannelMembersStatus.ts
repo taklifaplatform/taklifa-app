@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { getUserActivityStatus } from '../utils/getUserActivityStatus';
-
+import { t } from 'i18next';
 import { useAuth } from '@zix/services/auth';
 import type { Channel } from 'stream-chat';
 
@@ -22,9 +22,9 @@ export const useChannelMembersStatus = (channel: Channel) => {
 
       return (newStatus = getUserActivityStatus(result?.user));
     } else {
-      const memberCountText = `${memberCount} Members`;
+      const memberCountText = `${memberCount}  ${t('common:member')}`;
       const onlineCountText =
-        watchersCount > 0 ? `${watchersCount} Online` : '';
+        watchersCount > 0 ? `${watchersCount} ${t('common:online')}` : '';
 
       newStatus = `${[memberCountText, onlineCountText].join(', ')}`;
 

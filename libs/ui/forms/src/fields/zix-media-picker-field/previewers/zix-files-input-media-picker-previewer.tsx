@@ -1,6 +1,6 @@
 import { Check, Plus, PlusSquare, X, XCircle } from "@tamagui/lucide-icons";
 import { Button, Text, XStack, useStyle } from "tamagui";
-
+import { t } from 'i18next';
 import { IconProps } from "@tamagui/helpers-icon";
 import { MediaTransformer } from "@zix/api";
 import { useMemo } from "react";
@@ -22,7 +22,7 @@ export const ZixFilesInputMediaPickerPreviewer: React.FC<ZixMediaPreviewerProps>
   })
   const inputText = useMemo(() => {
     return previews?.length
-      ? `${previews?.length} Document Updated`
+      ? `${previews?.length} ${t('common:document-update')}`
       : placeholder;
   }, [previews, placeholder]);
 

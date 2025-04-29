@@ -48,7 +48,7 @@ export const AccountSwitcher: React.FC<AccountSwitcherProps> = ({
         requestBody,
       }),
     onSuccess(data) {
-      toast.show('Account changed successfully');
+      toast.show(t('app:account-switcher.account-switching'));
       refetchUser();
       setSheetOpen(false);
       redirectUserToActiveDashboard({
@@ -137,7 +137,11 @@ export const AccountSwitcher: React.FC<AccountSwitcherProps> = ({
             <Text fontWeight="bold" fontSize={15} numberOfLines={1}>
               {user?.name || !!user?.username ? `@${user?.username}` : '...'}
             </Text>
-            {user?.active_role?.name && <Text>{user?.active_role?.name}</Text>}
+            {user?.active_role?.name && (
+              <Text>
+                {t(`common:roles.${user?.active_role?.name}`)}
+              </Text>
+            )}
           </YStack>
           {isWeb && <View width="$2" />}
           <ChevronDown size="$1" />
@@ -148,7 +152,9 @@ export const AccountSwitcher: React.FC<AccountSwitcherProps> = ({
         <Dialog.Content backgroundColor="$color1" padding="$2" width={500}>
           <YGroup flex={1} backgroundColor="$color1" width="100%">
             <XStack alignItems="center" justifyContent="space-between">
-              <H4 paddingHorizontal="$4">Switch Account</H4>
+              <H4 paddingHorizontal="$4">
+                {t('app:account-switcher.title')}
+              </H4>
               <Button
                 padding="$4"
                 icon={X}
@@ -190,8 +196,9 @@ export const AccountSwitcher: React.FC<AccountSwitcherProps> = ({
                 pressStyle={{ opacity: 0.5 }}
                 marginTop="$2"
                 scaleIcon={1.3}
-                title="Add Account"
-                subTitle="Add new company or account"
+                title={t('app:account-switcher.add-account')}
+                subTitle={t('app:account-switcher.add-account-subtitle')}
+
               />
             </YGroup.Item>
           </YGroup>

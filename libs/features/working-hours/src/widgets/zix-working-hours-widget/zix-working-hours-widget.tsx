@@ -49,7 +49,7 @@ export const ZixWorkingHoursWidget: React.FC<ZixWorkingHoursWidgetProps> = ({
     if (!workingHours[day]) {
       return (
         <Text fontSize={'$2'}>
-          Closed
+          {t('app:working-hours.closed')}
         </Text>
       )
     }

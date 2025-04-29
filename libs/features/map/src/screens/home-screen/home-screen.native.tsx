@@ -17,6 +17,7 @@ import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useRouter } from 'solito/router';
 import { Button, H4, View, YStack } from 'tamagui';
 import MapFilters from '../../components/map-filters/map-filters';
+import { t } from 'i18next';
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
 
@@ -337,7 +338,7 @@ export function HomeScreen() {
         size="$3"
         onPress={() => setShowMap(!showMap)}
       >
-        {showMap ? 'القائمة' : 'الخريطة'}
+        {showMap ? t('common:list') : t('common:map')}
       </Button>
     );
 

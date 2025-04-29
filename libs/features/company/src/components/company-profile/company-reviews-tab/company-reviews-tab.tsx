@@ -49,7 +49,7 @@ export const CompanyReviewsTab: React.FC<CompanyReviewsTabProps> = ({
       }
     }),
     onSuccess(data, variables, context) {
-      toast.show('Rating submitted successfully')
+      toast.show(t('common:rating-submitted-successfully'))
       refetch()
     },
   })

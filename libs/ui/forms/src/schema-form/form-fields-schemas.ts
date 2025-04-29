@@ -2,7 +2,7 @@ import { createUniqueFieldSchema } from '@ts-react/form';
 
 import { z, ZodTypeAny } from 'zod';
 import { MoneySchema, ShipmentItemsSchema } from '../form-fields';
-
+import { t } from 'i18next';
 export const mediaSchema = z.object({
   id: z.any().optional().nullable(),
   uuid: z.string().optional().nullable(),
@@ -78,7 +78,7 @@ export const formFields = {
   image: createUniqueFieldSchema(mediaSchema, 'image'),
 
   phone: createUniqueFieldSchema(
-    z.string().regex(/[0-9]{10}/, 'Please enter a valid phone number'),
+    z.string().regex(/[0-9]{10}/,(`${t('common:please-enter-phone-number')}`)),
     'phone',
   ),
   code: createUniqueFieldSchema(z.string(), 'code'),

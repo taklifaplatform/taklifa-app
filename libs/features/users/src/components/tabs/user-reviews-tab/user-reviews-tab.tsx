@@ -52,7 +52,7 @@ export const UserReviewsTab: React.FC<UserReviewsTabProps> = ({
       }
     }),
     onSuccess(data, variables, context) {
-      toast.show('Rating submitted successfully')
+      toast.show(t('common:rating-submitted-successfully'))
       refetch()
     },
     onError(error: any) {

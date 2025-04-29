@@ -82,7 +82,7 @@ export function HomeScreen() {
     ));
 
 
-    // DARK Map Style
+  // DARK Map Style
   const { current } = useThemeSetting();
   const darkMapStyle = [
     {
@@ -284,7 +284,7 @@ export function HomeScreen() {
       size="$4"
       onPress={() => setShowMap(!showMap)}
     >
-      {showMap ? 'القائمة' : 'الخريطة'}
+      {showMap ? t('common:list') : t('common:map')}
     </Button>
 
   );

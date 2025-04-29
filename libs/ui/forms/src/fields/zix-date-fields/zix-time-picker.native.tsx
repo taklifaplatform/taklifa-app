@@ -3,7 +3,7 @@ import { Clock } from '@tamagui/lucide-icons';
 import moment from 'moment';
 import { useState } from 'react';
 import { Button, Sheet, View, YStack } from 'tamagui';
-
+import { t } from 'i18next';
 import ZixInput from '../zix-input/zix-input';
 import { ZixDateFieldProps } from './types';
 
@@ -61,7 +61,7 @@ export const ZixTimePicker: React.FC<ZixDateFieldProps> = ({
               }}
             />
             <Button themeInverse onPress={() => startOpenChange(false)}>
-              Confirm
+               {t('common:confirm')}
             </Button>
           </YStack>
         </Sheet.Frame>
