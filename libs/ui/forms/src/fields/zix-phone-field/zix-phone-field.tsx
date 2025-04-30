@@ -15,6 +15,7 @@ export const ZixPhoneField: React.FC<ZixPhoneFieldProps> = ({
   onValueChange,
   value,
   error,
+  ...props
 }) => {
   const themeName = useThemeName();
 
@@ -57,6 +58,7 @@ export const ZixPhoneField: React.FC<ZixPhoneFieldProps> = ({
                   gap: '$0',
                   scaleIcon: 0.5,
                 }}
+                disabled={props.disabled}
               />
             )
           }
@@ -70,6 +72,7 @@ export const ZixPhoneField: React.FC<ZixPhoneFieldProps> = ({
           placeholder={defaultConfig?.mask}
           keyboardType="name-phone-pad"
           inputMode="numeric"
+          disabled={props.disabled}
         />
       </XStack>
     </Theme>

@@ -15,9 +15,13 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { z } from 'zod';
 import { AuthHeader } from '../../components/auth-header/auth-header';
+import { Platform } from 'react-native';
 
-const VerifyPhoneNumberFormSchema = z.object({
-  pin_code: formFields.code,
+export const VerifyPhoneNumberFormSchema = z.object({
+  pin_code: Platform.select({
+    web: formFields.number,
+    default: formFields.code,
+  }),
 });
 const { useParams } = createParam<{ phone?: string }>();
 
@@ -25,12 +29,16 @@ export type VerifyPhoneNumberFormProps = {
   onSuccess: (data?: any) => void;
   activeStep?: number;
   totalSteps?: number;
+  showAppHeader?: boolean;
+  phoneNumber?: string;
 };
 
 export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
   onSuccess = () => null,
   activeStep = 1,
   totalSteps,
+  showAppHeader = true,
+  phoneNumber: phoneNumberProp,
 }) => {
   const toast = useToastController();
   const form = useForm<z.infer<typeof VerifyPhoneNumberFormSchema>>();
@@ -38,8 +46,11 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
   const { params } = useParams();
 
   const phoneNumber = useMemo(() => {
+    if (phoneNumberProp) {
+      return `${phoneNumberProp}`.replaceAll(' ', '');
+    }
     return `${params?.phone}`.replaceAll(' ', '');
-  }, [params?.phone]);
+  }, [params?.phone, phoneNumberProp]);
 
   const maskedPhoneNumber = useMemo(() => {
     return `${phoneNumber.slice(0, 3)} **** ${phoneNumber.slice(-3)}`;
@@ -72,7 +83,7 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
         toast.show(t('auth:pin_code.code_sent'));
       })
       .catch((error) => {
-        console.log('error', JSON.stringify(error,null,2) , "phone=> ", phoneNumber);
+        console.log('error', JSON.stringify(error, null, 2), "phone=> ", phoneNumber);
         toast.show(error.message, {
           preset: 'error',
         });
@@ -117,7 +128,7 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
         </Text>
         <Theme name="accent">
           <Text fontSize="$4" color={canResed ? "$color10" : "gray"}>
-            {t('auth:pin_code.resend')}
+            {t('auth:pin_code.resend')}: {phoneNumberProp}
           </Text>
         </Theme>
       </XStack>
@@ -151,6 +162,7 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
         {(fields) => (
           <>
             <AuthHeader
+              canGoBack={showAppHeader}
               showIcon={false}
               activeStep={activeStep}
               totalSteps={totalSteps}

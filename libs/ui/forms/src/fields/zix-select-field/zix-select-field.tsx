@@ -93,6 +93,7 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
         onChange?.(String(val))
       }} >
         <Select.Trigger
+          disabled={disabled}
           width={width}
           iconAfter={ChevronDown}
           {...SHARED_FIELDS_STYLE}

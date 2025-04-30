@@ -8,7 +8,7 @@ import { DebugObject, FullScreenSpinner } from '@zix/ui/common';
 import { SchemaForm, SubmitButton, handleFormErrors } from '@zix/ui/forms';
 import { ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
@@ -17,7 +17,7 @@ import { LoginSchema } from '../login/login-screen';
 import { SignUpSchema } from '../register/sign-up-screen';
 import { Platform } from 'react-native';
 import { CustomIcon } from '@zix/ui/icons';
-
+import { VerifyPhoneNumberForm } from '../../forms/verify-phone-number-form/verify-phone-number-form';
 const { useParam } = createParam<{ code: string }>();
 
 export const InvitationScreen: React.FC = () => {
@@ -30,6 +30,7 @@ export const InvitationScreen: React.FC = () => {
   const registerForm = useForm<z.infer<typeof SignUpSchema>>();
   const toast = useToastController();
   const [invitationCode] = useParam('code');
+  const [shouldVerifyPhoneNumber, setShouldVerifyPhoneNumber] = useState(false);
   const router = useRouter();
 
   const { data } = useQuery({
@@ -65,6 +66,7 @@ export const InvitationScreen: React.FC = () => {
       setAuthAccessToken(data?.plainTextToken);
       setAuthUser(data?.user);
       // show phone verification
+      setShouldVerifyPhoneNumber(true);
     },
     onError(error: any) {
       toast.show(error?.body?.message || t('app:errors.something-went-wrong'), {
@@ -95,7 +97,7 @@ export const InvitationScreen: React.FC = () => {
       <Theme name="accent">
         <CustomIcon name="logo" size={100} color="$color1" />
       </Theme>
-      <Text fontSize={30} fontWeight="800">
+      <Text fontSize={30} fontWeight="800" textAlign="center">
         لقد تمت دعوتك للانضمام إلى {data?.data?.company?.name}
       </Text>
     </>
@@ -108,7 +110,11 @@ export const InvitationScreen: React.FC = () => {
       defaultValues={{
         phone_number: data?.data?.existing_user?.phone_number,
       }}
-      props={{}}
+      props={{
+        phone_number: {
+          disabled: true,
+        }
+      }}
       onSubmit={loginAsync}
       renderAfter={({ submit }) => {
         return (
@@ -155,7 +161,11 @@ export const InvitationScreen: React.FC = () => {
         username: data?.data?.name?.toLowerCase()?.replace(/\s+/g, '_'),
         phone_number: data?.data?.existing_user?.phone_number,
       }}
-      props={{}}
+      props={{
+        phone_number: {
+          disabled: true,
+        }
+      }}
       renderAfter={({ submit }) => {
         return (
           <Stack gap="$4">
@@ -192,6 +202,16 @@ export const InvitationScreen: React.FC = () => {
     </SchemaForm>
   )
 
+
+  const renderVerifyPhoneNumberForm = () => (data?.data?.id && shouldVerifyPhoneNumber) && (
+    <VerifyPhoneNumberForm
+      showAppHeader={false}
+      phoneNumber={data?.data?.phone_number}
+      onSuccess={() => {
+        setShouldVerifyPhoneNumber(false)
+      }}
+    />
+  )
 
   const renderAcceptInvitation = () => (
     <YStack flex={1} gap="$6" padding="$6">
@@ -265,7 +285,8 @@ export const InvitationScreen: React.FC = () => {
       {!user?.id && renderLoginForm()}
       {!user?.id && renderRegisterForm()}
       {!data?.data?.id && <FullScreenSpinner />}
-      {(data?.data?.id && !!user?.id) && renderAcceptInvitation()}
+      {renderVerifyPhoneNumberForm()}
+      {(data?.data?.id && !!user?.id && !shouldVerifyPhoneNumber) && renderAcceptInvitation()}
     </ScreenLayout>
   );
 };
