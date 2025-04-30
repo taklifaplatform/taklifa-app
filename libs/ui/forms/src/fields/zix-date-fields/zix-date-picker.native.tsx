@@ -6,11 +6,12 @@ import { Button, Sheet, View, YStack } from 'tamagui';
 import { t } from 'i18next';
 import ZixInput from '../zix-input/zix-input';
 import { ZixDateFieldProps } from './types';
-
+import { useThemeName } from '@tamagui/core';
 export const ZixDatePicker: React.FC<ZixDateFieldProps> = ({
   onChange,
   value,
 }) => {
+  const themeName = useThemeName();
   const [startOpen, startOpenChange] = useState(false)
   const size = '$5'
   return (
@@ -46,7 +47,7 @@ export const ZixDatePicker: React.FC<ZixDateFieldProps> = ({
           <YStack padding='$4' gap='$6'>
 
             <DateTimePicker
-              themeVariant='light'
+              themeVariant={themeName === 'light' ? 'light' : 'dark'}
               textColor='red'
               value={moment(value ?? undefined).toDate()}
               mode={'date'}
