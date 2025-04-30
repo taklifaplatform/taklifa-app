@@ -1,9 +1,8 @@
-import { randomUUID } from 'expo-crypto';
 import { Camera as CameraIcon, Image as LucideImage, Paperclip } from '@tamagui/lucide-icons';
 import { MediaService, MediaTransformer } from '@zix/api';
 import { ActionSheet, ActionSheetRef } from '@zix/ui/common';
+import { randomUUID } from 'expo-crypto';
 import { getDocumentAsync } from 'expo-document-picker';
-import * as ImageManipulator from 'expo-image-manipulator';
 
 import {
   MediaTypeOptions,
@@ -12,13 +11,13 @@ import {
 } from 'expo-image-picker';
 import { t } from 'i18next';
 import { useEffect, useRef, useState } from 'react';
-import { Alert, Linking, Platform, Image as RNImage } from 'react-native';
-import Image from 'next/image'; // Import Next.js Image for web
+import { Alert, Linking, Platform } from 'react-native';
+import { Dialog, Progress, Text, XStack } from 'tamagui';
 import { UploadableMediaFile, uploadMediaFile } from '../../utils';
+import { compressImage } from './compressImage';
 import { useCamera } from './hooks/useCamera';
 import { ZixFilesInputMediaPickerPreviewer, ZixImageMediaPickerPreviewer, ZixRowMediaPickerPreviewer } from './previewers';
 import { ZixMediaPickerTransformer } from './types';
-import { Dialog, Progress, XStack, Text } from 'tamagui';
 
 // Previewers specifications
 export const MediaPreviewers = {
@@ -133,11 +132,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     console.log('===============')
     setIsUploading(true);
     const finalResults = await Promise.all(Object.values(_medias).map(async (_media) => {
-      const resizedPhoto = await ImageManipulator.manipulateAsync(
-        _media.uri,
-        [{ resize: { width: 1024 } }], // resize to width of 300 and preserve aspect ratio
-        { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG },
-      );
+      const resizedPhoto = await compressImage(_media);
       console.log('resizedPhoto::', resizedPhoto)
       const media = {
         ..._media,
