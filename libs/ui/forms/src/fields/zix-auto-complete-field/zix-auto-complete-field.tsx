@@ -44,9 +44,9 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
           method: 'GET',
           url: `/api/${api}`,
           query: {
-            search: search || props.value,
+            search,
             page: 1,
-            per_page: perPage,
+            per_page: perPage * 10,
             ...query
           },
         });
