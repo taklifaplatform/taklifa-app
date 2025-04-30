@@ -22,7 +22,7 @@ import { ScreenLayout } from '@zix/ui/layouts';
 
 const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
 
-const SignUpSchema = z
+export const SignUpSchema = z
   .object({
     username: formFields.text.min(3).describe(t('forms:username')),
     phone_number: formFields.phone.describe(t('forms:phone_number')),

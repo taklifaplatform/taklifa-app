@@ -4,9 +4,5 @@
 /* eslint-disable */
 export type AcceptInviteRequest = {
     invitation_code?: string;
-    username?: string;
-    name?: string;
-    password?: string;
-    password_confirmation?: string;
 };
 

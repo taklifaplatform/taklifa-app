@@ -11,6 +11,7 @@ import type { VehicleModelTransformer } from './VehicleModelTransformer';
 export type VehicleTransformer = {
     id?: string;
     internal_id?: string;
+    model_id?: string;
     color?: string;
     plate_number?: string;
     vin_number?: string;

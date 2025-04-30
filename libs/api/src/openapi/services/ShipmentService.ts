@@ -220,4 +220,17 @@ export class ShipmentService {
             },
         });
     }
+    /**
+     * Retrieve a shipment by code.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static retrieveShipmentByCode(): CancelablePromise<{
+        data?: ShipmentTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/shipments-code/{code}',
+        });
+    }
 }

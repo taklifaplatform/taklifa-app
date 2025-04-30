@@ -18,7 +18,7 @@ const useIsSubmitting = () => {
 export const SubmitButton: React.FC<ButtonProps> = (
   props
 ) => {
-  const isSubmitting = useIsSubmitting();
+  const isSubmitting = useIsSubmitting() || props.loading;
 
   return (
     <Button

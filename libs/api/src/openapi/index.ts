@@ -178,6 +178,7 @@ export { ChatService } from './services/ChatService';
 export { CompaniesService } from './services/CompaniesService';
 export { CompanyAdminService } from './services/CompanyAdminService';
 export { CompanyInvitationsService } from './services/CompanyInvitationsService';
+export { CompanyMemberInvitationService } from './services/CompanyMemberInvitationService';
 export { CompanyMembersService } from './services/CompanyMembersService';
 export { CompanyVehiclesService } from './services/CompanyVehiclesService';
 export { DriversService } from './services/DriversService';
