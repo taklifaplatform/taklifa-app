@@ -48,6 +48,10 @@ const ZixApp: React.FC<SolitoAppProps> = ({ Component, pageProps }) => {
         <meta name="description" content="Sawaeed Logistic" />
         <link rel="icon" href="/favicon.svg" />
         <meta name="apple-itunes-app" content="app-id=6720725925, app-clip-bundle-id=app.sawaeed" id="appMetaTag"></meta>
+        <meta property="al:ios:url" content="sawaeed://" />
+        <meta property="al:ios:app_store_id" content="6720725925" />
+        <meta property="al:ios:app_name" content="Sawaeed" />
+        <link rel="alternate" href="ios-app://6720725925" />
       </Head>
       <MultiLangAppProvider defaultLang={defaultLang}>
         <NextThemeProvider
