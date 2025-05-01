@@ -8,7 +8,7 @@ const association = {
     details: [
       {
         appID: `${BUNDLE_ID}`,
-        paths: ['*', "/"],
+        paths: ['*'],
       },
     ],
   },
