@@ -133,7 +133,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     setIsUploading(true);
     const finalResults = await Promise.all(Object.values(_medias).map(async (_media) => {
       const resizedPhoto = await compressImage(_media);
-      console.log('resizedPhoto::', resizedPhoto)
+      // console.log('resizedPhoto::', resizedPhoto)
       const media = {
         ..._media,
         ...resizedPhoto
@@ -144,13 +144,13 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
           console.log('===============')
           console.log('uploadMediaFil>progress::', progress)
           console.log('===============')
-          setPreviews((prev) => ({
-            ...prev,
-            [media.uuid]: {
-              ...media,
-              uploadProgress: progress,
-            },
-          }));
+          // setPreviews((prev) => ({
+          //   ...prev,
+          //   [media.uuid]: {
+          //     ...media,
+          //     uploadProgress: progress,
+          //   },
+          // }));
         }).then((result) => {
           console.log('===============')
           console.log('uploadMediaFil>result::', result)

@@ -4,6 +4,7 @@ import { MediaTypeOptions } from 'expo-image-picker';
 import { Platform } from 'react-native';
 //import * as ImageManipulator from 'expo-image-manipulator';
 import dynamic from 'next/dynamic';
+// import * as Sentry from 'sentry-expo'
 
 
 // TODO:: Test for Mobile
@@ -75,6 +76,7 @@ export const uploadMediaFile = async (
       console.log('=========');
       console.log('MEDIA UPLOAD ERROR::', error);
       console.log('=========');
+      // Sentry.(error);
       reject({
         status: this.status,
         statusText: xhr.statusText,
@@ -109,10 +111,11 @@ export const uploadMediaFile = async (
           // uri: ['ios', 'android'].includes(Platform.OS)
           //   ? file.uri.replace('file://', '')
           //   : file.uri,
-          uri:
-            Platform.OS === 'ios' ? file.uri.replace('file://', '') : file.uri,
+          uri: Platform.OS === "ios" ? file.uri.replace("file://", "") : file.uri,
+          // uri:
+          //   Platform.OS === 'ios' ? file.uri.replace('file://', '') : file.uri,
           name: file.file_name,
-          type: file.file_type,
+          type: 'image/jpeg',
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any);
       }
@@ -120,6 +123,7 @@ export const uploadMediaFile = async (
       console.log('=========');
       console.log('MEDIA UPLOAD BUILDING FORM OBJECT ERROR::', error);
       console.log('=========');
+      alert(error?.message);
       reject(error);
     }
 

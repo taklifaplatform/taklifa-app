@@ -203,7 +203,8 @@
     "use-debounce": "*",
     "querystring": "*",
     "@expo/vector-icons": "*",
-    "react-native-maps-directions": "*"
+    "react-native-maps-directions": "*",
+    "moment-timezone": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",

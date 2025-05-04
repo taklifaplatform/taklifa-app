@@ -8,6 +8,7 @@ export default function Screen() {
   const router = useRouter();
   function redirectUser() {
     router.replace('/app');
+    // router.replace('/auth/verify-kyc');
   }
   useFocusEffect(
     useCallback(() => {
