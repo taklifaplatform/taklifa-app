@@ -137,6 +137,7 @@ export const ZixFilter: React.FC<ZixFiltersProps> = ({
       open={isOpen}
       onOpenChange={setIsOpen}
       contentPadding='$4'
+      disableRemoveScroll
       trigger={(
         <XStack
           theme='accent'
