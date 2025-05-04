@@ -28,19 +28,19 @@ export function getLastActivityStatus(
   console.log('Is lastActivityDate before oneDayAgo?', lastActivityDate.isBefore(oneDayAgo));
   console.log('Is lastActivityDate before twoHoursAgo?', lastActivityDate.isBefore(twoHoursAgo));
 */
-  if (lastActivityDate.isBefore(oneDayAgo)) {
-    return {
-      color: '#afafaf',
-      text: t('app:common.offline'),
-    };
-  }
+  // if (lastActivityDate.isBefore(oneDayAgo)) {
+  //   return {
+  //     color: '#afafaf',
+  //     text: t('app:common.offline'),
+  //   };
+  // }
 
-  if (lastActivityDate.isBefore(twoHoursAgo)) {
-    return {
-      color: '#feca16',
-      text: `${t('app:common.last-seen')} ${lastActivityDate.fromNow()}`,
-    };
-  }
+  // if (lastActivityDate.isBefore(twoHoursAgo)) {
+  //   return {
+  //     color: '#feca16',
+  //     text: `${t('app:common.last-seen')} ${lastActivityDate.fromNow()}`,
+  //   };
+  // }
 
   return {
     color: '#34c759',

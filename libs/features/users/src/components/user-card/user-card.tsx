@@ -55,7 +55,7 @@ export const UserCard: React.FC<UserCardProps> = React.memo(({
           <UserAvatar user={user} size="$5" />
           <YStack alignItems="flex-start">
             <Text color='$color12' fontWeight="bold">
-              {user?.name}
+              {user?.name ?? user?.username ?? user?.phone}
             </Text>
             {activeCompany && (
               <Text color='$color11'>
