@@ -25,7 +25,7 @@ const ChangePasswordSchema = z
       ctx.addIssue({
         path: ['password_confirmation'],
         code: 'custom',
-        message: 'The passwords did not match',
+        message:( t('forms:password_did_not_match')),
       });
     }
   });
@@ -48,7 +48,10 @@ export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
         requestBody,
       }),
     onSuccess({ data }) {
-      toast.show('Successfully updated!');
+      toast.show(t('forms:password_changed_successfully'), {
+        type: 'success',
+        duration: 3000,
+      });
       data && onSuccess?.(data);
     },
     onError(error: any) {

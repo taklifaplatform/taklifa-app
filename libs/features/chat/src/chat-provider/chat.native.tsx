@@ -8,11 +8,11 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({
   children,
   ...props
 }) => {
-  const { client } = useChat()
+  const { client ,i18nInstance} = useChat()
 
   return (
     <OverlayProvider>
-      <Chat client={client}>
+      <Chat client={client} i18nInstance={i18nInstance} >
         {children}
         {/* <AppOverlayProvider>
           <UserSearchProvider>{children}</UserSearchProvider>

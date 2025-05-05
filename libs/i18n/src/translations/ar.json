@@ -53,6 +53,7 @@
     "forms": {
       "labels": {
         "address": "العنوان",
+        "noAddress": "لا يوجد عنوان",
         "building-name": "اسم المبنى",
         "floor-number": "رقم الطابق",
         "house-number": "رقم المنزل",
@@ -132,15 +133,20 @@
       "all": "الكل",
       "service-provider-type": "نوع مقدم الخدمة",
       "company": "شركة",
-      "solo-driver": "سائق فردي"
+      "solo-driver": "سائق فردي",
+      "emptyMessage": "رسالة فارغة",
+      "sendMessage": "إرسال رسالة",
+      "you": "أنت"
     },
     "company": {
       "verification_status": {
         "pending": "قيد الانتظار",
         "verified": "تم التحقق",
         "rejected": "مرفوض",
-        "in_review": "قيد المراجعة"
+        "in_review": "قيد المراجعة",
+        "verify-kyc": "التحقق من الهوية"
       }
+
     },
     "working-hours": {
       "closed": "مغلق"
@@ -264,7 +270,7 @@
       "description": "أدخل كلمة المرور الجديدة وقم بتأكيدها لإعادة تعيين كلمة المرور"
     },
     "kyc": {
-      "title": "التحقق من KYC"
+      "title":"(KYC)التحقق من الهوية"
     }
   },
   "comercial": {
@@ -326,6 +332,10 @@
       "company_manager": "مدير الشركة",
       "company_driver": "سائق الشركة",
       "solo_driver": "سائق فردي"
+    },
+    "user": {
+      "admin": "مدير",
+      "user": "مستخدم"
     },
     "user_types": {
       "individual": "فرد",
@@ -436,7 +446,7 @@
     "no-reviews-yet": "لا توجد تقييمات بعد",
     "notify-customer": "إعلام العميل",
     "customer": "العميل",
-    "solo-driver":"سائق فردي",
+    "solo-driver": "سائق فردي",
     "service-information": "معلومات الخدمة",
     "update-service": "تحديث الخدمة",
     "create-service": "إنشاء خدمة",
@@ -468,8 +478,8 @@
     "please-enter-phone-number": "يرجى إدخال رقم الهاتف",
     "no_services_found": "لم يتم العثور على خدمات",
     "document-update": "تم تحديث المستند",
-    "member":"عضو",
-    "online":"متصل"
+    "member": "عضو",
+    "online": "متصل"
   },
   "cookies-banner": {
     "section-1": {
@@ -492,7 +502,16 @@
   },
   "forms": {
     "name": "الاسم // أدخل اسمك الكامل",
-    "names": "الأسماء // أدخل الأسماء",
+    "names": "الاسم  ",
+    "mute-group": "كتم المجموعة",
+    "disable-notification-group": "تعطيل إشعارات المجموعة",
+    "photos-and-videos": "الصور ومقاطع الفيديو",
+    "view-all-shared-photos-videos-group": "عرض جميع الصور ومقاطع الفيديو المشتركة في المجموعة",
+    "leave-group": "مغادرة المجموعة",
+    "leave-chat-group": "مغادرة مجموعة الدردشة",
+    "are-you-sure-leave-group": "هل أنت متأكد أنك تريد مغادرة المجموعة؟",
+    "leave": "مغادرة",
+    "cancel": "إلغاء",
     "username": "اسم المستخدم // أدخل اسم المستخدم الخاص بك",
     "phone_number": "رقم الهاتف // أدخل رقم هاتفك",
     "about": "عن // أدخل معلومات عنك",
@@ -500,6 +519,8 @@
     "password_confirmation": "تأكيد كلمة المرور // أدخل كلمة المرور مرة أخرى",
     "new_password": "كلمة المرور الجديدة // أدخل كلمة المرور الجديدة الخاصة بك",
     "new_password_confirmation": "تأكيد كلمة المرور الجديدة // أدخل كلمة المرور الجديدة مرة أخرى",
+    "password_did_not_match": "كلمة المرور غير متطابقة",
+    "password_changed_successfully": "تم تغيير كلمة المرور بنجاح",
     "accept_terms": "الموافقة على // الشروط والأحكام الخاصة بسواعد",
     "license_number": "رقم الرخصة // أدخل رقم الرخصة الخاصة بك",
     "vehicle_driving_license": "وثيقة رخصة قيادة المركبة // أرفق الملفات...",

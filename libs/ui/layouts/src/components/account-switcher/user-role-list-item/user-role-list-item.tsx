@@ -73,7 +73,7 @@ export const UserRoleListItem: React.FC<UserRoleListItemProps> = ({
         router.push(`/auth/verify-kyc`)
       }}
     >
-      Verify KYC
+      {t('app:company.verification_status.verify-kyc')}
     </Button>
   ) : null
 
