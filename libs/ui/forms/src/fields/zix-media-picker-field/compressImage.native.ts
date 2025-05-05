@@ -1,5 +1,5 @@
 import * as ImageManipulator from 'expo-image-manipulator';
-
+import * as Sentry from "@sentry/react-native";
 export async function compressImage(media: any) {
     try {
         const resizedPhoto = await ImageManipulator.manipulateAsync(
@@ -10,6 +10,7 @@ export async function compressImage(media: any) {
     
         return resizedPhoto;
     } catch (error) {
+        Sentry.captureException(error);
         console.log('===============')
         console.log('compressImage ERROR::', error)
         console.log('===============')

@@ -204,7 +204,8 @@
     "querystring": "*",
     "@expo/vector-icons": "*",
     "react-native-maps-directions": "*",
-    "moment-timezone": "*"
+    "moment-timezone": "*",
+    "@sentry/react-native": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",

@@ -4,6 +4,7 @@ import { ActionSheet, ActionSheetRef } from '@zix/ui/common';
 import { randomUUID } from 'expo-crypto';
 import { getDocumentAsync } from 'expo-document-picker';
 
+import * as Sentry from "@sentry/react-native";
 import {
   MediaTypeOptions,
   launchCameraAsync,
@@ -161,6 +162,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
             uploadProgress: 1,
           });
         }).catch((error) => {
+          Sentry.captureException(error);
           failedMedias[media.uuid] = error?.errors?.file || [];
         });
       });
@@ -285,6 +287,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
         onFilesSelected(files);
       }
     } catch (error: any) {
+      Sentry.captureException(error);
       Alert.alert('Oops!!', error?.message || 'Failed to take photo', [
         { text: 'OK', style: 'cancel' },
       ]);

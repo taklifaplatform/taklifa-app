@@ -46,7 +46,7 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
           query: {
             search,
             page: 1,
-            per_page: perPage * 10,
+            per_page: perPage * 4,
             ...query
           },
         });
