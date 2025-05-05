@@ -14,6 +14,7 @@ import {
 } from 'tamagui';
 import { FormFieldContainer } from '../../common';
 import { CodeInputFieldProps } from './code-input-field';
+import { useMultiLang } from '@zix/i18n';
 
 const CELL_COUNT = 6;
 const CELL_WIDTH = 40;
@@ -26,6 +27,7 @@ export const CodeInputField: React.FC<CodeInputFieldProps> = ({
   const { field, error } = useTsController<string>();
   const theme = useTheme();
 
+  const { isRtl } = useMultiLang();
   const textStyle = useStyle({
     color: '$color11'
   })
@@ -50,6 +52,7 @@ export const CodeInputField: React.FC<CodeInputFieldProps> = ({
 
   const rootStyle = useStyle({
     width: CELL_COUNT * (CELL_WIDTH + CELL_WIDTH * 0.4),
+    flexDirection: isRtl ? 'row-reverse' : 'row',
   });
   const focusStyle = useStyle({
     borderColor: '$borderColorFocus',
