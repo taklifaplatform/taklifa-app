@@ -1,7 +1,7 @@
 
 import React from 'react';
 import MapView from 'react-native-maps';
-
+import { t } from 'i18next';
 import { LocationTransformer } from '@zix/api';
 import { ZixMapMarker } from '@zix/ui/common';
 import { Text, YStack } from 'tamagui';
@@ -29,7 +29,7 @@ export const ZixLocationInfoWidget: React.FC<ZixLocationInfoWidgetWrapperProps> 
         (location) => (
           <YStack gap='$4'>
             <Text>
-              {location?.address ?? 'No address'}
+              {location?.address ?? t('app:forms.labels.noAddress')}
             </Text>
             {renderMap(location)}
           </YStack>

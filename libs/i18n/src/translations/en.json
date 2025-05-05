@@ -3,6 +3,7 @@
     "forms": {
       "labels": {
         "address": "Address",
+        "noAddress": "No Address",
         "building-name": "Building Name",
         "floor-number": "Floor Number",
         "house-number": "House Number",
@@ -82,7 +83,11 @@
       "all": "All",
       "service-provider-type": "Service Provider Type",
       "company": "Company",
-      "solo-driver": "Solo Driver"
+      "solo-driver": "Solo Driver",
+      "emptyMessage": "Empty message",
+      "sendMessage": "Send Message",
+      "you": "You"
+    }
     },
     "working-hours": {
       "closed": "Closed"
@@ -92,7 +97,8 @@
         "pending": "Pending",
         "verified": "Verified",
         "rejected": "Rejected",
-        "in_review": "In Review"
+        "in_review": "In Review",
+        "verify-kyc": "Verify KYC"
       }
     },
     "account-switcher": {
@@ -101,7 +107,7 @@
       "add-account-subtitle": "Add new company or account.",
       "account-switching": "Account changed successfully"
     }
-  },
+  ,
   "about": {
     "section-1": {
       "title-1": "Welcome to Sawaeed Logistics",
@@ -259,6 +265,10 @@
       "company_manager": "Company Manager",
       "company_driver": "Company Driver",
       "solo_driver": "Solo Driver"
+    },
+    "user": {
+      "admin": "Admin",
+      "user": "User"
     },
     "user_types": {
       "individual": "Individual",
@@ -441,6 +451,16 @@
   },
   "forms": {
     "name": "Name // Enter your full name",
+    "names": "Name",
+    "mute-group": "Mute Group",
+    "disable-notification-group": "Disable Group Notifications",
+    "photos-and-videos": "Photos and Videos",
+    "view-all-shared-photos-videos-group": "View All Shared Photos and Videos in the Group",
+    "leave-group": "Leave Group",
+    "leave-chat-group": "Leave Chat Group",
+    "are-you-sure-leave-group": "Are you sure you want to leave the group?",
+    "leave": "Leave",
+    "cancel":"Cancel",
     "username": "Username // Enter your username",
     "phone_number": "Phone Number // Enter your phone number",
     "about": "About // Tell us a bit about yourself",
@@ -448,6 +468,8 @@
     "password_confirmation": "Password Confirmation // Enter your password again",
     "new_password": "New Password // Enter your new password",
     "new_password_confirmation": "New Password Confirmation // Enter your new password again",
+    "password_did_not_match": "Password did not match",
+    "password_changed_successfully": "Password changed successfully",
     "accept_terms": "Accept Terms // Accept terms and conditions",
     "license_number": "License Number // Enter your license number",
     "vehicle_driving_license": "Vehicle Driving License // Enter your vehicle driving license",
@@ -709,6 +731,5 @@
     "complain-text": "If there are any problems you encounter, please do not hesitate to contact us",
     "saudi_arabia": "Saudi Arabia",
     "sawaed_logistics": "Sawaed Logistics"
-    
   }
 }

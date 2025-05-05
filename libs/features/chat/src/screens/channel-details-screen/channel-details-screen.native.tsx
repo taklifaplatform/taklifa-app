@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 import { Check, ImagePlus, MessageCircle, MessageCircleOff, UserX } from '@tamagui/lucide-icons';
 import { UserAvatar } from '@zix/ui/common';
 import { useChannelContext, useChatContext } from 'stream-chat-expo';
-import { Avatar, Button, ListItem, ScrollView, View, YGroup } from 'tamagui';
+import { Avatar, Button, ListItem, ScrollView, View, YGroup,Text } from 'tamagui';
 import ChannelHeader from '../../components/channel-header/channel-header';
 import { CustomIcon } from '@zix/ui/icons';
 import { ZixFieldContainer, ZixInput } from '@zix/ui/forms';
@@ -74,7 +74,12 @@ export function ChannelDetailsScreen() {
                   borderBottomWidth={"$1"}
                   key={`${member.user?.id}-${index}`}
                   title={member.user?.name}
-                  subTitle={member.user?.online || member.role}
+                  // subTitle={member.user?.online || member.role }
+                  subTitle={member.user?.online || member.role &&(
+                    <Text>
+                      {t(`common:user.${member.role}`)}
+                    </Text>
+                  )}
                   icon={(
                     <UserAvatar size='$3' user={member.user} />
                   )}
@@ -108,7 +113,7 @@ export function ChannelDetailsScreen() {
               paddingHorizontal: '$4',
               paddingBottom: '$4'
             }}
-            label={t('forms:name')}
+            label={t('forms:names')}
             labelBold
           >
             <ZixInput
@@ -132,8 +137,8 @@ export function ChannelDetailsScreen() {
           />
           <YGroup.Item>
             <ListItem
-              title='Mute Group'
-              subTitle='Disable Notification for this group'
+              title={t('forms:mute-group')}
+              subTitle={t('forms:disable-notification-group')}
               onPress={async () => {
                 if (muted) {
                   await channel.unmute();
@@ -166,8 +171,8 @@ export function ChannelDetailsScreen() {
             />
 
             <ListItem
-              title='Photos and Videos'
-              subTitle='View all shared photos and videos in this group'
+              title={t('forms:photos-and-videos')}
+              subTitle={t('forms:view-all-shared-photos-videos-group')}
               onPress={async () => {
                 router.push(`${getUrlPrefix}/chat/channels/${channel.id}/images`);
               }}
@@ -191,20 +196,20 @@ export function ChannelDetailsScreen() {
             />
 
             <ListItem
-              title='Leave Group'
-              subTitle='Leave Chat Group'
+              title={t('forms:leave-group')}
+              subTitle={t('forms:leave-chat-group')}
               onPress={async () => {
                 Alert.alert(
-                  'Leave Group',
-                  `Are you sure you want to leave the group ${groupName || ''}?`,
+                  t('forms:leave-group'),
+                  `${t('forms:are-you-sure-leave-group')} ${groupName || ''}`,
                   [
                     {
-                      text: 'Leave',
+                      text: t('forms:leave'),
                       onPress: () => leaveGroup(),
                       style: 'cancel',
                     },
                     {
-                      text: 'Cancel',
+                      text: t('forms:cancel'),
                       style: 'destructive',
                     },
                   ]
