@@ -469,6 +469,11 @@
     "new_password": "New Password // Enter your new password",
     "new_password_confirmation": "New Password Confirmation // Enter your new password again",
     "password_did_not_match": "Password did not match",
+
+    "password_field_required": "Password field is required",
+    "password_confirmation_field_required": "Password confirmation field is required",
+    "password_field_min_length": "Password must be at least 8 characters long",
+
     "password_changed_successfully": "Password changed successfully",
     "accept_terms": "Accept Terms // Accept terms and conditions",
     "license_number": "License Number // Enter your license number",

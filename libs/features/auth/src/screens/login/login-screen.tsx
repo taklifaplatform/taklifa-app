@@ -24,6 +24,17 @@ const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
 export const LoginSchema = z.object({
   phone_number: formFields.phone.describe(t('forms:phone_number').toString()),
   password: formFields.secure_text.describe(t('forms:password')),
+})
+.superRefine(({ password  }, ctx) => {
+  if (password.length < 1) {
+    ctx.addIssue({
+      path: ['password'],
+      code: 'custom',
+      message:( t('forms:password_field_required')),
+    });
+  }
+
+
 });
 
 export const LoginScreen: React.FC = () => {

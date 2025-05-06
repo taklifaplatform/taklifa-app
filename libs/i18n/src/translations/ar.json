@@ -519,7 +519,13 @@
     "password_confirmation": "تأكيد كلمة المرور // أدخل كلمة المرور مرة أخرى",
     "new_password": "كلمة المرور الجديدة // أدخل كلمة المرور الجديدة الخاصة بك",
     "new_password_confirmation": "تأكيد كلمة المرور الجديدة // أدخل كلمة المرور الجديدة مرة أخرى",
+
     "password_did_not_match": "كلمة المرور غير متطابقة",
+
+    "password_field_required": "حقل كلمة المرور مطلوب",
+    "password_confirmation_field_required": "حقل تأكيد كلمة المرور مطلوب",
+    "password_field_min_length": " كلمة المرور  8 أحرف على الأقل",
+
     "password_changed_successfully": "تم تغيير كلمة المرور بنجاح",
     "accept_terms": "الموافقة على // الشروط والأحكام الخاصة بسواعد",
     "license_number": "رقم الرخصة // أدخل رقم الرخصة الخاصة بك",
