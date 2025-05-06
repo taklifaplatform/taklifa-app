@@ -58,6 +58,7 @@ export const ShipmentItem: React.FC<ShipmentItemProps> = ({
         >
           <YStack gap='$3'>
             <BoxDimension item={value} />
+            
 
             <XStack alignItems='flex-start' gap='$3'>
               <ZixFieldContainer label={t('common:length-ship')} isOptional error={error.dim_length}>

@@ -105,7 +105,9 @@
     "shipment-manager": {
       "sender": {
         "title": "تفاصيل الشحنة",
-        "description": "يرجى تحديد عنوانك والتاريخ والوقت الذي تتواجد فيه"
+        "description": "يرجى تحديد عنوانك والتاريخ والوقت الذي تتواجد فيه",
+        "please-select-whatyou-are-shipping": "يرجى تحديد ما تقوم بشحنه",
+        "please-specify-the-price-that-suits-you": "يرجى تحديد السعر الذي يناسبك"
       },
       "recipient": {
         "title": "معلومات المستلم",
@@ -146,7 +148,6 @@
         "in_review": "قيد المراجعة",
         "verify-kyc": "التحقق من الهوية"
       }
-
     },
     "working-hours": {
       "closed": "مغلق"
@@ -270,7 +271,7 @@
       "description": "أدخل كلمة المرور الجديدة وقم بتأكيدها لإعادة تعيين كلمة المرور"
     },
     "kyc": {
-      "title":"(KYC)التحقق من الهوية"
+      "title": "(KYC)التحقق من الهوية"
     }
   },
   "comercial": {
@@ -301,6 +302,9 @@
     "width-ship": "العرض (سم)",
     "length-ship": "الطول (سم)",
     "approx": "الوزن اتقريبي (كغ)",
+    "approx-ship": "الوزن (كغ)",
+    "box-dimensions-and-weigth-are-normal": "الأبعاد الصندوق ووزنها لاعتيادية",
+    "box-dimensions-and-weigth": "الأبعاد الصندوق ووزنها",
     "content": "محتوى الشحنة",
     "add-box": "اضافة طرد",
     "remove-box": "إزالة طرد",
@@ -519,13 +523,10 @@
     "password_confirmation": "تأكيد كلمة المرور // أدخل كلمة المرور مرة أخرى",
     "new_password": "كلمة المرور الجديدة // أدخل كلمة المرور الجديدة الخاصة بك",
     "new_password_confirmation": "تأكيد كلمة المرور الجديدة // أدخل كلمة المرور الجديدة مرة أخرى",
-
     "password_did_not_match": "كلمة المرور غير متطابقة",
-
     "password_field_required": "حقل كلمة المرور مطلوب",
     "password_confirmation_field_required": "حقل تأكيد كلمة المرور مطلوب",
     "password_field_min_length": " كلمة المرور  8 أحرف على الأقل",
-
     "password_changed_successfully": "تم تغيير كلمة المرور بنجاح",
     "accept_terms": "الموافقة على // الشروط والأحكام الخاصة بسواعد",
     "license_number": "رقم الرخصة // أدخل رقم الرخصة الخاصة بك",

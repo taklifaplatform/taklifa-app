@@ -23,9 +23,9 @@ const { useParam } = createParam<{
 }>();
 
 const CreateShipmentSchema = z.object({
-  from_location_id: formFields.advanced_location.describe(
-    `${t('app:forms.labels.shipping-from')} // ${t('app:forms.placeholders.shipping-from')}`
-  ),
+  // from_location_id: formFields.advanced_location.describe(
+  //   `${t('app:forms.labels.shipping-from')} // ${t('app:forms.placeholders.shipping-from')}`
+  // ),
   pick_date: formFields.row_date_picker.describe(
     `${t('app:forms.labels.date')} // ${t('app:forms.placeholders.date')}`
   ),
@@ -119,7 +119,7 @@ export function ManageShipmentSenderScreen() {
           form={form}
           schema={CreateShipmentSchema}
           props={{
-            from_location: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
+            // from_location: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
             pick_date: {
               ...SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
               min_date: moment().add(1, 'day').toDate()

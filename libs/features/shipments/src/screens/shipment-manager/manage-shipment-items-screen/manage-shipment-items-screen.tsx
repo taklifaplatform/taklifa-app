@@ -168,7 +168,7 @@ export const ManageShipmentItemsScreen: React.FC = () => {
       <ShipmentManagerHeader
         activeStep={2}
         shipment={data?.data}
-        title='يرجى تحديد ما تقوم بشحنه'
+        title={t('app:shipment-manager.sender.please-select-whatyou-are-shipping')}
       />
       {renderFullForm()}
       {renderLoading()}
