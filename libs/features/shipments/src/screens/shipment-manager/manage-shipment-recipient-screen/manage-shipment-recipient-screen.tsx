@@ -26,6 +26,8 @@ const SendFromSchema = z.object({
   // to_location_id: formFields.advanced_location.describe(
   //   `${t('app:forms.labels.shipping-to')} // ${t('app:forms.placeholders.shipping-to')}`,
   // ),
+  
+  
   recipient_name: formFields.text.describe(
     `${t('app:forms.labels.recipient-name')} // ${t('app:forms.placeholders.recipient-name')}`,
   ),

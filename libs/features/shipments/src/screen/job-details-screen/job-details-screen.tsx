@@ -44,7 +44,7 @@ export function JobDetailsScreen() {
   const size = useMemo(
     () =>
       job?.items?.map(
-        (item) => `${item.dim_width}x${item.dim_height}x${item.dim_length}cm `,
+        (item) => `${item.dim_width}x${item.dim_height}x${item.dim_length}${t('common:cm')} `,
       ),
     [job?.items],
   );

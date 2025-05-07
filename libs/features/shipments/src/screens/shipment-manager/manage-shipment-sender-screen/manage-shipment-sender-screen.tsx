@@ -26,6 +26,8 @@ const CreateShipmentSchema = z.object({
   // from_location_id: formFields.advanced_location.describe(
   //   `${t('app:forms.labels.shipping-from')} // ${t('app:forms.placeholders.shipping-from')}`
   // ),
+  
+  
   pick_date: formFields.row_date_picker.describe(
     `${t('app:forms.labels.date')} // ${t('app:forms.placeholders.date')}`
   ),

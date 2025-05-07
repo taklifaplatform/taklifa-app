@@ -62,7 +62,7 @@ export function ManageShipmentDriversScreen() {
       })
     },
     onSuccess() {
-      toast.show('Shipment items updated successfully', { preset: 'success' })
+      toast.show(t('common:shipment-items-updated-successfully'), { preset: 'success' })
       onSkipPress()
     },
     onError(error: any) {

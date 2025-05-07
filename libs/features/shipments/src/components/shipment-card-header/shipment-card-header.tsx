@@ -7,6 +7,7 @@ import moment from 'moment';
 import React from 'react';
 import { Button, H6, Text, XStack, YStack } from 'tamagui';
 import { useShipmentHelper } from '../../hooks';
+import { useMultiLang } from '@zix/i18n';
 
 
 export interface ShipmentCardHeaderProps {
@@ -16,7 +17,7 @@ export interface ShipmentCardHeaderProps {
 
 export const ShipmentCardHeader: React.FC<ShipmentCardHeaderProps> = ({ shipment }) => {
   const { isAuthOwner, getShipmentStatusColor } = useShipmentHelper({ shipment })
-
+  const { activeLang } = useMultiLang()
   const renderSender = () => (
     <XStack alignItems='center' gap='$2'>
       <UserAvatar size='$1' user={shipment.user} />
@@ -55,8 +56,8 @@ export const ShipmentCardHeader: React.FC<ShipmentCardHeaderProps> = ({ shipment
         size="$1"
       />
       <Text fontSize={10} color='$color9'>
-        {t('job:job-published')} {moment(shipment.created_at).fromNow()}
-        {isAuthOwner ? ' by You' : ''}
+        {t('job:job-published')} {moment(shipment.created_at).locale(activeLang).fromNow()}
+        {isAuthOwner ? t('forms:by-You') : ''}
       </Text>
     </XStack>
   )
@@ -69,6 +70,8 @@ export const ShipmentCardHeader: React.FC<ShipmentCardHeaderProps> = ({ shipment
       </XStack>
       {renderTitle()}
       {renderPublishedDate()}
+
+      
     </YStack>
   );
 }

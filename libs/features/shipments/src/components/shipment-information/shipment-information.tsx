@@ -9,6 +9,7 @@ import {
   Weight,
 } from '@tamagui/lucide-icons';
 import { ShipmentTransformer } from '@zix/api';
+import { useMultiLang } from '@zix/i18n';
 import { CustomIcon } from '@zix/ui/icons';
 import {
   ZixMediasListWidget,
@@ -29,6 +30,7 @@ export const ShipmentInformation: React.FC<ShipmentInformationProps> = ({
   shipment,
   ...props
 }) => {
+  const { activeLang } = useMultiLang()
   /* Delivery Time */
   const deliveryTime = useMemo(() => {
     return moment.duration(
@@ -96,27 +98,28 @@ export const ShipmentInformation: React.FC<ShipmentInformationProps> = ({
               optionVariant="location"
               variant="details"
               options={[
-                 {
+                {
                   icons: (
                     <CustomIcon name="aspect_ratio" size="$1" color="$color10" />
                   ),
                   name: t('job:package-size'),
-                  value: `${item.dim_width || 0} x ${item.dim_height || 0} x ${item.dim_length || 0}cm`,
+                  value: `${item.dim_width || 0} x ${item.dim_height || 0} x ${item.dim_length || 0} ${t('common:cm')}`,
                 },
                 {
                   icons: <Weight size="$1" color='$color10' />,
                   name: t('job:package-weight'),
                   value: `${item.cap_weight || 0} ${item.cap_unit || ''}`,
                 },
-                 {
+                {
                   icons: <ScrollText size="$1" color='$color10' />,
-                  name: 'Notes',
+                  name: t('app:forms.labels.notes'),
                   value: item.notes || ',,,',
                 },
               ]}
             />
           ))
         }
+
         <ZixVariantOptionsWidget
           icon={<CustomIcon name="time" size="$1" color="$color10" />}
           label={t('shipment:time-and-distance')}
@@ -129,17 +132,17 @@ export const ShipmentInformation: React.FC<ShipmentInformationProps> = ({
             {
               icons: <Inbox size="$1" color='$color10' />,
               name: t('job:deliver_duration'),
-              value: `${deliveryTime.humanize()}`,
+              value: `${deliveryTime.locale(activeLang).humanize()}`,
             },
             {
               icons: <Route size="$1" color='$color10' rotate="90deg" />,
               name: t('job:estimated-distance'),
-              value: distance ? `${distance.toFixed(2)} km` : 'N/A',
+              value: distance ? `${distance.toFixed(2)} ${t('app:common.km')}` : `${t('app:common.n/a')}`,
             },
             {
               icons: <CustomIcon name="chronic" size="$1" color='$color10' />,
               name: t('job:estimated-time'),
-              value: `${deliveryTime.asHours()} hours`,
+              value: `${deliveryTime.asHours()} ${t('app:common.hours')}`,
             },
             {
               icons: <CustomIcon name="time" size="$1" color='$color10' />,

@@ -34,7 +34,7 @@ export const ShipmentInteraction: React.FC<ShipmentInteractionProps> = ({
 
   const renderRenderViewInteractionButton = () => canViewShipmentInteractions && (
     <Button size='$2' icon={Eye} onPress={() => router.push(`/app/shipment-manager/${shipment.id}/proposals`)}>
-      View
+      {t('common:view')}
     </Button>
   )
 
