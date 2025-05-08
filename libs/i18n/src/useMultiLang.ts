@@ -7,7 +7,7 @@ import { DevSettings, I18nManager, Linking, Platform } from "react-native";
 import i18n from "./i18n";
 import { MultiLangContext } from "./MultiLangContext";
 
-const SUPPORTED_LANGS = ["en", "ar", "ur"];
+const SUPPORTED_LANGS = ["en", "ar"];
 
 export function useMultiLang() {
   const activeLang = useContext(MultiLangContext);
