@@ -48,7 +48,7 @@ export const SelectUserTypeScreen = () => {
         <YStack gap="$4" marginHorizontal="$4" marginTop="$10">
           {!user?.roles?.find((role) => role.name === 'solo_driver') && (
             <InlineItemSelect
-              icon="solo_transporter_car"
+              icon="solo_transporter_car" //
               title={t('common:user_types.individual')}
               value="solo_driver"
               selectedValue={requestedAccountType}

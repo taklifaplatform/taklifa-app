@@ -80,6 +80,9 @@ import TimePace from './icons/time-pace.svg';
 import Time from './icons/time.svg'; 
 import Touch_app from './icons/touch_app.svg'; 
 import UserInfo from './icons/user-info.svg'; 
+import UserTypeCompany from './icons/user-type-company.svg'; 
+import UserTypeCustomer from './icons/user-type-customer.svg'; 
+import UserTypeSoloTransporter from './icons/user-type-solo-transporter.svg'; 
 import Wallet from './icons/wallet.svg'; 
 import WebDarkLogo from './icons/web-dark-logo.svg'; 
 import WebLogoAr from './icons/web-logo-ar.svg'; 
@@ -167,6 +170,9 @@ export {
   Time,
   Touch_app,
   UserInfo,
+  UserTypeCompany,
+  UserTypeCustomer,
+  UserTypeSoloTransporter,
   Wallet,
   WebDarkLogo,
   WebLogoAr,
