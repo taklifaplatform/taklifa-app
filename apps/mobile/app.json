@@ -25,11 +25,7 @@
         "ExpoLocalization_supportsRTL": true,
         "CFBundleLocalizations": [
           "ar",
-          "en",
-          "ur",
-          "ar",
-          "en",
-          "ur"
+          "en"
         ],
         "LSApplicationQueriesSchemes": [
           "comgooglemaps",
