@@ -1,10 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { useToastController } from '@tamagui/toast';
 import { VehicleModelTransformer, VehiclesService } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
-import { DebugObject, FullScreenSpinner } from '@zix/ui/common';
+import { FullScreenSpinner } from '@zix/ui/common';
 import {
   SchemaForm,
   SubmitButton,
@@ -17,20 +17,20 @@ import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
-import { Theme, Image } from 'tamagui';
+import { Image, Theme } from 'tamagui';
 import { z } from 'zod';
 
 const ManageVehicleFormSchema = z
   .object({
-    image: formFields.image.describe(t('forms:vehicle-image')),
+    // image: formFields.image.describe(t('forms:vehicle-image')),
     images: formFields.medias.describe(t('forms:images')),
     model_id: formFields.autocomplete.describe(t('forms:vehicle-model')),
     // internal_id: formFields.text.describe(t('forms:vehicle-internal-id')).optional().nullable(),
     color: formFields.text.describe(t('forms:color')),
     plate_number: formFields.text.describe(t('forms:plate-number')),
+    year: formFields.number.describe(t('forms:vehicle-year')),
     vin_number: formFields.text.describe(t('forms:vin-number')).optional().nullable(),
     // TODO: missing model
-    year: formFields.number.describe(t('forms:vehicle-year')),
 
     information: z.object({
       body_type: formFields.text.describe(t('forms:body-type')).optional().nullable(),

@@ -164,6 +164,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
         }).catch((error) => {
           Sentry.captureException(error);
           failedMedias[media.uuid] = error?.errors?.file || [];
+          reject(error);
         });
       });
     }));
