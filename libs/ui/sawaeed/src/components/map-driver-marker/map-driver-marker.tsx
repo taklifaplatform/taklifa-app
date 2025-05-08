@@ -17,9 +17,6 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = React.memo(({
   onPress
 }: MapDriverMarkerProps) => {
   const [showCustomIcon, setShowCustomIcon] = useState(false)
-
-  console.log(JSON.stringify(driver?.vehicle?.image?.original_url, null, 2))
-
   const renderCarIcon = () => (!showCustomIcon && driver?.vehicle?.model?.map_icon?.url) ? (
     <Image
       source={{ uri: driver?.vehicle?.model?.map_icon?.url }}
