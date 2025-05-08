@@ -1,11 +1,13 @@
 import { CustomIcon, CustomIconName } from '@zix/ui/icons';
-import { Avatar, Button, Text, Theme, XStack } from 'tamagui';
+import { Avatar, Button, Text, Theme, XStack, YStack } from 'tamagui';
 import React from 'react';
+import { t } from 'i18next';
 
 export interface InlineItemSelectProps {
   onSelect: (value: string) => void;
   selectedValue?: string;
   value: string;
+  showServiceProvider?: boolean;
   icon: CustomIconName;
   title: string;
 }
@@ -28,13 +30,13 @@ export const InlineItemSelect: React.FC<InlineItemSelectProps> = ({
   value,
   icon,
   title,
+  showServiceProvider,
 }) => {
   return (
     <XStack
       onPress={() => onSelect(value)}
       hoverStyle={{ backgroundColor: '$color5' }}
-      paddingVertical="$2"
-      paddingHorizontal="$4"
+      paddingHorizontal="$2"
       justifyContent="space-between"
       alignItems="center"
       borderColor={selectedValue === value ? '$color5' : '$color2'}
@@ -43,15 +45,24 @@ export const InlineItemSelect: React.FC<InlineItemSelectProps> = ({
       backgroundColor="$color2"
       cursor="pointer"
     >
-      <Theme name="accent">
-        <Avatar size="$6">
-          <CustomIcon name={icon} size="$4" color="$color9" />
-        </Avatar>
-      </Theme>
+      <XStack alignItems="center" gap="$2">
+        <Theme name="accent">
+          <Avatar size="$8">
+            <CustomIcon name={icon} size="$8" color="$color9" />
+          </Avatar>
+        </Theme>
 
-      <Text fontSize="$4" fontWeight="800">
-        {title}
-      </Text>
+        <YStack gap="$1" alignItems="flex-start">
+          {showServiceProvider && (
+            <Text fontSize="$4" fontWeight="800">
+              {t('common:account_types.seek.service_provider')}
+            </Text>
+          )}
+          <Text fontSize="$4" fontWeight="800">
+            {title}
+          </Text>
+        </YStack>
+      </XStack>
       <Button
         pressStyle={{
           backgroundColor: 'transparent',

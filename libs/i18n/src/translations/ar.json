@@ -338,13 +338,14 @@
       "user": "مستخدم"
     },
     "user_types": {
+      "customer": "عميل سواعد",
       "individual": "فرد",
-      "company": "شركة"
+      "company": "شركة / مؤسسة"
     },
     "account_types": {
       "seek": {
         "service_requestor": "أبحث عن الخدمة",
-        "service_provider": "مقدم الخدمة"
+        "service_provider": "مزود خدمة "
       }
     },
     "select_country": "اختر الدولة",

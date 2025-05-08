@@ -20,7 +20,8 @@ export const SelectAccountTypeScreen: React.FC = () => {
     if (role === 'customer') {
       router.push('/auth/register/create-account');
     } else {
-      router.push('/auth/register/user-type');
+      // router.push('/auth/register/user-type');
+      router.push('/auth/register/create-account');
     }
   }
 
@@ -38,8 +39,8 @@ export const SelectAccountTypeScreen: React.FC = () => {
 
         <YStack gap="$4" marginHorizontal="$4" marginTop="$10">
           <InlineItemSelect
-            icon="looking_for_service"
-            title={t('common:account_types.seek.service_requestor')}
+            icon="user_type_customer"
+            title={t('common:user_types.customer')}
             value="customer"
             selectedValue={requestedAccountType}
             onSelect={(value) => {
@@ -48,9 +49,21 @@ export const SelectAccountTypeScreen: React.FC = () => {
             }}
           />
           <InlineItemSelect
-            icon="service_provider"
-            title={t('common:account_types.seek.service_provider')}
+            icon="user_type_solo_transporter"
+            title={t('common:user_types.individual')}
             value="solo_driver"
+            showServiceProvider
+            selectedValue={requestedAccountType}
+            onSelect={(value) => {
+              setRequestedAccountType(value);
+              onRedirectUser(value);
+            }}
+          />
+          <InlineItemSelect
+            icon="user_type_company"
+            title={t('common:user_types.company')}
+            value="company_owner"
+            showServiceProvider
             selectedValue={requestedAccountType}
             onSelect={(value) => {
               setRequestedAccountType(value);
