@@ -8,12 +8,12 @@ import { useEffect } from 'react';
 import { useRouter } from 'solito/router';
 
 import { Button, Stack, Text, View } from 'tamagui';
-// tmp
 
 
 export const ZixNotificationHeaderButton = () => {
   const router = useRouter()
   const echo = useEcho()
+
   const { user, isLoggedIn } = useAuth()
 
   const { data, refetch } = useQuery({
@@ -43,7 +43,6 @@ export const ZixNotificationHeaderButton = () => {
       paddingVertical='$1'
       borderRadius='$4'
     >
-
       <Text color='$color1'>
         {data?.data?.count || 0}
       </Text>
