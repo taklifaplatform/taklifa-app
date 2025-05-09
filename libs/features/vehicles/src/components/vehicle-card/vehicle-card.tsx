@@ -7,7 +7,7 @@ import { useAuth } from '@zix/services/auth';
 import { ActionSheet, ActionSheetRef, MediaFile } from '@zix/ui/common';
 import { ZixVariantOptionsWidget } from '@zix/ui/widgets';
 import { t } from 'i18next';
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { Alert } from 'react-native';
 
 import { useRouter } from 'solito/router';
@@ -28,6 +28,10 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
   const toast = useToastController()
 
   const queryClient = useQueryClient();
+
+  const vehicleImage = useMemo(() => {
+    return vehicle?.images?.length ? vehicle?.images[0] : vehicle?.model?.map_icon;
+  }, [vehicle?.images, vehicle?.model?.map_icon]);
 
   const { mutate } = useMutation({
     mutationFn() {
@@ -59,7 +63,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
       borderBottomWidth='$1'
     >
       <XStack gap='$2' flex={1} onPress={() => actionSheetManagerRef.current?.open()}>
-        <MediaFile media={vehicle.image} width='$10' height='$6' borderRadius='$4' heightQuality />
+        <MediaFile media={vehicleImage} width='$10' height='$6' borderRadius='$4' heightQuality />
         <View flex={1}>
           <ZixVariantOptionsWidget
             optionVariant="location"
@@ -83,14 +87,14 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
       </XStack>
 
       <XStack>
-       {!showHeader && <Button
+        {!showHeader && <Button
           iconAfter={<MoreHorizontal />}
           onPress={() => {
             actionSheetManagerRef.current?.open();
           }}
         />}
         <ActionSheet
-          snapPoints={[33,25]}
+          snapPoints={[33, 25]}
           ref={actionSheetManagerRef}
           title={t('common:settings')}
           actions={[
