@@ -7,6 +7,9 @@ import { AuthHeader } from '../../components/auth-header/auth-header';
 import InlineItemSelect from '../../components/inline-item-select/inline-item-select';
 import { FormWrapper } from '@zix/ui/forms';
 import { ScreenLayout } from '@zix/ui/layouts';
+import { UserService } from '@zix/api';
+import * as Sentry from '@sentry/react-native';
+import { useToastController } from '@tamagui/toast';
 
 /**
  * Represents the screen for selecting the account type during the registration process.
@@ -14,15 +17,41 @@ import { ScreenLayout } from '@zix/ui/layouts';
  */
 export const SelectAccountTypeScreen: React.FC = () => {
   const router = useRouter();
-  const { requestedAccountType, setRequestedAccountType } = useAuth();
+  const { requestedAccountType, setRequestedAccountType, user, isLoggedIn, redirectUserToActiveDashboard, refetchUser } = useAuth();
+  const toast = useToastController();
 
   function onRedirectUser(role: string) {
-    if (role === 'customer') {
-      router.push('/auth/register/create-account');
+    if (isLoggedIn) {
+      if (role === 'company_owner') {
+        router.push('/auth/create-company');
+      } else if (role === 'solo_driver') {
+        router.push('/auth/verify-kyc');
+      } else if (role === 'customer') {
+        UserService.enableCustomerRole()
+          .then(() => {
+            UserService.changeActiveRole({
+              requestBody: {
+                name: 'customer',
+              },
+            }).then((data) => {
+              refetchUser();
+              redirectUserToActiveDashboard({
+                user: data.data,
+              })
+            }).catch((error) => {
+              toast.show(error?.body?.message || t('common:errors.something_went_wrong'));
+              Sentry.captureException(error);
+            });
+          })
+          .catch((error) => {
+            toast.show(error?.body?.message || t('common:errors.something_went_wrong'));
+            Sentry.captureException(error);
+          });
+      }
     } else {
-      // router.push('/auth/register/user-type');
       router.push('/auth/register/create-account');
     }
+
   }
 
   return (
@@ -38,27 +67,31 @@ export const SelectAccountTypeScreen: React.FC = () => {
         />
 
         <YStack gap="$4" marginHorizontal="$4" marginTop="$10">
-          <InlineItemSelect
-            icon="user_type_customer"
-            title={t('common:user_types.customer')}
-            value="customer"
-            selectedValue={requestedAccountType}
-            onSelect={(value) => {
-              setRequestedAccountType(value);
-              onRedirectUser(value);
-            }}
-          />
-          <InlineItemSelect
-            icon="user_type_solo_transporter"
-            title={t('common:user_types.individual')}
-            value="solo_driver"
-            showServiceProvider
-            selectedValue={requestedAccountType}
-            onSelect={(value) => {
-              setRequestedAccountType(value);
-              onRedirectUser(value);
-            }}
-          />
+          {!user?.roles?.find((role) => role.name === 'customer') && (
+            <InlineItemSelect
+              icon="user_type_customer"
+              title={t('common:user_types.customer')}
+              value="customer"
+              selectedValue={requestedAccountType}
+              onSelect={(value) => {
+                setRequestedAccountType(value);
+                onRedirectUser(value);
+              }}
+            />
+          )}
+          {!user?.roles?.find((role) => role.name === 'solo_driver') && (
+            <InlineItemSelect
+              icon="user_type_solo_transporter"
+              title={t('common:user_types.individual')}
+              value="solo_driver"
+              showServiceProvider
+              selectedValue={requestedAccountType}
+              onSelect={(value) => {
+                setRequestedAccountType(value);
+                onRedirectUser(value);
+              }}
+            />
+          )}
           <InlineItemSelect
             icon="user_type_company"
             title={t('common:user_types.company')}

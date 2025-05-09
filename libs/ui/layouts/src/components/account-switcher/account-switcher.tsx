@@ -113,11 +113,7 @@ export const AccountSwitcher: React.FC<AccountSwitcherProps> = ({
 
   const onAddAccount = useCallback(() => {
     setSheetOpen(false);
-    if (roleNames?.includes('customer')) {
-      router.push('/auth/register/user-type');
-    } else {
-      router.push('/auth/register');
-    }
+    router.push('/auth/register');
   }, [roleNames, router]);
 
   const { current } = useThemeSetting();

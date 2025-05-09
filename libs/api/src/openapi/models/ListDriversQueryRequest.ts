@@ -5,7 +5,9 @@
 export type ListDriversQueryRequest = {
     search?: string;
     latitude?: number;
+    latitude_delta?: number;
     longitude?: number;
+    longitude_delta?: number;
     vehicle_model?: string;
 };
 

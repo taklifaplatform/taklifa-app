@@ -17,7 +17,9 @@ export class DriversService {
         perPage,
         search,
         latitude,
+        latitudeDelta,
         longitude,
+        longitudeDelta,
         vehicleModel,
     }: {
         /**
@@ -30,7 +32,9 @@ export class DriversService {
         perPage?: number,
         search?: string,
         latitude?: any,
+        latitudeDelta?: any,
         longitude?: any,
+        longitudeDelta?: any,
         vehicleModel?: string,
     }): CancelablePromise<{
         data?: Array<DriverTransformer>;
@@ -63,7 +67,9 @@ export class DriversService {
                 'per_page': perPage,
                 'search': search,
                 'latitude': latitude,
+                'latitude_delta': latitudeDelta,
                 'longitude': longitude,
+                'longitude_delta': longitudeDelta,
                 'vehicle_model': vehicleModel,
             },
         });

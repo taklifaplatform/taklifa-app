@@ -153,4 +153,17 @@ export class UserService {
             url: '/api/auth/user/delete-account',
         });
     }
+    /**
+     * Enable Customer Role.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static enableCustomerRole(): CancelablePromise<{
+        data?: AuthenticatedUserTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/auth/user/enable-customer-role',
+        });
+    }
 }
