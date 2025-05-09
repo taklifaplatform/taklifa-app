@@ -1,6 +1,6 @@
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import { Plus } from '@tamagui/lucide-icons';
-import { COMPANY_ROLES, USER_ROLES, useAuth } from '@zix/services/auth';
+import { USER_ROLES, useAuth } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import { Tabs } from 'expo-router';
 import { t } from 'i18next';
@@ -52,7 +52,10 @@ export const AppBottomBar = () => {
       />
       <Tabs.Screen
         name="org"
-        options={COMPANY_ROLES.includes(activeRole) ? {
+        options={(
+          activeRole === USER_ROLES.company_manager ||
+          activeRole === USER_ROLES.company_owner
+        ) ? { //
           title: t('navigation:company-dashboard.data'),
           tabBarIcon: ({ size, color }) => (
             <CustomIcon name="apps" color={color} size={size} />
@@ -63,7 +66,10 @@ export const AppBottomBar = () => {
       />
       <Tabs.Screen
         name="stores"
-        options={activeRole === USER_ROLES.customer ? {
+        options={(
+          activeRole === USER_ROLES.customer ||
+          activeRole === USER_ROLES.company_driver
+        ) ? {
           title: t('navigation:customer-dashboard.store'),
           tabBarIcon: ({ size, color }) => (
             <CustomIcon
