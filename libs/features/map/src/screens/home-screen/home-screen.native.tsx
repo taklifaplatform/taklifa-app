@@ -10,14 +10,15 @@ import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { MapCompanyMarker, MapDriverMarker } from '@zix/ui/sawaeed';
 import { getDistance } from '@zix/utils';
 import * as Location from 'expo-location';
+import { t } from 'i18next';
+import debounce from 'lodash/debounce';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Dimensions, Keyboard, Platform, SectionList } from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, { Region } from 'react-native-maps';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useRouter } from 'solito/router';
-import { Button, H4, View, YStack } from 'tamagui';
+import { Button, H4, Spinner, View, XStack, YStack } from 'tamagui';
 import MapFilters from '../../components/map-filters/map-filters';
-import { t } from 'i18next';
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
 
@@ -49,17 +50,68 @@ export function HomeScreen() {
   const [search, setSearch] = useState<string>();
   const filtersKey = useMemo(() => Object.values(filters).join('-'), [filters]);
 
-  const { data, ...driversQuery } = useQuery({
-    queryFn() {
-      return DriversService.fetchAllDrivers({
-        perPage: Platform.select({ web: 80, ios: 50, android: 20 }),
-        vehicleModel: filters.vehicle_model,
-        search,
-      });
-    },
-    queryKey: ['DriversService.fetchAllDrivers', search, filtersKey],
-    // staleTime: 5 * 1000,
+  const [currentRegion, setCurrentRegion] = useState<Region>({
+    latitude: 24.713552,
+    longitude: 46.675296,
+    latitudeDelta: 0.4388121185204774,
+    longitudeDelta: 0.32004178032601516
   });
+
+  const [drivers, setDrivers] = useState<DriverTransformer[]>([]);
+  const [isFetching, setIsFetching] = useState(false);
+  async function fetchDrivers(query: any = {}) {
+    const queryParams = {
+      perPage: Platform.select({ web: 80, ios: 50, android: 30 }),
+      vehicleModel: filters.vehicle_model,
+      latitude: currentRegion.latitude,
+      longitude: currentRegion.longitude,
+      latitudeDelta: currentRegion.latitudeDelta,
+      longitudeDelta: currentRegion.longitudeDelta,
+      search,
+      ...query,
+    }
+    setIsFetching(true);
+    const { data: driversData } = await DriversService.fetchAllDrivers(queryParams);
+    console.log("==============")
+    console.log('queryParams::', JSON.stringify(queryParams, null, 2))
+    console.log('driversData::', driversData?.length)
+    console.log("==============")
+
+    if (driversData?.length) {
+      setDrivers(driversData);
+    }
+    setIsFetching(false);
+  }
+  useEffect(() => {
+    fetchDrivers({
+      vehicleModel: filters.vehicle_model,
+      latitude: currentRegion.latitude,
+      longitude: currentRegion.longitude,
+      latitudeDelta: currentRegion.latitudeDelta,
+      longitudeDelta: currentRegion.longitudeDelta,
+      search,
+    });
+  }, [
+    filters.vehicle_model,
+    currentRegion,
+    search,
+    filters,
+  ]);
+  // const { data, ...driversQuery } = useQuery({
+  //   queryFn() {
+  //     return DriversService.fetchAllDrivers({
+  //       perPage: Platform.select({ web: 80, ios: 50, android: 30 }),
+  //       vehicleModel: filters.vehicle_model,
+  //       latitude: currentRegion.latitude,
+  //       longitude: currentRegion.longitude,
+  //       latitudeDelta: currentRegion.latitudeDelta,
+  //       longitudeDelta: currentRegion.longitudeDelta,
+  //       search,
+  //     });
+  //   },
+  //   queryKey: ['DriversService.fetchAllDrivers', search, filtersKey, currentRegion],
+  //   placeholderData: keepPreviousData,
+  // });
 
   const companiesQuery = useQuery({
     queryFn() {
@@ -74,16 +126,16 @@ export function HomeScreen() {
   const [selectedDriver, setSelectedDriver] = useState<DriverTransformer>();
 
   const driversList = useMemo<DriverTransformer[]>(() => {
-    if (!selectedDriver?.location || !data?.data) {
-      return data?.data || [];
+    if (!selectedDriver?.location || !drivers) {
+      return drivers || [];
     }
-    return data.data.sort((a, b) => {
+    return drivers.sort((a, b) => {
       if (!a.location || !b.location) return 0;
       const aDistance = getDistance(selectedDriver?.location, a.location);
       const bDistance = getDistance(selectedDriver?.location, b.location);
       return aDistance < bDistance ? a : b;
     });
-  }, [data?.data, selectedDriver]);
+  }, [drivers, selectedDriver]);
 
   // TODO:: Get user location when role is driver
 
@@ -236,9 +288,9 @@ export function HomeScreen() {
 
   const renderMapDrivers = () =>
     (filters.provider_type === 'all' || filters.provider_type === USER_ROLES.solo_driver) ?
-      driversList.map((driver, index) => (
+      drivers.map((driver, index) => (
         <MapDriverMarker
-          key={`marker-${index}`}
+          key={`marker-${driver?.id}`}
           driver={driver}
           isSelected={selectedDriver?.id === driver.id}
           onPress={() => {
@@ -249,7 +301,7 @@ export function HomeScreen() {
 
   const renderMapCompanies = () =>
     (filters.provider_type === 'all' || filters.provider_type === 'company') ?
-      companiesQuery.data?.data?.map((company, index) => (
+      companiesQuery.drivers?.map((company, index) => (
         <MapCompanyMarker
           key={`marker-${index}`}
           company={company}
@@ -258,6 +310,12 @@ export function HomeScreen() {
           }}
         />
       )) : null;
+
+  // Debounced region setter
+  const debouncedSetCurrentRegion = useMemo(
+    () => debounce((region: Region) => setCurrentRegion(region), 500),
+    []
+  );
 
   const renderMap = () =>
     showMap && (
@@ -268,6 +326,7 @@ export function HomeScreen() {
         onPress={() => Keyboard.dismiss()}
         showsUserLocation={!!driverLocation}
         showsMyLocationButton={false}
+        onRegionChangeComplete={debouncedSetCurrentRegion}
       >
         {renderMapDrivers()}
         {renderMapCompanies()}
@@ -292,7 +351,7 @@ export function HomeScreen() {
       ),
     },
     {
-      data: !!showCompany && companiesQuery.data?.data || [],
+      data: !!showCompany && companiesQuery.drivers || [],
       renderItem: ({ item, index }) => (
         <CompanyCard
           key={`stack-company-${item.id}-${index}`}
@@ -312,8 +371,9 @@ export function HomeScreen() {
       >
         <SectionList
           sections={renderListData || []}
-          refreshing={driversQuery.isFetching}
-          onRefresh={driversQuery.refetch}
+          refreshing={isFetching}
+          onRefresh={fetchDrivers}
+          // onRefresh={driversQuery.refetch}
           ListEmptyComponent={
             <View flex={1} alignItems='center' gap="$8">
               <CustomIcon name="empty_data" size="$18" color="$color5" />
@@ -364,8 +424,15 @@ export function HomeScreen() {
   )
 
   const renderFilters = () => (
-    <View position='absolute' top={1}>
-      <MapFilters values={filters} onChange={setFilters} />
+    <View position='absolute' top={1} left={1} right={1}>
+      <XStack alignItems='center' justifyContent='space-between'>
+        <MapFilters values={filters} onChange={setFilters} />
+        {
+          isFetching && (
+            <Spinner />
+          )
+        }
+      </XStack>
     </View>
   )
 
