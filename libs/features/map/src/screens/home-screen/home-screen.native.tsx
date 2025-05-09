@@ -137,24 +137,26 @@ export function HomeScreen() {
     });
   }, [drivers, selectedDriver]);
 
-  // TODO:: Get user location when role is driver
-
   const [driverLocation, setDriverLocation] = useState(null)
   const getDriverLocation = async () => {
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== 'granted') {
-      console.log('Permission to access location was denied');
-      return;
-    }
-
-    const location = await Location.getCurrentPositionAsync({});
-    setDriverLocation(location?.coords);
-    LocationService.updateLiveLocation({
-      requestBody: {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+        return;
       }
-    })
+
+      const location = await Location.getCurrentPositionAsync({});
+      setDriverLocation(location?.coords);
+      LocationService.updateLiveLocation({
+        requestBody: {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude
+        }
+      })
+    } catch (error) {
+
+    }
   }
 
   const updateLocationInterval = useRef<NodeJS.Timeout | null>(null);

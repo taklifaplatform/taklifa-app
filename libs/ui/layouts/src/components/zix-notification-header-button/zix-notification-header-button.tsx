@@ -14,20 +14,23 @@ import { Button, Stack, Text, View } from 'tamagui';
 export const ZixNotificationHeaderButton = () => {
   const router = useRouter()
   const echo = useEcho()
-  const { user } = useAuth()
+  const { user, isLoggedIn } = useAuth()
+
   const { data, refetch } = useQuery({
     queryFn: () => NotificationService.getUnreadNotificationCount(),
     queryKey: ['NotificationService.getUnreadNotificationCount'],
-  })
+    enabled: isLoggedIn
+  });
 
   useEffect(() => {
-
-    echo.private(`notifications.${user?.id}`)
-      .notification(() => refetch())
+    if (isLoggedIn) {
+      echo.private(`notifications.${user?.id}`)
+        .notification(() => refetch())
+    }
     return () => {
       // channel.uns()
     }
-  }, [])
+  }, [isLoggedIn])
 
   const renderBellCount = () => !!data?.data?.count && (
     <View
