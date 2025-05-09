@@ -30,7 +30,7 @@ export const ShipmentOwnerActions: React.FC<ShipmentOwnerActionsProps> = ({ ship
   const { mutateAsync } = useMutation({
     mutationFn: () => ShipmentService.destroyShipment({ shipment: shipment.id }),
     onSuccess(data) {
-      toast.show('Shipment deleted successfully', { preset: 'success' });
+      toast.show(t('common:shipment-deleted-successfully'), { preset: 'success' });
       queryClient.refetchQueries({ queryKey: ['ShipmentService.fetchAllShipment'] });
       router.push(`${getUrlPrefix}/shipments`);
       actionSheetRef.current?.close()

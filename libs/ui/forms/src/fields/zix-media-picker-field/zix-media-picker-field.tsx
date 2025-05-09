@@ -258,6 +258,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
         Alert.alert(
           'Oops!!',
           'Camera permission is required to take photo',
+          
           [
             { text: 'Cancel', style: 'cancel' },
             { text: 'Open Settings', onPress: () => Linking.openSettings() },

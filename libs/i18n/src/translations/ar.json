@@ -105,7 +105,9 @@
     "shipment-manager": {
       "sender": {
         "title": "تفاصيل الشحنة",
-        "description": "يرجى تحديد عنوانك والتاريخ والوقت الذي تتواجد فيه"
+        "description": "يرجى تحديد عنوانك والتاريخ والوقت الذي تتواجد فيه",
+        "please-select-whatyou-are-shipping": "يرجى تحديد ما تقوم بشحنه",
+        "please-specify-the-price-that-suits-you": "يرجى تحديد السعر الذي يناسبك"
       },
       "recipient": {
         "title": "معلومات المستلم",
@@ -123,6 +125,9 @@
     },
     "common": {
       "business-hours": "ساعات العمل",
+      "hours": "ساعة",
+      "km": "كم",
+      "n/a": "غير متاح",
       "working-day": "يوم عمل",
       "from": "من",
       "to": "إلى",
@@ -146,7 +151,6 @@
         "in_review": "قيد المراجعة",
         "verify-kyc": "التحقق من الهوية"
       }
-
     },
     "working-hours": {
       "closed": "مغلق"
@@ -270,7 +274,7 @@
       "description": "أدخل كلمة المرور الجديدة وقم بتأكيدها لإعادة تعيين كلمة المرور"
     },
     "kyc": {
-      "title":"(KYC)التحقق من الهوية"
+      "title": "(KYC)التحقق من الهوية"
     }
   },
   "comercial": {
@@ -301,6 +305,9 @@
     "width-ship": "العرض (سم)",
     "length-ship": "الطول (سم)",
     "approx": "الوزن اتقريبي (كغ)",
+    "approx-ship": "الوزن (كغ)",
+    "box-dimensions-and-weight-are-normal": "الأبعاد الصندوق ووزنها لاعتيادية",
+    "box-dimensions-and-weight": "الأبعاد الصندوق ووزنها",
     "content": "محتوى الشحنة",
     "add-box": "اضافة طرد",
     "remove-box": "إزالة طرد",
@@ -398,6 +405,8 @@
     "width": "العرض",
     "height": "الارتفاع",
     "length": "الطول",
+    "cm": "صم",
+    "kg": "كغ",
     "unit": "الوحدة",
     "internal-id": "المعرف الداخلي",
     "capacity-volume": "سعة الحجم",
@@ -434,6 +443,8 @@
     "cancel-contract": "إلغاء العقد",
     "chat-contract": "محادثه",
     "cancelled-contract": "تم إلغاء العقد",
+    "shipment-deleted-successfully": "تم حذف الشحنة بنجاح",
+    "shipment-items-updated-successfully": "تم تحديث عناصر الشحنة بنجاح",
     "edit-proposal": "تعديل العرض",
     "cancel-contract-message": "هل أنت متأكد من إلغاء العقد؟",
     "contract-removed": "خدمة ملغاة",
@@ -504,6 +515,7 @@
   "forms": {
     "name": "الاسم // أدخل اسمك الكامل",
     "names": "الاسم  ",
+    "by-you": " بواسطتك",
     "mute-group": "كتم المجموعة",
     "disable-notification-group": "تعطيل إشعارات المجموعة",
     "photos-and-videos": "الصور ومقاطع الفيديو",
@@ -521,6 +533,9 @@
     "new_password": "كلمة المرور الجديدة // أدخل كلمة المرور الجديدة الخاصة بك",
     "new_password_confirmation": "تأكيد كلمة المرور الجديدة // أدخل كلمة المرور الجديدة مرة أخرى",
     "password_did_not_match": "كلمة المرور غير متطابقة",
+    "password_field_required": "حقل كلمة المرور مطلوب",
+    "password_confirmation_field_required": "حقل تأكيد كلمة المرور مطلوب",
+    "password_field_min_length": " كلمة المرور  8 أحرف على الأقل",
     "password_changed_successfully": "تم تغيير كلمة المرور بنجاح",
     "accept_terms": "الموافقة على // الشروط والأحكام الخاصة بسواعد",
     "license_number": "رقم الرخصة // أدخل رقم الرخصة الخاصة بك",

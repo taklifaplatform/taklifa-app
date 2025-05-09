@@ -28,6 +28,27 @@ const ChangePasswordSchema = z
         message:( t('forms:password_did_not_match')),
       });
     }
+    if (password.length < 1) {
+      ctx.addIssue({
+        path: ['password'],
+        code: 'custom',
+        message:( t('forms:password_field_required')),
+      });
+    }
+    if (password.length < 8) {
+      ctx.addIssue({
+        path: ['password'],
+        code: 'custom',
+        message:( t('forms:password_field_min_length')),
+      });
+    }
+    if (password_confirmation.length < 1) {
+      ctx.addIssue({
+        path: ['password_confirmation'],
+        code: 'custom',
+        message:( t('forms:password_confirmation_field_required')),
+      });
+    }
   });
 
 export type ChangePasswordFormProps = {

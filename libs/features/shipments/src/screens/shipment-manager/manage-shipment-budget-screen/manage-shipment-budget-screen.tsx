@@ -100,7 +100,7 @@ export const ManageShipmentBudgetScreen: React.FC = () => {
           <ShipmentManagerHeader
             activeStep={5}
             shipment={data?.data}
-            title='يرجى تحديد السعر المناسب لك'
+            title={t('app:shipment-manager.sender.please-specify-the-price-that-suits-you')}
           />
 
           <ZixFieldContainer

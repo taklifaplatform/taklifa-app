@@ -65,7 +65,7 @@ export const ManageShipmentItemsScreen: React.FC = () => {
       })
     },
     onSuccess(data, variables, context) {
-      toast.show('Shipment items updated successfully', { preset: 'success' })
+      toast.show(t('common:shipment-items-updated-successfully'), { preset: 'success' })
       if (data?.data?.selected_driver_id || data?.data?.selected_company_id) {
         router.push(`${getUrlPrefix}/shipment-manager/${shipmentId}/budget`)
       } else {
@@ -168,7 +168,7 @@ export const ManageShipmentItemsScreen: React.FC = () => {
       <ShipmentManagerHeader
         activeStep={2}
         shipment={data?.data}
-        title='يرجى تحديد ما تقوم بشحنه'
+        title={t('app:shipment-manager.sender.please-select-whatyou-are-shipping')}
       />
       {renderFullForm()}
       {renderLoading()}

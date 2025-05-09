@@ -1,6 +1,7 @@
 
 import { ShipmentItemTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
+import { t } from 'i18next';
 import { useMemo } from 'react';
 import { Text, XStack, YStack } from 'tamagui';
 
@@ -14,19 +15,19 @@ export const BoxDimension: React.FC<BoxDimensionProps> = ({
 
   const dimensions = useMemo(() => ([
     {
-      label: 'الطول (سم)',
+      label: (t('common:length-ship')),
       value: item.dim_length || 25
     },
     {
-      label: 'العرض (سم)',
+      label: (t('common:width-ship')),
       value: item.dim_width || 25
     },
     {
-      label: 'الارتفاع (سم)',
+      label: (t('common:height-ship')),
       value: item.dim_height || 25
     },
     {
-      label: 'الوزن (كغ)',
+      label: (t('common:approx-ship')),
       value: item.cap_weight || 1
     }
   ]), [item])
@@ -43,7 +44,7 @@ export const BoxDimension: React.FC<BoxDimensionProps> = ({
       <YStack gap='$3' flex={1}>
         <Text>
           {
-            !item?.dim_length ? 'الأبعاد الصندوق ووزنها لاعتيادية' : 'الأبعاد الصندوق ووزنها'
+            !item?.dim_length ? (t('common:box-dimensions-and-weight-are-normal')) : (t('common:box-dimensions-and-weight'))
           }
         </Text>
         <XStack gap='$3' flex={1}>

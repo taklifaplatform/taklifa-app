@@ -55,7 +55,9 @@
     "shipment-manager": {
       "sender": {
         "title": "Shipment Details",
-        "description": "Here you can view the details of the shipment and manage it."
+        "description": "Here you can view the details of the shipment and manage it.",
+        "please-select-whatyou-are-shipping": "Please select what you are shipping",
+        "please-specify-the-price-that-suits-you": "Please specify the price that suits you"
       },
       "recipient": {
         "title": "Recipient Details",
@@ -73,6 +75,9 @@
     },
     "common": {
       "business-hours": "Business Hours",
+      "hours": "Hours",
+      "km": "KM",
+      "n/a": "N/A",
       "working-day": "Working Day",
       "from": "From",
       "to": "To",
@@ -88,26 +93,25 @@
       "sendMessage": "Send Message",
       "you": "You"
     }
-    },
-    "working-hours": {
-      "closed": "Closed"
-    },
-    "company": {
-      "verification_status": {
-        "pending": "Pending",
-        "verified": "Verified",
-        "rejected": "Rejected",
-        "in_review": "In Review",
-        "verify-kyc": "Verify KYC"
-      }
-    },
-    "account-switcher": {
-      "title": "Switch Account",
-      "add-account": "Add Account",
-      "add-account-subtitle": "Add new company or account.",
-      "account-switching": "Account changed successfully"
+  },
+  "working-hours": {
+    "closed": "Closed"
+  },
+  "company": {
+    "verification_status": {
+      "pending": "Pending",
+      "verified": "Verified",
+      "rejected": "Rejected",
+      "in_review": "In Review",
+      "verify-kyc": "Verify KYC"
     }
-  ,
+  },
+  "account-switcher": {
+    "title": "Switch Account",
+    "add-account": "Add Account",
+    "add-account-subtitle": "Add new company or account.",
+    "account-switching": "Account changed successfully"
+  },
   "about": {
     "section-1": {
       "title-1": "Welcome to Sawaeed Logistics",
@@ -329,6 +333,11 @@
     "width": "Width",
     "height": "Height",
     "length": "Length",
+    "cm": "CM",
+    "kg": "KG",
+    "approx-ship": "Weight (KG)",
+    "box-dimensions-and-weight-are-normal": "Box dimensions and weight are normal",
+    "box-dimensions-and-weight": "Box dimensions and weight",
     "unit": "Unit",
     "internal-id": "Internal ID",
     "capacity-volume": "Capacity Volume",
@@ -382,6 +391,8 @@
     "cancel-contract-message": "Are you sure you want to cancel the contract?",
     "chat-contract": "Chat",
     "cancelled-contract": "Cancelled",
+    "shipment-deleted-successfully": "Shipment deleted successfully",
+    "shipment-items-updated-successfully": "Shipment items updated successfully",
     "edit-proposal": "Edit Proposal",
     "contract-removed": "Contract Removed",
     "contract-removed-message": "Reason for cancellation of service: The recipient is not present or it was removed manually please get in touch with the services to know more.",
@@ -452,6 +463,7 @@
   "forms": {
     "name": "Name // Enter your full name",
     "names": "Name",
+    "by-you": " by You ",
     "mute-group": "Mute Group",
     "disable-notification-group": "Disable Group Notifications",
     "photos-and-videos": "Photos and Videos",
@@ -460,7 +472,7 @@
     "leave-chat-group": "Leave Chat Group",
     "are-you-sure-leave-group": "Are you sure you want to leave the group?",
     "leave": "Leave",
-    "cancel":"Cancel",
+    "cancel": "Cancel",
     "username": "Username // Enter your username",
     "phone_number": "Phone Number // Enter your phone number",
     "about": "About // Tell us a bit about yourself",
@@ -469,6 +481,9 @@
     "new_password": "New Password // Enter your new password",
     "new_password_confirmation": "New Password Confirmation // Enter your new password again",
     "password_did_not_match": "Password did not match",
+    "password_field_required": "Password field is required",
+    "password_confirmation_field_required": "Password confirmation field is required",
+    "password_field_min_length": "Password must be at least 8 characters long",
     "password_changed_successfully": "Password changed successfully",
     "accept_terms": "Accept Terms // Accept terms and conditions",
     "license_number": "License Number // Enter your license number",
