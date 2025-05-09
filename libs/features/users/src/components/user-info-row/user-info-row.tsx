@@ -17,18 +17,7 @@ export const UserInfoRow: React.FC<UserInfoRowProps> = ({
     <>
       <XStack alignItems="center" gap="$2">
         <Theme name='accent'>
-          {
-            user?.vehicle?.model?.map_icon?.url ? (
-              <Image
-                source={{ uri: user?.vehicle?.model?.map_icon?.url }}
-                width="$3"
-                height="$1"
-                resizeMode="contain"
-              />
-            ) : (
-              <CustomIcon name="car" size='$1' color="$color9" />
-            )
-          }
+          <CustomIcon name="car" size='$1' color="$color9" />
         </Theme>
         <Text color='$color12' fontWeight="600" fontSize="$1">
           {user?.vehicle?.plate_number}
