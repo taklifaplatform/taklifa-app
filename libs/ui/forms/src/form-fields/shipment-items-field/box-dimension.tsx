@@ -44,7 +44,7 @@ export const BoxDimension: React.FC<BoxDimensionProps> = ({
       <YStack gap='$3' flex={1}>
         <Text>
           {
-            !item?.dim_length ? (t('common:box-dimensions-and-weigth-are-normal')) : (t('common:box-dimensions-and-weigth'))
+            !item?.dim_length ? (t('common:box-dimensions-and-weight-are-normal')) : (t('common:box-dimensions-and-weight'))
           }
         </Text>
         <XStack gap='$3' flex={1}>

@@ -57,7 +57,7 @@ export const ShipmentCardHeader: React.FC<ShipmentCardHeaderProps> = ({ shipment
       />
       <Text fontSize={10} color='$color9'>
         {t('job:job-published')} {moment(shipment.created_at).locale(activeLang).fromNow()}
-        {isAuthOwner ? t('forms:by-You') : ''}
+        {isAuthOwner ? t('forms:by-you') : ''}
       </Text>
     </XStack>
   )

@@ -23,11 +23,9 @@ import { SHARED_SHIPMENT_MANAGER_FIELD_PROPS } from '../configs';
 const { useParam } = createParam<{ shipment: string }>();
 
 const SendFromSchema = z.object({
-  // to_location_id: formFields.advanced_location.describe(
-  //   `${t('app:forms.labels.shipping-to')} // ${t('app:forms.placeholders.shipping-to')}`,
-  // ),
-  
-  
+  to_location_id: formFields.advanced_location.describe(
+    `${t('app:forms.labels.shipping-to')} // ${t('app:forms.placeholders.shipping-to')}`,
+  ),
   recipient_name: formFields.text.describe(
     `${t('app:forms.labels.recipient-name')} // ${t('app:forms.placeholders.recipient-name')}`,
   ),
@@ -92,7 +90,7 @@ export const ManageShipmentRecipientScreen: React.FC = () => {
       form={form}
       schema={SendFromSchema}
       props={{
-        // to_location: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
+        to_location: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
         deliver_date: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
         deliver_time: SHARED_SHIPMENT_MANAGER_FIELD_PROPS,
       }}
