@@ -12,8 +12,7 @@ import { getDistance } from '@zix/utils';
 import * as Location from 'expo-location';
 import { t } from 'i18next';
 import debounce from 'lodash/debounce';
-import type { FC } from 'react';
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Dimensions, Keyboard, Platform, SectionList } from 'react-native';
 import MapView, { Region } from 'react-native-maps';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
@@ -131,16 +130,16 @@ export function HomeScreen() {
     if ((!selectedDriver?.location && !selectedDriver?.live_location) || !drivers) {
       return drivers || [];
     }
-    const driverLocation = selectedDriver.live_location || selectedDriver.location;
+    const driverLocation = selectedDriver.live_location || selectedDriver.location
     return drivers.sort((a, b) => {
       if (!a.location || !b.location) return 0;
       const aDistance = getDistance(driverLocation, a.location);
       const bDistance = getDistance(driverLocation, b.location);
-      return aDistance - bDistance;
+      return aDistance < bDistance ? a : b;
     });
   }, [drivers, selectedDriver]);
 
-  const [driverLocation, setDriverLocation] = useState<Location.LocationObjectCoords | null>(null)
+  const [driverLocation, setDriverLocation] = useState(null)
   const getDriverLocation = async () => {
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
@@ -264,6 +263,36 @@ export function HomeScreen() {
 
   }, [isFocused]);
 
+  // Check if user verified
+  // const isVerified = (user.active_role?.name === USER_ROLES.solo_driver && (
+  //   !user.verification_status
+  //   || ['pending', 'rejected'].includes(user.verification_status)
+  // ));
+
+
+  // useEffect(() => {
+  //   if (isVerified) {
+  //     console.log(user.active_role?.name)
+  //     Alert.alert(
+  //       'تحذير',
+  //       'يجب عليك تحديث بياناتك لتتمكن من استخدام التطبيق',
+  //       [
+  //         {
+  //           text: 'تحديث البيانات',
+  //           onPress: () => router.push(`/auth/verify-kyc`)
+  //         },
+  //         {
+  //           text: 'إلغاء',
+  //           onPress: () => console.log('Cancel Pressed'),
+  //           style: 'destructive',
+  //         }
+  //       ],
+  //       { cancelable: false }
+  //     );
+  //   }
+  // },[isVerified])
+
+
   const renderMapDrivers = () =>
     (filters.provider_type === 'all' || filters.provider_type === USER_ROLES.solo_driver) ?
       drivers.map((driver, index) => (
@@ -279,7 +308,7 @@ export function HomeScreen() {
 
   const renderMapCompanies = () =>
     (filters.provider_type === 'all' || filters.provider_type === 'company') ?
-      companiesQuery.data?.data?.map((company, index) => (
+      companiesQuery.drivers?.map((company, index) => (
         <MapCompanyMarker
           key={`marker-${index}`}
           company={company}
@@ -295,8 +324,124 @@ export function HomeScreen() {
     []
   );
 
+  const renderMap = () =>
+    showMap && (
+      <MapView
+        ref={mapRef}
+        style={{ flex: 1 }}
+        initialCamera={initialCamera}
+        onPress={() => Keyboard.dismiss()}
+        showsUserLocation={!!driverLocation}
+        showsMyLocationButton={false}
+        onRegionChangeComplete={debouncedSetCurrentRegion}
+      >
+        {renderMapDrivers()}
+        {renderMapCompanies()}
+      </MapView>
+    );
   //List
   const showCompany = filters.provider_type === 'all' || filters.provider_type === 'company';
+  const showDrivers = filters.provider_type === 'all' || filters.provider_type === USER_ROLES.solo_driver;
+
+  const renderListData = [
+    {
+      data: !!showDrivers && driversList || [],
+      renderItem: ({ item, index }) => (
+        <UserCard
+          key={`stack-${item.id}-${index}`}
+          user={item}
+          flex={1}
+          marginHorizontal="$4"
+          marginVertical="$2"
+          backgroundColor="$color2"
+        />
+      ),
+    },
+    {
+      data: !!showCompany && companiesQuery.drivers || [],
+      renderItem: ({ item, index }) => (
+        <CompanyCard
+          key={`stack-company-${item.id}-${index}`}
+          user={item}
+          flex={1}
+          marginHorizontal="$4"
+          marginVertical="$2"
+          backgroundColor="$color2"
+        />
+      ),
+    },
+  ];
+  const renderList = () =>
+    !showMap && (
+      <View flex={1}
+        marginTop={isKeyboardVisible ? 0 : "$10"}
+      >
+        <SectionList
+          sections={renderListData || []}
+          refreshing={isFetching}
+          onRefresh={fetchDrivers}
+          // onRefresh={driversQuery.refetch}
+          ListEmptyComponent={
+            <View flex={1} alignItems='center' gap="$8">
+              <CustomIcon name="empty_data" size="$18" color="$color5" />
+              <H4>No Data Found!</H4>
+            </View>
+          }
+        />
+      </View>
+    );
+
+  //switch button Map / List
+  const renderSwitcher = () =>
+    !showCarousel && (
+      <Button
+        theme="accent"
+        position="absolute"
+        bottom="$4"
+        left="$4"
+        icon={<CustomIcon name={showMap ? 'list' : 'map'} size="$2" />}
+        fontWeight="600"
+        fontSize="$2"
+        size="$3"
+        onPress={() => setShowMap(!showMap)}
+      >
+        {showMap ? t('common:list') : t('common:map')}
+      </Button>
+    );
+
+  // center user location
+  const renderCenterButton = () => driverLocation?.latitude && (
+    <Button
+      theme="accent"
+      icon={<MaterialIcons name="my-location" size={20} color="black" />}
+      circular
+      position="absolute"
+      bottom="$3"
+      right="$4"
+      onPress={() => {
+        mapRef?.current?.animateCamera({
+          center: {
+            latitude: parseFloat(driverLocation?.latitude),
+            longitude: parseFloat(driverLocation?.longitude),
+          },
+          zoom: 16,
+        });
+      }}
+    />
+  )
+
+  const renderFilters = () => (
+    <View position='absolute' top={1} left={1} right={1}>
+      <XStack alignItems='center' justifyContent='space-between'>
+        <MapFilters values={filters} onChange={setFilters} />
+        {
+          isFetching && (
+            <Spinner />
+          )
+        }
+      </XStack>
+    </View>
+  )
 
   const renderCarouselItem = ({
     item,
@@ -326,341 +471,72 @@ export function HomeScreen() {
       ? defaultIndex
       : 0;
 
+  const renderCarousel = () =>
+    showCarousel && driversList.length > 0 && (
+      <YStack
+        position="absolute"
+        bottom={0}
+        backgroundColor={'$color1'}
+        borderTopRightRadius={'$6'}
+        borderTopLeftRadius={'$6'}
+        paddingVertical="$5"
+      >
+        <Button
+          icon={X}
+          scaleIcon={1.5}
+          backgroundColor="$color1"
+          size="$3"
+          width="$6"
+          position="absolute"
+          top="$-6"
+          left="$4"
+          onPress={onCloseCarouselButtonPress}
+        />
+        <Carousel
+          key={driversList.length}
+          ref={carouselRef}
+          width={USER_CARD_WIDTH}
+          height={USER_CARD_HEIGHT}
+          autoPlay={false}
+          data={driversList}
+          defaultIndex={safeDefaultIndex}
+          renderItem={renderCarouselItem}
+          onSnapToItem={onSnapToItem}
+        />
+      </YStack>
+    );
+
   return (
     <ScreenLayout>
       <YStack flex={1}>
-        <AppHeaderSection search={search} setSearch={setSearch} MaterialIcons={MaterialIcons} />
+        <AppHeader
+          showSearchBar
+          searchProps={{
+            value: search,
+            onChangeText: setSearch,
+            rightIcon: () => (
+              search && search.length > 0 ? (
+                <Button
+                  unstyled
+                  theme="accent"
+                  icon={<MaterialIcons name="cancel" size={24} color={'grey'} />}
+                  onPress={() => setSearch('')}
+                />
+              ) : null
+            ),
+          }}
+        />
         <YStack flex={1} position='relative'>
-          <MapSection
-            showMap={showMap}
-            mapRef={mapRef}
-            initialCamera={initialCamera}
-            driverLocation={driverLocation}
-            debouncedSetCurrentRegion={debouncedSetCurrentRegion}
-            renderMapDrivers={renderMapDrivers}
-            renderMapCompanies={renderMapCompanies}
-          />
-          <ListSection
-            showMap={showMap}
-            isKeyboardVisible={isKeyboardVisible}
-            driversList={driversList}
-            companiesList={!!showCompany && companiesQuery.data?.data || []}
-            isFetching={isFetching}
-            fetchDrivers={fetchDrivers}
-          />
-          <CarouselSection
-            showCarousel={showCarousel}
-            driversList={driversList}
-            USER_CARD_WIDTH={USER_CARD_WIDTH}
-            USER_CARD_HEIGHT={USER_CARD_HEIGHT}
-            carouselRef={carouselRef}
-            safeDefaultIndex={safeDefaultIndex}
-            renderCarouselItem={renderCarouselItem}
-            onSnapToItem={onSnapToItem}
-            onCloseCarouselButtonPress={onCloseCarouselButtonPress}
-            X={X}
-          />
-          <SwitcherButton
-            showCarousel={showCarousel}
-            showMap={showMap}
-            setShowMap={setShowMap}
-            t={t}
-          />
-          <CenterButton
-            driverLocation={driverLocation}
-            mapRef={mapRef}
-            MaterialIcons={MaterialIcons}
-            showMap={showMap}
-          />
-          <FiltersSection
-            isKeyboardVisible={isKeyboardVisible}
-            filters={filters}
-            setFilters={(values) => setFilters({ ...filters, ...values })}
-            isFetching={isFetching}
-          />
+          {renderMap()}
+          {renderList()}
+          {!isKeyboardVisible && renderCarousel()}
+          {!isKeyboardVisible && renderSwitcher()}
+          {driverLocation && showMap && renderCenterButton()}
+          {!isKeyboardVisible && renderFilters()}
         </YStack>
       </YStack>
     </ScreenLayout>
   );
 }
-
-// Memoized Map Section
-interface MapSectionProps {
-  showMap: boolean;
-  mapRef: React.RefObject<MapView>;
-  initialCamera: any;
-  driverLocation: Location.LocationObjectCoords | null;
-  debouncedSetCurrentRegion: (region: Region) => void;
-  renderMapDrivers: () => React.ReactNode;
-  renderMapCompanies: () => React.ReactNode;
-}
-const MapSection: FC<MapSectionProps> = memo(function MapSection({
-  showMap,
-  mapRef,
-  initialCamera,
-  driverLocation,
-  debouncedSetCurrentRegion,
-  renderMapDrivers,
-  renderMapCompanies,
-}) {
-  if (!showMap) return null;
-  return (
-    <MapView
-      ref={mapRef}
-      style={{ flex: 1 }}
-      initialCamera={initialCamera}
-      onPress={() => Keyboard.dismiss()}
-      showsUserLocation={!!driverLocation}
-      showsMyLocationButton={false}
-      onRegionChangeComplete={debouncedSetCurrentRegion}
-    >
-      {renderMapDrivers()}
-      {renderMapCompanies()}
-    </MapView>
-  );
-});
-
-// Memoized List Section
-interface ListSectionProps {
-  showMap: boolean;
-  isKeyboardVisible: boolean;
-  driversList: DriverTransformer[];
-  companiesList: any[];
-  isFetching: boolean;
-  fetchDrivers: (query?: any) => Promise<void>;
-}
-const ListSection: FC<ListSectionProps> = memo(function ListSection({
-  showMap,
-  isKeyboardVisible,
-  driversList,
-  companiesList,
-  isFetching,
-  fetchDrivers,
-}) {
-  if (showMap) return null;
-  return (
-    <View flex={1} marginTop={isKeyboardVisible ? 0 : "$10"}>
-      <SectionList
-        sections={[{ data: driversList }]}
-        keyExtractor={(item: DriverTransformer, index) => `driver-${item.id}-${index}`}
-        renderItem={({ item, index }: { item: DriverTransformer; index: number }) => (
-          <UserCard
-            key={`stack-${item.id}-${index}`}
-            user={item}
-            flex={1}
-            marginHorizontal="$4"
-            marginVertical="$2"
-            backgroundColor="$color2"
-          />
-        )}
-        refreshing={isFetching}
-        onRefresh={fetchDrivers}
-        ListEmptyComponent={
-          <View flex={1} alignItems='center' gap="$8">
-            <CustomIcon name="empty_data" size="$18" color="$color5" />
-            <H4>No Data Found!</H4>
-          </View>
-        }
-      />
-      {companiesList.length > 0 && (
-        <View>
-          {companiesList.map((item: any, index: number) => (
-            <CompanyCard
-              key={`stack-company-${item.id}-${index}`}
-              user={item}
-              flex={1}
-              marginHorizontal="$4"
-              marginVertical="$2"
-              backgroundColor="$color2"
-            />
-          ))}
-        </View>
-      )}
-    </View>
-  );
-});
-
-// Memoized Carousel Section
-interface CarouselSectionProps {
-  showCarousel: boolean;
-  driversList: DriverTransformer[];
-  USER_CARD_WIDTH: number;
-  USER_CARD_HEIGHT: number;
-  carouselRef: React.RefObject<ICarouselInstance>;
-  safeDefaultIndex: number;
-  renderCarouselItem: (props: { item: DriverTransformer; index: number }) => JSX.Element;
-  onSnapToItem: (index: number) => void;
-  onCloseCarouselButtonPress: () => void;
-  X: any;
-}
-const CarouselSection: FC<CarouselSectionProps> = memo(function CarouselSection({
-  showCarousel,
-  driversList,
-  USER_CARD_WIDTH,
-  USER_CARD_HEIGHT,
-  carouselRef,
-  safeDefaultIndex,
-  renderCarouselItem,
-  onSnapToItem,
-  onCloseCarouselButtonPress,
-  X,
-}) {
-  if (!showCarousel || driversList.length === 0) return null;
-  return (
-    <YStack
-      position="absolute"
-      bottom={0}
-      backgroundColor={'$color1'}
-      borderTopRightRadius={'$6'}
-      borderTopLeftRadius={'$6'}
-      paddingVertical="$5"
-    >
-      <Button
-        icon={X}
-        scaleIcon={1.5}
-        backgroundColor="$color1"
-        size="$3"
-        width="$6"
-        position="absolute"
-        top="$-6"
-        left="$4"
-        onPress={onCloseCarouselButtonPress}
-      />
-      <Carousel
-        key={driversList.length}
-        ref={carouselRef}
-        width={USER_CARD_WIDTH}
-        height={USER_CARD_HEIGHT}
-        autoPlay={false}
-        data={driversList}
-        defaultIndex={safeDefaultIndex}
-        renderItem={renderCarouselItem}
-        onSnapToItem={onSnapToItem}
-      />
-    </YStack>
-  );
-});
-
-// Memoized Switcher Button
-interface SwitcherButtonProps {
-  showCarousel: boolean;
-  showMap: boolean;
-  setShowMap: React.Dispatch<React.SetStateAction<boolean>>;
-  t: typeof t;
-}
-const SwitcherButton: FC<SwitcherButtonProps> = memo(function SwitcherButton({
-  showCarousel,
-  showMap,
-  setShowMap,
-  t,
-}) {
-  if (showCarousel) return null;
-  return (
-    <Button
-      theme="accent"
-      position="absolute"
-      bottom="$4"
-      left="$4"
-      icon={<CustomIcon name={showMap ? 'list' : 'map'} size="$2" />}
-      fontWeight="600"
-      fontSize="$2"
-      size="$3"
-      onPress={() => setShowMap(!showMap)}
-    >
-      {showMap ? t('common:list') : t('common:map')}
-    </Button>
-  );
-});
-
-// Memoized Center Button
-interface CenterButtonProps {
-  driverLocation: Location.LocationObjectCoords | null;
-  mapRef: React.RefObject<MapView>;
-  MaterialIcons: any;
-  showMap: boolean;
-}
-const CenterButton: FC<CenterButtonProps> = memo(function CenterButton({
-  driverLocation,
-  mapRef,
-  MaterialIcons,
-  showMap,
-}) {
-  if (!driverLocation || !showMap) return null;
-  return (
-    <Button
-      theme="accent"
-      icon={<MaterialIcons name="my-location" size={20} color="black" />}
-      circular
-      position="absolute"
-      bottom="$3"
-      right="$4"
-      onPress={() => {
-        mapRef?.current?.animateCamera({
-          center: {
-            latitude: driverLocation.latitude,
-            longitude: driverLocation.longitude,
-          },
-          zoom: 16,
-        });
-      }}
-    />
-  );
-});
-
-// Memoized Filters Section
-interface FiltersSectionProps {
-  isKeyboardVisible: boolean;
-  filters: { vehicle_model: string; provider_type: string };
-  setFilters: (values: Record<string, string>) => void;
-  isFetching: boolean;
-}
-const FiltersSection: FC<FiltersSectionProps> = memo(function FiltersSection({
-  isKeyboardVisible,
-  filters,
-  setFilters,
-  isFetching,
-}) {
-  if (isKeyboardVisible) return null;
-  return (
-    <View position='absolute' top={1} left={1} right={1}>
-      <XStack alignItems='center' justifyContent='space-between'>
-        <MapFilters values={filters} onChange={(values) => setFilters({ ...filters, ...values })} />
-        {isFetching && <Spinner />}
-      </XStack>
-    </View>
-  );
-});
-
-// Memoized AppHeader Section
-interface AppHeaderSectionProps {
-  search: string | undefined;
-  setSearch: React.Dispatch<React.SetStateAction<string | undefined>>;
-  MaterialIcons: any;
-}
-const AppHeaderSection: FC<AppHeaderSectionProps> = memo(function AppHeaderSection({
-  search,
-  setSearch,
-  MaterialIcons,
-}) {
-  return (
-    <AppHeader
-      showSearchBar
-      searchProps={{
-        value: search,
-        onChangeText: setSearch,
-        rightIcon: () => (
-          search && search.length > 0 ? (
-            <Button
-              unstyled
-              theme="accent"
-              icon={<MaterialIcons name="cancel" size={24} color={'grey'} />}
-              onPress={() => setSearch('')}
-            />
-          ) : null
-        ),
-      }}
-    />
-  );
-});
 
 export default HomeScreen;
