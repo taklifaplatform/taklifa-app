@@ -462,8 +462,17 @@ export function HomeScreen() {
     );
   };
 
+  const defaultIndex = selectedDriver?.id
+    ? driversList.findIndex((d) => d.id === selectedDriver.id)
+    : 0;
+
+  const safeDefaultIndex =
+    defaultIndex >= 0 && defaultIndex < driversList.length
+      ? defaultIndex
+      : 0;
+
   const renderCarousel = () =>
-    showCarousel && (
+    showCarousel && driversList.length > 0 && (
       <YStack
         position="absolute"
         bottom={0}
@@ -489,12 +498,8 @@ export function HomeScreen() {
           width={USER_CARD_WIDTH}
           height={USER_CARD_HEIGHT}
           autoPlay={false}
-          data={driversList || []}
-          defaultIndex={
-            selectedDriver?.id
-              ? driversList.findIndex((d) => d.id === selectedDriver.id)
-              : 0
-          }
+          data={driversList}
+          defaultIndex={safeDefaultIndex}
           renderItem={renderCarouselItem}
           onSnapToItem={onSnapToItem}
         />

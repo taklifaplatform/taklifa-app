@@ -1,4 +1,8 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
+apps/mobile/android
+apps/mobile/ios
+apps/mobile/node_modules
+apps/mobile/yarn.lock
 
 # compiled output
 dist
