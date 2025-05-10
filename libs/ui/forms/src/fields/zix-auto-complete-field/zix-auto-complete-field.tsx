@@ -36,7 +36,6 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
   }
 
   const [search, setSearch] = useState<string>();
-  // const [search, setSearch] = useState<string>(props.value || '');
   const { data, refetch, isFetching } = useQuery(
     {
       queryFn() {
@@ -64,11 +63,6 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
     }, 1000);
   }, [props.value]);
 
-  // useEffect(() => {
-  //   if (props.value !== search) {
-  //     setSearch(props.value || '');
-  //   }
-  // }, [props.value]);
 
   const mappedData = useMemo<BaseSelectFieldItem[]>(() => {
     return [

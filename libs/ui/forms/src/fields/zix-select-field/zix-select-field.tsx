@@ -100,7 +100,6 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
           {...selectTriggerProps}
         >
           {prependPlaceHolder}
-          {/* <Text>{(selectedPhone?.icon || "") + " " + (selectedPhone?.name || "")}</Text> */}
           <Select.Value fontSize="$1" placeholder={placeholder} />
           {appendPlaceHolder}
         </Select.Trigger>
