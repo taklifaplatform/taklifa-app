@@ -80,7 +80,8 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
 
   // on Contact button press
   const onContactPress = (item: any) => {
-    Linking.openURL(`tel:${item?.driver?.phone_number}`);
+    const phoneNumber = item?.driver?.phone_number
+    Linking.openURL(`tel:${phoneNumber.includes('+') ? phoneNumber : `+${phoneNumber}`}`);
   }
 
 
@@ -143,25 +144,25 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
             fontSize={'$3'}
           >{item?.title || ''}</Text>
           <XStack
-          alignItems='center'
+            alignItems='center'
           >
-          <Text
-            fontWeight={'bold'}
-            fontSize={'$3'}
-          >{item?.price?.value || ''}</Text>
-          <Text
-            fontWeight={'bold'}
-            fontSize={'$3'}
-          > {item?.price?.currency?.code || ''}</Text>
+            <Text
+              fontWeight={'bold'}
+              fontSize={'$3'}
+            >{item?.price?.value || ''}</Text>
+            <Text
+              fontWeight={'bold'}
+              fontSize={'$3'}
+            > {item?.price?.currency?.code || ''}</Text>
           </XStack>
 
         </XStack>
         <XStack
-            gap="$4"
-            alignItems='center'
-            justifyContent='space-between'
-          >
-            {/* <ZixButton
+          gap="$4"
+          alignItems='center'
+          justifyContent='space-between'
+        >
+          {/* <ZixButton
               flex={0.1}
               backgroundColor='$gray7'
               loading={isPending}
@@ -169,24 +170,24 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
               onPress={startChat}
             />*/}
 
-            {item?.driver?.phone_number && <Button
-              flex={0.1}
-              backgroundColor='$gray7'
-              icon={() => <CustomIcon name="call" color='$color12' size={'$1'} />}
-              onPress={() => onContactPress(item)}
-            />
-            }
-            {!showHeader && !driver && <Button
-              iconAfter={<MoreHorizontal />}
-              onPress={() => {
-                setSelectedItem(item);
-                actionSheetManagerRef.current?.open();
-              }}
-            />}
-          </XStack>
+          {item?.driver?.phone_number && <Button
+            flex={0.1}
+            backgroundColor='$gray7'
+            icon={() => <CustomIcon name="call" color='$color12' size={'$1'} />}
+            onPress={() => onContactPress(item)}
+          />
+          }
+          {!showHeader && !driver && <Button
+            iconAfter={<MoreHorizontal />}
+            onPress={() => {
+              setSelectedItem(item);
+              actionSheetManagerRef.current?.open();
+            }}
+          />}
+        </XStack>
         <Text
           numberOfLines={3}
-        >{item?.description || ''}</Text>
+        >{item?.description || ''}</Text>
         {
           item?.images && <ZixMediasListWidget medias={item?.images || []} paddingHorizontal={5} />
         }
@@ -260,7 +261,7 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
               <CustomIcon name="empty_data" size="$18" color="$color5" />
               <H4>
                 {t('common:no_services_found')}
-                </H4>
+              </H4>
             </View>
           }
         />

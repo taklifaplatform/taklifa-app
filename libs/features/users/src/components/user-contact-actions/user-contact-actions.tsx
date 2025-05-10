@@ -21,7 +21,7 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
   onServiceRequestPress,
   ...props
 }) => {
-  const { user: authUser, getUrlPrefix, isServiceProvider } = useAuth()
+  const { user: authUser, isLoggedIn, getUrlPrefix, isServiceProvider } = useAuth()
   const { width } = Dimensions.get('window');
   const router = useRouter()
 
@@ -32,10 +32,15 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
   }
 
   function onCallPress() {
-    Linking.openURL(`tel:${user.phone_number}`);
+    const phoneNumber = user.phone_number
+    Linking.openURL(`tel:${phoneNumber.includes('+') ? phoneNumber : `+${phoneNumber}`}`);
   }
 
   function _onServiceRequestPress() {
+    if (!isLoggedIn) {
+      router.push(`/auth/login`)
+      return
+    }
     if (onServiceRequestPress) {
       return onServiceRequestPress()
     }
@@ -82,18 +87,24 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
         )
       }
       <ZixButton
-        flex={ width > 400 ? 0.5 : 0.2}
+        flex={width > 400 ? 0.5 : 0.2}
         backgroundColor='$gray7'
         icon={(props: IconProps) => <CustomIcon {...props} name="chat" color='$color12' />}
         disabled={isPending}
         loading={isPending}
-        onPress={() => startChat()}
+        onPress={() => {
+          if (isLoggedIn) {
+            startChat()
+          } else {
+            router.push(`/auth/login`)
+          }
+        }}
         {...sharedButtonStyle}
       >
         {width > 400 ? t('shipment:chat') : null}
       </ZixButton>
       <Button
-        flex={ width > 400 ? 0.5 : 0.2}
+        flex={width > 400 ? 0.5 : 0.2}
         backgroundColor='$gray7'
         icon={(props: IconProps) => <CustomIcon {...props} name="call" color='$color12' />}
         onPress={onCallPress}

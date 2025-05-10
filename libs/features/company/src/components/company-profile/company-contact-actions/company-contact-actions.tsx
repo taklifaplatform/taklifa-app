@@ -34,7 +34,8 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
   }
 
   function onCallPress() {
-    Linking.openURL(`tel:${company?.phone_number}`);
+    const phoneNumber = company?.phone_number
+    Linking.openURL(`tel:${phoneNumber.includes('+') ? phoneNumber : `+${phoneNumber}`}`);
   }
 
   function _onServiceRequestPress() {
