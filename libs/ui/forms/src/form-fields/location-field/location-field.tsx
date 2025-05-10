@@ -37,6 +37,7 @@ export const LocationField: React.FC<LocationFieldProps> = ({
       location: value,
     }) : { data: {} },
     queryKey: ['LocationService.retrieve', value],
+    enabled: !!value,
   })
 
   const locationData = data?.data ?? {}

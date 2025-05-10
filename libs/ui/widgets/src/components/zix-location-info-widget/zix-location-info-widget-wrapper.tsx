@@ -30,6 +30,7 @@ export const ZixLocationInfoWidgetWrapper: React.FC<ZixLocationInfoWidgetWrapper
       location: locationId,
     }) : undefined,
     queryKey: ['LocationService.retrieve', locationId],
+    enabled: !!locationId,
   })
 
   const [loadingEditAction, setLoadingEditAction] = useState(false)
