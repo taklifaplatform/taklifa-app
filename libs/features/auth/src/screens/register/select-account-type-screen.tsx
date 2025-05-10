@@ -2,20 +2,21 @@ import { t } from 'i18next';
 import { useRouter } from 'solito/router';
 import { YStack } from 'tamagui';
 
-import { useAuth } from '@zix/services/auth';
-import { AuthHeader } from '../../components/auth-header/auth-header';
-import InlineItemSelect from '../../components/inline-item-select/inline-item-select';
-import { FormWrapper } from '@zix/ui/forms';
-import { ScreenLayout } from '@zix/ui/layouts';
-import { UserService } from '@zix/api';
 import * as Sentry from '@sentry/react-native';
 import { useToastController } from '@tamagui/toast';
+import { UserService } from '@zix/api';
+import { useAuth, useMixpanel } from '@zix/services/auth';
+import { FormWrapper } from '@zix/ui/forms';
+import { ScreenLayout } from '@zix/ui/layouts';
+import { AuthHeader } from '../../components/auth-header/auth-header';
+import InlineItemSelect from '../../components/inline-item-select/inline-item-select';
 
 /**
  * Represents the screen for selecting the account type during the registration process.
  * Allows the user to choose between service requestor and service provider account types.
  */
 export const SelectAccountTypeScreen: React.FC = () => {
+  useMixpanel('Select Account Type Page view')
   const router = useRouter();
   const { requestedAccountType, setRequestedAccountType, user, isLoggedIn, redirectUserToActiveDashboard, refetchUser } = useAuth();
   const toast = useToastController();

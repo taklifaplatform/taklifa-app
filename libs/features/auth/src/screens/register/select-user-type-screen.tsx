@@ -2,17 +2,18 @@ import { t } from 'i18next';
 import { useRouter } from 'solito/router';
 import { YStack } from 'tamagui';
 
-import { useAuth } from '@zix/services/auth';
-import { AuthHeader } from '../../components/auth-header/auth-header';
-import InlineItemSelect from '../../components/inline-item-select/inline-item-select';
+import { useAuth, useMixpanel } from '@zix/services/auth';
 import { FormWrapper } from '@zix/ui/forms';
 import { ScreenLayout } from '@zix/ui/layouts';
+import { AuthHeader } from '../../components/auth-header/auth-header';
+import InlineItemSelect from '../../components/inline-item-select/inline-item-select';
 
 /**
  * Renders the screen for selecting the user type during the registration process.
  * Allows the user to choose between individual and company user types.
  */
 export const SelectUserTypeScreen = () => {
+  useMixpanel('Select User Type Page view')
   const router = useRouter();
   const { isLoggedIn, requestedAccountType, setRequestedAccountType, user } =
     useAuth();

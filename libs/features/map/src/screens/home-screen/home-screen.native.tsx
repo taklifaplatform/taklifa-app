@@ -4,7 +4,7 @@ import { X } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { CompaniesService, DriverTransformer, DriversService, LocationService } from '@zix/api';
 import { CompanyCard, UserCard } from '@zix/features/users';
-import { USER_ROLES, useAuth } from '@zix/services/auth';
+import { USER_ROLES, useAuth, useMixpanel } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { MapCompanyMarker, MapDriverMarker } from '@zix/ui/sawaeed';
@@ -34,6 +34,7 @@ const initialCamera = {
 };
 
 export function HomeScreen() {
+  useMixpanel('Home Page view')
   const USER_CARD_WIDTH = width;
   const USER_CARD_HEIGHT = Math.max(260, height / 4);
 

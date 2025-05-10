@@ -206,7 +206,8 @@
     "react-native-maps-directions": "*",
     "moment-timezone": "*",
     "@sentry/react-native": "*",
-    "lodash": "*"
+    "lodash": "*",
+    "mixpanel-react-native": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",

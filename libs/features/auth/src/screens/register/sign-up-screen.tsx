@@ -16,9 +16,9 @@ import { Theme } from 'tamagui';
 import { z } from 'zod';
 
 import { AuthService } from '@zix/api';
-import { USER_ROLES, useAuth } from '@zix/services/auth';
-import { AuthHeader } from '../../components/auth-header/auth-header';
+import { USER_ROLES, useAuth, useMixpanel } from '@zix/services/auth';
 import { ScreenLayout } from '@zix/ui/layouts';
+import { AuthHeader } from '../../components/auth-header/auth-header';
 
 const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
 
@@ -58,6 +58,7 @@ export const SignUpSchema = z
   });
 
 export const SignUpScreen = () => {
+  useMixpanel('Sign Up Page view')
   const toast = useToastController();
   const router = useRouter();
   const updateParams = useUpdateParams();

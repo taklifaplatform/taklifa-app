@@ -3,7 +3,7 @@ import { Paragraph, Stack, Text, Theme } from 'tamagui';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 
 import { AuthService } from '@zix/api';
-import { useAuth } from '@zix/services/auth';
+import { useAuth, useMixpanel } from '@zix/services/auth';
 import {
   SchemaForm,
   SubmitButton,
@@ -25,19 +25,20 @@ export const LoginSchema = z.object({
   phone_number: formFields.phone.describe(t('forms:phone_number').toString()),
   password: formFields.secure_text.describe(t('forms:password')),
 })
-.superRefine(({ password  }, ctx) => {
-  if (password.length < 1) {
-    ctx.addIssue({
-      path: ['password'],
-      code: 'custom',
-      message:( t('forms:password_field_required')),
-    });
-  }
+  .superRefine(({ password }, ctx) => {
+    if (password.length < 1) {
+      ctx.addIssue({
+        path: ['password'],
+        code: 'custom',
+        message: (t('forms:password_field_required')),
+      });
+    }
 
 
-});
+  });
 
 export const LoginScreen: React.FC = () => {
+  useMixpanel('Login Page view')
   const { setAuthAccessToken, setAuthUser, redirectUserToActiveDashboard } =
     useAuth();
 
