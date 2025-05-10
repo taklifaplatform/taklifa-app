@@ -80,7 +80,16 @@ export function HomeScreen() {
     console.log("==============")
 
     if (driversData?.length) {
-      setDrivers(driversData);
+      const referenceLocation = driverLocation || currentRegion;
+      const sortedDrivers = driversData.slice().sort((a, b) => {
+        const aLoc = a.live_location || a.location;
+        const bLoc = b.live_location || b.location;
+        if (!aLoc || !bLoc) return 0;
+        const aDistance = getDistance(referenceLocation, aLoc);
+        const bDistance = getDistance(referenceLocation, bLoc);
+        return aDistance - bDistance;
+      });
+      setDrivers(sortedDrivers);
     }
     setIsFetching(false);
   }
@@ -127,18 +136,42 @@ export function HomeScreen() {
   });
   const [selectedDriver, setSelectedDriver] = useState<DriverTransformer>();
 
-  const driversList = useMemo<DriverTransformer[]>(() => {
-    if ((!selectedDriver?.location && !selectedDriver?.live_location) || !drivers) {
-      return drivers || [];
+  const [driversList, setDriversList] = useState<DriverTransformer[]>([]);
+
+  const [showCarousel, setShowCarousel] = useState(false);
+
+  function getWindowedDrivers(drivers: DriverTransformer[], selectedDriver: DriverTransformer | undefined, currentRegion: Region) {
+    if (!drivers || drivers.length === 0) return [];
+
+    const referenceLocation =
+      selectedDriver?.live_location ||
+      selectedDriver?.location ||
+      currentRegion;
+
+    const sortedDrivers = drivers
+      .filter(d => d.live_location || d.location)
+      .slice()
+      .sort((a, b) => {
+        const aLoc = a.live_location || a.location;
+        const bLoc = b.live_location || b.location;
+        if (!aLoc || !bLoc) return 0;
+        const aDistance = getDistance(referenceLocation, aLoc);
+        const bDistance = getDistance(referenceLocation, bLoc);
+        return aDistance - bDistance;
+      });
+
+    if (!selectedDriver) {
+      return sortedDrivers;
     }
-    const driverLocation = selectedDriver.live_location || selectedDriver.location;
-    return drivers.sort((a, b) => {
-      if (!a.location || !b.location) return 0;
-      const aDistance = getDistance(driverLocation, a.location);
-      const bDistance = getDistance(driverLocation, b.location);
-      return aDistance - bDistance;
-    });
-  }, [drivers, selectedDriver]);
+    const listingLimit = 20;
+
+    const selectedIndex = sortedDrivers.findIndex(d => d.id === selectedDriver.id);
+    const start = Math.max(0, selectedIndex - Math.floor(listingLimit / 2));
+    const end = Math.min(sortedDrivers.length, selectedIndex + Math.ceil(listingLimit / 2));
+
+    return sortedDrivers.slice(start, end);
+  }
+
 
   const [driverLocation, setDriverLocation] = useState<Location.LocationObjectCoords | null>(null)
   const getDriverLocation = async () => {
@@ -182,12 +215,9 @@ export function HomeScreen() {
     }
   }, [user]);
 
-
-  const [showCarousel, setShowCarousel] = useState(false);
-
   // on, Swipe item MAP Animation
   function onAnimateToDriver(driver: DriverTransformer) {
-    if (!driver.location) return;
+    if (!driver.location || !driver.live_location) return;
 
     if (!showCarousel) {
       setShowCarousel(true);
@@ -208,6 +238,7 @@ export function HomeScreen() {
   }
 
   function onCloseCarouselButtonPress() {
+    setDriversList([])
     setShowCarousel(false);
     setSelectedDriver(undefined);
     if (mapRef && mapRef.current) {
@@ -229,9 +260,11 @@ export function HomeScreen() {
     setSelectedDriver(driversList[index]);
   }
 
+  // const [selectedDriver, setSelectedDriver] = useState<DriverTransformer>();
   function onMarkerPress(driver: DriverTransformer, index: number) {
     setSelectedDriver(driver);
     onAnimateToDriver(driver);
+    setDriversList(getWindowedDrivers(drivers, driver, currentRegion));
     setShowCarousel(true);
     carouselRef?.current?.scrollTo({
       index,
