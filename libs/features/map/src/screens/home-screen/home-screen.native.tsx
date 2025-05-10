@@ -95,7 +95,7 @@ export function HomeScreen() {
     filters.vehicle_model,
     currentRegion,
     search,
-    filters,
+    filters.vehicle_model,
   ]);
   // const { data, ...driversQuery } = useQuery({
   //   queryFn() {
@@ -126,13 +126,14 @@ export function HomeScreen() {
   const [selectedDriver, setSelectedDriver] = useState<DriverTransformer>();
 
   const driversList = useMemo<DriverTransformer[]>(() => {
-    if (!selectedDriver?.location || !drivers) {
+    if ((!selectedDriver?.location && !selectedDriver?.live_location) || !drivers) {
       return drivers || [];
     }
+    const driverLocation = selectedDriver.live_location || selectedDriver.location
     return drivers.sort((a, b) => {
       if (!a.location || !b.location) return 0;
-      const aDistance = getDistance(selectedDriver?.location, a.location);
-      const bDistance = getDistance(selectedDriver?.location, b.location);
+      const aDistance = getDistance(driverLocation, a.location);
+      const bDistance = getDistance(driverLocation, b.location);
       return aDistance < bDistance ? a : b;
     });
   }, [drivers, selectedDriver]);
@@ -219,6 +220,9 @@ export function HomeScreen() {
 
   // Carousel SnapItem
   function onSnapToItem(index: number) {
+    if (driversList?.length < index) {
+      return;
+    }
     onAnimateToDriver(driversList[index]);
     setSelectedDriver(driversList[index]);
   }

@@ -69,6 +69,17 @@
         "platform": "android"
       }
     },
+    "android:apk": {
+      "executor": "@nx/expo:build",
+      "dependsOn": [
+        "ensure-symlink",
+        "sync-deps"
+      ],
+      "options": {
+        "profile": "development",
+        "platform": "android"
+      }
+    },
     "release:ios": {
       "executor": "@nx/expo:build",
       "dependsOn": ["ensure-symlink", "sync-deps"],
