@@ -73,6 +73,24 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
     </YStack>
   );
 
+  const renderItemContent = (item: BaseSelectFieldItem) => (
+    <XStack alignItems='center' gap='$2' flex={1} overflow='hidden'>
+      <Text fontSize='$4'>{item.icon}</Text>
+      <Text numberOfLines={1} fontSize='$4'>{item.name}</Text>
+    </XStack>
+  )
+
+  const renderSelectedItem = (_value: string | undefined, placeholder: string | undefined) => {
+    const item = options.find(item => item.id === _value)
+    return item ? renderItemContent(item) : (
+      <XStack alignItems='center' gap='$2' flex={1} overflow='hidden'>
+        <Text numberOfLines={1} fontSize='$4'>
+          {value ?? placeholder}
+        </Text>
+      </XStack>
+    )
+  }
+
   if (!search && !options.length && value) {
     return (
       <View
@@ -99,8 +117,8 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
           {...SHARED_FIELDS_STYLE}
           {...selectTriggerProps}
         >
-          {prependPlaceHolder}
-          <Select.Value fontSize="$1" placeholder={placeholder} />
+          {renderSelectedItem(value, placeholder)}
+          {/* <Select.Value fontSize="$1" placeholder={placeholder} /> */}
           {appendPlaceHolder}
         </Select.Trigger>
 
@@ -152,10 +170,7 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
                       justifyContent='space-between'
                     >
                       <Select.ItemText>
-                        <XStack alignItems='center' gap='$2' flex={1}>
-                          <Text fontSize='$4'>{item.icon}</Text>
-                          <Text fontSize='$4'>{item.name}</Text>
-                        </XStack>
+                        {renderItemContent(item)}
                       </Select.ItemText>
                       <Select.ItemIndicator marginLeft="$4" theme='accent'>
                         <CustomIcon name='radio_button_checked' color='$color9' />
