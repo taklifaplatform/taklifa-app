@@ -2,7 +2,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useIsFocused } from '@react-navigation/native';
 import { X } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
-import { CompaniesService, DriverTransformer, DriversService, LocationService } from '@zix/api';
+import { CompaniesService, CompanyTransformer, DriverTransformer, DriversService, LocationService } from '@zix/api';
 import { CompanyCard, UserCard } from '@zix/features/users';
 import { USER_ROLES, useAuth, useMixpanel } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
@@ -50,7 +50,6 @@ export function HomeScreen() {
   })
   const [showMap, setShowMap] = useState(true);
   const [search, setSearch] = useState<string>();
-  const filtersKey = useMemo(() => Object.values(filters).join('-'), [filters]);
 
   const [currentRegion, setCurrentRegion] = useState<Region>({
     latitude: 24.713552,
@@ -79,7 +78,7 @@ export function HomeScreen() {
     console.log('driversData::', driversData?.length)
     console.log("==============")
 
-    if (driversData?.length) {
+    if (driversData?.length || search?.length) {
       const referenceLocation = driverLocation || currentRegion;
       const sortedDrivers = driversData.slice().sort((a, b) => {
         const aLoc = a.live_location || a.location;
@@ -163,7 +162,7 @@ export function HomeScreen() {
     if (!selectedDriver) {
       return sortedDrivers;
     }
-    const listingLimit = 20;
+    const listingLimit = 14;
 
     const selectedIndex = sortedDrivers.findIndex(d => d.id === selectedDriver.id);
     const start = Math.max(0, selectedIndex - Math.floor(listingLimit / 2));
@@ -376,8 +375,8 @@ export function HomeScreen() {
           <ListSection
             showMap={showMap}
             isKeyboardVisible={isKeyboardVisible}
-            driversList={driversList}
-            companiesList={!!showCompany && companiesQuery.data?.data || []}
+            driversList={drivers}
+            companiesList={companiesQuery.data?.data || []}
             isFetching={isFetching}
             fetchDrivers={fetchDrivers}
           />
@@ -458,7 +457,7 @@ interface ListSectionProps {
   showMap: boolean;
   isKeyboardVisible: boolean;
   driversList: DriverTransformer[];
-  companiesList: any[];
+  companiesList: CompanyTransformer[];
   isFetching: boolean;
   fetchDrivers: (query?: any) => Promise<void>;
 }
@@ -470,22 +469,41 @@ const ListSection: FC<ListSectionProps> = memo(function ListSection({
   isFetching,
   fetchDrivers,
 }) {
+  const renderListData = [
+    {
+      data: driversList || [],
+      renderItem: ({ item, index }) => (
+        <UserCard
+          key={`stack-${item.id}-${index}`}
+          user={item}
+          flex={1}
+          marginHorizontal="$4"
+          marginVertical="$2"
+          backgroundColor="$color2"
+        />
+      ),
+    },
+    {
+      data: companiesList || [],
+      renderItem: ({ item, index }) => (
+        <CompanyCard
+          key={`stack-company-${item.id}-${index}`}
+          user={item}
+          flex={1}
+          marginHorizontal="$4"
+          marginVertical="$2"
+          backgroundColor="$color2"
+        />
+      ),
+    },
+  ];
   if (showMap) return null;
   return (
     <View flex={1} marginTop={isKeyboardVisible ? 0 : "$10"}>
       <SectionList
-        sections={[{ data: driversList }]}
+        style={{ flex: 1 }}
+        sections={renderListData}
         keyExtractor={(item: DriverTransformer, index) => `driver-${item.id}-${index}`}
-        renderItem={({ item, index }: { item: DriverTransformer; index: number }) => (
-          <UserCard
-            key={`stack-${item.id}-${index}`}
-            user={item}
-            flex={1}
-            marginHorizontal="$4"
-            marginVertical="$2"
-            backgroundColor="$color2"
-          />
-        )}
         refreshing={isFetching}
         onRefresh={fetchDrivers}
         ListEmptyComponent={
@@ -495,20 +513,6 @@ const ListSection: FC<ListSectionProps> = memo(function ListSection({
           </View>
         }
       />
-      {companiesList.length > 0 && (
-        <View>
-          {companiesList.map((item: any, index: number) => (
-            <CompanyCard
-              key={`stack-company-${item.id}-${index}`}
-              user={item}
-              flex={1}
-              marginHorizontal="$4"
-              marginVertical="$2"
-              backgroundColor="$color2"
-            />
-          ))}
-        </View>
-      )}
     </View>
   );
 });
