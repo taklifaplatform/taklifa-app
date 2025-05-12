@@ -14,7 +14,7 @@ import {
 } from '@zix/ui/forms';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
 import { Image, Theme } from 'tamagui';
@@ -33,20 +33,20 @@ const ManageVehicleFormSchema = z
     // TODO: missing model
 
     information: z.object({
-      body_type: formFields.text.describe(t('forms:body-type')).optional().nullable(),
-      steering_wheel: formFields.text.describe(t('forms:steering-wheel')).optional().nullable(),
+      // body_type: formFields.text.describe(t('forms:body-type')).optional().nullable(),
+      // steering_wheel: formFields.text.describe(t('forms:steering-wheel')).optional().nullable(),
       doors_count: formFields.number.describe(t('forms:doors-count')).optional().nullable(),
       seats_count: formFields.number.describe(t('forms:seats-count')).optional().nullable(),
       top_speed: formFields.number.describe(t('forms:top-speed')).optional().nullable(),
     }),
 
-    fuel_information: z.object({
-      fuel_type: formFields.text.describe(t('forms:fuel-type')).optional().nullable(),
-      fuel_capacity: formFields.float.describe(t('forms:fuel-capacity')).optional().nullable(),
-      liter_per_km_in_city: formFields.float.describe(t('forms:liter-per-km-in-city')).optional().nullable(),
-      liter_per_km_in_highway: formFields.float.describe(t('forms:liter-per-km-in-highway')).optional().nullable(),
-      liter_per_km_mixed: formFields.float.describe(t('forms:liter-per-km-in-combined')).optional().nullable(),
-    }),
+    // // fuel_information: z.object({
+    // //   fuel_type: formFields.text.describe(t('forms:fuel-type')).optional().nullable(),
+    // //   fuel_capacity: formFields.float.describe(t('forms:fuel-capacity')).optional().nullable(),
+    // //   liter_per_km_in_city: formFields.float.describe(t('forms:liter-per-km-in-city')).optional().nullable(),
+    // //   liter_per_km_in_highway: formFields.float.describe(t('forms:liter-per-km-in-highway')).optional().nullable(),
+    // //   liter_per_km_mixed: formFields.float.describe(t('forms:liter-per-km-in-combined')).optional().nullable(),
+    // // }),
 
     capacity_dimensions: z.object({
       width: formFields.float.describe(t('forms:vehicle-width')).optional().nullable(),
@@ -84,24 +84,24 @@ export const ManageVehicleScreen: React.FC = () => {
 
   const queryClient = useQueryClient();
 
-  const { mutateAsync } = useMutation({
-    async mutationFn(requestBody: z.infer<typeof ManageVehicleFormSchema>) {
-      console.log('requestBody::', JSON.stringify(requestBody, null, 2))
-      console.log('form.getValues::', form.getValues())
-      console.log('form.getValues->model_id::', form.getValues('model_id'))
-      if (!requestBody.model_id) {
-        throw new Error('Model is required');
-        return ;
-      }
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: async (requestBody: z.infer<typeof ManageVehicleFormSchema>) => {
+      // console.log('requestBody::', JSON.stringify(requestBody, null, 2))
+      // console.log('form.getValues::', form.getValues())
+      // console.log('form.getValues->model_id::', form.getValues('model_id'))
+      // if (!requestBody.model_id) {
+      //   throw new Error('Model is required');
+      //   return;
+      // }
 
       if (vehicleId) {
-        return VehiclesService.updateVehicle({
+        return await VehiclesService.updateVehicle({
           vehicle: vehicleId,
           requestBody,
         });
       }
 
-      return VehiclesService.createVehicle({
+      return await VehiclesService.createVehicle({
         requestBody,
       });
     },
@@ -113,15 +113,14 @@ export const ManageVehicleScreen: React.FC = () => {
         queryKey: ['VehiclesService.fetchAllVehicles', user?.active_role?.id, user?.active_company?.id],
       });
       // refresh after 5 seconds
-      setTimeout(() => {
-        queryClient.invalidateQueries({
-          queryKey: ['DriversService.fetchAllDrivers'],
-        })
-      }, 5000);
-      refetchUser();
+      queryClient.invalidateQueries({
+        queryKey: ['DriversService.fetchAllDrivers'],
+      })
+      // reset form
       toast.show('Vehicle Updated Successfully!');
-      router.back();
-      console.log('onSuccess::')
+      form.reset();
+      refetchUser();
+      router.replace('/app');
     },
     onError(error: any) {
       console.log('============')
@@ -137,92 +136,102 @@ export const ManageVehicleScreen: React.FC = () => {
   )
 
   const renderForm = () => (!!data?.data?.id || !vehicleId) && (
-    <SchemaForm
-      form={form}
-      schema={ManageVehicleFormSchema}
-      defaultValues={data?.data || {}}
-      props={{
-        model_id: {
-          api: 'vehicle-models',
-          dataMapper: (item: VehicleModelTransformer) => ({
-            id: item.id,
-            name: item.name,
-            icon: item?.map_icon ? (
-              <Image
-                source={{ uri: item.map_icon.url }}
-                resizeMode='contain'
-                style={{ width: 30, height: 25 }}
-              />
-            ) : null
-          }),
-        },
-      }}
-      onSubmit={mutateAsync}
-      renderAfter={({ submit }) => {
-        return (
-          <Theme inverse>
-            <SubmitButton onPress={() => submit()}>
-              {t('common:next')}
-            </SubmitButton>
-          </Theme>
-        );
-      }}
-    >
-      {({ information, fuel_information, capacity_dimensions, capacity_weight, ...fields }) => (
-        <>
-          <ZixFieldContainer
-            label={t('common:vehicle-information')}
-            labelBold
-            collapsible
-          >
-            {Object.values(fields)}
-          </ZixFieldContainer>
-          <ZixFieldContainer
-            label={t('common:vehicle-type')}
-            labelBold
-            collapsible
-            isOptional
-          >
-            {Object.values(information)}
-          </ZixFieldContainer>
+    <FormProvider {...form}>
+      <SchemaForm
+        form={form}
+        schema={ManageVehicleFormSchema}
+        defaultValues={data?.data || {}}
+        props={{
+          model_id: {
+            api: 'vehicle-models',
+            dataMapper: (item: VehicleModelTransformer) => ({
+              id: item.id,
+              name: item.name,
+              icon: item?.map_icon ? (
+                <Image
+                  source={{ uri: item.map_icon.url }}
+                  resizeMode='contain'
+                  style={{ width: 30, height: 25 }}
+                />
+              ) : null
+            }),
+          },
+        }}
+        onSubmit={async (variables) => {
+          console.log('variables::', JSON.stringify(variables, null, 2));
+          await mutateAsync(variables);
+        }}
+        renderAfter={({ submit }) => {
+          return (
+            <Theme inverse>
+              <SubmitButton loading={isPending} onPress={() => {
+                console.log('submit::')
+                // return submit()
+                mutateAsync(form.getValues())
+                // submit()
+              }}>
+                {t('common:next')}
+              </SubmitButton>
+            </Theme>
+          );
+        }}
+      >
+        {({ information, fuel_information, capacity_dimensions, capacity_weight, ...fields }) => (
+          <>
+            <ZixFieldContainer
+              label={t('common:vehicle-information')}
+              labelBold
+              collapsible
+            >
+              {Object.values(fields)}
+            </ZixFieldContainer>
+            <ZixFieldContainer
+              label={t('common:vehicle-type')}
+              labelBold
+              collapsible
+              isOptional
+            >
+              {Object.values(information)}
+            </ZixFieldContainer>
 
-          <ZixFieldContainer
+            {/* <ZixFieldContainer
             label={t('common:fuel-information')}
             labelBold
             collapsible
             isOptional
           >
             {Object.values(fuel_information)}
-          </ZixFieldContainer>
+          </ZixFieldContainer> */}
 
-          <ZixFieldContainer
-            label={t('common:dimensions')}
-            labelBold
-            collapsible
-            isOptional
-          >
-            {Object.values(capacity_dimensions)}
-          </ZixFieldContainer>
+            <ZixFieldContainer
+              label={t('common:dimensions')}
+              labelBold
+              collapsible
+              isOptional
+            >
+              {Object.values(capacity_dimensions)}
+            </ZixFieldContainer>
 
-          <ZixFieldContainer
-            label={t('common:capacity-weight')}
-            labelBold
-            collapsible
-            isOptional
-          >
-            {Object.values(capacity_weight)}
-          </ZixFieldContainer>
+            <ZixFieldContainer
+              label={t('common:capacity-weight')}
+              labelBold
+              collapsible
+              isOptional
+            >
+              {Object.values(capacity_weight)}
+            </ZixFieldContainer>
 
-        </>
-      )}
-    </SchemaForm>
+          </>
+        )}
+      </SchemaForm>
+    </FormProvider>
   );
 
   return (
     <ScreenLayout safeAreaBottom authProtected>
       <AppHeader
         showBackButton
-        title={vehicleId ? t('common:edit-vehicle') :  t('common:add-vehicle')}
+        title={vehicleId ? t('common:edit-vehicle') : t('common:add-vehicle')}
       />
       {/* <DebugObject object={data?.data} /> */}
       {renderForm()}

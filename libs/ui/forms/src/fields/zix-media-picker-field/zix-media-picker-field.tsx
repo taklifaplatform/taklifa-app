@@ -12,7 +12,7 @@ import {
 } from 'expo-image-picker';
 import { t } from 'i18next';
 import { useEffect, useRef, useState } from 'react';
-import { Alert, Linking, Platform } from 'react-native';
+import { Alert, Platform } from 'react-native';
 import { Dialog, Progress, Text, XStack } from 'tamagui';
 import { UploadableMediaFile, uploadMediaFile } from '../../utils';
 import { compressImage } from './compressImage';
@@ -61,7 +61,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
       const files = Array.isArray(value) ? value : [value];
       const _medias: Record<string, any> = {};
       files.forEach(file => {
-        if (file.uuid) {
+        if (file && file.uuid) {
           _medias[file.uuid] = file;
         } else {
           _medias[file.id] = file;
@@ -104,195 +104,191 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
 
   const [isUploading, setIsUploading] = useState(false);
 
-  async function onFilesSelected(files: ZixMediaPickerTransformer[]) {
-    const _medias: Record<string, any> = {};
-
-    files.forEach(file => {
-      const uuid = randomUUID();
-      _medias[uuid] = {
-        ...file,
-        url: file.uri,
-        original_url: file.uri,
-        uuid,
-        uploadProgress: 0.2,
-      };
+  // Helper: Batched state update for previews
+  const updatePreviews = (newMedias: Record<string, ZixMediaPickerTransformer>, isMultiple: boolean) => {
+    setPreviews((prev) => {
+      if (isMultiple) {
+        return { ...prev, ...newMedias };
+      } else {
+        return { ...newMedias };
+      }
     });
+  };
 
-    if (isMultiple) {
-      setPreviews((prev) => ({
-        ...prev,
-        ..._medias,
-      }));
-    } else {
-      setPreviews(_medias);
-    }
+  async function onFilesSelected(files: ZixMediaPickerTransformer[]) {
+    if (!files || !files.length) return;
+    const _medias: Record<string, ZixMediaPickerTransformer> = {};
+    files.forEach(file => {
+      if (file && file.uuid) {
+        _medias[file.uuid] = { ...file, uploadProgress: 0.2 };
+      }
+    });
+    updatePreviews(_medias, !!isMultiple);
 
     const failedMedias: Record<string, string[]> = {};
-    console.log('===============')
-    console.log('UPLOADING FILES::', _medias)
-    console.log('===============')
     setIsUploading(true);
-    const finalResults = await Promise.all(Object.values(_medias).map(async (_media) => {
-      const resizedPhoto = await compressImage(_media);
-      // console.log('resizedPhoto::', resizedPhoto)
-      const media = {
-        ..._media,
-        ...resizedPhoto
-      }
-      return new Promise((resolve, reject) => {
-        // compress the image
-        uploadMediaFile(media as UploadableMediaFile, (progress) => {
-          console.log('===============')
-          console.log('uploadMediaFil>progress::', progress)
-          console.log('===============')
-          // setPreviews((prev) => ({
-          //   ...prev,
-          //   [media.uuid]: {
-          //     ...media,
-          //     uploadProgress: progress,
-          //   },
-          // }));
-        }).then((result) => {
-          console.log('===============')
-          console.log('uploadMediaFil>result::', result)
-          console.log('===============')
-          resolve({
-            ...media,
-            ...result,
-            uploadProgress: 1,
-          });
-        }).catch((error) => {
-          Sentry.captureException(error);
-          failedMedias[media.uuid] = error?.errors?.file || [];
-          reject(error);
-        });
-      });
-    }));
-    console.log('===============')
-    console.log('FINAL RESULTS::', finalResults)
-    console.log('===============')
-
+    let finalResults: ZixMediaPickerTransformer[] = [];
+    try {
+      finalResults = await Promise.all(
+        Object.values(_medias).map(async (_media) => {
+          try {
+            const resizedPhoto = await compressImage(_media);
+            const media = { ..._media, ...resizedPhoto };
+            return await new Promise<ZixMediaPickerTransformer>((resolve, reject) => {
+              uploadMediaFile(media as UploadableMediaFile, (progress) => {
+                setPreviews((prev) => ({
+                  ...prev,
+                  ...(media.uuid ? {
+                    [media.uuid]: {
+                      ...media,
+                      uploadProgress: progress,
+                    },
+                  } : {}),
+                }));
+              })
+                .then((result) => {
+                  resolve({ ...media, ...result, uploadProgress: 1 });
+                })
+                .catch((error: any) => {
+                  captureError(error);
+                  if (_media.uuid) {
+                    failedMedias[_media.uuid] = error?.errors?.file || [error?.message || 'Unknown error'];
+                  }
+                  reject(error);
+                });
+            });
+          } catch (error: any) {
+            captureError(error);
+            if (_media.uuid) {
+              failedMedias[_media.uuid] = [error?.message || 'Unknown error'];
+            }
+            throw error;
+          }
+        })
+      );
+    } catch (e) {
+      // Already handled per-file
+    }
     onChange?.(isMultiple ? finalResults : finalResults[0]);
-
     if (Object.keys(failedMedias).length) {
       let errors: string[] = [];
       Object.keys(failedMedias).forEach((uuid) => {
-        onRemoveMedia(_medias[uuid]);
-        errors = [...errors, ...failedMedias[uuid]];
+        if (_medias[uuid]) {
+          onRemoveMedia(_medias[uuid]);
+        }
+        if (failedMedias[uuid]) {
+          errors = [...errors, ...failedMedias[uuid]];
+        }
       });
-      Alert.alert(
-        'Oops!!',
-        errors.length ? errors.join(', ') : 'Failed to upload file',
-        [{ text: 'OK', style: 'cancel' }],
-        { cancelable: true }
-      );
+      showAlert('Oops!!', errors.length ? errors.join(', ') : 'Failed to upload file');
     }
     setIsUploading(false);
+  }
+
+  // Helper: Safe alert
+  function showAlert(title: string, message: string) {
+    try {
+      Alert.alert(title, message, [{ text: 'OK', style: 'cancel' }], { cancelable: true });
+    } catch (e) {
+      // fallback: log if Alert fails
+      console.error('Alert failed:', e, title, message);
+    }
+  }
+
+  // Helper: Safe Sentry capture
+  function captureError(error: any) {
+    try {
+      Sentry.captureException(error);
+    } catch (e) {
+      console.error('Sentry capture failed:', e, error);
+    }
+  }
+
+  // Helper: Convert picked files to ZixMediaPickerTransformer with required fields
+  function normalizePickedFiles(files: any[], type: string, mediaTypes?: any): ZixMediaPickerTransformer[] {
+    return files.map((file) => ({
+      ...file,
+      url: file.uri,
+      original_url: file.uri,
+      uuid: randomUUID(),
+      uploadProgress: 0,
+      id: typeof file.id === 'number' ? file.id : undefined,
+      file_name: file.fileName || file.assetId || file.name || file.uri,
+      file_type: file.type || file.mimeType || type,
+      mediaTypes: mediaTypes || undefined,
+    }));
   }
 
   async function launchMediaPicker() {
     actionRef.current?.close();
     const mediaTypes = MediaTypeOptions.Images;
-
-    const result = await launchImageLibraryAsync({
-      mediaTypes,
-      allowsEditing: !isMultiple,
-      quality: 0.8,
-      allowsMultipleSelection: isMultiple,
-    });
-    // TODO: compress mages
-    if (result?.canceled) return;
-    if (result.assets.length) {
-      if (maxFileSize && result.assets.filter((asset) => asset.fileSize > maxFileSize).length) {
-        Alert.alert(
-          'Oops!!',
-          `File size should not exceed ${maxFileSize / 1024 / 1024} MB`,
-          [
-            {
-              text: 'OK',
-              style: 'cancel',
-            },
-          ],
-          {
-            cancelable: true,
-          },
-        );
-        return;
-      }
-      const files: Partial<UploadableMediaFile>[] = result.assets.map((file) => ({
-        ...file,
+    try {
+      const result = await launchImageLibraryAsync({
         mediaTypes,
-        id: '',
-        uri: file.uri,
-        file_name: file.fileName || file.assetId || file.uri,
-        file_type: file.type || type,
-      }));
-      onFilesSelected(files);
+        allowsEditing: !isMultiple,
+        quality: 0.8,
+        allowsMultipleSelection: isMultiple,
+      });
+      if (result?.canceled) return;
+      if (result.assets.length) {
+        if (maxFileSize && result.assets.some((asset) => (asset.fileSize ?? 0) > maxFileSize)) {
+          showAlert('Oops!!', `File size should not exceed ${maxFileSize / 1024 / 1024} MB`);
+          return;
+        }
+        const files = normalizePickedFiles(result.assets, type, mediaTypes);
+        onFilesSelected(files);
+      }
+    } catch (error: any) {
+      captureError(error);
+      showAlert('Oops!!', error?.message || 'Failed to pick media');
     }
   }
 
   async function launchDocumentPicker() {
     actionRef.current?.close();
-    const result = await getDocumentAsync({
-      multiple: isMultiple,
-      type: ['image/*',],
-      // type: ['image/*', 'application/pdf'],
-    });
-    if (result?.canceled) return;
-    if (result.assets.length) {
-      const files = result.assets.map((file) => ({
-        ...file,
-        id: '',
-        uri: file.uri,
-        file_name: file.name,
-        file_type: file.mimeType || type,
-      }));
-      onFilesSelected(files);
+    try {
+      const result = await getDocumentAsync({
+        multiple: isMultiple,
+        type: ['image/*'],
+      });
+      if (result?.canceled) return;
+      if (result.assets.length) {
+        const files = normalizePickedFiles(result.assets, type);
+        onFilesSelected(files);
+      }
+    } catch (error: any) {
+      captureError(error);
+      showAlert('Oops!!', error?.message || 'Failed to pick document');
     }
   }
 
   async function launchCamera() {
-    if (!permission?.granted) {
-      const grant = await requestPermission();
-      if (!grant.granted) {
-        Alert.alert(
-          'Oops!!',
-          'Camera permission is required to take photo',
-          
-          [
-            { text: 'Cancel', style: 'cancel' },
-            { text: 'Open Settings', onPress: () => Linking.openSettings() },
-          ],
-          { cancelable: true }
-        );
-        return;
-      }
-    }
-
-    actionRef.current?.close();
-    const mediaTypes = MediaTypeOptions.Images;
-
     try {
+      if (!permission || typeof permission !== 'object' || !('granted' in permission) || !(permission as any).granted) {
+        let grant;
+        if (typeof requestPermission === 'function') {
+          grant = await requestPermission();
+        }
+        if (typeof grant !== 'object' || !('granted' in grant) || !(grant as any).granted) {
+          showAlert('Oops!!', 'Camera permission is required to take photo');
+          return;
+        }
+      }
+      actionRef.current?.close();
+      const mediaTypes = MediaTypeOptions.Images;
       const result = await launchCameraAsync({
         mediaTypes,
         allowsEditing: !isMultiple,
         aspect: [4, 3],
         quality: 1,
       });
-      if (!result.canceled) {
-        const files = result.assets.map((file) => ({
-          id: '',
-          uri: file.uri,
-          file_name: file.fileName || file.assetId || file.uri,
-          file_type: file.type || type,
-        }));
+      if (!result.canceled && result.assets.length) {
+        const files = normalizePickedFiles(result.assets, type, mediaTypes);
         onFilesSelected(files);
       }
     } catch (error: any) {
-      Sentry.captureException(error);
-      Alert.alert('Oops!!', error?.message || 'Failed to take photo', [
-        { text: 'OK', style: 'cancel' },
-      ]);
+      captureError(error);
+      showAlert('Oops!!', error?.message || 'Failed to take photo');
     }
   }
 
@@ -306,7 +302,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
 
   function onRemoveMedia(media: MediaTransformer) {
     if (type === 'file') {
-      onChange?.(null);
+      onChange?.(null as any); // type fix
       setPreviews({});
     } else {
       onChange?.(
@@ -317,15 +313,19 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
         )
       );
       if (media.uuid) {
-        MediaService.deleteMedia(media.uuid);
+        try {
+          MediaService.deleteMedia({ requestBody: { uuid: media.uuid } });
+        } catch (e) {
+          captureError(e);
+        }
       }
       setPreviews((prev) => {
         const _new = { ...prev };
-        delete _new[media.uuid || media.id];
+        if (media.uuid && _new[media.uuid]) delete _new[media.uuid];
+        else if (media.id && _new[media.id]) delete _new[media.id];
         return _new;
       });
     }
-
   }
 
   const renderUploadProgressDialog = () => {
@@ -363,9 +363,9 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
             <Dialog.Title>{t('core:media_picker.uploading_title')}</Dialog.Title>
             <Dialog.Description>
               {t('core:media_picker.uploading_progress', {
-                uploaded: uploadedFiles,
-                total: totalFiles
-              }).replace('{uploaded}', uploadedFiles).replace('{total}', totalFiles)}
+                uploaded: uploadedFiles.toString(),
+                total: totalFiles.toString(),
+              })?.replace('{uploaded}', uploadedFiles.toString()).replace('{total}', totalFiles.toString())}
             </Dialog.Description>
             <XStack space="$4" alignItems="center">
               <Progress value={progress} width="100%" size="$4">
