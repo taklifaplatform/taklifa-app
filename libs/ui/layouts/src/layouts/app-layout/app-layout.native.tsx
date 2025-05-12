@@ -1,6 +1,6 @@
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import { Plus } from '@tamagui/lucide-icons';
-import { COMPANY_ROLES, USER_ROLES, useAuth } from '@zix/services/auth';
+import { COMPANY_MANAGER_ROLES, DRIVER_ROLES, USER_ROLES, useAuth } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import { Tabs, useRouter } from 'expo-router';
 import { t } from 'i18next';
@@ -52,7 +52,7 @@ export const AppLayout = () => {
       />
       <Tabs.Screen
         name="company"
-        options={COMPANY_ROLES.includes(activeRole) ? {
+        options={COMPANY_MANAGER_ROLES.includes(activeRole) ? {
           title: t('navigation:company-dashboard.data'),
           tabBarIcon: ({ size, color }) => (
             <CustomIcon name="apps" color={color} size={size} />
@@ -63,7 +63,7 @@ export const AppLayout = () => {
       />
       <Tabs.Screen
         name="driver-vehicles"
-        options={USER_ROLES.solo_driver === activeRole ? {
+        options={DRIVER_ROLES.includes(activeRole) ? {
           title: t('common:vehicle'),
           tabBarIcon: ({ size, color }) => (
             <CustomIcon name="car" color={color} size={size} />

@@ -13,6 +13,11 @@ export const USER_ROLES = {
   solo_driver: 'solo_driver',
 } as const;
 
+export const DRIVER_ROLES: AUTH_ROLE_TYPE[] = [
+  USER_ROLES.company_driver,
+  USER_ROLES.solo_driver,
+];
+
 export const COMPANY_ROLES: AUTH_ROLE_TYPE[] = [
   USER_ROLES.company_driver,
   USER_ROLES.company_manager,

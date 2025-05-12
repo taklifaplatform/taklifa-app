@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { VehiclesService } from '@zix/api';
-import { useAuth } from '@zix/services/auth';
+import { useAuth, USER_ROLES } from '@zix/services/auth';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { FlatList } from 'react-native';
 import { VehicleCard } from '../../components';
@@ -20,7 +20,7 @@ export const VehiclesListScreen: React.FC<VehiclesListScreenProps> = ({
   showHeader,
   search,
 }) => {
-  const { user } = useAuth();
+  const { user, activeRole } = useAuth();
   const router = useRouter();
 
   //
@@ -45,7 +45,7 @@ export const VehiclesListScreen: React.FC<VehiclesListScreenProps> = ({
         {
           key: 'services',
           title: t('common:services'),
-          content: <ServicesListScreen showHeader={false} driver={true}/>,
+          content: <ServicesListScreen showHeader={false} driver={true} />,
         },
       ]}
     />
@@ -94,11 +94,11 @@ export const VehiclesListScreen: React.FC<VehiclesListScreenProps> = ({
 
   return (
     <ScreenLayout>
-      {showHeader && <AppHeader title="Manage Vehicles" />}
+      {showHeader && <AppHeader title={t('common:manage-vehicles')} />}
       <YStack flex={1} paddingVertical="$4">
-        {!showHeader ? renderVehicleScreen()  : renderHorizonTabs()}
+        {!showHeader ? renderVehicleScreen() : renderHorizonTabs()}
       </YStack>
-      {!data?.data.length && showHeader && renderFabButton()}
+      {!data?.data.length && showHeader && activeRole === USER_ROLES.solo_driver && renderFabButton()}
     </ScreenLayout>
   );
 }
