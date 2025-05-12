@@ -76,7 +76,6 @@ import Store from './icons/store.svg';
 import Success from './icons/success.svg'; 
 import Theme from './icons/theme.svg'; 
 import TikTok from './icons/tik-tok.svg'; 
-import Tiktok from './icons/tiktok.svg'; 
 import TimePace from './icons/time-pace.svg'; 
 import Time from './icons/time.svg'; 
 import Touch_app from './icons/touch_app.svg'; 
@@ -167,7 +166,6 @@ export {
   Success,
   Theme,
   TikTok,
-  Tiktok,
   TimePace,
   Time,
   Touch_app,

@@ -1,3 +1,5 @@
+import { Instagram } from '@tamagui/lucide-icons';
+import { Facebook } from '@tamagui/lucide-icons';
 import { useMultiLang } from '@zix/i18n';
 import { ZixContainer, ZixLinkButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
@@ -36,27 +38,23 @@ export const ZixWebFooter = () => {
         <XStack gap="$1">
           <ZixLinkButton
             menuItem
-            unstyled
-            icon={<CustomIcon name="tik_tok" size={'$2.5'} color={'$color2'} />}
-            href={'/'}
+            href={'https://www.tiktok.com/@sawaeed.app'}
+            icon={<CustomIcon name="tik_tok" size={'$1.5'} color='$color2' />}
           />
           <ZixLinkButton
             menuItem
-            unstyled
-            icon={<CustomIcon name="snapchat" size={'$2.5'} color={'$color2'} />}
-            href={'/'}
+            href={'https://www.instagram.com/sawaedlogistics'}
+            icon={<CustomIcon name="snapchat" size={'$1.5'} color='$color2' />}
           />
           <ZixLinkButton
             menuItem
-            unstyled
-            icon={<CustomIcon name="instagram" size={'$2.5'} color={'$color2'} />}
-            href={'/'}
+            href={'https://www.instagram.com/sawaedlogistics'}
+            icon={<Instagram size='$1.5' color='$color2' />}
           />
           <ZixLinkButton
             menuItem
-            unstyled
-            icon={<CustomIcon name="facebook" size={'$2.5'} color={'$color2'} />}
-            href={'/'}
+            href={'https://www.x.com/sawaedlogistics'}
+            icon={<Facebook size='$1.5' color='$color2' />}
           />
         </XStack>
       </YStack>

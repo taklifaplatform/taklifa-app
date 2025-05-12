@@ -113,7 +113,7 @@ export function TopHeader() {
       <ZixLinkButton
         menuItem
         href={'https://www.tiktok.com/@sawaeed.app'}
-        icon={<CustomIcon name="tiktok" size={'$1.5'} color='$color12' />}
+        icon={<CustomIcon name="tik_tok" size={'$1.5'} color='$color12' />}
       />
       <ZixLinkButton
         menuItem
