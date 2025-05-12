@@ -2,7 +2,6 @@ import { t } from 'i18next';
 import { useRouter } from 'solito/router';
 import { YStack } from 'tamagui';
 
-import * as Sentry from '@sentry/react-native';
 import { useToastController } from '@tamagui/toast';
 import { UserService } from '@zix/api';
 import { useAuth, useMixpanel } from '@zix/services/auth';
@@ -41,12 +40,10 @@ export const SelectAccountTypeScreen: React.FC = () => {
               })
             }).catch((error) => {
               toast.show(error?.body?.message || t('common:errors.something_went_wrong'));
-              Sentry.captureException(error);
             });
           })
           .catch((error) => {
             toast.show(error?.body?.message || t('common:errors.something_went_wrong'));
-            Sentry.captureException(error);
           });
       }
     } else {

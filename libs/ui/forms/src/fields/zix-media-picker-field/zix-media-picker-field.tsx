@@ -4,7 +4,6 @@ import { ActionSheet, ActionSheetRef } from '@zix/ui/common';
 import { randomUUID } from 'expo-crypto';
 import { getDocumentAsync } from 'expo-document-picker';
 
-import * as Sentry from "@sentry/react-native";
 import {
   MediaTypeOptions,
   launchCameraAsync,
@@ -195,13 +194,8 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     }
   }
 
-  // Helper: Safe Sentry capture
   function captureError(error: any) {
-    try {
-      Sentry.captureException(error);
-    } catch (e) {
-      console.error('Sentry capture failed:', e, error);
-    }
+    console.error('Error capture failed:', error);
   }
 
   // Helper: Convert picked files to ZixMediaPickerTransformer with required fields

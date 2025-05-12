@@ -1,7 +1,4 @@
 import { MediaTransformer, OpenAPI } from '@zix/api';
-import { randomUUID } from 'expo-crypto';
-import { Platform } from 'react-native';
-import * as Sentry from "@sentry/react-native";
 
 export type UploadableMediaFile = {
   uri: string;
@@ -73,7 +70,6 @@ export const uploadMediaFile = async (
           console.log('=========');
           console.log('MEDIA UPLOAD BUILDING BLOB ERROR::', error);
           console.log('=========');
-          Sentry.captureException(error);
           alert((error as Error)?.message || 'Error preparing file for upload');
           reject(error);
           return;
@@ -137,7 +133,6 @@ export const uploadMediaFile = async (
           console.log('=========');
           console.log('MEDIA UPLOAD ERROR::', error);
           console.log('=========');
-          Sentry.captureException(error);
           reject({
             status: this.status,
             statusText: xhr.statusText,
@@ -150,7 +145,6 @@ export const uploadMediaFile = async (
         console.log('=========');
         console.log('MEDIA UPLOAD ERROR::', error);
         console.log('=========');
-        Sentry.captureException(error);
         reject(error);
       }
     };

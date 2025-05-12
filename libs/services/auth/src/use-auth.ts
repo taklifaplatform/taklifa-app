@@ -1,5 +1,4 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import * as Sentry from '@sentry/react-native';
 import { mixpanel } from './mixpanel';
 
 import {
@@ -210,13 +209,7 @@ export function useAuth(): AuthHelpers {
   useEffect(() => {
     if (authAccessToken && !user?.id) {
       refetchUser();
-    } else if (user?.id) {
-      Sentry.setUser({
-        email: user?.email || user?.phone_number,
-        name: user?.name || user?.username,
-        id: user?.id,
-      })
-    }
+    } 
     OpenAPI.TOKEN = authAccessToken;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authAccessToken, user]);
