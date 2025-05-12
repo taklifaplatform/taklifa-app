@@ -5,14 +5,14 @@ import { ZixAvatar } from '@zix/ui/common';
 import { t } from 'i18next';
 import React from 'react';
 import { useRouter } from 'solito/router';
-import { Button, H4, Text, View, XStack, YStack } from 'tamagui';
+import { Button, H4, View, XStack, YStack } from 'tamagui';
 
 export type CompanyProfileHeaderProps = {
   company: CompanyTransformer;
 };
 
 export const CompanyProfileHeader: React.FC<CompanyProfileHeaderProps> = ({ company }) => {
-  const { isAuthMemberInThisCompany, getUrlPrefix } = useAuth();
+  const { canManageThisCompany, getUrlPrefix } = useAuth();
   const router = useRouter();
 
   function onEditCompanyPress() {
@@ -28,7 +28,7 @@ export const CompanyProfileHeader: React.FC<CompanyProfileHeaderProps> = ({ comp
           size="$9"
         />
         {
-          isAuthMemberInThisCompany(company?.id) ? (
+          canManageThisCompany(company?.id) ? (
             <Button width="$8" size='$2' icon={Pencil} onPress={onEditCompanyPress}>
               {t('common:edit')}
             </Button>

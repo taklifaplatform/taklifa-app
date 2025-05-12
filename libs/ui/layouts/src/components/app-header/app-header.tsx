@@ -1,5 +1,5 @@
 import { PlusSquare, Search, X } from '@tamagui/lucide-icons';
-import { COMPANY_ROLES, useAuth } from '@zix/services/auth';
+import { COMPANY_MANAGER_ROLES, useAuth } from '@zix/services/auth';
 import { UserAvatar, ZixAvatar } from '@zix/ui/common';
 import { ZixInput, ZixInputProps } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
@@ -70,7 +70,18 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   const renderUserAvatar = () => (
     <Button
       unstyled
-      icon={<UserAvatar user={user} size="$2.5" />}
+      icon={(
+        <View position='relative'>
+          <UserAvatar user={user} size="$2.5" />
+          {
+            user.active_company && (
+              <View position='absolute' bottom={-5} right={-5}>
+                <ZixAvatar media={user.active_company?.logo} size="$1" />
+              </View>
+            )
+          }
+        </View>
+      )}
       onPress={onAvatarPress}
     />
   );
@@ -97,7 +108,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
 
 
   const renderAvatar = () =>
-    !showBackButton ? COMPANY_ROLES.includes(activeRole) ? renderCompanyAvatar() : renderUserAvatar() : null;
+    !showBackButton ? COMPANY_MANAGER_ROLES.includes(activeRole) ? renderCompanyAvatar() : renderUserAvatar() : null;
 
   const renderNotificationsButton = () =>
     !showBackButton && (

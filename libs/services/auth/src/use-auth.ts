@@ -16,7 +16,7 @@ import {
   authRequestedAccountTypeStorage,
   authUserStorage,
 } from './auth-atoms';
-import { AUTH_ROLE_TYPE, COMPANY_ROLES, USER_ROLES } from './types';
+import { AUTH_ROLE_TYPE, COMPANY_MANAGER_ROLES, COMPANY_ROLES, USER_ROLES } from './types';
 
 export type RedirectUserOptions = {
   pushRoute?: boolean;
@@ -203,6 +203,10 @@ export function useAuth(): AuthHelpers {
     return !!user?.companies?.find((company) => company.id === companyId);
   }
 
+  function canManageThisCompany(companyId: string) {
+    return user?.companies?.find((company) => company.id === companyId) && COMPANY_MANAGER_ROLES.includes(user?.active_role?.name as AUTH_ROLE_TYPE);
+  }
+
   useEffect(() => {
     if (authAccessToken && !user?.id) {
       refetchUser();
@@ -237,6 +241,7 @@ export function useAuth(): AuthHelpers {
     getUrlPrefix,
     isServiceProvider,
     isAuthMemberInThisCompany,
+    canManageThisCompany,
     activeCompanyId,
   };
 }

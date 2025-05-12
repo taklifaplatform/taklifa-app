@@ -172,7 +172,13 @@ export const AccountSwitcher: React.FC<AccountSwitcherProps> = ({
 
 
             {user?.companies?.map((company) => (
-              <CompanyListItem key={company.name} onPress={changeActiveCompany} company={company} isSelected={user?.active_company?.id === company.id} />
+              <CompanyListItem
+                key={company.name}
+                onPress={changeActiveCompany}
+                company={company}
+                isSelected={user?.active_company?.id === company.id}
+                activeRole={user?.active_role}
+              />
             ))}
             <YGroup.Item>
               <ListItem

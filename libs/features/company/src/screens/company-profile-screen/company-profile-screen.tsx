@@ -20,7 +20,7 @@ const { useParam } = createParam<{ company: string }>();
 export function CompanyProfileScreen() {
   const [companyId] = useParam('company');
   const router = useRouter();
-  const { user: authUser, getUrlPrefix } = useAuth();
+  const { user: authUser, getUrlPrefix, canManageThisCompany, isAuthMemberInThisCompany } = useAuth();
 
 
   const { data, refetch, isLoading } = useQuery({
@@ -49,7 +49,7 @@ export function CompanyProfileScreen() {
           <CompanyProfileHeader company={data.data} />
           <CompanyInfoRow company={data.data} />
         </YStack>
-      {!authUser?.companies?.find(c => c.id === company?.id) && <CompanyContactActions company={data.data} />}
+        {!authUser?.companies?.find(c => c.id === company?.id) && <CompanyContactActions company={data.data} />}
       </YStack>
       <CompanyProfileTabs company={data.data} />
     </ScrollView>
@@ -59,7 +59,7 @@ export function CompanyProfileScreen() {
   const renderLoadingSpinner = () => !company?.id && <FullScreenSpinner />;
 
   const renderHeader = () =>
-    authUser?.companies?.find(c => c.id === company?.id) ? (
+    canManageThisCompany(company?.id) ? ( //
       <AppHeader
         showBackButton
         headerTitle={() => <AccountSwitcher />}
@@ -67,13 +67,18 @@ export function CompanyProfileScreen() {
           <TouchableOpacity
             style={{
               borderRadius: 4,
-                padding: 5,
+              padding: 5,
             }}
             onPress={() => router.push(`${getUrlPrefix}/account/settings`)}
           >
             <CustomIcon name="more" color="black" size="$3" />
           </TouchableOpacity>
         )}
+      />
+    ) : isAuthMemberInThisCompany(company?.id) ? (
+      <AppHeader
+        showBackButton
+        headerTitle={() => <AccountSwitcher />}
       />
     ) : (
       <AppHeader

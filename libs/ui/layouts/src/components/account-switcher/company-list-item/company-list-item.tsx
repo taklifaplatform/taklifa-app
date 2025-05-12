@@ -1,7 +1,7 @@
 
 import { Badge, BadgeAlert, BadgeCheck, BadgeMinus, BadgeX } from '@tamagui/lucide-icons';
-import { SimpleCompanyTransformer } from '@zix/api';
-import { useAuth } from '@zix/services/auth';
+import { SimpleCompanyTransformer, UserSimpleRoleTransformer } from '@zix/api';
+import { AUTH_ROLE_TYPE, COMPANY_MANAGER_ROLES } from '@zix/services/auth';
 import { MediaAvatar } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
@@ -10,6 +10,7 @@ import { useRouter } from 'solito/router';
 import { Button, Text, Theme, XStack, YStack } from 'tamagui';
 
 export type CompanyListItemProps = {
+  activeRole?: UserSimpleRoleTransformer
   company: SimpleCompanyTransformer
   isSelected: boolean,
   onPress: (id: string) => void
@@ -17,6 +18,7 @@ export type CompanyListItemProps = {
 
 
 export const CompanyListItem: React.FC<CompanyListItemProps> = ({
+  activeRole,
   company,
   isSelected,
   onPress
@@ -55,7 +57,10 @@ export const CompanyListItem: React.FC<CompanyListItemProps> = ({
     }
   }
 
-  const renderSubmitDocumentsButton = () => (company.verification_status && ['pending', 'rejected'].includes(company.verification_status)) ? (
+  const renderSubmitDocumentsButton = () => (
+    company.verification_status && ['pending', 'rejected'].includes(company.verification_status)
+    && COMPANY_MANAGER_ROLES.includes(activeRole?.name as AUTH_ROLE_TYPE)
+  ) ? (
     <Button
       size='$2'
       fontSize='$1'

@@ -22,7 +22,7 @@ export const AboutCompanyTab: React.FC<AboutCompanyTabProps> = ({
   company
 }) => {
   const router = useRouter()
-  const { getUrlPrefix, isAuthMemberInThisCompany } = useAuth()
+  const { getUrlPrefix, canManageThisCompany } = useAuth()
   const carouselRef = useRef<ICarouselInstance>(null);
   const USER_CARD_WIDTH = Dimensions.get('window').width;
   const USER_CARD_HEIGHT = 140;
@@ -43,7 +43,7 @@ export const AboutCompanyTab: React.FC<AboutCompanyTabProps> = ({
     queryKey: ['CompanyMembersService.list', company.id],
   })
 
-  const renderAboutEditButton = () => isAuthMemberInThisCompany(company.id) ? (
+  const renderAboutEditButton = () => canManageThisCompany(company.id) ? (
     <ZixButton icon={Pencil} size='$2' onPress={() => {
       router.push(`${getUrlPrefix}/companies/${company.id}/settings`)
     }}>
@@ -51,7 +51,7 @@ export const AboutCompanyTab: React.FC<AboutCompanyTabProps> = ({
     </ZixButton>
   ) : null
 
-  const renderAbout = () => (!!company.about?.length || isAuthMemberInThisCompany(company.id)) && (
+  const renderAbout = () => (!!company.about?.length || canManageThisCompany(company.id)) && (
     <ZixWidgetContainer label={t('common:about-company')} labelPrepend={renderAboutEditButton()}>
       <Text flex={1}>
         {company.about ?? 'N/A'}
@@ -60,11 +60,11 @@ export const AboutCompanyTab: React.FC<AboutCompanyTabProps> = ({
   )
 
   const renderLocation = () => (!!company.location_id) && (
-    <ZixLocationInfoWidget locationId={company.location_id} canEdit={isAuthMemberInThisCompany(company.id)} />
+    <ZixLocationInfoWidget locationId={company.location_id} canEdit={canManageThisCompany(company.id)} />
   )
 
   const renderWorkingHours = () => company.working_hours_id && (
-    <ZixWorkingHoursWidget workingHourId={company.working_hours_id} canEdit={isAuthMemberInThisCompany(company.id)} />
+    <ZixWorkingHoursWidget workingHourId={company.working_hours_id} canEdit={canManageThisCompany(company.id)} />
   )
 
   const renderDriversListCarousel = () => !!data?.data?.length && (
