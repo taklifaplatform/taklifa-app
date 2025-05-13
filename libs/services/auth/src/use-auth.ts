@@ -188,13 +188,17 @@ export function useAuth(): AuthHelpers {
     });
     refetch().then(() => {
       data?.data && setAuthUser(data.data);
-      mixpanel.identify(user?.email)
-      mixpanel?.people?.set({
-        $phoneNumber: user.phone_number,
-        $name: user.name,
-        $role: user.active_role?.name,
-        $company: user.active_company?.name,
-      })
+      try {
+        mixpanel?.identify?.(data?.data?.id)
+        mixpanel?.people?.set({
+          $phoneNumber: data?.data?.phone_number,
+          $name: data?.data?.name,
+          $role: data?.data?.active_role?.name,
+          $company: data?.data?.active_company?.name,
+        })
+      } catch (error) {
+        //
+      }
     });
   }
 
