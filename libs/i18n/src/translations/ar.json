@@ -292,6 +292,7 @@
     }
   },
   "common": {
+    "built-with-love-by": "تم التطوير بواسطة STE ZIX DEV",
     "app_name": "سواعد اللوجستية",
     "welcome": "مرحبًا",
     "next": "التالي",

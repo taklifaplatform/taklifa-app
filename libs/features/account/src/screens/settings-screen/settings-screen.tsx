@@ -7,8 +7,8 @@ import { CustomIcon } from '@zix/ui/icons';
 import { usePathname } from '@zix/utils';
 import { t } from 'i18next';
 import { useCallback, useRef, useState } from 'react';
-import { Alert, Linking, Platform } from 'react-native';
-import { Paragraph, ScrollView, Theme, View, YStack, useMedia } from 'tamagui';
+import { Alert, Linking, Platform, TouchableOpacity } from 'react-native';
+import { Text, Paragraph, ScrollView, Theme, View, YStack, useMedia } from 'tamagui';
 
 import { UserService } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
@@ -227,9 +227,19 @@ export const SettingsScreen = () => {
       we just did a simple package.json read since we want to keep things simple for the starter
        */}
 
-        <Paragraph paddingVertical="$4" textAlign="center" theme="alt2">
-          v1.0.0
+        <Paragraph paddingVertical="$1" textAlign="center" theme="alt2">
+          v1.1.6
         </Paragraph>
+        <TouchableOpacity onPress={() => Linking.openURL('https://zixdev.com?ref=sawaeed')}  >
+          <Paragraph
+            paddingBottom="$4"
+            textAlign="center"
+            theme="alt1"
+            fontSize="$1"
+          >
+            {t('common:built-with-love-by')}
+          </Paragraph>
+        </TouchableOpacity>
       </YStack >
     </>
   );
