@@ -1,11 +1,12 @@
 import { useRouter } from 'solito/router';
 
 import { UserTransformer } from '@zix/api';
-import { useAuth } from '@zix/services/auth';
-import VerifyPhoneNumberForm from '../../forms/verify-phone-number-form/verify-phone-number-form';
+import { useAuth, useMixpanel } from '@zix/services/auth';
 import { ScreenLayout } from '@zix/ui/layouts';
+import VerifyPhoneNumberForm from '../../forms/verify-phone-number-form/verify-phone-number-form';
 
 export const SignUpPhoneNumberVerificationScreen = () => {
+  useMixpanel('Sign Up Phone Number Verification Screen view')
   const router = useRouter();
   const { registerSteps, requestedAccountType } = useAuth();
 

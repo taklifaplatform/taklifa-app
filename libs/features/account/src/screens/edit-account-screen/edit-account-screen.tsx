@@ -9,7 +9,7 @@ import { Theme, View } from 'tamagui';
 
 import { useToastController } from '@tamagui/toast';
 import { UserService } from '@zix/api';
-import { useAuth } from '@zix/services/auth';
+import { useAuth, useMixpanel } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
@@ -38,6 +38,7 @@ const ProfileSchema = z
   });
 
 export const EditAccountScreen = () => {
+  useMixpanel('Edit Account Screen view')
   const { user, refetchUser } = useAuth();
   const { params } = useParams();
 
@@ -71,28 +72,28 @@ export const EditAccountScreen = () => {
   return (
     <ScreenLayout safeAreaBottom>
       <View flex={1}>
-      <AppHeader showBackButton title="Edit Profile" />
-      <SchemaForm
-        form={form}
-        schema={ProfileSchema}
-        props={{
-          name: {
-            autoFocus: !!params?.edit_name,
-          },
-          about: {
-            autoFocus: !!params?.edit_about,
-          },
-        }}
-        defaultValues={user}
-        onSubmit={mutateAsync}
-        renderAfter={({ submit }) => (
-          <Theme inverse>
-            <SubmitButton onPress={() => submit()}>
-              {t('common:confirm')}
-            </SubmitButton>
-          </Theme>
-        )}
-      />
+        <AppHeader showBackButton title="Edit Profile" />
+        <SchemaForm
+          form={form}
+          schema={ProfileSchema}
+          props={{
+            name: {
+              autoFocus: !!params?.edit_name,
+            },
+            about: {
+              autoFocus: !!params?.edit_about,
+            },
+          }}
+          defaultValues={user}
+          onSubmit={mutateAsync}
+          renderAfter={({ submit }) => (
+            <Theme inverse>
+              <SubmitButton onPress={() => submit()}>
+                {t('common:confirm')}
+              </SubmitButton>
+            </Theme>
+          )}
+        />
       </View>
     </ScreenLayout>
   );

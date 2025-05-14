@@ -1,10 +1,12 @@
 import { useMultiLang } from '@zix/i18n';
+import { useMixpanel } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import { ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { Stack, Text, Theme, YStack } from 'tamagui';
 
 export const OnboardingAuthScreen = () => {
+  useMixpanel('Onboarding Auth Screen view')
   const { activeLang } = useMultiLang();
   const options = [
     {

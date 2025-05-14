@@ -1,9 +1,10 @@
-import { H1, YStack, isWeb, Text, ScrollView } from 'tamagui';
-import { t } from 'i18next';
-import { AppHeader } from '@zix/ui/layouts';
 import { useMultiLang } from '@zix/i18n';
-
+import { useMixpanel } from '@zix/services/auth';
+import { AppHeader } from '@zix/ui/layouts';
+import { t } from 'i18next';
+import { H1, isWeb, ScrollView, Text, YStack } from 'tamagui';
 export const TermsOfServiceScreen = () => {
+  useMixpanel('Terms of Service Screen view')
   const { isRtl } = useMultiLang();
   const sharedStyle = {
     textAlign: isRtl ? 'left' : 'right',

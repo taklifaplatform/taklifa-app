@@ -4,6 +4,7 @@ import React from 'react';
 
 import { useToastController } from '@tamagui/toast';
 import { CompanyAdminService } from '@zix/api';
+import { useMixpanel } from '@zix/providers';
 import { useAuth } from '@zix/services/auth';
 import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/ui/forms';
 import { ScreenLayout } from '@zix/ui/layouts';
@@ -13,7 +14,6 @@ import { useRouter } from 'solito/router';
 import { Theme } from 'tamagui';
 import { z } from 'zod';
 import { AuthHeader } from '../../components/auth-header/auth-header';
-
 const CreateCompanyFormSchema = z
   .object({
     logo: formFields.image.optional().describe(t('forms:company_logo')),
@@ -31,6 +31,7 @@ const CreateCompanyFormSchema = z
   });
 
 export const CreateCompanyScreen: React.FC = () => {
+  useMixpanel('Create Company Page view')
   const form = useForm<z.infer<typeof CreateCompanyFormSchema>>();
   const { refetchUser, registerSteps } = useAuth()
   const toast = useToastController();

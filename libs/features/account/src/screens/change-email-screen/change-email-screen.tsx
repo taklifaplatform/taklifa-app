@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 
 import { useToastController } from '@tamagui/toast';
 import { UserService } from '@zix/api';
+import { useAuth, useMixpanel } from '@zix/services/auth';
 import {
   SchemaForm,
   SubmitButton,
@@ -9,7 +10,6 @@ import {
   handleFormErrors,
 } from '@zix/ui/forms';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
-import { useAuth } from '@zix/services/auth';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
@@ -25,6 +25,7 @@ const ChangeEmailSchema = z.object({
 });
 
 export const ChangeEmailScreen = () => {
+  useMixpanel('Change Email Screen view')
   const { user } = useAuth();
   const toast = useToastController();
   const router = useRouter();

@@ -1,21 +1,21 @@
 import { useMutation } from '@tanstack/react-query';
 
+import { useToastController } from '@tamagui/toast';
 import { UserVerificationService } from '@zix/api';
-import { useAuth } from '@zix/services/auth';
+import { useAuth, useMixpanel } from '@zix/services/auth';
 import {
   SchemaForm,
   SubmitButton,
   formFields,
   handleFormErrors,
 } from '@zix/ui/forms';
+import { ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
 import { Theme } from 'tamagui';
 import { z } from 'zod';
 import { AuthHeader } from '../../components/auth-header/auth-header';
-import { ScreenLayout } from '@zix/ui/layouts';
-import { useToastController } from '@tamagui/toast';
 
 const DriverVerificationFormSchema = z
   .object({
@@ -40,6 +40,7 @@ const DriverVerificationFormSchema = z
   });
 
 export const AuthDriverVerificationScreen = () => {
+  useMixpanel('Auth Driver Verification Screen view')
   const router = useRouter();
   const { registerSteps } = useAuth();
   const toast = useToastController();

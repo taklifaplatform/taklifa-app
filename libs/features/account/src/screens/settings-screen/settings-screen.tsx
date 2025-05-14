@@ -8,10 +8,10 @@ import { usePathname } from '@zix/utils';
 import { t } from 'i18next';
 import { useCallback, useRef, useState } from 'react';
 import { Alert, Linking, Platform, TouchableOpacity } from 'react-native';
-import { Text, Paragraph, ScrollView, Theme, View, YStack, useMedia } from 'tamagui';
+import { Paragraph, ScrollView, Theme, View, YStack } from 'tamagui';
 
 import { UserService } from '@zix/api';
-import { useAuth } from '@zix/services/auth';
+import { useAuth, useMixpanel } from '@zix/services/auth';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { useRouter } from 'solito/router';
 
@@ -20,7 +20,7 @@ const brandColors = {
 };
 
 export const SettingsScreen = () => {
-  const media = useMedia();
+  useMixpanel('Settings Screen view')
   const pathname = usePathname();
   const router = useRouter();
   const { getUrlPrefix, isLoggedIn } = useAuth();

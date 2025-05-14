@@ -1,26 +1,27 @@
-import { Button, Stack, Text, Theme, YStack } from 'tamagui';
+import { Stack, Text, Theme, YStack } from 'tamagui';
 
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AuthService, CompanyMemberInvitationService } from '@zix/api';
-import { useAuth } from '@zix/services/auth';
-import { DebugObject, FullScreenSpinner } from '@zix/ui/common';
+import { useAuth, useMixpanel } from '@zix/services/auth';
+import { FullScreenSpinner } from '@zix/ui/common';
 import { SchemaForm, SubmitButton, handleFormErrors } from '@zix/ui/forms';
+import { CustomIcon } from '@zix/ui/icons';
 import { ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Platform } from 'react-native';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
 import { z } from 'zod';
+import { VerifyPhoneNumberForm } from '../../forms/verify-phone-number-form/verify-phone-number-form';
 import { LoginSchema } from '../login/login-screen';
 import { SignUpSchema } from '../register/sign-up-screen';
-import { Platform } from 'react-native';
-import { CustomIcon } from '@zix/ui/icons';
-import { VerifyPhoneNumberForm } from '../../forms/verify-phone-number-form/verify-phone-number-form';
 const { useParam } = createParam<{ code: string }>();
 
 export const InvitationScreen: React.FC = () => {
+  useMixpanel('Invitation Page view')
   const {
     user,
     setAuthAccessToken,

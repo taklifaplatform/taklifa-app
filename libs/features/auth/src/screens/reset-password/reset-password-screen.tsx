@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
+import { useToastController } from '@tamagui/toast';
 import { AuthService } from '@zix/api';
-import { Paragraph, Stack, Text, Theme } from 'tamagui';
 import {
   SchemaForm,
   SubmitButton,
@@ -15,10 +15,10 @@ import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { createParam } from 'solito';
 import { Link } from 'solito/link';
 import { useRouter } from 'solito/router';
+import { Paragraph, Stack, Text, Theme } from 'tamagui';
 import { z } from 'zod';
 import { AuthHeader } from '../../components/auth-header/auth-header';
-import { ScreenLayout } from '@zix/ui/layouts';
-import { useToastController } from '@tamagui/toast';
+import { useMixpanel } from '@zix/services/auth';
 
 const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
 
@@ -27,6 +27,7 @@ const ResetPasswordSchema = z.object({
 });
 
 export const ResetPasswordScreen = () => {
+  useMixpanel('Reset Password Screen view')
   const { params } = useParams();
   const router = useRouter();
   const updateParams = useUpdateParams();
@@ -108,28 +109,28 @@ const SignInLink = () => {
   });
 
   return (
-      <Link
-        href={`/auth/login?${new URLSearchParams(phone ? { phone } : undefined)}`}
+    <Link
+      href={`/auth/login?${new URLSearchParams(phone ? { phone } : undefined)}`}
+    >
+      <Stack
+        flexDirection="row"
+        alignItems="center"
+        gap="$2"
+        justifyContent="center"
       >
-        <Stack
-          flexDirection="row"
-          alignItems="center"
-          gap="$2"
-          justifyContent="center"
-        >
-          <Paragraph textAlign="center" theme="alt1">
-            {t('auth:reset_password.done_resetting')}
-          </Paragraph>
-          <Theme name="accent">
-            <Text textDecorationLine="underline" color={'$color1'} theme={'accent'}>
-              {t('auth:sign_in')}
-            </Text>
-          </Theme>
-          <Theme name="accent">
-            <CustomIcon name="arrow_right" color="$color10" />
-          </Theme>
-        </Stack>
-      </Link>
+        <Paragraph textAlign="center" theme="alt1">
+          {t('auth:reset_password.done_resetting')}
+        </Paragraph>
+        <Theme name="accent">
+          <Text textDecorationLine="underline" color={'$color1'} theme={'accent'}>
+            {t('auth:sign_in')}
+          </Text>
+        </Theme>
+        <Theme name="accent">
+          <CustomIcon name="arrow_right" color="$color10" />
+        </Theme>
+      </Stack>
+    </Link>
   );
 };
 

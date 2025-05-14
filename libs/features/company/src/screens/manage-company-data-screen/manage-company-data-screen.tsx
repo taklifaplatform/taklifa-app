@@ -1,6 +1,7 @@
 import { Cog } from '@tamagui/lucide-icons';
+import { ServicesListScreen } from '@zix/features/services';
 import { VehiclesListScreen } from '@zix/features/vehicles';
-import { useAuth } from '@zix/services/auth';
+import { useAuth, useMixpanel } from '@zix/services/auth';
 import { ZixTab } from '@zix/ui/common';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
@@ -10,9 +11,9 @@ import { useRouter } from 'solito/router';
 import { YStack } from 'tamagui';
 import { ManageTeamFabButton } from '../../components/manage-team-fab-button/manage-team-fab-button';
 import EmployeesListScreen from '../employees/employees-list-screen/employees-list-screen';
-import { ServicesListScreen } from '@zix/features/services';
 
 export function ManageCompanyDataScreen() {
+  useMixpanel('Manage Company Data Screen view')
   const router = useRouter();
   const { getUrlPrefix, activeCompanyId } = useAuth();
 
@@ -39,12 +40,12 @@ export function ManageCompanyDataScreen() {
         {
           key: 'vehicles',
           title: t('common:vehicles'),
-          content: <VehiclesListScreen showHeader={false} search={search}/>,
+          content: <VehiclesListScreen showHeader={false} search={search} />,
         },
         {
           key: 'services',
           title: t('common:services'),
-          content: <ServicesListScreen showHeader={false} edit={true} search={search}/>,
+          content: <ServicesListScreen showHeader={false} edit={true} search={search} />,
         },
       ]}
     />

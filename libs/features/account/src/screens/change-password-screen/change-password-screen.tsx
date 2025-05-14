@@ -1,4 +1,5 @@
 import { ChangePasswordForm } from '@zix/features/auth';
+import { useMixpanel } from '@zix/services/auth';
 import { isWeb } from 'tamagui';
 
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
@@ -7,6 +8,7 @@ import { useRouter } from 'solito/router';
 
 
 export const ChangePasswordScreen = () => {
+  useMixpanel('Change Password Screen view')
   const router = useRouter();
 
   return (

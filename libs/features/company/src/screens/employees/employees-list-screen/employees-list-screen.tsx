@@ -1,15 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { CompanyInvitationsService, CompanyMembersService } from '@zix/api';
-import { COMPANY_ROLE_TYPES, useAuth } from '@zix/services/auth';
+import { COMPANY_ROLE_TYPES, useAuth, useMixpanel } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
+import { ScreenLayout } from '@zix/ui/layouts';
+import { t } from 'i18next';
 import { useMemo } from 'react';
 import { SectionList } from 'react-native';
 import { H4, Stack, useStyle } from 'tamagui';
 import { TeamMemberCard } from '../../../components/team-member-card/team-member-card';
 import { TeamMemberInvitationCard } from '../../../components/team-member-invitation-card/team-member-invitation-card';
-import { ScreenLayout } from '@zix/ui/layouts';
-import { t } from 'i18next';
 
 export interface EmployeesListScreenProps {
   memberRole: COMPANY_ROLE_TYPES;
@@ -20,6 +20,7 @@ export function EmployeesListScreen({
   memberRole,
   search,
 }: EmployeesListScreenProps) {
+  useMixpanel('Employees List Screen view')
   const { user } = useAuth();
 
   const membersQuery = useQuery({

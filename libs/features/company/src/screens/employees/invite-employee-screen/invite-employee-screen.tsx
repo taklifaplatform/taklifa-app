@@ -2,17 +2,17 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import React from 'react';
 
+import { useToastController } from '@tamagui/toast';
 import { CompanyInvitationsService } from '@zix/api';
+import { USER_ROLES, useAuth, useMixpanel } from '@zix/services/auth';
 import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/ui/forms';
-import { USER_ROLES, useAuth } from '@zix/services/auth';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { FormProvider, useForm } from 'react-hook-form';
-import { Theme } from 'tamagui';
-import { z } from 'zod';
-import { useToastController } from '@tamagui/toast';
-import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
+import { Theme } from 'tamagui';
+import { z } from 'zod';
 
 const InviteEmployeeFormSchema = z
   .object({
@@ -29,6 +29,7 @@ const { useParam } = createParam<{ role: string }>();
 
 
 export const InviteEmployeeScreen: React.FC = () => {
+  useMixpanel('Invite Employee Screen view')
   const form = useForm<z.infer<typeof InviteEmployeeFormSchema>>();
   const { user } = useAuth();
   const [role] = useParam('role');

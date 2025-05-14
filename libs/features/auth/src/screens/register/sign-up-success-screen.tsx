@@ -1,10 +1,10 @@
+import { useAuth, useMixpanel } from '@zix/services/auth';
 import { SubmitButton } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
-import { useAuth } from '@zix/services/auth';
+import { ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { H2, Text, Theme, YStack } from 'tamagui';
 import { AuthHeader } from '../../components/auth-header/auth-header';
-import { ScreenLayout } from '@zix/ui/layouts';
 
 /**
  * Renders the sign-up success screen.
@@ -13,6 +13,7 @@ import { ScreenLayout } from '@zix/ui/layouts';
  * and a button to proceed to the next step or redirect to a specified page.
  */
 export const SignUpSuccessScreen = () => {
+  useMixpanel('Sign Up Success Screen view')
   const { registerSteps, requestedAccountType, redirectUserToActiveDashboard } =
     useAuth();
 

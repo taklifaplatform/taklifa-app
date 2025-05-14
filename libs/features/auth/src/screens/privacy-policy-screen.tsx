@@ -1,10 +1,10 @@
+import { useMixpanel } from '@zix/services/auth';
 import { AppHeader } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { Platform } from 'react-native';
-import { H1, H2, H3, H4, Paragraph, ScrollView, View, YStack, isWeb, Text } from 'tamagui';
-import { Linking } from 'react-native'
-
+import { H1, H2, H3, H4, isWeb, Paragraph, ScrollView, Text, View, YStack } from 'tamagui';
 export const PrivacyPolicyScreen = () => {
+  useMixpanel('Privacy Policy Screen view')
   const renderBreak = () => (isWeb ? <br /> : '\n\n');
   const renderListItem = (text: React.ReactNode) => (
     <YStack marginLeft="$4" marginBottom="$2">
@@ -29,7 +29,7 @@ export const PrivacyPolicyScreen = () => {
         />}
         <YStack gap="$4" padding="$4">
           {isWeb && <H1>{t('account:privacy_policy.title')}</H1>}
-          
+
           <Paragraph>Last updated: April 15, 2025</Paragraph>
 
           <H2>Interpretation and Definitions</H2>

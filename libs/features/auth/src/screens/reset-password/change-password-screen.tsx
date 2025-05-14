@@ -1,10 +1,11 @@
-import { useAuth } from '@zix/services/auth';
+import { useAuth, useMixpanel } from '@zix/services/auth';
+import { ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 import ChangePasswordForm from '../../forms/change-password-form/change-password-form';
-import { ScreenLayout } from '@zix/ui/layouts';
 
 export const ChangePasswordScreen = () => {
+  useMixpanel('Change Password Screen view')
   const { redirectUserToActiveDashboard } = useAuth();
 
   return (

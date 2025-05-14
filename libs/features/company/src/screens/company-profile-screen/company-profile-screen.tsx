@@ -6,18 +6,19 @@ import { AccountSwitcher, AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { RefreshControl, TouchableOpacity } from 'react-native';
 import { createParam } from 'solito';
 
+import { useAuth, useMixpanel } from '@zix/services/auth';
+import { CustomIcon } from '@zix/ui/icons';
+import { useRouter } from 'solito/router';
 import { ScrollView, YStack } from 'tamagui';
+import CompanyContactActions from '../../components/company-profile/company-contact-actions/company-contact-actions';
 import CompanyInfoRow from '../../components/company-profile/company-info-row/company-info-row';
 import CompanyProfileHeader from '../../components/company-profile/company-profile-header/company-profile-header';
-import CompanyContactActions from '../../components/company-profile/company-contact-actions/company-contact-actions';
 import CompanyProfileTabs from '../../components/company-profile/company-profile-tabs/company-profile-tabs';
-import { useAuth } from '@zix/services/auth';
-import { useRouter } from 'solito/router';
-import { CustomIcon } from '@zix/ui/icons';
 
 const { useParam } = createParam<{ company: string }>();
 
 export function CompanyProfileScreen() {
+  useMixpanel('Company Profile Screen view')
   const [companyId] = useParam('company');
   const router = useRouter();
   const { user: authUser, getUrlPrefix, canManageThisCompany, isAuthMemberInThisCompany } = useAuth();
