@@ -51,7 +51,22 @@ const ZixApp: React.FC<SolitoAppProps> = ({ Component, pageProps }) => {
         typeof window !== 'undefined' &&
         (url.startsWith('/app') || url.startsWith('/auth'))
       ) {
-        window.open(`sawaeed:///${url}`, '_self');
+        const customUrl = `sawaeed:///${url}`;
+        const userAgent = navigator.userAgent || navigator.vendor;
+        let storeUrl = '';
+        if (/android/i.test(userAgent)) {
+          storeUrl = 'https://play.google.com/store/apps/details?id=app.sawaeed';
+        } else if (/iPad|iPhone|iPod/.test(userAgent)) {
+          storeUrl = 'https://apps.apple.com/app/id6720725925';
+        }
+        // Try to open the app
+        window.open(customUrl, '_self');
+        // Fallback to store after a short delay
+        if (storeUrl) {
+          setTimeout(() => {
+            window.location.href = storeUrl;
+          }, 1500);
+        }
       }
     };
     // On first load
