@@ -53,7 +53,7 @@ export const AboutCompanyTab: React.FC<AboutCompanyTabProps> = ({
 
   const renderAbout = () => (!!company.about?.length || canManageThisCompany(company.id)) && (
     <ZixWidgetContainer label={t('common:about-company')} labelPrepend={renderAboutEditButton()}>
-      <Text flex={1}>
+      <Text flex={1} textAlign='left'>
         {company.about ?? 'N/A'}
       </Text>
     </ZixWidgetContainer>
