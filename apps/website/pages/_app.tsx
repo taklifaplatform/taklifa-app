@@ -47,12 +47,18 @@ const ZixApp: React.FC<SolitoAppProps> = ({ Component, pageProps }) => {
 
   useEffect(() => {
     const handleRouteChange = (url: string) => {
-      if (typeof window !== 'undefined' && url !== '/' && url !== '') {
+      if (
+        typeof window !== 'undefined' &&
+        (url.startsWith('/app') || url.startsWith('/auth'))
+      ) {
         window.open(`sawaeed:///${url}`, '_self');
       }
     };
     // On first load
-    if (typeof window !== 'undefined' && window.location.pathname !== '/' && window.location.pathname !== '') {
+    if (
+      typeof window !== 'undefined' &&
+      (window.location.pathname.startsWith('/app') || window.location.pathname.startsWith('/auth'))
+    ) {
       handleRouteChange(window.location.pathname);
     }
     router.events.on('routeChangeComplete', handleRouteChange);
