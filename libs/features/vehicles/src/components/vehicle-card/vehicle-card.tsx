@@ -56,6 +56,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
   return (
     <XStack
       width='100%'
+      gap="$3"
       paddingVertical='$3'
       marginBottom='$4'
       borderRadius='$4'

@@ -1,6 +1,6 @@
 import { Brush, CarFront, TextCursorInput } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
-import { CompanyTransformer, CompanyVehiclesService } from '@zix/api';
+import { CompanyTransformer, CompanyVehiclesService, VehicleTransformer } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { MediaFile } from '@zix/ui/common';
 import { ZixVariantOptionsWidget, ZixWidgetContainer } from '@zix/ui/widgets';
@@ -28,6 +28,11 @@ export const CompanyVehiclesTab: React.FC<CompanyVehiclesTabProps> = ({
     queryKey: ['CompanyVehiclesService.list', company.id],
   })
 
+
+  function getVehicleImage(vehicle: VehicleTransformer) {
+    return vehicle.images?.length ? vehicle.images[0] : vehicle.model?.map_icon;
+  }
+
   return (
     <YStack gap='$2'>
       <ZixWidgetContainer label={t('common:vehicles')}>
@@ -46,7 +51,7 @@ export const CompanyVehiclesTab: React.FC<CompanyVehiclesTabProps> = ({
               backgroundColor='$color2'
               alignItems='center'
             >
-              <MediaFile media={item.image} width='$10' height='$6' borderRadius='$4' heightQuality />
+              <MediaFile media={getVehicleImage(item)} width='$10' height='$6' borderRadius='$4' heightQuality />
               <ZixVariantOptionsWidget
                 optionVariant="location"
                 variant="location"
