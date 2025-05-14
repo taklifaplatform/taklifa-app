@@ -4,7 +4,7 @@
     "slug": "sawaeed",
     "jsEngine": "hermes",
     "scheme": "sawaeed",
-    "version": "1.1.5",
+    "version": "1.1.6",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -98,7 +98,21 @@
         "googleMaps": {
           "apiKey": "AIzaSyBw3sZh4uFyLbi9sKTzKYn3BqIS_b-vGeA"
         }
-      }
+      },
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "sawaeed.app",
+              "pathPrefix": "/"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png",
