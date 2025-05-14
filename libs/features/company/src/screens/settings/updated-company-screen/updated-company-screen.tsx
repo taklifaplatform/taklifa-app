@@ -3,7 +3,7 @@ import React from 'react';
 
 import { useToastController } from '@tamagui/toast';
 import { CompaniesService, CompanyAdminService } from '@zix/api';
-import { useAuth } from '@zix/services/auth';
+import { useAuth, useMixpanel } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
 import {
   SchemaForm,
@@ -33,6 +33,7 @@ const UpdateCompanyFormSchema = z
   });
 
 export const UpdateCompanyScreen: React.FC = () => {
+  useMixpanel('Update Company Screen view')
   const [companyId] = useParam('company');
 
   const form = useForm<z.infer<typeof UpdateCompanyFormSchema>>();

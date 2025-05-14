@@ -23,6 +23,8 @@ import 'raf/polyfill';
 import { ReactElement, ReactNode, useMemo } from 'react';
 import type { SolitoAppProps } from 'solito';
 import Script from 'next/script';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -36,11 +38,28 @@ const ZixApp: React.FC<SolitoAppProps> = ({ Component, pageProps }) => {
   const getLayout = Component.getLayout || ((page) => page);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_theme, setTheme] = useRootTheme();
+  const router = useRouter();
 
   // memo to avoid re-render on dark/light change
   const contents = useMemo(() => {
     return getLayout(<Component {...pageProps} />);
   }, [pageProps]);
+
+  useEffect(() => {
+    const handleRouteChange = (url: string) => {
+      if (typeof window !== 'undefined' && url !== '/' && url !== '') {
+        window.open(`sawaeed:///${url}`, '_self');
+      }
+    };
+    // On first load
+    if (typeof window !== 'undefined' && window.location.pathname !== '/' && window.location.pathname !== '') {
+      handleRouteChange(window.location.pathname);
+    }
+    router.events.on('routeChangeComplete', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router]);
 
   return (
     <>
