@@ -21,7 +21,7 @@ export const uploadMediaFile = async (
       'Authorization': `Bearer ${OpenAPI.TOKEN}`,
     },
     body: JSON.stringify({
-      filename: `${file.uuid}-${file.file_name}`,
+      filename: `${file.uuid}.jpg`,
     }),
   })
   const vaporSignedUrlData = await vaporSignedUrl.json();
@@ -112,7 +112,7 @@ export const uploadMediaFile = async (
               body: JSON.stringify({
                 key: vaporSignedUrlData.key,
                 uuid: file.uuid,
-                filename: file.file_name,
+                filename: `${file.uuid}.jpg`,
               }),
             })
             const convertToSpatieTemporaryUrlData = await convertToSpatieTemporaryUrl.json();

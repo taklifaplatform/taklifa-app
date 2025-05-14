@@ -375,8 +375,8 @@ export function HomeScreen() {
           <ListSection
             showMap={showMap}
             isKeyboardVisible={isKeyboardVisible}
-            driversList={drivers}
-            companiesList={companiesQuery.data?.data || []}
+            driversList={filters.provider_type === 'all' || filters.provider_type === USER_ROLES.solo_driver ? drivers : []}
+            companiesList={filters.provider_type === 'all' || filters.provider_type === 'company' ? companiesQuery.data?.data || [] : []}
             isFetching={isFetching}
             fetchDrivers={fetchDrivers}
           />
