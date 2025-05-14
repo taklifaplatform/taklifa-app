@@ -4,13 +4,13 @@ import { createParam } from 'solito';
 
 import { useQuery } from '@tanstack/react-query';
 import { VehiclesService } from '@zix/api';
+import { useMixpanel } from '@zix/services/auth';
 import { FullScreenSpinner, MediaFile } from '@zix/ui/common';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { ZixMediasListWidget, ZixWidgetContainer } from '@zix/ui/widgets';
 import { t } from 'i18next';
-import { Dimensions, RefreshControl } from 'react-native';
+import { RefreshControl } from 'react-native';
 import { ScrollView, Text, View, XStack, YStack } from 'tamagui';
-
 
 const { useParam } = createParam<{ vehicle: string }>();
 
@@ -24,11 +24,10 @@ type VehicleInfoSection = {
   items: VehicleRowInfo[];
 }
 
-const SCREEN_WIDTH = Dimensions.get('screen').width;
 
 export function VehicleProfileScreen() {
   const [vehicleId] = useParam('vehicle');
-
+  useMixpanel(`Vehicle Profile Screen view - Vehicle:${vehicleId}`)
   const { data, refetch, isLoading } = useQuery({
     queryFn() {
       return VehiclesService.retrieveVehicle({

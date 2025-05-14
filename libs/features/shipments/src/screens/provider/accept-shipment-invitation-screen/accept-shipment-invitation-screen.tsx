@@ -7,6 +7,7 @@ import { AppHeader } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
+import { useRouter } from 'solito/router';
 import {
   FormProvider,
   Theme,
@@ -14,8 +15,6 @@ import {
 } from 'tamagui';
 import { z } from 'zod';
 import { SHARED_SHIPMENT_MANAGER_FIELD_PROPS } from '../../shipment-manager/configs';
-import { Router } from 'next/router';
-import { useRouter } from 'solito/router';
 
 const { useParam } = createParam<{ shipment: string, invitation?: string, proposal?: string }>();
 
@@ -34,6 +33,7 @@ const AcceptShipmentInvitationSchema = z.object({
 });
 
 export function AcceptShipmentInvitationScreen() {
+  useMixpanel('Accept Shipment Invitation Screen view')
   const [shipmentId] = useParam('shipment');
   const [invitationId] = useParam('invitation');
   const [proposalId] = useParam('proposal');

@@ -1,5 +1,5 @@
 import { Settings } from '@tamagui/lucide-icons';
-import { useAuth } from '@zix/services/auth';
+import { useAuth, useMixpanel } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { ZixMapDirectionWidget, ZixWidgetContainer } from '@zix/ui/widgets';
@@ -31,6 +31,7 @@ export type ShipmentDetailScreenProps = {
 export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
   variant = 'shipments',
 }) => {
+  useMixpanel('Shipment Detail Screen view')
   const { activeRole, getUrlPrefix } = useAuth();
   const { shipment, isLoading, refetch } = useShipment({ variant })
   const isCancelled = shipment?.status === 'cancelled';
@@ -66,7 +67,7 @@ export const ShipmentDetailScreen: React.FC<ShipmentDetailScreenProps> = ({
               <YStack gap="$2">
                 {shipment?.items?.map((item, index) => (
                   <Text key={`shipment-note-${item.id}-${index}`}>
-                    {item.notes ||''}
+                    {item.notes || ''}
                   </Text>
                 ))}
               </YStack>

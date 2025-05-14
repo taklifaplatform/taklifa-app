@@ -2,7 +2,7 @@
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ServicesService } from '@zix/api';
-import { useAuth } from '@zix/services/auth';
+import { useAuth, useMixpanel } from '@zix/services/auth';
 import { formFields, handleFormErrors, SchemaForm, SubmitButton, ZixFieldContainer } from '@zix/ui/forms';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
@@ -28,6 +28,7 @@ export interface ManageServiceScreenProps {
 const { useParam } = createParam<{ service?: string }>();
 
 export function ManageServiceScreen(props: ManageServiceScreenProps) {
+  useMixpanel('Manage Service Screen view')
   const form = useForm<z.infer<typeof ManageServiceFormSchema>>();
   const toast = useToastController();
   const [serviceId] = useParam('service');

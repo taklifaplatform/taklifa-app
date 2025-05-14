@@ -1,18 +1,18 @@
 
+import { MoreHorizontal, Pencil, Trash2 } from '@tamagui/lucide-icons';
+import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
-import { H4, View, YStack, Image, XStack, Text, Button, Theme } from 'tamagui';
 import { ChatService, ServicesService } from '@zix/api';
-import { Alert, Dimensions, FlatList, Linking, Platform } from 'react-native';
+import { useAuth, useMixpanel } from '@zix/services/auth';
+import { ActionSheet, ActionSheetRef, UserAvatar } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
-import { ActionSheet, ActionSheetRef, UserAvatar, ZixButton } from '@zix/ui/common';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { ZixMediasListWidget } from '@zix/ui/widgets';
-import { useRouter } from 'solito/router';
-import { useAuth } from '@zix/services/auth';
-import { Eye, MoreHorizontal, Pencil, Trash2 } from '@tamagui/lucide-icons';
 import { t } from 'i18next';
 import { useRef, useState } from 'react';
-import toast from 'libs/providers/src/lib/providers/toast/toast';
+import { Alert, Dimensions, FlatList, Linking, Platform } from 'react-native';
+import { useRouter } from 'solito/router';
+import { Button, H4, Image, Text, View, XStack, YStack } from 'tamagui';
 export interface ServicesListScreenProps {
   showHeader: boolean;
   driver: boolean;
@@ -26,13 +26,13 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
   edit = false,
   search,
 }) => {
-
+  useMixpanel('Services List Screen view')
   const SCREEN_WIDTH = Dimensions.get('window').width;
   const router = useRouter();
   const { user, getUrlPrefix } = useAuth();
   const actionSheetManagerRef = useRef<ActionSheetRef>(null);
   const queryClient = useQueryClient();
-
+  const toast = useToastController();
   const { data, refetch, isLoading } =
     driver ?
       useQuery({

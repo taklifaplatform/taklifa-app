@@ -2,6 +2,7 @@ import { SendHorizontal } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
 import { useMutation } from '@tanstack/react-query';
 import { SupportService } from '@zix/api';
+import { useMixpanel } from '@zix/services/auth';
 import {
   SchemaForm,
   SubmitButton,
@@ -11,7 +12,6 @@ import {
 import { CustomIcon } from '@zix/ui/icons';
 import { ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
 import { FormProvider, Text, Theme, View, XStack, YStack } from 'tamagui';
@@ -30,6 +30,7 @@ const ContactUsSchema = z.object({
 });
 
 export const ContactScreen = () => {
+  useMixpanel('Contact Screen view')
   const toast = useToastController();
   const router = useRouter();
   const form = useForm<z.infer<typeof ContactUsSchema>>();

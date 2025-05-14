@@ -1,18 +1,18 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { ShipmentProposalService } from '@zix/api';
-import { DebugObject, FullScreenSpinner } from '@zix/ui/common';
+import { FullScreenSpinner } from '@zix/ui/common';
 import { AppHeader } from '@zix/ui/layouts';
 import { createParam } from 'solito';
 
-import { Text, View } from 'tamagui';
+import { useMixpanel } from '@zix/services/auth';
 import ShipmentProposalCard from '../shipment-proposals-list-screen/shipment-proposal-card';
-
 
 const { useParam } = createParam<{ shipment: string; proposal: string }>();
 
 
 export function ShipmentProposalDetailScreen() {
+  useMixpanel('Shipment Proposal Detail Screen view')
   const [shipmentId] = useParam('shipment');
   const [proposalId] = useParam('proposal');
 

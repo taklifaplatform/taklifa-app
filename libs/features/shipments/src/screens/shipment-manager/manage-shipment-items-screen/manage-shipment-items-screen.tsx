@@ -2,14 +2,13 @@ import { MinusSquare, PlusSquare } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { ShipmentService, ShipmentTransformer } from '@zix/api';
-import { useAuth } from '@zix/services/auth';
+import { useAuth, useMixpanel } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
 import { SubmitButton, ZixFieldContainer, ZixSelectRowOptionField, formFields } from '@zix/ui/forms';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { ShipmentItem } from 'libs/ui/forms/src/form-fields';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
 import { Button, ScrollView, Separator, View, YStack } from 'tamagui';
@@ -25,6 +24,7 @@ const SendFromSchema = z.object({
 })
 
 export const ManageShipmentItemsScreen: React.FC = () => {
+  useMixpanel('Manage Shipment Items Screen view')
   const router = useRouter()
   const { getUrlPrefix } = useAuth()
   const [shipmentId] = useParam('shipment');

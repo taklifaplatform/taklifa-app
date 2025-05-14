@@ -1,4 +1,9 @@
 
+import { useToastController } from '@tamagui/toast';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { WorkingHoursService } from '@zix/api';
+import { useMixpanel } from '@zix/services/auth';
+import { FullScreenSpinner } from '@zix/ui/common';
 import {
   SchemaForm,
   SubmitButton,
@@ -9,14 +14,10 @@ import {
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
+import { createParam } from 'solito';
+import { useRouter } from 'solito/router';
 import { Theme, XStack, YStack } from 'tamagui';
 import { z } from 'zod';
-import { createParam } from 'solito';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { WorkingHoursService } from '@zix/api';
-import { FullScreenSpinner } from '@zix/ui/common';
-import { useToastController } from '@tamagui/toast';
-import { useRouter } from 'solito/router';
 
 const days = [
   'monday',
@@ -63,6 +64,7 @@ const WorkingHoursManagerSchema = z
   });
 
 export function WorkingHoursManagerScreen() {
+  useMixpanel('Working Hours Manager Screen view')
   const [workingHourId] = useParam('working');
 
   const form = useForm<z.infer<typeof WorkingHoursManagerSchema>>();

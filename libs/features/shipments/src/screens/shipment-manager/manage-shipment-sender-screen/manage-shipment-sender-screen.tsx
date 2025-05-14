@@ -1,11 +1,12 @@
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { ShipmentService } from '@zix/api';
-import { useAuth } from '@zix/services/auth';
+import { useAuth, useMixpanel } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
 import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/ui/forms';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
+import moment from 'moment';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
@@ -14,7 +15,6 @@ import { FormProvider, Theme } from 'tamagui';
 import { z } from 'zod';
 import { ShipmentManagerHeader } from '../../../components/shipment-manager/shipment-manager-header/shipment-manager-header';
 import { SHARED_SHIPMENT_MANAGER_FIELD_PROPS } from '../configs';
-import moment from 'moment';
 
 const { useParam } = createParam<{
   shipment?: string,
@@ -35,6 +35,7 @@ const CreateShipmentSchema = z.object({
 })
 
 export function ManageShipmentSenderScreen() {
+  useMixpanel('Manage Shipment Sender Screen view')
   const form = useForm<z.infer<typeof CreateShipmentSchema>>()
   const router = useRouter()
   const toast = useToastController()

@@ -1,7 +1,7 @@
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { ShipmentService } from '@zix/api';
-import { useAuth } from '@zix/services/auth';
+import { useAuth, useMixpanel } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
 import { SubmitButton, handleFormErrors } from '@zix/ui/forms';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
@@ -20,6 +20,7 @@ import {
 const { useParam } = createParam<{ shipment: string }>();
 
 export function ShipmentSummaryScreen() {
+  useMixpanel('Shipment Summary Screen view')
   const [shipmentId] = useParam('shipment');
   const toast = useToastController();
   const router = useRouter();

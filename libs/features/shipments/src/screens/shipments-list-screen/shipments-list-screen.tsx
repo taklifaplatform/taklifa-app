@@ -5,11 +5,11 @@ import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import React, { useMemo, useState } from 'react';
 
-import { useAuth } from '@zix/services/auth';
-import { FlatList } from 'react-native';
-import { Circle, H4, Text, Stack, View, YStack, useMedia, useStyle, ScrollView } from 'tamagui';
-import ShipmentCard from '../../components/shipment-card/shipment-card';
+import { useAuth, useMixpanel } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
+import { FlatList } from 'react-native';
+import { Circle, H4, ScrollView, Stack, Text, View, YStack, useMedia, useStyle } from 'tamagui';
+import ShipmentCard from '../../components/shipment-card/shipment-card';
 
 export type ShipmentsListScreenProps = {
   variant: 'shipments' | 'jobs';
@@ -18,6 +18,7 @@ export type ShipmentsListScreenProps = {
 export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
   variant = 'shipments',
 }) => {
+  useMixpanel('Shipments List Screen view')
   const { activeRole, getUrlPrefix } = useAuth();
   const media = useMedia();
 

@@ -3,7 +3,7 @@ import React from 'react';
 
 import { useToastController } from '@tamagui/toast';
 import { VehicleModelTransformer, VehiclesService } from '@zix/api';
-import { useAuth } from '@zix/services/auth';
+import { useAuth, useMixpanel } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
 import {
   SchemaForm,
@@ -65,6 +65,7 @@ const { useParam } = createParam<{ vehicle?: string }>();
 
 export const ManageVehicleScreen: React.FC = () => {
   const [vehicleId] = useParam('vehicle');
+  useMixpanel(`Manage Vehicle Screen view - Vehicle:${vehicleId}`)
   const form = useForm<z.infer<typeof ManageVehicleFormSchema>>();
   const { user, refetchUser } = useAuth();
   const toast = useToastController();

@@ -2,6 +2,7 @@ import { SendHorizontal } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
 import { useMutation } from '@tanstack/react-query';
 import { SupportService } from '@zix/api';
+import { useMixpanel } from '@zix/services/auth';
 import {
   SchemaForm,
   SubmitButton,
@@ -14,7 +15,7 @@ import { t } from 'i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { useRouter } from 'solito/router';
-import { Theme, XStack, YStack, Text, View } from 'tamagui';
+import { Text, Theme, View, XStack, YStack } from 'tamagui';
 import { z } from 'zod';
 
 const ComplainSchema = z.object({
@@ -29,6 +30,7 @@ const ComplainSchema = z.object({
   ),
 });
 export const ComplainScreen = () => {
+  useMixpanel('Complain Screen view')
   const toast = useToastController();
   const router = useRouter();
   const form = useForm<z.infer<typeof ComplainSchema>>();

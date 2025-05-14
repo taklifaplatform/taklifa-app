@@ -2,14 +2,16 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { ShipmentInvitationService } from '@zix/api';
+import { useMixpanel } from '@zix/services/auth';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
+import { t } from "i18next";
 import { FlatList } from 'react-native';
 import { useShipment } from '../../hooks';
 import ShipmentInvitationCard from './shipment-invitation-card';
-import { t } from "i18next";
 
 
 export function ShipmentInvitationsListScreen() {
+  useMixpanel('Shipment Invitations List Screen view')
   const { shipmentId } = useShipment()
   const { data, refetch, isLoading } = useQuery({
     queryFn() {

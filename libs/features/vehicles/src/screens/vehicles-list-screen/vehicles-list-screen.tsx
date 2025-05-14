@@ -1,16 +1,16 @@
+import { Plus } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { VehiclesService } from '@zix/api';
-import { useAuth, USER_ROLES } from '@zix/services/auth';
-import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
-import { FlatList } from 'react-native';
-import { VehicleCard } from '../../components';
-import { Button, H4, Theme, View, YStack } from 'tamagui';
-import { CustomIcon } from '@zix/ui/icons';
-import { useRouter } from 'solito/router';
-import { Plus } from '@tamagui/lucide-icons';
-import { t } from 'i18next';
 import { ServicesListScreen } from '@zix/features/services';
+import { useAuth, useMixpanel, USER_ROLES } from '@zix/services/auth';
 import { ZixTab } from '@zix/ui/common';
+import { CustomIcon } from '@zix/ui/icons';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
+import { t } from 'i18next';
+import { FlatList } from 'react-native';
+import { useRouter } from 'solito/router';
+import { Button, H4, Theme, View, YStack } from 'tamagui';
+import { VehicleCard } from '../../components';
 export type VehiclesListScreenProps = {
   showHeader?: boolean;
   search?: string;
@@ -20,6 +20,7 @@ export const VehiclesListScreen: React.FC<VehiclesListScreenProps> = ({
   showHeader,
   search,
 }) => {
+  useMixpanel('Vehicles List Screen view')
   const { user, activeRole } = useAuth();
   const router = useRouter();
 

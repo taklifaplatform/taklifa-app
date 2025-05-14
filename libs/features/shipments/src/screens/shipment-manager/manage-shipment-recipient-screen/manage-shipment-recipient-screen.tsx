@@ -1,7 +1,7 @@
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { ShipmentService } from '@zix/api';
-import { useAuth } from '@zix/services/auth';
+import { useAuth, useMixpanel } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
 import {
   SchemaForm,
@@ -44,6 +44,7 @@ const SendFromSchema = z.object({
 });
 
 export const ManageShipmentRecipientScreen: React.FC = () => {
+  useMixpanel('Manage Shipment Recipient Screen view')
   const form = useForm<z.infer<typeof SendFromSchema>>();
   const router = useRouter();
   const { getUrlPrefix } = useAuth();

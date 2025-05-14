@@ -1,6 +1,7 @@
 import { Check } from '@tamagui/lucide-icons';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { ShipmentService } from '@zix/api';
+import { useMixpanel } from '@zix/services/auth';
 import { UserAvatar } from '@zix/ui/common';
 import { SchemaForm, SubmitButton, formFields } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
@@ -12,11 +13,10 @@ import { createParam } from 'solito';
 import {
   FormProvider,
   Separator,
-  Stack,
   Text,
   Theme,
   XStack,
-  YStack,
+  YStack
 } from 'tamagui';
 import { z } from 'zod';
 
@@ -33,6 +33,7 @@ const CancelShipmentSchema = z.object({
 export const ShipmentRejectScreen: React.FC<ShipmentRejectScreenProps> = (
   props,
 ) => {
+  useMixpanel('Shipment Reject Screen view')
   const [shipmentId] = useParam('shipment');
   const { data } = useQuery({
     queryKey: ['ShipmentService.retrieveShipment', { id: shipmentId }],

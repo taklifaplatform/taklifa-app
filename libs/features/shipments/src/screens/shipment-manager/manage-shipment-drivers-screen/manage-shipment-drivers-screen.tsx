@@ -1,24 +1,25 @@
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { createParam } from 'solito';
 
-import { View, Text, YStack, Button, H4 } from 'tamagui';
-import ShipmentManagerHeader from '../../../components/shipment-manager/shipment-manager-header/shipment-manager-header';
+import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { CompaniesService, CompanyTransformer, DriverTransformer, DriversService, ShipmentService, UpdateShipmentRequest } from '@zix/api';
+import { CompanyCard } from '@zix/features/company';
+import { UserCard } from '@zix/features/users';
+import { useAuth, useMixpanel } from '@zix/services/auth';
 import { ZixTab } from '@zix/ui/common';
+import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import { FlatList } from 'react-native';
-import { UserCard } from '@zix/features/users';
-import { CompanyCard } from '@zix/features/company';
-import { useToastController } from '@tamagui/toast';
 import { useRouter } from 'solito/router';
-import { useAuth } from '@zix/services/auth';
-import { CustomIcon } from '@zix/ui/icons';
+import { Button, H4, View, YStack } from 'tamagui';
+import ShipmentManagerHeader from '../../../components/shipment-manager/shipment-manager-header/shipment-manager-header';
 
 const { useParam } = createParam<{ shipment: string }>();
 
 export function ManageShipmentDriversScreen() {
+  useMixpanel('Manage Shipment Drivers Screen view')
   const [shipmentId] = useParam('shipment');
   const [selectedDrivers, setSelectedDrivers] = useState<DriverTransformer[]>([])
   const [selectedCompanies, setSelectedCompanies] = useState<CompanyTransformer[]>([])
