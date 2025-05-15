@@ -70,7 +70,8 @@
         "ITSAppUsesNonExemptEncryption": false
       },
       "associatedDomains": [
-        "applinks:sawaeed.app"
+        "applinks:sawaeed.app",
+        "applinks:sawaeed.app.link"
       ]
     },
     "android": {
@@ -107,6 +108,11 @@
             {
               "scheme": "https",
               "host": "sawaeed.app",
+              "pathPrefix": "/"
+            },
+            {
+              "scheme": "https",
+              "host": "sawaeed.app.link",
               "pathPrefix": "/"
             }
           ],
