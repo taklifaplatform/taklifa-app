@@ -74,7 +74,6 @@
       "sunday": "Sunday"
     },
     "common": {
-      "built-with-love-by": "Developed by STE ZIX DEV",
       "manage-vehicles": "Manage Vehicles",
       "business-hours": "Business Hours",
       "hours": "Hours",
@@ -243,6 +242,7 @@
     }
   },
   "common": {
+    "built-with-love-by": "Developed by STE ZIX DEV",
     "app_name": "Sawaeed Logistic",
     "welcome": "Welcome",
     "next": "Next",
