@@ -442,7 +442,8 @@ const MapSection: FC<MapSectionProps> = memo(function MapSection({
       style={{ flex: 1 }}
       initialCamera={initialCamera}
       onPress={() => Keyboard.dismiss()}
-      showsUserLocation={!!driverLocation}
+      showsUserLocation
+      // showsUserLocation={!!driverLocation}
       showsMyLocationButton={false}
       onRegionChangeComplete={debouncedSetCurrentRegion}
     >
@@ -622,7 +623,27 @@ const CenterButton: FC<CenterButtonProps> = memo(function CenterButton({
   MaterialIcons,
   showMap,
 }) {
-  if (!driverLocation || !showMap) return null;
+  async function onPress() {
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+        return;
+      }
+
+      const location = await Location.getCurrentPositionAsync({});
+      mapRef?.current?.animateCamera({
+        center: {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        },
+        zoom: 16,
+      });
+    } catch (error) {
+      //
+    }
+
+  }
   return (
     <Button
       theme="accent"
@@ -631,15 +652,7 @@ const CenterButton: FC<CenterButtonProps> = memo(function CenterButton({
       position="absolute"
       bottom="$3"
       right="$4"
-      onPress={() => {
-        mapRef?.current?.animateCamera({
-          center: {
-            latitude: driverLocation.latitude,
-            longitude: driverLocation.longitude,
-          },
-          zoom: 16,
-        });
-      }}
+      onPress={() => onPress()}
     />
   );
 });
