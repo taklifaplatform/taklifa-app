@@ -1,13 +1,13 @@
 import { StreamChat } from 'stream-chat';
+import { StableWSConnection } from 'stream-chat/src/connection';
+import { WSConnectionFallback } from 'stream-chat/src/connection_fallback';
+import { isWSFailure } from 'stream-chat/src/errors';
 import {
-  ExtendableGenerics,
   DefaultGenerics,
+  ExtendableGenerics,
   StreamChatOptions,
 } from 'stream-chat/src/types';
-import { StableWSConnection } from 'stream-chat/src/connection';
-import { isErrorResponse, isWSFailure } from 'stream-chat/src/errors';
 import { isOnline } from 'stream-chat/src/utils';
-import { WSConnectionFallback } from 'stream-chat/src/connection_fallback';
 import { ZixChatEcho } from './ZixChatEcho';
 
 export class ZixChat<
