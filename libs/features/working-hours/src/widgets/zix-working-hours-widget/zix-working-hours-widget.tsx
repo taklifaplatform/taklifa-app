@@ -80,7 +80,7 @@ export const ZixWorkingHoursWidget: React.FC<ZixWorkingHoursWidgetProps> = ({
 
   return (
     <ZixWidgetContainer label={t('common:working-hours')} labelPrepend={renderEditButton()}>
-      <YStack gap="$2" flexDirection={Platform.OS === 'web' ? 'row' : 'column'} flexWrap="wrap">
+      <YStack gap="$2" flexDirection={Platform.OS === 'web' ? 'row' : 'column'} >
         {days.map((day, index) => (
           <XStack
             key={index}

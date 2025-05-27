@@ -46,8 +46,11 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
     showSearchBar && (
       <View paddingHorizontal="$4" paddingVertical="$2" $gtMd={{ flex: 1 }}>
         <ZixInput
-          leftIcon={() => <Search size="$1.5" color="#FECA16" />}
+          leftIcon={() => <Search size="$1.5" color="$color6" />}
           placeholder={t('common:search')}
+          placeholderTextColor='$color11'
+          borderWidth={0.5}
+          borderColor='$color11'
           fontWeight='600'
           rightIcon={() =>
             searchProps?.value && <X size="$1.5" onPress={() => searchProps?.onChangeText('')} />

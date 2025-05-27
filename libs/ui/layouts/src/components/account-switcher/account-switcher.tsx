@@ -145,17 +145,17 @@ export const AccountSwitcher: React.FC<AccountSwitcherProps> = ({
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay />
-        <Dialog.Content backgroundColor="$color1" padding="$2" width={500}>
-          <YGroup flex={1} backgroundColor="$color1" width="100%">
+        <Dialog.Content padding="$2" width={500}>
+          <YGroup flex={1} backgroundColor="white" width="100%">
             <XStack alignItems="center" justifyContent="space-between">
               <H4 paddingHorizontal="$4">
-                {t('app:account-switcher.title')}
+                {t('account-switcher:title')}
               </H4>
               <Button
                 padding="$4"
                 icon={X}
                 scaleIcon={1.3}
-                backgroundColor="$color1"
+                backgroundColor="white"
                 onPress={() => setSheetOpen(false)}
               />
             </XStack>
@@ -198,8 +198,9 @@ export const AccountSwitcher: React.FC<AccountSwitcherProps> = ({
                 pressStyle={{ opacity: 0.5 }}
                 marginTop="$2"
                 scaleIcon={1.3}
-                title={t('app:account-switcher.add-account')}
-                subTitle={t('app:account-switcher.add-account-subtitle')}
+                title={t('account-switcher:add-account')}
+                subTitle={t('account-switcher:add-account-subtitle')}
+                backgroundColor='white'
 
               />
             </YGroup.Item>

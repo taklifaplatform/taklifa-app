@@ -163,12 +163,12 @@ export function ManageShipmentDriversScreen() {
 
   return (
     <ScreenLayout safeAreaBottom authProtected>
-      <AppHeader title={'common:shipment-detail'} showBackButton />
+      <AppHeader title={t('common:shipment-detail')} showBackButton />
       <YStack flex={1}>
         <ShipmentManagerHeader
           activeStep={4}
           shipment={data?.data}
-          title='يرجى تحديد السيارة , السائق والشركة المناسب لك'
+          title={t('common:please_select_vehicle_driver_company')}
         />
         {renderTabs()}
         <YStack padding='$4' gap='$2'>
