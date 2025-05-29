@@ -52,10 +52,10 @@ const CategoryList = memo(({ categories, selectedCategory, onSelect }: CategoryL
     keyExtractor={(item, index): string => `${item.id ?? index}`}
     renderItem={({ item }) => (
       <ZixButton
+        themeInverse={selectedCategory?.id === item.id || (!selectedCategory && item.id === 'all')}
         key={item.id}
         style={{ marginRight: 10 }}
         onPress={() => item.id === 'all' ? onSelect(undefined) : onSelect(item as AnnouncementCategoryTransformer)}
-        theme={selectedCategory?.id === item.id || (!selectedCategory && item.id === 'all') ? 'light' : undefined}
       >
         <Text>{item.name}</Text>
       </ZixButton>
@@ -75,7 +75,7 @@ const SubCategoryList = memo(({ subCategories, selectedSubCategory, onSelect }: 
         key={item.id}
         style={{ marginRight: 10 }}
         onPress={() => onSelect(item)}
-        theme={selectedSubCategory?.id === item.id ? 'light' : undefined}
+        themeInverse={selectedSubCategory?.id === item.id}
       >
         <Text>{item.name}</Text>
       </ZixButton>
