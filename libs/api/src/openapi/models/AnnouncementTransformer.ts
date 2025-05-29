@@ -11,6 +11,11 @@ export type AnnouncementTransformer = {
     title?: string;
     description?: string;
     price?: PriceTransformer;
+    city?: string;
+    metadata?: any[];
+    metadata_fields?: any[];
+    category_id?: number;
+    sub_category_id?: number;
     images?: MediaTransformer;
 };
 

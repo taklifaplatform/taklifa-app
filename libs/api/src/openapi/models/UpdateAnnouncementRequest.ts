@@ -9,6 +9,8 @@ export type UpdateAnnouncementRequest = {
     price?: string;
     category_id?: string;
     sub_category_id?: string;
+    metadata?: Array<string>;
+    city?: string;
     images?: Array<ImagesUpdateAnnouncementRequest>;
 };
 

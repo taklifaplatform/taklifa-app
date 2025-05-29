@@ -6,6 +6,7 @@ import { useMixpanel } from '@zix/services/auth';
 import { formFields, handleFormErrors, SchemaForm, SubmitButton, ZixFieldContainer } from '@zix/ui/forms';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
@@ -16,11 +17,14 @@ const ManageAnnouncementFormSchema = z
   .object({
     images: formFields.medias.describe(t('forms:announcement-images')),
     category_id: formFields.autocomplete.describe(t('forms:announcement-category')),
-    year_model: formFields.number.describe(t('forms:announcement-year-model')).optional().nullable(),
+    sub_category_id: formFields.autocomplete.describe(t('forms:announcement-sub-category')),
+    metadata: z.object({
+      model_year: formFields.number.describe(t('forms:announcement-year-model')).optional().nullable(),
+    }),
     city: formFields.text.describe(t('forms:announcement-city')).optional().nullable(),
     title: formFields.text.describe(t('forms:announcement-name')),
     description: formFields.text.describe(t('forms:announcement-description')).max(100),
-    price: formFields.text.describe(t('forms:price')).optional().nullable(),
+    price: formFields.number.describe(t('forms:price')).optional().nullable(),
   });
 
 /* eslint-disable-next-line */
@@ -36,6 +40,16 @@ export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
   const [announcementId] = useParam('announcement');
   const router = useRouter();
   const queryClient = useQueryClient();
+
+  const categoryId = form.watch('category_id');
+  const subCategoryId = form.watch('sub_category_id');
+
+  const { data: categories } = useQuery({
+    queryFn: () => AnnouncementService.listAnnouncementCategories({}),
+    queryKey: ['AnnouncementService.listAnnouncementCategories'],
+  })
+
+  const selectedCategory = useMemo(() => categories?.data?.find((category) => category.id === categoryId), [categories, categoryId]);
 
   const { data, refetch } = useQuery({
     queryFn: () =>
@@ -93,10 +107,10 @@ export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
         },
         sub_category_id: {
           api: 'announcement-categories',
-          // disabled: !selectedCategory,
-          // query: {
-          //   category_id: selectedCategory,
-          // }
+          disabled: !selectedCategory?.sub_categories?.length,
+          query: {
+            category_id: categoryId,
+          }
         }
       }}
       defaultValues={data?.data || {}}
@@ -111,13 +125,22 @@ export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
         );
       }}
     >
-      {({ ...fields }) => (
+      {({ metadata, ...fields }) => (
         <ZixFieldContainer
           label={t('common:service-information')}
           labelBold
           collapsible
         >
           {Object.values(fields)}
+          {!!selectedCategory?.metadata_fields?.length && (
+            <ZixFieldContainer
+              label={t('common:service-information')}
+              labelBold
+              collapsible
+            >
+              {Object.values(metadata)}
+            </ZixFieldContainer>
+          )}
         </ZixFieldContainer>
       )}
     </SchemaForm>
