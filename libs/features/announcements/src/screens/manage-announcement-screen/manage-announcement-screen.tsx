@@ -3,7 +3,6 @@ import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AnnouncementService } from '@zix/api';
 import { useMixpanel } from '@zix/services/auth';
-import { DebugObject } from '@zix/ui/common';
 import { formFields, handleFormErrors, SchemaForm, SubmitButton, ZixFieldContainer } from '@zix/ui/forms';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
@@ -15,12 +14,13 @@ import { z } from 'zod';
 
 const ManageAnnouncementFormSchema = z
   .object({
-    images: formFields.medias.describe(t('forms:images')),
-    category_id: formFields.autocomplete.describe(t('forms:category')),
-    // sub_category_id: formFields.select.describe(t('common:sub-category')),
-    title: formFields.text.describe(t('common:service-title')),
-    description: formFields.textarea.describe(t('common:service-description')),
-    price: formFields.text.describe(t('forms:price')),
+    images: formFields.medias.describe(t('forms:announcement-images')),
+    category_id: formFields.autocomplete.describe(t('forms:announcement-category')),
+    year_model: formFields.number.describe(t('forms:announcement-year-model')).optional().nullable(),
+    city: formFields.text.describe(t('forms:announcement-city')).optional().nullable(),
+    title: formFields.text.describe(t('forms:announcement-name')),
+    description: formFields.text.describe(t('forms:announcement-description')).max(100),
+    price: formFields.text.describe(t('forms:price')).optional().nullable(),
   });
 
 /* eslint-disable-next-line */
@@ -85,6 +85,9 @@ export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
       form={form}
       schema={ManageAnnouncementFormSchema}
       props={{
+        description: {
+          isMultiline: true,
+        },
         category_id: {
           api: 'announcement-categories',
         },

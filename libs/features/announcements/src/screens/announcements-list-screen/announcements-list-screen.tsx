@@ -15,7 +15,6 @@ import { Button, H4, Text, Theme, View, XStack, YStack } from 'tamagui';
 
 export interface AnnouncementsListScreenProps {
   showHeader: boolean;
-  driver: boolean;
   edit: boolean;
   search: string;
 }
@@ -37,7 +36,6 @@ interface SubCategoryListProps {
 interface AnnouncementItemProps {
   item: AnnouncementTransformer;
   showHeader: boolean;
-  driver: boolean;
   edit: boolean;
   onContactPress: (item: AnnouncementTransformer) => void;
   onMorePress: (item: AnnouncementTransformer) => void;
@@ -54,6 +52,7 @@ const CategoryList = memo(({ categories, selectedCategory, onSelect }: CategoryL
       <ZixButton
         themeInverse={selectedCategory?.id === item.id || (!selectedCategory && item.id === 'all')}
         key={item.id}
+        size='$3'
         style={{ marginRight: 10 }}
         onPress={() => item.id === 'all' ? onSelect(undefined) : onSelect(item as AnnouncementCategoryTransformer)}
       >
@@ -74,6 +73,9 @@ const SubCategoryList = memo(({ subCategories, selectedSubCategory, onSelect }: 
       <ZixButton
         key={item.id}
         style={{ marginRight: 10 }}
+        variant={selectedSubCategory?.id === item.id ? undefined : 'outlined'}
+        borderColor={selectedSubCategory?.id === item.id ? '$color1' : '$color11'}
+        size='$2'
         onPress={() => onSelect(item)}
         themeInverse={selectedSubCategory?.id === item.id}
       >
@@ -82,13 +84,13 @@ const SubCategoryList = memo(({ subCategories, selectedSubCategory, onSelect }: 
     )}
     horizontal
     showsHorizontalScrollIndicator={false}
+    contentContainerStyle={{ paddingHorizontal: 16 }}
   />
 ));
 
 const AnnouncementItem = memo(({
   item,
   showHeader,
-  driver,
   edit,
   onContactPress,
   onMorePress,
@@ -101,7 +103,7 @@ const AnnouncementItem = memo(({
       backgroundColor='$color2'
       borderRadius={5}
       marginBottom={10}
-      marginHorizontal={showHeader && '$4'}
+      marginHorizontal={showHeader ? '$4' : undefined}
       paddingBottom={'$4'}
     >
       <XStack
@@ -157,7 +159,7 @@ const SearchCatFilters = memo(({ categories, selectedCategory, onSelectCategory,
   onSelectSubCategory: (cat: AnnouncementCategoryTransformer) => void;
 }) => (
   <Theme reset>
-    <YStack gap={'$4'}>
+    <YStack gap='$3' paddingVertical='$2'>
       <CategoryList categories={categories} selectedCategory={selectedCategory} onSelect={onSelectCategory} />
       <SubCategoryList subCategories={subCategories} selectedSubCategory={selectedSubCategory} onSelect={onSelectSubCategory} />
     </YStack>
@@ -168,7 +170,6 @@ const SearchCatFilters = memo(({ categories, selectedCategory, onSelectCategory,
 
 export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = ({
   showHeader = true,
-  driver = false,
   edit = false,
 }) => {
   useMixpanel('Announcements List Screen view')
@@ -217,7 +218,7 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
   });
 
   // Memoize subcategories
-  const subCategories = useMemo(() => [], [selectedCategory]);
+  const subCategories = useMemo(() => selectedCategory?.sub_categories || [], [selectedCategory]);
 
   // Memoize callbacks
   const handleSelectCategory = useCallback((cat?: AnnouncementCategoryTransformer) => {
@@ -303,7 +304,6 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
             <AnnouncementItem
               item={item}
               showHeader={showHeader}
-              driver={driver}
               edit={edit}
               onContactPress={onContactPress}
               onMorePress={handleMorePress}
