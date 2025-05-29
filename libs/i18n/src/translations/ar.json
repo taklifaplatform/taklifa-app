@@ -141,7 +141,8 @@
       "solo-driver": "سائق فردي",
       "emptyMessage": "رسالة فارغة",
       "sendMessage": "إرسال رسالة",
-      "you": "أنت"
+      "you": "أنت",
+      "nothingYet": "لا شيء حتى الآن"
     },
     "company": {
       "verification_status": {
@@ -446,7 +447,15 @@
     "chat-contract": "محادثه",
     "cancelled-contract": "تم إلغاء العقد",
     "shipment-deleted-successfully": "تم حذف الشحنة بنجاح",
+    "shipment-confirmed": "تم تأكيد الشحنة",
+    "company-created-successfully": "تم إنشاء الشركة بنجاح",
+    "company-updated-successfully": "تم تحديث الشركة بنجاح",
+    "company-change-successfully": "تم تغيير الشركة بنجاح",
+    "member-removed-successfully": "تمت إزالة العضو بنجاح",
+    "invitation-sent-successfully": "تم إرسال الدعوة بنجاح",
+    "vehicle-updated-successfully": "تم تحديث المركبة بنجاح",
     "shipment-items-updated-successfully": "تم تحديث عناصر الشحنة بنجاح",
+    "please-select-vehicle-driver-company": "يرجى تحديد المركبة والسائق والشركة",
     "edit-proposal": "تعديل العرض",
     "cancel-contract-message": "هل أنت متأكد من إلغاء العقد؟",
     "contract-removed": "خدمة ملغاة",
@@ -473,7 +482,9 @@
     "draft": "مسودة",
     "assigned": "معين",
     "shipment-invitations": "دعوة الشحن",
+    "shipment-summary": "ملخص الشحنة",
     "remove-invitation": "إزالة الدعوة",
+    "view-details": "عرض التفاصيل",
     "view-proposal": "عرض العرض",
     "shipment-budget": "ميزانية الشحن",
     "skip": "تخطي",
@@ -492,13 +503,15 @@
     "please-enter-phone-number": "يرجى إدخال رقم الهاتف",
     "no_services_found": "لم يتم العثور على خدمات",
     "document-update": "تم تحديث المستند",
+    "edit-company-info": "تعديل معلومات الشركة",
     "member": "عضو",
     "online": "متصل",
     "market": "السوق",
     "update-announcement": "تحديث الإعلان",
     "create-announcement": "إنشاء إعلان",
     "add-announcement": "أضف إعلان",
-    "sar": "ر.س"
+    "sar": "ر.س",
+    "price": "السعر"
   },
   "cookies-banner": {
     "section-1": {

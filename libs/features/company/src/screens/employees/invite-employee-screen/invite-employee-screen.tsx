@@ -52,7 +52,7 @@ export const InviteEmployeeScreen: React.FC = () => {
       console.log('=====')
       console.log('context::', context)
       console.log('=====')
-      toast.show('Invitation Sent Successfully!');
+      toast.show(t('common:invitation-sent-successfully'));
       router.back()
       queryClient.invalidateQueries({ queryKey: ['CompanyInvitationsService.list'] })
     },

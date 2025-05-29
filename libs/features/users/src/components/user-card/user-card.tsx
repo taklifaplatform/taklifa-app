@@ -1,13 +1,13 @@
 import { DriverTransformer } from '@zix/api';
+import { useAuth } from '@zix/services/auth';
 import { UserAvatar } from '@zix/ui/common';
 import { ZixMediasListWidget } from '@zix/ui/widgets';
+import { getLastActivityStatus } from '@zix/utils';
 import React, { useMemo } from 'react';
 import { useRouter } from 'solito/router';
 import { Image, Separator, Text, ThemeableStackProps, XStack, YStack } from 'tamagui';
 import { UserContactActions, UserContactActionsProps } from '../user-contact-actions/user-contact-actions';
 import { UserInfoRow } from '../user-info-row/user-info-row';
-import { getLastActivityStatus } from '@zix/utils';
-import { useAuth } from '@zix/services/auth';
 
 export type UserCardProps = ThemeableStackProps & {
   user: DriverTransformer;

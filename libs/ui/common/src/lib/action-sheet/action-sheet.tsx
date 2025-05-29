@@ -44,7 +44,6 @@ export const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
       open: () => setIsOpen(true),
       close: () => setIsOpen(false),
     }));
-
     return (
       <Sheet
         modal

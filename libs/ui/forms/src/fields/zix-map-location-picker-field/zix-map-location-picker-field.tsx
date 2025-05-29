@@ -130,7 +130,7 @@ const ZixMapLocationPickerFieldHeader: React.FC<ZixMapLocationPickerFieldHeaderP
         <ZixInput
           value={search}
           onChangeText={setSearch}
-          placeholder="Search here"
+          placeholder={t('job:search')}
           leftIcon={() => (
             <Theme name="accent">
               <Search size="$1.5" color="$color10" />

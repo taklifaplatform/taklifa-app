@@ -2,11 +2,10 @@ import type { StorybookConfig } from "@storybook/nextjs";
 
 const config: StorybookConfig = {
   stories: [
-    "../../../libs/app/ui/**/src/**/*.stories.@(js|jsx|ts|tsx|mdx)",
-    "../../../libs/app/ui/**/src/**/**/*.stories.@(js|jsx|ts|tsx|mdx)",
-    // '../../../libs/ui/**/src/**/**/*.stories.@(js|jsx|ts|tsx|mdx)',
-    // '../../../libs/ui/**/src/**/**/**/*.stories.@(js|jsx|ts|tsx|mdx)',
+    "../../../libs/app/ui/**/src/**/*.@(mdx|stories.@(js|jsx|ts|tsx))",
+    "../../../libs/app/ui/**/src/**/**/*.@(mdx|stories.@(js|jsx|ts|tsx))"
   ],
+
   addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
@@ -26,15 +25,16 @@ const config: StorybookConfig = {
         ],
       },
     },
+    "@chromatic-com/storybook"
   ],
+
   framework: {
     name: "@storybook/nextjs",
     options: {
-      builder: {
-        useSWC: false,
-      },
+      builder: {},
     },
   },
+
   core: {
     builder: {
       name: "@storybook/builder-webpack5",
@@ -44,6 +44,7 @@ const config: StorybookConfig = {
       },
     },
   },
+
   webpackFinal: async (config) => {
     // Remove export-order-loader since it doesn't work properly for CommonJS code
     // It currently appends ES code to CommonJS code resulting in a "exports is not defined" error
@@ -63,13 +64,17 @@ const config: StorybookConfig = {
 
     return config;
   },
+
   env: (config) => ({
     ...config,
     TAMAGUI_TARGET: "web",
   }),
-  docs: {
-    autodocs: true,
-  },
+
+  docs: {},
+
+  typescript: {
+    reactDocgen: "react-docgen-typescript"
+  }
 };
 
 export default config;

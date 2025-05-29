@@ -23,7 +23,9 @@ const preview: Preview = {
     //   }
     // }
   },
-  decorators: [StorybookDecorator]
+
+  decorators: [StorybookDecorator],
+  tags: ['autodocs']
 };
 
 export default preview;

@@ -6,10 +6,12 @@ import {
   useFonts,
 } from '@expo-google-fonts/almarai';
 import { MainAppProvider } from '@zix/providers';
-import { SplashScreen, Stack } from 'expo-router';
+import { Stack } from 'expo-router';
 import React, { useCallback } from 'react';
 import { LogBox, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import * as SplashScreen from 'expo-splash-screen';
+
 LogBox.ignoreAllLogs();
 
 SplashScreen.preventAutoHideAsync();
@@ -39,9 +41,9 @@ export default function MainAppLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
         <MainAppProvider>
-        <Stack screenOptions={{
-          headerShown: false,
-        }}/>
+          <Stack screenOptions={{
+            headerShown: false,
+          }} />
         </MainAppProvider>
       </View>
     </GestureHandlerRootView >

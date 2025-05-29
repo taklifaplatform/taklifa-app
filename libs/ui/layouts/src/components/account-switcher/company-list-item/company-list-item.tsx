@@ -74,7 +74,8 @@ export const CompanyListItem: React.FC<CompanyListItemProps> = ({
         router.push(`/app/companies/${company.id}/settings`)
       }}
     >
-      Update Documents
+
+      {t('common:edit-company-info')}
     </Button>
   ) : null
 

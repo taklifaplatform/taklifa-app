@@ -73,8 +73,10 @@ export function ManageServiceScreen(props: ManageServiceScreenProps) {
       queryClient.refetchQueries({
         queryKey: ['ServicesService.listCompanyServices', user?.active_company?.id],
       })
+      toast.show(t('common:company-updated-successfully'));
       form.reset();
       router.replace(`/app/stores`);
+
       console.log('onSuccess::')
     },
     onError(error: any) {

@@ -31,7 +31,7 @@ export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = React.memo(({
       }}
     />
   ) : (
-    <Building size="$2" color={'color5'}/>
+    <Building size="$2" color={'$color5'}/>
   )
 
   if (!company.location) {

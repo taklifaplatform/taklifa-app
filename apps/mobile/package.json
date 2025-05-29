@@ -208,10 +208,15 @@
     "@sentry/react-native": "*",
     "lodash": "*",
     "mixpanel-react-native": "*",
-    "mixpanel-browser": "*"
+    "mixpanel-browser": "*",
+    "@nx/devkit": "*",
+    "@nx/web": "*",
+    "@nx/webpack": "*",
+    "enhanced-resolve": "*",
+    "picocolors": "*",
+    "tsconfig-paths": "*"
   },
   "scripts": {
-    "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile && cp package-lock.json apps/mobile",
     "eas-build-post-install": "cd ../../ && node tools/scripts/eas-build-post-install.mjs . apps/mobile",
     "android": "expo run:android",
     "ios": "expo run:ios"

@@ -4,8 +4,7 @@ import React from 'react';
 
 import { useToastController } from '@tamagui/toast';
 import { CompanyAdminService } from '@zix/api';
-import { useMixpanel } from '@zix/providers';
-import { useAuth } from '@zix/services/auth';
+import { useAuth, useMixpanel } from '@zix/services/auth';
 import { SchemaForm, SubmitButton, formFields, handleFormErrors } from '@zix/ui/forms';
 import { ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
@@ -44,7 +43,7 @@ export const CreateCompanyScreen: React.FC = () => {
       });
     },
     onSuccess() {
-      toast.show('Company Created Successfully!');
+      toast.show(t('common:company-created-successfully'));
       refetchUser()
       router.push('/auth/register/success')
     },
