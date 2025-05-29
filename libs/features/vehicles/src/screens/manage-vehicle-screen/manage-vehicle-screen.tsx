@@ -118,7 +118,7 @@ export const ManageVehicleScreen: React.FC = () => {
         queryKey: ['DriversService.fetchAllDrivers'],
       })
       // reset form
-      toast.show('Vehicle Updated Successfully!');
+      toast.show(t('common:vehicle-updated-successfully'));
       form.reset();
       refetchUser();
       router.replace('/app');

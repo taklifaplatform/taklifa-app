@@ -6,7 +6,7 @@ import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import { useCallback } from 'react';
 import { useRouter } from 'solito/router';
-import { Button, ColorTokens, H4, View, XStack, YStack } from 'tamagui';
+import { Button, ColorTokens, H4, Theme, View, XStack, YStack } from 'tamagui';
 import ZixNotificationHeaderButton from '../zix-notification-header-button/zix-notification-header-button';
 import { AppHeaderWrapper } from './app-header-wrapper';
 
@@ -32,7 +32,6 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
 }) => {
   const { user, activeRole, isLoggedIn, getUrlPrefix } = useAuth();
   const router = useRouter();
-
   const onAvatarPress = useCallback(() => {
     if (isLoggedIn) {
       router.push(`${getUrlPrefix}/users/${user?.id}`);
@@ -44,20 +43,25 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
 
   const renderSearchBar = () =>
     showSearchBar && (
-      <View paddingHorizontal="$4" paddingVertical="$2" $gtMd={{ flex: 1 }}>
-        <ZixInput
-          leftIcon={() => <Search size="$1.5" color="$color6" />}
-          placeholder={t('common:search')}
-          placeholderTextColor='$color11'
-          borderWidth={0.5}
-          borderColor='$color11'
-          fontWeight='600'
-          rightIcon={() =>
-            searchProps?.value && <X size="$1.5" onPress={() => searchProps?.onChangeText('')} />
-          }
-          {...searchProps}
-        />
-      </View>
+      <Theme reset>
+        <View
+          paddingHorizontal="$4"
+          paddingVertical="$2"
+          $gtMd={{ flex: 1 }}>
+          <ZixInput
+            leftIcon={() => <Search size="$1.5" color="$color6" />}
+            placeholder={t('common:search')}
+            placeholderTextColor='$color11'
+            borderWidth={0.5}
+            borderColor='$color11'
+            fontWeight='600'
+            rightIcon={() =>
+              searchProps?.value && <X size="$1.5" onPress={() => searchProps?.onChangeText('')} />
+            }
+            {...searchProps}
+          />
+        </View>
+      </Theme>
     );
 
   const renderCompanyAvatar = () => (

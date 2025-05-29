@@ -92,9 +92,10 @@
       "solo-driver": "Solo Driver",
       "emptyMessage": "Empty message",
       "sendMessage": "Send Message",
-      "you": "You"
-    }
-  },
+      "you": "You",
+      "nothingYet": "Nothing yet"
+    },
+
   "working-hours": {
     "closed": "Closed"
   },
@@ -112,7 +113,8 @@
     "add-account": "Add Account",
     "add-account-subtitle": "Add new company or account.",
     "account-switching": "Account changed successfully"
-  },
+  }
+    },
   "about": {
     "section-1": {
       "title-1": "Welcome to Sawaeed Logistics",
@@ -394,7 +396,15 @@
     "chat-contract": "Chat",
     "cancelled-contract": "Cancelled",
     "shipment-deleted-successfully": "Shipment deleted successfully",
+    "shipment-confirmed": "Shipment confirmed successfully",
+    "company-created-successfully": "Company created successfully",
+    "company-updated-successfully": "Company updated successfully",
+    "company-change-successfully": "Company changed successfully",
+    "member-removed-successfully": "Member removed successfully",
+    "invitation-sent-successfully": "Invitation sent successfully",
+    "vehicle-updated-successfully": "Vehicle updated successfully",
     "shipment-items-updated-successfully": "Shipment items updated successfully",
+    "please-select-vehicle-driver-company": "Please select vehicle, driver and company",
     "edit-proposal": "Edit Proposal",
     "contract-removed": "Contract Removed",
     "contract-removed-message": "Reason for cancellation of service: The recipient is not present or it was removed manually please get in touch with the services to know more.",
@@ -420,6 +430,7 @@
     "draft": "Draft",
     "assigned": "Assigned",
     "shipment-invitations": "Shipment Invitations",
+    "shipment-summary": "Shipment Summary",
     "remove-invitation": "Remove Invitation",
     "view-details": "View Details",
     "view-proposal": "View Proposal",
@@ -441,8 +452,10 @@
     "please-enter-phone-number": "Please enter a valid phone number",
     "no_services_found": "No services found",
     "document-update": "Document Update",
+    "edit-company-info": "Edit Company Info",
     "member": "Member",
-    "online": "Online"
+    "online": "Online",
+    "price": "Price"
   },
   "cookies-banner": {
     "section-1": {

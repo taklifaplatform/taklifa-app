@@ -16,8 +16,10 @@ const i18nInstance = new Streami18n({
     "Send a message": t('app:common.sendMessage'),
     "You": t('app:common.you'),
     "Photos and Videos": t('forms:photos-and-videos'),
-    "AM": "ammmmm"
- 
+    "AM": "ammmmm",
+    "Nothing yet...": t('app:common.nothingYet')
+
+
   },
 });
 

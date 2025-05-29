@@ -28,7 +28,7 @@ export function TeamMemberCard({
       return CompanyMembersService.delete(variables);
     },
     onSuccess: (data, variables, context) => {
-      toast.show('Member removed successfully!');
+      toast.show(t('common:member-removed-successfully'));
     },
     onError(error: any) {
       toast.show(

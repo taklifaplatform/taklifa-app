@@ -168,7 +168,7 @@ export function ManageShipmentDriversScreen() {
         <ShipmentManagerHeader
           activeStep={4}
           shipment={data?.data}
-          title={t('common:please_select_vehicle_driver_company')}
+          title={t('common:please-select-vehicle-driver-company')}
         />
         {renderTabs()}
         <YStack padding='$4' gap='$2'>

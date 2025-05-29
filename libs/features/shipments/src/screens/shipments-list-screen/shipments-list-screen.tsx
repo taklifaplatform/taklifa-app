@@ -8,8 +8,9 @@ import React, { useMemo, useState } from 'react';
 import { useAuth, useMixpanel } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import { FlatList } from 'react-native';
-import { Circle, H4, ScrollView, Stack, Text, View, YStack, useMedia, useStyle } from 'tamagui';
+import { Circle, H4, ScrollView, Stack, Text, View, XStack, YStack, useMedia, useStyle } from 'tamagui';
 import ShipmentCard from '../../components/shipment-card/shipment-card';
+import { X } from '@tamagui/lucide-icons';
 
 export type ShipmentsListScreenProps = {
   variant: 'shipments' | 'jobs';
@@ -51,11 +52,11 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
 
   const renderShipment = (item: ShipmentFilterTransformer, index: number) => (
     <ZixButton
-      width={150}
+      flex={1}
       key={index}
       theme={status === item.status ? 'accent' : undefined}
       backgroundColor={status === item.status ? '$color9' : '$color2'}
-      borderRadius={status === item.status ? "$4" : "$0"}
+      borderRadius="$4"
       height="$4"
       textProps={{
         textTransform: 'capitalize',
@@ -82,21 +83,20 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
 
   const renderShipmentFilters = () =>
     variant === 'shipments' && (
-      <View padding="$4" height='$6' $gtMd={{ display: 'none' }}>
-        <View>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            height={50}
-          >
+      <View padding="$4" $gtMd={{ display: 'none' }}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+        >
+          <XStack gap='$4'>
             {
               [
                 { key: 'all', status: 'all' },
                 ...(shipmentFilterQuery?.data?.data || [])
               ].map((item, index) => renderShipment(item, index))
             }
-          </ScrollView>
-        </View>
+          </XStack>
+        </ScrollView>
       </View>
     );
 

@@ -17,18 +17,18 @@ import {
   Button,
   Dialog,
   H4,
+  isWeb,
   ListItem,
   Text,
+  Theme,
   ThemeableStackProps,
   View,
   XStack,
   YGroup,
-  YStack,
-  isWeb
+  YStack
 } from 'tamagui';
 import CompanyListItem from './company-list-item/company-list-item';
 import UserRoleListItem from './user-role-list-item/user-role-list-item';
-import { useThemeSetting } from '@zix/providers';
 
 export interface AccountSwitcherProps {
   containerProps?: ThemeableStackProps;
@@ -48,7 +48,7 @@ export const AccountSwitcher: React.FC<AccountSwitcherProps> = ({
         requestBody,
       }),
     onSuccess(data) {
-      toast.show(t('app:account-switcher.account-switching'));
+      toast.show(t('account-switcher:account-switching'));
       refetchUser();
       setSheetOpen(false);
       redirectUserToActiveDashboard({
@@ -73,7 +73,7 @@ export const AccountSwitcher: React.FC<AccountSwitcherProps> = ({
         company,
       }),
     onSuccess(data) {
-      toast.show('Company changed successfully');
+      toast.show(t('common:company-change-successfully'));
       refetchUser();
       setSheetOpen(false);
       redirectUserToActiveDashboard({
@@ -116,13 +116,11 @@ export const AccountSwitcher: React.FC<AccountSwitcherProps> = ({
     router.push('/auth/register');
   }, [roleNames, router]);
 
-  const { current } = useThemeSetting();
 
   return (
     <Dialog open={sheetOpen} onOpenChange={setSheetOpen}>
       <Dialog.Trigger>
         <XStack
-          theme={current === 'dark' ? 'dark' : "light"}
           alignItems="center"
           gap="$2"
           onPress={() => setSheetOpen(true)}
@@ -143,78 +141,80 @@ export const AccountSwitcher: React.FC<AccountSwitcherProps> = ({
           <ChevronDown size="$1" />
         </XStack>
       </Dialog.Trigger>
-      <Dialog.Portal>
-        <Dialog.Overlay />
-        <Dialog.Content padding="$2" width={500}>
-          <YGroup flex={1} backgroundColor="white" width="100%">
-            <XStack alignItems="center" justifyContent="space-between">
-              <H4 paddingHorizontal="$4">
-                {t('account-switcher:title')}
-              </H4>
-              <Button
-                padding="$4"
-                icon={X}
-                scaleIcon={1.3}
-                backgroundColor="white"
-                onPress={() => setSheetOpen(false)}
-              />
-            </XStack>
-            {userRoles?.map((role) => (
-              <UserRoleListItem
-                key={`user-role-${role.id}`}
-                role={role}
-                user={user}
-                onPress={() => changeActiveRole({ name: role.name })}
-                onClose={() => setSheetOpen(false)}
-                isSelected={user?.active_role?.name === role.name}
-              />
-            ))}
+
+      <Theme reset>
+        <Dialog.Portal>
+          <Dialog.Content padding="$2" flex={1}>
+            <YGroup flex={1} width="100%">
+              <XStack alignItems="center" justifyContent="space-between">
+                <H4 paddingHorizontal="$4">
+                  {t('app:account-switcher.title')}
+                </H4>
+                <Button
+                  padding="$4"
+                  icon={X}
+                  scaleIcon={1.3}
+                  backgroundColor="$color1"
+                  onPress={() => setSheetOpen(false)}
+                />
+              </XStack>
+              {userRoles?.map((role) => (
+                <UserRoleListItem
+                  key={`user-role-${role.id}`}
+                  role={role}
+                  user={user}
+                  onPress={() => changeActiveRole({ name: role.name })}
+                  onClose={() => setSheetOpen(false)}
+                  isSelected={user?.active_role?.name === role.name}
+                />
+              ))}
 
 
-            {user?.companies?.map((company) => (
-              <CompanyListItem
-                key={company.name}
-                onPress={changeActiveCompany}
-                company={company}
-                isSelected={user?.active_company?.id === company.id}
-                activeRole={user?.active_role}
-              />
-            ))}
-            <YGroup.Item>
-              <ListItem
-                onPress={() => onAddAccount()}
-                icon={(props) => (
-                  <Avatar
-                    size="$4"
-                    circular
-                    backgroundColor="$color5"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Plus size="$2" />
-                  </Avatar>
-                )}
-                hoverStyle={{ backgroundColor: '$color5' }}
-                pressStyle={{ opacity: 0.5 }}
-                marginTop="$2"
-                scaleIcon={1.3}
-                title={t('account-switcher:add-account')}
-                subTitle={t('account-switcher:add-account-subtitle')}
-                backgroundColor='white'
+              {user?.companies?.map((company) => (
+                <CompanyListItem
+                  key={company.name}
+                  onPress={changeActiveCompany}
+                  company={company}
+                  isSelected={user?.active_company?.id === company.id}
+                  activeRole={user?.active_role}
+                />
+              ))}
+              <YGroup.Item>
+                <ListItem
+                  onPress={() => onAddAccount()}
+                  icon={(props) => (
+                    <Avatar
+                      size="$4"
+                      circular
+                      backgroundColor="$color5"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <Plus size="$2" />
+                    </Avatar>
+                  )}
+                  hoverStyle={{ backgroundColor: '$color5' }}
+                  pressStyle={{ opacity: 0.5 }}
+                  marginTop="$2"
+                  scaleIcon={1.3}
+                  title={t('app:account-switcher.add-account')}
+                  subTitle={t('app:account-switcher.add-account-subtitle')}
 
-              />
-            </YGroup.Item>
-          </YGroup>
-        </Dialog.Content>
-      </Dialog.Portal>
-      <Dialog.Adapt platform="touch">
-        <Dialog.Sheet native modal snapPoints={snapPoints}>
-          <Dialog.Sheet.Frame>
-            <Dialog.Adapt.Contents />
-          </Dialog.Sheet.Frame>
-          <Dialog.Sheet.Overlay />
-        </Dialog.Sheet>
-      </Dialog.Adapt>
+                />
+              </YGroup.Item>
+            </YGroup>
+          </Dialog.Content>
+        </Dialog.Portal>
+        <Dialog.Adapt platform="touch">
+          <Dialog.Sheet native modal snapPoints={snapPoints}>
+            <Dialog.Sheet.Frame>
+              <Dialog.Adapt.Contents />
+            </Dialog.Sheet.Frame>
+            <Dialog.Sheet.Overlay />
+          </Dialog.Sheet>
+        </Dialog.Adapt>
+      </Theme>
+
     </Dialog>
   );
 };

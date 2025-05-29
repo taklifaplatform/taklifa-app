@@ -71,7 +71,7 @@ export function ManageServiceScreen(props: ManageServiceScreenProps) {
       queryClient.refetchQueries({
         queryKey: ['ServicesService.listCompanyServices', user?.active_company?.id],
       })
-      toast.show('Company Updated Successfully!');
+      toast.show(t('common:company-updated-successfully'));
       router.back();
       console.log('onSuccess::')
     },

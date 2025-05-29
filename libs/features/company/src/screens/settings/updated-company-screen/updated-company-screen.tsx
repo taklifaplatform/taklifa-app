@@ -62,7 +62,7 @@ export const UpdateCompanyScreen: React.FC = () => {
         queryKey: ['CompaniesService.retrieveCompany', companyId]
       });
       refetchUser();
-      toast.show('Company Updated Successfully!');
+      toast.show(t('common:company-updated-successfully'));
       router.back();
     },
     onError(error) {
