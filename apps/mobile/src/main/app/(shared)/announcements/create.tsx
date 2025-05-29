@@ -1,8 +1,8 @@
-import { ManageServiceScreen } from '@zix/features/services';
+import { ManageAnnouncementScreen } from '@zix/features/announcements';
 import React from 'react';
 
 export default function Screen() {
   return (
-    <ManageServiceScreen />
+    <ManageAnnouncementScreen />
   );
 }

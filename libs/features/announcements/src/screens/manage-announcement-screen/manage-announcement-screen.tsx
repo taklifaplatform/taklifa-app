@@ -1,8 +1,9 @@
 
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { AnnouncementService, ServicesService } from '@zix/api';
-import { useAuth, useMixpanel } from '@zix/services/auth';
+import { AnnouncementService } from '@zix/api';
+import { useMixpanel } from '@zix/services/auth';
+import { DebugObject } from '@zix/ui/common';
 import { formFields, handleFormErrors, SchemaForm, SubmitButton, ZixFieldContainer } from '@zix/ui/forms';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
@@ -15,9 +16,11 @@ import { z } from 'zod';
 const ManageAnnouncementFormSchema = z
   .object({
     images: formFields.medias.describe(t('forms:images')),
+    category_id: formFields.autocomplete.describe(t('forms:category')),
+    // sub_category_id: formFields.select.describe(t('common:sub-category')),
     title: formFields.text.describe(t('common:service-title')),
     description: formFields.textarea.describe(t('common:service-description')),
-    price: formFields.number.describe(t('common:price')),
+    price: formFields.text.describe(t('forms:price')),
   });
 
 /* eslint-disable-next-line */
@@ -33,13 +36,13 @@ export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
   const [announcementId] = useParam('announcement');
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { user } = useAuth();
 
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryFn: () =>
       AnnouncementService.retrieveAnnouncement({
         announcement: announcementId,
       }),
+    enabled: !!announcementId,
     queryKey: ['AnnouncementService.retrieveAnnouncement', announcementId],
   })
 
@@ -47,7 +50,7 @@ export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
     async mutationFn(requestBody: z.infer<typeof ManageAnnouncementFormSchema>) {
       if (announcementId) {
         return AnnouncementService.updateAnnouncement({
-          service: announcementId,
+          announcement: announcementId,
           requestBody,
         });
       }
@@ -60,6 +63,9 @@ export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
       queryClient.refetchQueries({
         queryKey: ['AnnouncementService.listAnnouncements'],
       })
+      if (announcementId) {
+        refetch();
+      }
 
       form.reset();
       router.replace(`/app/stores`);
@@ -79,8 +85,15 @@ export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
       form={form}
       schema={ManageAnnouncementFormSchema}
       props={{
-        cover: {
-          notAvatar: true
+        category_id: {
+          api: 'announcement-categories',
+        },
+        sub_category_id: {
+          api: 'announcement-categories',
+          // disabled: !selectedCategory,
+          // query: {
+          //   category_id: selectedCategory,
+          // }
         }
       }}
       defaultValues={data?.data || {}}
@@ -111,9 +124,10 @@ export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
     <ScreenLayout safeAreaBottom authProtected>
       <AppHeader
         showBackButton
-        title={announcementId ? t('common:update-service') : t('common:create-service')}
+        title={announcementId ? t('common:update-announcement') : t('common:create-announcement')}
       />
       {renderForm()}
+      {/* <DebugObject object={data} /> */}
     </ScreenLayout>
   )
 }

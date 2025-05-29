@@ -93,57 +93,60 @@ const AnnouncementItem = memo(({
   onContactPress,
   onMorePress,
   SCREEN_WIDTH,
-}: AnnouncementItemProps) => (
-  <YStack
-    backgroundColor='$color2'
-    borderRadius={5}
-    marginBottom={10}
-    marginHorizontal={showHeader && '$4'}
-    paddingBottom={'$4'}
-  >
-    <XStack
-      gap="$10"
-      onPress={() => onMorePress(item)}
-      justifyContent='space-between' alignItems='center' padding={"$4"}
+}: AnnouncementItemProps) => {
+  const { user } = useAuth();
+
+  return (
+    <YStack
+      backgroundColor='$color2'
+      borderRadius={5}
+      marginBottom={10}
+      marginHorizontal={showHeader && '$4'}
+      paddingBottom={'$4'}
     >
-      <XStack alignItems="center" gap="$2">
-        <UserAvatar user={item?.user} size="$5" />
-        <Text color='$color12' fontWeight="bold">
-          {item?.user?.name}
-        </Text>
-      </XStack>
-      <XStack gap="$4" alignItems='center'>
-        {item?.user?.phone_number && <Button
-          flex={0.1}
-          backgroundColor='$gray7'
-          icon={() => <CustomIcon name="call" color='$color12' size={'$1'} />}
-          onPress={() => onContactPress(item)}
-        />}
-        {!showHeader && !driver && <Button
-          iconAfter={<MoreHorizontal />}
-          onPress={() => onMorePress(item)}
-        />}
-      </XStack>
-    </XStack>
-    <YStack gap="$4" paddingHorizontal="$4">
       <XStack
-        justifyContent='space-between'
-        alignItems='center'
-        borderBottomWidth={0.5}
-        borderColor={'$color5'}
-        paddingVertical={"$2"}
+        gap="$10"
+        onPress={() => onMorePress(item)}
+        justifyContent='space-between' alignItems='center' padding={"$4"}
       >
-        <Text fontWeight={'bold'} fontSize={'$3'}>{item?.title || ''}</Text>
-        <XStack alignItems='center'>
-          <Text fontWeight={'bold'} fontSize={'$3'}>{item?.price?.value || ''}</Text>
-          <Text fontWeight={'bold'} fontSize={'$3'}> {item?.price?.currency?.code || ''}</Text>
+        <XStack alignItems="center" gap="$2" flex={1}>
+          <UserAvatar user={item?.user} size="$5" />
+          <Text color='$color12' fontWeight="bold">
+            {item?.user?.name || item?.user?.username}
+          </Text>
+        </XStack>
+        <XStack gap="$4" alignItems='center'>
+          {item?.user?.phone_number && <Button
+            flex={0.1}
+            backgroundColor='$gray7'
+            icon={() => <CustomIcon name="call" color='$color12' size={'$1'} />}
+            onPress={() => onContactPress(item)}
+          />}
+          {user?.id === item?.user?.id && <Button
+            iconAfter={<MoreHorizontal />}
+            onPress={() => onMorePress(item)}
+          />}
         </XStack>
       </XStack>
-      <Text numberOfLines={3}>{item?.description || ''}</Text>
-      {item?.images && <ZixMediasListWidget medias={item.images ? [item.images] : []} paddingHorizontal={5} />}
+      <YStack gap="$4" paddingHorizontal="$4">
+        <XStack
+          justifyContent='space-between'
+          alignItems='center'
+          borderBottomWidth={0.5}
+          borderColor={'$color5'}
+          paddingVertical={"$2"}
+        >
+          <Text fontWeight={'bold'} fontSize={'$3'}>{item?.title || ''}</Text>
+          <XStack alignItems='center'>
+            <Text fontWeight={'bold'} fontSize={'$3'}>{item?.price} {t('common:sar')}</Text>
+          </XStack>
+        </XStack>
+        <Text numberOfLines={3}>{item?.description || ''}</Text>
+        {item?.images && <ZixMediasListWidget medias={item.images || []} paddingHorizontal={5} />}
+      </YStack>
     </YStack>
-  </YStack>
-));
+  )
+});
 
 const SearchCatFilters = memo(({ categories, selectedCategory, onSelectCategory, subCategories, selectedSubCategory, onSelectSubCategory }: {
   categories: AnnouncementCategoryTransformer[];
@@ -204,9 +207,7 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
       announcement: selectedItem?.id ? String(selectedItem.id) : '',
     }),
     onSuccess: () => {
-      queryClient.refetchQueries({
-        queryKey: ['AnnouncementService.listAnnouncements', user?.id],
-      });
+      refetch();
       toast.show('Announcement Removed Successfully!');
     },
     onError: () => {
@@ -238,7 +239,7 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
       icon: <Pencil size="$1" color="$color10" />,
       onPress: () => {
         actionSheetManagerRef.current?.close();
-        router.push(`${getUrlPrefix}/company/services/${selectedItem?.id}/edit`);
+        router.push(`/app/announcements/${selectedItem?.id}/edit`);
       },
     },
     {
@@ -321,7 +322,7 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
             icon={<Plus size="$1" color="$color12" />}
             onPress={() => {
               if (isLoggedIn) {
-                router.push(`${getUrlPrefix}/company/services/create`)
+                router.push(`/app/announcements/create`)
               } else {
                 router.push(`/auth/login`)
               }
