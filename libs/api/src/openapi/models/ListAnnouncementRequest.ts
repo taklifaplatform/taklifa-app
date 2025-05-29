@@ -4,5 +4,7 @@
 /* eslint-disable */
 export type ListAnnouncementRequest = {
     search?: string;
+    category_id?: string;
+    sub_category_id?: string;
 };
 

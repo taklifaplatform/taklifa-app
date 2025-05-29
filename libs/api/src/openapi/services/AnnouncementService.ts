@@ -18,6 +18,8 @@ export class AnnouncementService {
         page,
         perPage,
         search,
+        categoryId,
+        subCategoryId,
     }: {
         /**
          * Page number
@@ -28,6 +30,8 @@ export class AnnouncementService {
          */
         perPage?: number,
         search?: string,
+        categoryId?: any,
+        subCategoryId?: any,
     }): CancelablePromise<{
         data?: Array<AnnouncementTransformer>;
         links?: {
@@ -58,6 +62,8 @@ export class AnnouncementService {
                 'page': page,
                 'per_page': perPage,
                 'search': search,
+                'category_id': categoryId,
+                'sub_category_id': subCategoryId,
             },
         });
     }

@@ -1,11 +1,11 @@
 import { MoreHorizontal, Pencil, Plus, Trash2 } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { AnnouncementService, AnnouncementTransformer, ServicesService } from '@zix/api';
+import { AnnouncementCategoryTransformer, AnnouncementService, AnnouncementTransformer } from '@zix/api';
 import { useAuth, useMixpanel } from '@zix/services/auth';
-import { ActionSheet, ActionSheetRef, UserAvatar, ZixButton } from '@zix/ui/common';
+import { ActionSheet, ActionSheetRef, DebugObject, UserAvatar, ZixButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
-import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
+import { AppHeader } from '@zix/ui/layouts';
 import { ZixMediasListWidget } from '@zix/ui/widgets';
 import { t } from 'i18next';
 import { useRef, useState } from 'react';
@@ -24,7 +24,6 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
   showHeader = true,
   driver = false,
   edit = false,
-  search,
 }) => {
   useMixpanel('Announcements List Screen view')
   const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -33,6 +32,7 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
   const actionSheetManagerRef = useRef<ActionSheetRef>(null);
   const queryClient = useQueryClient();
   const toast = useToastController();
+  const [search, setSearch] = useState('');
 
   const { data: categoriesData } =
     useQuery({
@@ -40,13 +40,19 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
         AnnouncementService.listAnnouncementCategories({}),
       queryKey: ['AnnouncementService.listAnnouncementCategories'],
     })
+
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState<AnnouncementCategoryTransformer>();
+  const [selectedSubCategory, setSelectedSubCategory] = useState<AnnouncementCategoryTransformer>();
   const { data, refetch, isLoading } =
     useQuery({
       queryFn: () =>
         AnnouncementService.listAnnouncements({
-          search
+          search: search,
+          categoryId: selectedCategory?.id,
+          subCategoryId: selectedSubCategory?.id,
         }),
-      queryKey: ['AnnouncementService.listAnnouncements', `-${search}`,],
+      queryKey: ['AnnouncementService.listAnnouncements', `-${search}`, selectedCategory?.id, selectedSubCategory?.id],
     })
 
 
@@ -59,7 +65,7 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
   }
 
 
-  const [selectedItem, setSelectedItem] = useState(null);
+
 
   const { mutate } = useMutation({
     mutationFn() {
@@ -78,12 +84,56 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
     }
   })
 
-  const renderCategoriesCards = () => {
-    return categoriesData?.data?.map((category) => (
-      <View key={category.id}>
+
+  const renderCategoryCard = (category: AnnouncementCategoryTransformer) => {
+    // return <Text>{category.name}</Text>;
+    return (
+      <ZixButton
+        // height={40}
+        key={category.id}
+        style={{ marginRight: 10 }}
+        onPress={() => setSelectedCategory(category)}
+        theme={selectedCategory?.id === category.id ? 'light' : undefined}
+      >
         <Text>{category.name}</Text>
-      </View>
-    ))
+      </ZixButton>
+    )
+  }
+
+  const renderSubCategoryCard = ({ item }) => {
+    return (
+      <ZixButton key={item.id} style={{ marginRight: 10 }}>
+        <Text>{item.name}</Text>
+      </ZixButton>
+    )
+  }
+
+  const renderCategoriesCards = () => {
+
+    return (
+      <FlatList
+        data={categoriesData?.data || []}
+        keyExtractor={(item) => (item.id !== undefined ? item.id.toString() : Math.random().toString())}
+        renderItem={({ item }) => renderCategoryCard(item)}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        // style={{ backgroundColor: 'red', height: 10 }}
+        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 8 }}
+      />
+    );
+  }
+
+  const renderSubCategoriesCards = () => {
+    return (
+      <FlatList
+        data={selectedCategory?.announcement_categories || []}
+        keyExtractor={(item) => (item.id !== undefined ? item.id.toString() : Math.random().toString())}
+        renderItem={renderSubCategoryCard}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+      // contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 8 }}
+      />
+    )
   }
 
   const renderItem = ({ item, index }) => (
@@ -220,11 +270,27 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
     </YStack>
   )
 
-  return (
-    <ScreenLayout>
-      {showHeader && <AppHeader title={t('common:market')} />}
-      <YStack flex={1} paddingTop={15}>
+  const renderSearchCatFilters = () => {
+    return (
+      <YStack gap={'$4'}>
         {renderCategoriesCards()}
+        {renderSubCategoriesCards()}
+      </YStack>
+    )
+  }
+
+  return (
+    <View flex={1}>
+      <AppHeader title={t('common:market')}
+        showSearchBar
+        searchProps={{
+          value: search,
+          onChangeText: setSearch,
+        }}
+        renderAfterSearchBar={() => renderSearchCatFilters()}
+      />
+      <YStack flex={1} paddingTop={15} position='relative'>
+        <DebugObject object={selectedCategory} />
         <FlatList
           showsVerticalScrollIndicator={false}
           refreshing={isLoading}
@@ -257,7 +323,7 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
           </ZixButton>
         </XStack>
       </YStack>
-    </ScreenLayout>
+    </View>
   );
 }
 

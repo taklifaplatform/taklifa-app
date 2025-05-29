@@ -5,5 +5,9 @@
 export type AnnouncementCategoryTransformer = {
     id?: number;
     name?: string;
+    sub_categories?: Array<{
+        id?: number;
+        name?: string;
+    }>;
 };
 
