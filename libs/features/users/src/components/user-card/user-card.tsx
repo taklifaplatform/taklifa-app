@@ -32,12 +32,7 @@ export const UserCard: React.FC<UserCardProps> = React.memo(({
   }, [user?.companies]);
 
   function onPress() {
-    if (isLoggedIn) {
-      router.push(`/app/users/${user.id}`);
-    } else {
-      alert('Please login to view details');
-      router.push(`/auth/login`);
-    }
+    router.push(`/app/users/${user.id}`);
   }
 
   return (

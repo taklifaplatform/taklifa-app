@@ -71,12 +71,7 @@ export function HomeScreen() {
         key={`marker-${index}`}
         company={company}
         onPress={() => {
-          if (isLoggedIn) {
-            router.push(`/app/companies/${company.id}`);
-          } else {
-            alert('Please login to view details');
-            router.push(`/auth/login`);
-          }
+          router.push(`/app/companies/${company.id}`);
         }}
       />
     ));

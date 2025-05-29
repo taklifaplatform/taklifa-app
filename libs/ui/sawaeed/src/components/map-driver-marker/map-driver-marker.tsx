@@ -3,7 +3,8 @@ import { CustomIcon } from '@zix/ui/icons';
 import React, { useState } from 'react';
 import { Platform } from 'react-native';
 import { Marker } from 'react-native-maps';
-import { Image, View } from 'tamagui';
+import { useStyle, View } from 'tamagui';
+import { Image } from 'expo-image';
 
 export type MapDriverMarkerProps = {
   driver: DriverTransformer;
@@ -17,11 +18,20 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = React.memo(({
   onPress
 }: MapDriverMarkerProps) => {
   const [showCustomIcon, setShowCustomIcon] = useState(false)
+  const style = useStyle({
+    width: driver?.vehicle?.model?.map_icon_width || '$6',
+    height: driver?.vehicle?.model?.map_icon_height || '$4',
+  })
   const renderCarIcon = () => (!showCustomIcon && driver?.vehicle?.model?.map_icon?.url) ? (
     <Image
-      source={{ uri: driver?.vehicle?.model?.map_icon?.url }}
-      width={driver?.vehicle?.model?.map_icon_width || '$6'}
-      height={driver?.vehicle?.model?.map_icon_height || '$4'}
+      source={{ uri: driver?.vehicle?.model?.map_icon?.original_url }}
+      style={style}
+      // style={{
+      //   width: 100,
+      //   height: 500,
+      //   resizeMode: 'contain',
+      // }}
+      contentFit='contain'
       onError={() => {
         console.log('error loading image')
         setShowCustomIcon(true)
@@ -51,8 +61,8 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = React.memo(({
       <View
         width='$8'
         height='$8'
-        alignItems='center'
-        justifyContent='center'
+        alignItems={Platform.OS === 'android' ? undefined : 'center'}
+        justifyContent={Platform.OS === 'android' ? undefined : 'center'}
         borderColor='$color5'
         style={
           isSelected
