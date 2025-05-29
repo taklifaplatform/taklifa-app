@@ -46,7 +46,7 @@ export function ShipmentSummaryScreen() {
         shipment: shipmentId as string,
       }),
     onSuccess() {
-      toast.show('Shipment confirmed');
+      toast.show(t('common:shipment-confirmed'));
       router.push(`${getUrlPrefix}/shipments`);
     },
     onError(error: any) {
@@ -77,7 +77,9 @@ export function ShipmentSummaryScreen() {
 
   return (
     <ScreenLayout safeAreaBottom authProtected>
-      <AppHeader title="مراجعة البيانات" showBackButton />
+      <AppHeader
+        title={t('common:shipment-summary')}
+        showBackButton />
       {renderLoadingSpinner()}
       {renderShipmentSummary()}
 

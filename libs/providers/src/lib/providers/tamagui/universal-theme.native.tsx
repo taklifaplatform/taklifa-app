@@ -33,6 +33,24 @@ const DefaultTheme: Theme = {
     border: 'rgb(216, 216, 216)',
     notification: 'rgb(255, 59, 48)',
   },
+  fonts: {
+    regular: {
+      fontFamily: 'System',
+      fontWeight: '400',
+    },
+    medium: {
+      fontFamily: 'System',
+      fontWeight: '500',
+    },
+    bold: {
+      fontFamily: 'System',
+      fontWeight: '700',
+    },
+    heavy: {
+      fontFamily: 'System',
+      fontWeight: '800',
+    }
+  },
 };
 
 const DarkTheme: Theme = {
@@ -44,6 +62,24 @@ const DarkTheme: Theme = {
     text: '#E0E0E0',
     border: 'rgb(39, 39, 41)',
     notification: 'rgb(255, 69, 58)',
+  },
+  fonts: {
+    regular: {
+      fontFamily: 'System',
+      fontWeight: '400',
+    },
+    medium: {
+      fontFamily: 'System',
+      fontWeight: '500',
+    },
+    bold: {
+      fontFamily: 'System',
+      fontWeight: '700',
+    },
+    heavy: {
+      fontFamily: 'System',
+      fontWeight: '800',
+    }
   },
 };
 

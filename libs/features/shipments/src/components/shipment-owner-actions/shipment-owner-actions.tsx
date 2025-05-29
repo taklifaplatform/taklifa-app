@@ -46,7 +46,7 @@ export const ShipmentOwnerActions: React.FC<ShipmentOwnerActionsProps> = ({ ship
   // Define actions for both ActionSheet and web dropdown
   const actions = [
     {
-      name: t('common:view-proposals'),
+      name: t('common:view-details'),
       icon: <Eye size="$2" color="$color10" />,
       onPress: () => {
         router.push(`${getUrlPrefix}/shipments/${shipment.id}`)

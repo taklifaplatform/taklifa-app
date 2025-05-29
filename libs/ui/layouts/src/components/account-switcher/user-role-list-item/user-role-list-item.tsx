@@ -94,7 +94,6 @@ export const UserRoleListItem: React.FC<UserRoleListItemProps> = ({
       {renderSubmitDocumentsButton()}
     </XStack>
   )
-
   return (
     <XStack
       onPress={() => onPress()}
@@ -119,8 +118,8 @@ export const UserRoleListItem: React.FC<UserRoleListItemProps> = ({
           user={user}
           size='$4'
         />
-        <YStack gap='$2' flex={1}>
-          <Text fontWeight='700'>
+        <YStack gap='$2' flex={1} >
+          <Text fontWeight='700' >
             {user.name ?? user.username ? `@${user.username}` : ''}
           </Text>
 

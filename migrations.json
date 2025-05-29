@@ -1,12 +1,19 @@
 {
   "migrations": [
     {
-      "cli": "nx",
-      "version": "19.1.0-beta.6",
-      "description": "Migrate no-extra-semi rules into user config, out of nx extendable configs",
-      "implementation": "./src/migrations/update-19-1-0-migrate-no-extra-semi/migrate-no-extra-semi",
-      "package": "@nx/eslint-plugin",
-      "name": "update-19-1-0-rename-no-extra-semi"
+      "version": "21.1.0-beta.2",
+      "description": "Adds **/nx-rules.mdc and **/nx.instructions.md to .gitignore if not present",
+      "implementation": "./src/migrations/update-21-1-0/add-gitignore-entry",
+      "package": "nx",
+      "name": "21-1-0-add-ignore-entries-for-nx-rule-files"
     }
-  ]
+  ],
+  "nx-console": {
+    "initialGitRef": {
+      "ref": "51f2df7d4f691262baad947bc59c36a791c92152",
+      "subject": "chore: update stream-chat and stream-chat-expo dependencies to latest versions"
+    },
+    "targetVersion": "latest",
+    "confirmedPackageUpdates": true
+  }
 }
