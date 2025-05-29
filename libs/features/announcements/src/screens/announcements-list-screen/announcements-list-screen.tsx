@@ -30,7 +30,7 @@ interface CategoryListProps {
 interface SubCategoryListProps {
   subCategories: AnnouncementCategoryTransformer[];
   selectedSubCategory?: AnnouncementCategoryTransformer;
-  onSelect: (cat: AnnouncementCategoryTransformer) => void;
+  onSelect: (cat?: AnnouncementCategoryTransformer) => void;
 }
 
 interface AnnouncementItemProps {
@@ -65,19 +65,19 @@ const CategoryList = memo(({ categories, selectedCategory, onSelect }: CategoryL
   />
 ));
 
-const SubCategoryList = memo(({ subCategories, selectedSubCategory, onSelect }: SubCategoryListProps) => (
-  <FlatList<AnnouncementCategoryTransformer>
-    data={subCategories}
-    keyExtractor={(item: AnnouncementCategoryTransformer, index: number): string => `${item.id ?? index}`}
+const SubCategoryList = memo(({ subCategories, selectedSubCategory, onSelect }: SubCategoryListProps) => subCategories?.length > 0 ? (
+  <FlatList<{ id: number | 'all'; name: string }>
+    data={[{ id: 'all', name: t('common:all') }, ...subCategories] as ({ id: number | 'all'; name: string })[]}
+    keyExtractor={(item, index): string => `${item.id ?? index}`}
     renderItem={({ item }) => (
       <ZixButton
         key={item.id}
         style={{ marginRight: 10 }}
-        variant={selectedSubCategory?.id === item.id ? undefined : 'outlined'}
-        borderColor={selectedSubCategory?.id === item.id ? '$color1' : '$color11'}
+        variant={selectedSubCategory?.id === item.id || (!selectedSubCategory && item.id === 'all') ? undefined : 'outlined'}
+        borderColor={selectedSubCategory?.id === item.id || (!selectedSubCategory && item.id === 'all') ? '$color1' : '$color11'}
         size='$2'
-        onPress={() => onSelect(item)}
-        themeInverse={selectedSubCategory?.id === item.id}
+        onPress={() => item.id === 'all' ? onSelect(undefined) : onSelect(item as AnnouncementCategoryTransformer)}
+        themeInverse={selectedSubCategory?.id === item.id || (!selectedSubCategory && item.id === 'all')}
       >
         <Text>{item.name}</Text>
       </ZixButton>
@@ -86,7 +86,7 @@ const SubCategoryList = memo(({ subCategories, selectedSubCategory, onSelect }: 
     showsHorizontalScrollIndicator={false}
     contentContainerStyle={{ paddingHorizontal: 16 }}
   />
-));
+) : null);
 
 const AnnouncementItem = memo(({
   item,
@@ -156,7 +156,7 @@ const SearchCatFilters = memo(({ categories, selectedCategory, onSelectCategory,
   onSelectCategory: (cat?: AnnouncementCategoryTransformer) => void;
   subCategories: AnnouncementCategoryTransformer[];
   selectedSubCategory?: AnnouncementCategoryTransformer;
-  onSelectSubCategory: (cat: AnnouncementCategoryTransformer) => void;
+  onSelectSubCategory: (cat?: AnnouncementCategoryTransformer) => void;
 }) => (
   <Theme reset>
     <YStack gap='$3' paddingVertical='$2'>
@@ -225,7 +225,7 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
     setSelectedCategory(cat);
     setSelectedSubCategory(undefined);
   }, []);
-  const handleSelectSubCategory = useCallback((cat: AnnouncementCategoryTransformer) => {
+  const handleSelectSubCategory = useCallback((cat?: AnnouncementCategoryTransformer) => {
     setSelectedSubCategory(cat);
   }, []);
 
