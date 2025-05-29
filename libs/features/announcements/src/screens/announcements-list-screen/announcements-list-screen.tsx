@@ -8,7 +8,7 @@ import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader } from '@zix/ui/layouts';
 import { ZixMediasListWidget } from '@zix/ui/widgets';
 import { t } from 'i18next';
-import { useRef, useState } from 'react';
+import { useRef, useState, useCallback, useMemo, memo } from 'react';
 import { Alert, Dimensions, FlatList, Linking } from 'react-native';
 import { useRouter } from 'solito/router';
 import { Button, H4, Image, Text, View, XStack, YStack } from 'tamagui';
@@ -19,6 +19,147 @@ export interface AnnouncementsListScreenProps {
   edit: boolean;
   search: string;
 }
+
+// --- Types ---
+
+interface CategoryListProps {
+  categories: AnnouncementCategoryTransformer[];
+  selectedCategory?: AnnouncementCategoryTransformer;
+  onSelect: (cat: AnnouncementCategoryTransformer) => void;
+}
+
+interface SubCategoryListProps {
+  subCategories: AnnouncementCategoryTransformer[];
+  selectedSubCategory?: AnnouncementCategoryTransformer;
+  onSelect: (cat: AnnouncementCategoryTransformer) => void;
+}
+
+interface AnnouncementItemProps {
+  item: AnnouncementTransformer;
+  showHeader: boolean;
+  driver: boolean;
+  edit: boolean;
+  onContactPress: (item: AnnouncementTransformer) => void;
+  onMorePress: (item: AnnouncementTransformer) => void;
+  SCREEN_WIDTH: number;
+}
+
+// --- Memoized Components ---
+
+const CategoryList = memo(({ categories, selectedCategory, onSelect }: CategoryListProps) => (
+  <FlatList<AnnouncementCategoryTransformer>
+    data={categories}
+    keyExtractor={(item: AnnouncementCategoryTransformer, index: number): string => `${item.id ?? index}`}
+    renderItem={({ item }) => (
+      <ZixButton
+        key={item.id}
+        style={{ marginRight: 10 }}
+        onPress={() => onSelect(item)}
+        theme={selectedCategory?.id === item.id ? 'light' : undefined}
+      >
+        <Text>{item.name}</Text>
+      </ZixButton>
+    )}
+    horizontal
+    showsHorizontalScrollIndicator={false}
+    contentContainerStyle={{ paddingHorizontal: 16 }}
+  />
+));
+
+const SubCategoryList = memo(({ subCategories, selectedSubCategory, onSelect }: SubCategoryListProps) => (
+  <FlatList<AnnouncementCategoryTransformer>
+    data={subCategories}
+    keyExtractor={(item: AnnouncementCategoryTransformer, index: number): string => `${item.id ?? index}`}
+    renderItem={({ item }) => (
+      <ZixButton
+        key={item.id}
+        style={{ marginRight: 10 }}
+        onPress={() => onSelect(item)}
+        theme={selectedSubCategory?.id === item.id ? 'light' : undefined}
+      >
+        <Text>{item.name}</Text>
+      </ZixButton>
+    )}
+    horizontal
+    showsHorizontalScrollIndicator={false}
+  />
+));
+
+const AnnouncementItem = memo(({
+  item,
+  showHeader,
+  driver,
+  edit,
+  onContactPress,
+  onMorePress,
+  SCREEN_WIDTH,
+}: AnnouncementItemProps) => (
+  <YStack
+    backgroundColor='$color2'
+    borderRadius={5}
+    marginBottom={10}
+    marginHorizontal={showHeader && '$4'}
+    paddingBottom={'$4'}
+  >
+    <XStack
+      gap="$10"
+      onPress={() => onMorePress(item)}
+      justifyContent='space-between' alignItems='center' padding={"$4"}
+    >
+      <XStack alignItems="center" gap="$2">
+        <UserAvatar user={item?.user} size="$5" />
+        <Text color='$color12' fontWeight="bold">
+          {item?.user?.name}
+        </Text>
+      </XStack>
+      <XStack gap="$4" alignItems='center'>
+        {item?.user?.phone_number && <Button
+          flex={0.1}
+          backgroundColor='$gray7'
+          icon={() => <CustomIcon name="call" color='$color12' size={'$1'} />}
+          onPress={() => onContactPress(item)}
+        />}
+        {!showHeader && !driver && <Button
+          iconAfter={<MoreHorizontal />}
+          onPress={() => onMorePress(item)}
+        />}
+      </XStack>
+    </XStack>
+    <YStack gap="$4" paddingHorizontal="$4">
+      <XStack
+        justifyContent='space-between'
+        alignItems='center'
+        borderBottomWidth={0.5}
+        borderColor={'$color5'}
+        paddingVertical={"$2"}
+      >
+        <Text fontWeight={'bold'} fontSize={'$3'}>{item?.title || ''}</Text>
+        <XStack alignItems='center'>
+          <Text fontWeight={'bold'} fontSize={'$3'}>{item?.price?.value || ''}</Text>
+          <Text fontWeight={'bold'} fontSize={'$3'}> {item?.price?.currency?.code || ''}</Text>
+        </XStack>
+      </XStack>
+      <Text numberOfLines={3}>{item?.description || ''}</Text>
+      {item?.images && <ZixMediasListWidget medias={item.images ? [item.images] : []} paddingHorizontal={5} />}
+    </YStack>
+  </YStack>
+));
+
+const SearchCatFilters = memo(({ categories, selectedCategory, onSelectCategory, subCategories, selectedSubCategory, onSelectSubCategory }: {
+  categories: AnnouncementCategoryTransformer[];
+  selectedCategory?: AnnouncementCategoryTransformer;
+  onSelectCategory: (cat: AnnouncementCategoryTransformer) => void;
+  subCategories: AnnouncementCategoryTransformer[];
+  selectedSubCategory?: AnnouncementCategoryTransformer;
+  onSelectSubCategory: (cat: AnnouncementCategoryTransformer) => void;
+}) => (
+  <YStack gap={'$4'}>
+    <CategoryList categories={categories} selectedCategory={selectedCategory} onSelect={onSelectCategory} />
+    <SubCategoryList subCategories={subCategories} selectedSubCategory={selectedSubCategory} onSelect={onSelectSubCategory} />
+  </YStack>
+));
+
+// --- Main Screen ---
 
 export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = ({
   showHeader = true,
@@ -33,277 +174,144 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
   const queryClient = useQueryClient();
   const toast = useToastController();
   const [search, setSearch] = useState('');
-
-  const { data: categoriesData } =
-    useQuery({
-      queryFn: () =>
-        AnnouncementService.listAnnouncementCategories({}),
-      queryKey: ['AnnouncementService.listAnnouncementCategories'],
-    })
-
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState<AnnouncementTransformer | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<AnnouncementCategoryTransformer>();
   const [selectedSubCategory, setSelectedSubCategory] = useState<AnnouncementCategoryTransformer>();
-  const { data, refetch, isLoading } =
-    useQuery({
-      queryFn: () =>
-        AnnouncementService.listAnnouncements({
-          search: search,
-          categoryId: selectedCategory?.id,
-          subCategoryId: selectedSubCategory?.id,
-        }),
-      queryKey: ['AnnouncementService.listAnnouncements', `-${search}`, selectedCategory?.id, selectedSubCategory?.id],
-    })
 
+  const { data: categoriesData } = useQuery({
+    queryFn: () => AnnouncementService.listAnnouncementCategories({}),
+    queryKey: ['AnnouncementService.listAnnouncementCategories'],
+  });
 
+  const { data, refetch, isLoading } = useQuery({
+    queryFn: () => AnnouncementService.listAnnouncements({
+      search: search,
+      categoryId: selectedCategory?.id,
+      subCategoryId: selectedSubCategory?.id,
+    }),
+    queryKey: ['AnnouncementService.listAnnouncements', search, selectedCategory?.id, selectedSubCategory?.id],
+  });
 
   // on Contact button press
-  const onContactPress = (item: AnnouncementTransformer) => {
-    const phoneNumber = item?.user?.phone_number
+  const onContactPress = useCallback((item: AnnouncementTransformer) => {
+    const phoneNumber = item?.user?.phone_number;
     if (!phoneNumber) return;
     Linking.openURL(`tel:${phoneNumber.includes('+') ? phoneNumber : `+${phoneNumber}`}`);
-  }
-
-
-
+  }, []);
 
   const { mutate } = useMutation({
-    mutationFn() {
-      return AnnouncementService.deleteAnnouncement({
-        announcement: selectedItem?.id || '',
-      });
-    },
-    onSuccess() {
+    mutationFn: () => AnnouncementService.deleteAnnouncement({
+      announcement: selectedItem?.id ? String(selectedItem.id) : '',
+    }),
+    onSuccess: () => {
       queryClient.refetchQueries({
         queryKey: ['AnnouncementService.listAnnouncements', user?.id],
-      })
+      });
       toast.show('Announcement Removed Successfully!');
     },
-    onError(error) {
+    onError: () => {
       toast.show('Failed to remove announcement');
-    }
-  })
+    },
+  });
 
+  // Memoize subcategories
+  const subCategories = useMemo(() => [], [selectedCategory]);
 
-  const renderCategoryCard = (category: AnnouncementCategoryTransformer) => {
-    // return <Text>{category.name}</Text>;
-    return (
-      <ZixButton
-        // height={40}
-        key={category.id}
-        style={{ marginRight: 10 }}
-        onPress={() => setSelectedCategory(category)}
-        theme={selectedCategory?.id === category.id ? 'light' : undefined}
-      >
-        <Text>{category.name}</Text>
-      </ZixButton>
-    )
-  }
+  // Memoize callbacks
+  const handleSelectCategory = useCallback((cat: AnnouncementCategoryTransformer) => {
+    setSelectedCategory(cat);
+    setSelectedSubCategory(undefined);
+  }, []);
+  const handleSelectSubCategory = useCallback((cat: AnnouncementCategoryTransformer) => {
+    setSelectedSubCategory(cat);
+  }, []);
 
-  const renderSubCategoryCard = ({ item }) => {
-    return (
-      <ZixButton key={item.id} style={{ marginRight: 10 }}>
-        <Text>{item.name}</Text>
-      </ZixButton>
-    )
-  }
+  const handleMorePress = useCallback((item: AnnouncementTransformer) => {
+    setSelectedItem(item);
+    actionSheetManagerRef.current?.open();
+  }, []);
 
-  const renderCategoriesCards = () => {
-
-    return (
-      <FlatList
-        data={categoriesData?.data || []}
-        keyExtractor={(item) => (item.id !== undefined ? item.id.toString() : Math.random().toString())}
-        renderItem={({ item }) => renderCategoryCard(item)}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        // style={{ backgroundColor: 'red', height: 10 }}
-        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 8 }}
-      />
-    );
-  }
-
-  const renderSubCategoriesCards = () => {
-    return (
-      <FlatList
-        data={selectedCategory?.announcement_categories || []}
-        keyExtractor={(item) => (item.id !== undefined ? item.id.toString() : Math.random().toString())}
-        renderItem={renderSubCategoryCard}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-      // contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 8 }}
-      />
-    )
-  }
-
-  const renderItem = ({ item, index }) => (
-
-    <YStack
-      backgroundColor='$color2'
-      borderRadius={5}
-      key={index}
-      marginBottom={10}
-      marginHorizontal={showHeader && '$4'}
-      paddingBottom={'$4'}
-    >
-      <XStack
-        gap="$10"
-        onPress={() => item?.company?.id ? router.push(`/app/companies/${item.company.id}`) : router.push(`/app/users/${item?.driver?.id}`)}
-        justifyContent='space-between' alignItems='center' padding={"$4"}
-      >
-        <XStack alignItems="center" gap="$2">
-          <UserAvatar user={item?.driver?.avatar ? item?.driver : item?.company} size="$5" />
-          <Text color='$color12' fontWeight="bold">
-            {item?.driver?.name || item?.company?.name}
-          </Text>
-        </XStack>
-        <XStack
-          gap="$4"
-          alignItems='center'
-        // justifyContent='space-between'
-        >
-          {item?.driver?.phone_number && <Button
-            flex={0.1}
-            backgroundColor='$gray7'
-            icon={() => <CustomIcon name="call" color='$color12' size={'$1'} />}
-            onPress={() => onContactPress(item)}
-          />
-          }
-          {!showHeader && !driver && <Button
-            iconAfter={<MoreHorizontal />}
-            onPress={() => {
-              setSelectedItem(item);
-              actionSheetManagerRef.current?.open();
-            }}
-          />}
-        </XStack>
-        <Image source={{ uri: item?.cover?.original_url || "" }}
-          width={SCREEN_WIDTH / 2.5}
-          height={SCREEN_WIDTH / 5}
-          borderRadius={5}
-        />
-      </XStack>
-      <YStack gap="$4" paddingHorizontal="$4">
-        <XStack
-          justifyContent='space-between'
-          alignItems='center'
-          borderBottomWidth={0.5}
-          borderColor={'$color5'}
-          paddingVertical={"$2"}
-        >
-          <Text
-            fontWeight={'bold'}
-            fontSize={'$3'}
-          >{item?.title || ''}</Text>
-          <XStack
-            alignItems='center'
-          >
-            <Text
-              fontWeight={'bold'}
-              fontSize={'$3'}
-            >{item?.price?.value || ''}</Text>
-            <Text
-              fontWeight={'bold'}
-              fontSize={'$3'}
-            > {item?.price?.currency?.code || ''}</Text>
-          </XStack>
-
-        </XStack>
-
-        <Text
-          numberOfLines={3}
-        >{item?.description || ''}</Text>
-        {
-          item?.images && <ZixMediasListWidget medias={item?.images || []} paddingHorizontal={5} />
-        }
-      </YStack>
-      {
-        edit && <XStack
-          right={0}
-          bottom={0}
-          position='absolute'
-        >
-
-          <ActionSheet
-            snapPoints={[33, 25]}
-            ref={actionSheetManagerRef}
-            title={t('common:settings')}
-            actions={[
-              {
-                name: t('common:edit'),
-                icon: <Pencil size="$1" color="$color10" />,
-                onPress: () => {
-                  actionSheetManagerRef.current?.close();
-                  router.push(`${getUrlPrefix}/company/services/${selectedItem?.id}/edit`)
-                },
+  // ActionSheet actions
+  const actionSheetActions = useMemo(() => [
+    {
+      name: t('common:edit'),
+      icon: <Pencil size="$1" color="$color10" />,
+      onPress: () => {
+        actionSheetManagerRef.current?.close();
+        router.push(`${getUrlPrefix}/company/services/${selectedItem?.id}/edit`);
+      },
+    },
+    {
+      theme: 'error',
+      name: t('common:delete'),
+      icon: <Trash2 size="$1" color="$color10" />,
+      onPress: () => {
+        Alert.alert(
+          t('common:delete'),
+          t('common:confirm-delete'),
+          [
+            {
+              text: t('common:cancel'),
+              onPress: () => actionSheetManagerRef.current?.close(),
+              style: 'cancel',
+            },
+            {
+              text: t('common:remove'),
+              style: 'destructive',
+              onPress: () => {
+                actionSheetManagerRef.current?.close();
+                mutate();
               },
-              {
-                theme: 'error',
-                name: t('common:delete'),
-                icon: <Trash2 size="$1" color="$color10" />,
-                onPress: () => {
-                  Alert.alert(
-                    t('common:delete'),
-                    t('common:confirm-delete'),
-                    [
-                      {
-                        text: t('common:cancel'),
-                        onPress: () => actionSheetManagerRef.current?.close(),
-                        style: 'cancel',
-                      },
-                      {
-                        text: t('common:remove'),
-                        style: 'destructive',
-                        onPress: () => {
-                          actionSheetManagerRef.current?.close();
-                          mutate();
-                        },
-                      },
-                    ],
-                  );
-                },
-              },
-            ]}
-          />
-        </XStack>
-      }
-    </YStack>
-  )
-
-  const renderSearchCatFilters = () => {
-    return (
-      <YStack gap={'$4'}>
-        {renderCategoriesCards()}
-        {renderSubCategoriesCards()}
-      </YStack>
-    )
-  }
+            },
+          ],
+        );
+      },
+    },
+  ], [getUrlPrefix, mutate, router, selectedItem]);
 
   return (
     <View flex={1}>
-      <AppHeader title={t('common:market')}
+      <AppHeader
+        title={t('common:market')}
         showSearchBar
         searchProps={{
           value: search,
           onChangeText: setSearch,
         }}
-        renderAfterSearchBar={() => renderSearchCatFilters()}
+        renderAfterSearchBar={() => (
+          <SearchCatFilters
+            categories={categoriesData?.data || []}
+            selectedCategory={selectedCategory}
+            onSelectCategory={handleSelectCategory}
+            subCategories={subCategories}
+            selectedSubCategory={selectedSubCategory}
+            onSelectSubCategory={handleSelectSubCategory}
+          />
+        )}
       />
       <YStack flex={1} paddingTop={15} position='relative'>
-        <DebugObject object={selectedCategory} />
         <FlatList
           showsVerticalScrollIndicator={false}
           refreshing={isLoading}
           onRefresh={refetch}
           style={{ flex: 1 }}
-          data={data?.data || []}
-          renderItem={renderItem}
+          data={data?.data as AnnouncementTransformer[] || []}
+          keyExtractor={(item: AnnouncementTransformer, index: number): string => `${item.id ?? index}`}
+          renderItem={({ item, index }) => (
+            <AnnouncementItem
+              item={item}
+              showHeader={showHeader}
+              driver={driver}
+              edit={edit}
+              onContactPress={onContactPress}
+              onMorePress={handleMorePress}
+              SCREEN_WIDTH={SCREEN_WIDTH}
+            />
+          )}
           ListEmptyComponent={
             <View flex={1} alignItems='center' gap="$8" paddingTop="$8">
               <CustomIcon name="empty_data" size="$18" color="$color5" />
-              <H4>
-                {t('common:no_services_found')}
-              </H4>
+              <H4>{t('common:no_services_found')}</H4>
             </View>
           }
         />
@@ -322,11 +330,16 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
             أضف اعلان
           </ZixButton>
         </XStack>
+        {/* ActionSheet for edit/delete */}
+        <ActionSheet
+          snapPoints={[33, 25]}
+          ref={actionSheetManagerRef}
+          title={t('common:settings')}
+          actions={actionSheetActions}
+        />
       </YStack>
     </View>
   );
 }
-
-
 
 export default AnnouncementsListScreen;
