@@ -9,6 +9,7 @@ import ZixSelectField, { BaseSelectFieldItem, ZixSelectFieldProps } from '../zix
  * TODO: implement load more logic
  */
 export type ZixAutoCompleteFieldProps = Partial<ZixSelectFieldProps> & {
+  identifier?: string;
   api: string;
   query?: Record<string, any>;
   itemKey?: string;
@@ -23,6 +24,7 @@ export type ZixAutoCompleteFieldProps = Partial<ZixSelectFieldProps> & {
 export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
   {
     api,
+    identifier = 'unique-identifier',
     query = {},
     itemKey,
     itemValue,
@@ -50,7 +52,7 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
           },
         });
       },
-      queryKey: [api, perPage, search, `-${props.value}`, Object.values(query)],
+      queryKey: [identifier, api, perPage, search, `-${props.value}`, Object.values(query)],
     }
   );
   useEffect(() => {

@@ -17,6 +17,9 @@
     "paths": {
       "@zix/api": ["libs/api/src/index.ts"],
       "@zix/features/account": ["libs/features/account/src/index.ts"],
+      "@zix/features/announcements": [
+        "libs/features/announcements/src/index.ts"
+      ],
       "@zix/features/auth": ["libs/features/auth/src/index.ts"],
       "@zix/features/chat": ["libs/features/chat/src/index.ts"],
       "@zix/features/company": ["libs/features/company/src/index.ts"],

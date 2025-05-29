@@ -62,6 +62,7 @@ export type BaseZixFieldContainerProps = ThemeableStackProps & {
   labelShowRequiredAsterisk?: boolean;
 
   error?: RecursiveErrorType<any>;
+  errorMessage?: string;
   label?: string
   isOptional?: boolean
 };
@@ -81,6 +82,7 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
   error,
   label,
   isOptional,
+  errorMessage,
   ...rest
 }) => {
   const id = useId()
@@ -115,7 +117,7 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
     );
 
   const renderField = () => (
-    <View flex={1} {...fieldContainerProps}>
+    <View {...fieldContainerProps}>
       <Shake shakeKey={error?.errorMessage}>
         {children}
       </Shake>
@@ -158,7 +160,7 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
         </Accordion.Trigger>
         <Accordion.Content padding="0">
           {renderField()}
-          <FieldError message={error?.errorMessage} />
+          <FieldError message={errorMessage || error?.errorMessage} />
         </Accordion.Content>
       </Accordion.Item>
     </Accordion>
@@ -167,7 +169,7 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
 
   return (
     <Theme name={error ? 'error' : themeName} forceClassName>
-      <Fieldset flex={1}>
+      <Fieldset >
         {
           collapsible ? renderAccordion() : (
             <>
@@ -175,7 +177,7 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
                 {renderLabel()}
                 {renderField()}
               </StackContainer>
-              <FieldError message={error?.errorMessage} />
+              <FieldError message={errorMessage || error?.errorMessage} />
             </>
           )
         }

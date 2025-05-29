@@ -17,6 +17,7 @@ export type AppHeaderProps = {
   goBack?: () => void;
   headerTitle?: () => React.ReactNode;
   headerRight?: () => React.ReactNode;
+  renderAfterSearchBar?: () => React.ReactNode;
   title?: string;
   headerBackgroundColor?: ColorTokens | 'transparent';
 };
@@ -29,6 +30,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   headerRight,
   headerTitle,
   title,
+  renderAfterSearchBar,
 }) => {
   const { user, activeRole, isLoggedIn, getUrlPrefix } = useAuth();
   const router = useRouter();
@@ -222,6 +224,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
           </XStack>
 
           {renderSearchBar()}
+          {renderAfterSearchBar?.()}
         </YStack>
       </AppHeaderWrapper>
     </YStack>

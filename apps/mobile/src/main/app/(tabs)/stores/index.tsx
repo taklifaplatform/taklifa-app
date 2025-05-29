@@ -1,7 +1,7 @@
 import React from 'react';
-import { ServicesListScreen } from '@zix/features/services';
+import { AnnouncementsListScreen } from '@zix/features/announcements';
 
 export default function Screen() {
  // return null
-  return <ServicesListScreen />;
+  return <AnnouncementsListScreen />;
 }

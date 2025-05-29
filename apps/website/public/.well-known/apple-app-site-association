@@ -1,1 +1,1 @@
-{"applinks":{"apps":[],"details":[{"appID":"DZPLAPPP9Y.app.sawaeed","paths":["*"]}]}}
+{"applinks":{"apps":[],"details":[{"appID":"DZPLAPPP9Y.app.sawaeed","paths":["/app/*", "/auth/*"]}]}}

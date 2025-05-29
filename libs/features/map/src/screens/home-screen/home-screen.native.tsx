@@ -62,7 +62,7 @@ export function HomeScreen() {
   const [isFetching, setIsFetching] = useState(false);
   async function fetchDrivers(query: any = {}) {
     const queryParams = {
-      perPage: Platform.select({ web: 80, ios: 50, android: 30 }),
+      perPage: Platform.select({ web: 80, ios: 150, android: 80 }),
       vehicleModel: filters.vehicle_model,
       latitude: currentRegion.latitude,
       longitude: currentRegion.longitude,

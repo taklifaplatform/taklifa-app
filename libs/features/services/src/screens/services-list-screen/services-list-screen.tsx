@@ -1,10 +1,9 @@
-
-import { MoreHorizontal, Pencil, Trash2 } from '@tamagui/lucide-icons';
+import { MoreHorizontal, Pencil, Plus, Trash2 } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ChatService, ServicesService } from '@zix/api';
 import { useAuth, useMixpanel } from '@zix/services/auth';
-import { ActionSheet, ActionSheetRef, UserAvatar } from '@zix/ui/common';
+import { ActionSheet, ActionSheetRef, UserAvatar, ZixButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { ZixMediasListWidget } from '@zix/ui/widgets';
@@ -29,7 +28,7 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
   useMixpanel('Services List Screen view')
   const SCREEN_WIDTH = Dimensions.get('window').width;
   const router = useRouter();
-  const { user, getUrlPrefix } = useAuth();
+  const { user, getUrlPrefix, isLoggedIn } = useAuth();
   const actionSheetManagerRef = useRef<ActionSheetRef>(null);
   const queryClient = useQueryClient();
   const toast = useToastController();
@@ -117,13 +116,35 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
       paddingBottom={'$4'}
     >
       <XStack
+        gap="$10"
         onPress={() => item?.company?.id ? router.push(`/app/companies/${item.company.id}`) : router.push(`/app/users/${item?.driver?.id}`)}
-        justifyContent='space-between' alignItems='center' padding={"$4"}>
+        justifyContent='space-between' alignItems='center' padding={"$4"}
+      >
         <XStack alignItems="center" gap="$2">
           <UserAvatar user={item?.driver?.avatar ? item?.driver : item?.company} size="$5" />
           <Text color='$color12' fontWeight="bold">
             {item?.driver?.name || item?.company?.name}
           </Text>
+        </XStack>
+        <XStack
+          gap="$4"
+          alignItems='center'
+        // justifyContent='space-between'
+        >
+          {item?.driver?.phone_number && <Button
+            flex={0.1}
+            backgroundColor='$gray7'
+            icon={() => <CustomIcon name="call" color='$color12' size={'$1'} />}
+            onPress={() => onContactPress(item)}
+          />
+          }
+          {!showHeader && !driver && <Button
+            iconAfter={<MoreHorizontal />}
+            onPress={() => {
+              setSelectedItem(item);
+              actionSheetManagerRef.current?.open();
+            }}
+          />}
         </XStack>
         <Image source={{ uri: item?.cover?.original_url || "" }}
           width={SCREEN_WIDTH / 2.5}
@@ -157,34 +178,7 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
           </XStack>
 
         </XStack>
-        <XStack
-          gap="$4"
-          alignItems='center'
-          justifyContent='space-between'
-        >
-          {/* <ZixButton
-              flex={0.1}
-              backgroundColor='$gray7'
-              loading={isPending}
-              icon={() => <CustomIcon name="chat" color='$color12' size={"$1"} />}
-              onPress={startChat}
-            />*/}
 
-          {item?.driver?.phone_number && <Button
-            flex={0.1}
-            backgroundColor='$gray7'
-            icon={() => <CustomIcon name="call" color='$color12' size={'$1'} />}
-            onPress={() => onContactPress(item)}
-          />
-          }
-          {!showHeader && !driver && <Button
-            iconAfter={<MoreHorizontal />}
-            onPress={() => {
-              setSelectedItem(item);
-              actionSheetManagerRef.current?.open();
-            }}
-          />}
-        </XStack>
         <Text
           numberOfLines={3}
         >{item?.description || ''}</Text>
@@ -247,7 +241,7 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
 
   return (
     <ScreenLayout>
-      {showHeader && <AppHeader title={t('common:services')} />}
+      {showHeader && <AppHeader title={t('common:market')} />}
       <YStack flex={1} paddingTop={15}>
         <FlatList
           showsVerticalScrollIndicator={false}
@@ -265,6 +259,21 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
             </View>
           }
         />
+        <XStack padding="$4" position='absolute' bottom={0} left={0} right={0}>
+          <ZixButton
+            theme='accent'
+            icon={<Plus size="$1" color="$color12" />}
+            onPress={() => {
+              if (isLoggedIn) {
+                router.push(`${getUrlPrefix}/company/services/create`)
+              } else {
+                router.push(`/auth/login`)
+              }
+            }}
+          >
+            أضف اعلان
+          </ZixButton>
+        </XStack>
       </YStack>
     </ScreenLayout>
   );
