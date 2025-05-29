@@ -1,7 +1,7 @@
 
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { ServicesService } from '@zix/api';
+import { AnnouncementService, ServicesService } from '@zix/api';
 import { useAuth, useMixpanel } from '@zix/services/auth';
 import { formFields, handleFormErrors, SchemaForm, SubmitButton, ZixFieldContainer } from '@zix/ui/forms';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
@@ -12,67 +12,55 @@ import { useRouter } from 'solito/router';
 import { Theme } from 'tamagui';
 import { z } from 'zod';
 
-const ManageServiceFormSchema = z
+const ManageAnnouncementFormSchema = z
   .object({
     images: formFields.medias.describe(t('forms:images')),
     title: formFields.text.describe(t('common:service-title')),
     description: formFields.textarea.describe(t('common:service-description')),
-    price: formFields.money.describe(t('common:price')),
+    price: formFields.number.describe(t('common:price')),
   });
 
 /* eslint-disable-next-line */
-export interface ManageServiceScreenProps {
+export interface ManageAnnouncementScreenProps {
 }
 
-const { useParam } = createParam<{ service?: string }>();
+const { useParam } = createParam<{ announcement?: string }>();
 
-export function ManageServiceScreen(props: ManageServiceScreenProps) {
-  useMixpanel('Manage Service Screen view')
-  const form = useForm<z.infer<typeof ManageServiceFormSchema>>();
+export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
+  useMixpanel('Manage Announcement Screen view')
+  const form = useForm<z.infer<typeof ManageAnnouncementFormSchema>>();
   const toast = useToastController();
-  const [serviceId] = useParam('service');
+  const [announcementId] = useParam('announcement');
   const router = useRouter();
   const queryClient = useQueryClient();
   const { user } = useAuth();
 
   const { data } = useQuery({
     queryFn: () =>
-      ServicesService.retrieveZoneService({
-        service: serviceId,
+      AnnouncementService.retrieveAnnouncement({
+        announcement: announcementId,
       }),
-    queryKey: ['ServicesService.retrieveZoneService', serviceId],
+    queryKey: ['AnnouncementService.retrieveAnnouncement', announcementId],
   })
-  /* useEffect(() => {
-     if (serviceId) {
-       Object.keys(data?.data || {}).forEach((key) => {
-         form.setValue(key, data?.data[key]);
-       });
-     }
-   }, [data?.data])*/
 
   const { mutateAsync } = useMutation({
-    async mutationFn(requestBody: z.infer<typeof ManageServiceFormSchema>) {
-      if (serviceId) {
-        return ServicesService.updateService({
-          service: serviceId,
+    async mutationFn(requestBody: z.infer<typeof ManageAnnouncementFormSchema>) {
+      if (announcementId) {
+        return AnnouncementService.updateAnnouncement({
+          service: announcementId,
           requestBody,
         });
       }
 
-      return ServicesService.createService({
+      return AnnouncementService.createAnnouncement({
         requestBody,
       });
     },
     onSuccess() {
       queryClient.refetchQueries({
-        queryKey: ['ServicesService.listServices'],
+        queryKey: ['AnnouncementService.listAnnouncements'],
       })
-      queryClient.refetchQueries({
-        queryKey: ['ServicesService.listDriverServices', user?.id],
-      })
-      queryClient.refetchQueries({
-        queryKey: ['ServicesService.listCompanyServices', user?.active_company?.id],
-      })
+
       form.reset();
       router.replace(`/app/stores`);
       console.log('onSuccess::')
@@ -86,10 +74,10 @@ export function ManageServiceScreen(props: ManageServiceScreenProps) {
     },
   });
 
-  const renderForm = () => (!serviceId || data?.data?.id) && (
+  const renderForm = () => (!announcementId || data?.data?.id) && (
     <SchemaForm
       form={form}
-      schema={ManageServiceFormSchema}
+      schema={ManageAnnouncementFormSchema}
       props={{
         cover: {
           notAvatar: true
@@ -123,7 +111,7 @@ export function ManageServiceScreen(props: ManageServiceScreenProps) {
     <ScreenLayout safeAreaBottom authProtected>
       <AppHeader
         showBackButton
-        title={serviceId ? t('common:update-service') : t('common:create-service')}
+        title={announcementId ? t('common:update-service') : t('common:create-service')}
       />
       {renderForm()}
     </ScreenLayout>
@@ -131,4 +119,4 @@ export function ManageServiceScreen(props: ManageServiceScreenProps) {
 }
 
 
-export default ManageServiceScreen;
+export default ManageAnnouncementScreen;

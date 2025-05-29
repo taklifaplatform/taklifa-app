@@ -1,7 +1,7 @@
 import { MoreHorizontal, Pencil, Plus, Trash2 } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { ChatService, ServicesService } from '@zix/api';
+import { AnnouncementService, AnnouncementTransformer, ServicesService } from '@zix/api';
 import { useAuth, useMixpanel } from '@zix/services/auth';
 import { ActionSheet, ActionSheetRef, UserAvatar, ZixButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
@@ -9,101 +9,82 @@ import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { ZixMediasListWidget } from '@zix/ui/widgets';
 import { t } from 'i18next';
 import { useRef, useState } from 'react';
-import { Alert, Dimensions, FlatList, Linking, Platform } from 'react-native';
+import { Alert, Dimensions, FlatList, Linking } from 'react-native';
 import { useRouter } from 'solito/router';
 import { Button, H4, Image, Text, View, XStack, YStack } from 'tamagui';
-export interface ServicesListScreenProps {
+
+export interface AnnouncementsListScreenProps {
   showHeader: boolean;
   driver: boolean;
   edit: boolean;
   search: string;
 }
 
-export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
+export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = ({
   showHeader = true,
   driver = false,
   edit = false,
   search,
 }) => {
-  useMixpanel('Services List Screen view')
+  useMixpanel('Announcements List Screen view')
   const SCREEN_WIDTH = Dimensions.get('window').width;
   const router = useRouter();
   const { user, getUrlPrefix, isLoggedIn } = useAuth();
   const actionSheetManagerRef = useRef<ActionSheetRef>(null);
   const queryClient = useQueryClient();
   const toast = useToastController();
+
+  const { data: categoriesData } =
+    useQuery({
+      queryFn: () =>
+        AnnouncementService.listAnnouncementCategories({}),
+      queryKey: ['AnnouncementService.listAnnouncementCategories'],
+    })
   const { data, refetch, isLoading } =
-    driver ?
-      useQuery({
-        queryFn: () =>
-          ServicesService.listDriverServices({
-            driver: user?.id,
-            search
-          }),
-        queryKey: ['ServicesService.listDriverServices', user?.id, `-${search}`,],
-      })
-      :
-      user?.active_company ? useQuery({
-        queryFn: () =>
-          ServicesService.listCompanyServices({
-            company: user?.active_company?.id,
-            search
-          }),
-        queryKey: ['ServicesService.listCompanyServices', user?.active_company?.id, `-${search}`,],
-      }) : useQuery({
-        queryFn: () =>
-          ServicesService.listServices({
-            search
-          }),
-        queryKey: ['ServicesService.listServices', `-${search}`,],
-      });
+    useQuery({
+      queryFn: () =>
+        AnnouncementService.listAnnouncements({
+          search
+        }),
+      queryKey: ['AnnouncementService.listAnnouncements', `-${search}`,],
+    })
 
-
-  // start chat
-
-  const { mutate: startChat, isPending } = useMutation({
-    mutationFn() {
-      return ChatService.startChat({
-        model: `${user.id}`
-      })
-    },
-    onSuccess(data) {
-      if (Platform.OS === 'web') {
-        router.push(`${getUrlPrefix}/chat?channel=${data.data?.id}`)
-        return
-      }
-      router.push(`${getUrlPrefix}/chat/channels/${data.data?.id}`)
-    },
-  })
 
 
   // on Contact button press
-  const onContactPress = (item: any) => {
-    const phoneNumber = item?.driver?.phone_number
+  const onContactPress = (item: AnnouncementTransformer) => {
+    const phoneNumber = item?.user?.phone_number
+    if (!phoneNumber) return;
     Linking.openURL(`tel:${phoneNumber.includes('+') ? phoneNumber : `+${phoneNumber}`}`);
   }
 
 
   const [selectedItem, setSelectedItem] = useState(null);
+
   const { mutate } = useMutation({
     mutationFn() {
-      return ServicesService.deleteService({
-        service: selectedItem?.id || '',
+      return AnnouncementService.deleteAnnouncement({
+        announcement: selectedItem?.id || '',
       });
     },
     onSuccess() {
       queryClient.refetchQueries({
-        queryKey: ['ServicesService.listDriverServices', user?.id],
+        queryKey: ['AnnouncementService.listAnnouncements', user?.id],
       })
-      queryClient.refetchQueries({
-        queryKey: ['ServicesService.listCompanyServices', user?.active_company?.id],
-      })
-      toast.show('Service Removed Successfully!');
+      toast.show('Announcement Removed Successfully!');
     },
     onError(error) {
-      toast.show('Failed to remove vehicle');
+      toast.show('Failed to remove announcement');
     }
   })
+
+  const renderCategoriesCards = () => {
+    return categoriesData?.data?.map((category) => (
+      <View key={category.id}>
+        <Text>{category.name}</Text>
+      </View>
+    ))
+  }
 
   const renderItem = ({ item, index }) => (
 
@@ -243,6 +224,7 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
     <ScreenLayout>
       {showHeader && <AppHeader title={t('common:market')} />}
       <YStack flex={1} paddingTop={15}>
+        {renderCategoriesCards()}
         <FlatList
           showsVerticalScrollIndicator={false}
           refreshing={isLoading}
@@ -280,4 +262,5 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
 }
 
 
-export default ServicesListScreen;
+
+export default AnnouncementsListScreen;

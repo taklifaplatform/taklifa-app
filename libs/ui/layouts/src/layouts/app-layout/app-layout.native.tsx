@@ -43,12 +43,16 @@ export const AppLayout = () => {
       />
       <Tabs.Screen
         name="create-shipment"
-        options={activeRole === USER_ROLES.customer ? {
-          title: '',
-          tabBarIcon: PlusButton,
-        } : {
+        options={{
+          // TODO: the might be enabled on later, when the customer wants to enabled back create shipment feature.
           href: null
         }}
+        // options={activeRole === USER_ROLES.customer ? {
+        //   title: '',
+        //   tabBarIcon: PlusButton,
+        // } : {
+        //   href: null
+        // }}
       />
       <Tabs.Screen
         name="company"
@@ -74,8 +78,8 @@ export const AppLayout = () => {
       />
       <Tabs.Screen
         name="stores"
-        options={activeRole === USER_ROLES.customer ? {
-          title: t('navigation:customer-dashboard.store'),
+        options={{
+          title: t('common:market'),
           tabBarIcon: ({ size, color }) => (
             <CustomIcon
               name="store"
@@ -83,13 +87,11 @@ export const AppLayout = () => {
               size={size}
             />
           ),
-        } : {
-          href: null
         }}
       />
       <Tabs.Screen
         name="jobs"
-        options={activeRole !== USER_ROLES.customer ? {
+        options={/*activeRole !== USER_ROLES.customer ? {
           title: t('navigation:solo-driver-dashboard.jobs'),
           tabBarIcon: ({ size, color }) => (
             <CustomIcon
@@ -98,7 +100,7 @@ export const AppLayout = () => {
               size={size}
             />
           ),
-        } : {
+        } : */{
           href: null
         }}
       />
