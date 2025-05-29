@@ -15,7 +15,6 @@ import { Button, H4, Text, Theme, View, XStack, YStack } from 'tamagui';
 
 export interface AnnouncementsListScreenProps {
   showHeader: boolean;
-  edit: boolean;
   search: string;
 }
 
@@ -36,7 +35,6 @@ interface SubCategoryListProps {
 interface AnnouncementItemProps {
   item: AnnouncementTransformer;
   showHeader: boolean;
-  edit: boolean;
   onContactPress: (item: AnnouncementTransformer) => void;
   onMorePress: (item: AnnouncementTransformer) => void;
   SCREEN_WIDTH: number;
@@ -91,10 +89,8 @@ const SubCategoryList = memo(({ subCategories, selectedSubCategory, onSelect }: 
 const AnnouncementItem = memo(({
   item,
   showHeader,
-  edit,
   onContactPress,
   onMorePress,
-  SCREEN_WIDTH,
 }: AnnouncementItemProps) => {
   const { user } = useAuth();
 
@@ -108,7 +104,6 @@ const AnnouncementItem = memo(({
     >
       <XStack
         gap="$10"
-        onPress={() => onMorePress(item)}
         justifyContent='space-between' alignItems='center' padding={"$4"}
       >
         <XStack alignItems="center" gap="$2" flex={1}>
@@ -170,7 +165,6 @@ const SearchCatFilters = memo(({ categories, selectedCategory, onSelectCategory,
 
 export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = ({
   showHeader = true,
-  edit = false,
 }) => {
   useMixpanel('Announcements List Screen view')
   const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -304,7 +298,6 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
             <AnnouncementItem
               item={item}
               showHeader={showHeader}
-              edit={edit}
               onContactPress={onContactPress}
               onMorePress={handleMorePress}
               SCREEN_WIDTH={SCREEN_WIDTH}

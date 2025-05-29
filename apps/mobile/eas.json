@@ -46,9 +46,6 @@
         "TAMAGUI_TARGET": "native"
       },
       "channel": "production",
-      "ios": {
-        "image": "macos-sequoia-15.3-xcode-16.2"
-      },
       "autoIncrement": true
     }
   },
@@ -57,7 +54,7 @@
     "preview": {}
   },
   "cli": {
-    "version": ">=16.3.3",
+    "version": ">=16.6.2",
     "appVersionSource": "remote"
   }
 }
