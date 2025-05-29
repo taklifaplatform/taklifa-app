@@ -455,6 +455,11 @@
     "edit-company-info": "Edit Company Info",
     "member": "Member",
     "online": "Online",
+    "market": "Market",
+    "update-announcement": "Update Announcement",
+    "create-announcement": "Create Announcement",
+    "add-announcement": "Add Announcement",
+    "sar": "SAR",
     "price": "Price"
   },
   "cookies-banner": {

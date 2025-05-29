@@ -1,17 +1,17 @@
 import { MoreHorizontal, Pencil, Plus, Trash2 } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { AnnouncementCategoryTransformer, AnnouncementService, AnnouncementTransformer } from '@zix/api';
 import { useAuth, useMixpanel } from '@zix/services/auth';
-import { ActionSheet, ActionSheetRef, DebugObject, UserAvatar, ZixButton } from '@zix/ui/common';
+import { ActionSheet, ActionSheetRef, UserAvatar, ZixButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader } from '@zix/ui/layouts';
 import { ZixMediasListWidget } from '@zix/ui/widgets';
 import { t } from 'i18next';
-import { useRef, useState, useCallback, useMemo, memo } from 'react';
+import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { Alert, Dimensions, FlatList, Linking } from 'react-native';
 import { useRouter } from 'solito/router';
-import { Button, H4, Image, Text, View, XStack, YStack } from 'tamagui';
+import { Button, H4, Text, Theme, View, XStack, YStack } from 'tamagui';
 
 export interface AnnouncementsListScreenProps {
   showHeader: boolean;
@@ -116,7 +116,7 @@ const AnnouncementItem = memo(({
           </Text>
         </XStack>
         <XStack gap="$4" alignItems='center'>
-          {item?.user?.phone_number && <Button
+          {!!item?.user?.phone_number && <Button
             flex={0.1}
             backgroundColor='$gray7'
             icon={() => <CustomIcon name="call" color='$color12' size={'$1'} />}
@@ -156,10 +156,12 @@ const SearchCatFilters = memo(({ categories, selectedCategory, onSelectCategory,
   selectedSubCategory?: AnnouncementCategoryTransformer;
   onSelectSubCategory: (cat: AnnouncementCategoryTransformer) => void;
 }) => (
-  <YStack gap={'$4'}>
-    <CategoryList categories={categories} selectedCategory={selectedCategory} onSelect={onSelectCategory} />
-    <SubCategoryList subCategories={subCategories} selectedSubCategory={selectedSubCategory} onSelect={onSelectSubCategory} />
-  </YStack>
+  <Theme reset>
+    <YStack gap={'$4'}>
+      <CategoryList categories={categories} selectedCategory={selectedCategory} onSelect={onSelectCategory} />
+      <SubCategoryList subCategories={subCategories} selectedSubCategory={selectedSubCategory} onSelect={onSelectSubCategory} />
+    </YStack>
+  </Theme>
 ));
 
 // --- Main Screen ---
@@ -172,9 +174,8 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
   useMixpanel('Announcements List Screen view')
   const SCREEN_WIDTH = Dimensions.get('window').width;
   const router = useRouter();
-  const { user, getUrlPrefix, isLoggedIn } = useAuth();
+  const { getUrlPrefix, isLoggedIn } = useAuth();
   const actionSheetManagerRef = useRef<ActionSheetRef>(null);
-  const queryClient = useQueryClient();
   const toast = useToastController();
   const [search, setSearch] = useState('');
   const [selectedItem, setSelectedItem] = useState<AnnouncementTransformer | null>(null);
@@ -268,7 +269,7 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
         );
       },
     },
-  ], [getUrlPrefix, mutate, router, selectedItem]);
+  ], [selectedItem]);
 
   return (
     <View flex={1}>
@@ -328,7 +329,7 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
               }
             }}
           >
-            أضف اعلان
+            {t('common:add-announcement')}
           </ZixButton>
         </XStack>
         {/* ActionSheet for edit/delete */}
