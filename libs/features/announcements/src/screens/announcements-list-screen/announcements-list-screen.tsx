@@ -25,7 +25,7 @@ export interface AnnouncementsListScreenProps {
 interface CategoryListProps {
   categories: AnnouncementCategoryTransformer[];
   selectedCategory?: AnnouncementCategoryTransformer;
-  onSelect: (cat: AnnouncementCategoryTransformer) => void;
+  onSelect: (cat?: AnnouncementCategoryTransformer) => void;
 }
 
 interface SubCategoryListProps {
@@ -47,15 +47,15 @@ interface AnnouncementItemProps {
 // --- Memoized Components ---
 
 const CategoryList = memo(({ categories, selectedCategory, onSelect }: CategoryListProps) => (
-  <FlatList<AnnouncementCategoryTransformer>
-    data={categories}
-    keyExtractor={(item: AnnouncementCategoryTransformer, index: number): string => `${item.id ?? index}`}
+  <FlatList<{ id: number | 'all'; name: string }>
+    data={[{ id: 'all', name: t('common:all') }, ...categories] as ({ id: number | 'all'; name: string })[]}
+    keyExtractor={(item, index): string => `${item.id ?? index}`}
     renderItem={({ item }) => (
       <ZixButton
         key={item.id}
         style={{ marginRight: 10 }}
-        onPress={() => onSelect(item)}
-        theme={selectedCategory?.id === item.id ? 'light' : undefined}
+        onPress={() => item.id === 'all' ? onSelect(undefined) : onSelect(item as AnnouncementCategoryTransformer)}
+        theme={selectedCategory?.id === item.id || (!selectedCategory && item.id === 'all') ? 'light' : undefined}
       >
         <Text>{item.name}</Text>
       </ZixButton>
@@ -142,7 +142,7 @@ const AnnouncementItem = memo(({
           </XStack>
         </XStack>
         <Text numberOfLines={3}>{item?.description || ''}</Text>
-        {item?.images && <ZixMediasListWidget medias={item.images || []} paddingHorizontal={5} />}
+        {item?.images && <ZixMediasListWidget medias={Array.isArray(item.images) ? item.images : []} paddingHorizontal={5} />}
       </YStack>
     </YStack>
   )
@@ -151,7 +151,7 @@ const AnnouncementItem = memo(({
 const SearchCatFilters = memo(({ categories, selectedCategory, onSelectCategory, subCategories, selectedSubCategory, onSelectSubCategory }: {
   categories: AnnouncementCategoryTransformer[];
   selectedCategory?: AnnouncementCategoryTransformer;
-  onSelectCategory: (cat: AnnouncementCategoryTransformer) => void;
+  onSelectCategory: (cat?: AnnouncementCategoryTransformer) => void;
   subCategories: AnnouncementCategoryTransformer[];
   selectedSubCategory?: AnnouncementCategoryTransformer;
   onSelectSubCategory: (cat: AnnouncementCategoryTransformer) => void;
@@ -219,7 +219,7 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
   const subCategories = useMemo(() => [], [selectedCategory]);
 
   // Memoize callbacks
-  const handleSelectCategory = useCallback((cat: AnnouncementCategoryTransformer) => {
+  const handleSelectCategory = useCallback((cat?: AnnouncementCategoryTransformer) => {
     setSelectedCategory(cat);
     setSelectedSubCategory(undefined);
   }, []);
