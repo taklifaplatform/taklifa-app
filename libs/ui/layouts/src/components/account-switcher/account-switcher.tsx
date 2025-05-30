@@ -48,7 +48,7 @@ export const AccountSwitcher: React.FC<AccountSwitcherProps> = ({
         requestBody,
       }),
     onSuccess(data) {
-      toast.show(t('account-switcher:account-switching'));
+      toast.show(t('app:account-switcher.account-switching'));
       refetchUser();
       setSheetOpen(false);
       redirectUserToActiveDashboard({

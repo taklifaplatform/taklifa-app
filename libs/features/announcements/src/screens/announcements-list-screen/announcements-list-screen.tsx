@@ -204,10 +204,10 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
     }),
     onSuccess: () => {
       refetch();
-      toast.show('Announcement Removed Successfully!');
+      toast.show(t('common:announcement-removed-successfully'));
     },
     onError: () => {
-      toast.show('Failed to remove announcement');
+      toast.show(t('common:failed-to-remove-announcement'));
     },
   });
 

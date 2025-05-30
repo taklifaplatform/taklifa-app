@@ -74,7 +74,6 @@
       "sunday": "Sunday"
     },
     "common": {
-      "manage-vehicles": "Manage Vehicles",
       "business-hours": "Business Hours",
       "hours": "Hours",
       "km": "KM",
@@ -279,6 +278,7 @@
       "user": "User"
     },
     "user_types": {
+      "customer": "Customer",
       "individual": "Individual",
       "company": "Company"
     },
@@ -295,6 +295,7 @@
     "chat": "Chat",
     "settings": "Settings",
     "manage-team": "Manage Team",
+    "manage-vehicles": "Manage Vehicles",
     "managers": "Managers",
     "manager": "Manager",
     "invite-manager": "Invite Manager",
@@ -403,6 +404,8 @@
     "member-removed-successfully": "Member removed successfully",
     "invitation-sent-successfully": "Invitation sent successfully",
     "vehicle-updated-successfully": "Vehicle updated successfully",
+    "announcement-removed-successfully": "Announcement removed successfully",
+    "failed-to-remove-announcement": "Failed to remove announcement",
     "shipment-items-updated-successfully": "Shipment items updated successfully",
     "please-select-vehicle-driver-company": "Please select vehicle, driver and company",
     "edit-proposal": "Edit Proposal",
