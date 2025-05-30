@@ -43,17 +43,17 @@ export const ZixWebFooter = () => {
           />
           <ZixLinkButton
             menuItem
-            href={'https://www.instagram.com/sawaedlogistics'}
+            href={'https://www.snapchat.com/add/sawaeed.app?share_id=iDs1PAy9ZJw&locale=en-US'}
             icon={<CustomIcon name="snapchat" size={'$1.5'} color='$color2' />}
           />
           <ZixLinkButton
             menuItem
-            href={'https://www.instagram.com/sawaedlogistics'}
+            href={'https://www.instagram.com/sawaeed.app'}
             icon={<Instagram size='$1.5' color='$color2' />}
           />
           <ZixLinkButton
             menuItem
-            href={'https://www.x.com/sawaedlogistics'}
+            href={'https://www.facebook.com/people/%D8%B3%D9%88%D8%A7%D8%B9%D8%AF-%D8%A7%D9%84%D9%84%D9%88%D8%AC%D8%B3%D8%AA%D9%8A%D8%A9/pfbid034HMQXwBev6dQNzo11Rmcih9Q8j2FU6S4Z9vhxPpcAiEWB3othkiHc4siBteJeFEl/?rdid=EvToBViZdnBkK9f1&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1FkReVQwMD%2F'}
             icon={<Facebook size='$1.5' color='$color2' />}
           />
         </XStack>
