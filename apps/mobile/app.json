@@ -7,6 +7,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
+    "newArchEnabled": false,
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -80,7 +81,6 @@
         "backgroundColor": "#FECA16"
       },
       "googleServicesFile": "./google-services.json",
-      "useNextNotificationsApi": true,
       "package": "app.sawaeed",
       "versionCode": 50,
       "permissions": [

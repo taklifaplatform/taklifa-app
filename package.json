@@ -4,6 +4,11 @@
   "license": "MIT",
   "scripts": {},
   "private": true,
+  "overrides": {
+    "metro-resolver": "0.81.0",
+    "metro": "0.81.0",
+    "metro-config": "0.81.0"
+  },
   "dependencies": {
     "@datepicker-react/hooks": "^2.8.4",
     "@expo-google-fonts/almarai": "^0.2.3",
@@ -160,7 +165,7 @@
     "babel-preset-expo": "12.0.9",
     "cypress": "14.3.3",
     "detox": "20.31.0",
-    "eas-cli": "~16.6.2",
+    "eas-cli": "~16.7.0",
     "eslint": "8.57.0",
     "eslint-config-next": "15.3.2",
     "eslint-config-prettier": "10.1.5",
@@ -174,8 +179,8 @@
     "jest-environment-jsdom": "29.7.0",
     "jest-environment-node": "^29.7.0",
     "jest-expo": "52.0.6",
-    "metro": "0.80.8",
-    "metro-resolver": "0.80.4",
+    "metro": "0.81.0",
+    "metro-resolver": "0.81.0",
     "nx": "21.1.2",
     "openapi-typescript-codegen": "^0.28.0",
     "prettier": "^3.2.5",

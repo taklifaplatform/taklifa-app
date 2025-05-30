@@ -54,7 +54,7 @@
     "preview": {}
   },
   "cli": {
-    "version": ">=16.6.2",
+    "version": ">=16.7.0",
     "appVersionSource": "remote"
   }
 }
