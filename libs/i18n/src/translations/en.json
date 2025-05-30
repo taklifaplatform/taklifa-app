@@ -562,7 +562,19 @@
     "vehicle-height": "Height // Enter your vehicle height",
     "vehicle-length": "Length // Enter your vehicle length",
     "unit": "Unit // Enter unit type...",
-    "vehicle-capacity-weight": "Capacity Weight // Enter your vehicle capacity weight"
+    "vehicle-capacity-weight": "Capacity Weight // Enter your vehicle capacity weight",
+    "shipping-from": "Shipping From // Enter shipping from",
+    "shipping-to": "Shipping To // Enter shipping to",
+    "price": "Price // Enter price",
+    "category": "Category // Enter category",
+    "announcement-sub-category": "Announcement Sub Category // Enter announcement sub category",
+    "announcement-name": "Announcement Name // Enter announcement name",
+    "announcement-title": "Announcement Title // Enter announcement title",
+    "announcement-description": "Announcement Description // Enter announcement description",
+    "announcement-city": "Announcement City // Enter announcement city",
+    "announcement-year-model": "Announcement Year Model // Enter announcement year model",
+    "announcement-category": "Announcement Category // Enter announcement category",
+    "announcement-images": "Announcement Images // Upload announcement images"
   },
   "invite": {
     "company-member": "Hello, {{name}}! \n\n{{company}} has invited you to join their team. \n\nTo accept the invitation, click the link below: \n\n{{link}} \n\n"
