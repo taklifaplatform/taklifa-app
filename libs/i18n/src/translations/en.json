@@ -573,7 +573,7 @@
     "announcement-description": "Announcement Description // Enter announcement description",
     "announcement-city": "Announcement City // Enter announcement city",
     "announcement-year-model": "Announcement Year Model // Enter announcement year model",
-    "announcement-category": "Announcement Category // Enter announcement category",
+    "announcement-category": "Announcement Category",
     "announcement-images": "Announcement Images // Upload announcement images"
   },
   "invite": {

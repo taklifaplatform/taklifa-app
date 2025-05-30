@@ -1,23 +1,25 @@
 
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { AnnouncementService } from '@zix/api';
+import { AnnouncementCategoryTransformer, AnnouncementService } from '@zix/api';
 import { useMixpanel } from '@zix/services/auth';
+import { ZixButton } from '@zix/ui/common';
 import { formFields, handleFormErrors, SchemaForm, SubmitButton, ZixFieldContainer } from '@zix/ui/forms';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
+import { FlatList } from 'react-native';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
-import { Theme } from 'tamagui';
+import { View, Text, Theme, YStack } from 'tamagui';
 import { z } from 'zod';
 
 const ManageAnnouncementFormSchema = z
   .object({
     images: formFields.medias.describe(t('forms:announcement-images')),
-    category_id: formFields.autocomplete.describe(t('forms:announcement-category')),
-    sub_category_id: formFields.autocomplete.describe(t('forms:announcement-sub-category')),
+    category_id: formFields.text.describe(t('forms:announcement-category')),
+    sub_category_id: formFields.text.describe(t('forms:announcement-sub-category')),
     metadata: z.object({
       model_year: formFields.number.describe(t('forms:announcement-year-model')).optional().nullable(),
     }),
@@ -44,12 +46,12 @@ export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
   const categoryId = form.watch('category_id');
   const subCategoryId = form.watch('sub_category_id');
 
-  const { data: categories } = useQuery({
+  const { data: categoriesData } = useQuery({
     queryFn: () => AnnouncementService.listAnnouncementCategories({}),
     queryKey: ['AnnouncementService.listAnnouncementCategories'],
   })
 
-  const selectedCategory = useMemo(() => categories?.data?.find((category) => category.id === categoryId), [categories, categoryId]);
+  const selectedCategory = useMemo(() => categoriesData?.data?.find((category) => category.id === categoryId), [categoriesData, categoryId]);
 
   const { data, refetch } = useQuery({
     queryFn: () =>
@@ -94,6 +96,57 @@ export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
     },
   });
 
+  const renderMainCategorySelector = () => (
+    <FlatList
+      data={categoriesData?.data || []}
+      renderItem={({ item }) => (
+        <ZixButton
+          themeInverse={selectedCategory?.id === item.id}
+          key={item.id}
+          size='$4'
+          style={{ marginRight: 10 }}
+          onPress={() => {
+            if (selectedCategory?.id === item.id) {
+              form.setValue('category_id', undefined);
+              form.setValue('sub_category_id', undefined);
+            } else {
+              form.setValue('category_id', item.id);
+              form.setValue('sub_category_id', undefined);
+            }
+          }}
+        >
+          <Text>{item.name}</Text>
+        </ZixButton>
+      )}
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      keyExtractor={(item, index): string => `${item.id ?? index}`}
+
+    />
+  )
+
+  const renderSubCategorySelector = () => (
+    <FlatList
+      data={selectedCategory?.sub_categories || []}
+      renderItem={({ item }) => (
+        <ZixButton
+          themeInverse={subCategoryId === item.id}
+          key={item.id}
+          size='$2'
+          style={{ marginRight: 10 }}
+          onPress={() => {
+            form.setValue('sub_category_id', item.id);
+          }}
+        >
+          <Text>{item.name}</Text>
+        </ZixButton>
+      )}
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      keyExtractor={(item, index): string => `${item.id ?? index}`}
+    />
+  )
+
   const renderForm = () => (!announcementId || data?.data?.id) && (
     <SchemaForm
       form={form}
@@ -102,16 +155,6 @@ export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
         description: {
           isMultiline: true,
         },
-        category_id: {
-          api: 'announcement-categories',
-        },
-        sub_category_id: {
-          api: 'announcement-categories',
-          disabled: !selectedCategory?.sub_categories?.length,
-          query: {
-            category_id: categoryId,
-          }
-        }
       }}
       defaultValues={data?.data || {}}
       onSubmit={mutateAsync}
@@ -125,23 +168,34 @@ export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
         );
       }}
     >
-      {({ metadata, ...fields }) => (
-        <ZixFieldContainer
-          label={t('common:service-information')}
-          labelBold
-          collapsible
+      {({ metadata, images, category_id, sub_category_id, ...fields }) => (
+        <YStack
+          gap='$2'
         >
+          {images}
+          <ZixFieldContainer
+            label={t('forms:announcement-category')}
+            labelBold
+            collapsible
+            error={!!form?.formState?.errors?.category_id}
+            errorMessage={form?.formState?.errors?.category_id?.message}
+          >
+            <YStack
+              gap='$3'
+            >
+              {renderMainCategorySelector()}
+              {renderSubCategorySelector()}
+            </YStack>
+          </ZixFieldContainer>
           {Object.values(fields)}
           {!!selectedCategory?.metadata_fields?.length && (
-            <ZixFieldContainer
-              label={t('common:service-information')}
-              labelBold
-              collapsible
+            <YStack
+              gap='$2'
             >
               {Object.values(metadata)}
-            </ZixFieldContainer>
+            </YStack>
           )}
-        </ZixFieldContainer>
+        </YStack>
       )}
     </SchemaForm>
   );

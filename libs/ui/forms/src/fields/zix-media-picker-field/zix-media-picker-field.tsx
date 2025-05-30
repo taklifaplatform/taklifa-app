@@ -352,7 +352,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
             enterStyle={{ x: 0, y: 20, opacity: 0, scale: 0.9 }}
             exitStyle={{ x: 0, y: 20, opacity: 0, scale: 0.9 }}
             gap="$4"
-            width="90%"
+            width="100%"
           >
             <Dialog.Title>{t('core:media_picker.uploading_title')}</Dialog.Title>
             <Dialog.Description>
