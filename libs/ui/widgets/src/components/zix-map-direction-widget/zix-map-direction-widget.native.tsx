@@ -1,12 +1,11 @@
+import { X } from '@tamagui/lucide-icons';
 import { LocationTransformer } from '@zix/api';
+import * as Location from 'expo-location';
 import React, { useEffect, useState } from 'react';
 import { Dimensions } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import MapViewDirections from 'react-native-maps-directions';
 import { Button, Stack, View } from 'tamagui';
 import ZixGetDirection from '../zix-get-direction/zix-get-direction';
-import * as Location from 'expo-location';
-import { X } from '@tamagui/lucide-icons';
 
 /* eslint-disable-next-line */
 export type ZixMapDirectionWidgetProps = {
@@ -16,7 +15,7 @@ export type ZixMapDirectionWidgetProps = {
 };
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
-const GOOGLE_MAPS_APIKEY = 'AIzaSyBw3sZh4uFyLbi9sKTzKYn3BqIS_b-vGeA'; // Replace with your actual API key
+// const GOOGLE_MAPS_APIKEY = 'AIzaSyBw3sZh4uFyLbi9sKTzKYn3BqIS_b-vGeA'; // Replace with your actual API key
 
 export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
   startLocation,
@@ -79,18 +78,18 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
   const [viewMap, setViewMap] = useState(false)
   return (
     <Stack height={viewMap ? 600 : 200} backgroundColor="$gray6" borderRadius="$5">
-     {viewMap && <Button
-      onPress={() => setViewMap(false)}
-      unstyled
-      position='absolute'
-      zIndex={1}
-      theme={'accent'}
-      size={'$2'}
+      {viewMap && <Button
+        onPress={() => setViewMap(false)}
+        unstyled
+        position='absolute'
+        zIndex={1}
+        theme={'accent'}
+        size={'$2'}
       >
-      <X size={'$3'} color={'white'} />
+        <X size={'$3'} color={'white'} />
       </Button>}
       <MapView
-      onPress={() => setViewMap(!viewMap)}
+        onPress={() => setViewMap(!viewMap)}
         style={{
           flex: 1,
           borderRadius: 10,
@@ -152,14 +151,14 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
         </Marker>
 
         {/* Direction Path */}
-        <MapViewDirections
+        {/* <MapViewDirections
           origin={start}
           destination={end}
           apikey={GOOGLE_MAPS_APIKEY}
           strokeWidth={6}
           strokeColor="#ffd32c"
           onError={(errorMessage) => console.log('Error: ', errorMessage)}
-        />
+        /> */}
       </MapView>
       <ZixGetDirection startLocation={startLocation} endLocation={endLocation} />
     </Stack>
