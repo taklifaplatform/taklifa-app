@@ -782,5 +782,10 @@
     "complain-text": "If there are any problems you encounter, please do not hesitate to contact us",
     "saudi_arabia": "Saudi Arabia",
     "sawaed_logistics": "Sawaed Logistics"
+  },
+  "expo-updates": {
+    "new-update-available": "New Update Available",
+    "new-update-available-description": "A new update has been downloaded. The app will restart to apply the update. Please press confirm to continue.",
+    "confirm-and-restart": "Confirm & Restart"
   }
 }

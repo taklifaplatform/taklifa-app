@@ -71,6 +71,7 @@
     "expo-sharing": "~13.0.1",
     "expo-splash-screen": "~0.29.24",
     "expo-status-bar": "~2.0.1",
+    "expo-updates": "~0.27.4",
     "expo-web-browser": "~14.0.2",
     "google-libphonenumber": "^3.2.34",
     "i18next": "^23.7.16",

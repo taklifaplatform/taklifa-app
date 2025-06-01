@@ -831,5 +831,10 @@
     "complain-text": "إذا كانت هناك أية مشاكل تواجهك، فالرجاء عدم التردد في الاتصال بنا",
     "saudi_arabia": "السعودية",
     "sawaed_logistics": "سواعد اللوجستية"
+  },
+  "expo-updates": {
+    "new-update-available": "تحديث جديد متاح",
+    "new-update-available-description": "تم تحميل تحديث جديد. سيتم إعادة تشغيل التطبيق لتطبيق التحديث. يرجى الضغط على تأكيد للمتابعة.",
+    "confirm-and-restart": "تأكيد وإعادة التشغيل"
   }
 }

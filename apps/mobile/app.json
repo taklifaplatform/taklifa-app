@@ -3,7 +3,7 @@
     "name": "سواعد",
     "slug": "sawaeed",
     "scheme": "sawaeed",
-    "version": "1.1.9",
+    "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -124,6 +124,7 @@
       "bundler": "metro"
     },
     "plugins": [
+      "expo-updates",
       "expo-localization",
       [
         "expo-camera",
@@ -173,7 +174,7 @@
         "projectId": "e42af032-da25-4337-9836-69ea04279e11"
       }
     },
-    "runtimeVersion": "1.0.0",
+    "runtimeVersion": "1.2.0",
     "owner": "zixdev",
     "hooks": {
       "postPublish": [
@@ -185,6 +186,12 @@
           }
         }
       ]
+    },
+    "updates": {
+      "url": "https://u.expo.dev/e42af032-da25-4337-9836-69ea04279e11",
+      "requestHeaders": {
+        "expo-channel-name": "production"
+      }
     }
   }
 }

@@ -133,7 +133,9 @@
     },
     "update": {
       "executor": "@nx/expo:update",
-      "options": {}
+      "options": {
+        "channel": "production"
+      }
     },
     "export": {
       "executor": "@nx/expo:export",

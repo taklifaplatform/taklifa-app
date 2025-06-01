@@ -5,3 +5,4 @@ export * from './tamagui/tamagui';
 export * from './tamagui/universal-theme';
 export * from './toast';
 export * from './push-notification/push-notification';
+export * from './expo-updates-provider';

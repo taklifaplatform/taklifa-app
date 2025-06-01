@@ -10,6 +10,7 @@ import {
   UniversalThemeProvider,
   ToastProvider,
   PushNotification,
+  ExpoUpdatesProvider,
 } from './providers';
 import { LaravelEchoProvider } from '@zix/services/laravel-echo';
 import { AuthProvider } from '@zix/services/auth';
@@ -39,6 +40,7 @@ export const MainAppProvider: React.FC<MainAppProviderProps> = ({
         ),
         ToastProvider,
         QueryClientProvider,
+        ExpoUpdatesProvider,
         AuthProvider,
         LaravelEchoProvider,
         ChatProvider,
