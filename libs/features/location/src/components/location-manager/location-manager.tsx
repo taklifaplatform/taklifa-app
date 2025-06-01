@@ -27,25 +27,25 @@ const LocationManagerSchema = z
     address: formFields?.textarea?.describe(
       `${t('app:forms.labels.address')} // ${t('app:forms.placeholders.address')}`
     ),
-    building_name: formFields?.text?.describe(
-      `${t('app:forms.labels.building-name')} // ${t('app:forms.placeholders.building-name')}`
-    ).optional().nullable(),
-    floor_number: formFields?.text?.describe(
-      `${t('app:forms.labels.floor-number')} // ${t('app:forms.placeholders.floor-number')}`
-    ).optional().nullable(),
-    house_number: formFields?.text?.describe(
-      `${t('app:forms.labels.house-number')} // ${t('app:forms.placeholders.house-number')}`
-    ).optional().nullable(),
+    // building_name: formFields?.text?.describe(
+    //   `${t('app:forms.labels.building-name')} // ${t('app:forms.placeholders.building-name')}`
+    // ).optional().nullable(),
+    // floor_number: formFields?.text?.describe(
+    //   `${t('app:forms.labels.floor-number')} // ${t('app:forms.placeholders.floor-number')}`
+    // ).optional().nullable(),
+    // house_number: formFields?.text?.describe(
+    //   `${t('app:forms.labels.house-number')} // ${t('app:forms.placeholders.house-number')}`
+    // ).optional().nullable(),
 
-    country_id: formFields?.country?.describe(
-      `${t('app:forms.labels.country')} // ${t('app:forms.placeholders.country')}`
-    ),
-    city_id: formFields?.autocomplete?.describe(
-      `${t('app:forms.labels.city')} // ${t('app:forms.placeholders.city')}`
-    ).optional().nullable(),
-    notes: formFields?.textarea?.describe(
-      `${t('app:forms.labels.notes')} // ${t('app:forms.placeholders.notes')}`
-    ).optional().nullable(),
+    // country_id: formFields?.country?.describe(
+    //   `${t('app:forms.labels.country')} // ${t('app:forms.placeholders.country')}`
+    // ),
+    // city_id: formFields?.autocomplete?.describe(
+    //   `${t('app:forms.labels.city')} // ${t('app:forms.placeholders.city')}`
+    // ).optional().nullable(),
+    // notes: formFields?.textarea?.describe(
+    //   `${t('app:forms.labels.notes')} // ${t('app:forms.placeholders.notes')}`
+    // ).optional().nullable(),
 
   });
 
@@ -145,7 +145,7 @@ export const LocationManager: React.FC<LocationManagerProps> = ({
           >
             <YStack gap="$4">
               {address}
-              {building_name}
+              {/* {building_name}
               <XStack alignItems="flex-start" gap="$4">
                 {floor_number}
                 {house_number}
@@ -153,12 +153,12 @@ export const LocationManager: React.FC<LocationManagerProps> = ({
               {country_id}
               <XStack alignItems="flex-start" gap="$4">
                 {state_id}
-              </XStack>
+              </XStack> */}
 
             </YStack>
 
           </ZixFieldContainer>
-          {notes}
+          {/* {notes} */}
         </YStack>
       )}
     </SchemaForm>

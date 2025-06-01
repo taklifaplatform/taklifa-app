@@ -24,7 +24,7 @@ const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
 
 export const SignUpSchema = z
   .object({
-    username: formFields.text.min(3).describe(t('forms:username')),
+    name: formFields.text.min(3).describe(t('forms:name')),
     phone_number: formFields.phone.describe(t('forms:phone_number')),
     password: formFields.secure_text.describe(t('forms:password')),
     password_confirmation: formFields.secure_text.describe(

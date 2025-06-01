@@ -95,7 +95,8 @@ export const uploadMediaFile = async (
       formData.append("file", {
 
         uri: Platform.OS === "ios" ? file.uri.replace("file://", "") : file.uri,
-        name: file.file_name,
+        name: `${file.uuid}.jpg`,
+        // name: file.file_name,
         type: 'image/jpeg',
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any);

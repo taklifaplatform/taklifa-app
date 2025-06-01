@@ -6,6 +6,7 @@ import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import {
   Adapt,
+  ScrollView,
   Select,
   SelectProps,
   SelectTriggerProps,
@@ -125,9 +126,9 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
         <Adapt platform="touch">
           <Sheet native modal dismissOnSnapToBottom>
             <Sheet.Frame>
-              <Sheet.ScrollView>
+              <ScrollView>
                 <Adapt.Contents />
-              </Sheet.ScrollView>
+              </ScrollView>
             </Sheet.Frame>
             <Sheet.Overlay />
           </Sheet>
@@ -168,6 +169,9 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
                       borderColor='$color5'
                       width="100%"
                       justifyContent='space-between'
+                      // onPress={() => {
+                      //   onChange?.(String(item.id))
+                      // }}
                     >
                       <Select.ItemText>
                         {renderItemContent(item)}
