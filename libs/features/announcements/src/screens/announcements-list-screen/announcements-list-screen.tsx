@@ -12,6 +12,7 @@ import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { Alert, Dimensions, FlatList, Linking } from 'react-native';
 import { useRouter } from 'solito/router';
 import { Button, H4, Text, Theme, View, XStack, YStack } from 'tamagui';
+import moment from 'moment';
 
 export interface AnnouncementsListScreenProps {
   showHeader: boolean;
@@ -108,22 +109,30 @@ const AnnouncementItem = memo(({
       >
         <XStack alignItems="center" gap="$2" flex={1}>
           <UserAvatar user={item?.user} size="$5" />
-          <Text color='$color12' fontWeight="bold">
-            {item?.user?.name || item?.user?.username}
-          </Text>
+          <YStack>
+            <Text color='$color12' fontWeight="bold">
+              {item?.user?.name || item?.user?.username}
+            </Text>
+            <Text fontSize={'$1'} color='$color12'>
+              {moment(item?.created_at).fromNow()}
+            </Text>
+          </YStack>
         </XStack>
-        <XStack gap="$4" alignItems='center'>
-          {!!item?.user?.phone_number && <Button
-            flex={0.1}
-            backgroundColor='$gray7'
-            icon={() => <CustomIcon name="call" color='$color12' size={'$1'} />}
-            onPress={() => onContactPress(item)}
-          />}
-          {user?.id === item?.user?.id && <Button
-            iconAfter={<MoreHorizontal />}
-            onPress={() => onMorePress(item)}
-          />}
-        </XStack>
+        <YStack>
+          <XStack gap="$4" alignItems='center'>
+            {!!item?.user?.phone_number && <Button
+              flex={0.1}
+              backgroundColor='$gray7'
+              icon={() => <CustomIcon name="call" color='$color12' size={'$1'} />}
+              onPress={() => onContactPress(item)}
+            />}
+            {user?.id === item?.user?.id && <Button
+              iconAfter={<MoreHorizontal />}
+              onPress={() => onMorePress(item)}
+            />}
+          </XStack>
+        </YStack>
+
       </XStack>
       <YStack gap="$4" paddingHorizontal="$4">
         <XStack
@@ -135,10 +144,25 @@ const AnnouncementItem = memo(({
         >
           <Text fontWeight={'bold'} fontSize={'$3'}>{item?.title || ''}</Text>
           <XStack alignItems='center'>
-            <Text fontWeight={'bold'} fontSize={'$3'}>{item?.price} {t('common:sar')}</Text>
+            <Text fontWeight={'bold'} fontSize={'$3'}>{item?.price || '0'} {t('common:sar')}</Text>
           </XStack>
         </XStack>
-        <Text numberOfLines={3}>{item?.description || ''}</Text>
+
+        <YStack>
+          {
+            !!item?.city && (
+              <XStack alignItems='center'>
+                <CustomIcon name="location" size={'$1'} color="$color12" />
+                <Text>{item?.city || ''}</Text>
+              </XStack>
+            )
+          }
+          {
+            !!item?.description && (
+              <Text numberOfLines={3}>{item?.description || ''}</Text>
+            )
+          }
+        </YStack>
         {item?.images && <ZixMediasListWidget medias={Array.isArray(item.images) ? item.images : []} paddingHorizontal={5} />}
       </YStack>
     </YStack>

@@ -15,6 +15,7 @@ import {
 } from 'tamagui';
 import { z } from 'zod';
 import { SHARED_SHIPMENT_MANAGER_FIELD_PROPS } from '../../shipment-manager/configs';
+import { useMixpanel } from '@zix/services/auth';
 
 const { useParam } = createParam<{ shipment: string, invitation?: string, proposal?: string }>();
 
