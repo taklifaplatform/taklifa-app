@@ -61,86 +61,86 @@ export function VehicleProfileScreen() {
         },
       ]
     },
-    {
-      label: t('common:vehicle-type'),
-      items: [
-        {
-          label: t('common:body-type'),
-          value: vehicle.information?.body_type || 'N/A'
-        },
-        {
-          label: t('common:steering-wheel'),
-          value: vehicle.information?.steering_wheel || 'N/A'
-        },
-        {
-          label: t('common:doors-count'),
-          value: vehicle.information?.doors_count || 'N/A'
-        },
-        {
-          label: t('common:seats-count'),
-          value: vehicle.information?.seats_count || 'N/A'
-        },
-        {
-          label: t('common:top-speed'),
-          value: vehicle.information?.top_speed || 'N/A'
-        },
-      ]
-    },
-    {
-      label: t('common:fuel-information'),
-      items: [
-        {
-          label: t('common:fuel-type'),
-          value: vehicle.fuel_information?.fuel_type || 'N/A'
-        },
-        {
-          label: t('common:fuel-capacity'),
-          value: vehicle.fuel_information?.fuel_capacity || 'N/A'
-        },
-        {
-          label: t('common:liter-per-km-in-city'),
-          value: vehicle.fuel_information?.liter_per_km_in_city || 'N/A'
-        },
-        {
-          label: t('common:liter-per-km-in-highway'),
-          value: vehicle.fuel_information?.liter_per_km_in_highway || 'N/A'
-        },
-        {
-          label: t('common:liter-per-km-in-combined'),
-          value: vehicle.fuel_information?.liter_per_km_mixed || 'N/A'
-        }
-      ]
-    },
-    {
-      label: t('common:dimensions'),
-      items: [
-        {
-          label: t('common:width'),
-          value: vehicle.capacity_dimensions?.width
-            ? `${vehicle.capacity_dimensions?.width} (${vehicle.capacity_dimensions?.unit})`
-            : 'N/A'
-        },
-        {
-          label: t('common:height'),
-          value: vehicle.capacity_dimensions?.height
-            ? `${vehicle.capacity_dimensions?.height} (${vehicle.capacity_dimensions?.unit})`
-            : 'N/A'
-        },
-        {
-          label: t('common:length'),
-          value: vehicle.capacity_dimensions?.length
-            ? `${vehicle.capacity_dimensions?.length} (${vehicle.capacity_dimensions?.unit})`
-            : 'N/A'
-        },
+    // {
+    //   label: t('common:vehicle-type'),
+    //   items: [
+    //     {
+    //       label: t('common:body-type'),
+    //       value: vehicle.information?.body_type || 'N/A'
+    //     },
+    //     {
+    //       label: t('common:steering-wheel'),
+    //       value: vehicle.information?.steering_wheel || 'N/A'
+    //     },
+    //     {
+    //       label: t('common:doors-count'),
+    //       value: vehicle.information?.doors_count || 'N/A'
+    //     },
+    //     {
+    //       label: t('common:seats-count'),
+    //       value: vehicle.information?.seats_count || 'N/A'
+    //     },
+    //     {
+    //       label: t('common:top-speed'),
+    //       value: vehicle.information?.top_speed || 'N/A'
+    //     },
+    //   ]
+    // },
+    // {
+    //   label: t('common:fuel-information'),
+    //   items: [
+    //     {
+    //       label: t('common:fuel-type'),
+    //       value: vehicle.fuel_information?.fuel_type || 'N/A'
+    //     },
+    //     {
+    //       label: t('common:fuel-capacity'),
+    //       value: vehicle.fuel_information?.fuel_capacity || 'N/A'
+    //     },
+    //     {
+    //       label: t('common:liter-per-km-in-city'),
+    //       value: vehicle.fuel_information?.liter_per_km_in_city || 'N/A'
+    //     },
+    //     {
+    //       label: t('common:liter-per-km-in-highway'),
+    //       value: vehicle.fuel_information?.liter_per_km_in_highway || 'N/A'
+    //     },
+    //     {
+    //       label: t('common:liter-per-km-in-combined'),
+    //       value: vehicle.fuel_information?.liter_per_km_mixed || 'N/A'
+    //     }
+    //   ]
+    // },
+    // {
+    //   label: t('common:dimensions'),
+    //   items: [
+    //     {
+    //       label: t('common:width'),
+    //       value: vehicle.capacity_dimensions?.width
+    //         ? `${vehicle.capacity_dimensions?.width} (${vehicle.capacity_dimensions?.unit})`
+    //         : 'N/A'
+    //     },
+    //     {
+    //       label: t('common:height'),
+    //       value: vehicle.capacity_dimensions?.height
+    //         ? `${vehicle.capacity_dimensions?.height} (${vehicle.capacity_dimensions?.unit})`
+    //         : 'N/A'
+    //     },
+    //     {
+    //       label: t('common:length'),
+    //       value: vehicle.capacity_dimensions?.length
+    //         ? `${vehicle.capacity_dimensions?.length} (${vehicle.capacity_dimensions?.unit})`
+    //         : 'N/A'
+    //     },
 
-        {
-          label: t('common:capacity-volume'),
-          value: vehicle.capacity_weight?.value
-            ? `${vehicle.capacity_weight?.value} (${vehicle.capacity_weight?.unit ?? 'kg'})`
-            : 'N/A'
-        },
-      ]
-    },
+    //     {
+    //       label: t('common:capacity-volume'),
+    //       value: vehicle.capacity_weight?.value
+    //         ? `${vehicle.capacity_weight?.value} (${vehicle.capacity_weight?.unit ?? 'kg'})`
+    //         : 'N/A'
+    //     },
+    //   ]
+    // },
   ]), [vehicle])
 
   console.info(data, 'data===')

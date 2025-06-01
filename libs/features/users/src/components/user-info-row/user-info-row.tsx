@@ -13,7 +13,7 @@ export const UserInfoRow: React.FC<UserInfoRowProps> = ({
   ...props
 }) => {
 
-  const renderVehicleInfo = () => !!user?.vehicle && (
+  const renderVehicleInfo = () => !!user?.vehicle?.plate_number && (
     <>
       <XStack alignItems="center" gap="$2">
         <Theme name='accent'>
@@ -39,7 +39,7 @@ export const UserInfoRow: React.FC<UserInfoRowProps> = ({
           <CustomIcon name="location" size='$1' color="$color9" />
         </Theme>
         <Text color='$color12' fontWeight="600" fontSize="$1">
-          {user?.location?.country?.name}
+          {user?.location?.country?.name || user?.location?.city?.name || user?.location?.address?.substring(0, 10)}
         </Text>
       </XStack>
       {

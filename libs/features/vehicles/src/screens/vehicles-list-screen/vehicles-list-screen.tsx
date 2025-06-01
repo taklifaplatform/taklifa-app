@@ -97,7 +97,7 @@ export const VehiclesListScreen: React.FC<VehiclesListScreenProps> = ({
     <ScreenLayout>
       {showHeader && <AppHeader title={t('common:manage-vehicles')} />}
       <YStack flex={1} paddingVertical="$4">
-        {!showHeader ? renderVehicleScreen() : renderHorizonTabs()}
+        {renderVehicleScreen()}
       </YStack>
       {!data?.data.length && showHeader && activeRole === USER_ROLES.solo_driver && renderFabButton()}
     </ScreenLayout>

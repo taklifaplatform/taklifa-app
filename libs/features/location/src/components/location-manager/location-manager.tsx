@@ -15,7 +15,7 @@ import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Separator, Theme, XStack, YStack } from 'tamagui';
+import { Separator, Theme, YStack } from 'tamagui';
 import { z } from 'zod';
 
 
@@ -37,9 +37,9 @@ const LocationManagerSchema = z
     //   `${t('app:forms.labels.house-number')} // ${t('app:forms.placeholders.house-number')}`
     // ).optional().nullable(),
 
-    // country_id: formFields?.country?.describe(
-    //   `${t('app:forms.labels.country')} // ${t('app:forms.placeholders.country')}`
-    // ),
+    country_id: formFields?.country?.describe(
+      `${t('app:forms.labels.country')} // ${t('app:forms.placeholders.country')}`
+    ),
     // city_id: formFields?.autocomplete?.describe(
     //   `${t('app:forms.labels.city')} // ${t('app:forms.placeholders.city')}`
     // ).optional().nullable(),
@@ -145,12 +145,13 @@ export const LocationManager: React.FC<LocationManagerProps> = ({
           >
             <YStack gap="$4">
               {address}
+              {country_id}
               {/* {building_name}
               <XStack alignItems="flex-start" gap="$4">
                 {floor_number}
                 {house_number}
               </XStack>
-              {country_id}
+              
               <XStack alignItems="flex-start" gap="$4">
                 {state_id}
               </XStack> */}

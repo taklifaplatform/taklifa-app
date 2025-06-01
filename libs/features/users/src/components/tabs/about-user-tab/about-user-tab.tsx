@@ -12,6 +12,9 @@ import { t } from 'i18next';
 import { useRouter } from 'solito/router';
 
 import { Stack, Text, XStack, YStack } from 'tamagui';
+import { CustomIcon } from '@zix/ui/icons';
+import { Button } from 'tamagui';
+import { Pencil } from '@tamagui/lucide-icons';
 
 export type AboutUserTabProps = {
   user: DriverTransformer
@@ -57,12 +60,31 @@ export const AboutUserTab: React.FC<AboutUserTabProps> = ({
     }
   }
 
-  const renderAbout = () => (!!user.about?.length) && (
-    <ZixWidgetContainer label={isServiceProvider(user) ? `${t('common:about-driver')}` : 'About'}>
-      <Text flex={1}>
-        {user.about}
-      </Text>
-    </ZixWidgetContainer>
+  const renderAbout = () => (!!user.about?.length || authUser?.id === user?.id) && (
+    <XStack
+      padding='$2'
+      backgroundColor={'$color1'}
+      borderRadius='$2'
+      shadowColor={'$color2'}
+      shadowOpacity={0.5}
+    >
+      <ZixWidgetContainer
+        label={isServiceProvider(user) ? `${t('common:bio')}` : 'About'}
+        collapsible
+        labelPrepend={authUser?.id === user?.id && (
+          <Button
+            icon={Pencil} size='$2'
+            onPress={() => router.push(`/app/account/settings/general`)}
+          >
+            {t('common:edit')}
+          </Button>
+        )}
+      >
+        <Text flex={1}>
+          {user.about || 'N/A'}
+        </Text>
+      </ZixWidgetContainer>
+    </XStack>
   )
 
   const renderCompaniesCarousel = () => !!user?.companies?.length && (
@@ -147,15 +169,8 @@ export const AboutUserTab: React.FC<AboutUserTabProps> = ({
 
   return Platform.OS === 'web' ? (
     <YStack gap='$2'>
-     {!!user.about?.length && <XStack
-        padding='$2'
-        backgroundColor={'$color1'}
-        borderRadius='$2'
-        shadowColor={'$color2'}
-        shadowOpacity={0.5}
-      >
-        {renderAbout()}
-      </XStack>}
+
+      {renderAbout()}
       <XStack
         padding='$2'
         backgroundColor={'$color1'}

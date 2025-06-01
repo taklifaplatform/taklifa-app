@@ -28,7 +28,7 @@ const ProfileSchema = z
       .optional(),
     username: formFields.text.describe(`${t('forms:username')}`),
     name: formFields.text.describe(`${t('forms:name')}`),
-    phone_number: formFields.phone.describe(`${t('forms:phone_number')}`),
+    // phone_number: formFields.phone.describe(`${t('forms:phone_number')}`),
     about: formFields.textarea.describe(`${t('forms:about')}`),
   })
   .required({

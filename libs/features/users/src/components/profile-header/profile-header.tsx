@@ -18,7 +18,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user }) => {
       </XStack>
       <YStack gap="$2">
         {!!user?.name && <H4 textAlign="center">{user.name}</H4>}
-        <H6 textAlign="center" color="$color10">@{user?.username}</H6>
+        <H6 textAlign="center" color="$color10">@{user?.username || user?.name}</H6>
         <XStack alignContent='center' gap="$2" justifyContent='center'>
           <View height='$1' width='$1' borderRadius='$8' backgroundColor={activityStatus?.color} />
           <Text fontWeight="bold" color="$color8">

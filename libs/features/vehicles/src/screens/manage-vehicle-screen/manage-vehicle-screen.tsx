@@ -32,32 +32,32 @@ const ManageVehicleFormSchema = z
     vin_number: formFields.text.describe(t('forms:vin-number')).optional().nullable(),
     // TODO: missing model
 
-    information: z.object({
-      // body_type: formFields.text.describe(t('forms:body-type')).optional().nullable(),
-      // steering_wheel: formFields.text.describe(t('forms:steering-wheel')).optional().nullable(),
-      doors_count: formFields.number.describe(t('forms:doors-count')).optional().nullable(),
-      seats_count: formFields.number.describe(t('forms:seats-count')).optional().nullable(),
-      top_speed: formFields.number.describe(t('forms:top-speed')).optional().nullable(),
-    }),
+    // information: z.object({
+    //   // body_type: formFields.text.describe(t('forms:body-type')).optional().nullable(),
+    //   // steering_wheel: formFields.text.describe(t('forms:steering-wheel')).optional().nullable(),
+    //   doors_count: formFields.number.describe(t('forms:doors-count')).optional().nullable(),
+    //   seats_count: formFields.number.describe(t('forms:seats-count')).optional().nullable(),
+    //   top_speed: formFields.number.describe(t('forms:top-speed')).optional().nullable(),
+    // }),
 
-    // // fuel_information: z.object({
-    // //   fuel_type: formFields.text.describe(t('forms:fuel-type')).optional().nullable(),
-    // //   fuel_capacity: formFields.float.describe(t('forms:fuel-capacity')).optional().nullable(),
-    // //   liter_per_km_in_city: formFields.float.describe(t('forms:liter-per-km-in-city')).optional().nullable(),
-    // //   liter_per_km_in_highway: formFields.float.describe(t('forms:liter-per-km-in-highway')).optional().nullable(),
-    // //   liter_per_km_mixed: formFields.float.describe(t('forms:liter-per-km-in-combined')).optional().nullable(),
-    // // }),
+    // // // fuel_information: z.object({
+    // // //   fuel_type: formFields.text.describe(t('forms:fuel-type')).optional().nullable(),
+    // // //   fuel_capacity: formFields.float.describe(t('forms:fuel-capacity')).optional().nullable(),
+    // // //   liter_per_km_in_city: formFields.float.describe(t('forms:liter-per-km-in-city')).optional().nullable(),
+    // // //   liter_per_km_in_highway: formFields.float.describe(t('forms:liter-per-km-in-highway')).optional().nullable(),
+    // // //   liter_per_km_mixed: formFields.float.describe(t('forms:liter-per-km-in-combined')).optional().nullable(),
+    // // // }),
 
-    capacity_dimensions: z.object({
-      width: formFields.float.describe(t('forms:vehicle-width')).optional().nullable(),
-      height: formFields.float.describe(t('forms:vehicle-height')).optional().nullable(),
-      length: formFields.float.describe(t('forms:vehicle-length')).optional().nullable(),
-      unit: formFields.text.describe(t('forms:unit')).optional().nullable(),
-    }),
-    capacity_weight: z.object({
-      weight: formFields.float.describe(t('forms:vehicle-capacity-weight')).optional().nullable(),
-      unit: formFields.text.describe(t('forms:unit')).optional().nullable(),
-    }),
+    // capacity_dimensions: z.object({
+    //   width: formFields.float.describe(t('forms:vehicle-width')).optional().nullable(),
+    //   height: formFields.float.describe(t('forms:vehicle-height')).optional().nullable(),
+    //   length: formFields.float.describe(t('forms:vehicle-length')).optional().nullable(),
+    //   unit: formFields.text.describe(t('forms:unit')).optional().nullable(),
+    // }),
+    // capacity_weight: z.object({
+    //   weight: formFields.float.describe(t('forms:vehicle-capacity-weight')).optional().nullable(),
+    //   unit: formFields.text.describe(t('forms:unit')).optional().nullable(),
+    // }),
   });
 
 const { useParam } = createParam<{ vehicle?: string }>();
@@ -186,14 +186,14 @@ export const ManageVehicleScreen: React.FC = () => {
             >
               {Object.values(fields)}
             </ZixFieldContainer>
-            <ZixFieldContainer
+            {/* <ZixFieldContainer
               label={t('common:vehicle-type')}
               labelBold
               collapsible
               isOptional
             >
               {Object.values(information)}
-            </ZixFieldContainer>
+            </ZixFieldContainer> */}
 
             {/* <ZixFieldContainer
             label={t('common:fuel-information')}
@@ -204,7 +204,7 @@ export const ManageVehicleScreen: React.FC = () => {
             {Object.values(fuel_information)}
           </ZixFieldContainer> */}
 
-            <ZixFieldContainer
+            {/* <ZixFieldContainer
               label={t('common:dimensions')}
               labelBold
               collapsible
@@ -220,7 +220,7 @@ export const ManageVehicleScreen: React.FC = () => {
               isOptional
             >
               {Object.values(capacity_weight)}
-            </ZixFieldContainer>
+            </ZixFieldContainer> */}
 
           </>
         )}
