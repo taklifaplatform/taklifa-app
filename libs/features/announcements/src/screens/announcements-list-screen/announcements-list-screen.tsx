@@ -13,6 +13,7 @@ import { Alert, Dimensions, FlatList, Linking } from 'react-native';
 import { useRouter } from 'solito/router';
 import { Button, H4, Text, Theme, View, XStack, YStack } from 'tamagui';
 import moment from 'moment';
+import { useFlatListQuery } from '@zix/utils';
 
 export interface AnnouncementsListScreenProps {
   showHeader: boolean;
@@ -206,12 +207,16 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
     queryKey: ['AnnouncementService.listAnnouncementCategories'],
   });
 
-  const { data, refetch, isLoading } = useQuery({
-    queryFn: () => AnnouncementService.listAnnouncements({
-      search: search,
-      categoryId: selectedCategory?.id,
-      subCategoryId: selectedSubCategory?.id,
-    }),
+  const { data: announcementsData, ...announcementsQuery } = useFlatListQuery({
+    initialPageParam: 1,
+    queryFn: ({ pageParam }: { pageParam: number }) =>
+      AnnouncementService.listAnnouncements({
+        perPage: 20,
+        page: pageParam || 1,
+        search: search,
+        categoryId: selectedCategory?.id,
+        subCategoryId: selectedSubCategory?.id,
+      }),
     queryKey: ['AnnouncementService.listAnnouncements', search, selectedCategory?.id, selectedSubCategory?.id],
   });
 
@@ -313,10 +318,13 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
       <YStack flex={1} paddingTop={15} position='relative'>
         <FlatList
           showsVerticalScrollIndicator={false}
-          refreshing={isLoading}
-          onRefresh={refetch}
+          refreshing={announcementsQuery.isLoading}
+          onRefresh={announcementsQuery.refetch}
+          onEndReached={announcementsQuery.fetchNextPage}
+          removeClippedSubviews={true}
+          initialNumToRender={10}
           style={{ flex: 1 }}
-          data={data?.data as AnnouncementTransformer[] || []}
+          data={announcementsData as AnnouncementTransformer[] || []}
           keyExtractor={(item: AnnouncementTransformer, index: number): string => `${item.id ?? index}`}
           renderItem={({ item, index }) => (
             <AnnouncementItem
