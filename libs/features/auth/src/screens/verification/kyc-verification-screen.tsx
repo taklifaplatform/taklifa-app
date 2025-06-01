@@ -41,7 +41,8 @@ export const KycVerificationScreen = () => {
     },
     onSuccess() {
       refetchUser();
-      router.push('/auth/verify-driver');
+      router.replace('/auth/register/success?redirect=/solo-driver');
+      // router.push('/auth/verify-driver');
     },
     onError(error: any) {
       toast.show(error?.body?.message || t('app:errors.something-went-wrong'), {

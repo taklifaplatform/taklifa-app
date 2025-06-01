@@ -117,7 +117,7 @@ export function useAuth(): AuthHelpers {
       return 3;
     }
     if (requestedAccountType === 'solo_driver') {
-      return 4;
+      return 3;
     }
     return 0;
   }, [requestedAccountType]);

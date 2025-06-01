@@ -54,7 +54,7 @@ export const SignUpSuccessScreen = () => {
         </YStack>
         <Theme inverse>
           <SubmitButton
-            marginHorizontal="$4"
+            margin="$4"
             borderRadius="$10"
             onPress={() => redirectUserToActiveDashboard()}
           >
