@@ -62,7 +62,7 @@ export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
     queryKey: ['AnnouncementService.retrieveAnnouncement', announcementId],
   })
 
-  const { mutateAsync } = useMutation({
+  const { mutateAsync, isPending } = useMutation({
     async mutationFn(requestBody: z.infer<typeof ManageAnnouncementFormSchema>) {
       if (announcementId) {
         return AnnouncementService.updateAnnouncement({
@@ -161,7 +161,10 @@ export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
       renderAfter={({ submit }) => {
         return (
           <Theme inverse>
-            <SubmitButton onPress={() => submit()}>
+            <SubmitButton loading={isPending} onPress={() => {
+              const formData = form.getValues();
+              return mutateAsync(formData);
+            }}>
               {t('common:next')}
             </SubmitButton>
           </Theme>
