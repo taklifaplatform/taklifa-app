@@ -4,7 +4,7 @@ import { UserAvatar, ZixAvatar } from '@zix/ui/common';
 import { ZixInput, ZixInputProps } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useRouter } from 'solito/router';
 import { Button, ColorTokens, H4, Theme, View, XStack, YStack } from 'tamagui';
 import ZixNotificationHeaderButton from '../zix-notification-header-button/zix-notification-header-button';
@@ -43,8 +43,9 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
     }
   }, [isLoggedIn, router, user, getUrlPrefix]);
 
+  const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
   const renderSearchBar = () =>
-    showSearchBar && (
+    (showSearchBar && isSearchBarOpen) && (
       <Theme reset>
         <View
           paddingHorizontal="$4"
@@ -119,12 +120,22 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   const renderAvatar = () =>
     !showBackButton ? COMPANY_MANAGER_ROLES.includes(activeRole) ? renderCompanyAvatar() : renderUserAvatar() : null;
 
-  const renderNotificationsButton = () =>
+  const renderToggleSearchBar = () =>
     !showBackButton && (
-      <XStack>
-        <ZixNotificationHeaderButton />
-      </XStack>
+      <Button
+        icon={isSearchBarOpen ? X : Search}
+        scaleIcon={1.5}
+        paddingHorizontal={0}
+        onPress={() => setIsSearchBarOpen(!isSearchBarOpen)}
+        size="$2"
+      />
     );
+  // const renderNotificationsButton = () =>
+  //   !showBackButton && (
+  //     <XStack>
+  //       <ZixNotificationHeaderButton />
+  //     </XStack>
+  //   );
 
   const renderDesktopHeader = () => (
     <YStack
@@ -219,7 +230,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
               )}
             </XStack>
             <XStack flex={0.25} justifyContent="flex-end">
-              {headerRight ? headerRight() : renderNotificationsButton()}
+              {headerRight ? headerRight() : renderToggleSearchBar()}
             </XStack>
           </XStack>
 

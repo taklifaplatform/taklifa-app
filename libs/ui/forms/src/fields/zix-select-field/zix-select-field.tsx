@@ -20,6 +20,7 @@ import {
 } from 'tamagui';
 import { SHARED_FIELDS_STYLE } from '../fields-config';
 import ZixInput from '../zix-input/zix-input';
+import { Platform } from 'react-native';
 
 export type BaseSelectFieldItem = {
   id: string
@@ -126,9 +127,18 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
         <Adapt platform="touch">
           <Sheet native modal dismissOnSnapToBottom>
             <Sheet.Frame>
-              <ScrollView>
-                <Adapt.Contents />
-              </ScrollView>
+              {
+                Platform.OS === 'android' ? (
+                  <ScrollView>
+                    <Adapt.Contents />
+                  </ScrollView>
+                ) : (
+                  <Sheet.ScrollView>
+                    <Adapt.Contents />
+                  </Sheet.ScrollView>
+                )
+              }
+
             </Sheet.Frame>
             <Sheet.Overlay />
           </Sheet>
@@ -169,9 +179,9 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
                       borderColor='$color5'
                       width="100%"
                       justifyContent='space-between'
-                      // onPress={() => {
-                      //   onChange?.(String(item.id))
-                      // }}
+                    // onPress={() => {
+                    //   onChange?.(String(item.id))
+                    // }}
                     >
                       <Select.ItemText>
                         {renderItemContent(item)}
