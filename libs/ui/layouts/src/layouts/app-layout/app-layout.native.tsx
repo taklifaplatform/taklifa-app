@@ -22,7 +22,7 @@ export const AppLayout = () => {
             <CustomIcon
               name="home"
               size={size}
-              color={focused ? '$color01' : '$color1'}
+              color={focused ? '#FECA16' : '#E0E0E0'}
             />
           ),
         }}
@@ -34,7 +34,7 @@ export const AppLayout = () => {
           tabBarIcon: ({ size, focused }) => (
             <CustomIcon
               name="store"
-              color={focused ? '$color01' : '$color1'}
+              color={focused ? '#FECA16' : '#E0E0E0'}
               size={size}
             />
           ),
@@ -49,7 +49,7 @@ export const AppLayout = () => {
           tabBarIcon: ({ size, focused }) => (
             <CustomIcon
               name="orders"
-              color={focused ? '$color01' : '$color1'}
+              color={focused ? '#FECA16' : '#E0E0E0'}
               size={size}
             />
           ),
@@ -73,7 +73,7 @@ export const AppLayout = () => {
         options={COMPANY_MANAGER_ROLES.includes(activeRole) ? {
           title: t('navigation:company-dashboard.data'),
           tabBarIcon: ({ size, focused }) => (
-            <CustomIcon name="apps" color={focused ? '$color01' : '$color1'} size={size} />
+            <CustomIcon name="apps" color={focused ? '#FECA16' : '#E0E0E0'} size={size} />
           ),
         } : {
           href: null
@@ -84,7 +84,7 @@ export const AppLayout = () => {
         options={DRIVER_ROLES.includes(activeRole) ? {
           title: t('common:vehicle'),
           tabBarIcon: ({ size, focused }) => (
-            <CustomIcon name="car" color={focused ? '$color01' : '$color1'} size={size} />
+            <CustomIcon name="car" color={focused ? '#FECA16' : '#E0E0E0'} size={size} />
           ),
         } : {
           href: null
@@ -98,7 +98,7 @@ export const AppLayout = () => {
           tabBarIcon: ({ size, focused }) => (
             <CustomIcon
               name="job"
-              color={focused ? '$color01' : '$color1'}
+              color={focused ? '#FECA16' : '#E0E0E0'}
               size={size}
             />
           ),
@@ -113,7 +113,7 @@ export const AppLayout = () => {
           tabBarIcon: ({ size, focused }) => (
             <CustomIcon
               name="notifications"
-              color={focused ? '$color01' : '$color1'}
+              color={focused ? '#FECA16' : '#E0E0E0'}
               size={size}
             />
           ),
@@ -126,7 +126,7 @@ export const AppLayout = () => {
           tabBarIcon: ({ size, focused }) => (
             <CustomIcon
               name="chat"
-              color={focused ? '$color01' : '$color1'}
+              color={focused ? '#FECA16' : '#E0E0E0'}
               size={size}
             />
           ),
