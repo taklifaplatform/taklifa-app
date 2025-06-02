@@ -304,6 +304,15 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
           value: search,
           onChangeText: setSearch,
         }}
+        headerRight={() => (
+          <Button
+            icon={<Plus size="$1" color="$color12" />}
+            paddingHorizontal={0}
+            onPress={() => {
+              router.push(`/app/announcements/create`)
+            }}
+          />
+        )}
         renderAfterSearchBar={() => (
           <SearchCatFilters
             categories={categoriesData?.data || []}
