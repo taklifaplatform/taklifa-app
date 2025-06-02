@@ -380,18 +380,6 @@ export function HomeScreen() {
             isFetching={isFetching}
             fetchDrivers={fetchDrivers}
           />
-          <CarouselSection
-            showCarousel={showCarousel}
-            driversList={driversList}
-            USER_CARD_WIDTH={USER_CARD_WIDTH}
-            USER_CARD_HEIGHT={USER_CARD_HEIGHT}
-            carouselRef={carouselRef}
-            safeDefaultIndex={safeDefaultIndex}
-            renderCarouselItem={renderCarouselItem}
-            onSnapToItem={onSnapToItem}
-            onCloseCarouselButtonPress={onCloseCarouselButtonPress}
-            X={X}
-          />
           <SwitcherButton
             showCarousel={showCarousel}
             showMap={showMap}
@@ -404,6 +392,19 @@ export function HomeScreen() {
             MaterialIcons={MaterialIcons}
             showMap={showMap}
           />
+          <CarouselSection
+            showCarousel={showCarousel}
+            driversList={driversList}
+            USER_CARD_WIDTH={USER_CARD_WIDTH}
+            USER_CARD_HEIGHT={USER_CARD_HEIGHT}
+            carouselRef={carouselRef}
+            safeDefaultIndex={safeDefaultIndex}
+            renderCarouselItem={renderCarouselItem}
+            onSnapToItem={onSnapToItem}
+            onCloseCarouselButtonPress={onCloseCarouselButtonPress}
+            X={X}
+          />
+
           <FiltersSection
             isKeyboardVisible={isKeyboardVisible}
             filters={filters}
@@ -644,6 +645,8 @@ const CenterButton: FC<CenterButtonProps> = memo(function CenterButton({
     }
 
   }
+
+  if (!showMap) return null;
   return (
     <Button
       theme="accent"
