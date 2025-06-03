@@ -95,7 +95,7 @@ export function TeamMemberInvitationCard({
         fontSize="$1"
         color={invitation.is_rejected ? '$red11' : '$yellow11'}
       >
-        {invitation.is_rejected ? 'Rejected' : 'Pending'}
+        {invitation.is_rejected ? t('shipment:status.rejected') : t('shipment:status.pending')}
       </Text>
     </View>
   );

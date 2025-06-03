@@ -143,7 +143,9 @@ const AnnouncementItem = memo(({
           borderColor={'$color5'}
           paddingVertical={"$2"}
         >
-          <Text fontWeight={'bold'} fontSize={'$3'}>{item?.title || ''}</Text>
+          <Text
+            textAlign='left' flex={1} numberOfLines={2}
+            fontWeight={'bold'} fontSize={'$3'}>{item?.title || ''}</Text>
           <XStack alignItems='center'>
             <Text fontWeight={'bold'} fontSize={'$3'}>{item?.price || '0'} {t('common:sar')}</Text>
           </XStack>
