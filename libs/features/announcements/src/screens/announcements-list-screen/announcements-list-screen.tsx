@@ -1,4 +1,4 @@
-import { MoreHorizontal, Pencil, Plus, Trash2 } from '@tamagui/lucide-icons';
+import { MoreHorizontal, Pencil, Plus, PlusCircle, Search, Trash2 } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AnnouncementCategoryTransformer, AnnouncementService, AnnouncementTransformer } from '@zix/api';
@@ -50,11 +50,15 @@ const CategoryList = memo(({ categories, selectedCategory, onSelect }: CategoryL
     keyExtractor={(item, index): string => `${item.id ?? index}`}
     renderItem={({ item }) => (
       <ZixButton
-        themeInverse={selectedCategory?.id === item.id || (!selectedCategory && item.id === 'all')}
+        theme={'accent'}
         key={item.id}
         size='$3'
         style={{ marginRight: 10 }}
         onPress={() => item.id === 'all' ? onSelect(undefined) : onSelect(item as AnnouncementCategoryTransformer)}
+        borderWidth={1}
+        borderColor={selectedCategory?.id === item.id || (!selectedCategory && item.id === 'all') ? '$color9' : '$color8'}
+        backgroundColor={selectedCategory?.id === item.id || (!selectedCategory && item.id === 'all') ? '$color8' : '$color2'}
+        borderRadius={10}
       >
         <Text>{item.name}</Text>
       </ZixButton>
@@ -71,14 +75,17 @@ const SubCategoryList = memo(({ subCategories, selectedSubCategory, onSelect }: 
     keyExtractor={(item, index): string => `${item.id ?? index}`}
     renderItem={({ item }) => (
       <ZixButton
+        theme={'accent'}
         key={item.id}
         style={{ marginRight: 10 }}
         variant={selectedSubCategory?.id === item.id || (!selectedSubCategory && item.id === 'all') ? undefined : 'outlined'}
-        borderColor={selectedSubCategory?.id === item.id || (!selectedSubCategory && item.id === 'all') ? '$color1' : '$color11'}
+        borderColor={selectedSubCategory?.id === item.id || (!selectedSubCategory && item.id === 'all') ? '$color1' : '$color8'}
         size='$2'
         onPress={() => item.id === 'all' ? onSelect(undefined) : onSelect(item as AnnouncementCategoryTransformer)}
-        themeInverse={selectedSubCategory?.id === item.id || (!selectedSubCategory && item.id === 'all')}
+        backgroundColor={'$color3'}
+        borderRadius={10}
       >
+        <CustomIcon name={item.icon} size={10}/>
         <Text>{item.name}</Text>
       </ZixButton>
     )}
@@ -99,27 +106,61 @@ const AnnouncementItem = memo(({
   return (
     <YStack
       backgroundColor='$color2'
-      borderRadius={5}
+      borderRadius={10}
       marginBottom={10}
       marginHorizontal={showHeader ? '$4' : undefined}
-      paddingBottom={'$4'}
     >
+      {/* //image */}
       <XStack
-        gap="$10"
-        justifyContent='space-between' alignItems='center' padding={"$4"}
+        padding={'$4'}
       >
-        <XStack alignItems="center" gap="$2" flex={1}>
-          <UserAvatar user={item?.user} size="$5" />
-          <YStack>
-            <Text color='$color12' fontWeight="bold">
-              {item?.user?.name || item?.user?.username}
-            </Text>
-            <Text fontSize={'$1'} color='$color12'>
-              {moment(item?.created_at).fromNow()}
-            </Text>
-          </YStack>
+        {item?.images && <ZixMediasListWidget imageWidth={105.67} imageHeight={76} medias={Array.isArray(item.images) ? item.images : []} />}
+      </XStack>
+      {/* //price and title */}
+      <XStack
+        justifyContent='space-between'
+        alignItems='center'
+        borderColor={'$color5'}
+        paddingVertical={"$2"}
+        padding={'$4'}
+      >
+        <Text
+          textAlign='left' flex={1} numberOfLines={2}
+          fontWeight={'bold'} fontSize={'$1'}>{item?.title || ''}</Text>
+        <XStack alignItems='center'>
+          <Text fontWeight={'bold'} fontSize={'$3'}>{item?.price || '0'} {t('common:sar')}</Text>
         </XStack>
-        <YStack>
+      </XStack>
+      {/* //user info */}
+      <XStack
+        alignItems='center'
+        justifyContent='flex-start'
+        gap="$2"
+        padding={'$4'}
+      >
+        <XStack alignItems='center' gap="$1">
+          <UserAvatar user={item?.user} size={10} />
+          <Text color='$color8' fontWeight={700} fontSize={11} numberOfLines={2}>
+            {item?.user?.name || item?.user?.username}
+          </Text>
+        </XStack>
+        {
+          !!item?.city && (
+            <XStack alignItems='center' gap="$1">
+              <CustomIcon name="location" size={10} color="$color8" />
+              <Text color="$color8" fontWeight={700} fontSize={11} >{item?.city || ''}</Text>
+            </XStack>
+          )
+        }
+        <XStack alignItems='center' gap="$1">
+          <CustomIcon name="time" size={10} color="$color8" />
+          <Text fontSize={11} color='$color8' fontWeight={700}>
+            {moment(item?.created_at).fromNow()}
+          </Text>
+        </XStack>
+      </XStack>
+
+      {/* <YStack>
           <XStack gap="$4" alignItems='center'>
             {!!item?.user?.phone_number && <Button
               flex={0.1}
@@ -132,42 +173,14 @@ const AnnouncementItem = memo(({
               onPress={() => onMorePress(item)}
             />}
           </XStack>
-        </YStack>
-
-      </XStack>
-      <YStack gap="$4" paddingHorizontal="$4">
-        <XStack
-          justifyContent='space-between'
-          alignItems='center'
-          borderBottomWidth={0.5}
-          borderColor={'$color5'}
-          paddingVertical={"$2"}
-        >
-          <Text
-            textAlign='left' flex={1} numberOfLines={2}
-            fontWeight={'bold'} fontSize={'$3'}>{item?.title || ''}</Text>
-          <XStack alignItems='center'>
-            <Text fontWeight={'bold'} fontSize={'$3'}>{item?.price || '0'} {t('common:sar')}</Text>
-          </XStack>
-        </XStack>
-
-        <YStack>
-          {
-            !!item?.city && (
-              <XStack alignItems='center'>
-                <CustomIcon name="location" size={'$1'} color="$color12" />
-                <Text>{item?.city || ''}</Text>
-              </XStack>
-            )
-          }
-          {
+        </YStack> */}
+      {/* <YStack gap="$4" paddingHorizontal="$4">
+        {
             !!item?.description && (
               <Text numberOfLines={3}>{item?.description || ''}</Text>
             )
           }
-        </YStack>
-        {item?.images && <ZixMediasListWidget medias={Array.isArray(item.images) ? item.images : []} paddingHorizontal={5} />}
-      </YStack>
+      </YStack> */}
     </YStack>
   )
 });
@@ -307,26 +320,36 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
           onChangeText: setSearch,
         }}
         headerRight={() => (
-          <Button
-            icon={<Plus size="$1" color="$color12" />}
-            paddingHorizontal={0}
-            onPress={() => {
-              router.push(`/app/announcements/create`)
-            }}
-          />
-        )}
-        renderAfterSearchBar={() => (
-          <SearchCatFilters
-            categories={categoriesData?.data || []}
-            selectedCategory={selectedCategory}
-            onSelectCategory={handleSelectCategory}
-            subCategories={subCategories}
-            selectedSubCategory={selectedSubCategory}
-            onSelectSubCategory={handleSelectSubCategory}
-          />
+          <XStack alignItems='center' gap="$2">
+            <ZixButton
+              theme='accent'
+              icon={<PlusCircle size="$1" color="$color12" />}
+              onPress={() => {
+                if (isLoggedIn) {
+                  router.push(`/app/announcements/create`)
+                } else {
+                  router.push(`/auth/login`)
+                }
+              }}
+              backgroundColor={'#FF9325'}
+              size={'$2'}
+              textProps={{ fontSize: '$1', color: '$color12' }}
+            >
+              {t('common:add-announcement')}
+            </ZixButton>
+            <Search size="$1" color="$color12" />
+          </XStack>
         )}
       />
       <YStack flex={1} paddingTop={15} position='relative'>
+        <SearchCatFilters
+          categories={categoriesData?.data || []}
+          selectedCategory={selectedCategory}
+          onSelectCategory={handleSelectCategory}
+          subCategories={subCategories}
+          selectedSubCategory={selectedSubCategory}
+          onSelectSubCategory={handleSelectSubCategory}
+        />
         <FlatList
           showsVerticalScrollIndicator={false}
           refreshing={announcementsQuery.isLoading}
@@ -353,7 +376,7 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
             </View>
           }
         />
-        <XStack padding="$4" position='absolute' bottom={0} left={0} right={0}>
+        {/* <XStack padding="$4" position='absolute' bottom={0} left={0} right={0}>
           <ZixButton
             theme='accent'
             icon={<Plus size="$1" color="$color12" />}
@@ -367,7 +390,7 @@ export const AnnouncementsListScreen: React.FC<AnnouncementsListScreenProps> = (
           >
             {t('common:add-announcement')}
           </ZixButton>
-        </XStack>
+        </XStack> */}
         {/* ActionSheet for edit/delete */}
         <ActionSheet
           snapPoints={[33, 25]}
