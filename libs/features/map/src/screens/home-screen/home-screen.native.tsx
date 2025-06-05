@@ -25,13 +25,15 @@ const { height } = Dimensions.get('window');
 
 const initialCamera = {
   center: {
-    latitude: 24.713552,
-    longitude: 46.675296,
+    // latitude: 24.713552,
+    // longitude: 46.675296,
+    "latitude": 24.66962499163617,
+    "longitude": 43.85464270466726,
   },
   pitch: 0,
   heading: 0,
-  altitude: 100000,
-  zoom: 10,
+  altitude: 7000000,
+  zoom: 16,
 };
 
 export function HomeScreen() {
@@ -444,7 +446,6 @@ const MapSection: FC<MapSectionProps> = memo(function MapSection({
       initialCamera={initialCamera}
       onPress={() => Keyboard.dismiss()}
       showsUserLocation
-      // showsUserLocation={!!driverLocation}
       showsMyLocationButton={false}
       onRegionChangeComplete={debouncedSetCurrentRegion}
     >
