@@ -54,17 +54,17 @@ export function HomeScreen() {
   const [search, setSearch] = useState<string>();
 
   const [currentRegion, setCurrentRegion] = useState<Region>({
-    latitude: 24.713552,
-    longitude: 46.675296,
-    latitudeDelta: 0.4388121185204774,
-    longitudeDelta: 0.32004178032601516
+    "latitude": 24.608423604325434,
+    "longitude": 41.53168703276937,
+    "latitudeDelta": 30.738793266086702,
+    "longitudeDelta": 20.300612610933356,
   });
 
   const [drivers, setDrivers] = useState<DriverTransformer[]>([]);
   const [isFetching, setIsFetching] = useState(false);
   async function fetchDrivers(query: any = {}) {
     const queryParams = {
-      perPage: Platform.select({ web: 80, ios: 150, android: 80 }),
+      perPage: Platform.select({ web: 80, ios: 80, android: 80 }),
       vehicleModel: filters.vehicle_model,
       latitude: currentRegion.latitude,
       longitude: currentRegion.longitude,
@@ -74,7 +74,7 @@ export function HomeScreen() {
       ...query,
     }
     setIsFetching(true);
-    const { data: driversData } = await DriversService.fetchAllDrivers(queryParams);
+    const { data: driversData, meta } = await DriversService.fetchAllDrivers(queryParams);
     console.log("==============")
     console.log('queryParams::', JSON.stringify(queryParams, null, 2))
     console.log('driversData::', driversData?.length)
@@ -90,7 +90,20 @@ export function HomeScreen() {
         const bDistance = getDistance(referenceLocation, bLoc);
         return aDistance - bDistance;
       });
-      setDrivers(sortedDrivers);
+
+      // Merge new drivers with existing ones, avoiding duplicates
+      setDrivers(prevDrivers => {
+        const existingIds = new Set(prevDrivers.map(d => d.id));
+        const newDrivers = sortedDrivers.filter(d => !existingIds.has(d.id));
+        return [...prevDrivers, ...newDrivers];
+      });
+
+      if (meta?.current_page < meta?.last_page) {
+        fetchDrivers({
+          ...queryParams,
+          page: meta?.current_page + 1,
+        });
+      }
     }
     setIsFetching(false);
   }
@@ -102,6 +115,7 @@ export function HomeScreen() {
       latitudeDelta: currentRegion.latitudeDelta,
       longitudeDelta: currentRegion.longitudeDelta,
       search,
+      page: 1,
     });
   }, [
     filters.vehicle_model,
@@ -109,21 +123,6 @@ export function HomeScreen() {
     search,
     filters.vehicle_model,
   ]);
-  // const { data, ...driversQuery } = useQuery({
-  //   queryFn() {
-  //     return DriversService.fetchAllDrivers({
-  //       perPage: Platform.select({ web: 80, ios: 50, android: 30 }),
-  //       vehicleModel: filters.vehicle_model,
-  //       latitude: currentRegion.latitude,
-  //       longitude: currentRegion.longitude,
-  //       latitudeDelta: currentRegion.latitudeDelta,
-  //       longitudeDelta: currentRegion.longitudeDelta,
-  //       search,
-  //     });
-  //   },
-  //   queryKey: ['DriversService.fetchAllDrivers', search, filtersKey, currentRegion],
-  //   placeholderData: keepPreviousData,
-  // });
 
   const companiesQuery = useQuery({
     queryFn() {
@@ -298,9 +297,18 @@ export function HomeScreen() {
 
   }, [isFocused]);
 
+  const filteredDrivers = useMemo(() => {
+    return drivers.filter((driver) => {
+      if (filters.vehicle_model !== 'all') {
+        return driver?.vehicle?.model?.id === filters.vehicle_model;
+      }
+      return true;
+    });
+  }, [drivers, filters?.vehicle_model]);
+
   const renderMapDrivers = () =>
     (filters.provider_type === 'all' || filters.provider_type === USER_ROLES.solo_driver) ?
-      drivers.map((driver, index) => (
+      filteredDrivers.map((driver, index) => (
         <MapDriverMarker
           key={`marker-${driver?.id}`}
           driver={driver}
