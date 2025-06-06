@@ -29,7 +29,7 @@ const ManageVehicleFormSchema = z
     color: formFields.text.describe(t('forms:color')),
     plate_number: formFields.text.describe(t('forms:plate-number')),
     year: formFields.number.describe(t('forms:vehicle-year')),
-    vin_number: formFields.text.describe(t('forms:vin-number')).optional().nullable(),
+    // vin_number: formFields.text.describe(t('forms:vin-number')).optional().nullable(),
     // TODO: missing model
 
     // information: z.object({

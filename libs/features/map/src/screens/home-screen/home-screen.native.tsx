@@ -92,17 +92,21 @@ export function HomeScreen() {
       });
 
       // Merge new drivers with existing ones, avoiding duplicates
-      setDrivers(prevDrivers => {
-        const existingIds = new Set(prevDrivers.map(d => d.id));
-        const newDrivers = sortedDrivers.filter(d => !existingIds.has(d.id));
-        return [...prevDrivers, ...newDrivers];
-      });
-
-      if (meta?.current_page < meta?.last_page) {
-        fetchDrivers({
-          ...queryParams,
-          page: meta?.current_page + 1,
+      if (Platform.OS === 'ios') {
+        setDrivers(prevDrivers => {
+          const existingIds = new Set(prevDrivers.map(d => d.id));
+          const newDrivers = sortedDrivers.filter(d => !existingIds.has(d.id));
+          return [...prevDrivers, ...newDrivers];
         });
+
+        if (meta?.current_page < meta?.last_page && meta?.current_page < 5) {
+          fetchDrivers({
+            ...queryParams,
+            page: meta?.current_page + 1,
+          });
+        }
+      } else {
+        setDrivers(sortedDrivers);
       }
     }
     setIsFetching(false);

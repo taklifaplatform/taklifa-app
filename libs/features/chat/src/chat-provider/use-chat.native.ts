@@ -10,15 +10,13 @@ const client = ZixChat.getInstance('000000');
 client.baseURL = `${process.env.NEXT_PUBLIC_API_URL}/api/chat`;
 
 const i18nInstance = new Streami18n({
-  language: "ar",
   translationsForLanguage: {
     "Empty message...": t('app:common.emptyMessage'),
     "Send a message": t('app:common.sendMessage'),
     "You": t('app:common.you'),
     "Photos and Videos": t('forms:photos-and-videos'),
     "AM": "ammmmm",
-    "Nothing yet...": t('app:common.nothingYet')
-
+    "Nothing yet...": t('app:common.nothingYet'),
 
   },
 });
