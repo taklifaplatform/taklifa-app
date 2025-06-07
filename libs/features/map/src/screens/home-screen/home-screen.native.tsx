@@ -33,7 +33,7 @@ const initialCamera = {
   pitch: 0,
   heading: 0,
   altitude: 7000000,
-  zoom: 16,
+  zoom: 5,
 };
 
 export function HomeScreen() {
@@ -92,7 +92,7 @@ export function HomeScreen() {
       });
 
       // Merge new drivers with existing ones, avoiding duplicates
-      if (Platform.OS === 'ios') {
+      if (Platform.OS === 'ios' && !search?.length) {
         setDrivers(prevDrivers => {
           const existingIds = new Set(prevDrivers.map(d => d.id));
           const newDrivers = sortedDrivers.filter(d => !existingIds.has(d.id));

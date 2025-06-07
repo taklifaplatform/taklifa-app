@@ -3,7 +3,7 @@
     "name": "سواعد",
     "slug": "sawaeed",
     "scheme": "sawaeed",
-    "version": "1.2.3",
+    "version": "1.2.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -174,7 +174,7 @@
         "projectId": "e42af032-da25-4337-9836-69ea04279e11"
       }
     },
-    "runtimeVersion": "1.2.0",
+    "runtimeVersion": "1.2.4",
     "owner": "zixdev",
     "hooks": {
       "postPublish": [
@@ -188,10 +188,7 @@
       ]
     },
     "updates": {
-      "url": "https://u.expo.dev/e42af032-da25-4337-9836-69ea04279e11",
-      "requestHeaders": {
-        "expo-channel-name": "production"
-      }
+      "url": "https://u.expo.dev/e42af032-da25-4337-9836-69ea04279e11"
     }
   }
 }

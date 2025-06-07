@@ -2,13 +2,13 @@
 // on web.
 // This file should only import and register the root. No components or exports
 // should be added here.
-import './src/importPolyfills'
+import './importPolyfills'
 import '@expo/metro-runtime'
 import { renderRootComponent } from 'expo-router/build/renderRootComponent'
 import 'react-native-url-polyfill/auto'
 import * as Sentry from 'sentry-expo'
 
-import ZixApp from './src/ZixApp'
+import ZixApp from './ZixApp'
 
 // Sentry.init({
 //   dsn: 'https://c8ef482b856797260dfe526afebfd863@o989495.ingest.sentry.io/4506384200892416',

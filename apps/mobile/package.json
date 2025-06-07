@@ -2,6 +2,7 @@
   "name": "mobile",
   "version": "0.0.1",
   "private": true,
+  "main": "index.js",
   "dependencies": {
     "@datepicker-react/hooks": "^2.8.4",
     "@expo-google-fonts/almarai": "^0.2.3",
