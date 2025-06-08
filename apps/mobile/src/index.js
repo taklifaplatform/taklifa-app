@@ -10,13 +10,13 @@ import * as Sentry from 'sentry-expo'
 
 import ZixApp from './ZixApp'
 
-// Sentry.init({
-//   dsn: 'https://c8ef482b856797260dfe526afebfd863@o989495.ingest.sentry.io/4506384200892416',
-//   enableInExpoDevelopment: false,
-//   // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
-//   // We recommend adjusting this value in production.
-//   tracesSampleRate: 1.0,
-// })
+Sentry.init({
+  dsn: 'https://c8ef482b856797260dfe526afebfd863@o989495.ingest.sentry.io/4506384200892416',
+  enableInExpoDevelopment: false,
+  // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+  // We recommend adjusting this value in production.
+  tracesSampleRate: 1.0,
+})
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
 // It also ensures that whether you load the app in Expo Go or in a native build,
