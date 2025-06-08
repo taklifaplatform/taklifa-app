@@ -86,4 +86,5 @@ export const iconNames = [
   'web_dark_logo',
   'web_logo_ar',
   'web_logo_en',
+  'whatsapp_contact',
 ];

@@ -69,15 +69,15 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
 
   return (
     <XStack justifyContent="space-between" gap="$2" {...props}>
-      <Button
+      {/* <Button
         theme='accent'
         flex={1.5}
         icon={(props: IconProps) => <CustomIcon {...props} name="followed" color='$color12' />}
         onPress={_onServiceRequestPress}
         {...sharedButtonStyle}
       >
-    {t('shipment:send-invitation')}
-      </Button>
+        {t('shipment:send-invitation')}
+      </Button> */}
       <ZixButton
         flex={1}
         backgroundColor='$gray7'

@@ -52,6 +52,7 @@ export const MapDriverMarker: React.FC<MapDriverMarkerProps> = React.memo(({
   return (
     <Marker
       key={driver.id}
+      identifier={driver.id?.toString() || ''}
       coordinate={{
         latitude: parseFloat(liveLocation.latitude ?? '0'),
         longitude: parseFloat(liveLocation.longitude ?? '0'),

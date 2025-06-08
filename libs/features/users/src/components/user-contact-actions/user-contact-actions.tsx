@@ -1,4 +1,5 @@
 import { IconProps } from '@tamagui/helpers-icon';
+import { Phone } from '@tamagui/lucide-icons';
 import { useMutation } from '@tanstack/react-query';
 import { ChatService, DriverTransformer } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
@@ -48,6 +49,11 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
     router.push(`${getUrlPrefix}/create-shipment?selected_driver_id=${user.id}`)
   }
 
+  function _onWhatsappPress() {
+    const phoneNumber = user.phone_number
+    Linking.openURL(`https://wa.me/${phoneNumber.includes('+') ? phoneNumber : `+${phoneNumber}`}`);
+  }
+
   const { mutate: startChat, isPending } = useMutation({
     mutationFn() {
       return ChatService.startChat({
@@ -76,13 +82,14 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
       {
         !isServiceProvider(authUser, true) && (
           <Button
-            theme='accent'
+            theme='success'
+            backgroundColor='$color10'
             flex={1}
-            icon={(props: IconProps) => <CustomIcon {...props} name="followed" color='$color12' />}
-            onPress={_onServiceRequestPress}
+            icon={(props: IconProps) => <CustomIcon {...props} name="whatsapp-contact" color='$color10' />}
+            onPress={_onWhatsappPress}
             {...sharedButtonStyle}
           >
-            {t('shipment:request-service')}
+            {t('common:contact-whatsapp')}
           </Button>
         )
       }

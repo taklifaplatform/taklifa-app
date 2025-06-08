@@ -2,8 +2,10 @@ import { Building } from '@tamagui/lucide-icons';
 import { CompanyTransformer } from '@zix/api';
 import React, { useState } from 'react';
 import { Marker } from 'react-native-maps';
+import { Image } from 'expo-image';
 
-import { Image, View } from 'tamagui';
+import { useStyle, View } from 'tamagui';
+import { Platform } from 'react-native';
 
 
 export type MapCompanyMarkerProps = {
@@ -19,19 +21,23 @@ export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = React.memo(({
 }: MapCompanyMarkerProps) => {
   const [showCustomIcon, setShowCustomIcon] = useState(false)
 
-  const renderCarIcon = () =>  (company?.logo?.original_url && !showCustomIcon) ? (
+
+  const style = useStyle({
+    width: '$4',
+    height: '$4',
+    borderRadius: '$4',
+  })
+  const renderCarIcon = () => (company?.logo?.original_url && !showCustomIcon) ? (
     <Image
       source={{ uri: company.logo?.original_url }}
-      width={50}
-      height={50}
-      borderRadius={100}
+      style={style}
       resizeMode='contain'
       onError={() => {
         setShowCustomIcon(true)
       }}
     />
   ) : (
-    <Building size="$2" color={'$color5'}/>
+    <Building size="$2" color={'$color5'} />
   )
 
   if (!company.location) {
@@ -49,9 +55,9 @@ export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = React.memo(({
     >
       <View
         width='$8'
-        height='$5'
-        alignItems='center'
-        justifyContent='center'
+        height='$8'
+        alignItems={Platform.OS === 'android' ? undefined : 'center'}
+        justifyContent={Platform.OS === 'android' ? undefined : 'center'}
         borderColor='$color5'
       >
         {renderCarIcon()}
@@ -59,7 +65,7 @@ export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = React.memo(({
     </Marker>
   );
 },
-(prevProps, nextProps) => prevProps.isSelected === nextProps.isSelected
+  (prevProps, nextProps) => prevProps.isSelected === nextProps.isSelected
 );
 
 export default MapCompanyMarker;

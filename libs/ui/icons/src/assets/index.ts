@@ -87,6 +87,7 @@ import Wallet from './icons/wallet.svg';
 import WebDarkLogo from './icons/web-dark-logo.svg'; 
 import WebLogoAr from './icons/web-logo-ar.svg'; 
 import WebLogoEn from './icons/web-logo-en.svg'; 
+import WhatsappContact from './icons/whatsapp-contact.svg'; 
 
 
 export {
@@ -177,4 +178,5 @@ export {
   WebDarkLogo,
   WebLogoAr,
   WebLogoEn,
+  WhatsappContact,
 }

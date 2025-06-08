@@ -228,7 +228,7 @@ export const SettingsScreen = () => {
        */}
 
         <Paragraph paddingVertical="$1" textAlign="center" theme="alt2">
-          v1.2.4 (EF-499)
+          v1.2.4 (EF-499-2)
         </Paragraph>
         <TouchableOpacity onPress={() => Linking.openURL('https://zixdev.com?ref=sawaeed')}  >
           <Paragraph

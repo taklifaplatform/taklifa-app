@@ -24,10 +24,8 @@ export const ExpoUpdatesProvider = ({ children }: ExpoUpdatesProviderProps) => {
             return;
         } catch (error: any) {
             setError(error?.message || 'Unknown error');
-            alert(error?.message || 'TMP: ATA Unknown error');
             return;
         }
-        alert('ATA Not Found');
     }
 
     useEffect(() => {
