@@ -1,0 +1,9 @@
+{
+  "executors": {
+    "update": {
+      "implementation": "./src/executors/update",
+      "schema": "./src/executors/schema.json",
+      "description": "update executor"
+    }
+  }
+}

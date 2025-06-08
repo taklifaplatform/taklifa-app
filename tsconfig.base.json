@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@zix/api": ["libs/api/src/index.ts"],
+      "@zix/expo-update": ["tools/expo-update/src/index.ts"],
       "@zix/features/account": ["libs/features/account/src/index.ts"],
       "@zix/features/announcements": [
         "libs/features/announcements/src/index.ts"

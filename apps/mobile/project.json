@@ -132,9 +132,15 @@
       "options": {}
     },
     "update": {
+      "executor": "@zix/expo-update:update",
+      "options": {
+        "channel": "production"
+      }
+    },
+    "old-update": {
       "executor": "@nx/expo:update",
       "options": {
-        "channel": "production",
+        "channel": "production"
       }
     },
     "export": {

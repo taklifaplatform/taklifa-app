@@ -1,0 +1,4 @@
+# Ignore the entire /app/ios folder
+ios/**/*
+yarn.lock
+package.json

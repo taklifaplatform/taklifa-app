@@ -466,7 +466,10 @@
     "add-announcement": "Add Announcement",
     "sar": "SAR",
     "price": "Price",
-    "contact-whatsapp": "Direct Message"
+    "contact-whatsapp": "Direct Message",
+    "version-number": "Version Number",
+    "version-identifier": "Version Identifier",
+    "version-date": "Version Date"
   },
   "cookies-banner": {
     "section-1": {

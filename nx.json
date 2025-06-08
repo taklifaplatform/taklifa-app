@@ -41,6 +41,11 @@
         "{projectRoot}/.storybook/**/*",
         "{projectRoot}/tsconfig.storybook.json"
       ]
+    },
+    "@nx/js:tsc": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     }
   },
   "namedInputs": {

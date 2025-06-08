@@ -5,14 +5,17 @@ import { useThemeSetting } from '@zix/providers';
 import { ActionSheet, ActionSheetRef, Settings } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { usePathname } from '@zix/utils';
+import * as Application from 'expo-application';
+import * as Updates from 'expo-updates';
 import { t } from 'i18next';
 import { useCallback, useRef, useState } from 'react';
 import { Alert, Linking, Platform, TouchableOpacity } from 'react-native';
-import { Paragraph, ScrollView, Theme, View, YStack } from 'tamagui';
+import { Paragraph, ScrollView, Text, Theme, View, XStack, YStack } from 'tamagui';
 
 import { UserService } from '@zix/api';
 import { useAuth, useMixpanel } from '@zix/services/auth';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
+import moment from 'moment';
 import { useRouter } from 'solito/router';
 
 const brandColors = {
@@ -158,7 +161,7 @@ export const SettingsScreen = () => {
                   {t('account:terms_of_service.title')}
                 </Settings.Item>
               </Settings.Group>
-
+              {/* 
               <Settings.Group>
                 <Settings.Item
                   icon={(props: IconProps) => (
@@ -173,7 +176,7 @@ export const SettingsScreen = () => {
                 >
                   {t('account:social.twitter_title')}
                 </Settings.Item>
-              </Settings.Group>
+              </Settings.Group> */}
 
               <Settings.Group>
                 {Platform.OS === 'web' ?
@@ -227,9 +230,16 @@ export const SettingsScreen = () => {
       we just did a simple package.json read since we want to keep things simple for the starter
        */}
 
-        <Paragraph paddingVertical="$1" textAlign="center" theme="alt2">
-          v1.2.4 (EF-103-2)
-        </Paragraph>
+        <XStack justifyContent="center" alignItems="center">
+          <Paragraph fontSize="$1" paddingVertical="$1" theme="alt2">
+            <Text fontWeight="bold">{t('common:version-number')}:</Text> {Application.nativeApplicationVersion} ({Application.nativeBuildVersion})
+            {'\n'}
+            <Text fontWeight="bold">{t('common:version-identifier')}:</Text> {Updates.updateId ?? 'main'}
+            {'\n'}
+            <Text fontWeight="bold">{t('common:version-date')}:</Text> {moment(Updates.createdAt ?? new Date()).format('YYYY-MM-DD HH:mm:ss')}
+            {/* v1.2.4 (EF-103-2) */}
+          </Paragraph>
+        </XStack>
         <TouchableOpacity onPress={() => Linking.openURL('https://zixdev.com?ref=sawaeed')}  >
           <Paragraph
             paddingBottom="$4"

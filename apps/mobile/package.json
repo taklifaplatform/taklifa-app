@@ -135,7 +135,8 @@
     "@react-navigation/native": "*",
     "@tamagui/constants": "*",
     "@expo/vector-icons": "*",
-    "lodash": "*"
+    "lodash": "*",
+    "expo-application": "*"
   },
   "scripts": {
     "eas-build-post-install": "cd ../../ && node tools/scripts/eas-build-post-install.mjs . apps/mobile",

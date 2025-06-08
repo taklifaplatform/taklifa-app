@@ -516,7 +516,10 @@
     "add-announcement": "أضف إعلان",
     "sar": "ر.س",
     "price": "السعر",
-    "contact-whatsapp": "تواصل مباشرة"
+    "contact-whatsapp": "تواصل مباشرة",
+    "version-number": "رقم الإصدار",
+    "version-identifier": "معرف الإصدار",
+    "version-date": "تاريخ الإصدار"
   },
   "cookies-banner": {
     "section-1": {
