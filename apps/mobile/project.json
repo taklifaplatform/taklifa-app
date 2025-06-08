@@ -135,7 +135,6 @@
       "executor": "@nx/expo:update",
       "options": {
         "channel": "production",
-        "platform": "ios"
       }
     },
     "export": {
