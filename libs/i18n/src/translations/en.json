@@ -87,6 +87,7 @@
       "last-seen": "Last seen",
       "all": "All",
       "service-provider-type": "Service Provider Type",
+      "service-provider": "Service Provider",
       "company": "Company",
       "solo-driver": "Solo Driver",
       "emptyMessage": "Empty message",

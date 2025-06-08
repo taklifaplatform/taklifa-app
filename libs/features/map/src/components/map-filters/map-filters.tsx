@@ -32,13 +32,13 @@ export const MapFilters: React.FC<MapFiltersProps> = ({
       label: t('common:model'),
       options: [
         {
-          label: t('app:common.all'),
+          label: `${t('common:model')}: ${t('app:common.all')}`,
           value: 'all',
           activeValue: (
-            <CustomIcon name="solo_transporter_car" size='$4' color="$color9" />
+            <CustomIcon name="solo_transporter_car" size='$2' color="$color9" />
           ),
           icon: (
-            <CustomIcon name="solo_transporter_car" size='$4' color="$color9" />
+            <CustomIcon name="solo_transporter_car" size='$2' color="$color9" />
           )
         },
 
@@ -48,13 +48,13 @@ export const MapFilters: React.FC<MapFiltersProps> = ({
           activeValue: (
             <MediaAvatar
               media={item.map_icon}
-              size='$4'
+              size='$2'
             />
           ),
           icon: (
             <MediaAvatar
               media={item.map_icon}
-              size='$4'
+              size='$2'
             />
           )
         })) || []
@@ -65,28 +65,29 @@ export const MapFilters: React.FC<MapFiltersProps> = ({
       label: t('app:common.service-provider-type'),
       options: [
         {
-          label: t('app:common.all'), value: 'all',
+          label: `${t('app:common.service-provider')}: ${t('app:common.all')}`,
+          value: 'all',
           icon: (
-            <CustomIcon name='service_provider' size='$4' />
+            <CustomIcon name='service_provider' size='$2' />
           ),
           activeValue: (
-            <CustomIcon name='service_provider' size='$4' />
+            <CustomIcon name='service_provider' size='$2' />
           ),
         },
         {
           label: t('app:common.company'), value: 'company', icon: (
-            <CustomIcon name='company_cars' size='$4' />
+            <CustomIcon name='company_cars' size='$2' />
           ),
           activeValue: (
-            <CustomIcon name='company_cars' size='$4' />
+            <CustomIcon name='company_cars' size='$2' />
           ),
         },
         {
           label: t('app:common.solo-driver'), value: USER_ROLES.solo_driver, icon: (
-            <CustomIcon name='solo_transporter_car' size='$4' />
+            <CustomIcon name='solo_transporter_car' size='$2' />
           ),
           activeValue: (
-            <CustomIcon name='solo_transporter_car' size='$4' />
+            <CustomIcon name='solo_transporter_car' size='$2' />
           ),
         },
       ]

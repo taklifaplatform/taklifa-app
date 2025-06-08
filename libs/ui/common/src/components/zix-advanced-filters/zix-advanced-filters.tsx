@@ -142,18 +142,20 @@ export const ZixFilter: React.FC<ZixFiltersProps> = ({
         <XStack
           theme='accent'
           key={filter.key}
-          backgroundColor='$color3'
-          borderWidth='$1'
+          backgroundColor='$color2'
+          borderWidth={1}
           borderColor='$color1'
           borderRadius='$4'
           alignItems='center'
           paddingHorizontal='$2'
-          height='$4'
+          height='$3'
         >
-          <Text fontWeight='700'>{filter.label}</Text>
-          {activeValue ? activeValue.activeValue ?? (
-            <Text>: {activeValue.label}</Text>
-          ) : ''}
+          <Text fontWeight='700' fontSize='$1'>
+            {activeValue ? activeValue?.label : filter.label}
+          </Text>
+          {activeValue?.activeValue && (
+            <Text fontSize='$1'>{activeValue?.activeValue}</Text>
+          )}
         </XStack>
       )}
     >
