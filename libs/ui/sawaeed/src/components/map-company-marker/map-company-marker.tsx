@@ -6,6 +6,7 @@ import { Image } from 'expo-image';
 
 import { useStyle, View } from 'tamagui';
 import { Platform } from 'react-native';
+import { CustomIcon } from '@zix/ui/icons';
 
 
 export type MapCompanyMarkerProps = {
@@ -37,7 +38,7 @@ export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = React.memo(({
       }}
     />
   ) : (
-    <Building size="$2" color={'$color5'} />
+    <CustomIcon name='company_cars' size="$4" color={'$color5'} />
   )
 
   if (!company.location) {

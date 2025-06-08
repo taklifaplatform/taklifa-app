@@ -1,5 +1,5 @@
 <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M40 40.5H8V22L5.5 18.5L9 7.5H39L42 18.5L40 22V40.5Z" fill="#E0E0E0"/>
+<path d="M40 40.5H8V22L5.5 18.5L9 7.5H39L42 18.5L40 22V40.5Z" fill="currentColor"/>
 <mask id="mask0_6509_5659" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="48" height="48">
 <rect width="48" height="48" fill="currentColor"/>
 </mask>

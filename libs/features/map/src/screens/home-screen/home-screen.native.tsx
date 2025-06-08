@@ -1,6 +1,6 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useIsFocused } from '@react-navigation/native';
-import { X } from '@tamagui/lucide-icons';
+import { List, Map, X } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { CompaniesService, CompanyTransformer, DriverTransformer, DriversService, LocationService } from '@zix/api';
 import { CompanyCard, UserCard } from '@zix/features/users';
@@ -394,12 +394,12 @@ export function HomeScreen() {
             isFetching={isFetching}
             fetchDrivers={fetchDrivers}
           />
-          <SwitcherButton
+          {/* <SwitcherButton
             showCarousel={showCarousel}
             showMap={showMap}
             setShowMap={setShowMap}
             t={t}
-          />
+          /> */}
           <CenterButton
             driverLocation={driverLocation}
             mapRef={mapRef}
@@ -424,6 +424,9 @@ export function HomeScreen() {
             filters={filters}
             setFilters={(values) => setFilters({ ...filters, ...values })}
             isFetching={isFetching}
+            showCarousel={showCarousel}
+            showMap={showMap}
+            setShowMap={setShowMap}
           />
         </YStack>
       </YStack>
@@ -610,17 +613,13 @@ const SwitcherButton: FC<SwitcherButtonProps> = memo(function SwitcherButton({
   return (
     <Button
       theme="accent"
-      position="absolute"
-      bottom="$4"
-      left="$4"
-      icon={<CustomIcon name={showMap ? 'list' : 'map'} size="$2" />}
+      icon={showMap ? List : Map}
+      scaleIcon={1.5}
       fontWeight="600"
       fontSize="$2"
       size="$3"
       onPress={() => setShowMap(!showMap)}
-    >
-      {showMap ? t('common:list') : t('common:map')}
-    </Button>
+    />
   );
 });
 
@@ -663,7 +662,7 @@ const CenterButton: FC<CenterButtonProps> = memo(function CenterButton({
   return (
     <Button
       theme="accent"
-      icon={<MaterialIcons name="my-location" size={20} color="black" />}
+      icon={<MaterialIcons name="my-location" size={30} color="black" />}
       circular
       position="absolute"
       bottom="$3"
@@ -679,19 +678,31 @@ interface FiltersSectionProps {
   filters: { vehicle_model: string; provider_type: string };
   setFilters: (values: Record<string, string>) => void;
   isFetching: boolean;
+  showCarousel: boolean;
+  showMap: boolean;
+  setShowMap: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const FiltersSection: FC<FiltersSectionProps> = memo(function FiltersSection({
   isKeyboardVisible,
   filters,
   setFilters,
   isFetching,
+  showCarousel,
+  showMap,
+  setShowMap,
 }) {
   if (isKeyboardVisible) return null;
   return (
     <View position='absolute' top={1} left={1} right={1}>
-      <XStack alignItems='center' justifyContent='space-between'>
+      <XStack alignItems='center' paddingHorizontal="$2" gap="$2">
+        <SwitcherButton
+          showCarousel={showCarousel}
+          showMap={showMap}
+          setShowMap={setShowMap}
+          t={t}
+        />
         <MapFilters values={filters} onChange={(values) => setFilters({ ...filters, ...values })} />
-        {isFetching && <Spinner />}
+        {isFetching && <Spinner color="$color1" />}
       </XStack>
     </View>
   );
