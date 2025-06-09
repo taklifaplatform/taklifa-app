@@ -60,6 +60,7 @@ export const iconNames = [
   'paper_money',
   'radio_button_checked',
   'ringing',
+  'saudi_riyal_symbol',
   'search_track',
   'search',
   'secure',
