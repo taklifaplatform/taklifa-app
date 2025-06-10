@@ -69,7 +69,7 @@ export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
       })
 
       form.reset();
-      router.replace(`/app/stores`);
+      router.replace(`/app/announcement`);
       console.log('onSuccess::')
     },
     onError(error: any) {

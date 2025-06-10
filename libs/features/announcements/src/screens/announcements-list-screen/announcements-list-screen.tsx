@@ -288,7 +288,7 @@ const AnnouncementItem = memo(
                   fontWeight: 'bold',
                 }}
               >
-                {t('common:more-information')}
+                {t('shipment:more-information')}
               </Button>
             </XStack>
           </YStack>

@@ -23,10 +23,20 @@ import {
 } from 'react-native';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
-import { Button, H4, Separator, Text, Theme, View, XStack, YStack } from 'tamagui';
+import {
+  Button,
+  H4,
+  Separator,
+  Text,
+  Theme,
+  View,
+  XStack,
+  YStack,
+} from 'tamagui';
 import { Image } from 'expo-image';
 import moment from 'moment';
 import { MoreHorizontal } from '@tamagui/lucide-icons';
+import { ChevronDown, ChevronUp, ChevronLeft } from '@tamagui/lucide-icons';
 
 const { useParam } = createParam<{ announcement?: string }>();
 
@@ -41,6 +51,7 @@ export const AnnouncementDetailsScreen = () => {
   const [selectedItem, setSelectedItem] =
     useState<AnnouncementTransformer | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
 
   const { data: announcementData } = useQuery({
     queryFn: () =>
@@ -71,27 +82,27 @@ export const AnnouncementDetailsScreen = () => {
     (a: AnnouncementTransformer) => a.id !== announcement?.id,
   );
 
-  // on Contact button press
-  const onContactPress = useCallback(() => {
-    const phoneNumber = announcement?.user?.phone_number;
-    if (!phoneNumber) return;
-    Linking.openURL(
-      `tel:${phoneNumber.includes('+') ? phoneNumber : `+${phoneNumber}`}`,
-    );
-  }, [announcement]);
+  // // on Contact button press
+  // const onContactPress = useCallback(() => {
+  //   const phoneNumber = announcement?.user?.phone_number;
+  //   if (!phoneNumber) return;
+  //   Linking.openURL(
+  //     `tel:${phoneNumber.includes('+') ? phoneNumber : `+${phoneNumber}`}`,
+  //   );
+  // }, [announcement]);
 
-  // WhatsApp button
-  const onWhatsAppPress = useCallback(() => {
-    const phoneNumber = announcement?.user?.phone_number;
-    if (!phoneNumber) return;
-    const url = `https://wa.me/${phoneNumber.replace(/[^\d]/g, '')}`;
-    Linking.openURL(url);
-  }, [announcement]);
+  // // WhatsApp button
+  // const onWhatsAppPress = useCallback(() => {
+  //   const phoneNumber = announcement?.user?.phone_number;
+  //   if (!phoneNumber) return;
+  //   const url = `https://wa.me/${phoneNumber.replace(/[^\d]/g, '')}`;
+  //   Linking.openURL(url);
+  // }, [announcement]);
 
-  // Placeholder for chat
-  const onChatPress = useCallback(() => {
-    toast.show('ميزة المحادثة قادمة قريباً');
-  }, [toast]);
+  // // Placeholder for chat
+  // const onChatPress = useCallback(() => {
+  //   toast.show('ميزة المحادثة قادمة قريباً');
+  // }, [toast]);
 
   const { mutate } = useMutation({
     mutationFn: () =>
@@ -151,7 +162,7 @@ export const AnnouncementDetailsScreen = () => {
   if (!announcement) {
     return (
       <ScreenLayout>
-        <AppHeader showBackButton title={t('common:announcement-details')} />
+        <AppHeader showBackButton title={t('common:market')} />
         <View flex={1} alignItems="center" justifyContent="center">
           <CustomIcon name="empty_data" size="$18" color="$color5" />
           <H4>{t('common:announcement-not-found')}</H4>
@@ -165,20 +176,73 @@ export const AnnouncementDetailsScreen = () => {
 
   return (
     <ScreenLayout>
-      <AppHeader
-        showBackButton
-        title={t('common:announcement-details')}
-        headerRight={() =>
-          user?.id === announcement?.user?.id ? (
+      <AppHeader showBackButton title={t('common:market')} />
+      {/* Action buttons for owner */}
+      {user?.id === announcement?.user?.id && (
+        <XStack gap="$1" padding="$3" justifyContent="space-between">
+          <Button
+            backgroundColor="#FFEEEE"
+            size="$2"
+            textProps={{
+              fontSize: 8,
+              fontWeight: '500',
+            }}
+            color="#FF3B30"
+            iconAfter={<CustomIcon name="delete" size={13} color="#FF3B30" />}
+            onPress={() => {
+              Alert.alert(t('common:delete'), t('common:confirm-delete'), [
+                {
+                  text: t('common:cancel'),
+                  style: 'cancel',
+                },
+                {
+                  text: t('common:remove'),
+                  style: 'destructive',
+                  onPress: () => mutate(),
+                },
+              ]);
+            }}
+          >
+            {t('common:delete-announcement')}
+          </Button>
+          <XStack gap="$3">
             <Button
-              icon={<CustomIcon name="more" size="$1" color="$color12" />}
-              onPress={handleMorePress}
-            />
-          ) : null
-        }
-      />
+              backgroundColor="$color3"
+              borderRadius={10}
+              size="$2"
+              textProps={{
+                fontSize: 8,
+                fontWeight: '500',
+              }}
+              color="#34C759"
+              iconAfter={
+                <CustomIcon name="check-circle" size={13} color="#34C759" />
+              }
+              disabled
+            >
+              حالة الإعلان: شغال
+            </Button>
+            <Button
+              backgroundColor="$color3"
+              borderRadius={10}
+              size="$2"
+              textProps={{
+                fontSize: 8,
+                fontWeight: '500',
+              }}
+              color="#222"
+              iconAfter={<CustomIcon name="edit" size={13} color="#222" />}
+              onPress={() =>
+                router.push(`/app/announcements/${announcementId}/edit`)
+              }
+            >
+              {t('common:edit-announcement')}
+            </Button>
+          </XStack>
+        </XStack>
+      )}
       <ScrollView showsVerticalScrollIndicator={false}>
-        <YStack flex={1} gap="$4" padding="$2">
+        <YStack flex={1} gap="$4" padding="$3">
           {/* Image Carousel */}
           {images.length > 0 && (
             <YStack>
@@ -270,51 +334,90 @@ export const AnnouncementDetailsScreen = () => {
                 </Text>
               </XStack>
             </XStack>
-            <UserContactActions user={announcement.user} />
+            <UserContactActions user={announcement.user!} />
           </YStack>
-          <Separator
-            marginVertical="$2"
-           />
+          <Separator marginVertical="$2" />
 
           {/* Description Section */}
           {!!announcement?.description && (
-          <YStack
-            backgroundColor="#fff"
-            borderRadius={16}
-            padding={16}
-            gap="$3"
-          >
-            <Text fontWeight="bold" fontSize={16} textAlign="left">
-              وصف الإعلان
-            </Text>
-            <YStack gap="$4" >
-           
-                <Text textAlign="left" numberOfLines={3} fontSize={13} color="$color12" >{announcement?.description || ''}</Text>
-           
-            </YStack>
-            {/* <XStack justifyContent="space-between" marginTop={8}>
-              <XStack alignItems="center" gap={4}>
-                <CustomIcon name="eye" size={16} color="#888" />
-                <Text color="#888" fontSize={13}>
-                  عدد المشاهدات: 0
-                </Text>
-              </XStack>
-              <XStack alignItems="center" gap={4}>
-                <CustomIcon name="hash" size={16} color="#888" />
-                <Text color="#888" fontSize={13}>
-                  رقم إعلان: #{announcement.id}
-                </Text>
-              </XStack>
-            </XStack> */}
-          </YStack>
-          )}
+            <YStack gap="$3">
+              <TouchableOpacity onPress={() => setIsDescriptionOpen((v) => !v)}>
+                <XStack
+                  alignItems="center"
+                  gap={8}
+                  justifyContent="space-between"
+                >
+                  <Text fontWeight="bold" fontSize={16} textAlign="left">
+                    وصف الإعلان
+                  </Text>
 
+                  {isDescriptionOpen ? (
+                    <ChevronUp size={18} color="#222" />
+                  ) : (
+                    <ChevronDown size={18} color="#222" />
+                  )}
+                </XStack>
+              </TouchableOpacity>
+              {isDescriptionOpen && (
+                <YStack>
+                  <Text textAlign="left" fontSize={13} color="$color12">
+                    {announcement?.description || ''}
+                  </Text>
+                </YStack>
+              )}
+              <YStack
+                justifyContent="space-between"
+                gap="$3"
+                backgroundColor="$color2"
+                borderRadius={16}
+                padding="$4"
+              >
+                <XStack alignItems="center" gap="$5">
+                  <CustomIcon name="hash" size={16} color="#888" />
+                  <Text color="$color10" fontSize={13}>
+                    رقم إعلان:
+                  </Text>
+                  <Text color="$color12" fontSize={13}>
+                    222222
+                  </Text>
+                </XStack>
+                <XStack alignItems="center" gap="$3">
+                  <CustomIcon name="eye" size={16} color="#888" />
+                  <Text color="$color10" fontSize={13}>
+                    عدد المشاهدات:
+                  </Text>
+                  <Text color="$color12" fontSize={13}>
+                    0
+                  </Text>
+                </XStack>
+
+                <Button
+                  size="$2"
+                  textProps={{
+                    fontSize: 10,
+                    fontWeight: '500',
+                  }}
+                >
+                  المزيد من الاحصائيات
+                </Button>
+              </YStack>
+            </YStack>
+          )}
+          <Separator borderColor="$color4" borderWidth={0.25} />
           {/* Similar Announcements */}
           {similarAnnouncements.length > 0 && (
             <YStack gap="$2" marginTop={16}>
-              <Text fontWeight="bold" fontSize={16} textAlign="left">
-                إعلانات مشابهة
-              </Text>
+              <XStack alignItems="center" justifyContent="space-between" marginBottom={8}>
+                <Text fontWeight="bold" fontSize={16} textAlign="left">
+                  إعلانات مشابهة
+                </Text>
+                <TouchableOpacity onPress={() => router.push('/app/announcements')} style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Text fontSize={13} color="$color12" marginLeft={4}>
+                    تصفح المزيد
+                  </Text>
+                  <ChevronLeft size={16} color="$color12"/>
+                </TouchableOpacity>
+              </XStack>
               <FlatList
                 data={similarAnnouncements}
                 horizontal
@@ -329,7 +432,7 @@ export const AnnouncementDetailsScreen = () => {
                     <YStack
                       backgroundColor="$color2"
                       borderRadius={12}
-                      padding={8}
+                     
                       gap={6}
                     >
                       <Image
@@ -340,21 +443,26 @@ export const AnnouncementDetailsScreen = () => {
                         style={{ width: '100%', height: 90, borderRadius: 8 }}
                         contentFit="cover"
                       />
+                      <YStack
+                       backgroundColor="$color2"
+                       borderRadius={12}
+                       padding={8}
+                       gap={6}>
                       <Text
                         fontWeight="bold"
-                        fontSize={14}
+                        fontSize={10}
                         numberOfLines={1}
-                        textAlign="right"
+                        textAlign="left"
                       >
                         {item.title}
                       </Text>
                       <XStack alignItems="center" gap={4}>
-                        <CustomIcon name="user" size={12} color="#888" />
+                      <UserAvatar user={item?.user} size={10} />
                         <Text color="#888" fontSize={12}>
                           {item.user?.name}
                         </Text>
                       </XStack>
-                      <XStack alignItems="center" gap={4}>
+                      <XStack alignItems="center" gap={8}>
                         <Text fontWeight="bold" fontSize={14}>
                           {item.price || '0'}
                         </Text>
@@ -364,6 +472,8 @@ export const AnnouncementDetailsScreen = () => {
                           color="#888"
                         />
                       </XStack>
+                      </YStack>
+                   
                     </YStack>
                   </TouchableOpacity>
                 )}
@@ -372,13 +482,6 @@ export const AnnouncementDetailsScreen = () => {
           )}
         </YStack>
       </ScrollView>
-      {/* ActionSheet for edit/delete */}
-      <ActionSheet
-        snapPoints={[33, 25]}
-        ref={actionSheetManagerRef}
-        title={t('common:settings')}
-        actions={actionSheetActions}
-      />
     </ScreenLayout>
   );
 };

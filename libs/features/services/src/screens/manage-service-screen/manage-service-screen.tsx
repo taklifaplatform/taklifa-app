@@ -75,7 +75,7 @@ export function ManageServiceScreen(props: ManageServiceScreenProps) {
       })
       toast.show(t('common:company-updated-successfully'));
       form.reset();
-      router.replace(`/app/stores`);
+      router.replace(`/app/announcement`);
 
       console.log('onSuccess::')
     },

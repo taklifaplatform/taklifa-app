@@ -17,6 +17,7 @@ import Call from './icons/call.svg';
 import Car from './icons/car.svg'; 
 import Category from './icons/category.svg'; 
 import Chat from './icons/chat.svg'; 
+import CheckCircle from './icons/check-circle.svg'; 
 import Chronic from './icons/chronic.svg'; 
 import Client from './icons/client.svg'; 
 import Comment from './icons/comment.svg'; 
@@ -24,12 +25,15 @@ import CompanyCars from './icons/company-cars.svg';
 import CompanyShipping from './icons/company-shipping.svg'; 
 import Company from './icons/company.svg'; 
 import ContactCalendar from './icons/contact-calendar.svg'; 
+import Delete from './icons/delete.svg'; 
 import DimensionBox from './icons/dimension-box.svg'; 
 import Document from './icons/document.svg'; 
+import Edit from './icons/edit.svg'; 
 import EmptyChat from './icons/empty-chat.svg'; 
 import EmptyData from './icons/empty-data.svg'; 
 import EmptyFolder from './icons/empty-folder.svg'; 
 import EmptyNotification from './icons/empty-notification.svg'; 
+import Eye from './icons/eye.svg'; 
 import Facebook from './icons/facebook.svg'; 
 import FindTrack from './icons/find-track.svg'; 
 import Flip from './icons/flip.svg'; 
@@ -37,6 +41,7 @@ import Followed from './icons/followed.svg';
 import Garage from './icons/garage.svg'; 
 import GooglePlay from './icons/google-play.svg'; 
 import HalfStar from './icons/half-star.svg'; 
+import Hash from './icons/hash.svg'; 
 import HomeInfo from './icons/home-info.svg'; 
 import Home from './icons/home.svg'; 
 import Instagram from './icons/instagram.svg'; 
@@ -109,6 +114,7 @@ export {
   Car,
   Category,
   Chat,
+  CheckCircle,
   Chronic,
   Client,
   Comment,
@@ -116,12 +122,15 @@ export {
   CompanyShipping,
   Company,
   ContactCalendar,
+  Delete,
   DimensionBox,
   Document,
+  Edit,
   EmptyChat,
   EmptyData,
   EmptyFolder,
   EmptyNotification,
+  Eye,
   Facebook,
   FindTrack,
   Flip,
@@ -129,6 +138,7 @@ export {
   Garage,
   GooglePlay,
   HalfStar,
+  Hash,
   HomeInfo,
   Home,
   Instagram,
