@@ -111,7 +111,7 @@ export const ManageVehicleScreen: React.FC = () => {
         queryKey: ['CompanyVehiclesService.list', user?.active_company?.id],
       });
       queryClient.invalidateQueries({
-        queryKey: ['VehiclesService.fetchAllVehicles', user?.active_role?.id, user?.active_company?.id],
+        queryKey: ['VehiclesService.fetchAllVehicles', user?.id],
       });
       // refresh after 5 seconds
       queryClient.invalidateQueries({

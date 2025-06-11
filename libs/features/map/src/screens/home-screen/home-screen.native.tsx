@@ -2,7 +2,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useIsFocused } from '@react-navigation/native';
 import { List, Map, X } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
-import { CompaniesService, CompanyTransformer, DriverTransformer, DriversService, LocationService } from '@zix/api';
+import { CompaniesService, CompanyTransformer, DriverTransformer, DriversService, LocationService, VehiclesService } from '@zix/api';
 import { CompanyCard, UserCard } from '@zix/features/users';
 import { USER_ROLES, useAuth, useMixpanel } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
@@ -18,7 +18,7 @@ import { Dimensions, Keyboard, Platform, SectionList } from 'react-native';
 import MapView, { Region } from 'react-native-maps';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useRouter } from 'solito/router';
-import { Button, H4, Spinner, View, XStack, YStack } from 'tamagui';
+import { Button, H4, Spinner, View, XStack, YStack, Text } from 'tamagui';
 import MapFilters from '../../components/map-filters/map-filters';
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
@@ -52,6 +52,40 @@ export function HomeScreen() {
   })
   const [showMap, setShowMap] = useState(true);
   const [search, setSearch] = useState<string>();
+
+  const { data: vehiclesData } = useQuery({
+    queryFn: () =>
+      VehiclesService.fetchAllVehicles({
+        search
+      }),
+    enabled: user?.active_role?.name === USER_ROLES.solo_driver,
+    queryKey: ['VehiclesService.fetchAllVehicles', user?.id, `-${search}`,],
+  });
+
+  const shouldShowAddVehicleWarning = useMemo(() => {
+    return user?.active_role?.name === USER_ROLES.solo_driver && !vehiclesData?.data?.length;
+  }, [user, vehiclesData]);
+  const renderAddVehicleWarning = () => {
+    if (!shouldShowAddVehicleWarning) return null;
+    return (
+      <View padding='$3' backgroundColor='#FF3B30' gap="$2">
+        <XStack justifyContent='space-between' alignItems='center'>
+          <Text flex={1} color="#FFFFFF" fontSize="$2" textAlign="left" fontWeight="bold">
+            {t('common:add-vehicle-warning', 'يرجى تسجيل المركبه لاضافتها على الخريطة هنا')}
+          </Text>
+          <Button
+            size="$2"
+            backgroundColor="#FFFFFF"
+            onPress={() => router.push('/app/company/vehicles/create')}
+          >
+            <Text color="#FF3B30" fontSize="$4" fontWeight="bold">
+              {t('common:add-vehicle', 'إضافة مركبة')}
+            </Text>
+          </Button>
+        </XStack>
+      </View>
+    )
+  }
 
   const [currentRegion, setCurrentRegion] = useState<Region>({
     "latitude": 24.608423604325434,
@@ -376,6 +410,7 @@ export function HomeScreen() {
     <ScreenLayout>
       <YStack flex={1}>
         <AppHeaderSection search={search} setSearch={setSearch} MaterialIcons={MaterialIcons} />
+        {renderAddVehicleWarning()}
         <YStack flex={1} position='relative'>
           <MapSection
             showMap={showMap}
