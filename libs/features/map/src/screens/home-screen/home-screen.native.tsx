@@ -2,7 +2,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useIsFocused } from '@react-navigation/native';
 import { List, Map, X } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
-import { CompaniesService, CompanyTransformer, DriverTransformer, DriversService, LocationService } from '@zix/api';
+import { AnalyticsService, CompaniesService, CompanyTransformer, DriverTransformer, DriversService, LocationService } from '@zix/api';
 import { CompanyCard, UserCard } from '@zix/features/users';
 import { USER_ROLES, useAuth, useMixpanel } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
@@ -266,6 +266,15 @@ export function HomeScreen() {
 
   // const [selectedDriver, setSelectedDriver] = useState<DriverTransformer>();
   function onMarkerPress(driver: DriverTransformer, index: number) {
+    AnalyticsService
+      .storeUserAnalytic({
+        user: driver.id?.toString() || '',
+        requestBody: {
+          action_type: 'map_view',
+        }
+      }).then((res) => {
+        console.log('Map view analytic stored', res)
+      })
     setSelectedDriver(driver);
     onAnimateToDriver(driver);
     setDriversList(getWindowedDrivers(drivers, driver, currentRegion));

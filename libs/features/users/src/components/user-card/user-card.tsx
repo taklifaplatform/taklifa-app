@@ -1,4 +1,4 @@
-import { DriverTransformer } from '@zix/api';
+import { AnalyticsService, DriverTransformer } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { UserAvatar } from '@zix/ui/common';
 import { ZixMediasListWidget } from '@zix/ui/widgets';
@@ -32,6 +32,13 @@ export const UserCard: React.FC<UserCardProps> = React.memo(({
   }, [user?.companies]);
 
   function onPress() {
+    AnalyticsService
+      .storeUserAnalytic({
+        user: user.id?.toString() || '',
+        requestBody: {
+          action_type: 'profile_view',
+        }
+      })
     router.push(`/app/users/${user.id}`);
   }
 

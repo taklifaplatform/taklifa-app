@@ -1,7 +1,7 @@
 import { IconProps } from '@tamagui/helpers-icon';
 import { Phone } from '@tamagui/lucide-icons';
 import { useMutation } from '@tanstack/react-query';
-import { ChatService, DriverTransformer } from '@zix/api';
+import { AnalyticsService, ChatService, DriverTransformer } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { ZixButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
@@ -14,12 +14,14 @@ export type UserContactActionsProps = ThemeableStackProps & {
   user: DriverTransformer;
   actionButtonSize?: SizeTokens;
   onServiceRequestPress?: () => void;
+  onContractPressAnalytic?: (type: 'call' | 'whatsapp') => void;
 };
 
 export const UserContactActions: React.FC<UserContactActionsProps> = ({
   user,
   actionButtonSize = '$2.5',
   onServiceRequestPress,
+  onContractPressAnalytic,
   ...props
 }) => {
   const { user: authUser, isLoggedIn, getUrlPrefix, isServiceProvider } = useAuth()
@@ -32,7 +34,20 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
     scaleIcon: 1.2
   }
 
+  function trackContractPress(type: 'call' | 'whatsapp') {
+    if (onContractPressAnalytic) {
+      onContractPressAnalytic(type)
+    } else {
+      AnalyticsService.storeUserAnalytic({
+        user: user.id?.toString() || '',
+        requestBody: {
+          action_type: 'call_press',
+        }
+      })
+    }
+  }
   function onCallPress() {
+    trackContractPress('call')
     const phoneNumber = user.phone_number
     Linking.openURL(`tel:${phoneNumber.includes('+') ? phoneNumber : `+${phoneNumber}`}`);
   }
@@ -50,6 +65,7 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
   }
 
   function _onWhatsappPress() {
+    trackContractPress('whatsapp')
     const phoneNumber = user.phone_number
     Linking.openURL(`https://wa.me/${phoneNumber.includes('+') ? phoneNumber : `+${phoneNumber}`}`);
   }
