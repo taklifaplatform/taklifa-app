@@ -12,6 +12,7 @@ import {
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
+  AnalyticsService,
   AnnouncementCategoryTransformer,
   AnnouncementService,
   AnnouncementTransformer,
@@ -184,7 +185,21 @@ const AnnouncementItem = memo(
     const router = useRouter();
     return (
       <TouchableOpacity
-        onPress={() => router.push(`/app/announcements/${item.id}`)}
+        onPress={() => {
+          // AnalyticsService.storeAnnouncementAnalytic({
+          //   requestBody: {
+          //     announcement: item.id,
+          //     user_id: user?.id,
+          //     company_id: item?.user?.company_id,
+          //     type: 'view',
+          //     created_at: new Date().toISOString(),
+          //     updated_at: new Date().toISOString(),
+          //     deleted_at: null,
+          //   }
+          // })
+
+          router.push(`/app/announcements/${item.id}`)
+        }}
       >
         <XStack
           theme={user?.id === item?.user?.id ? 'accent' : undefined}
