@@ -234,7 +234,7 @@ export const SettingsScreen = () => {
           <Paragraph fontSize="$1" paddingVertical="$1" theme="alt2">
             <Text fontWeight="bold">{t('common:version-number')}:</Text> {Application.nativeApplicationVersion} ({Application.nativeBuildVersion})
             {'\n'}
-            <Text fontWeight="bold">{t('common:version-identifier')}:</Text> {Updates.updateId ?? 'main'}
+            <Text fontWeight="bold">{t('common:version-identifier')}:</Text> {Updates.updateId?.substring(0, 8) ?? '-'} ({Updates.channel ?? '-'})
             {'\n'}
             <Text fontWeight="bold">{t('common:version-date')}:</Text> {moment(Updates.createdAt ?? new Date()).format('YYYY-MM-DD HH:mm:ss')}
             {/* v1.2.4 (EF-103-2) */}

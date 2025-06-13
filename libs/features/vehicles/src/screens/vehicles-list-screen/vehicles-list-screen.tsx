@@ -31,7 +31,7 @@ export const VehiclesListScreen: React.FC<VehiclesListScreenProps> = ({
         search
       }),
 
-    queryKey: ['VehiclesService.fetchAllVehicles', user?.active_role?.id, user?.active_company?.id, `-${search}`,],
+    queryKey: ['VehiclesService.fetchAllVehicles', user?.id, `-${search}`,],
   });
 
   const renderHorizonTabs = () => (
