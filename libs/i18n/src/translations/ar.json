@@ -630,7 +630,10 @@
     "announcement-city": "المدينة // أدخل المدينة الخاصة بالإعلان",
     "announcement-year-model": "سنة موديل المركبة // أدخل سنة موديل المركبة الخاصة بالإعلان",
     "announcement-category": "الفئة // أختر نوع الإعلان",
-    "announcement-images": "الصور // قم بتحميل الصور"
+    "announcement-images": "الصور // قم بتحميل الصور",
+    "delete-announcement": "حذف الإعلان",
+    "edit-announcement": "تعديل الإعلان",
+    "announcement-status": "حالة الإعلان"
   },
   "job": {
     "job-title": "احصل على أفضل الوظائف المضمونة والمستقلة",

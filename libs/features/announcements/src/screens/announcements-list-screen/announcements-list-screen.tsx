@@ -5,7 +5,11 @@ import {
   PlusCircle,
   Search,
   Trash2,
+  Calendar,
+  ArrowDown,
+  ChevronDown,
 } from '@tamagui/lucide-icons';
+import { Check as CheckIcon } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
@@ -33,10 +37,20 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useRouter } from 'solito/router';
-import { Button, H4, Text, Theme, View, XStack, YStack } from 'tamagui';
+import {
+  Button,
+  H4,
+  Text,
+  Theme,
+  View,
+  XStack,
+  YStack,
+  Checkbox,
+} from 'tamagui';
 import { Image } from 'expo-image';
 import moment from 'moment';
 import { useFlatListQuery } from '@zix/utils';
+import { ZixDialog } from '@zix/ui/common';
 
 export interface AnnouncementsListScreenProps {
   showHeader: boolean;
@@ -150,7 +164,7 @@ const SubCategoryList = memo(
             backgroundColor={'$color3'}
             borderRadius={10}
           >
-            <CustomIcon name={item.icon} size={10} />
+            <CustomIcon name={item?.icon} size={10} />
             <Text>{item.name}</Text>
           </ZixButton>
         )}
@@ -187,7 +201,29 @@ const AnnouncementItem = memo(
           alignItems="center"
         >
           {/* //image */}
-          <XStack>
+          <YStack gap={2}>
+            {user?.id === item?.user?.id && (
+              <Button
+                width={55}
+                size={16}
+                textProps={{
+                  fontSize: 8,
+                  color: '$color12',
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  marginTop: -2,
+                }}
+                icon={
+                  <CustomIcon name="advertisement" size={10} color="$color12" />
+                }
+                borderRadius={10}
+                position="absolute"
+                top={-20}
+                right={25}
+              >
+                اعلاناتي
+              </Button>
+            )}
             {item?.images?.length ? (
               <Image
                 source={{ uri: item?.images[0]?.url }}
@@ -210,11 +246,11 @@ const AnnouncementItem = memo(
                   alignItems="center"
                   justifyContent="center"
                 >
-                  <CustomIcon name="logo" size={75} color="$color2" />
+                  <CustomIcon name="image-blank" size={90} color="$color2" />
                 </View>
               </Theme>
             )}
-          </XStack>
+          </YStack>
           <YStack
             flex={1}
             justifyContent="space-between"
@@ -292,28 +328,6 @@ const AnnouncementItem = memo(
               </Button>
             </XStack>
           </YStack>
-
-          {/* <YStack>
-          <XStack gap="$4" alignItems='center'>
-            {!!item?.user?.phone_number && <Button
-              flex={0.1}
-              backgroundColor='$gray7'
-              icon={() => <CustomIcon name="call" color='$color12' size={'$1'} />}
-              onPress={() => onContactPress(item)}
-            />}
-            {user?.id === item?.user?.id && <Button
-              iconAfter={<MoreHorizontal />}
-              onPress={() => onMorePress(item)}
-            />}
-          </XStack>
-        </YStack> */}
-          {/* <YStack gap="$4" paddingHorizontal="$4">
-        {
-            !!item?.description && (
-              <Text numberOfLines={3}>{item?.description || ''}</Text>
-            )
-          }
-      </YStack> */}
         </XStack>
       </TouchableOpacity>
     );
@@ -348,6 +362,7 @@ const SearchCatFilters = memo(
           selectedSubCategory={selectedSubCategory}
           onSelect={onSelectSubCategory}
         />
+        {/* //تصفية حسب: */}
       </YStack>
     </Theme>
   ),
@@ -371,29 +386,95 @@ export const AnnouncementsListScreen: React.FC<
     useState<AnnouncementCategoryTransformer>();
   const [selectedSubCategory, setSelectedSubCategory] =
     useState<AnnouncementCategoryTransformer>();
+  const [sortSheetOpen, setSortSheetOpen] = useState(false);
+  const [sortType, setSortType] = useState<
+    'date_desc' | 'date_asc' | 'price_desc' | 'price_asc'
+  >('date_desc');
+  const [priceSheetOpen, setPriceSheetOpen] = useState(false);
+  const [dateSheetOpen, setDateSheetOpen] = useState(false);
+  const [yearSheetOpen, setYearSheetOpen] = useState(false);
+  const [selectedYears, setSelectedYears] = useState<string[]>([]);
+
+  const { data: announcementsDataRaw, ...announcementsQuery } =
+    useFlatListQuery({
+      initialPageParam: 1,
+      queryFn: ({ pageParam }: { pageParam: number }) =>
+        AnnouncementService.listAnnouncements({
+          perPage: 20,
+          page: pageParam || 1,
+          search: search,
+          categoryId: selectedCategory?.id,
+          subCategoryId: selectedSubCategory?.id,
+          ...(selectedYears.length > 0 ? { years: selectedYears } : {}),
+        }),
+      queryKey: [
+        'AnnouncementService.listAnnouncements',
+        search,
+        selectedCategory?.id,
+        selectedSubCategory?.id,
+        sortType,
+        selectedYears.join(','),
+      ],
+    });
+
+  // Liste des années générée dynamiquement à partir des annonces
+  const YEARS = useMemo(() => {
+    const arr = Array.isArray(announcementsDataRaw)
+      ? announcementsDataRaw
+      : announcementsDataRaw?.data || [];
+    const yearsSet = new Set<string>();
+    arr.forEach((item: any) => {
+      const year = item.metadata?.model_year || (item.created_at ? new Date(item.created_at).getFullYear() : undefined);
+      if (year) yearsSet.add(String(year));
+    });
+    // Ajoute les années fixes si absentes
+    ['2025', '2024', '2023', '2022', '2020', '2019', '2000'].forEach(y => yearsSet.add(y));
+    const yearsArr = Array.from(yearsSet);
+    if (yearsArr.length === 0) yearsArr.push(String(new Date().getFullYear()));
+    return yearsArr.sort((a, b) => Number(b) - Number(a));
+  }, [announcementsDataRaw]);
 
   const { data: categoriesData } = useQuery({
     queryFn: () => AnnouncementService.listAnnouncementCategories({}),
     queryKey: ['AnnouncementService.listAnnouncementCategories'],
   });
 
-  const { data: announcementsData, ...announcementsQuery } = useFlatListQuery({
-    initialPageParam: 1,
-    queryFn: ({ pageParam }: { pageParam: number }) =>
-      AnnouncementService.listAnnouncements({
-        perPage: 20,
-        page: pageParam || 1,
-        search: search,
-        categoryId: selectedCategory?.id,
-        subCategoryId: selectedSubCategory?.id,
-      }),
-    queryKey: [
-      'AnnouncementService.listAnnouncements',
-      search,
-      selectedCategory?.id,
-      selectedSubCategory?.id,
-    ],
-  });
+  // Tri côté client
+  const announcementsData = useMemo(() => {
+    if (!announcementsDataRaw) return [];
+    let arr = Array.isArray(announcementsDataRaw)
+      ? announcementsDataRaw
+      : announcementsDataRaw?.data || [];
+    // Filtrage par années sélectionnées
+    if (selectedYears.length > 0) {
+      arr = arr.filter((item: any) =>
+        selectedYears.includes(
+          String(item.metadata?.model_year || (item.created_at ? new Date(item.created_at).getFullYear() : ''))
+        )
+      );
+    }
+    if (sortType === 'price_desc') {
+      return [...arr].sort(
+        (a, b) => (Number(b.price) || 0) - (Number(a.price) || 0),
+      );
+    }
+    if (sortType === 'price_asc') {
+      return [...arr].sort(
+        (a, b) => (Number(a.price) || 0) - (Number(b.price) || 0),
+      );
+    }
+    if (sortType === 'date_asc') {
+      return [...arr].sort(
+        (a, b) =>
+          new Date(a.created_at).getTime() - new Date(b.created_at).getTime(),
+      );
+    }
+    // date_desc par défaut
+    return [...arr].sort(
+      (a, b) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+    );
+  }, [announcementsDataRaw, sortType, selectedYears]);
 
   // on Contact button press
   const onContactPress = useCallback((item: AnnouncementTransformer) => {
@@ -481,6 +562,116 @@ export const AnnouncementsListScreen: React.FC<
     [selectedItem],
   );
 
+  const filters = [
+    {
+      key: 'price',
+      label: 'السعر',
+      options: [
+        {
+          label: 'الأغلى أولاً',
+          value: 'price_desc',
+          name: (
+            <XStack
+              alignItems="center"
+              justifyContent="space-between"
+              width="100%"
+              theme="accent"
+            >
+              <Text fontWeight={sortType === 'price_desc' ? 'bold' : 'normal'}>
+                الأغلى أولاً
+              </Text>
+              <CustomIcon
+                name="radio_button_checked"
+                color={sortType === 'price_desc' ? '$color9' : 'gray'}
+              />
+            </XStack>
+          ),
+          onPress: () => {
+            setSortType('price_desc');
+            setPriceSheetOpen(false);
+          },
+        },
+        {
+          label: 'الأرخص أولاً',
+          value: 'price_asc',
+          name: (
+            <XStack
+              alignItems="center"
+              justifyContent="space-between"
+              width="100%"
+              theme="accent"
+            >
+              <Text fontWeight={sortType === 'price_asc' ? 'bold' : 'normal'}>
+                الأرخص أولاً
+              </Text>
+              <CustomIcon
+                name="radio_button_checked"
+                color={sortType === 'price_asc' ? '$color9' : 'gray'}
+              />
+            </XStack>
+          ),
+          onPress: () => {
+            setSortType('price_asc');
+            setPriceSheetOpen(false);
+          },
+        },
+      ],
+    },
+    {
+      key: 'date',
+      label: 'الوقت',
+      options: [
+        {
+          label: 'الأحدث أولاً',
+          value: 'date_desc',
+          name: (
+            <XStack
+              alignItems="center"
+              justifyContent="space-between"
+              width="100%"
+              theme="accent"
+            >
+              <Text fontWeight={sortType === 'date_desc' ? 'bold' : 'normal'}>
+                الأحدث أولاً
+              </Text>
+              <CustomIcon
+                name="radio_button_checked"
+                color={sortType === 'date_desc' ? '$color9' : 'gray'}
+              />
+            </XStack>
+          ),
+          onPress: () => {
+            setSortType('date_desc');
+            setDateSheetOpen(false);
+          },
+        },
+        {
+          label: 'الأقدم أولاً',
+          value: 'date_asc',
+          name: (
+            <XStack
+              alignItems="center"
+              justifyContent="space-between"
+              width="100%"
+            >
+              <Text fontWeight={sortType === 'date_asc' ? 'bold' : 'normal'}>
+                الأقدم أولاً
+              </Text>
+              <CustomIcon
+                name="radio_button_checked"
+                color={sortType === 'date_asc' ? '$color9' : 'gray'}
+              />
+            </XStack>
+          ),
+          onPress: () => {
+            setSortType('date_asc');
+            setDateSheetOpen(false);
+          },
+        },
+      ],
+    },
+  ];
+
   return (
     <View flex={1}>
       <AppHeader
@@ -508,6 +699,7 @@ export const AnnouncementsListScreen: React.FC<
             >
               {t('common:add-announcement')}
             </ZixButton>
+
             <Search size="$1" color="$color12" />
           </XStack>
         )}
@@ -520,6 +712,130 @@ export const AnnouncementsListScreen: React.FC<
           subCategories={subCategories}
           selectedSubCategory={selectedSubCategory}
           onSelectSubCategory={handleSelectSubCategory}
+        />
+        <XStack
+          justifyContent="flex-start"
+          alignItems="center"
+          gap="$2"
+          padding="$4"
+        >
+          <Text>تصفية حسب:</Text>
+          {/* Bouton tri année */}
+          <ZixDialog
+            title="السنة"
+            open={yearSheetOpen}
+            onOpenChange={setYearSheetOpen}
+            contentPadding="$4"
+            trigger={
+              <Button
+                iconAfter={<ChevronDown size="$1" color="$color12" />}
+                size="$2"
+                backgroundColor="$color1"
+                borderRadius={8}
+                borderWidth={1}
+                borderColor="$color3"
+                textProps={{
+                  fontSize: 13,
+                  color: '$color12',
+                  fontWeight: 'bold',
+                }}
+                onPress={() => setYearSheetOpen(true)}
+              >
+                {selectedYears.length > 0
+                  ? `${selectedYears.length} سنة`
+                  : 'السنة'}
+              </Button>
+            }
+          >
+            <YStack>
+              {YEARS.map((y) => (
+                <XStack
+                  key={y}
+                  alignItems="center"
+                  justifyContent="space-between"
+                  gap="$2"
+                  paddingVertical="$2"
+                  cursor="pointer"
+                  onPress={() => {
+                    setSelectedYears((prev) =>
+                      prev.includes(y)
+                        ? prev.filter((val) => val !== y)
+                        : [...prev, y],
+                    );
+                  }}
+                >
+                  <Text
+                    fontWeight={selectedYears.includes(y) ? 'bold' : 'normal'}
+                  >
+                    {y}
+                  </Text>
+                  <Checkbox checked={selectedYears.includes(y)} id={y}>
+                    <Checkbox.Indicator>
+                      <CheckIcon size="$1" />
+                    </Checkbox.Indicator>
+                  </Checkbox>
+                </XStack>
+              ))}
+            </YStack>
+          </ZixDialog>
+          {/* Bouton tri prix */}
+          <Button
+            iconAfter={<ChevronDown size="$1" color="$color12" />}
+            size="$2"
+            backgroundColor="$color1"
+            borderRadius={8}
+            onPress={() => setPriceSheetOpen(true)}
+            borderWidth={1}
+            borderColor="$color3"
+            textProps={{
+              fontSize: 13,
+              color: '$color12',
+              fontWeight: 'bold',
+            }}
+          >
+            {sortType === 'price_desc'
+              ? 'الأغلى أولاً'
+              : sortType === 'price_asc'
+                ? 'الأرخص أولاً'
+                : 'السعر'}
+          </Button>
+          {/* Bouton tri date */}
+          <Button
+            iconAfter={<ChevronDown size="$1" color="$color12" />}
+            size="$2"
+            backgroundColor="$color1"
+            borderRadius={8}
+            onPress={() => setDateSheetOpen(true)}
+            borderWidth={1}
+            borderColor="$color3"
+            textProps={{
+              fontSize: 13,
+              color: '$color12',
+              fontWeight: 'bold',
+            }}
+          >
+            {sortType === 'date_desc'
+              ? 'الأحدث أولاً'
+              : sortType === 'date_asc'
+                ? 'الأقدم أولاً'
+                : 'الوقت'}
+          </Button>
+        </XStack>
+        {/* ActionSheet pour le prix */}
+        <ActionSheet
+          open={priceSheetOpen}
+          onOpenChange={setPriceSheetOpen}
+          snapPoints={[33, 25]}
+          title={t('ترتيب حسب السعر')}
+          actions={filters.find((f) => f.key === 'price')?.options || []}
+        />
+        {/* ActionSheet pour la date */}
+        <ActionSheet
+          open={dateSheetOpen}
+          onOpenChange={setDateSheetOpen}
+          snapPoints={[33, 25]}
+          title={t('ترتيب حسب الوقت')}
+          actions={filters.find((f) => f.key === 'date')?.options || []}
         />
         <FlatList
           showsVerticalScrollIndicator={false}
@@ -551,6 +867,7 @@ export const AnnouncementsListScreen: React.FC<
             </View>
           }
         />
+
         {/* <XStack padding="$4" position='absolute' bottom={0} left={0} right={0}>
           <ZixButton
             theme='accent'

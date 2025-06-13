@@ -84,7 +84,7 @@ export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
       }
 
       form.reset();
-      router.replace(`/app/announcement`);
+      router.replace(`/app/announcements`);
       console.log('onSuccess::')
     },
     onError(error: any) {

@@ -1,6 +1,7 @@
 export const iconNames = [
   'about',
   'account',
+  'advertisement',
   'alert_cercle',
   'alert',
   'app_store',
@@ -43,6 +44,7 @@ export const iconNames = [
   'hash',
   'home_info',
   'home',
+  'image_blank',
   'instagram',
   'job',
   'list',

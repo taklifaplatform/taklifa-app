@@ -2,6 +2,7 @@
 // @ts-nocheck
 import About from './icons/about.svg'; 
 import Account from './icons/account.svg'; 
+import Advertisement from './icons/advertisement.svg'; 
 import AlertCercle from './icons/alert-cercle.svg'; 
 import Alert from './icons/alert.svg'; 
 import AppStore from './icons/app-store.svg'; 
@@ -44,6 +45,7 @@ import HalfStar from './icons/half-star.svg';
 import Hash from './icons/hash.svg'; 
 import HomeInfo from './icons/home-info.svg'; 
 import Home from './icons/home.svg'; 
+import ImageBlank from './icons/image-blank.svg'; 
 import Instagram from './icons/instagram.svg'; 
 import Job from './icons/job.svg'; 
 import List from './icons/list.svg'; 
@@ -99,6 +101,7 @@ import WhatsappContact from './icons/whatsapp-contact.svg';
 export {
   About,
   Account,
+  Advertisement,
   AlertCercle,
   Alert,
   AppStore,
@@ -141,6 +144,7 @@ export {
   Hash,
   HomeInfo,
   Home,
+  ImageBlank,
   Instagram,
   Job,
   List,
