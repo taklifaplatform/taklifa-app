@@ -6,17 +6,24 @@ import {
   useState,
 } from 'react';
 import { Dimensions } from 'react-native';
-import { Button, Sheet, Text, ThemeableStackProps, XStack, YStack } from 'tamagui';
+import {
+  Button,
+  Sheet,
+  Text,
+  ThemeableStackProps,
+  XStack,
+  YStack,
+} from 'tamagui';
 
 export type IAction = ThemeableStackProps & {
   name: string;
   disabled?: boolean;
   icon?:
-  | JSX.Element
-  | FunctionComponent<{ color?: string; size?: number }>
-  | null;
+    | JSX.Element
+    | FunctionComponent<{ color?: string; size?: number }>
+    | null;
   onPress?: () => void;
-}
+};
 
 export interface ActionSheetProps extends React.ComponentProps<typeof Sheet> {
   title?: string;
@@ -38,7 +45,9 @@ export const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
     const SCREEN_HEIGHT = Dimensions.get('window').height - ACTION_HEIGHT;
     const ACTION_HEIGHT_POINTS =
       Number(SCREEN_HEIGHT / (ACTION_HEIGHT * 2)) + (props.modal ? 0 : 1);
-    const SNAP_POINTS = [Math.min(ACTION_HEIGHT_POINTS * (props.actions.length + 1), 90)];
+    const SNAP_POINTS = [
+      Math.min(ACTION_HEIGHT_POINTS * (props.actions.length + 1), 90),
+    ];
 
     useImperativeHandle(ref, () => ({
       open: () => setIsOpen(true),
@@ -61,7 +70,7 @@ export const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
           exitStyle={{ opacity: 0 }}
         />
 
-        <Sheet.Frame backgroundColor='$color1'>
+        <Sheet.Frame backgroundColor="$color1">
           <YStack flex={1}>
             <XStack
               justifyContent="space-between"
@@ -82,19 +91,18 @@ export const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
                 unstyled
                 key={index}
                 padding="$4"
-                flexDirection='row'
+                flexDirection="row"
                 justifyContent="flex-start"
-                alignItems='center'
-                borderBottomWidth='$1'
-                borderColor='$color4'
+                alignItems="center"
+                borderBottomWidth="$1"
+                borderColor="$color4"
                 pressStyle={{
                   backgroundColor: '$color7',
                 }}
                 hoverStyle={{
                   backgroundColor: '$color7',
                 }}
-                color='$color12'
-
+                color="$color12"
                 {...prop}
               >
                 {name}
@@ -105,7 +113,7 @@ export const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
         </Sheet.Frame>
       </Sheet>
     );
-  }
+  },
 );
 
 ActionSheet.displayName = 'ActionSheet';

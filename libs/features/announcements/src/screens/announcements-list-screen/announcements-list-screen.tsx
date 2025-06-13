@@ -1,15 +1,12 @@
 import {
-  MoreHorizontal,
+  CheckSquare,
+  ChevronDown,
   Pencil,
-  Plus,
   PlusCircle,
   Search,
+  Square,
   Trash2,
-  Calendar,
-  ArrowDown,
-  ChevronDown,
 } from '@tamagui/lucide-icons';
-import { Check as CheckIcon } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
@@ -23,11 +20,14 @@ import {
   ActionSheetRef,
   UserAvatar,
   ZixButton,
+  ZixDialog,
 } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader } from '@zix/ui/layouts';
-import { ZixMediasListWidget } from '@zix/ui/widgets';
+import { useFlatListQuery } from '@zix/utils';
+import { Image } from 'expo-image';
 import { t } from 'i18next';
+import moment from 'moment';
 import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import {
   Alert,
@@ -40,17 +40,13 @@ import { useRouter } from 'solito/router';
 import {
   Button,
   H4,
+  ScrollView,
   Text,
   Theme,
   View,
   XStack,
   YStack,
-  Checkbox,
 } from 'tamagui';
-import { Image } from 'expo-image';
-import moment from 'moment';
-import { useFlatListQuery } from '@zix/utils';
-import { ZixDialog } from '@zix/ui/common';
 
 export interface AnnouncementsListScreenProps {
   showHeader: boolean;
@@ -378,6 +374,8 @@ export const AnnouncementsListScreen: React.FC<
   const router = useRouter();
   const { getUrlPrefix, isLoggedIn } = useAuth();
   const actionSheetManagerRef = useRef<ActionSheetRef>(null);
+  const priceActionSheetManagerRef = useRef<ActionSheetRef>(null);
+  const dateActionSheetManagerRef = useRef<ActionSheetRef>(null);
   const toast = useToastController();
   const [search, setSearch] = useState('');
   const [selectedItem, setSelectedItem] =
@@ -386,95 +384,45 @@ export const AnnouncementsListScreen: React.FC<
     useState<AnnouncementCategoryTransformer>();
   const [selectedSubCategory, setSelectedSubCategory] =
     useState<AnnouncementCategoryTransformer>();
-  const [sortSheetOpen, setSortSheetOpen] = useState(false);
-  const [sortType, setSortType] = useState<
-    'date_desc' | 'date_asc' | 'price_desc' | 'price_asc'
-  >('date_desc');
-  const [priceSheetOpen, setPriceSheetOpen] = useState(false);
-  const [dateSheetOpen, setDateSheetOpen] = useState(false);
+
+  // sort direction
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
+  // sort by
+  const [sortBy, setSortBy] = useState<'created_at' | 'price'>('created_at');
   const [yearSheetOpen, setYearSheetOpen] = useState(false);
   const [selectedYears, setSelectedYears] = useState<string[]>([]);
 
-  const { data: announcementsDataRaw, ...announcementsQuery } =
-    useFlatListQuery({
-      initialPageParam: 1,
-      queryFn: ({ pageParam }: { pageParam: number }) =>
-        AnnouncementService.listAnnouncements({
-          perPage: 20,
-          page: pageParam || 1,
-          search: search,
-          categoryId: selectedCategory?.id,
-          subCategoryId: selectedSubCategory?.id,
-          ...(selectedYears.length > 0 ? { years: selectedYears } : {}),
-        }),
-      queryKey: [
-        'AnnouncementService.listAnnouncements',
-        search,
-        selectedCategory?.id,
-        selectedSubCategory?.id,
-        sortType,
-        selectedYears.join(','),
-      ],
-    });
+  const { data: announcementsData, ...announcementsQuery } = useFlatListQuery({
+    initialPageParam: 1,
+    queryFn: ({ pageParam }: { pageParam: number }) =>
+      AnnouncementService.listAnnouncements({
+        perPage: 20,
+        page: pageParam || 1,
+        search: search,
+        categoryId: selectedCategory?.id,
+        subCategoryId: selectedSubCategory?.id,
+        years: selectedYears.length > 0 ? selectedYears?.join(',') : undefined,
+        sortBy: sortBy,
+        sortDirection: sortDirection,
+      }),
+    queryKey: [
+      'AnnouncementService.listAnnouncements',
+      search,
+      selectedCategory?.id,
+      selectedSubCategory?.id,
+      sortBy,
+      sortDirection,
+      selectedYears.join(','),
+    ],
+  });
 
   // Liste des années générée dynamiquement à partir des annonces
-  const YEARS = useMemo(() => {
-    const arr = Array.isArray(announcementsDataRaw)
-      ? announcementsDataRaw
-      : announcementsDataRaw?.data || [];
-    const yearsSet = new Set<string>();
-    arr.forEach((item: any) => {
-      const year = item.metadata?.model_year || (item.created_at ? new Date(item.created_at).getFullYear() : undefined);
-      if (year) yearsSet.add(String(year));
-    });
-    // Ajoute les années fixes si absentes
-    ['2025', '2024', '2023', '2022', '2020', '2019', '2000'].forEach(y => yearsSet.add(y));
-    const yearsArr = Array.from(yearsSet);
-    if (yearsArr.length === 0) yearsArr.push(String(new Date().getFullYear()));
-    return yearsArr.sort((a, b) => Number(b) - Number(a));
-  }, [announcementsDataRaw]);
+  const YEARS = Array.from({ length: 20 }, (_, i) => String(2025 - i));
 
   const { data: categoriesData } = useQuery({
     queryFn: () => AnnouncementService.listAnnouncementCategories({}),
     queryKey: ['AnnouncementService.listAnnouncementCategories'],
   });
-
-  // Tri côté client
-  const announcementsData = useMemo(() => {
-    if (!announcementsDataRaw) return [];
-    let arr = Array.isArray(announcementsDataRaw)
-      ? announcementsDataRaw
-      : announcementsDataRaw?.data || [];
-    // Filtrage par années sélectionnées
-    if (selectedYears.length > 0) {
-      arr = arr.filter((item: any) =>
-        selectedYears.includes(
-          String(item.metadata?.model_year || (item.created_at ? new Date(item.created_at).getFullYear() : ''))
-        )
-      );
-    }
-    if (sortType === 'price_desc') {
-      return [...arr].sort(
-        (a, b) => (Number(b.price) || 0) - (Number(a.price) || 0),
-      );
-    }
-    if (sortType === 'price_asc') {
-      return [...arr].sort(
-        (a, b) => (Number(a.price) || 0) - (Number(b.price) || 0),
-      );
-    }
-    if (sortType === 'date_asc') {
-      return [...arr].sort(
-        (a, b) =>
-          new Date(a.created_at).getTime() - new Date(b.created_at).getTime(),
-      );
-    }
-    // date_desc par défaut
-    return [...arr].sort(
-      (a, b) =>
-        new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
-    );
-  }, [announcementsDataRaw, sortType, selectedYears]);
 
   // on Contact button press
   const onContactPress = useCallback((item: AnnouncementTransformer) => {
@@ -577,18 +525,29 @@ export const AnnouncementsListScreen: React.FC<
               width="100%"
               theme="accent"
             >
-              <Text fontWeight={sortType === 'price_desc' ? 'bold' : 'normal'}>
+              <Text
+                fontWeight={
+                  sortBy === 'price' && sortDirection === 'desc'
+                    ? 'bold'
+                    : 'normal'
+                }
+              >
                 الأغلى أولاً
               </Text>
               <CustomIcon
                 name="radio_button_checked"
-                color={sortType === 'price_desc' ? '$color9' : 'gray'}
+                color={
+                  sortBy === 'price' && sortDirection === 'desc'
+                    ? '$color9'
+                    : 'gray'
+                }
               />
             </XStack>
           ),
           onPress: () => {
-            setSortType('price_desc');
-            setPriceSheetOpen(false);
+            setSortBy('price');
+            setSortDirection('desc');
+            priceActionSheetManagerRef.current?.close();
           },
         },
         {
@@ -601,18 +560,29 @@ export const AnnouncementsListScreen: React.FC<
               width="100%"
               theme="accent"
             >
-              <Text fontWeight={sortType === 'price_asc' ? 'bold' : 'normal'}>
+              <Text
+                fontWeight={
+                  sortBy === 'price' && sortDirection === 'asc'
+                    ? 'bold'
+                    : 'normal'
+                }
+              >
                 الأرخص أولاً
               </Text>
               <CustomIcon
                 name="radio_button_checked"
-                color={sortType === 'price_asc' ? '$color9' : 'gray'}
+                color={
+                  sortBy === 'price' && sortDirection === 'asc'
+                    ? '$color9'
+                    : 'gray'
+                }
               />
             </XStack>
           ),
           onPress: () => {
-            setSortType('price_asc');
-            setPriceSheetOpen(false);
+            setSortBy('price');
+            setSortDirection('asc');
+            priceActionSheetManagerRef.current?.close();
           },
         },
       ],
@@ -631,18 +601,29 @@ export const AnnouncementsListScreen: React.FC<
               width="100%"
               theme="accent"
             >
-              <Text fontWeight={sortType === 'date_desc' ? 'bold' : 'normal'}>
+              <Text
+                fontWeight={
+                  sortBy === 'created_at' && sortDirection === 'desc'
+                    ? 'bold'
+                    : 'normal'
+                }
+              >
                 الأحدث أولاً
               </Text>
               <CustomIcon
                 name="radio_button_checked"
-                color={sortType === 'date_desc' ? '$color9' : 'gray'}
+                color={
+                  sortBy === 'created_at' && sortDirection === 'desc'
+                    ? '$color9'
+                    : 'gray'
+                }
               />
             </XStack>
           ),
           onPress: () => {
-            setSortType('date_desc');
-            setDateSheetOpen(false);
+            setSortBy('created_at');
+            setSortDirection('desc');
+            dateActionSheetManagerRef.current?.close();
           },
         },
         {
@@ -653,19 +634,31 @@ export const AnnouncementsListScreen: React.FC<
               alignItems="center"
               justifyContent="space-between"
               width="100%"
+              theme="accent"
             >
-              <Text fontWeight={sortType === 'date_asc' ? 'bold' : 'normal'}>
+              <Text
+                fontWeight={
+                  sortBy === 'created_at' && sortDirection === 'asc'
+                    ? 'bold'
+                    : 'normal'
+                }
+              >
                 الأقدم أولاً
               </Text>
               <CustomIcon
                 name="radio_button_checked"
-                color={sortType === 'date_asc' ? '$color9' : 'gray'}
+                color={
+                  sortBy === 'created_at' && sortDirection === 'asc'
+                    ? '$color9'
+                    : 'gray'
+                }
               />
             </XStack>
           ),
           onPress: () => {
-            setSortType('date_asc');
-            setDateSheetOpen(false);
+            setSortBy('created_at');
+            setSortDirection('asc');
+            dateActionSheetManagerRef.current?.close();
           },
         },
       ],
@@ -725,7 +718,7 @@ export const AnnouncementsListScreen: React.FC<
             title="السنة"
             open={yearSheetOpen}
             onOpenChange={setYearSheetOpen}
-            contentPadding="$4"
+            // contentPadding="$4"
             trigger={
               <Button
                 iconAfter={<ChevronDown size="$1" color="$color12" />}
@@ -747,15 +740,10 @@ export const AnnouncementsListScreen: React.FC<
               </Button>
             }
           >
-            <YStack>
+            <ScrollView flex={1}>
               {YEARS.map((y) => (
-                <XStack
+                <TouchableOpacity
                   key={y}
-                  alignItems="center"
-                  justifyContent="space-between"
-                  gap="$2"
-                  paddingVertical="$2"
-                  cursor="pointer"
                   onPress={() => {
                     setSelectedYears((prev) =>
                       prev.includes(y)
@@ -764,19 +752,27 @@ export const AnnouncementsListScreen: React.FC<
                     );
                   }}
                 >
-                  <Text
-                    fontWeight={selectedYears.includes(y) ? 'bold' : 'normal'}
+                  <XStack
+                    alignItems="center"
+                    justifyContent="space-between"
+                    gap="$2"
+                    paddingHorizontal="$4"
+                    paddingVertical="$2"
                   >
-                    {y}
-                  </Text>
-                  <Checkbox checked={selectedYears.includes(y)} id={y}>
-                    <Checkbox.Indicator>
-                      <CheckIcon size="$1" />
-                    </Checkbox.Indicator>
-                  </Checkbox>
-                </XStack>
+                    <Text
+                      fontWeight={selectedYears.includes(y) ? 'bold' : 'normal'}
+                    >
+                      {y}
+                    </Text>
+                    {selectedYears.includes(y) ? (
+                      <CheckSquare size="$1" color="$color12" />
+                    ) : (
+                      <Square size="$1" color="$color12" />
+                    )}
+                  </XStack>
+                </TouchableOpacity>
               ))}
-            </YStack>
+            </ScrollView>
           </ZixDialog>
           {/* Bouton tri prix */}
           <Button
@@ -784,7 +780,7 @@ export const AnnouncementsListScreen: React.FC<
             size="$2"
             backgroundColor="$color1"
             borderRadius={8}
-            onPress={() => setPriceSheetOpen(true)}
+            onPress={() => priceActionSheetManagerRef.current?.open()}
             borderWidth={1}
             borderColor="$color3"
             textProps={{
@@ -793,9 +789,9 @@ export const AnnouncementsListScreen: React.FC<
               fontWeight: 'bold',
             }}
           >
-            {sortType === 'price_desc'
+            {sortBy === 'price' && sortDirection === 'desc'
               ? 'الأغلى أولاً'
-              : sortType === 'price_asc'
+              : sortBy === 'price' && sortDirection === 'asc'
                 ? 'الأرخص أولاً'
                 : 'السعر'}
           </Button>
@@ -805,7 +801,7 @@ export const AnnouncementsListScreen: React.FC<
             size="$2"
             backgroundColor="$color1"
             borderRadius={8}
-            onPress={() => setDateSheetOpen(true)}
+            onPress={() => dateActionSheetManagerRef.current?.open()}
             borderWidth={1}
             borderColor="$color3"
             textProps={{
@@ -814,25 +810,23 @@ export const AnnouncementsListScreen: React.FC<
               fontWeight: 'bold',
             }}
           >
-            {sortType === 'date_desc'
+            {sortBy === 'created_at' && sortDirection === 'desc'
               ? 'الأحدث أولاً'
-              : sortType === 'date_asc'
+              : sortBy === 'created_at' && sortDirection === 'asc'
                 ? 'الأقدم أولاً'
                 : 'الوقت'}
           </Button>
         </XStack>
         {/* ActionSheet pour le prix */}
         <ActionSheet
-          open={priceSheetOpen}
-          onOpenChange={setPriceSheetOpen}
+          ref={priceActionSheetManagerRef}
           snapPoints={[33, 25]}
           title={t('ترتيب حسب السعر')}
           actions={filters.find((f) => f.key === 'price')?.options || []}
         />
         {/* ActionSheet pour la date */}
         <ActionSheet
-          open={dateSheetOpen}
-          onOpenChange={setDateSheetOpen}
+          ref={dateActionSheetManagerRef}
           snapPoints={[33, 25]}
           title={t('ترتيب حسب الوقت')}
           actions={filters.find((f) => f.key === 'date')?.options || []}
