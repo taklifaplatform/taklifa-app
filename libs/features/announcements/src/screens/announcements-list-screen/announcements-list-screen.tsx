@@ -186,17 +186,14 @@ const AnnouncementItem = memo(
     return (
       <TouchableOpacity
         onPress={() => {
-          // AnalyticsService.storeAnnouncementAnalytic({
-          //   requestBody: {
-          //     announcement: item.id,
-          //     user_id: user?.id,
-          //     company_id: item?.user?.company_id,
-          //     type: 'view',
-          //     created_at: new Date().toISOString(),
-          //     updated_at: new Date().toISOString(),
-          //     deleted_at: null,
-          //   }
-          // })
+          AnalyticsService.storeAnnouncementAnalytic({
+            announcement: item.id?.toString() || '',
+            requestBody: {
+              action_type: 'view',
+            }
+          }).then((res) => {
+            console.log('Announcement analytic stored', res)
+          })
 
           router.push(`/app/announcements/${item.id}`)
         }}

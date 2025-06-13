@@ -1,7 +1,8 @@
 import { ChevronDown, ChevronLeft, ChevronUp } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { AnnouncementService, AnnouncementTransformer } from '@zix/api';
+import { AnalyticsService, AnnouncementService, AnnouncementTransformer } from '@zix/api';
+import { UserContactActions } from '@zix/features/users';
 import { useAuth, useMixpanel } from '@zix/services/auth';
 import { UserAvatar, ZixDialog } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
@@ -18,12 +19,10 @@ import {
   H4,
   Separator,
   Text,
-  Theme,
   View,
   XStack,
-  YStack,
+  YStack
 } from 'tamagui';
-import { UserContactActions } from '@zix/features/users';
 
 const { useParam } = createParam<{ announcement?: string }>();
 
@@ -44,7 +43,6 @@ type DescriptionSectionProps = {
 
 type SimilarAnnouncementsProps = {
   announcements: AnnouncementTransformer[];
-  onAnnouncementPress: (id: string | number) => void;
 };
 
 type OwnerActionsProps = {
@@ -212,8 +210,8 @@ const DescriptionSection = ({ description }: DescriptionSectionProps) => {
 
 const SimilarAnnouncements = ({
   announcements,
-  onAnnouncementPress,
 }: SimilarAnnouncementsProps) => {
+  const router = useRouter();
   if (announcements.length === 0) return null;
 
   return (
@@ -227,7 +225,7 @@ const SimilarAnnouncements = ({
           إعلانات مشابهة
         </Text>
         <TouchableOpacity
-          onPress={() => onAnnouncementPress('')}
+          onPress={() => router.push('/app/announcements')}
           style={{ flexDirection: 'row', alignItems: 'center' }}
         >
           <Text fontSize={13} color="$color12" marginLeft={4}>
@@ -245,7 +243,17 @@ const SimilarAnnouncements = ({
         renderItem={({ item }) => (
           <TouchableOpacity
             style={{ width: 180 }}
-            onPress={() => onAnnouncementPress(item.id || '')}
+            onPress={() => {
+              AnalyticsService.storeAnnouncementAnalytic({
+                announcement: item.id?.toString() || '',
+                requestBody: {
+                  action_type: 'view',
+                }
+              }).then((res) => {
+                console.log('Announcement analytic stored', res)
+              })
+              router.push(`/app/announcements/${item.id}`)
+            }}
             key={item.id}
           >
             <YStack backgroundColor="$color2" borderRadius={12} gap={6}>
@@ -529,11 +537,6 @@ export const AnnouncementDetailsScreen = () => {
           <Separator borderColor="$color4" borderWidth={0.25} />
           <SimilarAnnouncements
             announcements={similarAnnouncements}
-            onAnnouncementPress={(id) =>
-              router.push(
-                id ? `/app/announcements/${id}` : '/app/announcements',
-              )
-            }
           />
         </YStack>
       </ScrollView>
