@@ -1,12 +1,12 @@
 
-import { MediaAvatar, ZixAdvancedFilters } from '@zix/ui/common';
+import { ZixAdvancedFilters } from '@zix/ui/common';
+import { Image } from 'expo-image';
 import { useMemo } from 'react';
 
-import { CarFront } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { VehicleModelService } from '@zix/api';
-import { CustomIcon } from '@zix/ui/icons';
 import { USER_ROLES } from '@zix/services/auth';
+import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 
 export type MapFiltersProps = {
@@ -46,15 +46,21 @@ export const MapFilters: React.FC<MapFiltersProps> = ({
           label: item.name ?? '',
           value: item.id ?? '',
           activeValue: (
-            <MediaAvatar
-              media={item.map_icon}
-              size='$2'
+            <Image
+              source={{
+                uri: item.map_icon?.original_url || item.map_icon?.url || '',
+              }}
+              style={{ width: 30, height: 30 }}
+              contentFit='contain'
             />
           ),
           icon: (
-            <MediaAvatar
-              media={item.map_icon}
-              size='$2'
+            <Image
+              source={{
+                uri: item.map_icon?.original_url || item.map_icon?.url || '',
+              }}
+              style={{ width: 30, height: 30 }}
+              contentFit='contain'
             />
           )
         })) || []
