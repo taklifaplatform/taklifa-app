@@ -2,6 +2,7 @@
 // @ts-nocheck
 import About from './icons/about.svg'; 
 import Account from './icons/account.svg'; 
+import Advertisement from './icons/advertisement.svg'; 
 import AlertCercle from './icons/alert-cercle.svg'; 
 import Alert from './icons/alert.svg'; 
 import AppStore from './icons/app-store.svg'; 
@@ -17,6 +18,7 @@ import Call from './icons/call.svg';
 import Car from './icons/car.svg'; 
 import Category from './icons/category.svg'; 
 import Chat from './icons/chat.svg'; 
+import CheckCircle from './icons/check-circle.svg'; 
 import Chronic from './icons/chronic.svg'; 
 import Client from './icons/client.svg'; 
 import Comment from './icons/comment.svg'; 
@@ -24,12 +26,15 @@ import CompanyCars from './icons/company-cars.svg';
 import CompanyShipping from './icons/company-shipping.svg'; 
 import Company from './icons/company.svg'; 
 import ContactCalendar from './icons/contact-calendar.svg'; 
+import Delete from './icons/delete.svg'; 
 import DimensionBox from './icons/dimension-box.svg'; 
 import Document from './icons/document.svg'; 
+import Edit from './icons/edit.svg'; 
 import EmptyChat from './icons/empty-chat.svg'; 
 import EmptyData from './icons/empty-data.svg'; 
 import EmptyFolder from './icons/empty-folder.svg'; 
 import EmptyNotification from './icons/empty-notification.svg'; 
+import Eye from './icons/eye.svg'; 
 import Facebook from './icons/facebook.svg'; 
 import FindTrack from './icons/find-track.svg'; 
 import Flip from './icons/flip.svg'; 
@@ -37,8 +42,10 @@ import Followed from './icons/followed.svg';
 import Garage from './icons/garage.svg'; 
 import GooglePlay from './icons/google-play.svg'; 
 import HalfStar from './icons/half-star.svg'; 
+import Hash from './icons/hash.svg'; 
 import HomeInfo from './icons/home-info.svg'; 
 import Home from './icons/home.svg'; 
+import ImageBlank from './icons/image-blank.svg'; 
 import Instagram from './icons/instagram.svg'; 
 import Job from './icons/job.svg'; 
 import List from './icons/list.svg'; 
@@ -61,6 +68,7 @@ import Other from './icons/other.svg';
 import PaperMoney from './icons/paper-money.svg'; 
 import RadioButtonChecked from './icons/radio-button-checked.svg'; 
 import Ringing from './icons/ringing.svg'; 
+import SaudiRiyalSymbol from './icons/saudi-riyal-symbol.svg'; 
 import SearchTrack from './icons/search-track.svg'; 
 import Search from './icons/search.svg'; 
 import Secure from './icons/secure.svg'; 
@@ -93,6 +101,7 @@ import WhatsappContact from './icons/whatsapp-contact.svg';
 export {
   About,
   Account,
+  Advertisement,
   AlertCercle,
   Alert,
   AppStore,
@@ -108,6 +117,7 @@ export {
   Car,
   Category,
   Chat,
+  CheckCircle,
   Chronic,
   Client,
   Comment,
@@ -115,12 +125,15 @@ export {
   CompanyShipping,
   Company,
   ContactCalendar,
+  Delete,
   DimensionBox,
   Document,
+  Edit,
   EmptyChat,
   EmptyData,
   EmptyFolder,
   EmptyNotification,
+  Eye,
   Facebook,
   FindTrack,
   Flip,
@@ -128,8 +141,10 @@ export {
   Garage,
   GooglePlay,
   HalfStar,
+  Hash,
   HomeInfo,
   Home,
+  ImageBlank,
   Instagram,
   Job,
   List,
@@ -152,6 +167,7 @@ export {
   PaperMoney,
   RadioButtonChecked,
   Ringing,
+  SaudiRiyalSymbol,
   SearchTrack,
   Search,
   Secure,

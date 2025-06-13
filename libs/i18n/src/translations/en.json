@@ -580,7 +580,10 @@
     "announcement-city": "Announcement City // Enter announcement city",
     "announcement-year-model": "Announcement Year Model // Enter announcement year model",
     "announcement-category": "Announcement Category",
-    "announcement-images": "Announcement Images // Upload announcement images"
+    "announcement-images": "Announcement Images // Upload announcement images",
+    "delete-announcement": "Delete Announcement",
+    "edit-announcement": "Edit Announcement",
+    "announcement-status": "Announcement Status"
   },
   "invite": {
     "company-member": "Hello, {{name}}! \n\n{{company}} has invited you to join their team. \n\nTo accept the invitation, click the link below: \n\n{{link}} \n\n"
@@ -674,6 +677,7 @@
     "from_location": "From location",
     "to_location": "To location",
     "see-more": "See more",
+    "more-information": "More Information",
     "conducting-interviews": "Conducting interviews",
     "invitation-have-been-sent": "Invitation have been sent",
     "send-invitation": "Send invitation",

@@ -106,7 +106,7 @@ export function TeamMemberCard({
         <YStack gap="$2">
           <Text fontWeight="bold">{user.name ?? `@${user.username}`}</Text>
           <Text color={'$color10'} fontWeight={'$10'}>
-            Last activity: {moment(user.latest_activity).fromNow()}
+            {t('app:common.last-seen')}: {moment(user.latest_activity).fromNow()}
           </Text>
         </YStack>
       </XStack>

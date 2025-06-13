@@ -47,6 +47,9 @@ export const ZixButton = forwardRef(function ZixButtonFunc(
     // />
     <CustomButton
       {...props}
+      pressStyle={{
+        opacity: 0.7,
+      }}
       ref={ref as TamaguiComponent}
       // onPress={() => href ? router.push(href) : null}
       {...(display

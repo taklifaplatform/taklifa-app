@@ -20,6 +20,9 @@ export class AnnouncementService {
         search,
         categoryId,
         subCategoryId,
+        sortBy,
+        sortDirection,
+        years,
     }: {
         /**
          * Page number
@@ -32,6 +35,9 @@ export class AnnouncementService {
         search?: string,
         categoryId?: any,
         subCategoryId?: any,
+        sortBy?: 'created_at' | 'price',
+        sortDirection?: 'asc' | 'desc',
+        years?: string,
     }): CancelablePromise<{
         data?: Array<AnnouncementTransformer>;
         links?: {
@@ -64,6 +70,9 @@ export class AnnouncementService {
                 'search': search,
                 'category_id': categoryId,
                 'sub_category_id': subCategoryId,
+                'sort_by': sortBy,
+                'sort_direction': sortDirection,
+                'years': years,
             },
         });
     }
