@@ -1,4 +1,5 @@
 import {
+  ArrowDownZA,
   CheckSquare,
   ChevronDown,
   Pencil,
@@ -6,6 +7,7 @@ import {
   Search,
   Square,
   Trash2,
+  User,
 } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -101,13 +103,13 @@ const CategoryList = memo(
           borderWidth={1}
           borderColor={
             selectedCategory?.id === item.id ||
-            (!selectedCategory && item.id === 'all')
+              (!selectedCategory && item.id === 'all')
               ? '$color9'
               : '$color8'
           }
           backgroundColor={
             selectedCategory?.id === item.id ||
-            (!selectedCategory && item.id === 'all')
+              (!selectedCategory && item.id === 'all')
               ? '$color8'
               : '$color2'
           }
@@ -141,13 +143,13 @@ const SubCategoryList = memo(
             style={{ marginRight: 10 }}
             variant={
               selectedSubCategory?.id === item.id ||
-              (!selectedSubCategory && item.id === 'all')
+                (!selectedSubCategory && item.id === 'all')
                 ? undefined
                 : 'outlined'
             }
             borderColor={
               selectedSubCategory?.id === item.id ||
-              (!selectedSubCategory && item.id === 'all')
+                (!selectedSubCategory && item.id === 'all')
                 ? '$color1'
                 : '$color8'
             }
@@ -270,7 +272,7 @@ const AnnouncementItem = memo(
               theme={showHeader ? 'accent' : undefined}
             >
               <XStack flex={1} alignItems="center" gap="$1">
-                <UserAvatar user={item?.user} size={10} />
+                <User size={10} fill="#FECA16" color="#FECA16" />
                 <Text color="$color12" fontSize={10} numberOfLines={1}>
                   {item?.user?.name || item?.user?.username}
                 </Text>
@@ -710,7 +712,7 @@ export const AnnouncementsListScreen: React.FC<
           gap="$2"
           padding="$4"
         >
-          <Text>تصفية حسب:</Text>
+          <ArrowDownZA size={18} />
           {/* Bouton tri année */}
           <ZixDialog
             title="السنة"
