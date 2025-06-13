@@ -139,7 +139,18 @@ const InfoCard = ({ announcement }: InfoCardProps) => (
         </Text>
       </XStack>
     </XStack>
-    <UserContactActions user={announcement.user!} />
+    <UserContactActions
+      user={announcement.user!}
+      onContractPressAnalytic={() => {
+        AnalyticsService.storeAnnouncementAnalytic({
+          announcement: announcement.id?.toString() || '',
+          requestBody: {
+            action_type: 'call_press',
+          }
+        })
+      }}
+
+    />
   </YStack>
 );
 
