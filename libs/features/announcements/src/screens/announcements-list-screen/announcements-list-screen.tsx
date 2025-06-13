@@ -527,10 +527,10 @@ export const AnnouncementsListScreen: React.FC<
   const filters = [
     {
       key: 'price',
-      label: 'السعر',
+      label: t('common:price'),
       options: [
         {
-          label: 'الأغلى أولاً',
+          label: t('common:newest-first'),
           value: 'price_desc',
           name: (
             <XStack
@@ -545,14 +545,19 @@ export const AnnouncementsListScreen: React.FC<
                     ? 'bold'
                     : 'normal'
                 }
+                color={
+                  sortBy === 'price' && sortDirection === 'desc'
+                    ? '$color12'
+                    : '$color12'
+                }
               >
-                الأغلى أولاً
+                {t('common:newest-first')}
               </Text>
               <CustomIcon
                 name="radio_button_checked"
                 color={
                   sortBy === 'price' && sortDirection === 'desc'
-                    ? '$color9'
+                    ? '$color8'
                     : 'gray'
                 }
               />
@@ -565,7 +570,7 @@ export const AnnouncementsListScreen: React.FC<
           },
         },
         {
-          label: 'الأرخص أولاً',
+          label: t('common:oldest-first'),
           value: 'price_asc',
           name: (
             <XStack
@@ -580,14 +585,19 @@ export const AnnouncementsListScreen: React.FC<
                     ? 'bold'
                     : 'normal'
                 }
+                color={
+                  sortBy === 'price' && sortDirection === 'asc'
+                    ? '$color12'
+                    : '$color12'
+                }
               >
-                الأرخص أولاً
+                {t('common:oldest-first')}
               </Text>
               <CustomIcon
                 name="radio_button_checked"
                 color={
                   sortBy === 'price' && sortDirection === 'asc'
-                    ? '$color9'
+                    ? '$color8'
                     : 'gray'
                 }
               />
@@ -603,10 +613,10 @@ export const AnnouncementsListScreen: React.FC<
     },
     {
       key: 'date',
-      label: 'الوقت',
+      label: t('common:time'),
       options: [
         {
-          label: 'الأحدث أولاً',
+          label: t('common:newest-first'),
           value: 'date_desc',
           name: (
             <XStack
@@ -621,8 +631,13 @@ export const AnnouncementsListScreen: React.FC<
                     ? 'bold'
                     : 'normal'
                 }
+                color={
+                  sortBy === 'created_at' && sortDirection === 'desc'
+                    ? '$color12'
+                    : '$color12'
+                }
               >
-                الأحدث أولاً
+                {t('common:newest-first')}
               </Text>
               <CustomIcon
                 name="radio_button_checked"
@@ -641,7 +656,7 @@ export const AnnouncementsListScreen: React.FC<
           },
         },
         {
-          label: 'الأقدم أولاً',
+          label: t('common:oldest-first'),
           value: 'date_asc',
           name: (
             <XStack
@@ -656,8 +671,13 @@ export const AnnouncementsListScreen: React.FC<
                     ? 'bold'
                     : 'normal'
                 }
+                color={
+                  sortBy === 'created_at' && sortDirection === 'asc'
+                    ? '$color12'
+                    : '$color12'
+                }
               >
-                الأقدم أولاً
+                {t('common:oldest-first')}
               </Text>
               <CustomIcon
                 name="radio_button_checked"
@@ -727,7 +747,7 @@ export const AnnouncementsListScreen: React.FC<
           <ArrowDownZA size={18} />
           {/* Bouton tri année */}
           <ZixDialog
-            title="السنة"
+            title={t('common:year')}
             open={yearSheetOpen}
             onOpenChange={setYearSheetOpen}
             // contentPadding="$4"
@@ -747,7 +767,7 @@ export const AnnouncementsListScreen: React.FC<
                 onPress={() => setYearSheetOpen(true)}
               >
                 {selectedYears.length > 0 ? `(${selectedYears.length})` : ''}
-                السنة
+                {t('common:year')}
               </Button>
             }
           >
@@ -823,10 +843,10 @@ export const AnnouncementsListScreen: React.FC<
             }}
           >
             {sortBy === 'price' && sortDirection === 'desc'
-              ? 'الأغلى أولاً'
+              ? t('common:newest-first')
               : sortBy === 'price' && sortDirection === 'asc'
-                ? 'الأرخص أولاً'
-                : 'السعر'}
+                ? t('common:oldest-first')
+                : t('common:price')}
           </Button>
           {/* Bouton tri date */}
           <Button
@@ -844,24 +864,26 @@ export const AnnouncementsListScreen: React.FC<
             }}
           >
             {sortBy === 'created_at' && sortDirection === 'desc'
-              ? 'الأحدث أولاً'
+              ? t('common:newest-first')
               : sortBy === 'created_at' && sortDirection === 'asc'
-                ? 'الأقدم أولاً'
-                : 'الوقت'}
+                ? t('common:oldest-first')
+                : t('common:time')}
           </Button>
         </XStack>
         {/* ActionSheet pour le prix */}
         <ActionSheet
+          theme="accent"
           ref={priceActionSheetManagerRef}
           snapPoints={[33, 25]}
-          title={t('ترتيب حسب السعر')}
+          title={t('common:sort-by-price')}
           actions={filters.find((f) => f.key === 'price')?.options || []}
         />
         {/* ActionSheet pour la date */}
         <ActionSheet
+          theme="accent"
           ref={dateActionSheetManagerRef}
           snapPoints={[33, 25]}
-          title={t('ترتيب حسب الوقت')}
+          title={t('common:sort-by-time')}
           actions={filters.find((f) => f.key === 'date')?.options || []}
         />
         <FlatList

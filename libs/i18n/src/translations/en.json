@@ -479,7 +479,15 @@
     "permission-to-access-location-was-denied": "Permission to access location was denied",
     "please-open-app-settings-to-grant-permission": "Please open app settings to grant permission",
     "open-app-settings": "Open app settings",
-    "use-my-location": "Use my location"
+    "use-my-location": "Use my location",
+    "newest-first": "Newest First",
+    "oldest-first": "Oldest First",
+    "sort-by-price": "Sort by Price",
+    "sort-by-time": "Sort by Time",
+    "description-announcement": "Description",
+    "similar-announcements": "Similar Announcements",
+    "view-more": "View More",
+    "announcement-status": "Announcement Status"
   },
   "cookies-banner": {
     "section-1": {

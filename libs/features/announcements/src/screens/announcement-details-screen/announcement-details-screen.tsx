@@ -164,7 +164,7 @@ const DescriptionSection = ({ description }: DescriptionSectionProps) => {
       <TouchableOpacity onPress={() => setIsDescriptionOpen((v) => !v)}>
         <XStack alignItems="center" gap={8} justifyContent="space-between">
           <Text fontWeight="bold" fontSize={16} textAlign="left">
-            وصف الإعلان
+            {t('common:description-announcement')}
           </Text>
           {isDescriptionOpen ? (
             <ChevronUp size={18} color="#222" />
@@ -233,14 +233,14 @@ const SimilarAnnouncements = ({
         marginBottom={8}
       >
         <Text fontWeight="bold" fontSize={16} textAlign="left">
-          إعلانات مشابهة
+          {t('common:similar-announcements')}
         </Text>
         <TouchableOpacity
           onPress={() => router.push('/app/announcements')}
           style={{ flexDirection: 'row', alignItems: 'center' }}
         >
           <Text fontSize={13} color="$color12" marginLeft={4}>
-            تصفح المزيد
+            {t('common:view-more')}
           </Text>
           <ChevronLeft size={16} color="$color12" />
         </TouchableOpacity>
@@ -286,7 +286,6 @@ const SimilarAnnouncements = ({
                   <CustomIcon name="image-blank" size={90} color="$color2" />
                 </View>
               )}
-
               <YStack
                 backgroundColor="$color2"
                 borderRadius={12}
@@ -356,7 +355,7 @@ const OwnerActions = ({
       </Button>
       <XStack gap="$2">
         <ZixDialog
-          title="حالة الإعلان"
+          title={t('common:announcement-status')}
           open={statusSheetOpen}
           onOpenChange={setStatusSheetOpen}
           contentPadding="$4"
