@@ -739,7 +739,29 @@ export const AnnouncementsListScreen: React.FC<
               </Button>
             }
           >
+            <XStack
+              alignItems="center"
+              justifyContent="space-between"
+              paddingHorizontal="$4"
+              paddingVertical="$2"
+              borderBottomWidth={1}
+              borderBottomColor="$color3"
+            >
+              <ZixButton
+                size="$2"
+                theme="accent"
+                paddingHorizontal="$4"
+                disabled={selectedYears.length === 0}
+                onPress={() => {
+                  setYearSheetOpen(false)
+                  setSelectedYears([])
+                }}
+              >
+                {t('common:all')}
+              </ZixButton>
+            </XStack>
             <ScrollView flex={1}>
+
               {YEARS.map((y) => (
                 <TouchableOpacity
                   key={y}
