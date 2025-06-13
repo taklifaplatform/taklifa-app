@@ -3,24 +3,27 @@ import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AnnouncementService, AnnouncementTransformer } from '@zix/api';
 import { useAuth, useMixpanel } from '@zix/services/auth';
-import { ActionSheetRef, UserAvatar, ZixDialog } from '@zix/ui/common';
+import { UserAvatar, ZixDialog } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { Image } from 'expo-image';
 import { t } from 'i18next';
 import moment from 'moment';
-import { useCallback, useRef, useState } from 'react';
-import {
-  Alert,
-  Dimensions,
-  FlatList,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import { useCallback, useState } from 'react';
+import { Alert, FlatList, ScrollView, TouchableOpacity } from 'react-native';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
-import { Button, H4, Separator, Text, View, XStack, YStack } from 'tamagui';
-import { UserContactActions } from '../../../../users/src/components/user-contact-actions/user-contact-actions';
+import {
+  Button,
+  H4,
+  Separator,
+  Text,
+  Theme,
+  View,
+  XStack,
+  YStack,
+} from 'tamagui';
+import { UserContactActions } from '@zix/features/users';
 
 const { useParam } = createParam<{ announcement?: string }>();
 
@@ -53,7 +56,11 @@ type OwnerActionsProps = {
 };
 
 // Components
-const ImageCarousel = ({ images, selectedImageIndex, onImageSelect }: ImageCarouselProps) => {
+const ImageCarousel = ({
+  images,
+  selectedImageIndex,
+  onImageSelect,
+}: ImageCarouselProps) => {
   if (images.length === 0) return null;
 
   return (
@@ -81,7 +88,8 @@ const ImageCarousel = ({ images, selectedImageIndex, onImageSelect }: ImageCarou
                 height: 75,
                 borderRadius: 8,
                 borderWidth: selectedImageIndex === index ? 2 : 0,
-                borderColor: selectedImageIndex === index ? '#FF9325' : 'transparent',
+                borderColor:
+                  selectedImageIndex === index ? '#FF9325' : 'transparent',
               }}
               contentFit="cover"
             />
@@ -163,7 +171,7 @@ const DescriptionSection = ({ description }: DescriptionSectionProps) => {
           </Text>
         </YStack>
       )}
-      <YStack
+      {/* <YStack
         justifyContent="space-between"
         gap="$3"
         backgroundColor="$color2"
@@ -197,17 +205,24 @@ const DescriptionSection = ({ description }: DescriptionSectionProps) => {
         >
           المزيد من الاحصائيات
         </Button>
-      </YStack>
+      </YStack> */}
     </YStack>
   );
 };
 
-const SimilarAnnouncements = ({ announcements, onAnnouncementPress }: SimilarAnnouncementsProps) => {
+const SimilarAnnouncements = ({
+  announcements,
+  onAnnouncementPress,
+}: SimilarAnnouncementsProps) => {
   if (announcements.length === 0) return null;
 
   return (
     <YStack gap="$2" marginTop={16}>
-      <XStack alignItems="center" justifyContent="space-between" marginBottom={8}>
+      <XStack
+        alignItems="center"
+        justifyContent="space-between"
+        marginBottom={8}
+      >
         <Text fontWeight="bold" fontSize={16} textAlign="left">
           إعلانات مشابهة
         </Text>
@@ -231,17 +246,40 @@ const SimilarAnnouncements = ({ announcements, onAnnouncementPress }: SimilarAnn
           <TouchableOpacity
             style={{ width: 180 }}
             onPress={() => onAnnouncementPress(item.id || '')}
+            key={item.id}
           >
             <YStack backgroundColor="$color2" borderRadius={12} gap={6}>
-              <Image
-                source={{
-                  uri: Array.isArray(item.images) && item.images[0]?.url,
-                }}
-                style={{ width: '100%', height: 90, borderRadius: 8 }}
-                contentFit="cover"
-              />
-              <YStack backgroundColor="$color2" borderRadius={12} padding={8} gap={6}>
-                <Text fontWeight="bold" fontSize={10} numberOfLines={1} textAlign="left">
+              {item.images && item.images.length > 0 ? (
+                <Image
+                  source={{
+                    uri: Array.isArray(item.images) && item.images[0]?.url,
+                  }}
+                  style={{ width: '100%', height: 90, borderRadius: 8 }}
+                  contentFit="cover"
+                />
+              ) : (
+                <View
+                  style={{ width: '100%', height: 90, borderRadius: 8 }}
+                  overflow="hidden"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <CustomIcon name="image-blank" size={90} color="$color2" />
+                </View>
+              )}
+
+              <YStack
+                backgroundColor="$color2"
+                borderRadius={12}
+                padding={8}
+                gap={6}
+              >
+                <Text
+                  fontWeight="bold"
+                  fontSize={10}
+                  numberOfLines={1}
+                  textAlign="left"
+                >
                   {item.title}
                 </Text>
                 <XStack alignItems="center" gap={4}>
@@ -254,7 +292,11 @@ const SimilarAnnouncements = ({ announcements, onAnnouncementPress }: SimilarAnn
                   <Text fontWeight="bold" fontSize={14}>
                     {item.price || '0'}
                   </Text>
-                  <CustomIcon name="saudi-riyal-symbol" size={14} color="#888" />
+                  <CustomIcon
+                    name="saudi-riyal-symbol"
+                    size={14}
+                    color="#888"
+                  />
                 </XStack>
               </YStack>
             </YStack>
@@ -265,7 +307,13 @@ const SimilarAnnouncements = ({ announcements, onAnnouncementPress }: SimilarAnn
   );
 };
 
-const OwnerActions = ({ announcement, onDelete, onEdit, status, onStatusChange }: OwnerActionsProps) => {
+const OwnerActions = ({
+  announcement,
+  onDelete,
+  onEdit,
+  status,
+  onStatusChange,
+}: OwnerActionsProps) => {
   const [statusSheetOpen, setStatusSheetOpen] = useState(false);
   const STATUS_OPTIONS = [
     { value: 'active', label: 'شغال' },
@@ -312,7 +360,10 @@ const OwnerActions = ({ announcement, onDelete, onEdit, status, onStatusChange }
               }
             >
               {t('forms:announcement-status')}
-              <Text fontWeight="700" color={status === 'active' ? 'green' : 'red'}>
+              <Text
+                fontWeight="700"
+                color={status === 'active' ? 'green' : 'red'}
+              >
                 {STATUS_OPTIONS.find((opt) => opt.value === status)?.label}
               </Text>
             </Button>
@@ -478,7 +529,11 @@ export const AnnouncementDetailsScreen = () => {
           <Separator borderColor="$color4" borderWidth={0.25} />
           <SimilarAnnouncements
             announcements={similarAnnouncements}
-            onAnnouncementPress={(id) => router.push(id ? `/app/announcements/${id}` : '/app/announcements')}
+            onAnnouncementPress={(id) =>
+              router.push(
+                id ? `/app/announcements/${id}` : '/app/announcements',
+              )
+            }
           />
         </YStack>
       </ScrollView>

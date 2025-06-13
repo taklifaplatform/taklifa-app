@@ -675,9 +675,10 @@ export const AnnouncementsListScreen: React.FC<
           onChangeText: setSearch,
         }}
         headerRight={() => (
-          <XStack alignItems="center" gap="$2">
+          <Theme reset>
             <ZixButton
-              theme="accent"
+              minWidth={120}
+              themeInverse
               icon={<PlusCircle size="$1" color="$color12" />}
               onPress={() => {
                 if (isLoggedIn) {
@@ -686,15 +687,12 @@ export const AnnouncementsListScreen: React.FC<
                   router.push(`/auth/login`);
                 }
               }}
-              backgroundColor={'#FF9325'}
               size={'$2'}
-              textProps={{ fontSize: '$1', color: '$color12' }}
+              fontWeight="bold"
             >
               {t('common:add-announcement')}
             </ZixButton>
-
-            <Search size="$1" color="$color12" />
-          </XStack>
+          </Theme>
         )}
       />
       <YStack flex={1} paddingTop={15} position="relative">
@@ -734,9 +732,8 @@ export const AnnouncementsListScreen: React.FC<
                 }}
                 onPress={() => setYearSheetOpen(true)}
               >
-                {selectedYears.length > 0
-                  ? `${selectedYears.length} سنة`
-                  : 'السنة'}
+                {selectedYears.length > 0 ? `(${selectedYears.length})` : ''}
+                السنة
               </Button>
             }
           >

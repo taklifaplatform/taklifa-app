@@ -1,4 +1,3 @@
-
 export * from './components/user-info-row/user-info-row';
 
 export * from './components/user-profile/user-profile';
@@ -15,3 +14,4 @@ export * from './components/user-card/company-card';
 
 export * from './screens/user-profile-screen/user-profile-screen';
 
+export * from './components/user-contact-actions/user-contact-actions';
