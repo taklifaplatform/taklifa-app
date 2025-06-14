@@ -14,7 +14,7 @@ import { t } from 'i18next';
 import debounce from 'lodash/debounce';
 import type { FC } from 'react';
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
-import { Dimensions, Keyboard, Platform, SectionList } from 'react-native';
+import { Dimensions, Keyboard, Platform, SectionList, Alert, Linking } from 'react-native';
 import MapView, { Region, Circle } from 'react-native-maps';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useRouter } from 'solito/router';
@@ -457,6 +457,7 @@ export function HomeScreen() {
           <ActivateUrgencyModeButton
             mapRef={mapRef}
             driverLocation={driverLocation}
+            setDriverLocation={setDriverLocation}
             setShowUrgencyCircle={setShowUrgencyCircle}
             urgencyMode={urgencyMode}
             toggleUrgencyMode={toggleUrgencyMode}
@@ -754,6 +755,7 @@ interface ActivateUrgencyModeButtonProps {
   toggleUrgencyMode: () => void;
   mapRef: React.RefObject<MapView>;
   driverLocation: Location.LocationObjectCoords | null;
+  setDriverLocation: (location: Location.LocationObjectCoords | null) => void;
   setShowUrgencyCircle: (show: boolean) => void;
 }
 const ActivateUrgencyModeButton: FC<ActivateUrgencyModeButtonProps> = ({
@@ -761,35 +763,83 @@ const ActivateUrgencyModeButton: FC<ActivateUrgencyModeButtonProps> = ({
   toggleUrgencyMode,
   mapRef,
   driverLocation,
+  setDriverLocation,
   setShowUrgencyCircle,
 }) => {
   // Animation shared values
   const progress = useSharedValue(urgencyMode ? 1 : 0);
   const scale = useSharedValue(1);
 
+  const animateToLocation = (location: Location.LocationObjectCoords) => {
+    if (!mapRef?.current) return;
+    
+    if (Platform.OS === 'ios') {
+      mapRef.current.animateCamera({
+        center: {
+          latitude: location.latitude,
+          longitude: location.longitude,
+        },
+        altitude: 40000,
+        pitch: 0,
+        heading: 0,
+      }, { duration: 1000 });
+    } else {
+      mapRef.current.animateCamera({
+        center: {
+          latitude: location.latitude,
+          longitude: location.longitude,
+        },
+        zoom: 12,
+      }, { duration: 1000 });
+    }
+  };
+
+  const handleUrgencyModeToggle = async () => {
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert(
+          'تنبيه',
+          'يجب السماح للتطبيق بالوصول إلى موقعك لتفعيل وضع الطوارئ. يرجى تفعيل خدمة الموقع من إعدادات الجهاز.',
+          [
+            {
+              text: 'حسناً',
+              style: 'default',
+            },
+            {
+              text: 'فتح الإعدادات',
+              onPress: () => Linking.openSettings(),
+              style: 'default',
+            },
+          ]
+        );
+        return;
+      }
+      // If permission granted, get location and then toggle
+      const location = await Location.getCurrentPositionAsync({});
+      setDriverLocation(location.coords);
+      animateToLocation(location.coords);
+    } catch (error) {
+      Alert.alert(
+        'خطأ',
+        'حدث خطأ أثناء محاولة الوصول إلى موقعك. يرجى المحاولة مرة أخرى.',
+        [
+          {
+            text: 'حسناً',
+            style: 'default',
+          },
+        ]
+      );
+      return;
+    }
+    toggleUrgencyMode();
+  };
+
   useEffect(() => {
     progress.value = withTiming(urgencyMode ? 1 : 0, { duration: 500, easing: Easing.out(Easing.exp) });
     setShowUrgencyCircle(urgencyMode);
-    if (urgencyMode && driverLocation && mapRef?.current) {
-      if (Platform.OS === 'ios') {
-        mapRef.current.animateCamera({
-          center: {
-            latitude: driverLocation.latitude,
-            longitude: driverLocation.longitude,
-          },
-          altitude: 40000, // Very close zoom for Apple Maps
-          pitch: 0,
-          heading: 0,
-        }, { duration: 1000 });
-      } else {
-        mapRef.current.animateCamera({
-          center: {
-            latitude: driverLocation.latitude,
-            longitude: driverLocation.longitude,
-          },
-          zoom: 20, // Maximum zoom for Google Maps
-        }, { duration: 1000 });
-      }
+    if (urgencyMode && driverLocation) {
+      animateToLocation(driverLocation);
     }
   }, [urgencyMode]);
 
@@ -836,7 +886,7 @@ const ActivateUrgencyModeButton: FC<ActivateUrgencyModeButtonProps> = ({
   return (
     <Animated.View style={[{ position: 'absolute', bottom: 12, left: 16, borderRadius: 12, overflow: 'hidden' }, animatedStyle]}>
       <Pressable
-        onPress={toggleUrgencyMode}
+        onPress={handleUrgencyModeToggle}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 6 }}
