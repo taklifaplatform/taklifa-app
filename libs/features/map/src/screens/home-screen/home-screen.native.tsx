@@ -41,7 +41,7 @@ const initialCamera = {
 export function HomeScreen() {
   useMixpanel('Home Page view')
   const USER_CARD_WIDTH = width;
-  const USER_CARD_HEIGHT = Math.max(260, height / 4);
+  const USER_CARD_HEIGHT = Math.max(200, height / 4);
 
   const mapRef = useRef<MapView>(null);
   const carouselRef = useRef<ICarouselInstance>(null);
