@@ -87,6 +87,7 @@ import TikTok from './icons/tik-tok.svg';
 import TimePace from './icons/time-pace.svg'; 
 import Time from './icons/time.svg'; 
 import Touch_app from './icons/touch_app.svg'; 
+import Urgency from './icons/urgency.svg'; 
 import UserInfo from './icons/user-info.svg'; 
 import UserTypeCompany from './icons/user-type-company.svg'; 
 import UserTypeCustomer from './icons/user-type-customer.svg'; 
@@ -186,6 +187,7 @@ export {
   TimePace,
   Time,
   Touch_app,
+  Urgency,
   UserInfo,
   UserTypeCompany,
   UserTypeCustomer,

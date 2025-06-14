@@ -20,6 +20,8 @@ import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useRouter } from 'solito/router';
 import { Button, H4, Spinner, View, XStack, YStack, Text } from 'tamagui';
 import MapFilters from '../../components/map-filters/map-filters';
+import Animated, { useSharedValue, useAnimatedStyle, withTiming, interpolateColor, Easing } from 'react-native-reanimated';
+import { Pressable } from 'react-native';
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
 
@@ -450,6 +452,7 @@ export function HomeScreen() {
             MaterialIcons={MaterialIcons}
             showMap={showMap}
           />
+          <ActivateUrgencyModeButton />
           <CarouselSection
             showCarousel={showCarousel}
             driversList={driversList}
@@ -715,6 +718,87 @@ const CenterButton: FC<CenterButtonProps> = memo(function CenterButton({
     />
   );
 });
+
+// ActivateUrgencyModeButton
+interface ActivateUrgencyModeButtonProps {
+  urgencyMode: boolean;
+  toggleUrgencyMode: () => void;
+}
+const ActivateUrgencyModeButton: FC<ActivateUrgencyModeButtonProps> = () => {
+  const { urgencyMode, toggleUrgencyMode } = useAuth();
+  // Animation shared values
+  const progress = useSharedValue(urgencyMode ? 1 : 0);
+  const scale = useSharedValue(1);
+
+  // Animate progress when urgencyMode changes
+  React.useEffect(() => {
+    progress.value = withTiming(urgencyMode ? 1 : 0, { duration: 500, easing: Easing.out(Easing.exp) });
+  }, [urgencyMode]);
+
+  // Animated background color
+  const animatedStyle = useAnimatedStyle(() => ({
+    backgroundColor: interpolateColor(
+      progress.value,
+      [0, 1],
+      ['#FFF5F5', '#FF3B30'] // Outlined to filled
+    ),
+    borderColor: '#FF3B30',
+    borderWidth: 2,
+    transform: [{ scale: scale.value }],
+  }));
+
+  // Animated text color
+  const animatedTextStyle = useAnimatedStyle(() => ({
+    color: interpolateColor(
+      progress.value,
+      [0, 1],
+      ['#FF3B30', '#FFFFFF']
+    ),
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginLeft: 8,
+  }));
+
+  // Animated icon style (scale/rotate for fun)
+  const animatedIconStyle = useAnimatedStyle(() => ({
+    transform: [
+      { scale: withTiming(urgencyMode ? 1.1 : 1, { duration: 300 }) },
+      { rotate: `${progress.value * 180}deg` },
+    ],
+  }));
+
+  // Handle press animation
+  const handlePressIn = () => {
+    scale.value = withTiming(0.95, { duration: 100 });
+  };
+  const handlePressOut = () => {
+    scale.value = withTiming(1, { duration: 100 });
+  };
+
+  return (
+    <Animated.View style={[{ position: 'absolute', bottom: 12, left: 16, borderRadius: 12, overflow: 'hidden' }, animatedStyle]}>
+      <Pressable
+        onPress={toggleUrgencyMode}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 6 }}
+        accessibilityRole="button"
+        accessibilityLabel={urgencyMode ? 'خروج' : 'طوارئ'}
+      >
+        <Animated.View style={animatedIconStyle}>
+          {urgencyMode ? (
+            <X color="#fff" size={28} />
+          ) : (
+            <CustomIcon name="urgency" size={28} color="#FF3B30" />
+          )}
+        </Animated.View>
+        <Animated.Text style={animatedTextStyle}>
+          {urgencyMode ? 'خروج' : 'طوارئ'}
+        </Animated.Text>
+      </Pressable>
+    </Animated.View>
+  );
+}
 
 // Memoized Filters Section
 interface FiltersSectionProps {

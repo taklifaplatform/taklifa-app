@@ -8,13 +8,14 @@ import {
   UserService,
 } from '@zix/api';
 import { useAtom } from 'jotai';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useContext, useEffect, useMemo } from 'react';
 import { useRouter } from 'solito/router';
 import {
   authAccessTokenStorage,
   authRequestedAccountTypeStorage,
   authUserStorage,
 } from './auth-atoms';
+import { AuthContext } from './auth-provider';
 import { AUTH_ROLE_TYPE, COMPANY_MANAGER_ROLES, COMPANY_ROLES, USER_ROLES } from './types';
 
 export type RedirectUserOptions = {
@@ -45,9 +46,12 @@ export interface AuthHelpers {
   ) => boolean;
 
   isAuthMemberInThisCompany: (companyId?: string) => boolean;
+  toggleUrgencyMode: () => void;
+  urgencyMode: boolean;
 }
 
 export function useAuth(): AuthHelpers {
+  const authContext = useContext(AuthContext);
   const [authAccessToken, setAuthAccessToken] = useAtom(authAccessTokenStorage);
   const [authUser, setAuthUser] = useAtom(authUserStorage);
   const [requestedAccountType, setRequestedAccountType] = useAtom(
@@ -240,5 +244,7 @@ export function useAuth(): AuthHelpers {
     isAuthMemberInThisCompany,
     canManageThisCompany,
     activeCompanyId,
+    toggleUrgencyMode: authContext.toggleUrgencyMode,
+    urgencyMode: authContext.urgencyMode,
   };
 }

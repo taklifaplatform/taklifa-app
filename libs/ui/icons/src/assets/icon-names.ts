@@ -86,6 +86,7 @@ export const iconNames = [
   'time_pace',
   'time',
   'touch_app',
+  'urgency',
   'user_info',
   'user_type_company',
   'user_type_customer',

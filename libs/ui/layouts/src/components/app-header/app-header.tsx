@@ -32,7 +32,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   title,
   renderAfterSearchBar,
 }) => {
-  const { user, activeRole, isLoggedIn, getUrlPrefix } = useAuth();
+  const { user, activeRole, isLoggedIn, getUrlPrefix, urgencyMode } = useAuth();
   const router = useRouter();
   const onAvatarPress = useCallback(() => {
     if (isLoggedIn) {
@@ -128,6 +128,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
         paddingHorizontal={0}
         onPress={() => setIsSearchBarOpen(!isSearchBarOpen)}
         size="$2"
+        backgroundColor='transparent'
       />
     );
   // const renderNotificationsButton = () =>
@@ -163,7 +164,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
               headerTitle()
             ) : (
               <H4 fontSize={'$8'} numberOfLines={1}>
-                {title ?? t('common:app_name')}
+                {urgencyMode ? 'طوارئ' : title ?? t('common:app_name')}
               </H4>
             )}
           </XStack>
@@ -195,7 +196,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
     <YStack
       theme="accent"
       themeShallow
-      backgroundColor="$color9"
+      backgroundColor={urgencyMode ? '#FF3B30' : '$color9'}
       paddingBottom="$2"
       $gtMd={{ display: 'none' }}
     >
@@ -225,7 +226,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
                 headerTitle()
               ) : (
                 <H4 fontSize={15} numberOfLines={1}>
-                  {title ?? t('common:app_name')}
+                  {urgencyMode ? 'طوارئ' : title ?? t('common:app_name')}
                 </H4>
               )}
             </XStack>
