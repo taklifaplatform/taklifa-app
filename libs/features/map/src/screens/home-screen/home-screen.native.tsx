@@ -93,8 +93,8 @@ export function HomeScreen() {
     if (!urgencyMode) return null;
     return (
       <View padding='$3' backgroundColor='#FF3B30' gap="$1">
-        <Text color="#FFFFFF" fontSize="$2" textAlign="left" fontWeight="bold">
-          {t('common:urgency-mode-warning', '✅ شروط خدمة الطوارئ المجانية – تطبيق سواعد:')}
+        <Text color="#FFFFFF" fontSize="$1" textAlign="left" fontWeight="bold">
+          {t('common:urgency-mode-warning', '✅ شروط خدمة الطوارئ المجانية ( تامينك فقط ) تطبيق سواعد:')}
         </Text>
         <Text color="#FFFFFF" fontSize="$1" textAlign="left" fontWeight="bold">
           {t('common:urgency-mode-subtitle', '🔴 الخدمة متاحة فقط في الحالات التالية:')}
