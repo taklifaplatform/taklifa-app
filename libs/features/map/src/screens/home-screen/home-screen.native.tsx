@@ -89,6 +89,23 @@ export function HomeScreen() {
     )
   }
 
+  const renderUrgencyModeWarning = () => {
+    if (!urgencyMode) return null;
+    return (
+      <View padding='$3' backgroundColor='#FF3B30' gap="$1">
+        <Text color="#FFFFFF" fontSize="$2" textAlign="left" fontWeight="bold">
+          {t('common:urgency-mode-warning', '✅ شروط خدمة الطوارئ المجانية – تطبيق سواعد:')}
+        </Text>
+        <Text color="#FFFFFF" fontSize="$1" textAlign="left" fontWeight="bold">
+          {t('common:urgency-mode-subtitle', '🔴 الخدمة متاحة فقط في الحالات التالية:')}
+        </Text>
+        <Text color="#FFFFFF" fontSize="$1" textAlign="left">
+          {t('common:urgency-mode-description', '• تعطل مفاجئ في الطرق الرئيسية داخل المدينة\n• خطر مروري أو موقع يشكل تهديد لحركة السير على الطرق الرئسية فقط')}
+        </Text>
+      </View>
+    )
+  } 
+
   const [currentRegion, setCurrentRegion] = useState<Region>({
     "latitude": 24.608423604325434,
     "longitude": 41.53168703276937,
@@ -427,6 +444,7 @@ export function HomeScreen() {
       <YStack flex={1}>
         <AppHeaderSection search={search} setSearch={setSearch} MaterialIcons={MaterialIcons} />
         {renderAddVehicleWarning()}
+        {renderUrgencyModeWarning()}
         <YStack flex={1} position='relative'>
           <MapSection
             showMap={showMap}
@@ -687,6 +705,7 @@ const SwitcherButton: FC<SwitcherButtonProps> = memo(function SwitcherButton({
     <Button
       theme="accent"
       backgroundColor={urgencyMode ? "#FF3B30" : undefined}
+      color={urgencyMode ? "#FFFFFF" : undefined}
       icon={showMap ? List : Map}
       scaleIcon={1.5}
       fontWeight="600"
@@ -742,7 +761,7 @@ const CenterButton: FC<CenterButtonProps> = memo(function CenterButton({
     <Button
       theme="accent"
       backgroundColor={urgencyMode ? "#FF3B30" : undefined}
-      icon={<MaterialIcons name="my-location" size={30} color="black" />}
+      icon={<MaterialIcons name="my-location" size={30} color={urgencyMode ? "#FFFFFF" : "black"} />}
       circular
       position="absolute"
       bottom="$3"

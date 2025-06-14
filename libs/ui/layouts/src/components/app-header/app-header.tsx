@@ -124,6 +124,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
     !showBackButton && (
       <Button
         icon={isSearchBarOpen ? X : Search}
+        color={urgencyMode ? '#FFFFFF' : undefined}
         scaleIcon={1.5}
         paddingHorizontal={0}
         onPress={() => setIsSearchBarOpen(!isSearchBarOpen)}
@@ -163,7 +164,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
             {headerTitle ? (
               headerTitle()
             ) : (
-              <H4 fontSize={'$8'} numberOfLines={1}>
+              <H4 fontSize={'$8'} numberOfLines={1} color={urgencyMode ? '#FFFFFF' : undefined}>
                 {urgencyMode ? 'طوارئ' : title ?? t('common:app_name')}
               </H4>
             )}
@@ -225,7 +226,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
               {headerTitle ? (
                 headerTitle()
               ) : (
-                <H4 fontSize={15} numberOfLines={1}>
+                <H4 fontSize={15} numberOfLines={1} color={urgencyMode ? '#FFFFFF' : undefined}>
                   {urgencyMode ? 'طوارئ' : title ?? t('common:app_name')}
                 </H4>
               )}
