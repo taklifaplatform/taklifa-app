@@ -12,12 +12,14 @@ import { t } from 'i18next';
 export type MapFiltersProps = {
   values: Record<string, string>;
   onChange: (values: Record<string, string>) => void;
+  urgencyMode: boolean;
 }
 
 
 export const MapFilters: React.FC<MapFiltersProps> = ({
   values,
   onChange,
+  urgencyMode
 }) => {
   const vehicleModelsQuery = useQuery({
     queryFn() {
@@ -133,6 +135,7 @@ export const MapFilters: React.FC<MapFiltersProps> = ({
       filters={filters}
       values={values}
       onChange={onChange}
+      urgencyMode={urgencyMode}
     />
   );
 }

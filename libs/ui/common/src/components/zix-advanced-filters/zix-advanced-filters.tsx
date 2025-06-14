@@ -29,6 +29,7 @@ export type ZixAdvancedFiltersProps = {
   filters?: IFilter[];
   values?: Record<string, string>;
   onChange?: (values: Record<string, string>) => void;
+  urgencyMode?: boolean;
 }
 
 
@@ -39,6 +40,7 @@ export const ZixAdvancedFilters: React.FC<ZixAdvancedFiltersProps> = ({
   filters = [],
   values = {},
   onChange = (v) => console.log('ZixAdvancedFilters::onChange', v),
+  urgencyMode = false
 }) => {
   const maxVisibleFilters = SCREEN_WIDTH > 600 ? 4 : 2;
 
@@ -67,6 +69,7 @@ export const ZixAdvancedFilters: React.FC<ZixAdvancedFiltersProps> = ({
               ...values,
               [filter.key]: v,
             })}
+            urgencyMode={urgencyMode}
           />
         ))
       }
@@ -80,11 +83,13 @@ export type ZixFiltersProps = {
   filter: IFilter;
   value?: string;
   onChange?: (value: string) => void;
+  urgencyMode?: boolean;
 }
 export const ZixFilter: React.FC<ZixFiltersProps> = ({
   filter,
   value,
   onChange = (v) => console.log('ZixFilter::onChange', v),
+  urgencyMode = false
 }) => {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -140,11 +145,11 @@ export const ZixFilter: React.FC<ZixFiltersProps> = ({
       disableRemoveScroll
       trigger={(
         <XStack
-          theme='accent'
+          theme={urgencyMode ? "error" : "accent"}
           key={filter.key}
           backgroundColor='$color2'
           borderWidth={1}
-          borderColor='$color1'
+          borderColor={urgencyMode ? '#FF3B30' : '$color1'}
           borderRadius='$4'
           alignItems='center'
           paddingHorizontal='$2'

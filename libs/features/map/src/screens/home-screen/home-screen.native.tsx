@@ -452,6 +452,7 @@ export function HomeScreen() {
             mapRef={mapRef}
             MaterialIcons={MaterialIcons}
             showMap={showMap}
+            urgencyMode={urgencyMode}
           />
           <ActivateUrgencyModeButton
             mapRef={mapRef}
@@ -480,6 +481,7 @@ export function HomeScreen() {
             showCarousel={showCarousel}
             showMap={showMap}
             setShowMap={setShowMap}
+            urgencyMode={urgencyMode}
           />
         </YStack>
       </YStack>
@@ -670,17 +672,20 @@ interface SwitcherButtonProps {
   showMap: boolean;
   setShowMap: React.Dispatch<React.SetStateAction<boolean>>;
   t: typeof t;
+  urgencyMode: boolean;
 }
 const SwitcherButton: FC<SwitcherButtonProps> = memo(function SwitcherButton({
   showCarousel,
   showMap,
   setShowMap,
   t,
+  urgencyMode
 }) {
   if (showCarousel) return null;
   return (
     <Button
       theme="accent"
+      backgroundColor={urgencyMode ? "#FF3B30" : undefined}
       icon={showMap ? List : Map}
       scaleIcon={1.5}
       fontWeight="600"
@@ -697,12 +702,14 @@ interface CenterButtonProps {
   mapRef: React.RefObject<MapView>;
   MaterialIcons: any;
   showMap: boolean;
+  urgencyMode: boolean;
 }
 const CenterButton: FC<CenterButtonProps> = memo(function CenterButton({
   driverLocation,
   mapRef,
   MaterialIcons,
   showMap,
+  urgencyMode
 }) {
   async function onPress() {
     try {
@@ -730,6 +737,7 @@ const CenterButton: FC<CenterButtonProps> = memo(function CenterButton({
   return (
     <Button
       theme="accent"
+      backgroundColor={urgencyMode ? "#FF3B30" : undefined}
       icon={<MaterialIcons name="my-location" size={30} color="black" />}
       circular
       position="absolute"
@@ -859,6 +867,7 @@ interface FiltersSectionProps {
   showCarousel: boolean;
   showMap: boolean;
   setShowMap: React.Dispatch<React.SetStateAction<boolean>>;
+  urgencyMode: boolean;
 }
 const FiltersSection: FC<FiltersSectionProps> = memo(function FiltersSection({
   isKeyboardVisible,
@@ -868,6 +877,7 @@ const FiltersSection: FC<FiltersSectionProps> = memo(function FiltersSection({
   showCarousel,
   showMap,
   setShowMap,
+  urgencyMode
 }) {
   if (isKeyboardVisible) return null;
   return (
@@ -878,8 +888,9 @@ const FiltersSection: FC<FiltersSectionProps> = memo(function FiltersSection({
           showMap={showMap}
           setShowMap={setShowMap}
           t={t}
+          urgencyMode={urgencyMode}
         />
-        <MapFilters values={filters} onChange={(values) => setFilters({ ...filters, ...values })} />
+        <MapFilters urgencyMode={urgencyMode} values={filters} onChange={(values) => setFilters({ ...filters, ...values })} />
         {isFetching && <Spinner color="$color1" />}
       </XStack>
     </View>

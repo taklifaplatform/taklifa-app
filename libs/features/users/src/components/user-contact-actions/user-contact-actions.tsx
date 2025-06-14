@@ -24,7 +24,7 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
   onContractPressAnalytic,
   ...props
 }) => {
-  const { user: authUser, isLoggedIn, getUrlPrefix, isServiceProvider } = useAuth()
+  const { user: authUser, isLoggedIn, getUrlPrefix, isServiceProvider, urgencyMode } = useAuth()
   const { width } = Dimensions.get('window');
   const router = useRouter()
 
@@ -96,7 +96,7 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
   return (
     <XStack justifyContent="space-between" gap="$2" paddingHorizontal='$3' {...props}>
       {
-        !isServiceProvider(authUser, true) && (
+        (!isServiceProvider(authUser, true) && !urgencyMode) && (
           <Button
             theme='success'
             backgroundColor='$color10'
@@ -109,26 +109,30 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
           </Button>
         )
       }
-      <ZixButton
-        flex={width > 400 ? 0.5 : 0.2}
-        backgroundColor='$gray7'
-        icon={(props: IconProps) => <CustomIcon {...props} name="chat" color='$color12' />}
-        disabled={isPending}
-        loading={isPending}
-        onPress={() => {
-          if (isLoggedIn) {
-            startChat()
-          } else {
-            router.push(`/auth/login`)
-          }
-        }}
-        {...sharedButtonStyle}
-      >
-        {width > 400 ? t('shipment:chat') : null}
-      </ZixButton>
+      {
+        !urgencyMode && (
+          <ZixButton
+            flex={width > 400 ? 0.5 : 0.2}
+            backgroundColor='$gray7'
+            icon={(props: IconProps) => <CustomIcon {...props} name="chat" color='$color12' />}
+            disabled={isPending}
+            loading={isPending}
+            onPress={() => {
+              if (isLoggedIn) {
+                startChat()
+              } else {
+                router.push(`/auth/login`)
+              }
+            }}
+            {...sharedButtonStyle}
+          >
+            {width > 400 ? t('shipment:chat') : null}
+          </ZixButton>
+        )
+      }
       <Button
-        flex={width > 400 ? 0.5 : 0.2}
-        backgroundColor='$gray7'
+        flex={urgencyMode ? 1 : width > 400 ? 0.5 : 0.2}
+        backgroundColor={urgencyMode ? "#FF3B30" : '$gray7'}
         icon={(props: IconProps) => <CustomIcon {...props} name="call" color='$color12' />}
         onPress={onCallPress}
         {...sharedButtonStyle}
