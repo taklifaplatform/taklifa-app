@@ -726,7 +726,10 @@ const CenterButton: FC<CenterButtonProps> = memo(function CenterButton({
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
         },
-        zoom: 16,
+        altitude: 40000,
+        pitch: 0,
+        heading: 0,
+        zoom: 12,
       });
     } catch (error) {
       //
