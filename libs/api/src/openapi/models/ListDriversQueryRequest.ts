@@ -9,5 +9,6 @@ export type ListDriversQueryRequest = {
     longitude?: number;
     longitude_delta?: number;
     vehicle_model?: string;
+    urgency_service_provider?: number;
 };
 

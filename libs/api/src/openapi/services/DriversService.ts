@@ -21,6 +21,7 @@ export class DriversService {
         longitude,
         longitudeDelta,
         vehicleModel,
+        urgencyServiceProvider,
     }: {
         /**
          * Page number
@@ -36,6 +37,7 @@ export class DriversService {
         longitude?: any,
         longitudeDelta?: any,
         vehicleModel?: string,
+        urgencyServiceProvider?: any,
     }): CancelablePromise<{
         data?: Array<DriverTransformer>;
         links?: {
@@ -71,6 +73,7 @@ export class DriversService {
                 'longitude': longitude,
                 'longitude_delta': longitudeDelta,
                 'vehicle_model': vehicleModel,
+                'urgency_service_provider': urgencyServiceProvider,
             },
         });
     }

@@ -21,6 +21,8 @@ export type DriverTransformer = {
     location?: LocationTransformer;
     live_location?: LiveLocationTransformer;
     location_id?: string;
+    urgency_service_provider?: boolean;
+    urgency_service_radius?: number;
     rating_stats?: {
         score?: number;
         count?: number;

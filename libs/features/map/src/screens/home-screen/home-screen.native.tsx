@@ -15,7 +15,7 @@ import debounce from 'lodash/debounce';
 import type { FC } from 'react';
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { Dimensions, Keyboard, Platform, SectionList } from 'react-native';
-import MapView, { Region } from 'react-native-maps';
+import MapView, { Region, Circle } from 'react-native-maps';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useRouter } from 'solito/router';
 import { Button, H4, Spinner, View, XStack, YStack, Text } from 'tamagui';
@@ -46,7 +46,7 @@ export function HomeScreen() {
   const mapRef = useRef<MapView>(null);
   const carouselRef = useRef<ICarouselInstance>(null);
   const router = useRouter();
-  const { getUrlPrefix, user } = useAuth();
+  const { getUrlPrefix, user, urgencyMode, toggleUrgencyMode } = useAuth();
 
   const [filters, setFilters] = useState({
     vehicle_model: 'all',
@@ -68,7 +68,7 @@ export function HomeScreen() {
     return user?.active_role?.name === USER_ROLES.solo_driver && !vehiclesData?.data?.length;
   }, [user, vehiclesData]);
   const renderAddVehicleWarning = () => {
-    if (!shouldShowAddVehicleWarning) return null;
+    if (!shouldShowAddVehicleWarning || urgencyMode) return null;
     return (
       <View padding='$3' backgroundColor='#FF3B30' gap="$2">
         <XStack justifyContent='space-between' alignItems='center'>
@@ -156,12 +156,14 @@ export function HomeScreen() {
       longitudeDelta: currentRegion.longitudeDelta,
       search,
       page: 1,
+      urgencyServiceProvider: urgencyMode ? 1 : 0,
     });
   }, [
     filters.vehicle_model,
     currentRegion,
     search,
     filters.vehicle_model,
+    urgencyMode,
   ]);
 
   const companiesQuery = useQuery({
@@ -348,12 +350,15 @@ export function HomeScreen() {
 
   const filteredDrivers = useMemo(() => {
     return drivers.filter((driver) => {
+      if (urgencyMode && !driver?.urgency_service_provider) {
+        return false;
+      }
       if (filters.vehicle_model !== 'all') {
         return driver?.vehicle?.model?.id === filters.vehicle_model;
       }
       return true;
     });
-  }, [drivers, filters?.vehicle_model]);
+  }, [drivers, filters?.vehicle_model, urgencyMode]);
 
   const renderMapDrivers = () =>
     (filters.provider_type === 'all' || filters.provider_type === USER_ROLES.solo_driver) ?
@@ -369,7 +374,7 @@ export function HomeScreen() {
       )) : null;
 
   const renderMapCompanies = () =>
-    (filters.provider_type === 'all' || filters.provider_type === 'company') ?
+    (filters.provider_type === 'all' || filters.provider_type === 'company') && !urgencyMode ?
       companiesQuery.data?.data?.map((company, index) => (
         <MapCompanyMarker
           key={`marker-${index}`}
@@ -386,8 +391,6 @@ export function HomeScreen() {
     []
   );
 
-  //List
-  const showCompany = filters.provider_type === 'all' || filters.provider_type === 'company';
 
   const renderCarouselItem = ({
     item,
@@ -417,6 +420,8 @@ export function HomeScreen() {
       ? defaultIndex
       : 0;
 
+  const [showUrgencyCircle, setShowUrgencyCircle] = useState(false);
+
   return (
     <ScreenLayout>
       <YStack flex={1}>
@@ -431,28 +436,30 @@ export function HomeScreen() {
             debouncedSetCurrentRegion={debouncedSetCurrentRegion}
             renderMapDrivers={renderMapDrivers}
             renderMapCompanies={renderMapCompanies}
+            showUrgencyCircle={showUrgencyCircle}
+            urgencyCircleLocation={driverLocation}
           />
           <ListSection
             showMap={showMap}
             isKeyboardVisible={isKeyboardVisible}
-            driversList={filters.provider_type === 'all' || filters.provider_type === USER_ROLES.solo_driver ? drivers : []}
-            companiesList={filters.provider_type === 'all' || filters.provider_type === 'company' ? companiesQuery.data?.data || [] : []}
+            driversList={filteredDrivers}
+            companiesList={(filters.provider_type === 'all' || filters.provider_type === 'company') && !urgencyMode ? companiesQuery.data?.data || [] : []}
             isFetching={isFetching}
             fetchDrivers={fetchDrivers}
           />
-          {/* <SwitcherButton
-            showCarousel={showCarousel}
-            showMap={showMap}
-            setShowMap={setShowMap}
-            t={t}
-          /> */}
           <CenterButton
             driverLocation={driverLocation}
             mapRef={mapRef}
             MaterialIcons={MaterialIcons}
             showMap={showMap}
           />
-          <ActivateUrgencyModeButton />
+          <ActivateUrgencyModeButton
+            mapRef={mapRef}
+            driverLocation={driverLocation}
+            setShowUrgencyCircle={setShowUrgencyCircle}
+            urgencyMode={urgencyMode}
+            toggleUrgencyMode={toggleUrgencyMode}
+          />
           <CarouselSection
             showCarousel={showCarousel}
             driversList={driversList}
@@ -465,7 +472,6 @@ export function HomeScreen() {
             onCloseCarouselButtonPress={onCloseCarouselButtonPress}
             X={X}
           />
-
           <FiltersSection
             isKeyboardVisible={isKeyboardVisible}
             filters={filters}
@@ -490,6 +496,8 @@ interface MapSectionProps {
   debouncedSetCurrentRegion: (region: Region) => void;
   renderMapDrivers: () => React.ReactNode;
   renderMapCompanies: () => React.ReactNode;
+  showUrgencyCircle?: boolean;
+  urgencyCircleLocation?: Location.LocationObjectCoords | null;
 }
 const MapSection: FC<MapSectionProps> = memo(function MapSection({
   showMap,
@@ -499,6 +507,8 @@ const MapSection: FC<MapSectionProps> = memo(function MapSection({
   debouncedSetCurrentRegion,
   renderMapDrivers,
   renderMapCompanies,
+  showUrgencyCircle,
+  urgencyCircleLocation,
 }) {
   if (!showMap) return null;
   return (
@@ -513,6 +523,17 @@ const MapSection: FC<MapSectionProps> = memo(function MapSection({
     >
       {renderMapDrivers()}
       {renderMapCompanies()}
+      {showUrgencyCircle && urgencyCircleLocation && (
+        <Circle
+          center={{
+            latitude: urgencyCircleLocation.latitude,
+            longitude: urgencyCircleLocation.longitude,
+          }}
+          radius={5000} // 20km
+          strokeColor="#FF3B30"
+          fillColor="rgba(255,59,48,0.15)"
+        />
+      )}
     </MapView>
   );
 });
@@ -723,16 +744,45 @@ const CenterButton: FC<CenterButtonProps> = memo(function CenterButton({
 interface ActivateUrgencyModeButtonProps {
   urgencyMode: boolean;
   toggleUrgencyMode: () => void;
+  mapRef: React.RefObject<MapView>;
+  driverLocation: Location.LocationObjectCoords | null;
+  setShowUrgencyCircle: (show: boolean) => void;
 }
-const ActivateUrgencyModeButton: FC<ActivateUrgencyModeButtonProps> = () => {
-  const { urgencyMode, toggleUrgencyMode } = useAuth();
+const ActivateUrgencyModeButton: FC<ActivateUrgencyModeButtonProps> = ({
+  urgencyMode,
+  toggleUrgencyMode,
+  mapRef,
+  driverLocation,
+  setShowUrgencyCircle,
+}) => {
   // Animation shared values
   const progress = useSharedValue(urgencyMode ? 1 : 0);
   const scale = useSharedValue(1);
 
-  // Animate progress when urgencyMode changes
-  React.useEffect(() => {
+  useEffect(() => {
     progress.value = withTiming(urgencyMode ? 1 : 0, { duration: 500, easing: Easing.out(Easing.exp) });
+    setShowUrgencyCircle(urgencyMode);
+    if (urgencyMode && driverLocation && mapRef?.current) {
+      if (Platform.OS === 'ios') {
+        mapRef.current.animateCamera({
+          center: {
+            latitude: driverLocation.latitude,
+            longitude: driverLocation.longitude,
+          },
+          altitude: 40000, // Very close zoom for Apple Maps
+          pitch: 0,
+          heading: 0,
+        }, { duration: 1000 });
+      } else {
+        mapRef.current.animateCamera({
+          center: {
+            latitude: driverLocation.latitude,
+            longitude: driverLocation.longitude,
+          },
+          zoom: 20, // Maximum zoom for Google Maps
+        }, { duration: 1000 });
+      }
+    }
   }, [urgencyMode]);
 
   // Animated background color

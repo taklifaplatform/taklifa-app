@@ -3,9 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type UpdateUserAnalyticRequest = {
-    user_id?: string;
     action_type?: string;
-    viewer_id?: string;
-    count?: number;
+    call_type?: string;
 };
 

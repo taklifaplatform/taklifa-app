@@ -4,5 +4,6 @@
 /* eslint-disable */
 export type UpdateAnnouncementAnalyticRequest = {
     action_type?: string;
+    call_type?: string;
 };
 
