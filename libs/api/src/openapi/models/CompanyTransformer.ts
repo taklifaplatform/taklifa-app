@@ -9,6 +9,7 @@ export type CompanyTransformer = {
     about?: string;
     working_hours_id?: string;
     vehicles_count?: number;
+    contact_number?: string;
     logo?: MediaTransformer;
     location_id?: string;
     rating_stats?: {

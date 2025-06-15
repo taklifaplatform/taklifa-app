@@ -1,9 +1,9 @@
-import { MoreHorizontal, Pencil, Plus, Trash2 } from '@tamagui/lucide-icons';
+import { MoreHorizontal, Pencil, Trash2 } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ChatService, ServicesService } from '@zix/api';
 import { useAuth, useMixpanel } from '@zix/services/auth';
-import { ActionSheet, ActionSheetRef, UserAvatar, ZixButton } from '@zix/ui/common';
+import { ActionSheet, ActionSheetRef, UserAvatar } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { ZixMediasListWidget } from '@zix/ui/widgets';
@@ -259,21 +259,6 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
             </View>
           }
         />
-        <XStack padding="$4" position='absolute' bottom={0} left={0} right={0}>
-          <ZixButton
-            theme='accent'
-            icon={<Plus size="$1" color="$color12" />}
-            onPress={() => {
-              if (isLoggedIn) {
-                router.push(`${getUrlPrefix}/company/services/create`)
-              } else {
-                router.push(`/auth/login`)
-              }
-            }}
-          >
-            أضف اعلان
-          </ZixButton>
-        </XStack>
       </YStack>
     </ScreenLayout>
   );

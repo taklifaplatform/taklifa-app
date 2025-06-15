@@ -34,7 +34,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
   }
 
   function onCallPress() {
-    const phoneNumber = company?.phone_number
+    const phoneNumber = company?.contact_number
     Linking.openURL(`tel:${phoneNumber.includes('+') ? phoneNumber : `+${phoneNumber}`}`);
   }
 
@@ -89,7 +89,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
       >
         {t('shipment:chat')}
       </ZixButton>
-      {company?.phone_number && <Button
+      {company?.contact_number && <Button
         flex={1}
         backgroundColor='$gray7'
         icon={(props: IconProps) => <CustomIcon {...props} name="call" color='$color12' />}

@@ -10,5 +10,6 @@ export type SimpleCompanyTransformer = {
     verified_at?: string;
     verification_status?: string;
     logo?: MediaTransformer;
+    contact_number?: string;
 };
 
