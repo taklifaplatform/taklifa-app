@@ -9,7 +9,7 @@ import { createParam } from 'solito';
 import { useAuth, useMixpanel } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import { useRouter } from 'solito/router';
-import { ScrollView, YStack } from 'tamagui';
+import { ScrollView, Stack, Text, YStack } from 'tamagui';
 import CompanyContactActions from '../../components/company-profile/company-contact-actions/company-contact-actions';
 import CompanyInfoRow from '../../components/company-profile/company-info-row/company-info-row';
 import CompanyProfileHeader from '../../components/company-profile/company-profile-header/company-profile-header';
@@ -24,7 +24,7 @@ export function CompanyProfileScreen() {
   const { user: authUser, getUrlPrefix, canManageThisCompany, isAuthMemberInThisCompany } = useAuth();
 
 
-  const { data, refetch, isLoading } = useQuery({
+  const { data, refetch, isLoading, isError, error } = useQuery({
     queryFn() {
       if (!companyId) {
         return;
@@ -56,8 +56,8 @@ export function CompanyProfileScreen() {
     </ScrollView>
   )
   const company = data?.data;
-  //
-  const renderLoadingSpinner = () => !company?.id && <FullScreenSpinner />;
+
+  const renderLoadingSpinner = () => (!company?.id && !isError) && <FullScreenSpinner />;
 
   const renderHeader = () =>
     canManageThisCompany(company?.id) ? ( //
@@ -76,7 +76,7 @@ export function CompanyProfileScreen() {
           </TouchableOpacity>
         )}
       />
-    ) : isAuthMemberInThisCompany(company?.id) ? (
+    ) : (isAuthMemberInThisCompany(company?.id) || !company?.id) ? (
       <AppHeader
         showBackButton
         headerTitle={() => <AccountSwitcher />}
@@ -89,11 +89,21 @@ export function CompanyProfileScreen() {
     );
 
 
+  const renderError = () => isError && (
+    <Stack alignItems="center" justifyContent="center" flex={1} gap="$4">
+      <CustomIcon name="empty_data" color="red" size={250} />
+      <Text>
+        {error?.message}
+      </Text>
+    </Stack>
+  )
+
   return (
     <ScreenLayout>
       {renderHeader()}
       {renderLoadingSpinner()}
       {renderCompanyProfile()}
+      {renderError()}
     </ScreenLayout>
   );
 }
