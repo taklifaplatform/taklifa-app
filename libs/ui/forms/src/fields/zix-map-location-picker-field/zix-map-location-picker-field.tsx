@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import * as Location from 'expo-location';
 
-import { Search, X } from '@tamagui/lucide-icons';
+import { MapPin, Search, X } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
 import { GeographyService, LocationTransformer } from '@zix/api';
 import { ZixButton, ZixMapMarker } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { useSafeAreaInsets } from '@zix/utils';
 import { t } from 'i18next';
-import { ActivityIndicator, FlatList, Platform } from 'react-native';
+import { ActivityIndicator, Alert, FlatList, Linking, Platform } from 'react-native';
 import {
   Avatar,
   Button,
@@ -166,6 +167,52 @@ export const ZixMapLocationPickerFieldContent: React.FC<ZixMapLocationPickerFiel
     }
   )
   const [isPending, setIsPending] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(true);
+  const [isGettingLocation, setIsGettingLocation] = useState(false);
+
+  const handleGetCurrentLocation = async () => {
+    setIsGettingLocation(true);
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+        // show alert to open app settings
+        Alert.alert(
+          t('common:permission-to-access-location-was-denied'),
+          t('common:please-open-app-settings-to-grant-permission'),
+          [
+            {
+              text: t('common:open-app-settings'),
+              onPress: () => {
+                Linking.openSettings();
+              },
+            },
+          ],
+          {
+            cancelable: true,
+          }
+        );
+        return;
+      }
+
+      const position = await Location.getCurrentPositionAsync({});
+      const newLocation = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+      };
+      setLocalLocation({
+        ...value,
+        ...localLocation,
+        ...newLocation,
+      });
+      mutate(newLocation);
+
+    } catch (error) {
+      console.error('Error getting location:', error);
+    } finally {
+      setIsGettingLocation(false);
+    }
+  };
 
   async function mutate({ latitude, longitude }: LocationTransformer) {
     setIsPending(true);
@@ -238,6 +285,39 @@ export const ZixMapLocationPickerFieldContent: React.FC<ZixMapLocationPickerFiel
     }
   }
 
+  const renderMapInstructions = () => (
+    <YStack
+      backgroundColor="$color1"
+      padding="$4"
+    >
+      <XStack justifyContent="space-between" alignItems="center" marginBottom="$2">
+        <H4>{t('common:how-to-select-location')}</H4>
+        <Button
+          icon={X}
+          size="$3"
+          backgroundColor="$color2"
+          scaleIcon={1.2}
+          onPress={() => setShowInstructions(false)}
+        />
+      </XStack>
+      <YStack gap="$2" alignItems="flex-start">
+        <Text>• {t('common:click-map-to-select')}</Text>
+        <Text>• {t('common:drag-marker-to-adjust')}</Text>
+        <Text>• {t('common:search-for-location')}</Text>
+        <Theme name='accent'>
+          <ZixButton
+            loading={isGettingLocation}
+            onPress={handleGetCurrentLocation}
+            marginTop="$2"
+            icon={<MapPin size="$1.5" color="$color11" />}
+          >
+            {t('common:use-my-location')}
+          </ZixButton>
+        </Theme>
+      </YStack>
+    </YStack>
+  );
+
   const renderAddressConfirmation = () =>
     !!localLocation?.address && (
       <YStack
@@ -276,6 +356,7 @@ export const ZixMapLocationPickerFieldContent: React.FC<ZixMapLocationPickerFiel
         onChange={mutate}
         onClose={() => onClose(false)}
       />
+      {showInstructions && renderMapInstructions()}
       {isPending ?
         <View flex={1}
           position='absolute'

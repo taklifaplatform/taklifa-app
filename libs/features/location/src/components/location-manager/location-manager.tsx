@@ -86,14 +86,6 @@ export const LocationManager: React.FC<LocationManagerProps> = ({
     },
   })
 
-  const [showMap, setShowMap] = useState(false)
-
-  useEffect(() => {
-    setTimeout(() => {
-      setShowMap(true)
-    }
-      , 3000)
-  }, [location])
 
   const renderForm = () => !!location && (
     <SchemaForm
@@ -129,13 +121,13 @@ export const LocationManager: React.FC<LocationManagerProps> = ({
     >
       {({ address, building_name, floor_number, house_number, country_id, state_id, city_id, notes }) => (
         <YStack gap="$2">
-          {showMap ? <ZixMapLocationPickerField
+          <ZixMapLocationPickerField
             value={location} onChange={(val) => {
               Object.keys(val).forEach(key => {
                 form.setValue(key, val[key])
               })
             }}
-          /> : null}
+          />
           <Separator marginTop="$4" />
 
           <ZixFieldContainer

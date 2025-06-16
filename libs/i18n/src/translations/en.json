@@ -373,7 +373,7 @@
     "enter-your-detail-input-placeholder": "Enter your details...",
     "map": "Map",
     "list": "List",
-    "no-data-found": "No data found",
+    "no-data-found": "No data found", 
     "no-vehicles-found": "No vehicles found",
     "no-member-yet": "No members yet",
     "total-cost-of-shipment": "Total cost of shipment",
@@ -471,7 +471,15 @@
     "contact-whatsapp": "Direct Message",
     "version-number": "Version Number",
     "version-identifier": "Version Identifier",
-    "version-date": "Version Date"
+    "version-date": "Version Date",
+    "how-to-select-location": "How to select location",
+    "click-map-to-select": "Click on the map to select the location",
+    "drag-marker-to-adjust": "Drag the marker to adjust the location",
+    "search-for-location": "Search for a location",
+    "permission-to-access-location-was-denied": "Permission to access location was denied",
+    "please-open-app-settings-to-grant-permission": "Please open app settings to grant permission",
+    "open-app-settings": "Open app settings",
+    "use-my-location": "Use my location"
   },
   "cookies-banner": {
     "section-1": {

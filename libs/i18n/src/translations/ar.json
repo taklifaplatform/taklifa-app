@@ -521,7 +521,15 @@
     "contact-whatsapp": "تواصل مباشرة",
     "version-number": "رقم الإصدار",
     "version-identifier": "معرف الإصدار",
-    "version-date": "تاريخ الإصدار"
+    "version-date": "تاريخ الإصدار",
+    "how-to-select-location": "كيفية تحديد الموقع",
+    "click-map-to-select": "انقر على الخريطة لتحديد الموقع",
+    "drag-marker-to-adjust": "اسحب العلامة لضبط الموقع",
+    "search-for-location": "ابحث عن موقع",
+    "permission-to-access-location-was-denied": "تم رفض إذن الوصول إلى الموقع",
+    "please-open-app-settings-to-grant-permission": "يرجى فتح إعدادات التطبيق لتمكين الوصول إلى الموقع",
+    "open-app-settings": "فتح إعدادات التطبيق",
+    "use-my-location": "استخدم موقعي"
   },
   "cookies-banner": {
     "section-1": {
