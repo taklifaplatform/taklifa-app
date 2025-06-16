@@ -96,7 +96,7 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
   return (
     <XStack justifyContent="space-between" gap="$2" paddingHorizontal='$3' {...props}>
       {
-        (!isServiceProvider(authUser, true) && !urgencyMode) && (
+        !urgencyMode && (
           <Button
             theme='success'
             backgroundColor='$color10'
