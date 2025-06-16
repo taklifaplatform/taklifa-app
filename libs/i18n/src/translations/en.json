@@ -281,7 +281,7 @@
     "user_types": {
       "customer": "Customer",
       "individual": "Individual",
-      "company": "Company"
+      "company": "Companies - Institutions - Warehouses - Warehouses - Centers - Shops - Other"
     },
     "account_types": {
       "seek": {

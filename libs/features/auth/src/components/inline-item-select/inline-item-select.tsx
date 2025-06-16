@@ -10,6 +10,7 @@ export interface InlineItemSelectProps {
   showServiceProvider?: boolean;
   icon: CustomIconName;
   title: string;
+  smallTitle?: boolean;
 }
 
 /**
@@ -31,6 +32,7 @@ export const InlineItemSelect: React.FC<InlineItemSelectProps> = ({
   icon,
   title,
   showServiceProvider,
+  smallTitle,
 }) => {
   return (
     <XStack
@@ -52,13 +54,13 @@ export const InlineItemSelect: React.FC<InlineItemSelectProps> = ({
           </Avatar>
         </Theme>
 
-        <YStack gap="$1" alignItems="flex-start">
+        <YStack gap="$1" alignItems="flex-start" flex={0.8}>
           {showServiceProvider && (
             <Text fontSize="$4" fontWeight="800">
               {t('common:account_types.seek.service_provider')}
             </Text>
           )}
-          <Text fontSize="$4" fontWeight="800">
+          <Text fontSize={smallTitle ? '$3' : '$4'} fontWeight="800" textAlign="left">
             {title}
           </Text>
         </YStack>

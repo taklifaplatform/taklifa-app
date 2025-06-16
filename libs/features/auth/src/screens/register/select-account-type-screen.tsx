@@ -94,7 +94,8 @@ export const SelectAccountTypeScreen: React.FC = () => {
             icon="user_type_company"
             title={t('common:user_types.company')}
             value="company_owner"
-            showServiceProvider
+            // showServiceProvider
+            smallTitle
             selectedValue={requestedAccountType}
             onSelect={(value) => {
               setRequestedAccountType(value);

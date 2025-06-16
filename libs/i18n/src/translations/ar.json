@@ -352,7 +352,7 @@
     "user_types": {
       "customer": "عميل سواعد",
       "individual": "فرد",
-      "company": "شركة / مؤسسة"
+      "company": "شركات - مؤسسات - مستودعات - مخازن - مراكز - اخرى"
     },
     "account_types": {
       "seek": {
