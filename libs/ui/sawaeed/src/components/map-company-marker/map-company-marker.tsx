@@ -28,23 +28,25 @@ export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = React.memo(({
     height: '$4',
     borderRadius: '$4',
   })
-  // const renderCarIcon = () => (company?.logo?.original_url && !showCustomIcon) ? (
-  //   <Image
-  //     source={{ uri: company.logo?.original_url }}
-  //     style={style}
-  //     resizeMode='contain'
-  //     onError={() => {
-  //       setShowCustomIcon(true)
-  //     }}
-  //   />
-  // ) : (
-  //   <CustomIcon name='company_cars' size="$4" color={'$color5'} />
-  // )
-  const renderCarIcon = () => (
-    <Theme name='accent'>
+  const renderCarIcon = () => (company?.logo?.original_url && !showCustomIcon) ? (
+    <Image
+      source={{ uri: company.logo?.original_url }}
+      style={style}
+      resizeMode='contain'
+      onError={() => {
+        setShowCustomIcon(true)
+      }}
+    />
+  ) : (
+    <View theme='accent' backgroundColor='$color1' borderRadius='$4' width='$4' height='$4'>
       <CustomIcon name='logo' size="$4" color='$color1' />
-    </Theme>
+    </View>
   )
+  // const renderCarIcon = () => (
+  //   <View theme='accent' backgroundColor='$color1' borderRadius='$4' width='$4' height='$4'>
+  //     <CustomIcon name='logo' size="$4" color='$color1' />
+  //   </View>
+  // )
 
   if (!company.location) {
     return null;

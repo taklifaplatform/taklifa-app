@@ -160,7 +160,7 @@ export const ZixMapPointerField: React.FC<ZixMapPointerFieldProps> = (
       <MapView
         ref={mapRef}
         style={{ flex: 1 }}
-        customMapStyle={current === 'dark' ? darkMapStyle : []}
+        customMapStyle={darkMapStyle}
        // provider='google'
         initialCamera={{
           center: {
