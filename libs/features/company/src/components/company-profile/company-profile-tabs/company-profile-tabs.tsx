@@ -23,7 +23,12 @@ export const CompanyProfileTabs: React.FC<ProfileTabsProps> = ({
         key: 'about',
         title: `${t('common:tab-about')}`,
         content: <AboutCompanyTab company={company} />
-      }
+      },
+      {
+        key: 'services',
+        title: `${t('common:tab-services')}`,
+        content: <CompanyServicesTab company={company} />
+      },
     ]
 
     if (company.vehicles_count) {
@@ -40,11 +45,7 @@ export const CompanyProfileTabs: React.FC<ProfileTabsProps> = ({
       content: <CompanyDriversTab company={company} />
     })
 
-    _tabs.push({
-      key: 'services',
-      title: `${t('common:tab-services')}`,
-      content: <CompanyServicesTab company={company} />
-    })
+
     // _tabs.push({
     //   key: 'reviews',
     //   title: `${t('common:tab-review')}`,
@@ -55,7 +56,7 @@ export const CompanyProfileTabs: React.FC<ProfileTabsProps> = ({
 
   return (
     <ZixTab
-      defaultActiveTab='about'
+      defaultActiveTab='services'
       tabs={tabs}
     />
   );

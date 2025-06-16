@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Marker } from 'react-native-maps';
 import { Image } from 'expo-image';
 
-import { useStyle, View } from 'tamagui';
+import { Theme, useStyle, View } from 'tamagui';
 import { Platform } from 'react-native';
 import { CustomIcon } from '@zix/ui/icons';
 
@@ -28,17 +28,22 @@ export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = React.memo(({
     height: '$4',
     borderRadius: '$4',
   })
-  const renderCarIcon = () => (company?.logo?.original_url && !showCustomIcon) ? (
-    <Image
-      source={{ uri: company.logo?.original_url }}
-      style={style}
-      resizeMode='contain'
-      onError={() => {
-        setShowCustomIcon(true)
-      }}
-    />
-  ) : (
-    <CustomIcon name='company_cars' size="$4" color={'$color5'} />
+  // const renderCarIcon = () => (company?.logo?.original_url && !showCustomIcon) ? (
+  //   <Image
+  //     source={{ uri: company.logo?.original_url }}
+  //     style={style}
+  //     resizeMode='contain'
+  //     onError={() => {
+  //       setShowCustomIcon(true)
+  //     }}
+  //   />
+  // ) : (
+  //   <CustomIcon name='company_cars' size="$4" color={'$color5'} />
+  // )
+  const renderCarIcon = () => (
+    <Theme name='accent'>
+      <CustomIcon name='logo' size="$4" color='$color1' />
+    </Theme>
   )
 
   if (!company.location) {

@@ -3,7 +3,8 @@ import { useIsFocused } from '@react-navigation/native';
 import { List, Map, X } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { AnalyticsService, CompaniesService, CompanyTransformer, DriverTransformer, DriversService, LocationService, VehiclesService } from '@zix/api';
-import { CompanyCard, UserCard } from '@zix/features/users';
+import { CompanyCard } from '@zix/features/company';
+import { UserCard } from '@zix/features/users';
 import { USER_ROLES, useAuth, useMixpanel } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
@@ -104,7 +105,7 @@ export function HomeScreen() {
         </Text>
       </View>
     )
-  } 
+  }
 
   const [currentRegion, setCurrentRegion] = useState<Region>({
     "latitude": 24.608423604325434,
@@ -460,8 +461,9 @@ export function HomeScreen() {
           <ListSection
             showMap={showMap}
             isKeyboardVisible={isKeyboardVisible}
-            driversList={filteredDrivers}
-            companiesList={(filters.provider_type === 'all' || filters.provider_type === 'company') && !urgencyMode ? companiesQuery.data?.data || [] : []}
+            driversList={(filters.provider_type === 'all' || filters.provider_type === 'solo_driver') ? filteredDrivers : []}
+            companiesList={
+              (filters.provider_type === 'all' || filters.provider_type === 'company') && !urgencyMode ? companiesQuery.data?.data || [] : []}
             isFetching={isFetching}
             fetchDrivers={fetchDrivers}
           />
@@ -595,7 +597,7 @@ const ListSection: FC<ListSectionProps> = memo(function ListSection({
       renderItem: ({ item, index }) => (
         <CompanyCard
           key={`stack-company-${item.id}-${index}`}
-          user={item}
+          company={item}
           flex={1}
           marginHorizontal="$4"
           marginVertical="$2"
@@ -794,7 +796,7 @@ const ActivateUrgencyModeButton: FC<ActivateUrgencyModeButtonProps> = ({
 
   const animateToLocation = (location: Location.LocationObjectCoords) => {
     if (!mapRef?.current) return;
-    
+
     if (Platform.OS === 'ios') {
       mapRef.current.animateCamera({
         center: {
