@@ -44,7 +44,7 @@ export const SettingItem = ({
         {...props}
       >
         <YStack
-          padding="$2"
+          padding="$1"
           borderRadius="$3"
         // backgroundColor={'rgba(255, 251, 237, 1)'}
         >

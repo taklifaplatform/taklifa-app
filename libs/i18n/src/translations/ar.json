@@ -205,8 +205,40 @@
       "title": "عام"
     },
     "change_email": {
-      "title": "تغيير البريد الإلكتروني"
+      "title": " البريد الإلكتروني"
     },
+    "pay_fees": {
+      "title": "دفع رسوم"
+    },
+    "activity_status": {
+      "title": "حالة النشاط"
+    },
+    "notifications": {
+      "title": "الإشعارات",
+      "pause_notifications": "إيقاف الاشعارات مؤقتا"
+    },
+    "screen_and_language": {
+      "title": "الشاشة و اللغة"
+    },
+    "more_information": {
+      "title": "المزيد من المعلومات"
+    },
+    "about_us": {
+      "title": "حول التطبيق"
+    },
+    "login": {
+      "title": "تسجيل الدخول"
+    },
+    "add_account": {
+      "title": "أضف حساب جديد"
+    },
+    "account_settings": {
+      "title": "اعدادات الحساب"
+    },
+    "change_password": {
+      "title": " كلمة المرور"
+    },
+    "active": "نشط",
     "privacy_policy": {
       "title": "سياسة الخصوصية"
     },
@@ -217,8 +249,8 @@
       "twitter_title": "تويتر"
     },
     "theme": {
-      "title": "السمة",
-      "system": "النظام",
+      "title": "المظهر",
+      "system": "نظام التطبيق",
       "light": "فاتح",
       "dark": "داكن"
     },
@@ -707,7 +739,7 @@
   "settings": {
     "index_title": "الإعدادات",
     "general": "عام",
-    "change_password": "تغيير كلمة المرور",
+    "change_password": " كلمة المرور",
     "change_email": "تغيير البريد الإلكتروني",
     "privacy_policy": "سياسة الخصوصية",
     "terms_of_service": "شروط الخدمة",

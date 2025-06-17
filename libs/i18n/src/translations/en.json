@@ -158,6 +158,38 @@
     "change_email": {
       "title": "Change Email"
     },
+    "pay_fees": {
+      "title": "Pay Fees"
+    },
+    "activity_status": {
+      "title": "Activity Status"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "pause_notifications": "Pause Notifications"
+    },
+    "screen_and_language": {
+      "title": "Screen and Language"
+    },
+    "more_information": {
+      "title": "More Information"
+    },
+    "about_us": {
+      "title": "About Us"
+    },
+    "login": {
+      "title": "Login"
+    },
+    "add_account": {
+      "title": "Add Account"
+    },
+    "account_settings": {
+      "title": "Account Settings"
+    },
+    "change_password": {
+      "title": "Change Password"
+    },
+    "active": "Active",
     "privacy_policy": {
       "title": "Privacy Policy"
     },
