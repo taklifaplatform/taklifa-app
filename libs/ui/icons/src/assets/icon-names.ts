@@ -26,6 +26,7 @@ export const iconNames = [
   'company',
   'contact_calendar',
   'delete',
+  'delted',
   'dimension_box',
   'document',
   'edit',

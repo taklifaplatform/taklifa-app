@@ -1,7 +1,17 @@
-import { ChevronDown, ChevronLeft, ChevronUp } from '@tamagui/lucide-icons';
+import {
+  ChevronDown,
+  ChevronLeft,
+  ChevronUp,
+  X,
+  ChevronRight,
+} from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { AnalyticsService, AnnouncementService, AnnouncementTransformer } from '@zix/api';
+import {
+  AnalyticsService,
+  AnnouncementService,
+  AnnouncementTransformer,
+} from '@zix/api';
 import { UserContactActions } from '@zix/features/users';
 import { useAuth, useMixpanel } from '@zix/services/auth';
 import { UserAvatar, ZixDialog } from '@zix/ui/common';
@@ -10,19 +20,13 @@ import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { Image } from 'expo-image';
 import { t } from 'i18next';
 import moment from 'moment';
-import { useCallback, useState } from 'react';
-import { Alert, FlatList, ScrollView, TouchableOpacity } from 'react-native';
+import { useCallback, useRef, useState } from 'react';
+import { Alert, Dimensions, FlatList, ScrollView, TouchableOpacity } from 'react-native';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
-import {
-  Button,
-  H4,
-  Separator,
-  Text,
-  View,
-  XStack,
-  YStack
-} from 'tamagui';
+import { Button, H4, Separator, Text, View, XStack, YStack } from 'tamagui';
+import { Sheet } from '@tamagui/sheet';
+import Carousel from 'react-native-reanimated-carousel';
 
 const { useParam } = createParam<{ announcement?: string }>();
 
@@ -53,23 +57,114 @@ type OwnerActionsProps = {
   onStatusChange: (status: string) => void;
 };
 
-// Components
+// Components des images
 const ImageCarousel = ({
   images,
   selectedImageIndex,
   onImageSelect,
 }: ImageCarouselProps) => {
+  const carouselRef = useRef(null);
   if (images.length === 0) return null;
 
+  // Largeur de l'image principale (doit matcher le style)
+  const { width: IMAGE_WIDTH } = Dimensions.get('window');
+  const IMAGE_HEIGHT = 177;
+
+  // Fonction pour sélectionner une image et scroller la FlatList principale
+  const handleSelectImage = (index: number) => {
+    onImageSelect(index);
+    if (carouselRef.current) {
+      // @ts-expect-error carouselRef type is not precise, but scrollTo exists at runtime
+      carouselRef.current.scrollTo({ index, animated: true });
+    }
+  };
+
   return (
-    <YStack>
-      <Image
-        source={{
-          uri: images[selectedImageIndex]?.url || images[0]?.url,
+    <YStack alignItems="center" justifyContent="center" position="relative">
+      {/* Chevron gauche */}
+      <TouchableOpacity
+        disabled={selectedImageIndex === 0}
+        onPress={() => {
+          if (selectedImageIndex > 0) onImageSelect(selectedImageIndex - 1);
         }}
-        style={{ width: '100%', height: 177, borderRadius: 12 }}
-        contentFit="cover"
+        style={{
+          position: 'absolute',
+          left: 0,
+          top: '35%',
+          zIndex: 10,
+          transform: [{ translateY: -24 }],
+          opacity: selectedImageIndex === 0 ? 0.3 : 1,
+          padding: 8,
+        }}
+      >
+        <CustomIcon name="chevron-left" size={32} color="$color1" />
+      </TouchableOpacity>
+      {/* Carousel principal */}
+      <Carousel
+        ref={carouselRef}
+        width={IMAGE_WIDTH}
+        height={IMAGE_HEIGHT}
+        data={images}
+        loop={false}
+        style={{ borderRadius: 12 }}
+        renderItem={({ item }) => (
+          <Image
+            source={{ uri: item.url }}
+            style={{ width: IMAGE_WIDTH, height: IMAGE_HEIGHT, borderRadius: 12 }}
+            contentFit="cover"
+          />
+        )}
+        panGestureHandlerProps={{ activeOffsetX: [-10, 10] }}
+        snapEnabled
+        pagingEnabled
+        onSnapToItem={onImageSelect}
+        defaultIndex={selectedImageIndex}
       />
+      {/* Chevron droit */}
+      <TouchableOpacity
+        disabled={selectedImageIndex === images.length - 1}
+        onPress={() => {
+          if (selectedImageIndex < images.length - 1 && carouselRef.current) {
+            onImageSelect(selectedImageIndex + 1);
+            // @ts-expect-error carouselRef type is not precise, but scrollTo exists at runtime
+            carouselRef.current.scrollTo({ index: selectedImageIndex + 1, animated: true });
+          }
+        }}
+        style={{
+          position: 'absolute',
+          right: 0,
+          top: '35%',
+          zIndex: 10,
+          transform: [{ translateY: -24 }],
+          opacity: selectedImageIndex === images.length - 1 ? 0.3 : 1,
+          padding: 8,
+        }}
+      >
+        <CustomIcon name="chevron-right" size={32} color="$color1" />
+      </TouchableOpacity>
+
+      <XStack
+        gap={4}
+        marginTop={8}
+        justifyContent="center"
+        alignItems="center"
+        position="absolute"
+        bottom={90}
+        left={10}
+        right={10}
+        theme="accent"
+      >
+        {images.map((_, idx) => (
+          <View
+            key={idx}
+            width={8}
+            height={8}
+            borderRadius={8}
+            backgroundColor={selectedImageIndex === idx ? '$color8' : 'gray'}
+          />
+        ))}
+      </XStack>
+      {/* Miniatures synchronisées */}
       <FlatList
         data={images}
         horizontal
@@ -78,7 +173,7 @@ const ImageCarousel = ({
         style={{ marginTop: 8 }}
         contentContainerStyle={{ gap: 8 }}
         renderItem={({ item, index }) => (
-          <TouchableOpacity onPress={() => onImageSelect(index)}>
+          <TouchableOpacity onPress={() => handleSelectImage(index)}>
             <Image
               source={{ uri: item.url }}
               style={{
@@ -93,6 +188,7 @@ const ImageCarousel = ({
             />
           </TouchableOpacity>
         )}
+        extraData={selectedImageIndex}
       />
     </YStack>
   );
@@ -146,10 +242,9 @@ const InfoCard = ({ announcement }: InfoCardProps) => (
           announcement: announcement.id?.toString() || '',
           requestBody: {
             action_type: 'call_press',
-          }
-        })
+          },
+        });
       }}
-
     />
   </YStack>
 );
@@ -173,13 +268,6 @@ const DescriptionSection = ({ description }: DescriptionSectionProps) => {
           )}
         </XStack>
       </TouchableOpacity>
-      {isDescriptionOpen && (
-        <YStack>
-          <Text textAlign="left" fontSize={13} color="$color12">
-            {description}
-          </Text>
-        </YStack>
-      )}
       {/* <YStack
         justifyContent="space-between"
         gap="$3"
@@ -219,9 +307,7 @@ const DescriptionSection = ({ description }: DescriptionSectionProps) => {
   );
 };
 
-const SimilarAnnouncements = ({
-  announcements,
-}: SimilarAnnouncementsProps) => {
+const SimilarAnnouncements = ({ announcements }: SimilarAnnouncementsProps) => {
   const router = useRouter();
   if (announcements.length === 0) return null;
 
@@ -259,11 +345,11 @@ const SimilarAnnouncements = ({
                 announcement: item.id?.toString() || '',
                 requestBody: {
                   action_type: 'view',
-                }
+                },
               }).then((res) => {
-                console.log('Announcement analytic stored', res)
-              })
-              router.push(`/app/announcements/${item.id}`)
+                console.log('Announcement analytic stored', res);
+              });
+              router.push(`/app/announcements/${item.id}`);
             }}
             key={item.id}
           >
@@ -333,61 +419,78 @@ const OwnerActions = ({
   onStatusChange,
 }: OwnerActionsProps) => {
   const [statusSheetOpen, setStatusSheetOpen] = useState(false);
+  const [deleteSheetOpen, setDeleteSheetOpen] = useState(false);
   const STATUS_OPTIONS = [
-    { value: 'active', label: 'شغال' },
-    { value: 'inactive', label: 'متوقف' },
+    { value: 'active', label: t('common:active') },
+    { value: 'inactive', label: t('common:inactive') },
   ];
 
   return (
-    <XStack gap="$1" padding="$2" justifyContent="space-between">
-      <Button
-        backgroundColor="#FFEEEE"
-        size="$2"
-        textProps={{
-          fontSize: 10,
-          fontWeight: '500',
-        }}
-        color="#FF3B30"
-        iconAfter={<CustomIcon name="delete" size={13} color="#FF3B30" />}
-        onPress={onDelete}
-      >
-        {t('forms:delete-announcement')}
-      </Button>
+    <XStack gap="$1" padding="$4" justifyContent="space-between">
       <XStack gap="$2">
-        <ZixDialog
-          title={t('common:announcement-status')}
-          open={statusSheetOpen}
-          onOpenChange={setStatusSheetOpen}
-          contentPadding="$4"
-          trigger={
-            <Button
-              backgroundColor="$color3"
-              borderRadius={10}
-              size="$2"
-              textProps={{
-                fontSize: 10,
-                fontWeight: '500',
-              }}
-              color="#222"
-              onPress={() => setStatusSheetOpen(true)}
-              iconAfter={
-                <CustomIcon
-                  name="radio_button_checked"
-                  color={status === 'active' ? 'green' : 'red'}
-                />
-              }
-            >
-              {t('forms:announcement-status')}
-              <Text
-                fontWeight="700"
-                color={status === 'active' ? 'green' : 'red'}
-              >
-                {STATUS_OPTIONS.find((opt) => opt.value === status)?.label}
-              </Text>
-            </Button>
+        {/*edit button */}
+        <Button
+          backgroundColor="$color3"
+          borderRadius={10}
+          size="$2"
+          textProps={{
+            fontSize: 12,
+            fontWeight: '500',
+          }}
+          color="$color12"
+          iconAfter={<CustomIcon name="edit" size={13} color="$color12" />}
+          onPress={onEdit}
+        >
+          {t('forms:edit-announcement')}
+        </Button>
+        {/*status button */}
+        <Button
+          backgroundColor="$color3"
+          borderRadius={10}
+          size="$2"
+          textProps={{
+            fontSize: 12,
+            fontWeight: '500',
+          }}
+          color="$color12"
+          onPress={() => setStatusSheetOpen(true)}
+          iconAfter={
+            <CustomIcon
+              name="radio_button_checked"
+              color={status === 'active' ? 'green' : 'red'}
+            />
           }
         >
-          <YStack>
+          {t('common:announcement-status')}
+          <Text fontWeight="700" color={status === 'active' ? 'green' : 'red'}>
+            {STATUS_OPTIONS.find((opt) => opt.value === status)?.label}
+          </Text>
+        </Button>
+        <Sheet
+          open={statusSheetOpen}
+          onOpenChange={setStatusSheetOpen}
+          native
+          modal
+          snapPoints={[28]}
+          dismissOnSnapToBottom
+        >
+          <Sheet.Overlay />
+          <YStack
+            gap="$2"
+            padding="$4"
+            backgroundColor="#FFF"
+            borderRadius={20}
+            height={220}
+          >
+            <XStack justifyContent="space-between" alignItems="center">
+              <Text fontWeight="bold" fontSize={18} marginBottom={8}>
+                {t('forms:announcement-status')}
+              </Text>
+              <TouchableOpacity onPress={() => setStatusSheetOpen(false)}>
+                <X size={24} color="$color12" />
+              </TouchableOpacity>
+            </XStack>
+
             {STATUS_OPTIONS.map((opt) => (
               <XStack
                 theme="accent"
@@ -397,37 +500,113 @@ const OwnerActions = ({
                 gap="$2"
                 paddingVertical="$2"
                 cursor="pointer"
+                borderBottomWidth={0.25}
+                borderBottomColor="gray"
                 onPress={() => {
                   onStatusChange(opt.value);
                   setStatusSheetOpen(false);
                 }}
               >
-                <Text fontWeight={status === opt.value ? 'bold' : 'normal'}>
+                <Text
+                  fontWeight={status === opt.value ? 'bold' : 'normal'}
+                  fontSize={16}
+                  color={
+                    opt.value === 'active' && status === 'active'
+                      ? 'green'
+                      : opt.value === 'inactive' && status === 'inactive'
+                        ? '#FF9325'
+                        : '$color12'
+                  }
+                >
                   {opt.label}
                 </Text>
                 <CustomIcon
                   name="radio_button_checked"
-                  color={status === opt.value ? '$color9' : 'gray'}
+                  color={
+                    opt.value === 'active' && status === 'active'
+                      ? 'green'
+                      : opt.value === 'inactive' && status === 'inactive'
+                        ? '#FF9325'
+                        : 'gray'
+                  }
                 />
               </XStack>
             ))}
           </YStack>
-        </ZixDialog>
-        <Button
-          backgroundColor="$color3"
-          borderRadius={10}
-          size="$2"
-          textProps={{
-            fontSize: 10,
-            fontWeight: '500',
-          }}
-          color="#222"
-          iconAfter={<CustomIcon name="edit" size={13} color="#222" />}
-          onPress={onEdit}
-        >
-          {t('forms:edit-announcement')}
-        </Button>
+        </Sheet>
       </XStack>
+      {/*delete button */}
+      <Button
+        backgroundColor="#FFEEEE"
+        size="$2"
+        textProps={{
+          fontSize: 12,
+          fontWeight: '500',
+        }}
+        color="#FF3B30"
+        iconAfter={<CustomIcon name="delete" size={13} color="#FF3B30" />}
+        onPress={() => setDeleteSheetOpen(true)}
+      >
+        {t('forms:delete-announcement')}
+      </Button>
+      <Sheet
+        open={deleteSheetOpen}
+        onOpenChange={setDeleteSheetOpen}
+        native
+        modal
+        snapPoints={[38]}
+        dismissOnSnapToBottom
+      >
+        <Sheet.Overlay />
+        {/* <Sheet.Handle /> */}
+        <YStack
+          gap="$4"
+          padding="$4"
+          backgroundColor="#FFF0F0"
+          borderRadius={20}
+        >
+          <XStack justifyContent="space-between" alignItems="center">
+            <Text fontWeight="bold" fontSize={18} marginBottom={8}>
+              {t('forms:delete-announcement')}
+            </Text>
+            <TouchableOpacity onPress={() => setDeleteSheetOpen(false)}>
+              <X size={24} color="$color12" />
+            </TouchableOpacity>
+          </XStack>
+          <View
+            alignSelf="center"
+            backgroundColor="#FFF0F0"
+            borderRadius={50}
+            width={80}
+            height={80}
+            alignItems="center"
+            justifyContent="center"
+            marginBottom={16}
+          >
+            <CustomIcon name="delted" size={150} color="#FF3B30" />
+          </View>
+          <Text fontSize={16} textAlign="center" color="#222" marginBottom={16}>
+            {t('common:are-you-sure-delete')}
+          </Text>
+          <Button
+            backgroundColor="#FF3B30"
+            color="#fff"
+            borderRadius={10}
+            width="100%"
+            marginTop={16}
+            onPress={() => {
+              setDeleteSheetOpen(false);
+              onDelete();
+            }}
+            textProps={{
+              fontSize: 18,
+              fontWeight: '700',
+            }}
+          >
+            {t('common:yes-delete')}
+          </Button>
+        </YStack>
+      </Sheet>
     </XStack>
   );
 };
@@ -545,9 +724,7 @@ export const AnnouncementDetailsScreen = () => {
           <Separator marginVertical="$2" />
           <DescriptionSection description={announcement.description || ''} />
           <Separator borderColor="$color4" borderWidth={0.25} />
-          <SimilarAnnouncements
-            announcements={similarAnnouncements}
-          />
+          <SimilarAnnouncements announcements={similarAnnouncements} />
         </YStack>
       </ScrollView>
     </ScreenLayout>

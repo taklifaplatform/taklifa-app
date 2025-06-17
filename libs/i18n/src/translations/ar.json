@@ -532,12 +532,19 @@
     "use-my-location": "استخدم موقعي",
     "newest-first": "الأحدث أولاً",
     "oldest-first": "الأقدم أولاً",
+    "expensive-first": "الأغلى أولاً",
+    "cheap-first": "الأرخص أولاً",
     "sort-by-price": "ترتيب حسب السعر",
     "sort-by-time": "ترتيب حسب الوقت",
     "description-announcement": "وصف الإعلان",
     "similar-announcements": "إعلانات مشابهة",
     "view-more": "تصفح المزيد",
-    "announcement-status": "حالة الإعلان"
+    "announcement-status": "حالة الإعلان",
+    "active": "شغال",
+    "inactive": "متوقف",
+    "are-you-sure-delete": "هل أنت متأكد من حذف الإعلان؟",
+    "yes-delete": "نعم، حذف",
+    "no-delete": "لا"
   },
   "cookies-banner": {
     "section-1": {

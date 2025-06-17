@@ -104,13 +104,13 @@ const CategoryList = memo(
           borderWidth={1}
           borderColor={
             selectedCategory?.id === item.id ||
-              (!selectedCategory && item.id === 'all')
+            (!selectedCategory && item.id === 'all')
               ? '$color9'
               : '$color8'
           }
           backgroundColor={
             selectedCategory?.id === item.id ||
-              (!selectedCategory && item.id === 'all')
+            (!selectedCategory && item.id === 'all')
               ? '$color8'
               : '$color2'
           }
@@ -144,13 +144,13 @@ const SubCategoryList = memo(
             style={{ marginRight: 10 }}
             variant={
               selectedSubCategory?.id === item.id ||
-                (!selectedSubCategory && item.id === 'all')
+              (!selectedSubCategory && item.id === 'all')
                 ? undefined
                 : 'outlined'
             }
             borderColor={
               selectedSubCategory?.id === item.id ||
-                (!selectedSubCategory && item.id === 'all')
+              (!selectedSubCategory && item.id === 'all')
                 ? '$color1'
                 : '$color8'
             }
@@ -190,12 +190,12 @@ const AnnouncementItem = memo(
             announcement: item.id?.toString() || '',
             requestBody: {
               action_type: 'view',
-            }
+            },
           }).then((res) => {
-            console.log('Announcement analytic stored', res)
-          })
+            console.log('Announcement analytic stored', res);
+          });
 
-          router.push(`/app/announcements/${item.id}`)
+          router.push(`/app/announcements/${item.id}`);
         }}
       >
         <XStack
@@ -472,6 +472,11 @@ export const AnnouncementsListScreen: React.FC<
     (cat?: AnnouncementCategoryTransformer) => {
       setSelectedCategory(cat);
       setSelectedSubCategory(undefined);
+      if (!cat) {
+        setSelectedYears([]);
+        setSortBy('created_at');
+        setSortDirection('desc');
+      }
     },
     [],
   );
@@ -530,7 +535,7 @@ export const AnnouncementsListScreen: React.FC<
       label: t('common:price'),
       options: [
         {
-          label: t('common:newest-first'),
+          label: t('common:expensive-first'),
           value: 'price_desc',
           name: (
             <XStack
@@ -551,7 +556,7 @@ export const AnnouncementsListScreen: React.FC<
                     : '$color12'
                 }
               >
-                {t('common:newest-first')}
+                {t('common:expensive-first')}
               </Text>
               <CustomIcon
                 name="radio_button_checked"
@@ -570,7 +575,7 @@ export const AnnouncementsListScreen: React.FC<
           },
         },
         {
-          label: t('common:oldest-first'),
+          label: t('common:cheap-first'),
           value: 'price_asc',
           name: (
             <XStack
@@ -591,7 +596,7 @@ export const AnnouncementsListScreen: React.FC<
                     : '$color12'
                 }
               >
-                {t('common:oldest-first')}
+                {t('common:cheap-first')}
               </Text>
               <CustomIcon
                 name="radio_button_checked"
@@ -713,7 +718,7 @@ export const AnnouncementsListScreen: React.FC<
             <ZixButton
               minWidth={120}
               themeInverse
-              icon={<PlusCircle size="$1" color="$color12" />}
+              iconAfter={<PlusCircle size="$1" color="black" />}
               onPress={() => {
                 if (isLoggedIn) {
                   router.push(`/app/announcements/create`);
@@ -723,6 +728,10 @@ export const AnnouncementsListScreen: React.FC<
               }}
               size={'$2'}
               fontWeight="bold"
+              textProps={{
+                color: 'black',
+              }}
+              backgroundColor="orange"
             >
               {t('common:add-announcement')}
             </ZixButton>
@@ -783,17 +792,24 @@ export const AnnouncementsListScreen: React.FC<
                 size="$2"
                 theme="accent"
                 paddingHorizontal="$4"
-                disabled={selectedYears.length === 0}
                 onPress={() => {
-                  setYearSheetOpen(false)
-                  setSelectedYears([])
+                  setSelectedYears(
+                    selectedYears.length === YEARS.length ? [] : YEARS,
+                  );
+                  setYearSheetOpen(false);
                 }}
+                icon={
+                  selectedYears.length === YEARS.length ? (
+                    <CheckSquare size="$1" color="$color12" />
+                  ) : (
+                    <Square size="$1" color="$color12" />
+                  )
+                }
               >
                 {t('common:all')}
               </ZixButton>
             </XStack>
             <ScrollView flex={1}>
-
               {YEARS.map((y) => (
                 <TouchableOpacity
                   key={y}
@@ -843,9 +859,9 @@ export const AnnouncementsListScreen: React.FC<
             }}
           >
             {sortBy === 'price' && sortDirection === 'desc'
-              ? t('common:newest-first')
+              ? t('common:expensive-first')
               : sortBy === 'price' && sortDirection === 'asc'
-                ? t('common:oldest-first')
+                ? t('common:cheap-first')
                 : t('common:price')}
           </Button>
           {/* Bouton tri date */}

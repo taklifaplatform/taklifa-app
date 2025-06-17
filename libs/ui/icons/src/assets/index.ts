@@ -27,6 +27,7 @@ import CompanyShipping from './icons/company-shipping.svg';
 import Company from './icons/company.svg'; 
 import ContactCalendar from './icons/contact-calendar.svg'; 
 import Delete from './icons/delete.svg'; 
+import Delted from './icons/delted.svg'; 
 import DimensionBox from './icons/dimension-box.svg'; 
 import Document from './icons/document.svg'; 
 import Edit from './icons/edit.svg'; 
@@ -127,6 +128,7 @@ export {
   Company,
   ContactCalendar,
   Delete,
+  Delted,
   DimensionBox,
   Document,
   Edit,
