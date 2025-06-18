@@ -1,5 +1,5 @@
 import { Building } from '@tamagui/lucide-icons';
-import { CompanyTransformer } from '@zix/api';
+import { CompanyBranchTransformer, CompanyTransformer } from '@zix/api';
 import React, { useState } from 'react';
 import { Marker } from 'react-native-maps';
 import { Image } from 'expo-image';
@@ -11,12 +11,14 @@ import { CustomIcon } from '@zix/ui/icons';
 
 export type MapCompanyMarkerProps = {
   company: CompanyTransformer;
+  branch?: CompanyBranchTransformer;
   isSelected?: boolean;
   onPress?: () => void;
 };
 
 export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = React.memo(({
   company,
+  branch,
   isSelected,
   onPress
 }: MapCompanyMarkerProps) => {
@@ -48,7 +50,9 @@ export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = React.memo(({
   //   </View>
   // )
 
-  if (!company.location) {
+  const location = branch?.location || company.location
+
+  if (!location) {
     return null;
   }
 
@@ -56,8 +60,8 @@ export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = React.memo(({
     <Marker
       key={company.id}
       coordinate={{
-        latitude: parseFloat(company.location.latitude ?? '0'),
-        longitude: parseFloat(company.location.longitude ?? '0'),
+        latitude: parseFloat(location.latitude ?? '0'),
+        longitude: parseFloat(location.longitude ?? '0'),
       }}
       onPress={() => onPress?.()}
     >

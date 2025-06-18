@@ -48,7 +48,7 @@ const mapStyle = [
     "featureType": "administrative.land_parcel",
     "stylers": [{ "visibility": "off" }]
   },
-  
+
 ];
 
 export function HomeScreen() {
@@ -406,13 +406,26 @@ export function HomeScreen() {
   const renderMapCompanies = () =>
     (filters.provider_type === 'all' || filters.provider_type === 'company') && !urgencyMode ?
       companiesQuery.data?.data?.map((company, index) => (
-        <MapCompanyMarker
-          key={`marker-${index}`}
-          company={company}
-          onPress={() => {
-            router.push(`${getUrlPrefix}/companies/${company.id}`);
-          }}
-        />
+        <>
+          <MapCompanyMarker
+            key={`marker-${index}`}
+            company={company}
+            onPress={() => {
+              router.push(`${getUrlPrefix}/companies/${company.id}`);
+            }}
+          />
+
+          {
+            company.branches?.map((branch, index) => (
+              <MapCompanyMarker
+                key={`marker-${index}`}
+                company={company}
+                branch={branch}
+              />
+            ))
+          }
+
+        </>
       )) : null;
 
   // Debounced region setter

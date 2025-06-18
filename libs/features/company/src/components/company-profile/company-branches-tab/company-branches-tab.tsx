@@ -38,10 +38,6 @@ export const CompanyBranchesTab: React.FC<CompanyBranchesTabProps> = ({
             fontWeight={'bold'}
             fontSize={'$3'}
           >{item?.name || ''}</Text>
-
-
-
-
         </XStack>
 
 
