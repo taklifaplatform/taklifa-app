@@ -479,7 +479,22 @@
     "permission-to-access-location-was-denied": "Permission to access location was denied",
     "please-open-app-settings-to-grant-permission": "Please open app settings to grant permission",
     "open-app-settings": "Open app settings",
-    "use-my-location": "Use my location"
+    "use-my-location": "Use my location",
+    "newest-first": "Newest First",
+    "oldest-first": "Oldest First",
+    "expensive-first": "Expensive First",
+    "cheap-first": "Cheap First",
+    "sort-by-price": "Sort by Price",
+    "sort-by-time": "Sort by Time",
+    "description-announcement": "Description",
+    "similar-announcements": "Similar Announcements",
+    "view-more": "View More",
+    "announcement-status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "are-you-sure-delete": "Are you sure you want to delete the announcement?",
+    "yes-delete": "Yes, delete",
+    "no-delete": "No"
   },
   "cookies-banner": {
     "section-1": {
@@ -591,9 +606,9 @@
     "announcement-year-model": "Announcement Year Model // Enter announcement year model",
     "announcement-category": "Announcement Category",
     "announcement-images": "Announcement Images // Upload announcement images",
-    "delete-announcement": "Delete Announcement",
-    "edit-announcement": "Edit Announcement",
-    "announcement-status": "Announcement Status"
+    "delete-announcement": "Delete",
+    "edit-announcement": "Edit",
+    "announcement-status": "Status Announcement"
   },
   "invite": {
     "company-member": "Hello, {{name}}! \n\n{{company}} has invited you to join their team. \n\nTo accept the invitation, click the link below: \n\n{{link}} \n\n"
