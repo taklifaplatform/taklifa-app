@@ -12,6 +12,8 @@ import {
   AnnouncementService,
   AnnouncementTransformer,
 } from '@zix/api';
+import { ZixMediasListWidget } from '@zix/ui/widgets';
+
 import { UserContactActions } from '@zix/features/users';
 import { useAuth, useMixpanel } from '@zix/services/auth';
 import { UserAvatar, ZixDialog } from '@zix/ui/common';
@@ -252,7 +254,7 @@ const InfoCard = ({ announcement }: InfoCardProps) => (
 const DescriptionSection = ({ description }: DescriptionSectionProps) => {
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(true);
 
-  if (!description) return null;
+  if (!description?.length) return null;
 
   return (
     <YStack gap="$3">
@@ -268,41 +270,13 @@ const DescriptionSection = ({ description }: DescriptionSectionProps) => {
           )}
         </XStack>
       </TouchableOpacity>
-      {/* <YStack
-        justifyContent="space-between"
-        gap="$3"
-        backgroundColor="$color2"
-        borderRadius={16}
-        padding="$4"
-      >
-        <XStack alignItems="center" gap="$5">
-          <CustomIcon name="hash" size={16} color="#888" />
-          <Text color="$color10" fontSize={13}>
-            رقم إعلان:
+      {
+        isDescriptionOpen && (
+          <Text textAlign="left" fontSize={14} color="$color12" marginBottom={16}>
+            {description}
           </Text>
-          <Text color="$color12" fontSize={13}>
-            222222
-          </Text>
-        </XStack>
-        <XStack alignItems="center" gap="$3">
-          <CustomIcon name="eye" size={16} color="#888" />
-          <Text color="$color10" fontSize={13}>
-            عدد المشاهدات:
-          </Text>
-          <Text color="$color12" fontSize={13}>
-            0
-          </Text>
-        </XStack>
-        <Button
-          size="$2"
-          textProps={{
-            fontSize: 10,
-            fontWeight: '500',
-          }}
-        >
-          المزيد من الاحصائيات
-        </Button>
-      </YStack> */}
+        )
+      }
     </YStack>
   );
 };
@@ -715,16 +689,59 @@ export const AnnouncementDetailsScreen = () => {
       )}
       <ScrollView showsVerticalScrollIndicator={false}>
         <YStack flex={1} gap="$4" padding="$3">
-          <ImageCarousel
+          {/* <ImageCarousel
             images={images}
             selectedImageIndex={selectedImageIndex}
             onImageSelect={setSelectedImageIndex}
+          /> */}
+
+          <ZixMediasListWidget
+            medias={announcement?.images || []}
+            imageWidth={100}
+            imageHeight={100}
           />
           <InfoCard announcement={announcement} />
           <Separator marginVertical="$2" />
-          <DescriptionSection description={announcement.description || ''} />
+          <DescriptionSection description={announcement.description} />
+
+          <YStack
+            justifyContent="space-between"
+            gap="$3"
+            backgroundColor="$color2"
+            borderRadius={16}
+            padding="$4"
+          >
+            <XStack alignItems="center" gap="$5">
+              <CustomIcon name="hash" size={16} color="#888" />
+              <Text color="$color10" fontSize={13}>
+                رقم إعلان:
+              </Text>
+              <Text color="$color12" fontSize={13}>
+                222222
+              </Text>
+            </XStack>
+            <XStack alignItems="center" gap="$3">
+              <CustomIcon name="eye" size={16} color="#888" />
+              <Text color="$color10" fontSize={13}>
+                عدد المشاهدات:
+              </Text>
+              <Text color="$color12" fontSize={13}>
+                0
+              </Text>
+            </XStack>
+            <Button
+              size="$2"
+              textProps={{
+                fontSize: 10,
+                fontWeight: '500',
+              }}
+            >
+              المزيد من الاحصائيات
+            </Button>
+          </YStack>
           <Separator borderColor="$color4" borderWidth={0.25} />
-          <SimilarAnnouncements announcements={similarAnnouncements} />
+
+          {/* <SimilarAnnouncements announcements={similarAnnouncements} /> */}
         </YStack>
       </ScrollView>
     </ScreenLayout>
