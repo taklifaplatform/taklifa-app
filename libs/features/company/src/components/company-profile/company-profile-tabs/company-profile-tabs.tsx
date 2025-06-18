@@ -8,6 +8,7 @@ import CompanyDriversTab from '../company-drivers-tab/company-drivers-tab';
 import CompanyReviewsTab from '../company-reviews-tab/company-reviews-tab';
 import { t } from 'i18next';
 import CompanyServicesTab from '../company-services-tab/company-services-tab';
+import CompanyBranchesTab from '../company-branches-tab/company-branches-tab';
 
 export type ProfileTabsProps = {
   company: CompanyTransformer
@@ -39,18 +40,27 @@ export const CompanyProfileTabs: React.FC<ProfileTabsProps> = ({
       })
     }
 
+    // _tabs.push({
+    //   key: 'drivers',
+    //   title: `${t('common:tab-drivers')}`,
+    //   content: <CompanyDriversTab company={company} />
+    // })
+
+
     _tabs.push({
-      key: 'drivers',
-      title: `${t('common:tab-drivers')}`,
-      content: <CompanyDriversTab company={company} />
+      key: 'reviews',
+      title: `${t('common:tab-review')}`,
+      content: <CompanyReviewsTab company={company} />
     })
 
-
-    // _tabs.push({
-    //   key: 'reviews',
-    //   title: `${t('common:tab-review')}`,
-    //   content: <CompanyReviewsTab company={company} />
-    // })
+    if (company.branches?.length) {
+      _tabs.push({
+        key: 'branches',
+        title: `${t('common:branches')}`,
+        content: <CompanyBranchesTab company={company} />
+        // content: <CompanyBranchesTab company={company} />
+      })
+    }
     return _tabs
   }, [company])
 
