@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { CompanyBranchTransformer } from './CompanyBranchTransformer';
 import type { MediaTransformer } from './MediaTransformer';
 export type CompanyTransformer = {
     id?: string;
@@ -16,5 +17,6 @@ export type CompanyTransformer = {
         score?: number;
         count?: number;
     };
+    branches?: CompanyBranchTransformer;
 };
 

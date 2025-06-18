@@ -576,7 +576,15 @@
     "inactive": "متوقف",
     "are-you-sure-delete": "هل أنت متأكد من حذف الإعلان؟",
     "yes-delete": "نعم، حذف",
-    "no-delete": "لا"
+    "no-delete": "لا",
+    "branches": "الفروع",
+    "no-branches-found": "لم يتم العثور على فروع",
+    "update-branch": "تحديث الفرع",
+    "create-branch": "إنشاء فرع",
+    "branch-name": "اسم الفرع",
+    "branch-description": "وصف الفرع",
+    "branch-contact-number": "رقم هاتف الفرع",
+    "branch-location": "موقع الفرع"
   },
   "cookies-banner": {
     "section-1": {

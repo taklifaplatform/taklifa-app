@@ -21,6 +21,7 @@
       "@zix/features/announcements": [
         "libs/features/announcements/src/index.ts"
       ],
+      "@zix/features/branches": ["libs/features/branches/src/index.ts"],
       "@zix/features/auth": ["libs/features/auth/src/index.ts"],
       "@zix/features/chat": ["libs/features/chat/src/index.ts"],
       "@zix/features/company": ["libs/features/company/src/index.ts"],

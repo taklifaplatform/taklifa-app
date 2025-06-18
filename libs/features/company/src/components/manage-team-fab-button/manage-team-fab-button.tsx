@@ -1,4 +1,4 @@
-import { CarFront, Plus, Users, UsersRound } from '@tamagui/lucide-icons';
+import { Building2, CarFront, Plus, Users, UsersRound } from '@tamagui/lucide-icons';
 import { ActionSheet, ActionSheetRef } from '@zix/ui/common';
 import { useRef } from 'react';
 import { Button, Theme } from 'tamagui';
@@ -68,6 +68,14 @@ export const ManageTeamFabButton: React.FC = () => {
           onPress: () => {
             actionSheetRef.current?.close();
             router.push(`${getUrlPrefix}/company/services/create`);
+          },
+        },
+        {
+          name: t('common:branches'),
+          icon: <Building2 size="$2" color="$color10" />,
+          onPress: () => {
+            actionSheetRef.current?.close();
+            router.push(`${getUrlPrefix}/company/branches/create`);
           },
         },
       ]}

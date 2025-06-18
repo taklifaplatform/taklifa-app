@@ -526,7 +526,15 @@
     "inactive": "Inactive",
     "are-you-sure-delete": "Are you sure you want to delete the announcement?",
     "yes-delete": "Yes, delete",
-    "no-delete": "No"
+    "no-delete": "No",
+    "branches": "Branches",
+    "no-branches-found": "No branches found",
+    "update-branch": "Update Branch",
+    "create-branch": "Create Branch",
+    "branch-name": "Branch Name",
+    "branch-description": "Branch Description",
+    "branch-contact-number": "Branch Contact Number",
+    "branch-location": "Branch Location"
   },
   "cookies-banner": {
     "section-1": {
