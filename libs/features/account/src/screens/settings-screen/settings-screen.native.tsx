@@ -13,12 +13,12 @@ import { Alert, Linking, Platform, TouchableOpacity } from 'react-native';
 import {
   Paragraph,
   ScrollView,
+  Switch,
   Text,
   Theme,
   View,
   XStack,
   YStack,
-  Switch,
 } from 'tamagui';
 
 import { UserService } from '@zix/api';
@@ -76,22 +76,22 @@ export const SettingsScreen = () => {
     >
       {languages && languages?.length
         ? languages.map((lang, index) => (
-            <View
-              key={lang}
-              onPress={() => handleLanguageChange(lang)}
-              borderBottomWidth={0.5}
-              backgroundColor={hoveredIndex === index ? 'black' : 'white'}
-              cursor="pointer"
-              padding={10}
-              style={{
-                color: hoveredIndex === index ? 'white' : 'black', // Change text color on hover
-              }}
-              onMouseEnter={() => setHoveredIndex(index)} // Set hovered index on mouse enter
-              onMouseLeave={() => setHoveredIndex(null)} // Reset hover on mouse leave
-            >
-              {t(`account:language.${lang}`)}
-            </View>
-          ))
+          <View
+            key={lang}
+            onPress={() => handleLanguageChange(lang)}
+            borderBottomWidth={0.5}
+            backgroundColor={hoveredIndex === index ? 'black' : 'white'}
+            cursor="pointer"
+            padding={10}
+            style={{
+              color: hoveredIndex === index ? 'white' : 'black', // Change text color on hover
+            }}
+            onMouseEnter={() => setHoveredIndex(index)} // Set hovered index on mouse enter
+            onMouseLeave={() => setHoveredIndex(null)} // Reset hover on mouse leave
+          >
+            {t(`account:language.${lang}`)}
+          </View>
+        ))
         : null}
     </View>
   );
@@ -103,156 +103,129 @@ export const SettingsScreen = () => {
         <ScrollView>
           <Settings>
             <Settings.Items>
-              {isLoggedIn && Platform.OS === 'web' && (
-                <Settings.Group $gtSm={{ space: '$2' }}>
-                  {/* General */}
-                  <Settings.Item
-                    icon={(props: IconProps) => (
-                      <Theme name="accent">
-                        <CustomIcon
-                          {...props}
-                          name="settings"
-                          color="$color9"
-                        />
-                      </Theme>
-                    )}
-                    isActive={pathname === getUrl('account/settings/general')}
-                    href={getUrl('account/settings/general')}
-                    onPress={() => router.push(getUrl('account/settings'))}
-                    accentColor="$green9"
-                  >
-                    {t('account:general.title')}
-                  </Settings.Item>
-                </Settings.Group>
-              )}
-              <XStack paddingHorizontal="$6">
-                <Text fontSize={10}>{t('account:account_settings.title')}</Text>
-              </XStack>
-              {isLoggedIn && (
-                <Settings.Group
-                  backgroundColor="$background"
-                  borderRadius="$2"
-                  padding="$1"
-                >
-                  {/* Change Password */}
-                  <Settings.Item
-                    icon={(props: IconProps) => (
-                      <Theme name="accent">
-                        <CustomIcon
-                          name="lock"
-                          color="$color10"
-                          {...props}
-                          size={17}
-                        />
-                      </Theme>
-                    )}
-                    href={getUrl('account/settings/change-password')}
-                    onPress={() =>
-                      router.push(getUrl('account/settings/change-password'))
-                    }
-                    isActive={
-                      pathname === getUrl('account/settings/change-password')
-                    }
-                    accentColor="$green9"
-                  >
-                    <Text fontSize="$1" fontWeight="bold">
-                      {t('account:change_password.title')}
-                    </Text>
-                  </Settings.Item>
-                  {/* Change Email */}
-                  <Settings.Item
-                    icon={(props: IconProps) => (
-                      <Theme name="accent">
-                        <CustomIcon
-                          name="mail"
-                          color="$color10"
-                          {...props}
-                          size={17}
-                        />
-                      </Theme>
-                    )}
-                    isActive={
-                      pathname === getUrl('account/settings/change-email')
-                    }
-                    href={getUrl('account/settings/change-email')}
-                    onPress={() =>
-                      router.push(getUrl('account/settings/change-email'))
-                    }
-                    accentColor="$green9"
-                  >
-                    <Text fontSize="$1" fontWeight="bold">
-                      {t('account:change_email.title')}
-                    </Text>
-                  </Settings.Item>
-                  {/* Pay Fees */}
-                  <Settings.Item
-                    icon={(props: IconProps) => (
-                      <Theme name="accent">
-                        <CustomIcon
-                          name="payments"
-                          color="$color10"
-                          {...props}
-                          size={17}
-                        />
-                      </Theme>
-                    )}
-                    // onPress={() =>
-                    //   router.push(getUrl('account/settings/change-email'))
-                    // }
-                    accentColor="$green9"
-                  >
-                    <Text fontSize="$1" fontWeight="bold">
-                      {t('account:pay_fees.title')}
-                    </Text>
-                  </Settings.Item>
-                  {/* Activity Status */}
-                  <Settings.Item
-                    icon={(props: IconProps) => (
-                      <Theme name="accent">
-                        <CustomIcon
-                          name="app-badging"
-                          color="$color10"
-                          {...props}
-                          size={17}
-                        />
-                      </Theme>
-                    )}
-                    // isActive={
-                    //   pathname === getUrl('account/settings/change-email')
-                    // }
-                    // href={getUrl('account/settings/change-email')}
-                    // onPress={() =>
 
-                    // }
-                    accentColor="$green9"
+              {isLoggedIn && (
+                <>
+                  <XStack paddingHorizontal="$6">
+                    <Text fontSize={10}>{t('account:account_settings.title')}</Text>
+                  </XStack>
+                  <Settings.Group
+                    backgroundColor="$background"
+                    borderRadius="$2"
+                    padding="$1"
                   >
-                    <XStack
-                      justifyContent="space-between"
-                      alignItems="center"
-                      width="100%"
+                    {/* Change Password */}
+                    <Settings.Item
+                      icon={(props: IconProps) => (
+                        <Theme name="accent">
+                          <CustomIcon
+                            name="lock"
+                            color="$color10"
+                            {...props}
+                            size={17}
+                          />
+                        </Theme>
+                      )}
+                      href={getUrl('account/settings/change-password')}
+                      onPress={() =>
+                        router.push(getUrl('account/settings/change-password'))
+                      }
+                      isActive={
+                        pathname === getUrl('account/settings/change-password')
+                      }
+                      accentColor="$green9"
                     >
                       <Text fontSize="$1" fontWeight="bold">
-                        {t('account:activity_status.title')}
+                        {t('account:change_password.title')}
                       </Text>
+                    </Settings.Item>
+                    {/* Change Email */}
+                    <Settings.Item
+                      icon={(props: IconProps) => (
+                        <Theme name="accent">
+                          <CustomIcon
+                            name="mail"
+                            color="$color10"
+                            {...props}
+                            size={17}
+                          />
+                        </Theme>
+                      )}
+                      isActive={
+                        pathname === getUrl('account/settings/change-email')
+                      }
+                      href={getUrl('account/settings/change-email')}
+                      onPress={() =>
+                        router.push(getUrl('account/settings/change-email'))
+                      }
+                      accentColor="$green9"
+                    >
+                      <Text fontSize="$1" fontWeight="bold">
+                        {t('account:change_email.title')}
+                      </Text>
+                    </Settings.Item>
+                    {/* Pay Fees */}
+                    {/* <Settings.Item
+                      icon={(props: IconProps) => (
+                        <Theme name="accent">
+                          <CustomIcon
+                            name="payments"
+                            color="$color10"
+                            {...props}
+                            size={17}
+                          />
+                        </Theme>
+                      )}
+                      // onPress={() =>
+                      //   router.push(getUrl('account/settings/change-email'))
+                      // }
+                      accentColor="$green9"
+                    >
+                      <Text fontSize="$1" fontWeight="bold">
+                        {t('account:pay_fees.title')}
+                      </Text>
+                    </Settings.Item> */}
+                    {/* <Settings.Item
+                      icon={(props: IconProps) => (
+                        <Theme name="accent">
+                          <CustomIcon
+                            name="app-badging"
+                            color="$color10"
+                            {...props}
+                            size={17}
+                          />
+                        </Theme>
+                      )}
+                      accentColor="$green9"
+                    >
                       <XStack
-                        borderRadius="$10"
-                        backgroundColor="#34C759"
-                        paddingHorizontal="$3"
-                        paddingVertical="$1.5"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        width="100%"
                       >
-                        <Text
-                          fontSize={10}
-                          textTransform="capitalize"
-                          color="white"
-                        >
-                          {t('account:active')}
+                        <Text fontSize="$1" fontWeight="bold">
+                          {t('account:activity_status.title')}
                         </Text>
+                        <XStack
+                          borderRadius="$10"
+                          backgroundColor="#34C759"
+                          paddingHorizontal="$3"
+                          paddingVertical="$1.5"
+                        >
+                          <Text
+                            fontSize={10}
+                            textTransform="capitalize"
+                            color="white"
+                          >
+                            {t('account:active')}
+                          </Text>
+                        </XStack>
                       </XStack>
-                    </XStack>
-                  </Settings.Item>
-                </Settings.Group>
+                    </Settings.Item> */}
+                  </Settings.Group>
+                </>
               )}
-              <XStack paddingHorizontal="$6">
+              {/* <XStack paddingHorizontal="$6">
                 <Text fontSize={10}>{t('account:notifications.title')}</Text>
               </XStack>
               <Settings.Group
@@ -260,7 +233,6 @@ export const SettingsScreen = () => {
                 borderRadius="$2"
                 padding="$1"
               >
-                {/* Pause Notifications */}
                 <Settings.Item
                   hideRightChevron
                   paddingVertical="$2"
@@ -287,7 +259,8 @@ export const SettingsScreen = () => {
                     <NotificationSwitch />
                   </XStack>
                 </Settings.Item>
-              </Settings.Group>
+              </Settings.Group> */}
+
               <XStack paddingHorizontal="$6">
                 <Text fontSize={10}>
                   {t('account:screen_and_language.title')}
@@ -354,7 +327,7 @@ export const SettingsScreen = () => {
                   </Text>
                 </Settings.Item>
                 {/* About Us */}
-                <Settings.Item
+                {/* <Settings.Item
                   icon={(props: IconProps) => (
                     <Theme name="accent">
                       <CustomIcon
@@ -373,7 +346,7 @@ export const SettingsScreen = () => {
                   <Text fontSize="$1" fontWeight="bold">
                     {t('account:about_us.title')}
                   </Text>
-                </Settings.Item>
+                </Settings.Item> */}
               </Settings.Group>
               {/* 
               <Settings.Group>
@@ -421,7 +394,21 @@ export const SettingsScreen = () => {
                   </Text>
                 </Settings.Item>
                 {/* Logout */}
-                <SettingsItemLogoutAction />
+                {isLoggedIn ? <SettingsItemLogoutAction /> : (
+                  <Settings.Item
+                    icon={(props: IconProps) => (
+                      <Theme name="accent">
+                        <CustomIcon name="users" color="$color9" {...props} size={17} />
+                      </Theme>
+                    )}
+                    onPress={() => router.push('/auth/login')}
+                    accentColor="#FFD600"
+                  >
+                    <Text fontSize="$1" fontWeight="bold">
+                      {t('account:login.title')}
+                    </Text>
+                  </Settings.Item>
+                )}
               </Settings.Group>
               <Settings.Group>
                 {/* Delete Account */}
@@ -508,12 +495,12 @@ const SettingsLanguageAction = () => {
       actions={
         languages?.length
           ? languages.map((lang) => ({
-              name: t(`account:language.${lang}`).toString(),
-              onPress: () => {
-                actionSheetRef.current?.close();
-                changeLanguage(lang);
-              },
-            }))
+            name: t(`account:language.${lang}`).toString(),
+            onPress: () => {
+              actionSheetRef.current?.close();
+              changeLanguage(lang);
+            },
+          }))
           : []
       }
     />
@@ -575,20 +562,20 @@ const SettingsItemLogoutAction = () => {
         Platform.OS === 'web'
           ? logout()
           : Alert.alert(
-              `${t('common:sign-out')}`,
-              `${t('common:sign-out-message')}`,
-              [
-                {
-                  text: `${t('common:sign-out')}`,
-                  onPress: () => logout(),
-                  style: 'cancel',
-                },
-                {
-                  text: `${t('common:cancel')}`,
-                  style: 'destructive',
-                },
-              ],
-            );
+            `${t('common:sign-out')}`,
+            `${t('common:sign-out-message')}`,
+            [
+              {
+                text: `${t('common:sign-out')}`,
+                onPress: () => logout(),
+                style: 'cancel',
+              },
+              {
+                text: `${t('common:cancel')}`,
+                style: 'destructive',
+              },
+            ],
+          );
       }}
     >
       <Text fontSize="$1" fontWeight="bold">
@@ -613,21 +600,21 @@ const SettingsDeleteAccountAction = () => {
         Platform.OS === 'web'
           ? UserService.deleteAccount().then(() => logout())
           : Alert.alert(
-              `${t('common:delete-account')}`,
-              `${t('common:delete-account-message')}`,
-              [
-                {
-                  text: `${t('common:delete-account')}`,
-                  onPress: () =>
-                    UserService.deleteAccount().then(() => logout()),
-                  style: 'cancel',
-                },
-                {
-                  text: `${t('common:cancel')}`,
-                  style: 'destructive',
-                },
-              ],
-            );
+            `${t('common:delete-account')}`,
+            `${t('common:delete-account-message')}`,
+            [
+              {
+                text: `${t('common:delete-account')}`,
+                onPress: () =>
+                  UserService.deleteAccount().then(() => logout()),
+                style: 'cancel',
+              },
+              {
+                text: `${t('common:cancel')}`,
+                style: 'destructive',
+              },
+            ],
+          );
       }}
     >
       <Text fontSize="$1" fontWeight="bold" color="$color10">
