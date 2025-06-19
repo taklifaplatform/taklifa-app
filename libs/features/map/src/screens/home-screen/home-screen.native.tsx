@@ -408,7 +408,7 @@ export function HomeScreen() {
       companiesQuery.data?.data?.map((company, index) => (
         <>
           <MapCompanyMarker
-            key={`marker-${index}`}
+            key={`marker-${company.id}-${index}`}
             company={company}
             onPress={() => {
               router.push(`${getUrlPrefix}/companies/${company.id}`);
@@ -418,9 +418,12 @@ export function HomeScreen() {
           {
             company.branches?.map((branch, index) => (
               <MapCompanyMarker
-                key={`marker-${index}`}
+                key={`marker-${company.id}-${branch.id}-${index}`}
                 company={company}
                 branch={branch}
+                onPress={() => {
+                  router.push(`${getUrlPrefix}/companies/${company.id}`);
+                }}
               />
             ))
           }

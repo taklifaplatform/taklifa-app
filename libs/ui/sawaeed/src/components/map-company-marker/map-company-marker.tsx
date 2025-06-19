@@ -1,12 +1,11 @@
-import { Building } from '@tamagui/lucide-icons';
 import { CompanyBranchTransformer, CompanyTransformer } from '@zix/api';
+import { Image } from 'expo-image';
 import React, { useState } from 'react';
 import { Marker } from 'react-native-maps';
-import { Image } from 'expo-image';
 
-import { Theme, useStyle, View } from 'tamagui';
-import { Platform } from 'react-native';
 import { CustomIcon } from '@zix/ui/icons';
+import { Platform } from 'react-native';
+import { useStyle, View } from 'tamagui';
 
 
 export type MapCompanyMarkerProps = {
@@ -50,7 +49,7 @@ export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = React.memo(({
   //   </View>
   // )
 
-  const location = branch?.location || company.location
+  const location = (branch?.location?.latitude && branch?.location?.longitude) ? branch?.location : company.location
 
   if (!location) {
     return null;
