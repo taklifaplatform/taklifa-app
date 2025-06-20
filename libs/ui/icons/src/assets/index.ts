@@ -5,6 +5,7 @@ import Account from './icons/account.svg';
 import Advertisement from './icons/advertisement.svg'; 
 import AlertCercle from './icons/alert-cercle.svg'; 
 import Alert from './icons/alert.svg'; 
+import AppBadging from './icons/app-badging.svg'; 
 import AppStore from './icons/app-store.svg'; 
 import Apps from './icons/apps.svg'; 
 import AspectRatio from './icons/aspect-ratio.svg'; 
@@ -47,6 +48,7 @@ import Hash from './icons/hash.svg';
 import HomeInfo from './icons/home-info.svg'; 
 import Home from './icons/home.svg'; 
 import ImageBlank from './icons/image-blank.svg'; 
+import Info from './icons/info.svg'; 
 import Instagram from './icons/instagram.svg'; 
 import Job from './icons/job.svg'; 
 import List from './icons/list.svg'; 
@@ -62,11 +64,13 @@ import Map from './icons/map.svg';
 import Matricule from './icons/matricule.svg'; 
 import More from './icons/more.svg'; 
 import NearMe from './icons/near-me.svg'; 
+import NotificationsActive from './icons/notifications-active.svg'; 
 import Notifications from './icons/notifications.svg'; 
 import Opacity from './icons/opacity.svg'; 
 import Orders from './icons/orders.svg'; 
 import Other from './icons/other.svg'; 
 import PaperMoney from './icons/paper-money.svg'; 
+import Payments from './icons/payments.svg'; 
 import RadioButtonChecked from './icons/radio-button-checked.svg'; 
 import Ringing from './icons/ringing.svg'; 
 import SaudiRiyalSymbol from './icons/saudi-riyal-symbol.svg'; 
@@ -93,6 +97,7 @@ import UserInfo from './icons/user-info.svg';
 import UserTypeCompany from './icons/user-type-company.svg'; 
 import UserTypeCustomer from './icons/user-type-customer.svg'; 
 import UserTypeSoloTransporter from './icons/user-type-solo-transporter.svg'; 
+import Users from './icons/users.svg'; 
 import Wallet from './icons/wallet.svg'; 
 import WebDarkLogo from './icons/web-dark-logo.svg'; 
 import WebLogoAr from './icons/web-logo-ar.svg'; 
@@ -106,6 +111,7 @@ export {
   Advertisement,
   AlertCercle,
   Alert,
+  AppBadging,
   AppStore,
   Apps,
   AspectRatio,
@@ -148,6 +154,7 @@ export {
   HomeInfo,
   Home,
   ImageBlank,
+  Info,
   Instagram,
   Job,
   List,
@@ -163,11 +170,13 @@ export {
   Matricule,
   More,
   NearMe,
+  NotificationsActive,
   Notifications,
   Opacity,
   Orders,
   Other,
   PaperMoney,
+  Payments,
   RadioButtonChecked,
   Ringing,
   SaudiRiyalSymbol,
@@ -194,6 +203,7 @@ export {
   UserTypeCompany,
   UserTypeCustomer,
   UserTypeSoloTransporter,
+  Users,
   Wallet,
   WebDarkLogo,
   WebLogoAr,

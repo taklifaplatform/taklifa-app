@@ -11,6 +11,7 @@ import { useRouter } from 'solito/router';
 import { YStack } from 'tamagui';
 import { ManageTeamFabButton } from '../../components/manage-team-fab-button/manage-team-fab-button';
 import EmployeesListScreen from '../employees/employees-list-screen/employees-list-screen';
+import { BranchesListScreen } from '@zix/features/branches';
 
 export function ManageCompanyDataScreen() {
   useMixpanel('Manage Company Data Screen view')
@@ -46,6 +47,11 @@ export function ManageCompanyDataScreen() {
           key: 'services',
           title: t('common:services'),
           content: <ServicesListScreen showHeader={false} edit={true} search={search} />,
+        },
+        {
+          key: 'branches',
+          title: t('common:branches'),
+          content: <BranchesListScreen showHeader={false} edit={true} search={search} />,
         },
       ]}
     />

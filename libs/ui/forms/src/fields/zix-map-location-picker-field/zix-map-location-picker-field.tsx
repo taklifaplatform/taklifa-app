@@ -279,7 +279,13 @@ export const ZixMapLocationPickerFieldContent: React.FC<ZixMapLocationPickerFiel
         address: result?.formatted_address,
       });
     } catch (error) {
-      console.log('error', error);
+      console.log("### 123 ###")
+      console.log('error', error?.message, error);
+      setLocalLocation({
+        ...localLocation,
+        latitude,
+        longitude,
+      });
     } finally {
       setIsPending(false);
     }
@@ -319,7 +325,9 @@ export const ZixMapLocationPickerFieldContent: React.FC<ZixMapLocationPickerFiel
   );
 
   const renderAddressConfirmation = () =>
-    !!localLocation?.address && (
+    (!!localLocation?.address || (
+      !!localLocation?.latitude && !!localLocation?.longitude
+    )) && (
       <YStack
         paddingBottom={Platform.OS === 'web' ? '$8' : bottom}
         padding={Platform.OS === 'web' ? '$8' : '$4'}
