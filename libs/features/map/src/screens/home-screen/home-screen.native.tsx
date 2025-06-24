@@ -571,6 +571,7 @@ const MapSection: FC<MapSectionProps> = memo(function MapSection({
       initialCamera={initialCamera}
       onPress={() => Keyboard.dismiss()}
       showsUserLocation
+      followsUserLocation
       showsMyLocationButton={false}
       onRegionChangeComplete={debouncedSetCurrentRegion}
     >
@@ -763,7 +764,7 @@ const CenterButton: FC<CenterButtonProps> = memo(function CenterButton({
   showMap,
   urgencyMode
 }) {
-  async function onPress() {
+  async function autoCenterToUserLocation() {
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
@@ -788,6 +789,14 @@ const CenterButton: FC<CenterButtonProps> = memo(function CenterButton({
 
   }
 
+  const [isCentered, setIsCentered] = useState(false);
+  useEffect(() => {
+    if (showMap && !isCentered) {
+      autoCenterToUserLocation();
+      setIsCentered(true);
+    }
+  }, [showMap, isCentered])
+
   if (!showMap) return null;
   return (
     <Button
@@ -798,7 +807,7 @@ const CenterButton: FC<CenterButtonProps> = memo(function CenterButton({
       position="absolute"
       bottom="$3"
       right="$4"
-      onPress={() => onPress()}
+      onPress={() => autoCenterToUserLocation()}
     />
   );
 });
