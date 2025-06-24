@@ -665,7 +665,6 @@ const MapSection: FC<MapSectionProps> = memo(function MapSection({
       initialCamera={initialCamera}
       onPress={() => Keyboard.dismiss()}
       showsUserLocation
-      followsUserLocation
       showsMyLocationButton={false}
       onRegionChangeComplete={debouncedSetCurrentRegion}
     >
