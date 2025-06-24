@@ -186,19 +186,19 @@ export function HomeScreen() {
             page: meta?.current_page + 1,
           }); // Mark as recursive call
         } else {
-          if (drivers.length > 10 && meta?.total && meta?.total > 10) {
-            toast.show(
-              t('common:providers-found-message', { count: meta?.total, total: totalDrivers }),
-            )
-          }
+          // if (drivers.length > 10 && meta?.total && meta?.total > 10) {
+          //   toast.show(
+          //     t('common:providers-found-message', { count: meta?.total, total: totalDrivers }),
+          //   )
+          // }
         }
       } else {
         setDrivers(sortedDrivers);
-        if (sortedDrivers.length > 10) {
-          toast.show(
-            t('common:providers-found-message', { count: sortedDrivers.length, total: totalDrivers }),
-          )
-        }
+        // if (sortedDrivers.length > 10) {
+        //   toast.show(
+        //     t('common:providers-found-message', { count: sortedDrivers.length, total: totalDrivers }),
+        //   )
+        // }
       }
     }
     setIsFetching(false);
