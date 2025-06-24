@@ -78,6 +78,7 @@ export function HomeScreen() {
     queryKey: ['VehiclesService.fetchAllVehicles', user?.id, `-${search}`,],
   });
 
+
   const shouldShowAddVehicleWarning = useMemo(() => {
     return user?.active_role?.name === USER_ROLES.solo_driver && !vehiclesData?.data?.length;
   }, [user, vehiclesData]);
@@ -130,6 +131,15 @@ export function HomeScreen() {
   const [drivers, setDrivers] = useState<DriverTransformer[]>([]);
   const [isFetching, setIsFetching] = useState(false);
   const [driverLocation, setDriverLocation] = useState<Location.LocationObjectCoords | null>(null);
+  const [totalDrivers, setTotalDrivers] = useState(0);
+
+  useEffect(() => {
+    DriversService.fetchAllDrivers({
+      perPage: 1,
+    }).then((res) => {
+      setTotalDrivers(res.meta?.total || 0);
+    })
+  }, [drivers])
 
   const fetchDrivers = useCallback(async (query: any = {}) => {
     const queryParams = {
@@ -178,7 +188,7 @@ export function HomeScreen() {
         } else {
           if (drivers.length > 10 && meta?.total && meta?.total > 10) {
             toast.show(
-              t('common:providers-found-message', { count: drivers.length, total: meta?.total || 0 }),
+              t('common:providers-found-message', { count: meta?.total, total: totalDrivers }),
             )
           }
         }
@@ -186,7 +196,7 @@ export function HomeScreen() {
         setDrivers(sortedDrivers);
         if (sortedDrivers.length > 10) {
           toast.show(
-            t('common:providers-found-message', { count: sortedDrivers.length, total: meta?.total || 0 }),
+            t('common:providers-found-message', { count: sortedDrivers.length, total: totalDrivers }),
           )
         }
       }
