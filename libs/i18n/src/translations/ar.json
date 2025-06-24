@@ -584,7 +584,8 @@
     "branch-name": "اسم الفرع",
     "branch-description": "وصف الفرع",
     "branch-contact-number": "رقم هاتف الفرع",
-    "branch-location": "موقع الفرع"
+    "branch-location": "موقع الفرع",
+    "providers-found-message": "{{count}} من {{total}} مزود خدمة، كبر الخريطة لرؤية المزيد"
   },
   "cookies-banner": {
     "section-1": {

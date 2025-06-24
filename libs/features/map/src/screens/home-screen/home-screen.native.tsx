@@ -23,6 +23,7 @@ import { Button, H4, Spinner, View, XStack, YStack, Text } from 'tamagui';
 import MapFilters from '../../components/map-filters/map-filters';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, interpolateColor, Easing } from 'react-native-reanimated';
 import { Pressable } from 'react-native';
+import { useToastController } from '@tamagui/toast';
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
 
@@ -58,6 +59,7 @@ export function HomeScreen() {
 
   const mapRef = useRef<MapView>(null);
   const carouselRef = useRef<ICarouselInstance>(null);
+  const toast = useToastController();
   const router = useRouter();
   const { getUrlPrefix, user, urgencyMode, toggleUrgencyMode } = useAuth();
 
@@ -166,13 +168,24 @@ export function HomeScreen() {
         });
 
         if (meta?.current_page < meta?.last_page && meta?.current_page < 5) {
-          fetchDrivers({
+          return fetchDrivers({
             ...queryParams,
             page: meta?.current_page + 1,
           });
+        } else {
+          if (drivers.length > 10 && meta?.total && meta?.total > 10) {
+            toast.show(
+              t('common:providers-found-message', { count: drivers.length, total: meta?.total || 0 }),
+            )
+          }
         }
       } else {
         setDrivers(sortedDrivers);
+        if (sortedDrivers.length > 10) {
+          toast.show(
+            t('common:providers-found-message', { count: sortedDrivers.length, total: meta?.total || 0 }),
+          )
+        }
       }
     }
     setIsFetching(false);
