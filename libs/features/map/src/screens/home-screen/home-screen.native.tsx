@@ -12,9 +12,8 @@ import { MapCompanyMarker, MapDriverMarker } from '@zix/ui/sawaeed';
 import { getDistance } from '@zix/utils';
 import * as Location from 'expo-location';
 import { t } from 'i18next';
-import debounce from 'lodash/debounce';
 import type { FC } from 'react';
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import { Dimensions, Keyboard, Platform, SectionList, Alert, Linking } from 'react-native';
 import MapView, { Region, Circle } from 'react-native-maps';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
@@ -130,7 +129,9 @@ export function HomeScreen() {
 
   const [drivers, setDrivers] = useState<DriverTransformer[]>([]);
   const [isFetching, setIsFetching] = useState(false);
-  async function fetchDrivers(query: any = {}) {
+  const [driverLocation, setDriverLocation] = useState<Location.LocationObjectCoords | null>(null);
+  
+  const fetchDrivers = useCallback(async (query: any = {}) => {
     const queryParams = {
       perPage: Platform.select({ web: 80, ios: 80, android: 60 }),
       vehicleModel: filters.vehicle_model,
@@ -167,11 +168,13 @@ export function HomeScreen() {
           return [...prevDrivers, ...newDrivers];
         });
 
-        if (meta?.current_page < meta?.last_page && meta?.current_page < 5) {
+        if (
+          meta?.current_page < meta?.last_page && meta?.current_page < 5
+        ) {
           return fetchDrivers({
             ...queryParams,
             page: meta?.current_page + 1,
-          });
+          }); // Mark as recursive call
         } else {
           if (drivers.length > 10 && meta?.total && meta?.total > 10) {
             toast.show(
@@ -189,25 +192,59 @@ export function HomeScreen() {
       }
     }
     setIsFetching(false);
-  }
-  useEffect(() => {
-    fetchDrivers({
-      vehicleModel: filters.vehicle_model,
-      latitude: currentRegion.latitude,
-      longitude: currentRegion.longitude,
-      latitudeDelta: currentRegion.latitudeDelta,
-      longitudeDelta: currentRegion.longitudeDelta,
-      search,
-      page: 1,
-      urgencyServiceProvider: urgencyMode ? 1 : 0,
-    });
   }, [
     filters.vehicle_model,
     currentRegion,
     search,
-    filters.vehicle_model,
+    driverLocation,
+    drivers.length,
     urgencyMode,
+    toast,
+    t
   ]);
+
+  // Custom debounce implementation using timeout
+  const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  
+  const debouncedFetchDrivers = useMemo(() => {
+    return (query: any = {}) => {
+      // Clear existing timeout
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+      
+      // Set new timeout
+      debounceTimeoutRef.current = setTimeout(() => {
+        fetchDrivers({
+          vehicleModel: filters.vehicle_model,
+          latitude: currentRegion.latitude,
+          longitude: currentRegion.longitude,
+          latitudeDelta: currentRegion.latitudeDelta,
+          longitudeDelta: currentRegion.longitudeDelta,
+          search,
+          page: 1,
+          urgencyServiceProvider: urgencyMode ? 1 : 0,
+          ...query,
+        });
+      }, 1000);
+    };
+  }, [filters.vehicle_model, currentRegion, search, urgencyMode]);
+
+  useEffect(() => {
+    debouncedFetchDrivers();
+  }, [debouncedFetchDrivers]);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+      if (regionTimeoutRef.current) {
+        clearTimeout(regionTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const companiesQuery = useQuery({
     queryFn() {
@@ -257,8 +294,6 @@ export function HomeScreen() {
     return sortedDrivers.slice(start, end);
   }
 
-
-  const [driverLocation, setDriverLocation] = useState<Location.LocationObjectCoords | null>(null)
   const getDriverLocation = async () => {
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
@@ -276,7 +311,7 @@ export function HomeScreen() {
         }
       })
     } catch (error) {
-
+      //
     }
   }
 
@@ -445,8 +480,14 @@ export function HomeScreen() {
       )) : null;
 
   // Debounced region setter
+  const regionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const debouncedSetCurrentRegion = useMemo(
-    () => debounce((region: Region) => setCurrentRegion(region), 500),
+    () => (region: Region) => {
+      if (regionTimeoutRef.current) {
+        clearTimeout(regionTimeoutRef.current);
+      }
+      regionTimeoutRef.current = setTimeout(() => setCurrentRegion(region), 500);
+    },
     []
   );
 
