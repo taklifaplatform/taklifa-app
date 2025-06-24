@@ -130,7 +130,7 @@ export function HomeScreen() {
   const [drivers, setDrivers] = useState<DriverTransformer[]>([]);
   const [isFetching, setIsFetching] = useState(false);
   const [driverLocation, setDriverLocation] = useState<Location.LocationObjectCoords | null>(null);
-  
+
   const fetchDrivers = useCallback(async (query: any = {}) => {
     const queryParams = {
       perPage: Platform.select({ web: 80, ios: 80, android: 60 }),
@@ -205,14 +205,14 @@ export function HomeScreen() {
 
   // Custom debounce implementation using timeout
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  
+
   const debouncedFetchDrivers = useMemo(() => {
     return (query: any = {}) => {
       // Clear existing timeout
       if (debounceTimeoutRef.current) {
         clearTimeout(debounceTimeoutRef.current);
       }
-      
+
       // Set new timeout
       debounceTimeoutRef.current = setTimeout(() => {
         fetchDrivers({
@@ -426,6 +426,39 @@ export function HomeScreen() {
 
   }, [isFocused]);
 
+  const [isCentered, setIsCentered] = useState(false);
+  useEffect(() => {
+    if (showMap && !isCentered) {
+      autoCenterToUserLocation();
+      setIsCentered(true);
+    }
+  }, [showMap, isCentered])
+
+  async function autoCenterToUserLocation() {
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+        return;
+      }
+
+      const location = await Location.getCurrentPositionAsync({});
+      mapRef?.current?.animateCamera({
+        center: {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        },
+        altitude: 40000,
+        pitch: 0,
+        heading: 0,
+        zoom: 12,
+      });
+    } catch (error) {
+      //
+    }
+
+  }
+
   const filteredDrivers = useMemo(() => {
     return drivers.filter((driver) => {
       if (urgencyMode && !driver?.urgency_service_provider) {
@@ -555,6 +588,7 @@ export function HomeScreen() {
             MaterialIcons={MaterialIcons}
             showMap={showMap}
             urgencyMode={urgencyMode}
+            autoCenterToUserLocation={autoCenterToUserLocation}
           />
           <ActivateUrgencyModeButton
             mapRef={mapRef}
@@ -810,46 +844,17 @@ interface CenterButtonProps {
   MaterialIcons: any;
   showMap: boolean;
   urgencyMode: boolean;
+  autoCenterToUserLocation: () => Promise<void>;
 }
 const CenterButton: FC<CenterButtonProps> = memo(function CenterButton({
   driverLocation,
   mapRef,
   MaterialIcons,
   showMap,
-  urgencyMode
+  urgencyMode,
+  autoCenterToUserLocation
 }) {
-  async function autoCenterToUserLocation() {
-    try {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        console.log('Permission to access location was denied');
-        return;
-      }
 
-      const location = await Location.getCurrentPositionAsync({});
-      mapRef?.current?.animateCamera({
-        center: {
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-        },
-        altitude: 40000,
-        pitch: 0,
-        heading: 0,
-        zoom: 12,
-      });
-    } catch (error) {
-      //
-    }
-
-  }
-
-  const [isCentered, setIsCentered] = useState(false);
-  useEffect(() => {
-    if (showMap && !isCentered) {
-      autoCenterToUserLocation();
-      setIsCentered(true);
-    }
-  }, [showMap, isCentered])
 
   if (!showMap) return null;
   return (
