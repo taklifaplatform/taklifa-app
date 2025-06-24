@@ -1,5 +1,5 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { useIsFocused } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { List, Map, X } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { AnalyticsService, CompaniesService, CompanyTransformer, DriverTransformer, DriversService, LocationService, VehiclesService } from '@zix/api';
@@ -426,13 +426,19 @@ export function HomeScreen() {
 
   }, [isFocused]);
 
-  const [isCentered, setIsCentered] = useState(false);
-  useEffect(() => {
-    if (showMap && !isCentered) {
-      autoCenterToUserLocation();
-      setIsCentered(true);
-    }
-  }, [showMap, isCentered])
+  // const [isCentered, setIsCentered] = useState(false);
+  // useEffect(() => {
+  //   if (showMap && !isCentered) {
+  //     autoCenterToUserLocation();
+  //     setIsCentered(true);
+  //   }
+  // }, [showMap, isCentered])
+
+  useFocusEffect(
+    useCallback(() => {
+      autoCenterToUserLocation()
+    }, [])
+  )
 
   async function autoCenterToUserLocation() {
     try {
