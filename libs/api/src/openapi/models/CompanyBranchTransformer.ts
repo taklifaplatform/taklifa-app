@@ -8,6 +8,7 @@ export type CompanyBranchTransformer = {
     name?: string;
     description?: string;
     contact_number?: string;
+    company_id?: string;
     location?: LocationTransformer;
     location_id?: string;
 };

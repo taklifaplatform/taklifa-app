@@ -17,6 +17,9 @@ export type AnnouncementTransformer = {
     category_id?: number;
     sub_category_id?: number;
     images?: MediaTransformer;
+    views_count?: number;
+    likes_count?: number;
+    comments_count?: number;
     created_at?: string;
 };
 

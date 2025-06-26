@@ -2,8 +2,7 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronUp,
-  X,
-  ChevronRight,
+  X
 } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -14,30 +13,22 @@ import {
 } from '@zix/api';
 import { ZixMediasListWidget } from '@zix/ui/widgets';
 
+import { Sheet } from '@tamagui/sheet';
 import { UserContactActions } from '@zix/features/users';
 import { useAuth, useMixpanel } from '@zix/services/auth';
-import { UserAvatar, ZixDialog } from '@zix/ui/common';
+import { UserAvatar } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { Image } from 'expo-image';
 import { t } from 'i18next';
 import moment from 'moment';
-import { useCallback, useRef, useState } from 'react';
-import { Alert, Dimensions, FlatList, ScrollView, TouchableOpacity } from 'react-native';
+import { useCallback, useState } from 'react';
+import { ActivityIndicator, Alert, FlatList, ScrollView, TouchableOpacity } from 'react-native';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
 import { Button, H4, Separator, Text, View, XStack, YStack } from 'tamagui';
-import { Sheet } from '@tamagui/sheet';
-import Carousel from 'react-native-reanimated-carousel';
 
 const { useParam } = createParam<{ announcement?: string }>();
-
-// Types
-type ImageCarouselProps = {
-  images: Array<{ url: string; id?: string }>;
-  selectedImageIndex: number;
-  onImageSelect: (index: number) => void;
-};
 
 type InfoCardProps = {
   announcement: AnnouncementTransformer;
@@ -59,142 +50,6 @@ type OwnerActionsProps = {
   onStatusChange: (status: string) => void;
 };
 
-// Components des images
-const ImageCarousel = ({
-  images,
-  selectedImageIndex,
-  onImageSelect,
-}: ImageCarouselProps) => {
-  const carouselRef = useRef(null);
-  if (images.length === 0) return null;
-
-  // Largeur de l'image principale (doit matcher le style)
-  const { width: IMAGE_WIDTH } = Dimensions.get('window');
-  const IMAGE_HEIGHT = 177;
-
-  // Fonction pour sélectionner une image et scroller la FlatList principale
-  const handleSelectImage = (index: number) => {
-    onImageSelect(index);
-    if (carouselRef.current) {
-      // @ts-expect-error carouselRef type is not precise, but scrollTo exists at runtime
-      carouselRef.current.scrollTo({ index, animated: true });
-    }
-  };
-
-  return (
-    <YStack alignItems="center" justifyContent="center" position="relative">
-      {/* Chevron gauche */}
-      <TouchableOpacity
-        disabled={selectedImageIndex === 0}
-        onPress={() => {
-          if (selectedImageIndex > 0) onImageSelect(selectedImageIndex - 1);
-        }}
-        style={{
-          position: 'absolute',
-          left: 0,
-          top: '35%',
-          zIndex: 10,
-          transform: [{ translateY: -24 }],
-          opacity: selectedImageIndex === 0 ? 0.3 : 1,
-          padding: 8,
-        }}
-      >
-        <CustomIcon name="chevron-left" size={32} color="$color1" />
-      </TouchableOpacity>
-      {/* Carousel principal */}
-      <Carousel
-        ref={carouselRef}
-        width={IMAGE_WIDTH}
-        height={IMAGE_HEIGHT}
-        data={images}
-        loop={false}
-        style={{ borderRadius: 12 }}
-        renderItem={({ item }) => (
-          <Image
-            source={{ uri: item.url }}
-            style={{ width: IMAGE_WIDTH, height: IMAGE_HEIGHT, borderRadius: 12 }}
-            contentFit="cover"
-          />
-        )}
-        panGestureHandlerProps={{ activeOffsetX: [-10, 10] }}
-        snapEnabled
-        pagingEnabled
-        onSnapToItem={onImageSelect}
-        defaultIndex={selectedImageIndex}
-      />
-      {/* Chevron droit */}
-      <TouchableOpacity
-        disabled={selectedImageIndex === images.length - 1}
-        onPress={() => {
-          if (selectedImageIndex < images.length - 1 && carouselRef.current) {
-            onImageSelect(selectedImageIndex + 1);
-            // @ts-expect-error carouselRef type is not precise, but scrollTo exists at runtime
-            carouselRef.current.scrollTo({ index: selectedImageIndex + 1, animated: true });
-          }
-        }}
-        style={{
-          position: 'absolute',
-          right: 0,
-          top: '35%',
-          zIndex: 10,
-          transform: [{ translateY: -24 }],
-          opacity: selectedImageIndex === images.length - 1 ? 0.3 : 1,
-          padding: 8,
-        }}
-      >
-        <CustomIcon name="chevron-right" size={32} color="$color1" />
-      </TouchableOpacity>
-
-      <XStack
-        gap={4}
-        marginTop={8}
-        justifyContent="center"
-        alignItems="center"
-        position="absolute"
-        bottom={90}
-        left={10}
-        right={10}
-        theme="accent"
-      >
-        {images.map((_, idx) => (
-          <View
-            key={idx}
-            width={8}
-            height={8}
-            borderRadius={8}
-            backgroundColor={selectedImageIndex === idx ? '$color8' : 'gray'}
-          />
-        ))}
-      </XStack>
-      {/* Miniatures synchronisées */}
-      <FlatList
-        data={images}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={(item, idx) => `${item.id ?? idx}`}
-        style={{ marginTop: 8 }}
-        contentContainerStyle={{ gap: 8 }}
-        renderItem={({ item, index }) => (
-          <TouchableOpacity onPress={() => handleSelectImage(index)}>
-            <Image
-              source={{ uri: item.url }}
-              style={{
-                width: 75,
-                height: 75,
-                borderRadius: 8,
-                borderWidth: selectedImageIndex === index ? 2 : 0,
-                borderColor:
-                  selectedImageIndex === index ? '#FF9325' : 'transparent',
-              }}
-              contentFit="cover"
-            />
-          </TouchableOpacity>
-        )}
-        extraData={selectedImageIndex}
-      />
-    </YStack>
-  );
-};
 
 const InfoCard = ({ announcement }: InfoCardProps) => (
   <YStack
@@ -595,7 +450,7 @@ export const AnnouncementDetailsScreen = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [status, setStatus] = useState('active');
 
-  const { data: announcementData } = useQuery({
+  const { data: announcementData, isLoading } = useQuery({
     queryFn: () =>
       AnnouncementService.retrieveAnnouncement({
         announcement: announcementId || '',
@@ -661,19 +516,24 @@ export const AnnouncementDetailsScreen = () => {
     // TODO: Implement status update API call
   }, []);
 
-  if (!announcement) {
+  if (!announcement?.id) {
     return (
       <ScreenLayout>
         <AppHeader showBackButton title={t('common:market')} />
         <View flex={1} alignItems="center" justifyContent="center">
           <CustomIcon name="empty_data" size="$18" color="$color5" />
-          <H4>{t('common:announcement-not-found')}</H4>
+          {
+            isLoading ? (
+              <ActivityIndicator size="large" color="#0000ff" />
+            ) : (
+              <H4>{t('common:announcement-not-found')}</H4>
+            )
+          }
         </View>
       </ScreenLayout>
     );
   }
 
-  const images = Array.isArray(announcement.images) ? announcement.images : [];
 
   return (
     <ScreenLayout>
@@ -716,8 +576,8 @@ export const AnnouncementDetailsScreen = () => {
               <Text color="$color10" fontSize={13}>
                 رقم إعلان:
               </Text>
-              <Text color="$color12" fontSize={13}>
-                222222
+              <Text color="$color12" fontSize={12} textTransform='uppercase'>
+                {announcement?.id?.toString().substring(0, 8)}-{announcement?.id?.toString().substring(9, 12)}
               </Text>
             </XStack>
             <XStack alignItems="center" gap="$3">
@@ -726,10 +586,10 @@ export const AnnouncementDetailsScreen = () => {
                 عدد المشاهدات:
               </Text>
               <Text color="$color12" fontSize={13}>
-                0
+                {announcement?.views_count}
               </Text>
             </XStack>
-            <Button
+            {/* <Button
               size="$2"
               textProps={{
                 fontSize: 10,
@@ -737,7 +597,7 @@ export const AnnouncementDetailsScreen = () => {
               }}
             >
               المزيد من الاحصائيات
-            </Button>
+            </Button> */}
           </YStack>
           <Separator borderColor="$color4" borderWidth={0.25} />
 
