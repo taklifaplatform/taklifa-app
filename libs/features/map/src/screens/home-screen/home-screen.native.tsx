@@ -4,7 +4,6 @@ import { LayoutList, Map, X } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { AnalyticsService, CompaniesService, CompanyTransformer, DriverTransformer, DriversService, LocationService, VehiclesService } from '@zix/api';
 import { CompanyCard } from '@zix/features/company';
-import { UserCard } from '@zix/features/users';
 import { USER_ROLES, useAuth, useMixpanel } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
@@ -13,17 +12,15 @@ import { getDistance } from '@zix/utils';
 import * as Location from 'expo-location';
 import { t } from 'i18next';
 import type { FC } from 'react';
-import { memo, useEffect, useMemo, useRef, useState, useCallback } from 'react';
-import { Dimensions, Keyboard, Platform, SectionList, Alert, Linking } from 'react-native';
-import MapView, { Region, Circle } from 'react-native-maps';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Dimensions, Keyboard, Platform, SectionList } from 'react-native';
+import MapView, { Circle, Region } from 'react-native-maps';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useRouter } from 'solito/router';
-import { Button, H4, Spinner, View, XStack, YStack, Text } from 'tamagui';
+import { Button, H4, Spinner, Text, View, XStack, YStack } from 'tamagui';
 // import MapFilters from '../../components/map-filters/map-filters';
-import MapFiltersTaklifa from '../../components/map-filters-taklifa/map-filters-taklifa';
-import Animated, { useSharedValue, useAnimatedStyle, withTiming, interpolateColor, Easing } from 'react-native-reanimated';
-import { Pressable } from 'react-native';
 import { useToastController } from '@tamagui/toast';
+import MapFiltersTaklifa from '../../components/map-filters-taklifa/map-filters-taklifa';
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
 
@@ -55,13 +52,13 @@ const mapStyle = [
 export function HomeScreen() {
   useMixpanel('Home Page view')
   const USER_CARD_WIDTH = width;
-  const USER_CARD_HEIGHT = Math.max(200, height / 4);
+  const USER_CARD_HEIGHT = Math.max(100, height / 5.5);
 
   const mapRef = useRef<MapView>(null);
   const carouselRef = useRef<ICarouselInstance>(null);
   const toast = useToastController();
   const router = useRouter();
-  const { getUrlPrefix, user, urgencyMode, toggleUrgencyMode } = useAuth();
+  const { getUrlPrefix, user, urgencyMode } = useAuth();
 
   const [filters, setFilters] = useState({
     vehicle_model: 'all',
@@ -104,23 +101,6 @@ export function HomeScreen() {
       </View>
     )
   }
-
-  // const renderUrgencyModeWarning = () => {
-  //   if (!urgencyMode) return null;
-  //   return (
-  //     <View padding='$3' backgroundColor='#FF3B30' gap="$1">
-  //       <Text color="#FFFFFF" fontSize="$1" textAlign="left" fontWeight="bold">
-  //         {t('common:urgency-mode-warning', '✅ شروط خدمة الطوارئ المجانية ( تامينك فقط ) تطبيق سواعد:')}
-  //       </Text>
-  //       <Text color="#FFFFFF" fontSize="$1" textAlign="left" fontWeight="bold">
-  //         {t('common:urgency-mode-subtitle', '🔴 الخدمة متاحة فقط في الحالات التالية:')}
-  //       </Text>
-  //       <Text color="#FFFFFF" fontSize="$1" textAlign="left">
-  //         {t('common:urgency-mode-description', '• تعطل مفاجئ في الطرق الرئيسية داخل المدينة\n• خطر مروري أو موقع يشكل تهديد لحركة السير على الطرق الرئسية فقط')}
-  //       </Text>
-  //     </View>
-  //   )
-  // }
 
   const [currentRegion, setCurrentRegion] = useState<Region>({
     "latitude": 24.608423604325434,
@@ -550,13 +530,13 @@ export function HomeScreen() {
     item: DriverTransformer;
   }) => {
     return (
-      <UserCard
-        key={`view-${item.id}-${index}`}
-        user={item}
-        flex={1}
-        height={USER_CARD_HEIGHT}
-        marginHorizontal="$4"
-        backgroundColor="$color2"
+      <CompanyCard
+      key={`view-${item.id}-${index}`}
+      company={item}
+      flex={1}
+      height={USER_CARD_HEIGHT}
+      marginHorizontal="$4"
+      backgroundColor="$color2"
       />
     );
   };
@@ -705,19 +685,19 @@ const ListSection: FC<ListSectionProps> = memo(function ListSection({
   fetchDrivers,
 }) {
   const renderListData = [
-    {
-      data: driversList || [],
-      renderItem: ({ item, index }) => (
-        <UserCard
-          key={`stack-${item.id}-${index}`}
-          user={item}
-          flex={1}
-          marginHorizontal="$4"
-          marginVertical="$2"
-          backgroundColor="$color2"
-        />
-      ),
-    },
+    // {
+    //   data: driversList || [],
+    //   renderItem: ({ item, index }) => (
+    //     <UserCard
+    //       key={`stack-${item.id}-${index}`}
+    //       user={item}
+    //       flex={1}
+    //       marginHorizontal="$4"
+    //       marginVertical="$2"
+    //       backgroundColor="$color2"
+    //     />
+    //   ),
+    // },
     {
       data: companiesList || [],
       renderItem: ({ item, index }) => (
