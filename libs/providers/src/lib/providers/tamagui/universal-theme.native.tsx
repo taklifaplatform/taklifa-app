@@ -57,7 +57,7 @@ const DefaultTheme: Theme = {
 const DarkTheme: Theme = {
   dark: true,
   colors: {
-    primary: 'rgb(254, 202, 22)',
+    primary: 'rgb(15, 88, 55)',
     background: 'rgb(1, 1, 1)',
     card: 'rgb(18, 18, 18)',
     text: '#E0E0E0',

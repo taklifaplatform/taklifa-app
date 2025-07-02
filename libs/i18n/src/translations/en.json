@@ -768,6 +768,8 @@
     "request-service": "Request service",
     "chat": "Chat",
     "call": "Call",
+    "destination": "Destination",
+    "details": "Look at the details",
     "type": {
       "document": "Document",
       "box": "Box",

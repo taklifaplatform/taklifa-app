@@ -109,7 +109,7 @@ const palettes = {
     "hsla(142, 71%, 49%, 1)", // color7: Strong Border
     "hsla(142, 71%, 49%, 1)", // color8: Hover Border
     "hsla(153, 71%, 20%, 1)", // color9: Primary
-    "hsla(153, 71%, 20%, 1)", // color10: Hover Primary
+    "hsla(148, 88%, 97%, 1)", // color10: Hover Primary
     "hsla(202, 76%, 8%, 1)", // color11: Subtle Text
     "hsla(202, 76%, 0%, 1)", // color12: Text
     "hsla(0, 0%, 0%, 0.75)",
@@ -172,7 +172,7 @@ const palettes = {
     "hsla(153, 70%, 23%, 1)",
     "hsla(153, 70%, 28%, 1)",
     "hsla(153, 70%, 32%, 1)",
-    "hsla(153, 70%, 37%, 1)",
+    "hsla(142, 70%, 49%, 1)",
     "hsla(153, 70%, 41%, 1)",
     "hsla(153, 70%, 46%, 1)",
     "hsla(153, 70%, 50%, 1)",

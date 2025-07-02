@@ -1,5 +1,5 @@
 import { IconProps } from '@tamagui/helpers-icon';
-import { Phone } from '@tamagui/lucide-icons';
+import { Compass, Phone } from '@tamagui/lucide-icons';
 import { useMutation } from '@tanstack/react-query';
 import { AnalyticsService, ChatService, DriverTransformer } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
@@ -15,6 +15,7 @@ export type UserContactActionsProps = ThemeableStackProps & {
   actionButtonSize?: SizeTokens;
   onServiceRequestPress?: () => void;
   onContractPressAnalytic?: (type: 'call' | 'whatsapp') => void;
+  useDestinationButton?: boolean;
 };
 
 export const UserContactActions: React.FC<UserContactActionsProps> = ({
@@ -22,6 +23,7 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
   actionButtonSize = '$2.5',
   onServiceRequestPress,
   onContractPressAnalytic,
+  useDestinationButton = true,
   ...props
 }) => {
   const { user: authUser, isLoggedIn, getUrlPrefix, isServiceProvider, urgencyMode } = useAuth()
@@ -95,26 +97,16 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
 
   return (
     <XStack justifyContent="space-between" gap="$2" paddingHorizontal='$3' {...props}>
-      {
-        !urgencyMode && (
-          <Button
-            theme='success'
-            backgroundColor='$color10'
-            flex={1}
-            icon={(props: IconProps) => <CustomIcon {...props} name="whatsapp-contact" color='$color10' />}
-            onPress={_onWhatsappPress}
-            {...sharedButtonStyle}
-          >
-            {t('common:contact-whatsapp')}
-          </Button>
-        )
-      }
+      
       {
         !urgencyMode && (
           <ZixButton
+            theme='accent'
             flex={width > 400 ? 0.5 : 0.2}
-            backgroundColor='$gray7'
-            icon={(props: IconProps) => <CustomIcon {...props} name="chat" color='$color12' />}
+            backgroundColor='$color0'
+            icon={(props: IconProps) => <Compass {...props} size={20} color='$color2' />}
+            color='$color2'
+            fontWeight='600'
             disabled={isPending}
             loading={isPending}
             onPress={() => {
@@ -126,19 +118,39 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
             }}
             {...sharedButtonStyle}
           >
-            {width > 400 ? t('shipment:chat') : null}
+            {width > 400 ? t('shipment:destination') : null}
           </ZixButton>
         )
       }
-      <Button
+      {
+        !urgencyMode && (
+          <Button
+            theme='success'
+            backgroundColor='$color9'
+            flex={1}
+            icon={(props: IconProps) => <CustomIcon {...props} name="whatsapp-contact" />}
+            onPress={_onWhatsappPress}
+            {...sharedButtonStyle}
+          >
+            {t('common:contact-whatsapp')}
+          </Button>
+        )
+      }
+      {
+        useDestinationButton && (
+          <Button
         flex={urgencyMode ? 1 : width > 400 ? 0.5 : 0.2}
-        backgroundColor={urgencyMode ? "#FF3B30" : '$gray7'}
-        icon={(props: IconProps) => <CustomIcon {...props} name="call" color='$color12' />}
+        backgroundColor={'transparent'}
+        borderWidth={1}
+        borderColor={'$color0'}
         onPress={onCallPress}
         {...sharedButtonStyle}
       >
-        {width > 400 ? t('shipment:call') : null}
+        {width > 400 ? t('shipment:details') : null}
       </Button>
+        )
+      }
+      
     </XStack>
   );
 };

@@ -64,6 +64,7 @@ import Mail from './icons/mail.svg';
 import Map from './icons/map.svg'; 
 import Matricule from './icons/matricule.svg'; 
 import More from './icons/more.svg'; 
+import MyLocation from './icons/my-location.svg'; 
 import NearMe from './icons/near-me.svg'; 
 import NotificationsActive from './icons/notifications-active.svg'; 
 import Notifications from './icons/notifications.svg'; 
@@ -88,6 +89,7 @@ import SoloTransporterCar from './icons/solo-transporter-car.svg';
 import Star from './icons/star.svg'; 
 import Store from './icons/store.svg'; 
 import Success from './icons/success.svg'; 
+import Square from './icons/square.svg'; 
 import Theme from './icons/theme.svg'; 
 import TikTok from './icons/tik-tok.svg'; 
 import TimePace from './icons/time-pace.svg'; 
@@ -171,6 +173,7 @@ export {
   Map,
   Matricule,
   More,
+  MyLocation,
   NearMe,
   NotificationsActive,
   Notifications,
@@ -195,6 +198,7 @@ export {
   Star,
   Store,
   Success,
+  Square,
   Theme,
   TikTok,
   TimePace,

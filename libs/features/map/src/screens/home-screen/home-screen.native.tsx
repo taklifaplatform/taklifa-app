@@ -1,6 +1,6 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-import { List, Map, X } from '@tamagui/lucide-icons';
+import { LayoutList, Map, X } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { AnalyticsService, CompaniesService, CompanyTransformer, DriverTransformer, DriversService, LocationService, VehiclesService } from '@zix/api';
 import { CompanyCard } from '@zix/features/company';
@@ -19,7 +19,8 @@ import MapView, { Region, Circle } from 'react-native-maps';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useRouter } from 'solito/router';
 import { Button, H4, Spinner, View, XStack, YStack, Text } from 'tamagui';
-import MapFilters from '../../components/map-filters/map-filters';
+// import MapFilters from '../../components/map-filters/map-filters';
+import MapFiltersTaklifa from '../../components/map-filters-taklifa/map-filters-taklifa';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, interpolateColor, Easing } from 'react-native-reanimated';
 import { Pressable } from 'react-native';
 import { useToastController } from '@tamagui/toast';
@@ -104,22 +105,22 @@ export function HomeScreen() {
     )
   }
 
-  const renderUrgencyModeWarning = () => {
-    if (!urgencyMode) return null;
-    return (
-      <View padding='$3' backgroundColor='#FF3B30' gap="$1">
-        <Text color="#FFFFFF" fontSize="$1" textAlign="left" fontWeight="bold">
-          {t('common:urgency-mode-warning', '✅ شروط خدمة الطوارئ المجانية ( تامينك فقط ) تطبيق سواعد:')}
-        </Text>
-        <Text color="#FFFFFF" fontSize="$1" textAlign="left" fontWeight="bold">
-          {t('common:urgency-mode-subtitle', '🔴 الخدمة متاحة فقط في الحالات التالية:')}
-        </Text>
-        <Text color="#FFFFFF" fontSize="$1" textAlign="left">
-          {t('common:urgency-mode-description', '• تعطل مفاجئ في الطرق الرئيسية داخل المدينة\n• خطر مروري أو موقع يشكل تهديد لحركة السير على الطرق الرئسية فقط')}
-        </Text>
-      </View>
-    )
-  }
+  // const renderUrgencyModeWarning = () => {
+  //   if (!urgencyMode) return null;
+  //   return (
+  //     <View padding='$3' backgroundColor='#FF3B30' gap="$1">
+  //       <Text color="#FFFFFF" fontSize="$1" textAlign="left" fontWeight="bold">
+  //         {t('common:urgency-mode-warning', '✅ شروط خدمة الطوارئ المجانية ( تامينك فقط ) تطبيق سواعد:')}
+  //       </Text>
+  //       <Text color="#FFFFFF" fontSize="$1" textAlign="left" fontWeight="bold">
+  //         {t('common:urgency-mode-subtitle', '🔴 الخدمة متاحة فقط في الحالات التالية:')}
+  //       </Text>
+  //       <Text color="#FFFFFF" fontSize="$1" textAlign="left">
+  //         {t('common:urgency-mode-description', '• تعطل مفاجئ في الطرق الرئيسية داخل المدينة\n• خطر مروري أو موقع يشكل تهديد لحركة السير على الطرق الرئسية فقط')}
+  //       </Text>
+  //     </View>
+  //   )
+  // }
 
   const [currentRegion, setCurrentRegion] = useState<Region>({
     "latitude": 24.608423604325434,
@@ -576,7 +577,6 @@ export function HomeScreen() {
       <YStack flex={1}>
         <AppHeaderSection search={search} setSearch={setSearch} MaterialIcons={MaterialIcons} />
         {renderAddVehicleWarning()}
-        {renderUrgencyModeWarning()}
         <YStack flex={1} position='relative'>
           <MapSection
             showMap={showMap}
@@ -605,14 +605,6 @@ export function HomeScreen() {
             showMap={showMap}
             urgencyMode={urgencyMode}
             autoCenterToUserLocation={autoCenterToUserLocation}
-          />
-          <ActivateUrgencyModeButton
-            mapRef={mapRef}
-            driverLocation={driverLocation}
-            setDriverLocation={setDriverLocation}
-            setShowUrgencyCircle={setShowUrgencyCircle}
-            urgencyMode={urgencyMode}
-            toggleUrgencyMode={toggleUrgencyMode}
           />
           <CarouselSection
             showCarousel={showCarousel}
@@ -840,9 +832,8 @@ const SwitcherButton: FC<SwitcherButtonProps> = memo(function SwitcherButton({
   return (
     <Button
       theme="accent"
-      backgroundColor={urgencyMode ? "#FF3B30" : undefined}
-      color={urgencyMode ? "#FFFFFF" : undefined}
-      icon={showMap ? List : Map}
+      color={ "#FFFFFF"}
+      icon={showMap ? LayoutList : Map}
       scaleIcon={1.5}
       fontWeight="600"
       fontSize="$2"
@@ -876,7 +867,7 @@ const CenterButton: FC<CenterButtonProps> = memo(function CenterButton({
     <Button
       theme="accent"
       backgroundColor={urgencyMode ? "#FF3B30" : undefined}
-      icon={<MaterialIcons name="my-location" size={30} color={urgencyMode ? "#FFFFFF" : "black"} />}
+      icon={<CustomIcon name="my_location" size={30} color={ "#FFFFFF"} />}
       circular
       position="absolute"
       bottom="$3"
@@ -886,164 +877,155 @@ const CenterButton: FC<CenterButtonProps> = memo(function CenterButton({
   );
 });
 
-// ActivateUrgencyModeButton
-interface ActivateUrgencyModeButtonProps {
-  urgencyMode: boolean;
-  toggleUrgencyMode: () => void;
-  mapRef: React.RefObject<MapView>;
-  driverLocation: Location.LocationObjectCoords | null;
-  setDriverLocation: (location: Location.LocationObjectCoords | null) => void;
-  setShowUrgencyCircle: (show: boolean) => void;
-}
-const ActivateUrgencyModeButton: FC<ActivateUrgencyModeButtonProps> = ({
-  urgencyMode,
-  toggleUrgencyMode,
-  mapRef,
-  driverLocation,
-  setDriverLocation,
-  setShowUrgencyCircle,
-}) => {
-  // Animation shared values
-  const progress = useSharedValue(urgencyMode ? 1 : 0);
-  const scale = useSharedValue(1);
 
-  const animateToLocation = (location: Location.LocationObjectCoords) => {
-    if (!mapRef?.current) return;
+//   urgencyMode,
+//   toggleUrgencyMode,
+//   mapRef,
+//   driverLocation,
+//   setDriverLocation,
+//   setShowUrgencyCircle,
+// }) => {
+//   // Animation shared values
+//   const progress = useSharedValue(urgencyMode ? 1 : 0);
+//   const scale = useSharedValue(1);
 
-    if (Platform.OS === 'ios') {
-      mapRef.current.animateCamera({
-        center: {
-          latitude: location.latitude,
-          longitude: location.longitude,
-        },
-        altitude: 40000,
-        pitch: 0,
-        heading: 0,
-      }, { duration: 1000 });
-    } else {
-      mapRef.current.animateCamera({
-        center: {
-          latitude: location.latitude,
-          longitude: location.longitude,
-        },
-        zoom: 12,
-      }, { duration: 1000 });
-    }
-  };
+//   const animateToLocation = (location: Location.LocationObjectCoords) => {
+//     if (!mapRef?.current) return;
 
-  const handleUrgencyModeToggle = async () => {
-    try {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        Alert.alert(
-          'تنبيه',
-          'يجب السماح للتطبيق بالوصول إلى موقعك لتفعيل وضع الطوارئ. يرجى تفعيل خدمة الموقع من إعدادات الجهاز.',
-          [
-            {
-              text: 'حسناً',
-              style: 'default',
-            },
-            {
-              text: 'فتح الإعدادات',
-              onPress: () => Linking.openSettings(),
-              style: 'default',
-            },
-          ]
-        );
-        return;
-      }
-      // If permission granted, get location and then toggle
-      const location = await Location.getCurrentPositionAsync({});
-      setDriverLocation(location.coords);
-      animateToLocation(location.coords);
-    } catch (error) {
-      Alert.alert(
-        'خطأ',
-        'حدث خطأ أثناء محاولة الوصول إلى موقعك. يرجى المحاولة مرة أخرى.',
-        [
-          {
-            text: 'حسناً',
-            style: 'default',
-          },
-        ]
-      );
-      return;
-    }
-    toggleUrgencyMode();
-  };
+//     if (Platform.OS === 'ios') {
+//       mapRef.current.animateCamera({
+//         center: {
+//           latitude: location.latitude,
+//           longitude: location.longitude,
+//         },
+//         altitude: 40000,
+//         pitch: 0,
+//         heading: 0,
+//       }, { duration: 1000 });
+//     } else {
+//       mapRef.current.animateCamera({
+//         center: {
+//           latitude: location.latitude,
+//           longitude: location.longitude,
+//         },
+//         zoom: 12,
+//       }, { duration: 1000 });
+//     }
+//   };
 
-  useEffect(() => {
-    progress.value = withTiming(urgencyMode ? 1 : 0, { duration: 500, easing: Easing.out(Easing.exp) });
-    setShowUrgencyCircle(urgencyMode);
-    if (urgencyMode && driverLocation) {
-      animateToLocation(driverLocation);
-    }
-  }, [urgencyMode]);
+//   const handleUrgencyModeToggle = async () => {
+//     try {
+//       const { status } = await Location.requestForegroundPermissionsAsync();
+//       if (status !== 'granted') {
+//         Alert.alert(
+//           'تنبيه',
+//           'يجب السماح للتطبيق بالوصول إلى موقعك لتفعيل وضع الطوارئ. يرجى تفعيل خدمة الموقع من إعدادات الجهاز.',
+//           [
+//             {
+//               text: 'حسناً',
+//               style: 'default',
+//             },
+//             {
+//               text: 'فتح الإعدادات',
+//               onPress: () => Linking.openSettings(),
+//               style: 'default',
+//             },
+//           ]
+//         );
+//         return;
+//       }
+//       // If permission granted, get location and then toggle
+//       const location = await Location.getCurrentPositionAsync({});
+//       setDriverLocation(location.coords);
+//       animateToLocation(location.coords);
+//     } catch (error) {
+//       Alert.alert(
+//         'خطأ',
+//         'حدث خطأ أثناء محاولة الوصول إلى موقعك. يرجى المحاولة مرة أخرى.',
+//         [
+//           {
+//             text: 'حسناً',
+//             style: 'default',
+//           },
+//         ]
+//       );
+//       return;
+//     }
+//     toggleUrgencyMode();
+//   };
 
-  // Animated background color
-  const animatedStyle = useAnimatedStyle(() => ({
-    backgroundColor: interpolateColor(
-      progress.value,
-      [0, 1],
-      ['#FFF5F5', '#FF3B30'] // Outlined to filled
-    ),
-    borderColor: '#FF3B30',
-    borderWidth: 2,
-    transform: [{ scale: scale.value }],
-  }));
+//   useEffect(() => {
+//     progress.value = withTiming(urgencyMode ? 1 : 0, { duration: 500, easing: Easing.out(Easing.exp) });
+//     setShowUrgencyCircle(urgencyMode);
+//     if (urgencyMode && driverLocation) {
+//       animateToLocation(driverLocation);
+//     }
+//   }, [urgencyMode]);
 
-  // Animated text color
-  const animatedTextStyle = useAnimatedStyle(() => ({
-    color: interpolateColor(
-      progress.value,
-      [0, 1],
-      ['#FF3B30', '#FFFFFF']
-    ),
-    fontWeight: 'bold',
-    fontSize: 20,
-    marginLeft: 8,
-  }));
+//   // Animated background color
+//   const animatedStyle = useAnimatedStyle(() => ({
+//     backgroundColor: interpolateColor(
+//       progress.value,
+//       [0, 1],
+//       ['#FFF5F5', '#FF3B30'] // Outlined to filled
+//     ),
+//     borderColor: '#FF3B30',
+//     borderWidth: 2,
+//     transform: [{ scale: scale.value }],
+//   }));
 
-  // Animated icon style (scale/rotate for fun)
-  const animatedIconStyle = useAnimatedStyle(() => ({
-    transform: [
-      { scale: withTiming(urgencyMode ? 1.1 : 1, { duration: 300 }) },
-      { rotate: `${progress.value * 180}deg` },
-    ],
-  }));
+//   // Animated text color
+//   const animatedTextStyle = useAnimatedStyle(() => ({
+//     color: interpolateColor(
+//       progress.value,
+//       [0, 1],
+//       ['#FF3B30', '#FFFFFF']
+//     ),
+//     fontWeight: 'bold',
+//     fontSize: 20,
+//     marginLeft: 8,
+//   }));
 
-  // Handle press animation
-  const handlePressIn = () => {
-    scale.value = withTiming(0.95, { duration: 100 });
-  };
-  const handlePressOut = () => {
-    scale.value = withTiming(1, { duration: 100 });
-  };
+//   // Animated icon style (scale/rotate for fun)
+//   const animatedIconStyle = useAnimatedStyle(() => ({
+//     transform: [
+//       { scale: withTiming(urgencyMode ? 1.1 : 1, { duration: 300 }) },
+//       { rotate: `${progress.value * 180}deg` },
+//     ],
+//   }));
 
-  return (
-    <Animated.View style={[{ position: 'absolute', bottom: 12, left: 16, borderRadius: 12, overflow: 'hidden' }, animatedStyle]}>
-      <Pressable
-        onPress={handleUrgencyModeToggle}
-        onPressIn={handlePressIn}
-        onPressOut={handlePressOut}
-        style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 6 }}
-        accessibilityRole="button"
-        accessibilityLabel={urgencyMode ? 'خروج' : 'طوارئ'}
-      >
-        <Animated.View style={animatedIconStyle}>
-          {urgencyMode ? (
-            <X color="#fff" size={28} />
-          ) : (
-            <CustomIcon name="urgency" size={28} color="#FF3B30" />
-          )}
-        </Animated.View>
-        <Animated.Text style={animatedTextStyle}>
-          {urgencyMode ? 'خروج' : 'طوارئ'}
-        </Animated.Text>
-      </Pressable>
-    </Animated.View>
-  );
-}
+//   // Handle press animation
+//   const handlePressIn = () => {
+//     scale.value = withTiming(0.95, { duration: 100 });
+//   };
+//   const handlePressOut = () => {
+//     scale.value = withTiming(1, { duration: 100 });
+//   };
+
+//   return (
+//     <Animated.View style={[{ position: 'absolute', bottom: 12, left: 16, borderRadius: 12, overflow: 'hidden' }, animatedStyle]}>
+//       {/* <Pressable
+//         onPress={handleUrgencyModeToggle}
+//         onPressIn={handlePressIn}
+//         onPressOut={handlePressOut}
+//         style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 6 }}
+//         accessibilityRole="button"
+//         accessibilityLabel={urgencyMode ? 'خروج' : 'طوارئ'}
+//       >
+//         <Animated.View style={animatedIconStyle}>
+//           {urgencyMode ? (
+//             <X color="#fff" size={28} />
+//           ) : (
+//             <CustomIcon name="urgency" size={28} color="#FF3B30" />
+//           )}
+//         </Animated.View>
+//         <Animated.Text style={animatedTextStyle}>
+//           {urgencyMode ? 'خروج' : 'طوارئ'}
+//         </Animated.Text>
+//       </Pressable> */}
+//     </Animated.View>
+//   );
+// }
 
 // Memoized Filters Section
 interface FiltersSectionProps {
@@ -1077,7 +1059,7 @@ const FiltersSection: FC<FiltersSectionProps> = memo(function FiltersSection({
           t={t}
           urgencyMode={urgencyMode}
         />
-        <MapFilters urgencyMode={urgencyMode} values={filters} onChange={(values) => setFilters({ ...filters, ...values })} />
+        <MapFiltersTaklifa urgencyMode={urgencyMode} values={filters} onChange={(values) => setFilters({ ...filters, ...values })} />
         {isFetching && <Spinner color="$color1" />}
       </XStack>
     </View>

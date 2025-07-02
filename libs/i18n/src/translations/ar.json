@@ -814,6 +814,8 @@
     "request-service": "طلب الخدمة",
     "chat": "محادثة",
     "call": "اتصل",
+    "destination": "الموقع",
+    "details": "شاهد التفاصيل ",
     "type": {
       "document": "مستند",
       "box": "صندوق",

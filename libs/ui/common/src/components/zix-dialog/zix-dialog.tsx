@@ -1,6 +1,6 @@
-import { X } from '@tamagui/lucide-icons'
-import { ReactNode } from 'react'
-import { useWindowDimensions } from 'react-native'
+import { X } from '@tamagui/lucide-icons';
+import { ReactNode } from 'react';
+import { useWindowDimensions } from 'react-native';
 import {
   Button,
   Dialog,
@@ -9,22 +9,22 @@ import {
   SizeTokens,
   VisuallyHidden,
   XStack,
-} from 'tamagui'
-import { ZixDialogActions, ZixDialogHeader } from './zix-dialog-actions'
-import { ZixDialogContent } from './zix-dialog-content'
+} from 'tamagui';
+import { ZixDialogActions, ZixDialogHeader } from './zix-dialog-actions';
+import { ZixDialogContent } from './zix-dialog-content';
 
 export type ZixDialogProps = DialogProps & {
-  trigger?: ReactNode
-  title?: string
-  description?: string
-  hideCloseButton?: boolean
-  fullScreen?: boolean
-  contentPadding?: SizeTokens
-  dialogHeight?: string | number
-  dialogWidth?: string | number
-  dialogContentProps?: DialogContentProps
-  preventClickOutside?: boolean
-}
+  trigger?: ReactNode;
+  title?: string;
+  description?: string;
+  hideCloseButton?: boolean;
+  fullScreen?: boolean;
+  contentPadding?: SizeTokens;
+  dialogHeight?: string | number;
+  dialogWidth?: string | number;
+  dialogContentProps?: DialogContentProps;
+  preventClickOutside?: boolean;
+};
 
 export function ZixDialog({
   children,
@@ -40,7 +40,7 @@ export function ZixDialog({
   preventClickOutside,
   ...dialogProps
 }: ZixDialogProps) {
-  const { width, height } = useWindowDimensions()
+  const { width, height } = useWindowDimensions();
   return (
     <Dialog modal {...dialogProps}>
       {trigger && <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>}
@@ -81,29 +81,31 @@ export function ZixDialog({
           y={0}
           {...(fullScreen
             ? {
-              width,
-              height,
-            }
+                width,
+                height,
+              }
             : {
-              // maxHeight: '90%',
-              // maxWidth: '90%',
-              width: dialogWidth,
-              height: dialogHeight,
-            })}
+                // maxHeight: '90%',
+                // maxWidth: '90%',
+                width: dialogWidth,
+                height: dialogHeight,
+              })}
           {...(preventClickOutside && {
             onEscapeKeyDown: (ev) => {
-              ev.preventDefault()
+              ev.preventDefault();
             },
             onInteractOutside: (ev) => {
-              ev.preventDefault()
+              ev.preventDefault();
             },
           })}
           {...dialogContentProps}
         >
           {(!hideCloseButton || title) && (
             <XStack
+              theme={'accent'}
               justifyContent={'space-between'}
               padding={contentPadding}
+              backgroundColor={'$color3'}
             >
               {title ? (
                 <Dialog.Title>{title}</Dialog.Title>
@@ -137,9 +139,9 @@ export function ZixDialog({
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog>
-  )
+  );
 }
 
-ZixDialog.Actions = ZixDialogActions
-ZixDialog.Content = ZixDialogContent
-ZixDialog.Header = ZixDialogHeader
+ZixDialog.Actions = ZixDialogActions;
+ZixDialog.Content = ZixDialogContent;
+ZixDialog.Header = ZixDialogHeader;
