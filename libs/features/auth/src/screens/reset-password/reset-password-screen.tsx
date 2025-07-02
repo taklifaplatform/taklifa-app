@@ -127,7 +127,7 @@ const SignInLink = () => {
           </Text>
         </Theme>
         <Theme name="accent">
-          <CustomIcon name="arrow_right" color="$color10" />
+          <CustomIcon name="arrow_right" color="$color1" />
         </Theme>
       </Stack>
     </Link>

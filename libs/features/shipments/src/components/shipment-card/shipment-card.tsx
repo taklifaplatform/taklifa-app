@@ -61,7 +61,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
       options={[
         {
           icons: (
-            <Inbox size="$1" color={'$color9'} $sm={{ display: 'none' }} />
+            <Inbox size="$1" color={'$color1'} $sm={{ display: 'none' }} />
           ),
           name: t('job:number-of-packages'),
           value: `${shipment.items?.length}`,
@@ -71,7 +71,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
             <CustomIcon
               name="time_pace"
               size="$1"
-              color={'$color9'}
+              color={'$color1'}
               $sm={{ display: 'none' }}
             />
           ),
@@ -80,7 +80,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
         },
         {
           icons: (
-            <Settings2 size="$1" color={'$color9'} $sm={{ display: 'none' }} />
+            <Settings2 size="$1" color={'$color1'} $sm={{ display: 'none' }} />
           ),
           name: t('job:Suggestions'),
           value: String(shipment?.invitations_count || 0),
@@ -90,7 +90,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
             <CustomIcon
               name="paper_money"
               size="$1"
-              color={'$color9'}
+              color={'$color1'}
               $sm={{ display: 'none' }}
             />
           ),
@@ -111,7 +111,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
             <CustomIcon
               name="assistant-navigation"
               size="$1"
-              color={'$color9'}
+              color={'$color1'}
               {...(!isRtl && { rotate: '180deg' })}
             />
           ),
@@ -119,7 +119,7 @@ export const ShipmentCard: React.FC<ShipmentCardProps> = ({
           value: `${shipment?.from_location?.address || ''}`,
         },
         {
-          icons: <CustomIcon name="location" size="$1" color={'$color9'} />,
+          icons: <CustomIcon name="location" size="$1" color={'$color1'} />,
           name: t('shipment:to_location'),
           value: `${shipment.to_location?.address || ''}`,
         },

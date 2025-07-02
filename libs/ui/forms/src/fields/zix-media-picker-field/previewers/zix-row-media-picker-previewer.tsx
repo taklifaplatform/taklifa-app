@@ -52,7 +52,7 @@ export const ZixRowMediaPickerPreviewer: React.FC<ZixMediaPreviewerProps> = ({
         icon={<ImagePlus size="$2" color="black" />}
         width="$6"
         height="$6"
-        backgroundColor="$color9"
+        backgroundColor="$color1"
         borderRadius="$4"
       />
     </Stack>

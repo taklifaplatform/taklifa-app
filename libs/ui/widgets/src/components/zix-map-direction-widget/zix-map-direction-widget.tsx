@@ -92,7 +92,7 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
                   ? '$red9'
                   : status === 'delivered'
                     ? '$color5'
-                    : '$color9'
+                    : '$color1'
               }
               padding="$2"
               borderRadius="$10"

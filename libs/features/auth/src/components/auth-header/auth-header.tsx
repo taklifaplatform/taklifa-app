@@ -37,7 +37,7 @@ export const AuthHeader: React.FC<AuthHeaderProps> = (props) => {
     canGoBack = true,
     onGoNext = () => null,
     canGoNext,
-    iconColor = '$color9',
+    iconColor = '$color1',
     iconName = 'logo',
     showIcon = true,
   } = props;

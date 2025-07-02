@@ -46,7 +46,7 @@ export const UserInfoRow: React.FC<UserInfoRowProps> = ({
     <>
       <XStack alignItems="center" gap="$2">
         <Theme name='accent'>
-          <CustomIcon name="location" size='$1' color="$color9" />
+          <CustomIcon name="location" size='$1' color="$color1" />
         </Theme>
         <Text color='$color12' fontWeight="600" fontSize="$1">
           {user?.location?.country?.name || user?.location?.city?.name || user?.location?.address?.substring(0, 10)}
@@ -63,7 +63,7 @@ export const UserInfoRow: React.FC<UserInfoRowProps> = ({
   const renderRatingsInfo = () => !!user.rating_stats?.count && (
     <XStack alignItems="center" gap="$2">
       <Theme name='accent'>
-        <CustomIcon name="star" size='$1' color="$color9" />
+        <CustomIcon name="star" size='$1' color="$color1" />
       </Theme>
       <Text color='$color12' fontWeight="600" fontSize="$1">
         ({user.rating_stats?.count}) {user.rating_stats?.score}

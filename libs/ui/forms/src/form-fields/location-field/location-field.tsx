@@ -57,7 +57,7 @@ export const LocationField: React.FC<LocationFieldProps> = ({
         <XStack justifyContent="space-between" alignItems="center">
           <XStack alignItems="center" gap="$2">
             <Theme name="accent">
-              <CustomIcon name="location" size="$1" color="$color9" />
+              <CustomIcon name="location" size="$1" color="$color1" />
             </Theme>
             <Text fontWeight="700">{locationData?.name ?? 'Home'}</Text>
           </XStack>

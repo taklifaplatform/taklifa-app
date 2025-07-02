@@ -100,7 +100,7 @@ export const ShipmentRejectScreen: React.FC<ShipmentRejectScreenProps> = (
                     <Text
                       fontSize={12}
                       fontWeight={'600'}
-                      color={'$color9'}
+                      color={'$color1'}
                       $sm={{
                         fontSize: 12,
                         fontWeight: '600',
@@ -120,7 +120,7 @@ export const ShipmentRejectScreen: React.FC<ShipmentRejectScreenProps> = (
                     <Text
                       fontSize={12}
                       fontWeight={'600'}
-                      color={'$color9'}
+                      color={'$color1'}
                       $sm={{
                         fontSize: 9,
                         fontWeight: '600',

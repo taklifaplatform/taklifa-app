@@ -13,9 +13,9 @@ export const InlineStepper: React.FC<InlineStepperProps> = (
   props: InlineStepperProps
 ) => {
   const {
-    stepColorPrec = '$color3',
-    stepColorActive = '$color9',
-    stepColorPrev = '$color3',
+    stepColorPrec = '#25D366',
+    stepColorActive = '$color1',
+    stepColorPrev = '#25D366',
   } = props;
 
   const totalSteps = Array.from(Array(props.totalSteps).keys()).map(

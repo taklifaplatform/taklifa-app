@@ -8,7 +8,6 @@ export default function Screen() {
   const router = useRouter();
   function redirectUser() {
     router.replace('/app');
-    // router.replace('/auth/verify-kyc');
   }
   useFocusEffect(
     useCallback(() => {
@@ -20,7 +19,7 @@ export default function Screen() {
     <View
       style={{
         flex: 1,
-        backgroundColor: '#FECA16',
+        backgroundColor: '#0F5837',
       }}
     />
   );

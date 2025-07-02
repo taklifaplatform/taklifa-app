@@ -1,4 +1,4 @@
-import { PlusSquare, Search, X } from '@tamagui/lucide-icons';
+import { Search, X } from '@tamagui/lucide-icons';
 import { COMPANY_MANAGER_ROLES, useAuth } from '@zix/services/auth';
 import { UserAvatar, ZixAvatar } from '@zix/ui/common';
 import { ZixInput, ZixInputProps } from '@zix/ui/forms';
@@ -7,7 +7,6 @@ import { t } from 'i18next';
 import { useCallback, useState } from 'react';
 import { useRouter } from 'solito/router';
 import { Button, ColorTokens, H4, Theme, View, XStack, YStack } from 'tamagui';
-import ZixNotificationHeaderButton from '../zix-notification-header-button/zix-notification-header-button';
 import { AppHeaderWrapper } from './app-header-wrapper';
 
 export type AppHeaderProps = {
@@ -45,21 +44,21 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
 
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
   const renderSearchBar = () =>
-    (showSearchBar && isSearchBarOpen) && (
+    showSearchBar &&
+    isSearchBarOpen && (
       <Theme reset>
-        <View
-          paddingHorizontal="$4"
-          paddingVertical="$2"
-          $gtMd={{ flex: 1 }}>
+        <View paddingHorizontal="$4" paddingVertical="$2" $gtMd={{ flex: 1 }}>
           <ZixInput
             leftIcon={() => <Search size="$1.5" color="$color6" />}
             placeholder={t('common:search')}
-            placeholderTextColor='$color11'
+            placeholderTextColor="$color11"
             borderWidth={0.5}
-            borderColor='$color11'
-            fontWeight='600'
+            borderColor="$color11"
+            fontWeight="600"
             rightIcon={() =>
-              searchProps?.value && <X size="$1.5" onPress={() => searchProps?.onChangeText('')} />
+              searchProps?.value && (
+                <X size="$1.5" onPress={() => searchProps?.onChangeText('')} />
+              )
             }
             {...searchProps}
           />
@@ -80,30 +79,27 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   const renderUserAvatar = () => (
     <Button
       unstyled
-      icon={(
-        <View position='relative'>
+      icon={
+        <View position="relative">
           <UserAvatar user={user} size="$2.5" />
-          {
-            user.active_company && (
-              <View position='absolute' bottom={-5} right={-5}>
-                <ZixAvatar media={user.active_company?.logo} size="$1" />
-              </View>
-            )
-          }
+          {user.active_company && (
+            <View position="absolute" bottom={-5} right={-5}>
+              <ZixAvatar media={user.active_company?.logo} size="$1" />
+            </View>
+          )}
         </View>
-      )}
+      }
       onPress={onAvatarPress}
     />
   );
 
   const renderBackButton = () =>
     showBackButton && (
-      <View
-        cursor='pointer'
-      >
+      <View cursor="pointer">
         <Button
           unstyled
           size="$2"
+          color={'#FFFFFF'}
           icon={<CustomIcon name="arrow_left" size="$2" />}
           onPress={() => {
             if (goBack) {
@@ -116,90 +112,32 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
       </View>
     );
 
-
   const renderAvatar = () =>
-    !showBackButton ? COMPANY_MANAGER_ROLES.includes(activeRole) ? renderCompanyAvatar() : renderUserAvatar() : null;
+    !showBackButton
+      ? COMPANY_MANAGER_ROLES.includes(activeRole)
+        ? renderCompanyAvatar()
+        : renderUserAvatar()
+      : null;
 
   const renderToggleSearchBar = () =>
     !showBackButton && (
       <Button
         icon={isSearchBarOpen ? X : Search}
-        color={urgencyMode ? '#FFFFFF' : undefined}
+        color={'#FFFFFF'}
         scaleIcon={1.5}
         paddingHorizontal={0}
         onPress={() => setIsSearchBarOpen(!isSearchBarOpen)}
-        size="$2"
-        backgroundColor='transparent'
+        size="$4"
+        backgroundColor="transparent"
       />
     );
-  // const renderNotificationsButton = () =>
-  //   !showBackButton && (
-  //     <XStack>
-  //       <ZixNotificationHeaderButton />
-  //     </XStack>
-  //   );
-
-  const renderDesktopHeader = () => (
-    <YStack
-      display="none"
-      $gtMd={{ display: 'block' }}
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      position="sticky"
-      top={0}
-      zIndex={100}
-      backgroundColor="$color2"
-    >
-      <AppHeaderWrapper>
-        <XStack
-          padding="$4"
-          paddingVertical="$2"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <XStack
-            alignItems="center"
-            gap="$4">
-            {renderBackButton()}
-            {headerTitle ? (
-              headerTitle()
-            ) : (
-              <H4 fontSize={'$8'} numberOfLines={1} color={urgencyMode ? '#FFFFFF' : undefined}>
-                {urgencyMode ? 'طوارئ' : title ?? t('common:app_name')}
-              </H4>
-            )}
-          </XStack>
-          <XStack flex={0.3}>
-            {renderSearchBar()}
-          </XStack>
-          <XStack>
-            {headerRight ? (
-              headerRight()
-            ) : isLoggedIn && (
-              <Button
-                flex={1}
-                //theme="accent"
-                variant="outlined"
-                icon={<PlusSquare color={'$color01'} />}
-                onPress={() => router.push(`${getUrlPrefix}/create-shipment`)}
-                fontWeight='bold'
-              >
-                {t('common:create-shipment')}
-              </Button>
-            )}
-          </XStack>
-        </XStack>
-      </AppHeaderWrapper>
-    </YStack>
-  );
 
   const renderMobileHeader = () => (
     <YStack
       theme="accent"
       themeShallow
-      backgroundColor={urgencyMode ? '#FF3B30' : '$color9'}
-      paddingBottom="$2"
-      $gtMd={{ display: 'none' }}
+      backgroundColor={'$color1'}
+      paddingBottom="$1"
     >
       <AppHeaderWrapper>
         <YStack>
@@ -211,23 +149,19 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
           >
             <XStack flex={0.25} justifyContent="flex-start">
               {renderAvatar()}
-              {/*Platform.OS === 'web' ? renderAvatar() :
-                !showBackButton && <Button
-                  unstyled
-                  size="$2"
-                  icon={<CustomIcon name="list" size="$2" color={'$color'} />}
-                  onPress={() => {
-                    toggleDrawer()
-                  }}
-                />*/}
               {renderBackButton()}
             </XStack>
             <XStack flex={0.5} justifyContent="space-around">
               {headerTitle ? (
                 headerTitle()
               ) : (
-                <H4 fontSize={15} numberOfLines={1} color={urgencyMode ? '#FFFFFF' : undefined}>
-                  {urgencyMode ? 'طوارئ' : title ?? t('common:app_name')}
+                <H4
+                  fontSize={18}
+                  fontWeight="bold"
+                  numberOfLines={1}
+                  color={'#FFFFFF'}
+                >
+                  {title ?? <CustomIcon name="logo_light" size="$5" />}
                 </H4>
               )}
             </XStack>
@@ -243,12 +177,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
     </YStack>
   );
 
-  return (
-    <>
-      {renderDesktopHeader()}
-      {renderMobileHeader()}
-    </>
-  );
+  return <>{renderMobileHeader()}</>;
 };
 
 export default AppHeader;

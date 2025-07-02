@@ -52,12 +52,12 @@ export const ShipmentDirection: React.FC<ShipmentDirectionProps> = ({
             <CustomIcon
               name="location"
               size="$1.5"
-              color='$color9'
+              color='$color1'
             />
             <Text
               fontSize={18}
               fontWeight='700'
-              color='$color9'
+              color='$color1'
             >
               {t('shipment:to_location')}
             </Text>
@@ -67,7 +67,7 @@ export const ShipmentDirection: React.FC<ShipmentDirectionProps> = ({
             date={shipment.deliver_date || ''}
             phone_number={shipment.recipient_phone || ''}
             userName={shipment.recipient_name || ''}
-            borderColor={shipment.status === 'cancelled' ? '$red9' : '$color9'}
+            borderColor={shipment.status === 'cancelled' ? '$red9' : '$color1'}
             backgroundColor={
               shipment.status === 'cancelled'
                 ? '$red3'

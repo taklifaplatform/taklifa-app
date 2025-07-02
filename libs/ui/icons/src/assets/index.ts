@@ -57,6 +57,7 @@ import LocationCheck from './icons/location-check.svg';
 import Location from './icons/location.svg'; 
 import Lock from './icons/lock.svg'; 
 import Logo from './icons/logo.svg'; 
+import LogoLight from './icons/logo-light.svg'; 
 import Logout from './icons/logout.svg'; 
 import LookingForService from './icons/looking-for-service.svg'; 
 import Mail from './icons/mail.svg'; 
@@ -163,6 +164,7 @@ export {
   Location,
   Lock,
   Logo,
+  LogoLight,
   Logout,
   LookingForService,
   Mail,

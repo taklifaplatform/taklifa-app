@@ -39,7 +39,7 @@ export const ZixRowTimeRangePicker: React.FC<ZixDateFieldProps> = ({
         theme={isActive ? 'accent' : undefined}
         backgroundColor={
           isActive
-            ? '$color9'
+            ? '$color1'
             : '$color3'
         }
         onPress={() => {

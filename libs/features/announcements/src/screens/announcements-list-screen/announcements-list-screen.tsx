@@ -105,7 +105,7 @@ const CategoryList = memo(
           borderColor={
             selectedCategory?.id === item.id ||
             (!selectedCategory && item.id === 'all')
-              ? '$color9'
+              ? '$color1'
               : '$color8'
           }
           backgroundColor={
@@ -202,7 +202,7 @@ const AnnouncementItem = memo(
           theme={user?.id === item?.user?.id ? 'accent' : undefined}
           backgroundColor={user?.id === item?.user?.id ? '$color2' : '$color2'}
           borderWidth={1}
-          borderColor={user?.id === item?.user?.id ? '$color9' : '$color2'}
+          borderColor={user?.id === item?.user?.id ? '$color1' : '$color2'}
           borderRadius="$2"
           marginHorizontal={showHeader ? '$4' : undefined}
           padding="$2"
@@ -648,7 +648,7 @@ export const AnnouncementsListScreen: React.FC<
                 name="radio_button_checked"
                 color={
                   sortBy === 'created_at' && sortDirection === 'desc'
-                    ? '$color9'
+                    ? '$color1'
                     : 'gray'
                 }
               />
@@ -688,7 +688,7 @@ export const AnnouncementsListScreen: React.FC<
                 name="radio_button_checked"
                 color={
                   sortBy === 'created_at' && sortDirection === 'asc'
-                    ? '$color9'
+                    ? '$color1'
                     : 'gray'
                 }
               />

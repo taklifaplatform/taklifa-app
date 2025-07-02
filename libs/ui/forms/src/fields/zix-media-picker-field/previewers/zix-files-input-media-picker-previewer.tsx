@@ -44,7 +44,7 @@ export const ZixFilesInputMediaPickerPreviewer: React.FC<ZixMediaPreviewerProps>
               theme='success'
               width="$3"
               backgroundColor='transparent'
-              color='$color9'
+              color='$color1'
               icon={(props: IconProps) => <Check {...props} />}
               scaleIcon={1.8}
               onPress={() => {

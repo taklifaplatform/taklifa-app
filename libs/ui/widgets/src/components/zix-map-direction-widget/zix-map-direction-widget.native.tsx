@@ -123,7 +123,7 @@ export const ZixMapDirectionWidget: React.FC<ZixMapDirectionWidgetProps> = ({
             <View
               width={1}
               height={1}
-              backgroundColor={'$color9'}
+              backgroundColor={'$color1'}
               padding="$2"
               borderRadius="$10"
             />

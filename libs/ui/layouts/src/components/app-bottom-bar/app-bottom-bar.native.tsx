@@ -124,7 +124,7 @@ const PlusButton = ({ size, focused }: TabBarIconProps) => {
     <Theme name='accent'>
       <Circle
         position="absolute"
-        backgroundColor={focused ? '$color5' : '$color9'}
+        backgroundColor={focused ? '$color5' : '$color1'}
         width={size + 34}
         height={size + 34}
       />

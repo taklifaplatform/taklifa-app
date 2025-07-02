@@ -327,7 +327,7 @@
   },
   "common": {
     "built-with-love-by": "تم التطوير بواسطة STE ZIX DEV",
-    "app_name": "سواعد اللوجستية",
+    "app_name": "تكلفة",
     "welcome": "مرحبًا",
     "next": "التالي",
     "confirm": "تأكيد",
@@ -514,6 +514,7 @@
     "service-title": "عنوان الخدمة",
     "service-description": "وصف الخدمة",
     "services": "الخدمات",
+    "costs": "التكاليف",
     "all": "الكل",
     "cancelled": "ملغى",
     "searching": "جاري البحث",

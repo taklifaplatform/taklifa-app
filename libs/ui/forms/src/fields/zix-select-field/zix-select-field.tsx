@@ -187,7 +187,7 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
                         {renderItemContent(item)}
                       </Select.ItemText>
                       <Select.ItemIndicator marginLeft="$4" theme='accent'>
-                        <CustomIcon name='radio_button_checked' color='$color9' />
+                        <CustomIcon name='radio_button_checked' color='$color1' />
                       </Select.ItemIndicator>
                     </Select.Item>
                   )

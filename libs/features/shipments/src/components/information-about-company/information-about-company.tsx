@@ -48,7 +48,7 @@ export const InformationAboutCompany: React.FC<InformationAboutCompanyProps> = (
             </Link>}
           </XStack>
 
-          <Text flex={1} fontSize={15} fontWeight={'600'} color={'$color9'}>
+          <Text flex={1} fontSize={15} fontWeight={'600'} color={'$color1'}>
             {company.about}
           </Text>
         </YStack>
@@ -69,13 +69,13 @@ export const InformationAboutCompany: React.FC<InformationAboutCompanyProps> = (
             variant="details"
             options={[
               {
-                icons: <SquareUserRound size="$1" color={'$color9'} />,
+                icons: <SquareUserRound size="$1" color={'$color1'} />,
                 name: 'Name',
                 value: `${company.name}`,
               },
               {
                 icons: (
-                  <CustomIcon name="half-star" size="$1" color={'$color9'} />
+                  <CustomIcon name="half-star" size="$1" color={'$color1'} />
                 ),
                 name: t('shipment:ratings'),
                 value: `${company.rating_stats?.score}`,

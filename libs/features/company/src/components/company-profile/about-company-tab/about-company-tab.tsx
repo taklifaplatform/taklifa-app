@@ -104,7 +104,7 @@ export const AboutCompanyTab: React.FC<AboutCompanyTabProps> = ({
                     {item.user?.rating_stats?.score}
                   </Text>
                   <Theme name='accent'>
-                    <CustomIcon name='half_star' size={16} color='$color9' />
+                    <CustomIcon name='half_star' size={16} color='$color1' />
                   </Theme>
                 </XStack>
               ) : <View height={'$1'} />

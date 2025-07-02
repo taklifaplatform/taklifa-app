@@ -133,7 +133,7 @@ export const UserRoleListItem: React.FC<UserRoleListItemProps> = ({
             name="radio_button_checked"
             color={
               isSelected
-                ? '$color9'
+                ? '$color1'
                 : '$color3'
             }
           />

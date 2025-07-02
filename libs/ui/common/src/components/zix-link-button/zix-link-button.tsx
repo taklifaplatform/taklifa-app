@@ -40,7 +40,7 @@ const CustomButton = styled(Button, {
     },
     headerMenuActive: {
       true: {
-        backgroundColor: '$color9',
+        backgroundColor: '$color1',
       },
     },
     menuItem: {

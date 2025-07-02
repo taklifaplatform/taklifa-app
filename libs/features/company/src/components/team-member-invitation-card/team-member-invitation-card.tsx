@@ -105,7 +105,7 @@ export function TeamMemberInvitationCard({
       width={'100%'}
       justifyContent="space-between"
       paddingVertical="$4"
-      borderColor="$color9"
+      borderColor="$color1"
       alignItems="center"
     >
       <XStack gap="$3" alignItems="center">

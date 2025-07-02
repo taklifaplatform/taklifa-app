@@ -10,8 +10,7 @@ export default function Screen() {
 
   function redirectUser() {
     setTimeout(() => {
-      // router.replace('/auth/verify-kyc');
-      router.replace('/app');
+      router.replace('/auth/login');
     }, 1000);
   }
   const router = useRouter();
@@ -25,14 +24,16 @@ export default function Screen() {
     <View
       style={{
         flex: 1,
-        backgroundColor: '#333333',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#0F5837',
       }}
     >
       <Image
-        source={require('../../assets/splash.gif')}
-        resizeMode="cover"
+        source={require('../../assets/splash.png')}
+        resizeMode="contain"
         resizeMethod="resize"
-        style={{ width, height }}
+        style={{ width: width * 0.8, height: height * 0.8 }}
       />
     </View>
   );

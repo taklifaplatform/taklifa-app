@@ -23,7 +23,7 @@ export const ShipmentInlineStepper: React.FC<ShipmentInlineStepperProps> = (
 ) => {
   const {
     stepColorPrec = '$color3',
-    stepColorActive = '$color9',
+    stepColorActive = '$color1',
     stepColorPrev = '$color3',
   } = props;
 

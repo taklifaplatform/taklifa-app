@@ -85,7 +85,7 @@ export const SettingsScreen = () => {
                   <Settings.Item
                     icon={(props: IconProps) => (
                       <Theme name='accent'>
-                        <CustomIcon {...props} name="settings" color="$color9" />
+                        <CustomIcon {...props} name="settings" color="$color1" />
                       </Theme>
                     )}
                     isActive={pathname === getUrl('account/settings/general')}
@@ -102,7 +102,7 @@ export const SettingsScreen = () => {
                   <Settings.Item
                     icon={(props: IconProps) => (
                       <Theme name='accent'>
-                        <CustomIcon name="lock" color="$color9" {...props} />
+                        <CustomIcon name="lock" color="$color1" {...props} />
                       </Theme>
                     )}
                     href={getUrl('account/settings/change-password')}
@@ -117,7 +117,7 @@ export const SettingsScreen = () => {
                   <Settings.Item
                     icon={(props: IconProps) => (
                       <Theme name='accent'>
-                        <CustomIcon name="mail" color="$color9" {...props} />
+                        <CustomIcon name="mail" color="$color1" {...props} />
                       </Theme>
                     )}
                     isActive={
@@ -134,7 +134,7 @@ export const SettingsScreen = () => {
                 <Settings.Item
                   icon={(props: IconProps) => (
                     <Theme name='accent'>
-                      <CustomIcon name="secure" color="$color9" {...props} />
+                      <CustomIcon name="secure" color="$color1" {...props} />
                     </Theme>
                   )}
                   isActive={pathname === '/privacy-policy'}
@@ -147,7 +147,7 @@ export const SettingsScreen = () => {
                 <Settings.Item
                   icon={(props: IconProps) => (
                     <Theme name='accent'>
-                      <CustomIcon name="book" color="$color9" {...props} />
+                      <CustomIcon name="book" color="$color1" {...props} />
                     </Theme>
                   )}
                   isActive={pathname === '/terms-of-service'}
@@ -163,7 +163,7 @@ export const SettingsScreen = () => {
                 <Settings.Item
                   icon={(props: IconProps) => (
                     <Theme name='accent'>
-                      <CustomIcon name="share" color="$color9" {...props} />
+                      <CustomIcon name="share" color="$color1" {...props} />
                     </Theme>
                   )}
                   onPress={() =>
@@ -197,7 +197,7 @@ export const SettingsScreen = () => {
                     <Settings.Item
                       icon={(props: IconProps) => (
                         <Theme name='accent'>
-                          <CustomIcon name="followed" color="$color9" {...props} />
+                          <CustomIcon name="followed" color="$color1" {...props} />
                         </Theme>
                       )}
                       onPress={() => router.push('/auth/login')}
@@ -208,7 +208,7 @@ export const SettingsScreen = () => {
                     <Settings.Item
                       icon={(props: IconProps) => (
                         <Theme name='accent'>
-                          <CustomIcon name="account" color="$color9" {...props} />
+                          <CustomIcon name="account" color="$color1" {...props} />
                         </Theme>
                       )}
                       onPress={() => router.push('/auth/register')}
@@ -253,7 +253,7 @@ const SettingsWebLanguageAction = ({ onPress }) => {
       <Settings.Item
         icon={(props: IconProps) => (
           <Theme name='accent'>
-            <Languages  {...props} color="$color9" />
+            <Languages  {...props} color="$color1" />
           </Theme>
         )}
         onPress={onPress}
@@ -293,7 +293,7 @@ const SettingsLanguageAction = () => {
       <Settings.Item
         icon={(props: IconProps) => (
           <Theme name='accent'>
-            <Languages  {...props} color="$color9" />
+            <Languages  {...props} color="$color1" />
           </Theme>
         )}
         onPress={() => actionSheetRef.current?.open()}
@@ -312,7 +312,7 @@ const SettingsThemeAction = () => {
     <Settings.Item
       icon={(props: IconProps) => (
         <Theme name='accent'>
-          <CustomIcon name="theme" color="$color9" {...props} />
+          <CustomIcon name="theme" color="$color1" {...props} />
         </Theme>
       )}
       onPress={toggle}
@@ -330,9 +330,9 @@ const SettingsItemLogoutAction = () => {
     <Settings.Item
       theme='error'
       icon={(props: IconProps) => (
-        <CustomIcon name="logout" color="$color9" {...props} />
+        <CustomIcon name="logout" color="$color1" {...props} />
       )}
-      accentColor="$color9"
+      accentColor="$color1"
       //onPress={() => logout()}
       onPress={async () => {
         Platform.OS === 'web' ? logout() :
@@ -365,9 +365,9 @@ const SettingsDeleteAccountAction = () => {
     <Settings.Item
       theme='error'
       icon={(props: IconProps) => (
-        <CustomIcon name="secure" color="$color9" {...props} />
+        <CustomIcon name="secure" color="$color1" {...props} />
       )}
-      accentColor="$color9"
+      accentColor="$color1"
       //onPress={() => logout()}
       onPress={async () => {
         Platform.OS === 'web' ? UserService.deleteAccount().then(() => logout()) :

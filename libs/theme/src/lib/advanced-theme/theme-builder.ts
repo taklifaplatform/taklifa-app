@@ -96,20 +96,20 @@ const palettes = {
     "hsla(0, 0%, 95%, 0)",
   ],
   light_accent: [
-    "hsla(47, 99%, 54%, 0)",
-    "hsla(47, 99%, 54%, 0.25)",
-    "hsla(47, 99%, 54%, 0.5)",
-    "hsla(47, 99%, 54%, 0.75)",
-    "hsla(47, 99%, 54%, 1)", // color1 : background
+    "hsla(153, 71%, 20%, 0)",
+    "hsla(153, 71%, 20%, 0.25)",
+    "hsla(153, 71%, 20%, 0.5)",
+    "hsla(153, 71%, 20%, 0.75)",
+    "hsla(153, 71%, 20%, 1)", // color1 : background
     "hsla(48, 100%, 96%, 1)", // color2 : Substle Background
-    "hsla(47, 100%, 85%, 1)", // color3: UI Background
-    "hsla(47, 99%, 54%, 1)", // color4: Hovezr UI Background
-    "hsla(47, 99%, 74%, 1)", // color5: Active UI Background
-    "hsla(47, 99%, 54%, 1)", // color6: Subtle border
-    "hsla(47, 99%, 54%, 1)", // color7: Strong Border
-    "hsla(47, 99%, 55%, 1)", // color8: Hover Border
-    "hsla(47, 99%, 55%, 1)", // color9: Primary
-    "hsla(47, 99%, 55%, 1)", // color10: Hover Primary
+    "hsla(153, 71%, 20%, 1)", // color3: UI Background
+    "hsla(142, 70%, 49%, 1)", // color4: Hovezr UI Background
+    "hsla(153, 71%, 20%, 1)", // color5: Active UI Background
+    "hsla(142, 71%, 49%, 1)", // color6: Subtle border
+    "hsla(142, 71%, 49%, 1)", // color7: Strong Border
+    "hsla(142, 71%, 49%, 1)", // color8: Hover Border
+    "hsla(153, 71%, 20%, 1)", // color9: Primary
+    "hsla(153, 71%, 20%, 1)", // color10: Hover Primary
     "hsla(202, 76%, 8%, 1)", // color11: Subtle Text
     "hsla(202, 76%, 0%, 1)", // color12: Text
     "hsla(0, 0%, 0%, 0.75)",

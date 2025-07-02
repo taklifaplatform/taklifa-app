@@ -37,10 +37,10 @@ export const MapFilters: React.FC<MapFiltersProps> = ({
           label: `${t('common:model')}: ${t('app:common.all')}`,
           value: 'all',
           activeValue: (
-            <CustomIcon name="solo_transporter_car" size='$2' color="$color9" />
+            <CustomIcon name="solo_transporter_car" size='$2' color="$color1" />
           ),
           icon: (
-            <CustomIcon name="solo_transporter_car" size='$2' color="$color9" />
+            <CustomIcon name="solo_transporter_car" size='$2' color="$color1" />
           )
         },
 

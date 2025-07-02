@@ -353,7 +353,7 @@ export const SettingsScreen = () => {
                 <Settings.Item
                   icon={(props: IconProps) => (
                     <Theme name='accent'>
-                      <CustomIcon name="share" color="$color9" {...props} />
+                      <CustomIcon name="share" color="1" {...props} />
                     </Theme>
                   )}
                   onPress={() =>
@@ -398,7 +398,7 @@ export const SettingsScreen = () => {
                   <Settings.Item
                     icon={(props: IconProps) => (
                       <Theme name="accent">
-                        <CustomIcon name="users" color="$color9" {...props} size={17} />
+                        <CustomIcon name="users" color="$color1" {...props} size={17} />
                       </Theme>
                     )}
                     onPress={() => router.push('/auth/login')}
@@ -472,7 +472,7 @@ const SettingsWebLanguageAction = ({ onPress }) => {
       <Settings.Item
         icon={(props: IconProps) => (
           <Theme name="accent">
-            <Languages {...props} color="$color9" />
+            <Languages {...props} color="$color1" />
           </Theme>
         )}
         onPress={onPress}
@@ -512,7 +512,7 @@ const SettingsLanguageAction = () => {
       <Settings.Item
         icon={(props: IconProps) => (
           <Theme name="accent">
-            <Languages {...props} color="$color9" />
+            <Languages {...props} color="$color1" />
           </Theme>
         )}
         onPress={() => actionSheetRef.current?.open()}
@@ -533,7 +533,7 @@ const SettingsThemeAction = () => {
     <Settings.Item
       icon={(props: IconProps) => (
         <Theme name="accent">
-          <CustomIcon name="theme" color="$color9" {...props} size={17} />
+          <CustomIcon name="theme" color="$color1" {...props} size={17} />
         </Theme>
       )}
       onPress={toggle}
@@ -553,10 +553,10 @@ const SettingsItemLogoutAction = () => {
     <Settings.Item
       icon={(props: IconProps) => (
         <Theme name="accent">
-          <CustomIcon name="logout" color="$color9" {...props} size={17} />
+          <CustomIcon name="logout" color="$color1" {...props} size={17} />
         </Theme>
       )}
-      accentColor="$color9"
+      accentColor="$color1"
       //onPress={() => logout()}
       onPress={async () => {
         Platform.OS === 'web'
@@ -594,7 +594,7 @@ const SettingsDeleteAccountAction = () => {
       icon={(props: IconProps) => (
         <CustomIcon name="delete" color="$color10" {...props} size={17} />
       )}
-      accentColor="$color9"
+      accentColor="$color1"
       //onPress={() => logout()}
       onPress={async () => {
         Platform.OS === 'web'

@@ -50,7 +50,7 @@ export const InlineItemSelect: React.FC<InlineItemSelectProps> = ({
       <XStack alignItems="center" gap="$2">
         <Theme name="accent">
           <Avatar size="$8">
-            <CustomIcon name={icon} size="$8" color="$color9" />
+            <CustomIcon name={icon} size="$8" color="$color1" />
           </Avatar>
         </Theme>
 

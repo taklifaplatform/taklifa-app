@@ -56,6 +56,7 @@ export const iconNames = [
   'location',
   'lock',
   'logo',
+  'logo_light',
   'logout',
   'looking_for_service',
   'mail',

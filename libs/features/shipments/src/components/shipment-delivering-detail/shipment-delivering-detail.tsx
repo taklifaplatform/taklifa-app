@@ -47,7 +47,7 @@ export const ShipmentDeliveringDetail: React.FC<
 
       <Button
         variant='outlined'
-        icon={<Route size={15} color={'$color9'} rotate="90deg" />}
+        icon={<Route size={15} color={'$color1'} rotate="90deg" />}
       >
         {distance.toFixed(2)} {t('km')}
       </Button>
@@ -55,7 +55,7 @@ export const ShipmentDeliveringDetail: React.FC<
       <Button
         flex={1}
         variant='outlined'
-        icon={<CustomIcon name="time" size={15} color={'$color9'} />}
+        icon={<CustomIcon name="time" size={15} color={'$color1'} />}
       >
         {deliveryTime.humanize()}
       </Button>

@@ -55,7 +55,7 @@ export const ShipmentsListScreen: React.FC<ShipmentsListScreenProps> = ({
       flex={1}
       key={index}
       theme={status === item.status ? 'accent' : undefined}
-      backgroundColor={status === item.status ? '$color9' : '$color2'}
+      backgroundColor={status === item.status ? '$color1' : '$color2'}
       borderRadius="$4"
       height="$4"
       textProps={{

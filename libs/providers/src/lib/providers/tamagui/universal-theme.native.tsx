@@ -22,11 +22,12 @@ export const ThemeContext = createContext<
 
 type ThemeName = 'light' | 'dark' | 'system';
 
+/// 
 // TODO: should be configurable
 const DefaultTheme: Theme = {
   dark: false,
   colors: {
-    primary: 'rgb(254, 202, 22)',
+    primary: 'rgb(15, 88, 55)',
     background: 'rgb(249, 249, 249)',
     card: 'rgb(255, 255, 255)',
     text: 'rgb(33, 31, 31)',

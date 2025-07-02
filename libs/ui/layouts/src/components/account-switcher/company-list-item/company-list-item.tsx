@@ -130,7 +130,7 @@ export const CompanyListItem: React.FC<CompanyListItemProps> = ({
             name="radio_button_checked"
             color={
               isSelected
-                ? '$color9'
+                ? '$color1'
                 : '$color3'
             }
           />

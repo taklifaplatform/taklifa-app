@@ -50,7 +50,7 @@ export const OnboardingAuthScreen = () => {
           <Stack key={index} flexDirection="row" gap={'$4'}>
             {option.icon}
             <YStack gap="$4">
-              <Text fontSize={20} fontWeight="700" color="$color9">
+              <Text fontSize={20} fontWeight="700" color="$color1">
                 {option.title}
               </Text>
               <Text fontWeight="400" fontSize={15} lineHeight={25}>

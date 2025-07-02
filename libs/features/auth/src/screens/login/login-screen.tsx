@@ -139,10 +139,10 @@ const SignUpLink = () => {
         </Paragraph>
 
         <Theme name="accent">
-          <Text textDecorationLine="underline" color="$color9">
+          <Text textDecorationLine="underline" color="$color1">
             {t('auth:sign_up')}
           </Text>
-          <CustomIcon theme="accent" name="arrow_right" color="$color9" />
+          <CustomIcon theme="accent" name="arrow_right" color="$color1" />
         </Theme>
       </Stack>
     </Link>
@@ -160,7 +160,7 @@ const ForgotPasswordLink = () => {
         ).toString()}`}
       >
         <Stack flex={1} alignItems="flex-end" marginTop="$3">
-          <Paragraph color="$color9">{t('auth:forgot_password')}</Paragraph>
+          <Paragraph color="$color1">{t('auth:forgot_password')}</Paragraph>
         </Stack>
       </Link>
     </Theme>

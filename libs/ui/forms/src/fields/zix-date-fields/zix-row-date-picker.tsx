@@ -77,7 +77,7 @@ export const ZixRowDatePicker: React.FC<ZixDateFieldProps> = ({
         opacity: 0.5
       }}
       theme={activeDayIndex === index ? 'accent' : undefined}
-      backgroundColor={activeDayIndex === index ? '$color9' : '$color3'}
+      backgroundColor={activeDayIndex === index ? '$color1' : '$color3'}
       onPress={() => {
         onDateChange(moment(date).date(item))
       }}

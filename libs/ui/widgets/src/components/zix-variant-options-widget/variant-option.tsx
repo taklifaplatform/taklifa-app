@@ -70,7 +70,7 @@ const VariantText = styled(Text, {
     location: {
       true: {
         fontWeight: '700',
-        color: '$color9',
+        color: '$color1',
       }
     }
   },

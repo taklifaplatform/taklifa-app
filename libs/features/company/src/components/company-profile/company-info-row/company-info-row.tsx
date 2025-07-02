@@ -17,7 +17,7 @@ export const CompanyInfoRow: React.FC<CompanyInfoRowProps> = ({
     <>
       <XStack alignItems="center" gap="$2">
         <Theme name='accent'>
-          <CustomIcon name="car" size='$1' color="$color9" />
+          <CustomIcon name="car" size='$1' color="$color1" />
         </Theme>
         <Text color='$color12' fontWeight="600" fontSize="$1">
           {company.vehicles_count} {t('common:vehicles')}
@@ -36,7 +36,7 @@ export const CompanyInfoRow: React.FC<CompanyInfoRowProps> = ({
     <>
       <XStack alignItems="center" gap="$2">
         <Theme name='accent'>
-          <CustomIcon name="location" size='$1' color="$color9" />
+          <CustomIcon name="location" size='$1' color="$color1" />
         </Theme>
         <Text color='$color12' fontWeight="600" fontSize="$1">
           {company?.location?.country?.name}
@@ -53,7 +53,7 @@ export const CompanyInfoRow: React.FC<CompanyInfoRowProps> = ({
   const renderRatingsInfo = () => !!company.rating_stats?.count && (
     <XStack alignItems="center" gap="$2">
       <Theme name='accent'>
-        <CustomIcon name="star" size='$1' color="$color9" />
+        <CustomIcon name="star" size='$1' color="$color1" />
       </Theme>
       <Text color='$color12' fontWeight="600" fontSize="$1">
         ({company.rating_stats?.count}) {company.rating_stats?.score}

@@ -19,7 +19,7 @@ export const RatingStars: React.FC<RatingStarsProps> = ({
   const renderStar = (index: number) => {
     const isHalf = score - index === 0.5;
     const isFilled = score - index >= 1;
-    return isFilled ? <CustomIcon name='star' color='$color9' size={size} /> : isHalf ? <CustomIcon name='half_star' color='$color9' size={size} /> : <CustomIcon name='half_star' color='$color9' size={size} />
+    return isFilled ? <CustomIcon name='star' color='$color1' size={size} /> : isHalf ? <CustomIcon name='half_star' color='$color1' size={size} /> : <CustomIcon name='half_star' color='$color1' size={size} />
   };
 
   return (

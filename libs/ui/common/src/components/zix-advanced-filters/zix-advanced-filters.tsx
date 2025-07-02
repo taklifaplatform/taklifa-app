@@ -127,7 +127,7 @@ export const ZixFilter: React.FC<ZixFiltersProps> = ({
             <Theme name="accent">
               <CustomIcon
                 name="radio_button_checked"
-                color='$color9'
+                color='$color1'
               />
             </Theme>
           )

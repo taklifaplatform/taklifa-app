@@ -34,7 +34,7 @@ export const OnboardingStepContent = ({
         opacity={1}
         scale={1}
       >
-        <Icon color="$color9" size={96} />
+        <Icon color="$color1" size={96} />
       </YStack>
       <H2
         marginTop="$5"
@@ -45,7 +45,7 @@ export const OnboardingStepContent = ({
         opacity={1}
         scale={1}
         size="$10"
-        color="$color9"
+        color="$color1"
         selectable={false}
         textAlign="center"
         $md={{
@@ -68,7 +68,7 @@ export const OnboardingStepContent = ({
         size="$6"
         lineHeight="$8"
         textAlign="center"
-        color="$color9"
+        color="$color1"
         selectable={false}
         $md={{
           marginTop: '$3',
