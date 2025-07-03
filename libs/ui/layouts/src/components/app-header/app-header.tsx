@@ -1,4 +1,4 @@
-import { Search, X } from '@tamagui/lucide-icons';
+import { Search, ShoppingBag, X } from '@tamagui/lucide-icons';
 import { COMPANY_MANAGER_ROLES, useAuth } from '@zix/services/auth';
 import { UserAvatar, ZixAvatar } from '@zix/ui/common';
 import { ZixInput, ZixInputProps } from '@zix/ui/forms';
@@ -6,13 +6,15 @@ import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import { useCallback, useState } from 'react';
 import { useRouter } from 'solito/router';
-import { Button, ColorTokens, H4, Theme, View, XStack, YStack } from 'tamagui';
+import { Button, ColorTokens, H4, Theme, View, XStack, YStack, Text } from 'tamagui';
 import { AppHeaderWrapper } from './app-header-wrapper';
 
 export type AppHeaderProps = {
   searchProps?: ZixInputProps;
   showSearchBar?: boolean;
   showBackButton?: boolean;
+  showCardHeader?: boolean;
+  cardHeaderValue?: string;
   goBack?: () => void;
   headerTitle?: () => React.ReactNode;
   headerRight?: () => React.ReactNode;
@@ -25,6 +27,8 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   searchProps = {},
   showSearchBar,
   showBackButton,
+  showCardHeader,
+  cardHeaderValue,
   goBack,
   headerRight,
   headerTitle,
@@ -132,6 +136,14 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
       />
     );
 
+  const renderCardHeader = () => showCardHeader && (
+    <XStack gap="$2" alignItems="center" >
+      <CustomIcon name="riyal" size="$1" color="$color2" />
+      <Text fontSize={'$2'} fontWeight={'bold'} color="$color2">{cardHeaderValue}</Text>
+      <ShoppingBag size={20} color="$color2" />
+    </XStack>
+  );
+
   const renderMobileHeader = () => (
     <YStack
       theme="accent"
@@ -167,6 +179,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
             </XStack>
             <XStack flex={0.25} justifyContent="flex-end">
               {headerRight ? headerRight() : renderToggleSearchBar()}
+              {renderCardHeader()}
             </XStack>
           </XStack>
 

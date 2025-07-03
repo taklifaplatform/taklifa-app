@@ -1,4 +1,3 @@
-
 import { useQuery } from '@tanstack/react-query';
 import { CompaniesService } from '@zix/api';
 import { FullScreenSpinner } from '@zix/ui/common';
@@ -10,19 +9,20 @@ import { useAuth, useMixpanel } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import { useRouter } from 'solito/router';
 import { ScrollView, Stack, Text, YStack } from 'tamagui';
-import CompanyContactActions from '../../components/company-profile/company-contact-actions/company-contact-actions';
-import CompanyInfoRow from '../../components/company-profile/company-info-row/company-info-row';
-import CompanyProfileHeader from '../../components/company-profile/company-profile-header/company-profile-header';
+import { CompanyCard } from '../../components';
 import CompanyProfileTabs from '../../components/company-profile/company-profile-tabs/company-profile-tabs';
 
 const { useParam } = createParam<{ company: string }>();
 
 export function CompanyProfileScreen() {
-  useMixpanel('Company Profile Screen view')
+  useMixpanel('Company Profile Screen view');
   const [companyId] = useParam('company');
   const router = useRouter();
-  const { user: authUser, getUrlPrefix, canManageThisCompany, isAuthMemberInThisCompany } = useAuth();
-
+  const {
+    user: getUrlPrefix,
+    canManageThisCompany,
+    isAuthMemberInThisCompany,
+  } = useAuth();
 
   const { data, refetch, isLoading, isError, error } = useQuery({
     queryFn() {
@@ -37,27 +37,29 @@ export function CompanyProfileScreen() {
     queryKey: ['CompaniesService.retrieveCompany', companyId],
   });
 
-  const renderCompanyProfile = () => data?.data && (
-    <ScrollView flex={1} refreshControl={<RefreshControl refreshing={isLoading} onRefresh={refetch} />}>
-      <YStack padding="$4" marginBottom='$4' gap="$4">
-        <YStack
-          backgroundColor='$color2'
-          borderRadius='$5'
-          paddingHorizontal='$4'
-          paddingBottom='$4'
-          gap='$6'
-        >
-          <CompanyProfileHeader company={data.data} />
-          <CompanyInfoRow company={data.data} />
+  const renderCompanyProfile = () =>
+    data?.data && (
+      <ScrollView
+        flex={1}
+        refreshControl={
+          <RefreshControl refreshing={isLoading} onRefresh={refetch} />
+        }
+      >
+        <YStack padding="$4" marginBottom="$4" gap="$4">
+          <CompanyCard
+            company={data.data}
+            backgroundColor="$color2"
+            showContactActions
+            useShowButton={true}
+          />
         </YStack>
-        {!authUser?.companies?.find(c => c.id === company?.id) && <CompanyContactActions company={data.data} />}
-      </YStack>
-      <CompanyProfileTabs company={data.data} />
-    </ScrollView>
-  )
+        <CompanyProfileTabs company={data.data} />
+      </ScrollView>
+    );
   const company = data?.data;
 
-  const renderLoadingSpinner = () => (!company?.id && !isError) && <FullScreenSpinner />;
+  const renderLoadingSpinner = () =>
+    !company?.id && !isError && <FullScreenSpinner />;
 
   const renderHeader = () =>
     canManageThisCompany(company?.id) ? ( //
@@ -76,27 +78,24 @@ export function CompanyProfileScreen() {
           </TouchableOpacity>
         )}
       />
-    ) : (isAuthMemberInThisCompany(company?.id) || !company?.id) ? (
-      <AppHeader
-        showBackButton
-        headerTitle={() => <AccountSwitcher />}
-      />
+    ) : isAuthMemberInThisCompany(company?.id) || !company?.id ? (
+      <AppHeader showBackButton headerTitle={() => <AccountSwitcher />} />
     ) : (
       <AppHeader
         showBackButton
-        title={company?.name ?? '...'}
+        showCardHeader
+        cardHeaderValue={'3.500'}
+        title=""
       />
     );
 
-
-  const renderError = () => isError && (
-    <Stack alignItems="center" justifyContent="center" flex={1} gap="$4">
-      <CustomIcon name="empty_data" color="red" size={250} />
-      <Text>
-        {error?.message}
-      </Text>
-    </Stack>
-  )
+  const renderError = () =>
+    isError && (
+      <Stack alignItems="center" justifyContent="center" flex={1} gap="$4">
+        <CustomIcon name="empty_data" color="red" size={250} />
+        <Text>{error?.message}</Text>
+      </Stack>
+    );
 
   return (
     <ScreenLayout>
@@ -107,6 +106,5 @@ export function CompanyProfileScreen() {
     </ScreenLayout>
   );
 }
-
 
 export default CompanyProfileScreen;

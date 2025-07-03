@@ -5,7 +5,7 @@ import { AnalyticsService, ChatService, CompanyTransformer } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { ZixButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
-import { Compass, Phone } from '@tamagui/lucide-icons';
+import { CircleEllipsis, Compass, Phone } from '@tamagui/lucide-icons';
 import { t } from 'i18next';
 import { Linking, Platform } from 'react-native';
 import { useRouter } from 'solito/router';
@@ -15,12 +15,14 @@ export type CompanyContactActionsProps = ThemeableStackProps & {
   company: CompanyTransformer;
   actionButtonSize?: SizeTokens;
   onServiceRequestPress?: () => void;
+  useShowButton?: boolean;
 };
 
 export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
   company,
   actionButtonSize = '$2.5',
   onServiceRequestPress,
+  useShowButton = false,
   ...props
 }) => {
   const { getUrlPrefix } = useAuth();
@@ -75,24 +77,44 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
     // if (onContractPressAnalytic) {
     //   onContractPressAnalytic(type)
     // } else {
-      AnalyticsService.storeUserAnalytic({
-        user: company.id?.toString() || '',
-        requestBody: {
-          action_type: 'call_press',
-        }
-      })
+    AnalyticsService.storeUserAnalytic({
+      user: company.id?.toString() || '',
+      requestBody: {
+        action_type: 'call_press',
+      },
+    });
     // }
   }
 
   function _onWhatsappPress() {
-    trackContractPress('whatsapp') 
-    const phoneNumber = company?.phone_number || ""
-    Linking.openURL(`https://wa.me/${phoneNumber.includes('+') ? phoneNumber : `+${phoneNumber}`}`);
+    trackContractPress('whatsapp');
+    const phoneNumber = company?.phone_number || '';
+    Linking.openURL(
+      `https://wa.me/${phoneNumber.includes('+') ? phoneNumber : `+${phoneNumber}`}`,
+    );
   }
 
   return (
     <XStack justifyContent="space-between" gap="$2" {...props}>
-      <ZixButton
+      {useShowButton && (
+        <Button
+        theme="accent"
+        flex={1}
+        backgroundColor="$color0"
+        icon={(props: IconProps) => (
+          <CircleEllipsis {...props} size={20} color="$color2" />
+        )}
+        color="$color2"
+        fontWeight="600"
+        disabled={isPending}
+        loading={isPending}
+        onPress={() => {}}
+        {...sharedButtonStyle}
+        >
+          معلومات عنا
+        </Button>
+      )}
+      {!useShowButton && <ZixButton
         theme="accent"
         flex={1}
         backgroundColor="$color0"
@@ -107,7 +129,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
         {...sharedButtonStyle}
       >
         {t('shipment:destination')}
-      </ZixButton>
+      </ZixButton>}
       <Button
         theme="success"
         backgroundColor="$color9"
@@ -116,20 +138,24 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
           <CustomIcon {...props} name="whatsapp-contact" />
         )}
         onPress={_onWhatsappPress}
+        color="#FFFFFF"
+        fontWeight="600"
         {...sharedButtonStyle}
       >
-        {t('common:contact-whatsapp')}
+        تواصل بنا مباشر
       </Button>
-      <Button
-        flex={1}
-        backgroundColor={'transparent'}
-        borderWidth={1}
-        borderColor={'$color0'}
-        onPress={onCallPress}
-        {...sharedButtonStyle}
-      >
-        {t('shipment:details')}
-      </Button>
+      {!useShowButton && (
+        <Button
+          flex={1}
+          backgroundColor={'transparent'}
+          borderWidth={1}
+          borderColor={'$color0'}
+          onPress={onCallPress}
+          {...sharedButtonStyle}
+        >
+          {t('shipment:details')}
+        </Button>
+      )}
     </XStack>
   );
 };

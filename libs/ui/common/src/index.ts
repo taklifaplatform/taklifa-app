@@ -43,3 +43,5 @@ export * from "./components/inline-stepper/inline-stepper";
 export * from "./hooks/usePopoverState";
 
 export * from "./components/data-not-found/data-not-found";
+
+export * from "./components/zix-slider/zix-slider";

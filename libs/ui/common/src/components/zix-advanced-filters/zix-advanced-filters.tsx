@@ -131,7 +131,6 @@ export const ZixFilter: React.FC<ZixFiltersProps> = ({
       </YStack>
     </XStack>
   );
-  console.log('activeValue', activeValue?.value);
   return (
     <ZixDialog
       title={filter.label}

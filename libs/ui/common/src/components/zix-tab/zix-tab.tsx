@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import { Button, ThemeableStackProps, View, XStack } from 'tamagui';
 
 export type ITab = {
@@ -24,16 +23,17 @@ export const ZixTab: React.FC<ZixTabProps> = ({
 
   return (
     <View flex={1}>
-      <XStack marginHorizontal="$4" backgroundColor="$color3">
+      <XStack marginHorizontal="$4" backgroundColor="transparent" borderWidth={1} borderColor="$color3" borderRadius="$4">
         {tabs.map((tab) => (
           <Button
             key={`tab-title-${tab.key}`}
             flex={1}
-            theme={activeTab === tab.key ? 'accent' : undefined}
+            theme={ 'accent' }
+            backgroundColor={activeTab === tab.key ? "$color1" : "transparent"}
             onPress={() => setActiveTab(tab.key)}
-            borderRadius="$0"
             fontWeight="bold"
             fontSize="$1"
+            color={activeTab === tab.key ? "$color2" : "$color12"}
             paddingHorizontal={tabs?.length > 3 ? "$1" : "$2"}
           >
             {tab.title}
@@ -41,7 +41,7 @@ export const ZixTab: React.FC<ZixTabProps> = ({
         ))}
       </XStack>
 
-      <View flex={1} padding="$4" {...contentContainerProps}>
+      <View flex={1} padding="$4"  {...contentContainerProps}>
         {tabs
           .filter((tab) => tab.key === activeTab)
           .map((tab) => (

@@ -136,7 +136,9 @@
     "@tamagui/constants": "*",
     "@expo/vector-icons": "*",
     "lodash": "*",
-    "expo-application": "*"
+    "expo-application": "*",
+    "@ptomasroos/react-native-multi-slider": "*",
+    "react-native-fast-range-slider": "*"
   },
   "scripts": {
     "eas-build-post-install": "cd ../../ && node tools/scripts/eas-build-post-install.mjs . apps/mobile",

@@ -24,6 +24,7 @@ export type ZixDialogProps = DialogProps & {
   dialogWidth?: string | number;
   dialogContentProps?: DialogContentProps;
   preventClickOutside?: boolean;
+  snapPoints?: number[];
 };
 
 export function ZixDialog({
@@ -38,6 +39,7 @@ export function ZixDialog({
   dialogHeight,
   dialogContentProps,
   preventClickOutside,
+  snapPoints = [70, 100],
   ...dialogProps
 }: ZixDialogProps) {
   const { width, height } = useWindowDimensions();
@@ -45,7 +47,7 @@ export function ZixDialog({
     <Dialog modal {...dialogProps}>
       {trigger && <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>}
       <Dialog.Adapt platform="touch">
-        <Dialog.Sheet zIndex={200000} modal disableDrag>
+        <Dialog.Sheet zIndex={200000} modal disableDrag snapPoints={snapPoints}>
           <Dialog.Sheet.Frame>
             <Dialog.Adapt.Contents />
           </Dialog.Sheet.Frame>
@@ -65,14 +67,14 @@ export function ZixDialog({
           padding={'$0'}
           bordered
           elevate
-          animation={[
-            'quick',
-            {
-              opacity: {
-                overshootClamping: true,
-              },
-            },
-          ]}
+          // animation={[
+          //   'quick',
+          //   {
+          //     opacity: {
+          //       overshootClamping: true,
+          //     },
+          //   },
+          // ]}
           enterStyle={{ x: 0, y: -20, opacity: 0, scale: 0.9 }}
           exitStyle={{ x: 0, y: 10, opacity: 0, scale: 0.95 }}
           x={0}
@@ -103,12 +105,12 @@ export function ZixDialog({
           {(!hideCloseButton || title) && (
             <XStack
               theme={'accent'}
-              justifyContent={'space-between'}
+              justifyContent={'center'}
               padding={contentPadding}
               backgroundColor={'$color3'}
             >
               {title ? (
-                <Dialog.Title>{title}</Dialog.Title>
+                <Dialog.Title fontWeight="bold" fontSize={'$3'}>{title}</Dialog.Title>
               ) : (
                 <VisuallyHidden>
                   <Dialog.Title></Dialog.Title>

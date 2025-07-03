@@ -74,6 +74,7 @@ export const iconNames = [
   'payments',
   'radio_button_checked',
   'ringing',
+  'riyal',
   'saudi_riyal_symbol',
   'search_track',
   'search',

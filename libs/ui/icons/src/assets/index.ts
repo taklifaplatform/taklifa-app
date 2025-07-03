@@ -75,6 +75,7 @@ import PaperMoney from './icons/paper-money.svg';
 import Payments from './icons/payments.svg'; 
 import RadioButtonChecked from './icons/radio-button-checked.svg'; 
 import Ringing from './icons/ringing.svg'; 
+import Riyal from './icons/riyal.svg'; 
 import SaudiRiyalSymbol from './icons/saudi-riyal-symbol.svg'; 
 import SearchTrack from './icons/search-track.svg'; 
 import Search from './icons/search.svg'; 
@@ -184,6 +185,7 @@ export {
   Payments,
   RadioButtonChecked,
   Ringing,
+  Riyal,
   SaudiRiyalSymbol,
   SearchTrack,
   Search,

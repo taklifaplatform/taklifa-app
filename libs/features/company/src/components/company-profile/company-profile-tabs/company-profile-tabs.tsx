@@ -3,12 +3,8 @@ import React, { useMemo } from 'react';
 
 import { ZixTab } from '@zix/ui/common';
 import AboutCompanyTab from '../about-company-tab/about-company-tab';
-import CompanyVehiclesTab from '../company-vehicles-tab/company-vehicles-tab';
-import CompanyDriversTab from '../company-drivers-tab/company-drivers-tab';
-import CompanyReviewsTab from '../company-reviews-tab/company-reviews-tab';
-import { t } from 'i18next';
 import CompanyServicesTab from '../company-services-tab/company-services-tab';
-import CompanyBranchesTab from '../company-branches-tab/company-branches-tab';
+import ProductsCompanyTab from '../products-company-tab/products-company-tab';
 
 export type ProfileTabsProps = {
   company: CompanyTransformer
@@ -21,52 +17,22 @@ export const CompanyProfileTabs: React.FC<ProfileTabsProps> = ({
   const tabs = useMemo(() => {
     const _tabs = [
       {
-        key: 'about',
-        title: `${t('common:tab-about')}`,
-        content: <AboutCompanyTab company={company} />
+        key: 'products',
+        title: 'المنتجات',
+        content: <ProductsCompanyTab company={company} />
       },
       {
         key: 'services',
-        title: `${t('common:tab-services')}`,
+        title: 'الخدمات',
         content: <CompanyServicesTab company={company} />
       },
     ]
-
-    if (company.vehicles_count) {
-      _tabs.push({
-        key: 'vehicles',
-        title: `${t('common:tab-vehicles')}`,
-        content: <CompanyVehiclesTab company={company} />
-      })
-    }
-
-    // _tabs.push({
-    //   key: 'drivers',
-    //   title: `${t('common:tab-drivers')}`,
-    //   content: <CompanyDriversTab company={company} />
-    // })
-
-
-    _tabs.push({
-      key: 'reviews',
-      title: `${t('common:tab-review')}`,
-      content: <CompanyReviewsTab company={company} />
-    })
-
-    if (company.branches?.length) {
-      _tabs.push({
-        key: 'branches',
-        title: `${t('common:branches')}`,
-        content: <CompanyBranchesTab company={company} />
-        // content: <CompanyBranchesTab company={company} />
-      })
-    }
     return _tabs
   }, [company])
 
   return (
     <ZixTab
-      defaultActiveTab='services'
+      defaultActiveTab='products'
       tabs={tabs}
     />
   );
