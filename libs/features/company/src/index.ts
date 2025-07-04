@@ -1,4 +1,5 @@
 export * from './screens/company-profile-screen/company-profile-screen';
+export * from './screens/product/product-screen';
 
 export * from './screens/settings/updated-company-screen/updated-company-screen';
 

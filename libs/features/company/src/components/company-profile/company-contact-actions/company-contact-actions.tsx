@@ -3,13 +3,31 @@ import { useToastController } from '@tamagui/toast';
 import { useMutation } from '@tanstack/react-query';
 import { AnalyticsService, ChatService, CompanyTransformer } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
-import { ZixButton } from '@zix/ui/common';
+import { TitleInfo, ZixButton, ZixDialog } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
-import { CircleEllipsis, Compass, Phone } from '@tamagui/lucide-icons';
+import {
+  ChevronUp,
+  CircleEllipsis,
+  Compass,
+  MapPin,
+  Phone,
+  Star,
+} from '@tamagui/lucide-icons';
 import { t } from 'i18next';
 import { Linking, Platform } from 'react-native';
 import { useRouter } from 'solito/router';
-import { Button, SizeTokens, ThemeableStackProps, XStack } from 'tamagui';
+import {
+  Button,
+  SizeTokens,
+  ThemeableStackProps,
+  XStack,
+  Text,
+  YStack,
+  Theme,
+  Separator,
+  Paragraph,
+} from 'tamagui';
+import { useState } from 'react';
 
 export type CompanyContactActionsProps = ThemeableStackProps & {
   company: CompanyTransformer;
@@ -28,6 +46,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
   const { getUrlPrefix } = useAuth();
   const router = useRouter();
   const toast = useToastController();
+  const [isOpen, setIsOpen] = useState(false);
 
   const sharedButtonStyle = {
     size: actionButtonSize,
@@ -94,42 +113,129 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
     );
   }
 
+  const renderLocationInfo = () =>
+    !!company?.location?.id && (
+      <TitleInfo
+        icon={<MapPin size={20} color="$color11" />}
+        title={company?.location?.country?.name}
+      />
+    );
+
+  const renderRatingsInfo = () =>
+    !!company.rating_stats?.count && (
+      <TitleInfo
+        icon={<Star size={20} color="$color11" />}
+        title={`(${company.rating_stats?.count}) ${company.rating_stats?.score}`}
+      />
+    );
+  const renderAboutUs = () => (
+    <YStack
+      padding="$6"
+      justifyContent="flex-start"
+      alignItems="flex-start"
+      gap="$6"
+    >
+      <Text fontWeight="bold" fontSize="$2">
+        تواصل معنا
+      </Text>
+      <YStack gap="$2">
+        {renderLocationInfo()}
+        {renderRatingsInfo()}
+      </YStack>
+
+      <XStack justifyContent="space-between" gap="$2">
+        <ZixButton
+          theme="accent"
+          flex={1}
+          backgroundColor="$color0"
+          icon={(props: IconProps) => (
+            <Compass {...props} size={20} color="$color2" />
+          )}
+          color="$color2"
+          fontWeight="600"
+          disabled={isPending}
+          loading={isPending}
+          onPress={() => {}}
+          {...sharedButtonStyle}
+        >
+          {t('shipment:destination')}
+        </ZixButton>
+        <Button
+          theme="success"
+          backgroundColor="$color9"
+          flex={1}
+          icon={(props: IconProps) => (
+            <CustomIcon {...props} name="whatsapp-contact" />
+          )}
+          onPress={_onWhatsappPress}
+          color="#FFFFFF"
+          fontWeight="600"
+          {...sharedButtonStyle}
+        >
+          تواصل بنا مباشر
+        </Button>
+      </XStack>
+      <Separator borderWidth={0.5} borderColor="$color9" width="100%" />
+      <YStack gap="$4" alignItems="flex-start" justifyContent="flex-start">
+        <Text fontWeight="bold" fontSize="$2">
+          من نحن
+        </Text>
+        <Paragraph color="$color11" fontSize="$2" fontWeight="400">
+          {company?.about}
+        </Paragraph>
+      </YStack>
+    </YStack>
+  );
+
   return (
     <XStack justifyContent="space-between" gap="$2" {...props}>
       {useShowButton && (
-        <Button
-        theme="accent"
-        flex={1}
-        backgroundColor="$color0"
-        icon={(props: IconProps) => (
-          <CircleEllipsis {...props} size={20} color="$color2" />
-        )}
-        color="$color2"
-        fontWeight="600"
-        disabled={isPending}
-        loading={isPending}
-        onPress={() => {}}
-        {...sharedButtonStyle}
+        <ZixDialog
+          title={company?.name || ''}
+          open={isOpen}
+          onOpenChange={setIsOpen}
+          contentPadding="$1"
+          snapPoints={[50, 75]}
+          disableRemoveScroll
+          trigger={
+            <Button
+              theme="accent"
+              flex={1}
+              backgroundColor="$color0"
+              icon={(props: IconProps) => (
+                <CircleEllipsis {...props} size={20} color="$color2" />
+              )}
+              color="$color2"
+              fontWeight="600"
+              disabled={isPending}
+              loading={isPending}
+              {...sharedButtonStyle}
+            >
+              معلومات عنا
+            </Button>
+          }
         >
-          معلومات عنا
-        </Button>
+          {renderAboutUs()}
+        </ZixDialog>
       )}
-      {!useShowButton && <ZixButton
-        theme="accent"
-        flex={1}
-        backgroundColor="$color0"
-        icon={(props: IconProps) => (
-          <Compass {...props} size={20} color="$color2" />
-        )}
-        color="$color2"
-        fontWeight="600"
-        disabled={isPending}
-        loading={isPending}
-        onPress={() => {}}
-        {...sharedButtonStyle}
-      >
-        {t('shipment:destination')}
-      </ZixButton>}
+      {!useShowButton && (
+        <ZixButton
+          theme="accent"
+          flex={1}
+          backgroundColor="$color0"
+          icon={(props: IconProps) => (
+            <Compass {...props} size={20} color="$color2" />
+          )}
+          color="$color2"
+          fontWeight="600"
+          disabled={isPending}
+          loading={isPending}
+          onPress={() => {}}
+          {...sharedButtonStyle}
+        >
+          {t('shipment:destination')}
+        </ZixButton>
+      )}
       <Button
         theme="success"
         backgroundColor="$color9"

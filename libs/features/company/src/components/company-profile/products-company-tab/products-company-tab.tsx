@@ -1,42 +1,26 @@
 import {
-  ArrowUp,
-  Building2,
   ChevronUp,
   Circle,
   CircleCheck,
   Filter,
-  Minus,
-  Plus,
   Search,
 } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import { CompanyTransformer, ServicesService } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
-import { IFilterOption, ZixButton, ZixDialog, ZixSlider } from '@zix/ui/common';
-import { ZixInput } from '@zix/ui/forms';
+import { IFilterOption, ZixDialog, ZixSlider } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
-import { ZixMediasListWidget } from '@zix/ui/widgets';
 import { t } from 'i18next';
 import React, { useState } from 'react';
-import { Dimensions, FlatList } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 import { useRouter } from 'solito/router';
-import {
-  H4,
-  Text,
-  View,
-  XStack,
-  YStack,
-  Image,
-  Input,
-  Theme,
-  Button,
-} from 'tamagui';
+import { H4, Input, Text, Theme, View, XStack, YStack } from 'tamagui';
+import { ProductCard } from '../product-card/product-card';
 
 export type ProductsCompanyTabProps = {
   company: CompanyTransformer;
 };
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
 export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
   company,
 }) => {
@@ -70,83 +54,14 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
     queryKey: ['ServicesService.listCompanyServices', company.id],
   });
 
-  const handleUpdateCart = (value: number, state: 'plus' | 'minus') => {
-    console.log(value, state);
-  };
-
   const renderItem = ({ item, index }: { item: any; index: number }) => (
-    <YStack
-      backgroundColor="$color2"
-      borderRadius={10}
-      key={index}
-      padding={'$4'}
-      gap="$4"
-      width={SCREEN_WIDTH / 2.4}
-      justifyContent="center"
-      alignItems="center"
+    <TouchableOpacity
+      onPress={() => {
+        router.push(`${getUrlPrefix}/products/${item.id}`);
+      }}
     >
-      <XStack flex={1} alignItems="center" justifyContent="center">
-        <Image
-          source={{ uri: item?.images[0]?.original_url || '' }}
-          width={140}
-          height={130}
-          borderRadius={10}
-        />
-      </XStack>
-
-      <YStack
-        flex={1}
-        gap="$4"
-        justifyContent="flex-start"
-        alignItems="flex-start"
-      >
-        <Text fontWeight={'bold'} fontSize={'$2'} numberOfLines={1}>
-          {item?.title || ''}
-        </Text>
-        <XStack gap="$2" alignItems="center" flex={1}>
-          <Building2 size={20} color="$color0" />
-          <Text numberOfLines={1} fontSize={'$2'} flex={1}>
-            {item?.description}
-          </Text>
-        </XStack>
-        <XStack gap="$2" alignItems="center">
-          <Text fontWeight={'bold'} fontSize={'$3'}>
-            {item?.price?.value || ''}
-          </Text>
-          {item?.price?.value && <CustomIcon name="riyal" size="$1" />}
-        </XStack>
-      </YStack>
-      <XStack
-        width={'100%'}
-        justifyContent="space-between"
-        alignItems="center"
-        borderWidth={1}
-        borderColor="$color0"
-        borderRadius={10}
-        padding={'$3'}
-      >
-        <Button icon={<Plus size={12} color="$color11" />} unstyled onPress={() => handleUpdateCart(1, 'plus')} />
-        <Text fontSize={'$2'} fontWeight={'bold'} color="$color11">
-          1
-        </Text>
-        <Button icon={<Minus size={12} color="$color11" />} unstyled onPress={() => handleUpdateCart(1, 'minus')} />
-      </XStack>
-      <Button
-        theme={'accent'}
-        width={'100%'}
-        height={35}
-        borderRadius={10}
-        justifyContent="center"
-        alignItems="center"
-        onPress={() => {
-          router.push(`/company/${company.id}/product/${item.id}`);
-        }}
-      >
-        <Text fontSize={'$1'} fontWeight={'bold'} color="#FFFFFF">
-          أضف لعرض سعر
-        </Text>
-      </Button>
-    </YStack>
+      <ProductCard product={item} index={index} useShowButton={true} />
+    </TouchableOpacity>
   );
 
   const renderFilterProducts = () => {

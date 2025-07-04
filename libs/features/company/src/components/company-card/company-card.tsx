@@ -17,7 +17,7 @@ import {
 import { useAuth } from '@zix/services/auth';
 import { MapPin, Star } from '@tamagui/lucide-icons';
 import { t } from 'i18next';
-import { UserAvatar } from '@zix/ui/common';
+import { TitleInfo, UserAvatar } from '@zix/ui/common';
 
 export type CompanyCardProps = ThemeableStackProps & {
   company: CompanyTransformer;
@@ -43,26 +43,12 @@ export const CompanyCard: React.FC<CompanyCardProps> = ({
 
   const renderLocationInfo = () =>
     !!company?.location?.id && (
-      <XStack alignItems="center" gap="$2">
-        <Theme name="accent">
-          <MapPin size={20} color="$color0" />
-        </Theme>
-        <Text color="$color12" fontWeight="600" fontSize="$1">
-          {company?.location?.country?.name}
-        </Text>
-      </XStack>
+      <TitleInfo icon={<MapPin size={20} color="$color0" />} title={company?.location?.country?.name} />
     );
 
   const renderRatingsInfo = () =>
     !!company.rating_stats?.count && (
-      <XStack alignItems="center" gap="$2">
-        <Theme name="accent">
-          <Star size={20} color="$color1" />
-        </Theme>
-        <Text color="$color12" fontWeight="600" fontSize="$1">
-          ({company.rating_stats?.count}) {company.rating_stats?.score}
-        </Text>
-      </XStack>
+      <TitleInfo icon={<Star size={20} color="$color1" />} title={`(${company.rating_stats?.count}) ${company.rating_stats?.score}`} />
     );
 
   return (

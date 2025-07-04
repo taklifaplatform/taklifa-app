@@ -412,10 +412,10 @@ export function HomeScreen() {
             }
             isFetching={isFetching}
           />
-          <CenterButton
+          {/* <CenterButton
             showMap={showMap}
             autoCenterToUserLocation={autoCenterToUserLocation}
-          />
+          /> */}
           <CarouselSection
             showCarousel={showCarousel}
             companiesList={companiesList}
@@ -622,7 +622,7 @@ const SwitcherButton: FC<SwitcherButtonProps> = memo(function SwitcherButton({
   t,
   urgencyMode,
 }) {
-  if (showCarousel) return null;
+  // if (showCarousel) return null;
   return (
     <Button
       theme="accent"
@@ -683,7 +683,7 @@ const FiltersSection: FC<FiltersSectionProps> = memo(function FiltersSection({
 }) {
   if (isKeyboardVisible) return null;
   return (
-    <View position="absolute" top={1} left={1} right={1}>
+    <View position="absolute" bottom={showCarousel ? 270 : 10} left={1} right={1}>
       <XStack
         alignItems="center"
         paddingHorizontal="$2"
