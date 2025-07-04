@@ -1,13 +1,11 @@
 import {
-  ArrowDownZA,
-  CheckSquare,
-  ChevronDown,
+  Building2,
+  Clock,
+  MapPin,
   Pencil,
-  PlusCircle,
-  Search,
-  Square,
+  PlusSquare,
+  Rocket,
   Trash2,
-  User,
 } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -21,16 +19,15 @@ import { useAuth, useMixpanel } from '@zix/services/auth';
 import {
   ActionSheet,
   ActionSheetRef,
-  UserAvatar,
+  FilterByOrder,
+  TitleInfo,
   ZixButton,
-  ZixDialog,
 } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader } from '@zix/ui/layouts';
 import { useFlatListQuery } from '@zix/utils';
 import { Image } from 'expo-image';
 import { t } from 'i18next';
-import moment from 'moment';
 import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import {
   Alert,
@@ -40,16 +37,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useRouter } from 'solito/router';
-import {
-  Button,
-  H4,
-  ScrollView,
-  Text,
-  Theme,
-  View,
-  XStack,
-  YStack,
-} from 'tamagui';
+import { Button, H4, Stack, Text, Theme, View, XStack, YStack } from 'tamagui';
 
 export interface AnnouncementsListScreenProps {
   showHeader: boolean;
@@ -84,7 +72,7 @@ const CategoryList = memo(
   ({ categories, selectedCategory, onSelect }: CategoryListProps) => (
     <FlatList<{ id: number | 'all'; name: string }>
       data={
-        [{ id: 'all', name: t('common:all') }, ...categories] as {
+        [{ id: 'all', name: 'خدمات: الكل' }, ...categories] as {
           id: number | 'all';
           name: string;
         }[]
@@ -101,22 +89,17 @@ const CategoryList = memo(
               ? onSelect(undefined)
               : onSelect(item as AnnouncementCategoryTransformer)
           }
-          borderWidth={1}
-          borderColor={
-            selectedCategory?.id === item.id ||
-            (!selectedCategory && item.id === 'all')
-              ? '$color1'
-              : '$color8'
-          }
           backgroundColor={
             selectedCategory?.id === item.id ||
             (!selectedCategory && item.id === 'all')
-              ? '$color8'
-              : '$color2'
+              ? '$color1'
+              : '$color11'
           }
           borderRadius={10}
         >
-          <Text>{item.name}</Text>
+          <Text color="#FFFFFF" fontSize={14} fontWeight="bold">
+            {item.name}
+          </Text>
         </ZixButton>
       )}
       horizontal
@@ -183,71 +166,61 @@ const AnnouncementItem = memo(
   }: AnnouncementItemProps) => {
     const { user } = useAuth();
     const router = useRouter();
+
     return (
       <TouchableOpacity
         onPress={() => {
-          AnalyticsService.storeAnnouncementAnalytic({
-            announcement: item.id?.toString() || '',
-            requestBody: {
-              action_type: 'view',
-            },
-          }).then((res) => {
-            console.log('Announcement analytic stored', res);
-          });
-
           router.push(`/app/announcements/${item.id}`);
         }}
       >
         <XStack
-          theme={user?.id === item?.user?.id ? 'accent' : undefined}
-          backgroundColor={user?.id === item?.user?.id ? '$color2' : '$color2'}
+          theme={'accent'}
+          backgroundColor={user?.id === item?.user?.id ? '$color3' : '#F1F2F4'}
           borderWidth={1}
-          borderColor={user?.id === item?.user?.id ? '$color1' : '$color2'}
-          borderRadius="$2"
+          borderColor={user?.id === item?.user?.id ? '$color1' : '#F1F2F4'}
+          borderRadius="$4"
           marginHorizontal={showHeader ? '$4' : undefined}
-          padding="$2"
+          padding="$4"
           gap={'$3'}
           justifyContent="center"
           alignItems="center"
         >
+          {user?.id === item?.user?.id && (
+            <XStack
+              position="absolute"
+              top={-15}
+              left={10}
+              gap={'$2'}
+              padding="$2"
+              backgroundColor="$color3"
+              alignItems="center"
+              justifyContent="center"
+              borderRadius={'$6'}
+              borderWidth={1}
+              borderColor="$color1"
+            >
+              <Rocket size={15} color="$color1" />
+              <Text fontSize={'$1'} fontWeight={'600'} color="$color1">
+                خدماتي
+              </Text>
+            </XStack>
+          )}
           {/* //image */}
-          <YStack gap={2}>
-            {user?.id === item?.user?.id && (
-              <Button
-                width={55}
-                size={16}
-                textProps={{
-                  fontSize: 8,
-                  color: '$color12',
-                  fontWeight: 'bold',
-                  textAlign: 'center',
-                  marginTop: -2,
-                }}
-                icon={
-                  <CustomIcon name="advertisement" size={10} color="$color12" />
-                }
-                borderRadius={10}
-                position="absolute"
-                top={-20}
-                right={25}
-              >
-                اعلاناتي
-              </Button>
-            )}
+          <YStack>
             {item?.images?.length ? (
               <Image
                 source={{ uri: item?.images[0]?.url }}
                 style={{
-                  width: 80,
-                  height: 90,
+                  width: 100,
+                  height: 120,
                   borderRadius: 10,
                 }}
               />
             ) : (
               <Theme reset>
                 <View
-                  width={80}
-                  height={90}
+                  width={100}
+                  height={120}
                   backgroundColor="$color2"
                   borderRadius={10}
                   borderWidth={1}
@@ -261,12 +234,7 @@ const AnnouncementItem = memo(
               </Theme>
             )}
           </YStack>
-          <YStack
-            flex={1}
-            justifyContent="space-between"
-            gap="$3"
-            paddingVertical="$2"
-          >
+          <YStack flex={1} justifyContent="space-between" gap="$2">
             {/* title */}
             <Text
               textAlign="left"
@@ -276,65 +244,56 @@ const AnnouncementItem = memo(
             >
               {item?.title || ''}
             </Text>
-            {/* //user info */}
-
-            <XStack
+            <TitleInfo
+              icon={<Building2 size={15} color="#000000" />}
+              title={item?.description || ''}
+              flex={1}
+              textAlign="left"
+            />
+            <Stack
+              flexDirection="row"
+              flexWrap="wrap"
               alignItems="center"
               gap="$3"
               theme={showHeader ? 'accent' : undefined}
             >
-              <XStack flex={1} alignItems="center" gap="$1">
-                <User size={10} fill="#FECA16" color="#FECA16" />
-                <Text color="$color12" fontSize={10} numberOfLines={1}>
-                  {item?.user?.name || item?.user?.username}
-                </Text>
-              </XStack>
               {!!item?.city && (
-                <XStack flex={1} alignItems="center" gap="$1">
-                  <CustomIcon name="location" size={10} color="$color8" />
-                  <Text color="$color12" fontSize={10} numberOfLines={1}>
-                    {item.city}
-                  </Text>
-                </XStack>
+                <TitleInfo
+                  icon={<MapPin size={15} color="#000000" />}
+                  title={item.city}
+                  textAlign="left"
+                />
               )}
-              <XStack flex={1} alignItems="center" gap="$1">
-                <CustomIcon name="time" size={10} color="$color8" />
-                <Text fontSize={10} color="$color12">
-                  {moment(item?.created_at).fromNow()}
-                </Text>
-              </XStack>
-            </XStack>
+              <TitleInfo
+                icon={<Clock size={15} color="#000000" />}
+                title={'منذ ساعة'}
+              />
+            </Stack>
             {/* //price */}
 
             {/* // button More information */}
-            <XStack justifyContent="space-between">
+            <XStack justifyContent="space-between" marginTop={'$4'}>
               <XStack alignItems="center" gap={'$2'}>
-                <Text fontWeight={'bold'} fontSize={'$3'}>
+                <Text fontWeight={'bold'} fontSize={'$5'}>
                   {item?.price || '0'}
                 </Text>
-                <CustomIcon
-                  name="saudi-riyal-symbol"
-                  size={'$1'}
-                  color="$color12"
-                />
+                <CustomIcon name="riyal" size={'$3'} color="#000000" />
               </XStack>
               <Button
-                backgroundColor={'$color4'}
-                size="$2"
-                borderRadius={5}
-                onPress={() => {
-                  router.push(`/app/announcements/${item.id}`);
-                }}
-                iconAfter={() => (
-                  <CustomIcon name="arrow-right" color="$color12" size={'$1'} />
-                )}
-                textProps={{
-                  fontSize: 10,
-                  color: '$color12',
-                  fontWeight: 'bold',
-                }}
+                theme={'accent'}
+                backgroundColor="transparent"
+                borderWidth={1}
+                borderColor="$color11"
+                width={140}
+                height={35}
+                borderRadius={10}
+                justifyContent="center"
+                alignItems="center"
+                onPress={() => router.push(`/app/announcements/${item.id}`)}
               >
-                {t('shipment:more-information')}
+                <Text fontSize={'$1'} fontWeight={'bold'} color="$color11">
+                  شاهد التفاصيل
+                </Text>
               </Button>
             </XStack>
           </YStack>
@@ -704,10 +663,12 @@ export const AnnouncementsListScreen: React.FC<
     },
   ];
 
+  const [orderBy, setOrderBy] = useState('cheapest');
+
   return (
     <View flex={1}>
       <AppHeader
-        title={t('common:market')}
+        title={t('')}
         showSearchBar
         searchProps={{
           value: search,
@@ -715,10 +676,21 @@ export const AnnouncementsListScreen: React.FC<
         }}
         headerRight={() => (
           <Theme reset>
+            <Text
+              fontSize={'$4'}
+              fontWeight="bold"
+              color="$color1"
+              alignSelf="center"
+              marginRight={10}
+            >
+              {t('common:market')}
+            </Text>
             <ZixButton
-              minWidth={120}
-              themeInverse
-              iconAfter={<PlusCircle size="$1" color="black" />}
+              minWidth={180}
+              alignSelf="center"
+              marginRight={10}
+              theme="accent"
+              icon={<PlusSquare size="$1" color="$color1" />}
               onPress={() => {
                 if (isLoggedIn) {
                   router.push(`/app/announcements/create`);
@@ -727,13 +699,13 @@ export const AnnouncementsListScreen: React.FC<
                 }
               }}
               size={'$2'}
-              fontWeight="bold"
+              fontWeight="500"
               textProps={{
-                color: 'black',
+                color: '$color1',
               }}
-              backgroundColor="orange"
+              backgroundColor="$color3"
             >
-              {t('common:add-announcement')}
+              أضف خدمات الأن
             </ZixButton>
           </Theme>
         )}
@@ -753,162 +725,17 @@ export const AnnouncementsListScreen: React.FC<
           gap="$2"
           padding="$4"
         >
-          <ArrowDownZA size={18} />
-          {/* Bouton tri année */}
-          <ZixDialog
-            title={t('common:year')}
-            open={yearSheetOpen}
-            onOpenChange={setYearSheetOpen}
-            // contentPadding="$4"
-            trigger={
-              <Button
-                iconAfter={<ChevronDown size="$1" color="$color12" />}
-                size="$2"
-                backgroundColor="$color1"
-                borderRadius={8}
-                borderWidth={1}
-                borderColor="$color3"
-                textProps={{
-                  fontSize: 13,
-                  color: '$color12',
-                  fontWeight: 'bold',
-                }}
-                onPress={() => setYearSheetOpen(true)}
-              >
-                {selectedYears.length > 0 ? `(${selectedYears.length})` : ''}
-                {t('common:year')}
-              </Button>
-            }
-          >
-            <XStack
-              alignItems="center"
-              justifyContent="space-between"
-              paddingHorizontal="$4"
-              paddingVertical="$2"
-              borderBottomWidth={1}
-              borderBottomColor="$color3"
-            >
-              <ZixButton
-                size="$2"
-                theme="accent"
-                paddingHorizontal="$4"
-                onPress={() => {
-                  setSelectedYears(
-                    selectedYears.length === YEARS.length ? [] : YEARS,
-                  );
-                  setYearSheetOpen(false);
-                }}
-                icon={
-                  selectedYears.length === YEARS.length ? (
-                    <CheckSquare size="$1" color="$color12" />
-                  ) : (
-                    <Square size="$1" color="$color12" />
-                  )
-                }
-              >
-                {t('common:all')}
-              </ZixButton>
-            </XStack>
-            <ScrollView flex={1}>
-              {YEARS.map((y) => (
-                <TouchableOpacity
-                  key={y}
-                  onPress={() => {
-                    setSelectedYears((prev) =>
-                      prev.includes(y)
-                        ? prev.filter((val) => val !== y)
-                        : [...prev, y],
-                    );
-                  }}
-                >
-                  <XStack
-                    alignItems="center"
-                    justifyContent="space-between"
-                    gap="$2"
-                    paddingHorizontal="$4"
-                    paddingVertical="$2"
-                  >
-                    <Text
-                      fontWeight={selectedYears.includes(y) ? 'bold' : 'normal'}
-                    >
-                      {y}
-                    </Text>
-                    {selectedYears.includes(y) ? (
-                      <CheckSquare size="$1" color="$color12" />
-                    ) : (
-                      <Square size="$1" color="$color12" />
-                    )}
-                  </XStack>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </ZixDialog>
-          {/* Bouton tri prix */}
-          <Button
-            iconAfter={<ChevronDown size="$1" color="$color12" />}
-            size="$2"
-            backgroundColor="$color1"
-            borderRadius={8}
-            onPress={() => priceActionSheetManagerRef.current?.open()}
-            borderWidth={1}
-            borderColor="$color3"
-            textProps={{
-              fontSize: 13,
-              color: '$color12',
-              fontWeight: 'bold',
-            }}
-          >
-            {sortBy === 'price' && sortDirection === 'desc'
-              ? t('common:expensive-first')
-              : sortBy === 'price' && sortDirection === 'asc'
-                ? t('common:cheap-first')
-                : t('common:price')}
-          </Button>
-          {/* Bouton tri date */}
-          <Button
-            iconAfter={<ChevronDown size="$1" color="$color12" />}
-            size="$2"
-            backgroundColor="$color1"
-            borderRadius={8}
-            onPress={() => dateActionSheetManagerRef.current?.open()}
-            borderWidth={1}
-            borderColor="$color3"
-            textProps={{
-              fontSize: 13,
-              color: '$color12',
-              fontWeight: 'bold',
-            }}
-          >
-            {sortBy === 'created_at' && sortDirection === 'desc'
-              ? t('common:newest-first')
-              : sortBy === 'created_at' && sortDirection === 'asc'
-                ? t('common:oldest-first')
-                : t('common:time')}
-          </Button>
+          <Text>تصفية حسب:</Text>
+          <FilterByOrder orderBy={orderBy} setOrderBy={setOrderBy} />
         </XStack>
-        {/* ActionSheet pour le prix */}
-        <ActionSheet
-          theme="accent"
-          ref={priceActionSheetManagerRef}
-          snapPoints={[33, 25]}
-          title={t('common:sort-by-price')}
-          actions={filters.find((f) => f.key === 'price')?.options || []}
-        />
-        {/* ActionSheet pour la date */}
-        <ActionSheet
-          theme="accent"
-          ref={dateActionSheetManagerRef}
-          snapPoints={[33, 25]}
-          title={t('common:sort-by-time')}
-          actions={filters.find((f) => f.key === 'date')?.options || []}
-        />
+
         <FlatList
           showsVerticalScrollIndicator={false}
           refreshing={announcementsQuery.isLoading}
           onRefresh={announcementsQuery.refetch}
           onEndReached={announcementsQuery.fetchNextPage}
           removeClippedSubviews={true}
-          contentContainerStyle={{ gap: 10 }}
+          contentContainerStyle={{ gap: 20 }}
           initialNumToRender={10}
           style={{ flex: 1 }}
           data={(announcementsData as AnnouncementTransformer[]) || []}
@@ -932,23 +759,6 @@ export const AnnouncementsListScreen: React.FC<
             </View>
           }
         />
-
-        {/* <XStack padding="$4" position='absolute' bottom={0} left={0} right={0}>
-          <ZixButton
-            theme='accent'
-            icon={<Plus size="$1" color="$color12" />}
-            onPress={() => {
-              if (isLoggedIn) {
-                router.push(`/app/announcements/create`)
-              } else {
-                router.push(`/auth/login`)
-              }
-            }}
-          >
-            {t('common:add-announcement')}
-          </ZixButton>
-        </XStack> */}
-        {/* ActionSheet for edit/delete */}
         <ActionSheet
           snapPoints={[33, 25]}
           ref={actionSheetManagerRef}

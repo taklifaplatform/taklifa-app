@@ -124,7 +124,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
       : null;
 
   const renderToggleSearchBar = () =>
-    !showBackButton && (
+    !showBackButton && showSearchBar && (
       <Button
         icon={isSearchBarOpen ? X : Search}
         color={'#FFFFFF'}
@@ -178,7 +178,8 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
               )}
             </XStack>
             <XStack flex={0.25} justifyContent="flex-end">
-              {headerRight ? headerRight() : renderToggleSearchBar()}
+              {headerRight ? headerRight() : null}
+              {renderToggleSearchBar()}
               {renderCardHeader()}
             </XStack>
           </XStack>

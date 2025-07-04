@@ -47,3 +47,5 @@ export * from "./components/data-not-found/data-not-found";
 export * from "./components/zix-slider/zix-slider";
 
 export * from "./components/title-info/title-info";
+
+export * from "./components/filter-by-order/filter-by-order";

@@ -56,7 +56,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <Text fontWeight={'bold'} fontSize={'$2'} numberOfLines={1}>
           {product?.title || ''}
         </Text>
-        <TitleInfo icon={ <Building2 size={20} color="#000000" />} title={product?.description} flex={1}/>
+        <TitleInfo
+          icon={<Building2 size={20} color="#000000" />}
+          title={product?.description}
+          flex={1}
+        />
         <XStack gap="$2" alignItems="center">
           <Text fontWeight={'bold'} fontSize={'$3'}>
             {product?.price?.value || ''}
