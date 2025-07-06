@@ -41,7 +41,6 @@ import { Button, H4, Stack, Text, Theme, View, XStack, YStack } from 'tamagui';
 
 export interface AnnouncementsListScreenProps {
   showHeader: boolean;
-  search: string;
 }
 
 // --- Types ---
@@ -161,8 +160,6 @@ const AnnouncementItem = memo(
   ({
     item,
     showHeader,
-    onContactPress,
-    onMorePress,
   }: AnnouncementItemProps) => {
     const { user } = useAuth();
     const router = useRouter();
@@ -170,7 +167,7 @@ const AnnouncementItem = memo(
     return (
       <TouchableOpacity
         onPress={() => {
-          router.push(`/app/announcements/${item.id}`);
+          router.push(`/app/products/${item.id}`);
         }}
       >
         <XStack
@@ -186,24 +183,24 @@ const AnnouncementItem = memo(
           alignItems="center"
         >
           {user?.id === item?.user?.id && (
-            <XStack
-              position="absolute"
-              top={-15}
-              left={10}
-              gap={'$2'}
-              padding="$2"
-              backgroundColor="$color3"
-              alignItems="center"
-              justifyContent="center"
-              borderRadius={'$6'}
-              borderWidth={1}
-              borderColor="$color1"
-            >
-              <Rocket size={15} color="$color1" />
-              <Text fontSize={'$1'} fontWeight={'600'} color="$color1">
-                خدماتي
-              </Text>
-            </XStack>
+          <XStack
+            position="absolute"
+            top={-15}
+            left={10}
+            gap={'$2'}
+            padding="$2"
+            backgroundColor="$color3"
+            alignItems="center"
+            justifyContent="center"
+            borderRadius={'$6'}
+            borderWidth={1}
+            borderColor="$color1"
+          >
+            <Rocket size={15} color="$color1" />
+            <Text fontSize={'$1'} fontWeight={'600'} color="$color1">
+              خدماتي
+            </Text>
+          </XStack>
           )}
           {/* //image */}
           <YStack>
@@ -281,6 +278,9 @@ const AnnouncementItem = memo(
               </XStack>
               <Button
                 theme={'accent'}
+                pressStyle={{
+                  backgroundColor: 'gray'
+                }}
                 backgroundColor="transparent"
                 borderWidth={1}
                 borderColor="$color11"
@@ -289,7 +289,7 @@ const AnnouncementItem = memo(
                 borderRadius={10}
                 justifyContent="center"
                 alignItems="center"
-                onPress={() => router.push(`/app/announcements/${item.id}`)}
+                onPress={() => router.push(`/app/products/${item.id}`)}
               >
                 <Text fontSize={'$1'} fontWeight={'bold'} color="$color11">
                   شاهد التفاصيل
@@ -488,181 +488,6 @@ export const AnnouncementsListScreen: React.FC<
     [selectedItem],
   );
 
-  const filters = [
-    {
-      key: 'price',
-      label: t('common:price'),
-      options: [
-        {
-          label: t('common:expensive-first'),
-          value: 'price_desc',
-          name: (
-            <XStack
-              alignItems="center"
-              justifyContent="space-between"
-              width="100%"
-              theme="accent"
-            >
-              <Text
-                fontWeight={
-                  sortBy === 'price' && sortDirection === 'desc'
-                    ? 'bold'
-                    : 'normal'
-                }
-                color={
-                  sortBy === 'price' && sortDirection === 'desc'
-                    ? '$color12'
-                    : '$color12'
-                }
-              >
-                {t('common:expensive-first')}
-              </Text>
-              <CustomIcon
-                name="radio_button_checked"
-                color={
-                  sortBy === 'price' && sortDirection === 'desc'
-                    ? '$color8'
-                    : 'gray'
-                }
-              />
-            </XStack>
-          ),
-          onPress: () => {
-            setSortBy('price');
-            setSortDirection('desc');
-            priceActionSheetManagerRef.current?.close();
-          },
-        },
-        {
-          label: t('common:cheap-first'),
-          value: 'price_asc',
-          name: (
-            <XStack
-              alignItems="center"
-              justifyContent="space-between"
-              width="100%"
-              theme="accent"
-            >
-              <Text
-                fontWeight={
-                  sortBy === 'price' && sortDirection === 'asc'
-                    ? 'bold'
-                    : 'normal'
-                }
-                color={
-                  sortBy === 'price' && sortDirection === 'asc'
-                    ? '$color12'
-                    : '$color12'
-                }
-              >
-                {t('common:cheap-first')}
-              </Text>
-              <CustomIcon
-                name="radio_button_checked"
-                color={
-                  sortBy === 'price' && sortDirection === 'asc'
-                    ? '$color8'
-                    : 'gray'
-                }
-              />
-            </XStack>
-          ),
-          onPress: () => {
-            setSortBy('price');
-            setSortDirection('asc');
-            priceActionSheetManagerRef.current?.close();
-          },
-        },
-      ],
-    },
-    {
-      key: 'date',
-      label: t('common:time'),
-      options: [
-        {
-          label: t('common:newest-first'),
-          value: 'date_desc',
-          name: (
-            <XStack
-              alignItems="center"
-              justifyContent="space-between"
-              width="100%"
-              theme="accent"
-            >
-              <Text
-                fontWeight={
-                  sortBy === 'created_at' && sortDirection === 'desc'
-                    ? 'bold'
-                    : 'normal'
-                }
-                color={
-                  sortBy === 'created_at' && sortDirection === 'desc'
-                    ? '$color12'
-                    : '$color12'
-                }
-              >
-                {t('common:newest-first')}
-              </Text>
-              <CustomIcon
-                name="radio_button_checked"
-                color={
-                  sortBy === 'created_at' && sortDirection === 'desc'
-                    ? '$color1'
-                    : 'gray'
-                }
-              />
-            </XStack>
-          ),
-          onPress: () => {
-            setSortBy('created_at');
-            setSortDirection('desc');
-            dateActionSheetManagerRef.current?.close();
-          },
-        },
-        {
-          label: t('common:oldest-first'),
-          value: 'date_asc',
-          name: (
-            <XStack
-              alignItems="center"
-              justifyContent="space-between"
-              width="100%"
-              theme="accent"
-            >
-              <Text
-                fontWeight={
-                  sortBy === 'created_at' && sortDirection === 'asc'
-                    ? 'bold'
-                    : 'normal'
-                }
-                color={
-                  sortBy === 'created_at' && sortDirection === 'asc'
-                    ? '$color12'
-                    : '$color12'
-                }
-              >
-                {t('common:oldest-first')}
-              </Text>
-              <CustomIcon
-                name="radio_button_checked"
-                color={
-                  sortBy === 'created_at' && sortDirection === 'asc'
-                    ? '$color1'
-                    : 'gray'
-                }
-              />
-            </XStack>
-          ),
-          onPress: () => {
-            setSortBy('created_at');
-            setSortDirection('asc');
-            dateActionSheetManagerRef.current?.close();
-          },
-        },
-      ],
-    },
-  ];
-
   const [orderBy, setOrderBy] = useState('cheapest');
 
   return (
@@ -710,7 +535,7 @@ export const AnnouncementsListScreen: React.FC<
           </Theme>
         )}
       />
-      <YStack flex={1} paddingTop={15} position="relative">
+      <YStack flex={1} padding={'$3'} position="relative">
         <SearchCatFilters
           categories={categoriesData?.data || []}
           selectedCategory={selectedCategory}

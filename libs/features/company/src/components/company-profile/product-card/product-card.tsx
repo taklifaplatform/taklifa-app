@@ -3,7 +3,7 @@ import { TitleInfo } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import React from 'react';
 import { Dimensions } from 'react-native';
-
+import { useRouter } from 'solito/router';
 import { XStack, YStack, Image, Text, Button } from 'tamagui';
 
 export type ProductCardProps = {
@@ -18,6 +18,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   useShowButton = false,
 }) => {
   const { width: SCREEN_WIDTH } = Dimensions.get('window');
+  const router = useRouter();
   const handleUpdateCart = (value: number, state: 'plus' | 'minus') => {
     console.log(value, state);
   };
@@ -114,6 +115,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <Button
           theme={'accent'}
           backgroundColor="transparent"
+          pressStyle={{
+            backgroundColor: 'gray'
+          }}
           borderWidth={1}
           borderColor="$color11"
           width={'100%'}
@@ -121,7 +125,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           borderRadius={10}
           justifyContent="center"
           alignItems="center"
-          onPress={() => {}}
+          onPress={() => router.push(`/app/products/${product.id}`)}
         >
           <Text fontSize={'$1'} fontWeight={'bold'} color="$color11">
             شاهد التفاصيل
