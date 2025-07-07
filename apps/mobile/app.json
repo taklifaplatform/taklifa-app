@@ -19,7 +19,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "app.taklifa",
-      "buildNumber": "50",
+      "buildNumber": "1",
       "infoPlist": {
         "CFBundleDevelopmentRegion": "ar",
         "ExpoLocalization_supportsRTL": true,
@@ -82,7 +82,7 @@
       },
       "googleServicesFile": "./google-services.json",
       "package": "app.taklifa",
-      "versionCode": 50,
+      "versionCode": 1,
       "permissions": [
         "android.permission.NOTIFICATION",
         "android.permission.RECORD_AUDIO",
@@ -169,9 +169,6 @@
     "extra": {
       "router": {
         "origin": false
-      },
-      "eas": {
-        "projectId": "e42af032-da25-4337-9836-69ea04279e11"
       }
     },
     "runtimeVersion": "1.2.4",
@@ -186,9 +183,6 @@
           }
         }
       ]
-    },
-    "updates": {
-      "url": "https://u.expo.dev/e42af032-da25-4337-9836-69ea04279e11"
     }
   }
 }
