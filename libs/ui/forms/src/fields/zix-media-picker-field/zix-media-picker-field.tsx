@@ -1,6 +1,19 @@
-import { Camera as CameraIcon, Image as LucideImage, Paperclip } from '@tamagui/lucide-icons';
+import {
+  Camera,
+  Camera as CameraIcon,
+  FileImage,
+  Image,
+  Images,
+  Image as LucideImage,
+  Paperclip,
+} from '@tamagui/lucide-icons';
 import { MediaService, MediaTransformer } from '@zix/api';
-import { ActionSheet, ActionSheetRef } from '@zix/ui/common';
+import {
+  ActionSheet,
+  ActionSheetRef,
+  ZixButton,
+  ZixDialog,
+} from '@zix/ui/common';
 import { randomUUID } from 'expo-crypto';
 import { getDocumentAsync } from 'expo-document-picker';
 
@@ -11,12 +24,16 @@ import {
 } from 'expo-image-picker';
 import { t } from 'i18next';
 import { useEffect, useRef, useState } from 'react';
-import { Alert, Platform } from 'react-native';
-import { Dialog, Progress, Text, XStack } from 'tamagui';
+import { Alert, Platform, TouchableOpacity } from 'react-native';
+import { Dialog, Progress, Text, XStack, YStack } from 'tamagui';
 import { UploadableMediaFile, uploadMediaFile } from '../../utils';
 import { compressImage } from './compressImage';
 import { useCamera } from './hooks/useCamera';
-import { ZixFilesInputMediaPickerPreviewer, ZixImageMediaPickerPreviewer, ZixRowMediaPickerPreviewer } from './previewers';
+import {
+  ZixFilesInputMediaPickerPreviewer,
+  ZixImageMediaPickerPreviewer,
+  ZixRowMediaPickerPreviewer,
+} from './previewers';
 import { ZixMediaPickerTransformer } from './types';
 
 // Previewers specifications
@@ -25,7 +42,7 @@ export const MediaPreviewers = {
   medias: ZixRowMediaPickerPreviewer,
   files: ZixFilesInputMediaPickerPreviewer,
   file: ZixFilesInputMediaPickerPreviewer,
-}
+};
 
 export type ZixMediaPickerFieldProps = {
   type: 'medias' | 'image' | 'files' | 'file';
@@ -33,10 +50,13 @@ export type ZixMediaPickerFieldProps = {
   hasError?: boolean;
   isMultiple?: boolean;
   value?: MediaTransformer | MediaTransformer[];
-  onChange: (value: MediaTransformer | MediaTransformer[]) => Promise<void> | void;
+  onChange: (
+    value: MediaTransformer | MediaTransformer[],
+  ) => Promise<void> | void;
   placeholder?: string;
   isOptional?: boolean;
   maxFileSize?: number;
+  showCustomImagePicker?: boolean;
 };
 
 export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
@@ -48,18 +68,22 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
   isOptional,
   maxFileSize = 10 * 1024 * 1024,
   notAvatar,
+  showCustomImagePicker = false,
 }) => {
   const Previewer = MediaPreviewers[type];
   const { permission, requestPermission } = useCamera();
 
   const actionRef = useRef<ActionSheetRef>(null);
-  const [previews, setPreviews] = useState<Record<string | number, ZixMediaPickerTransformer>>({});
+  const [previews, setPreviews] = useState<
+    Record<string | number, ZixMediaPickerTransformer>
+  >({});
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (value) {
       const files = Array.isArray(value) ? value : [value];
       const _medias: Record<string, any> = {};
-      files.forEach(file => {
+      files.forEach((file) => {
         if (file && file.uuid) {
           _medias[file.uuid] = file;
         } else {
@@ -73,21 +97,21 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
   const renderImagePicker = () => {
     const actions = [
       {
-        name: t(`core:media_picker.camera`),
-        icon: <CameraIcon size="$1.5" color="$color10" />,
+        name: 'التقاط صورة',
+        icon: <Camera size="$1.5" color="$color10" />,
         onPress: launchCamera,
       },
       {
-        name: t(`core:media_picker.select_media`),
-        icon: <LucideImage size="$1.5" color="$color10" />,
+        name: 'مكتبة الصور',
+        icon: <Image size="$1.5" color="$color10" />,
         onPress: launchMediaPicker,
       },
     ];
 
     if (type === 'files' || type === 'file') {
       actions.push({
-        name: t(`core:media_picker.select_document`),
-        icon: <Paperclip size="$1.5" color="$color10" />,
+        name: 'اختيار الملفات',
+        icon: <FileImage size="$1.5" color="$color10" />,
         onPress: launchDocumentPicker,
       });
     }
@@ -100,11 +124,83 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
       />
     );
   };
+  const renderCustomImagePicker = () => {
+    
+    return (
+      <ZixDialog
+        title={'ارفع صور المنتج'}
+        
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        contentPadding="$1"
+        snapPoints={[30, 50]}
+        disableRemoveScroll
+        trigger={
+          <ZixButton
+            theme={'accent'}
+            width={'$20'}
+            height={'$4'}
+            borderRadius={'$4'}
+            backgroundColor="$color1"
+            alignSelf="center"
+            margin="$4"
+          >
+            <Text fontWeight="600" fontSize="$1" color="#FFFFFF">
+              {' '}
+              اختر الصور
+            </Text>
+          </ZixButton>
+        }
+      >
+        <YStack alignItems="flex-start" gap="$5" padding="$6">
+          <TouchableOpacity
+            onPress={() => {
+              setIsOpen(false);
+              launchMediaPicker();
+            }}
+            style={{ flexDirection: 'row', alignItems: 'center', gap: 20 }}
+          >
+            <Images size={25} color="#000000" />
+            <Text fontSize="$2" color="#000000" fontWeight="600">
+              مكتبة الصور
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setIsOpen(false);
+              launchCamera();
+            }}
+            style={{ flexDirection: 'row', alignItems: 'center', gap: 20 }}
+          >
+            <Camera size={25} color="#000000" />
+            <Text fontSize="$2" color="#000000" fontWeight="600">
+              التقاط صورة
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setIsOpen(false);
+              launchDocumentPicker();
+            }}
+            style={{ flexDirection: 'row', alignItems: 'center', gap: 20 }}
+          >
+            <FileImage size={25} color="#000000" />
+            <Text fontSize="$2" color="#000000" fontWeight="600">
+              اختيار الملفات
+            </Text>
+          </TouchableOpacity>
+        </YStack>
+      </ZixDialog>
+    );
+  };
 
   const [isUploading, setIsUploading] = useState(false);
 
   // Helper: Batched state update for previews
-  const updatePreviews = (newMedias: Record<string, ZixMediaPickerTransformer>, isMultiple: boolean) => {
+  const updatePreviews = (
+    newMedias: Record<string, ZixMediaPickerTransformer>,
+    isMultiple: boolean,
+  ) => {
     setPreviews((prev) => {
       if (isMultiple) {
         return { ...prev, ...newMedias };
@@ -117,7 +213,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
   async function onFilesSelected(files: ZixMediaPickerTransformer[]) {
     if (!files || !files.length) return;
     const _medias: Record<string, ZixMediaPickerTransformer> = {};
-    files.forEach(file => {
+    files.forEach((file) => {
       if (file && file.uuid) {
         _medias[file.uuid] = { ...file, uploadProgress: 0.2 };
       }
@@ -133,29 +229,35 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
           try {
             const resizedPhoto = await compressImage(_media);
             const media = { ..._media, ...resizedPhoto };
-            return await new Promise<ZixMediaPickerTransformer>((resolve, reject) => {
-              uploadMediaFile(media as UploadableMediaFile, (progress) => {
-                setPreviews((prev) => ({
-                  ...prev,
-                  ...(media.uuid ? {
-                    [media.uuid]: {
-                      ...media,
-                      uploadProgress: progress,
-                    },
-                  } : {}),
-                }));
-              })
-                .then((result) => {
-                  resolve({ ...media, ...result, uploadProgress: 1 });
+            return await new Promise<ZixMediaPickerTransformer>(
+              (resolve, reject) => {
+                uploadMediaFile(media as UploadableMediaFile, (progress) => {
+                  setPreviews((prev) => ({
+                    ...prev,
+                    ...(media.uuid
+                      ? {
+                          [media.uuid]: {
+                            ...media,
+                            uploadProgress: progress,
+                          },
+                        }
+                      : {}),
+                  }));
                 })
-                .catch((error: any) => {
-                  captureError(error);
-                  if (_media.uuid) {
-                    failedMedias[_media.uuid] = error?.errors?.file || [error?.message || 'Unknown error'];
-                  }
-                  reject(error);
-                });
-            });
+                  .then((result) => {
+                    resolve({ ...media, ...result, uploadProgress: 1 });
+                  })
+                  .catch((error: any) => {
+                    captureError(error);
+                    if (_media.uuid) {
+                      failedMedias[_media.uuid] = error?.errors?.file || [
+                        error?.message || 'Unknown error',
+                      ];
+                    }
+                    reject(error);
+                  });
+              },
+            );
           } catch (error: any) {
             captureError(error);
             if (_media.uuid) {
@@ -163,7 +265,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
             }
             throw error;
           }
-        })
+        }),
       );
     } catch (e) {
       // Already handled per-file
@@ -179,7 +281,10 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
           errors = [...errors, ...failedMedias[uuid]];
         }
       });
-      showAlert('Oops!!', errors.length ? errors.join(', ') : 'Failed to upload file');
+      showAlert(
+        'Oops!!',
+        errors.length ? errors.join(', ') : 'Failed to upload file',
+      );
     }
     setIsUploading(false);
   }
@@ -187,7 +292,9 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
   // Helper: Safe alert
   function showAlert(title: string, message: string) {
     try {
-      Alert.alert(title, message, [{ text: 'OK', style: 'cancel' }], { cancelable: true });
+      Alert.alert(title, message, [{ text: 'OK', style: 'cancel' }], {
+        cancelable: true,
+      });
     } catch (e) {
       // fallback: log if Alert fails
       console.error('Alert failed:', e, title, message);
@@ -199,7 +306,11 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
   }
 
   // Helper: Convert picked files to ZixMediaPickerTransformer with required fields
-  function normalizePickedFiles(files: any[], type: string, mediaTypes?: any): ZixMediaPickerTransformer[] {
+  function normalizePickedFiles(
+    files: any[],
+    type: string,
+    mediaTypes?: any,
+  ): ZixMediaPickerTransformer[] {
     return files.map((file) => ({
       ...file,
       url: file.uri,
@@ -225,8 +336,14 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
       });
       if (result?.canceled) return;
       if (result.assets.length) {
-        if (maxFileSize && result.assets.some((asset) => (asset.fileSize ?? 0) > maxFileSize)) {
-          showAlert('Oops!!', `File size should not exceed ${maxFileSize / 1024 / 1024} MB`);
+        if (
+          maxFileSize &&
+          result.assets.some((asset) => (asset.fileSize ?? 0) > maxFileSize)
+        ) {
+          showAlert(
+            'Oops!!',
+            `File size should not exceed ${maxFileSize / 1024 / 1024} MB`,
+          );
           return;
         }
         const files = normalizePickedFiles(result.assets, type, mediaTypes);
@@ -258,12 +375,21 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
 
   async function launchCamera() {
     try {
-      if (!permission || typeof permission !== 'object' || !('granted' in permission) || !(permission as any).granted) {
+      if (
+        !permission ||
+        typeof permission !== 'object' ||
+        !('granted' in permission) ||
+        !(permission as any).granted
+      ) {
         let grant;
         if (typeof requestPermission === 'function') {
           grant = await requestPermission();
         }
-        if (typeof grant !== 'object' || !('granted' in grant) || !(grant as any).granted) {
+        if (
+          typeof grant !== 'object' ||
+          !('granted' in grant) ||
+          !(grant as any).granted
+        ) {
           showAlert('Oops!!', 'Camera permission is required to take photo');
           return;
         }
@@ -303,8 +429,8 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
         Object.values(previews).filter(
           (preview) =>
             (!media.uuid || preview.uuid !== media.uuid) &&
-            (!media.id || preview.id !== media.id)
-        )
+            (!media.id || preview.id !== media.id),
+        ),
       );
       if (media.uuid) {
         try {
@@ -324,9 +450,15 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
 
   const renderUploadProgressDialog = () => {
     const totalFiles = Object.keys(previews).length;
-    const uploadedFiles = Object.values(previews).filter(file => file.uploadProgress === 1).length;
-    const progress = totalFiles > 0 ? (uploadedFiles / totalFiles) * 100 : 0;
-
+    const uploadedFiles = Object.values(previews).filter(
+      (file) => file.uploadProgress === 1,
+    ).length;
+    let progress = 0;
+    try {
+      progress = totalFiles > 0 ? (uploadedFiles / totalFiles) * 100 : 0;
+    } catch (error) {
+      console.log('error', error);
+    }
     return (
       <Dialog open={isUploading} modal>
         <Dialog.Portal>
@@ -352,16 +484,20 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
             enterStyle={{ x: 0, y: 20, opacity: 0, scale: 0.9 }}
             exitStyle={{ x: 0, y: 20, opacity: 0, scale: 0.9 }}
             gap="$4"
-            width="100%"
+            width="90%"
           >
-            <Dialog.Title>{t('core:media_picker.uploading_title')}</Dialog.Title>
+            <Dialog.Title>
+              {t('core:media_picker.uploading_title')}
+            </Dialog.Title>
             <Dialog.Description>
               {t('core:media_picker.uploading_progress', {
                 uploaded: uploadedFiles.toString(),
                 total: totalFiles.toString(),
-              })?.replace('{uploaded}', uploadedFiles.toString()).replace('{total}', totalFiles.toString())}
+              })
+                ?.replace('{uploaded}', uploadedFiles.toString())
+                .replace('{total}', totalFiles.toString())}
             </Dialog.Description>
-            <XStack space="$4" alignItems="center">
+            <XStack space="$4" alignItems="center" width="100%">
               <Progress value={progress} width="100%" size="$4">
                 <Progress.Indicator animation="bouncy" />
               </Progress>
@@ -375,16 +511,20 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
 
   return (
     <>
-      <Previewer
-        onPress={onOpenMediaPicker}
-        previews={Object.values(previews)}
-        onRemoveMedia={onRemoveMedia}
-        placeholder={placeholder}
-        isOptional={isOptional} //
-        notAvatar={notAvatar}
-      />
-      {renderImagePicker()}
-      {renderUploadProgressDialog()}
+      {!showCustomImagePicker && (
+        <Previewer
+          onPress={onOpenMediaPicker}
+          previews={Object.values(previews)}
+          onRemoveMedia={onRemoveMedia}
+          placeholder={placeholder}
+          isOptional={isOptional} //
+          notAvatar={notAvatar}
+        />
+      )}
+      {showCustomImagePicker && renderCustomImagePicker()}
+
+      {!showCustomImagePicker && renderImagePicker()}
+      { renderUploadProgressDialog()}
     </>
   );
 };

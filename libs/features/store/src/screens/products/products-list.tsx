@@ -76,7 +76,7 @@ export const ProductsListScreen: React.FC<ProductsListScreenProps> = ({
               }}
               onPress={() => {
                 setIsOpen(false);
-                router.push('/my-store/manage');
+                router.push('/app/products/create');
               }}
             >
               <FilePlus2 size={20} color="#000000" />
@@ -107,7 +107,7 @@ export const ProductsListScreen: React.FC<ProductsListScreenProps> = ({
               }}
               onPress={() => {
                 setIsOpen(false);
-                router.push('/my-store/manage');
+                router.push('/app/products/create-with-ai');
               }}
             >
               <Sparkles size={20} color="#000000" />

@@ -33,6 +33,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'solito/router';
 import { Button, H4, Stack, Text, Theme, View, XStack, YStack } from 'tamagui';
+import AnnouncementCard from '../../components/announcement-card';
 
 export interface AnnouncementsListScreenProps {
   showHeader: boolean;
@@ -151,152 +152,152 @@ const SubCategoryList = memo(
     ) : null,
 );
 
-const AnnouncementItem = memo(
-  ({
-    item,
-    showHeader,
-  }: AnnouncementItemProps) => {
-    const { user } = useAuth();
-    const router = useRouter();
+// const AnnouncementItem = memo(
+//   ({
+//     item,
+//     showHeader,
+//   }: AnnouncementItemProps) => {
+//     const { user } = useAuth();
+//     const router = useRouter();
 
-    return (
-      <TouchableOpacity
-        onPress={() => {
-          router.push(`/app/products/${item.id}`);
-        }}
-      >
-        <XStack
-          theme={'accent'}
-          backgroundColor={user?.id === item?.user?.id ? '$color3' : '#F1F2F4'}
-          borderWidth={1}
-          borderColor={user?.id === item?.user?.id ? '$color1' : '#F1F2F4'}
-          borderRadius="$4"
-          marginHorizontal={showHeader ? '$4' : undefined}
-          padding="$4"
-          gap={'$3'}
-          justifyContent="center"
-          alignItems="center"
-        >
-          {user?.id === item?.user?.id && (
-          <XStack
-            position="absolute"
-            top={-15}
-            left={10}
-            gap={'$2'}
-            padding="$2"
-            backgroundColor="$color3"
-            alignItems="center"
-            justifyContent="center"
-            borderRadius={'$6'}
-            borderWidth={1}
-            borderColor="$color1"
-          >
-            <Rocket size={15} color="$color1" />
-            <Text fontSize={'$1'} fontWeight={'600'} color="$color1">
-              خدماتي
-            </Text>
-          </XStack>
-          )}
-          {/* //image */}
-          <YStack>
-            {item?.images?.length ? (
-              <Image
-                source={{ uri: item?.images[0]?.url }}
-                style={{
-                  width: 100,
-                  height: 120,
-                  borderRadius: 10,
-                }}
-              />
-            ) : (
-              <Theme reset>
-                <View
-                  width={100}
-                  height={120}
-                  backgroundColor="$color2"
-                  borderRadius={10}
-                  borderWidth={1}
-                  borderColor="$color8"
-                  overflow="hidden"
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  <CustomIcon name="image-blank" size={90} color="$color2" />
-                </View>
-              </Theme>
-            )}
-          </YStack>
-          <YStack flex={1} justifyContent="space-between" gap="$2">
-            {/* title */}
-            <Text
-              textAlign="left"
-              fontWeight="700"
-              fontSize={'$2'}
-              numberOfLines={1}
-            >
-              {item?.title || ''}
-            </Text>
-            <TitleInfo
-              icon={<Building2 size={15} color="#000000" />}
-              title={item?.description || ''}
-              flex={1}
-              textAlign="left"
-            />
-            <Stack
-              flexDirection="row"
-              flexWrap="wrap"
-              alignItems="center"
-              gap="$3"
-              theme={showHeader ? 'accent' : undefined}
-            >
-              {!!item?.city && (
-                <TitleInfo
-                  icon={<MapPin size={15} color="#000000" />}
-                  title={item.city}
-                  textAlign="left"
-                />
-              )}
-              <TitleInfo
-                icon={<Clock size={15} color="#000000" />}
-                title={'منذ ساعة'}
-              />
-            </Stack>
-            {/* //price */}
+//     return (
+//       <TouchableOpacity
+//         onPress={() => {
+//           router.push(`/app/products/${item.id}`);
+//         }}
+//       >
+//         <XStack
+//           theme={'accent'}
+//           backgroundColor={user?.id === item?.user?.id ? '$color3' : '#F1F2F4'}
+//           borderWidth={1}
+//           borderColor={user?.id === item?.user?.id ? '$color1' : '#F1F2F4'}
+//           borderRadius="$4"
+//           marginHorizontal={showHeader ? '$4' : undefined}
+//           padding="$4"
+//           gap={'$3'}
+//           justifyContent="center"
+//           alignItems="center"
+//         >
+//           {user?.id === item?.user?.id && (
+//           <XStack
+//             position="absolute"
+//             top={-15}
+//             left={10}
+//             gap={'$2'}
+//             padding="$2"
+//             backgroundColor="$color3"
+//             alignItems="center"
+//             justifyContent="center"
+//             borderRadius={'$6'}
+//             borderWidth={1}
+//             borderColor="$color1"
+//           >
+//             <Rocket size={15} color="$color1" />
+//             <Text fontSize={'$1'} fontWeight={'600'} color="$color1">
+//               خدماتي
+//             </Text>
+//           </XStack>
+//           )}
+//           {/* //image */}
+//           <YStack>
+//             {item?.images?.length ? (
+//               <Image
+//                 source={{ uri: item?.images[0]?.url }}
+//                 style={{
+//                   width: 100,
+//                   height: 120,
+//                   borderRadius: 10,
+//                 }}
+//               />
+//             ) : (
+//               <Theme reset>
+//                 <View
+//                   width={100}
+//                   height={120}
+//                   backgroundColor="$color2"
+//                   borderRadius={10}
+//                   borderWidth={1}
+//                   borderColor="$color8"
+//                   overflow="hidden"
+//                   alignItems="center"
+//                   justifyContent="center"
+//                 >
+//                   <CustomIcon name="image-blank" size={90} color="$color2" />
+//                 </View>
+//               </Theme>
+//             )}
+//           </YStack>
+//           <YStack flex={1} justifyContent="space-between" gap="$2">
+//             {/* title */}
+//             <Text
+//               textAlign="left"
+//               fontWeight="700"
+//               fontSize={'$2'}
+//               numberOfLines={1}
+//             >
+//               {item?.title || ''}
+//             </Text>
+//             <TitleInfo
+//               icon={<Building2 size={15} color="#000000" />}
+//               title={item?.description || ''}
+//               flex={1}
+//               textAlign="left"
+//             />
+//             <Stack
+//               flexDirection="row"
+//               flexWrap="wrap"
+//               alignItems="center"
+//               gap="$3"
+//               theme={showHeader ? 'accent' : undefined}
+//             >
+//               {!!item?.city && (
+//                 <TitleInfo
+//                   icon={<MapPin size={15} color="#000000" />}
+//                   title={item.city}
+//                   textAlign="left"
+//                 />
+//               )}
+//               <TitleInfo
+//                 icon={<Clock size={15} color="#000000" />}
+//                 title={'منذ ساعة'}
+//               />
+//             </Stack>
+//             {/* //price */}
 
-            {/* // button More information */}
-            <XStack justifyContent="space-between" marginTop={'$4'}>
-              <XStack alignItems="center" gap={'$2'}>
-                <Text fontWeight={'bold'} fontSize={'$5'}>
-                  {item?.price || '0'}
-                </Text>
-                <CustomIcon name="riyal" size={'$2'} color="#000000" />
-              </XStack>
-              <Button
-                theme={'accent'}
-                pressStyle={{
-                  backgroundColor: 'gray'
-                }}
-                backgroundColor="transparent"
-                borderWidth={1}
-                borderColor="$color11"
-                width={140}
-                height={35}
-                borderRadius={10}
-                justifyContent="center"
-                alignItems="center"
-                onPress={() => router.push(`/app/products/${item.id}`)}
-              >
-                <Text fontSize={'$1'} fontWeight={'bold'} color="$color11">
-                  شاهد التفاصيل
-                </Text>
-              </Button>
-            </XStack>
-          </YStack>
-        </XStack>
-      </TouchableOpacity>
-    );
-  },
-);
+//             {/* // button More information */}
+//             <XStack justifyContent="space-between" marginTop={'$4'}>
+//               <XStack alignItems="center" gap={'$2'}>
+//                 <Text fontWeight={'bold'} fontSize={'$5'}>
+//                   {item?.price || '0'}
+//                 </Text>
+//                 <CustomIcon name="riyal" size={'$2'} color="#000000" />
+//               </XStack>
+//               <Button
+//                 theme={'accent'}
+//                 pressStyle={{
+//                   backgroundColor: 'gray'
+//                 }}
+//                 backgroundColor="transparent"
+//                 borderWidth={1}
+//                 borderColor="$color11"
+//                 width={140}
+//                 height={35}
+//                 borderRadius={10}
+//                 justifyContent="center"
+//                 alignItems="center"
+//                 onPress={() => router.push(`/app/products/${item.id}`)}
+//               >
+//                 <Text fontSize={'$1'} fontWeight={'bold'} color="$color11">
+//                   شاهد التفاصيل
+//                 </Text>
+//               </Button>
+//             </XStack>
+//           </YStack>
+//         </XStack>
+//       </TouchableOpacity>
+//     );
+//   },
+// );
 
 const SearchCatFilters = memo(
   ({
@@ -509,12 +510,9 @@ export const AnnouncementsListScreen: React.FC<
             index: number,
           ): string => `${item.id ?? index}`}
           renderItem={({ item, index }) => (
-            <AnnouncementItem
-              item={item}
+            <AnnouncementCard
+              announcement={item}
               showHeader={showHeader}
-              onContactPress={onContactPress}
-              onMorePress={handleMorePress}
-              SCREEN_WIDTH={SCREEN_WIDTH}
             />
           )}
           ListEmptyComponent={

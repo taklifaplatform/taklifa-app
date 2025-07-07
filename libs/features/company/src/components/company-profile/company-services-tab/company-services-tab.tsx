@@ -8,7 +8,7 @@ import { t } from 'i18next';
 import React from 'react';
 import { Dimensions, FlatList } from 'react-native';
 import { useRouter } from 'solito/router';
-
+import { AnnouncementCard } from '@zix/features/announcements';
 import { H4, Text, View, XStack, YStack, Image } from 'tamagui';
 
 export type CompanyServicesTabProps = {
@@ -85,10 +85,17 @@ export const CompanyServicesTab: React.FC<CompanyServicesTabProps> = ({
     </YStack>
   )
 
+
   return (
     <FlatList
       data={data?.data || []}
-      renderItem={renderItem}
+      contentContainerStyle={{
+        gap: 10,
+      }}
+      showsVerticalScrollIndicator={false}
+      renderItem={({ item, index }) => (
+        <AnnouncementCard key={index} announcement={item} showHeader={false} />
+      )}
       ListEmptyComponent={() => (
         <View flex={1} alignItems='center' gap="$8" padding='$4'>
           <CustomIcon name="empty_data" size="$18" color="$color5" />
