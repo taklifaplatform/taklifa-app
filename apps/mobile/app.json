@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "سواعد",
-    "slug": "sawaeed",
-    "scheme": "sawaeed",
+    "name": "تكلفة",
+    "slug": "taklifa",
+    "scheme": "taklifa",
     "version": "1.2.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,7 +18,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "app.sawaeed",
+      "bundleIdentifier": "app.taklifa",
       "buildNumber": "50",
       "infoPlist": {
         "CFBundleDevelopmentRegion": "ar",
@@ -70,8 +70,8 @@
         "ITSAppUsesNonExemptEncryption": false
       },
       "associatedDomains": [
-        "applinks:sawaeed.app",
-        "applinks:sawaeed.app.link"
+        "applinks:taklifa.app",
+        "applinks:taklifa.app.link"
       ]
     },
     "android": {
@@ -81,7 +81,7 @@
         "backgroundColor": "#FECA16"
       },
       "googleServicesFile": "./google-services.json",
-      "package": "app.sawaeed",
+      "package": "app.taklifa",
       "versionCode": 50,
       "permissions": [
         "android.permission.NOTIFICATION",
@@ -106,12 +106,12 @@
           "data": [
             {
               "scheme": "https",
-              "host": "sawaeed.app",
+              "host": "taklifa.app",
               "pathPrefix": "/"
             },
             {
               "scheme": "https",
-              "host": "sawaeed.app.link",
+              "host": "taklifa.app.link",
               "pathPrefix": "/"
             }
           ],
@@ -182,7 +182,7 @@
           "file": "sentry-expo/upload-sourcemaps",
           "config": {
             "organization": "zix-dev",
-            "project": "sawaeed"
+            "project": "taklifa"
           }
         }
       ]

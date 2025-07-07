@@ -32,7 +32,7 @@ export const OnboardingAuthScreen = () => {
         مرحبا بك في
       </Text>
       <Text fontSize={35} fontWeight="800">
-        سواعد اللوجستية
+        تكلفة
       </Text>
       <Text fontWeight="400" fontSize={15} lineHeight={25} marginTop="$3">
         {t('web-home:content-2')}
