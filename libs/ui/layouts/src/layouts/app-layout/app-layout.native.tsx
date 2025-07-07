@@ -1,5 +1,12 @@
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
-import { Plus } from '@tamagui/lucide-icons';
+import {
+  Bell,
+  CreditCard,
+  Handshake,
+  House,
+  Plus,
+  Store,
+} from '@tamagui/lucide-icons';
 import { CustomIcon } from '@zix/ui/icons';
 import { Tabs, useRouter } from 'expo-router';
 import { t } from 'i18next';
@@ -17,22 +24,35 @@ export const AppLayout = () => {
         options={{
           title: t('navigation:customer-dashboard.home'),
           tabBarIcon: ({ size, focused }) => (
-            <CustomIcon
-              name="home"
+            <House
               size={size}
               color={focused ? '#0F5837' : '#17221D'}
+              fill={focused ? '#EFFEF6' : '#FFFFFF'}
             />
           ),
         }}
       />
       <Tabs.Screen
-        name="services"
+        name="announcement"
         options={{
           title: t('common:services'),
           tabBarIcon: ({ size, focused }) => (
-            <CustomIcon
-              name="store"
+            <Handshake
               color={focused ? '#0F5837' : '#17221D'}
+              fill={focused ? '#EFFEF6' : '#FFFFFF'}
+              size={size}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="my-store"
+        options={{
+          title: 'متجري',
+          tabBarIcon: ({ size, focused }) => (
+            <Store
+              color={focused ? '#0F5837' : '#17221D'}
+              fill={focused ? '#EFFEF6' : '#FFFFFF'}
               size={size}
             />
           ),
@@ -44,9 +64,9 @@ export const AppLayout = () => {
         options={{
           title: t('settings:notifications'),
           tabBarIcon: ({ size, focused }) => (
-            <CustomIcon
-              name="notifications"
+            <Bell
               color={focused ? '#0F5837' : '#17221D'}
+              fill={focused ? '#EFFEF6' : '#FFFFFF'}
               size={size}
             />
           ),
@@ -57,9 +77,9 @@ export const AppLayout = () => {
         options={{
           title: t('common:costs'),
           tabBarIcon: ({ size, focused }) => (
-            <CustomIcon
-              name="payments"
+            <CreditCard
               color={focused ? '#0F5837' : '#17221D'}
+              fill={focused ? '#EFFEF6' : '#FFFFFF'}
               size={size}
             />
           ),
@@ -68,7 +88,5 @@ export const AppLayout = () => {
     </Tabs>
   );
 };
-
-
 
 export default AppLayout;

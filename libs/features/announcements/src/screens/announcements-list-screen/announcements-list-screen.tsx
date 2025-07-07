@@ -2,26 +2,22 @@ import {
   Building2,
   Clock,
   MapPin,
-  Pencil,
   PlusSquare,
-  Rocket,
-  Trash2,
+  Rocket
 } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import {
-  AnalyticsService,
   AnnouncementCategoryTransformer,
   AnnouncementService,
-  AnnouncementTransformer,
+  AnnouncementTransformer
 } from '@zix/api';
 import { useAuth, useMixpanel } from '@zix/services/auth';
 import {
-  ActionSheet,
   ActionSheetRef,
   FilterByOrder,
   TitleInfo,
-  ZixButton,
+  ZixButton
 } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader } from '@zix/ui/layouts';
@@ -30,11 +26,10 @@ import { Image } from 'expo-image';
 import { t } from 'i18next';
 import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import {
-  Alert,
   Dimensions,
   FlatList,
   Linking,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
 import { useRouter } from 'solito/router';
 import { Button, H4, Stack, Text, Theme, View, XStack, YStack } from 'tamagui';
@@ -274,7 +269,7 @@ const AnnouncementItem = memo(
                 <Text fontWeight={'bold'} fontSize={'$5'}>
                   {item?.price || '0'}
                 </Text>
-                <CustomIcon name="riyal" size={'$3'} color="#000000" />
+                <CustomIcon name="riyal" size={'$2'} color="#000000" />
               </XStack>
               <Button
                 theme={'accent'}
@@ -347,8 +342,6 @@ export const AnnouncementsListScreen: React.FC<
   const router = useRouter();
   const { getUrlPrefix, isLoggedIn } = useAuth();
   const actionSheetManagerRef = useRef<ActionSheetRef>(null);
-  const priceActionSheetManagerRef = useRef<ActionSheetRef>(null);
-  const dateActionSheetManagerRef = useRef<ActionSheetRef>(null);
   const toast = useToastController();
   const [search, setSearch] = useState('');
   const [selectedItem, setSelectedItem] =
@@ -362,7 +355,6 @@ export const AnnouncementsListScreen: React.FC<
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   // sort by
   const [sortBy, setSortBy] = useState<'created_at' | 'price'>('created_at');
-  const [yearSheetOpen, setYearSheetOpen] = useState(false);
   const [selectedYears, setSelectedYears] = useState<string[]>([]);
 
   const { data: announcementsData, ...announcementsQuery } = useFlatListQuery({
@@ -389,9 +381,6 @@ export const AnnouncementsListScreen: React.FC<
     ],
   });
 
-  // Liste des années générée dynamiquement à partir des annonces
-  const YEARS = Array.from({ length: 20 }, (_, i) => String(2025 - i));
-
   const { data: categoriesData } = useQuery({
     queryFn: () => AnnouncementService.listAnnouncementCategories({}),
     queryKey: ['AnnouncementService.listAnnouncementCategories'],
@@ -406,19 +395,6 @@ export const AnnouncementsListScreen: React.FC<
     );
   }, []);
 
-  const { mutate } = useMutation({
-    mutationFn: () =>
-      AnnouncementService.deleteAnnouncement({
-        announcement: selectedItem?.id ? String(selectedItem.id) : '',
-      }),
-    onSuccess: () => {
-      refetch();
-      toast.show(t('common:announcement-removed-successfully'));
-    },
-    onError: () => {
-      toast.show(t('common:failed-to-remove-announcement'));
-    },
-  });
 
   // Memoize subcategories
   const subCategories = useMemo(
@@ -451,42 +427,6 @@ export const AnnouncementsListScreen: React.FC<
     actionSheetManagerRef.current?.open();
   }, []);
 
-  // ActionSheet actions
-  const actionSheetActions = useMemo(
-    () => [
-      {
-        name: t('common:edit'),
-        icon: <Pencil size="$1" color="$color10" />,
-        onPress: () => {
-          actionSheetManagerRef.current?.close();
-          router.push(`/app/announcements/${selectedItem?.id}/edit`);
-        },
-      },
-      {
-        theme: 'error',
-        name: t('common:delete'),
-        icon: <Trash2 size="$1" color="$color10" />,
-        onPress: () => {
-          Alert.alert(t('common:delete'), t('common:confirm-delete'), [
-            {
-              text: t('common:cancel'),
-              onPress: () => actionSheetManagerRef.current?.close(),
-              style: 'cancel',
-            },
-            {
-              text: t('common:remove'),
-              style: 'destructive',
-              onPress: () => {
-                actionSheetManagerRef.current?.close();
-                mutate();
-              },
-            },
-          ]);
-        },
-      },
-    ],
-    [selectedItem],
-  );
 
   const [orderBy, setOrderBy] = useState('cheapest');
 
@@ -583,12 +523,6 @@ export const AnnouncementsListScreen: React.FC<
               <H4>{t('common:no_services_found')}</H4>
             </View>
           }
-        />
-        <ActionSheet
-          snapPoints={[33, 25]}
-          ref={actionSheetManagerRef}
-          title={t('common:settings')}
-          actions={actionSheetActions}
         />
       </YStack>
     </View>

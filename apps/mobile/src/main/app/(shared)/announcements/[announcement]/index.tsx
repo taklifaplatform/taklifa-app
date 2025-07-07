@@ -1,8 +1,9 @@
-import { ManageServiceScreen } from '@zix/features/vehicles';
+
 import React from 'react';
+import { Text, View } from 'react-native';
 
 export default function Screen() {
-  return (
-    <ManageServiceScreen />
-  );
+  return (<View>
+    <Text>Announcement</Text>
+  </View>);
 }
