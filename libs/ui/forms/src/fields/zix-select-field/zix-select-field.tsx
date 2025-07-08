@@ -27,7 +27,7 @@ export type BaseSelectFieldItem = {
   name: string
   description?: string
   icon?: React.ReactNode
-}
+} //
 export type ZixSelectFieldProps = SelectProps & {
   options: BaseSelectFieldItem[]
   isOptionsLoading?: boolean
@@ -63,7 +63,6 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
   onSearch,
   ...props
 }) => {
-
   const renderSearchBar = () => onSearch && (
     <YStack width='100%' padding='$4' marginVertical='$4'>
       <ZixInput
@@ -109,7 +108,6 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
   return (
     <Theme name={hasError ? 'red' : 'themeName'} forceClassName>
       <Select {...props} value={`${value}`} defaultValue={`${value}`} onValueChange={val => {
-        console.log('====:: val', val)
         onChange?.(String(val))
       }} >
         <Select.Trigger

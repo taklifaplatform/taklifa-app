@@ -1,14 +1,40 @@
-import { ImageUp, Trash2, WandSparkles } from '@tamagui/lucide-icons';
+import { CheckCircle, ImageUp, Trash2, WandSparkles } from '@tamagui/lucide-icons';
 import { MediaTransformer } from '@zix/api';
+import {
+  ZixAlertActions,
+  ZixButton
+} from '@zix/ui/common';
 import { ZixMediaPickerField } from '@zix/ui/forms';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useEffect, useState } from 'react';
 import { Dimensions, FlatList, TouchableOpacity } from 'react-native';
-import { Paragraph, Stack, Text, XStack, YStack, Image } from 'tamagui';
+import { Image, Paragraph, Stack, Text, YStack } from 'tamagui';
+import { useRouter } from 'expo-router';
 
 export const AddProductComponent = () => {
   const [images, setImages] = useState<MediaTransformer[]>([]);
   const SCREEN_WIDTH = Dimensions.get('window').width;
+  const [isOpen, setIsOpen] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isOpen) {
+    setTimeout(() => {
+      setIsOpen(false);
+      setIsSuccess(true);
+    }, 3000);
+  }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setTimeout(() => {
+        setIsSuccess(false);
+        router.push('/app/products/list-products');
+      }, 3000);
+    }
+  }, [isSuccess]);
 
   const renderMessageDescription = () => (
     <YStack
@@ -73,6 +99,10 @@ export const AddProductComponent = () => {
     );
   };
 
+  function sendImagesForProcessing() {
+    setIsOpen(true);
+  }
+
   return (
     <YStack flex={1} marginTop="$3" gap="$3">
       <FlatList
@@ -132,26 +162,40 @@ export const AddProductComponent = () => {
           );
         }}
       />
-      <LinearGradient
-        colors={
-          images.length > 0 ? ['#0F5837', '#15D278'] : ['#D9D9D9', '#D9D9D9']
+  
+      <ZixAlertActions
+        title="جاري تحليل الصور وإنشاء المنتجات..."
+        description="سيتم إنشاء منتج منفصل لكل صورة"
+        icon={
+          <WandSparkles
+            size={20}
+            color={images.length > 0 ? '#fff' : '#8590A2'}
+          />
         }
-        start={[0, 2]}
-        style={{
-          borderRadius: 10,
-          position: 'absolute',
-          bottom: 30,
-          left: 0,
-          right: 0,
-        }}
+        closeButton={isOpen}
       >
-        <TouchableOpacity
+        <ZixButton
+          disabled={images.length === 0}
+          onPress={() => {
+            setIsOpen(true);
+          }}
+         unstyled>
+        <LinearGradient
+          colors={
+            images.length > 0 ? ['#0F5837', '#15D278'] : ['#D9D9D9', '#D9D9D9']
+          }
+          start={[0, 2]}
           style={{
+            borderRadius: 10,
+            position: 'absolute',
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
             gap: 10,
             padding: 10,
+            bottom: 30,
+            left: 0,
+            right: 0,
           }}
         >
           <WandSparkles
@@ -166,8 +210,15 @@ export const AddProductComponent = () => {
           >
             إنشاء منتج لكل صورة بالذكاء الاصطناعي
           </Text>
-        </TouchableOpacity>
-      </LinearGradient>
+        </LinearGradient>
+        </ZixButton>
+      </ZixAlertActions>
+      <ZixAlertActions
+        title="تم إنشاء المنتجات بنجاح!"
+        description="تم إنشاء 4 منتج من 4 صورة"
+        icon={<CheckCircle size={20} color="green" />}
+        closeButton={isSuccess}
+      />
     </YStack>
   );
 };

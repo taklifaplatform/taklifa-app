@@ -3,6 +3,7 @@
 import About from './icons/about.svg'; 
 import Account from './icons/account.svg'; 
 import Advertisement from './icons/advertisement.svg'; 
+import AddStore from './icons/add-store.svg'; 
 import AlertCercle from './icons/alert-cercle.svg'; 
 import Alert from './icons/alert.svg'; 
 import AppBadging from './icons/app-badging.svg'; 
@@ -113,6 +114,7 @@ export {
   About,
   Account,
   Advertisement,
+  AddStore,
   AlertCercle,
   Alert,
   AppBadging,

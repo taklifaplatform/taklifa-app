@@ -49,3 +49,7 @@ export * from "./components/zix-slider/zix-slider";
 export * from "./components/title-info/title-info";
 
 export * from "./components/filter-by-order/filter-by-order";
+
+export * from "./components/zix-alert-dialog/zix-alert-dialog";
+
+export * from "./components/zix-alert-actions/zix-alert-actions";

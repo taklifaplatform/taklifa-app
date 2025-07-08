@@ -22,7 +22,6 @@
         "libs/features/announcements/src/index.ts"
       ],
       "@zix/features/store": ["libs/features/store/src/index.ts"],
-      "@zix/features/branches": ["libs/features/branches/src/index.ts"],
       "@zix/features/coast": ["libs/features/coast/src/index.ts"],
       "@zix/features/auth": ["libs/features/auth/src/index.ts"],
       "@zix/features/chat": ["libs/features/chat/src/index.ts"],
@@ -34,12 +33,8 @@
       "@zix/features/notifications": [
         "libs/features/notifications/src/index.ts"
       ],
-      // "@zix/features/services": ["libs/features/services/src/index.ts"],
-      "@zix/features/shipments": ["libs/features/shipments/src/index.ts"],
-      "@zix/features/solo-driver": ["libs/features/solo-driver/src/index.ts"],
       "@zix/features/support": ["libs/features/support/src/index.ts"],
       "@zix/features/users": ["libs/features/users/src/index.ts"],
-      // "@zix/features/vehicles": ["libs/features/vehicles/src/index.ts"],
       "@zix/features/working-hours": [
         "libs/features/working-hours/src/index.ts"
       ],

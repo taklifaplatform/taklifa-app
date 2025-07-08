@@ -7,9 +7,10 @@ import ListProductsComponent from './list-products-component';
 
 export type ProfileTabsProps = {
   company: CompanyTransformer;
+  tabKey: string;
 };
 
-export const ProductsCompanyTab: React.FC<ProfileTabsProps> = ({ company }) => {
+export const ProductsCompanyTab: React.FC<ProfileTabsProps> = ({ company, tabKey }) => {
   const tabs = useMemo(() => {
     const _tabs = [
       {
@@ -26,7 +27,7 @@ export const ProductsCompanyTab: React.FC<ProfileTabsProps> = ({ company }) => {
     return _tabs;
   }, []);
 
-  return <ZixTab defaultActiveTab="add-products" tabs={tabs} />;
+  return <ZixTab defaultActiveTab={tabKey} tabs={tabs} />;
 };
 
 export default ProductsCompanyTab;

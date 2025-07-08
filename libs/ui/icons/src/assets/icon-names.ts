@@ -2,6 +2,7 @@ export const iconNames = [
   'about',
   'account',
   'advertisement',
+  'add_store',
   'alert_cercle',
   'alert',
   'app_badging',

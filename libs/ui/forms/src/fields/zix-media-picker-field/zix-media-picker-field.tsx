@@ -86,7 +86,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
       files.forEach((file) => {
         if (file && file.uuid) {
           _medias[file.uuid] = file;
-        } else {
+        } else if (file && file.id) {
           _medias[file.id] = file;
         }
       });
@@ -455,10 +455,13 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     ).length;
     let progress = 0;
     try {
-      progress = totalFiles > 0 ? (uploadedFiles / totalFiles) * 100 : 0;
+      // Use integer arithmetic to avoid precision loss
+      progress = totalFiles > 0 ? Math.round((uploadedFiles * 100) / totalFiles) : 0;
     } catch (error) {
       console.log('error', error);
     }
+
+    // progress = Number(progress.toFixed(2));
     return (
       <Dialog open={isUploading} modal>
         <Dialog.Portal>
@@ -473,18 +476,18 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
             bordered
             elevate
             key="content"
-            animation={[
-              'quick',
-              {
-                opacity: {
-                  overshootClamping: true,
-                },
-              },
-            ]}
-            enterStyle={{ x: 0, y: 20, opacity: 0, scale: 0.9 }}
-            exitStyle={{ x: 0, y: 20, opacity: 0, scale: 0.9 }}
+            // animation={[
+            //   'quick',
+            //   {
+            //     opacity: {
+            //       overshootClamping: true,
+            //     },
+            //   },
+            // ]}
+            // enterStyle={{ x: 0, y: 20, opacity: 0, scale: 0.9 }}
+            // exitStyle={{ x: 0, y: 20, opacity: 0, scale: 0.9 }}
             gap="$4"
-            width="90%"
+            width="100%"
           >
             <Dialog.Title>
               {t('core:media_picker.uploading_title')}
@@ -501,7 +504,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
               <Progress value={progress} width="100%" size="$4">
                 <Progress.Indicator animation="bouncy" />
               </Progress>
-              <Text>{Math.round(progress)}%</Text>
+              <Text>{progress}%</Text>
             </XStack>
           </Dialog.Content>
         </Dialog.Portal>
