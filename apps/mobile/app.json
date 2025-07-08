@@ -3,7 +3,7 @@
     "name": "تكلفة",
     "slug": "taklifa",
     "scheme": "taklifa",
-    "version": "1.2.4",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -115,7 +115,10 @@
               "pathPrefix": "/"
             }
           ],
-          "category": ["BROWSABLE", "DEFAULT"]
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
         }
       ]
     },
@@ -169,6 +172,9 @@
     "extra": {
       "router": {
         "origin": false
+      },
+      "eas": {
+        "projectId": "dce64616-882d-43d4-ac84-c3fa9e429d2a"
       }
     },
     "runtimeVersion": "1.2.4",

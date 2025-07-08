@@ -1922,10 +1922,10 @@
     semver "^7.6.2"
     zod "^3.23.8"
 
-"@expo/eas-json@16.7.0":
-  version "16.7.0"
-  resolved "https://registry.npmjs.org/@expo/eas-json/-/eas-json-16.7.0.tgz"
-  integrity sha512-wWG/M9i2adPahzqZKKBaEbb4ro++Wz8EOOHx5QXoF30PlatBbDP+vBmypb9rY6wAuoDhK5xc5t6hFAwFtjtpNw==
+"@expo/eas-json@16.13.2":
+  version "16.13.2"
+  resolved "https://registry.yarnpkg.com/@expo/eas-json/-/eas-json-16.13.2.tgz#40df940d23d3da18da0dfdb37cf45fa9074d2b6e"
+  integrity sha512-WFcIlM+rZZLgHCmTF86XcXnSQItkzvY7d+FV4n6mDRnV39T16dSLaZ2Vj2xp6kseJs8UVoGD4WYLChr8D+ahzg==
   dependencies:
     "@babel/code-frame" "7.23.5"
     "@expo/eas-build-job" "1.0.173"
@@ -12067,17 +12067,17 @@ duplexer2@^0.1.2:
   dependencies:
     readable-stream "^2.0.2"
 
-eas-cli@~16.7.0:
-  version "16.7.2"
-  resolved "https://registry.npmjs.org/eas-cli/-/eas-cli-16.7.2.tgz"
-  integrity sha512-EdjZL5CqGdsil96e2XMWs7P4fNepqkXsxv+5G3o8kJl8/Ig8FKFgS8VDK3gDy6CAcnASEwg70gWLELz+Xu8MkQ==
+eas-cli@~16.13.4:
+  version "16.13.4"
+  resolved "https://registry.yarnpkg.com/eas-cli/-/eas-cli-16.13.4.tgz#34aac88f924d2511f3a2d9c63775922ed9e10d8a"
+  integrity sha512-dwbxbZL9MSXZMGHTQJ7QvhNntMmrxZH3dz+tELVVqTWDQQSZ75TpCR6dUxTJEQfcA4ba/YORDWnwhdHCUbszbA==
   dependencies:
     "@expo/apple-utils" "2.1.12"
     "@expo/code-signing-certificates" "0.0.5"
     "@expo/config" "10.0.6"
     "@expo/config-plugins" "9.0.12"
     "@expo/eas-build-job" "1.0.173"
-    "@expo/eas-json" "16.7.0"
+    "@expo/eas-json" "16.13.2"
     "@expo/env" "^1.0.0"
     "@expo/json-file" "8.3.3"
     "@expo/logger" "1.0.117"
