@@ -177,18 +177,7 @@
         "projectId": "dce64616-882d-43d4-ac84-c3fa9e429d2a"
       }
     },
-    "runtimeVersion": "1.2.4",
-    "owner": "zixdev",
-    "hooks": {
-      "postPublish": [
-        {
-          "file": "sentry-expo/upload-sourcemaps",
-          "config": {
-            "organization": "zix-dev",
-            "project": "taklifa"
-          }
-        }
-      ]
-    }
+    "runtimeVersion": "1.0.0",
+    "owner": "zixdev"
   }
 }
