@@ -12,7 +12,7 @@
     "generate": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "openapi --input https://api.sawaeed.app/api/docs/v1 --output ./libs/api/src/openapi --useOptions"
+        "command": "openapi --input https://api.taklifa.com/api/docs/v1 --output ./libs/api/src/openapi --useOptions"
       }
     },
     "generate:local": {
