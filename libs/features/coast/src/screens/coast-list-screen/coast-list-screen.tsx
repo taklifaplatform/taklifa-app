@@ -1,14 +1,9 @@
 import { FileDown, ShoppingBag } from '@tamagui/lucide-icons';
-import { useToastController } from '@tamagui/toast';
-import { useQueryClient } from '@tanstack/react-query';
-import { useAuth, useMixpanel } from '@zix/services/auth';
-import { ActionSheetRef } from '@zix/ui/common';
+import { useMixpanel } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
-import { useRef } from 'react';
-import { Dimensions, FlatList } from 'react-native';
-import { useRouter } from 'solito/router';
-import { Button, Text, XStack, YStack } from 'tamagui';
+import { FlatList } from 'react-native';
+import { Button, H4, Text, View, XStack, YStack } from 'tamagui';
 import { CostDetailComponent } from '../../components/cost-detail-component';
 export interface ServicesListScreenProps {
   showHeader: boolean;
@@ -59,6 +54,7 @@ export const CoastListScreen: React.FC<ServicesListScreenProps> = ({
   };
 
 
+
   return (
     <ScreenLayout>
       {showHeader && <AppHeader title="التكاليف" />}
@@ -70,6 +66,12 @@ export const CoastListScreen: React.FC<ServicesListScreenProps> = ({
         ListHeaderComponent={() => renderCoastTotal({ showButton: true })}
         showsVerticalScrollIndicator={false}
         renderItem={({item, index}) => <CostDetailComponent />}
+        ListEmptyComponent={
+          <View flex={1} alignItems="center" gap="$2" paddingTop="$8">
+            <CustomIcon name="empty_coast" size="$18" color="$color5" />
+            <H4 color="#8590A2">لم تقم بإضافة أي تكلفة بعد  </H4>
+          </View>
+        }
         />
         
       </YStack>

@@ -101,7 +101,7 @@ export function EmployeesListScreen({
         ListEmptyComponent={() => (
           <Stack flex={1} alignItems="center" marginBottom="$6">
             <CustomIcon name="empty_data" size="$20" color={'#757575'} />
-            <H4>{t('common:no-member-yet')}</H4>
+            <H4 color="#8590A2">{t('common:no-member-yet')}</H4>
           </Stack>
         )}
       />

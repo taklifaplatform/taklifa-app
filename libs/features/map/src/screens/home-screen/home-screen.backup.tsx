@@ -382,9 +382,9 @@ export function HomeScreen() {
           onRefresh={fetchDrivers}
           // onRefresh={driversQuery.refetch}
           ListEmptyComponent={
-            <View flex={1} alignItems='center' gap="$8">
+            <View flex={1} alignItems='center' gap="$2">
               <CustomIcon name="empty_data" size="$18" color="$color5" />
-              <H4>No Data Found!</H4>
+              <H4 color="#8590A2">لا يوجد بيانات</H4>
             </View>
           }
         />

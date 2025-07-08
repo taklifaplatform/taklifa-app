@@ -516,9 +516,9 @@ export const AnnouncementsListScreen: React.FC<
             />
           )}
           ListEmptyComponent={
-            <View flex={1} alignItems="center" gap="$8" paddingTop="$8">
+            <View flex={1} alignItems="center" gap="$2" paddingTop="$8">
               <CustomIcon name="empty_data" size="$18" color="$color5" />
-              <H4>{t('common:no_services_found')}</H4>
+              <H4 color="#8590A2">{t('common:no_services_found')}</H4>
             </View>
           }
         />

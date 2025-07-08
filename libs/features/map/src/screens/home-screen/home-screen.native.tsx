@@ -412,10 +412,10 @@ export function HomeScreen() {
             }
             isFetching={isFetching}
           />
-          {/* <CenterButton
+          <CenterButton
             showMap={showMap}
             autoCenterToUserLocation={autoCenterToUserLocation}
-          /> */}
+          />
           <CarouselSection
             showCarousel={showCarousel}
             companiesList={companiesList}
@@ -531,9 +531,9 @@ const ListSection: FC<ListSectionProps> = memo(function ListSection({
           // TODO
         }}
         ListEmptyComponent={
-          <View flex={1} alignItems="center" gap="$8">
+          <View flex={1} alignItems="center" gap="$2">
             <CustomIcon name="empty_data" size="$18" color="$color5" />
-            <H4>No Data Found!</H4>
+            <H4 color="#8590A2">لا يوجد بيانات</H4>
           </View>
         }
       />
@@ -628,8 +628,8 @@ const SwitcherButton: FC<SwitcherButtonProps> = memo(function SwitcherButton({
       theme="accent"
       color={'#FFFFFF'}
       icon={showMap ? LayoutList : Map}
-      scaleIcon={1.5}
-      fontWeight="600"
+      scaleIcon={1.75}
+      fontWeight="500"
       fontSize="$2"
       size="$3"
       onPress={() => setShowMap(!showMap)}

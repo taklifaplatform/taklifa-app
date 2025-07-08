@@ -36,6 +36,7 @@ export const iconNames = [
   'empty_data',
   'empty_folder',
   'empty_notification',
+  'empty_coast',
   'eye',
   'facebook',
   'find_track',

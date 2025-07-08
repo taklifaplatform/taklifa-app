@@ -1,16 +1,12 @@
-import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import {
   Bell,
   CreditCard,
   Handshake,
-  House,
-  Plus,
-  Store,
+  Store
 } from '@tamagui/lucide-icons';
 import { CustomIcon } from '@zix/ui/icons';
-import { Tabs, useRouter } from 'expo-router';
+import { Tabs } from 'expo-router';
 import { t } from 'i18next';
-import { Button } from 'tamagui';
 
 /**
  * TODO:
@@ -24,11 +20,7 @@ export const AppLayout = () => {
         options={{
           title: t('navigation:customer-dashboard.home'),
           tabBarIcon: ({ size, focused }) => (
-            <House
-              size={size}
-              color={focused ? '#0F5837' : '#17221D'}
-              fill={focused ? '#EFFEF6' : '#FFFFFF'}
-            />
+            <CustomIcon name="home" size={size} color={focused ? '#0F5837' : '#17221D'} />
           ),
         }}
       />

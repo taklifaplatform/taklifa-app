@@ -19,7 +19,7 @@ export const AnnouncementCard = ({ announcement, showHeader }: AnnouncementCardP
   return (
     <TouchableOpacity
         onPress={() => {
-          router.push(`/app/products/${item.id}`);
+          router.push(`/app/products/${announcement.id}`);
         }}
       >
         <XStack

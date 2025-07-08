@@ -1,15 +1,18 @@
-import { CheckCircle, ImageUp, Trash2, WandSparkles } from '@tamagui/lucide-icons';
-import { MediaTransformer } from '@zix/api';
 import {
-  ZixAlertActions,
-  ZixButton
-} from '@zix/ui/common';
+  CheckCircle,
+  ImageUp,
+  Trash2,
+  WandSparkles,
+} from '@tamagui/lucide-icons';
+import { MediaTransformer } from '@zix/api';
+import { ZixAlertActions, ZixButton, DeleteProduct } from '@zix/ui/common';
 import { ZixMediaPickerField } from '@zix/ui/forms';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useEffect, useState } from 'react';
 import { Dimensions, FlatList, TouchableOpacity } from 'react-native';
 import { Image, Paragraph, Stack, Text, YStack } from 'tamagui';
 import { useRouter } from 'expo-router';
+import { CheckedGif, MagicGif } from '@zix/ui/icons';
 
 export const AddProductComponent = () => {
   const [images, setImages] = useState<MediaTransformer[]>([]);
@@ -20,11 +23,11 @@ export const AddProductComponent = () => {
 
   useEffect(() => {
     if (isOpen) {
-    setTimeout(() => {
-      setIsOpen(false);
-      setIsSuccess(true);
-    }, 3000);
-  }
+      setTimeout(() => {
+        setIsOpen(false);
+        setIsSuccess(true);
+      }, 3000);
+    }
   }, [isOpen]);
 
   useEffect(() => {
@@ -143,34 +146,36 @@ export const AddProductComponent = () => {
                 source={{ uri: item.original_url }}
                 style={{ width: '100%', height: '100%' }}
               />
-              <TouchableOpacity
-                style={{
-                  position: 'absolute',
-                  top: 10,
-                  left: 10,
-                  backgroundColor: '#FEECEE',
-                  borderRadius: 20,
-                  padding: 5,
-                }}
-                onPress={() => {
+              <DeleteProduct
+                title="تأكيد الحذف"
+                trigger={
+                  <TouchableOpacity
+                  style={{
+                    position: 'absolute',
+                    top: 10,
+                    left: 10,
+                    backgroundColor: '#FEECEE',
+                    borderRadius: 20,
+                    padding: 5,
+                  }}
+                  >
+                    <Trash2 size={20} color="red" />
+                  </TouchableOpacity>
+                }
+                onDelete={() => {
                   setImages(images.filter((image) => image.uuid !== item.uuid));
                 }}
-              >
-                <Trash2 size={20} color="red" />
-              </TouchableOpacity>
+              />
             </Stack>
           );
         }}
       />
-  
+
       <ZixAlertActions
         title="جاري تحليل الصور وإنشاء المنتجات..."
         description="سيتم إنشاء منتج منفصل لكل صورة"
         icon={
-          <WandSparkles
-            size={20}
-            color={images.length > 0 ? '#fff' : '#8590A2'}
-          />
+          <MagicGif width={35} height={35} />
         }
         closeButton={isOpen}
       >
@@ -179,44 +184,47 @@ export const AddProductComponent = () => {
           onPress={() => {
             setIsOpen(true);
           }}
-         unstyled>
-        <LinearGradient
-          colors={
-            images.length > 0 ? ['#0F5837', '#15D278'] : ['#D9D9D9', '#D9D9D9']
-          }
-          start={[0, 2]}
-          style={{
-            borderRadius: 10,
-            position: 'absolute',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 10,
-            padding: 10,
-            bottom: 30,
-            left: 0,
-            right: 0,
-          }}
+          unstyled
         >
-          <WandSparkles
-            size={20}
-            color={images.length > 0 ? '#fff' : '#8590A2'}
-          />
-          <Text
-            fontSize="$1"
-            color={images.length > 0 ? '#fff' : '#8590A2'}
-            fontWeight="600"
-            textAlign="center"
+          <LinearGradient
+            colors={
+              images.length > 0
+                ? ['#0F5837', '#15D278']
+                : ['#D9D9D9', '#D9D9D9']
+            }
+            start={[0, 2]}
+            style={{
+              borderRadius: 10,
+              position: 'absolute',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 10,
+              padding: 10,
+              bottom: 30,
+              left: 0,
+              right: 0,
+            }}
           >
-            إنشاء منتج لكل صورة بالذكاء الاصطناعي
-          </Text>
-        </LinearGradient>
+            <WandSparkles
+              size={20}
+              color={images.length > 0 ? '#fff' : '#8590A2'}
+            />
+            <Text
+              fontSize="$1"
+              color={images.length > 0 ? '#fff' : '#8590A2'}
+              fontWeight="600"
+              textAlign="center"
+            >
+              إنشاء منتج لكل صورة بالذكاء الاصطناعي
+            </Text>
+          </LinearGradient>
         </ZixButton>
       </ZixAlertActions>
       <ZixAlertActions
         title="تم إنشاء المنتجات بنجاح!"
         description="تم إنشاء 4 منتج من 4 صورة"
-        icon={<CheckCircle size={20} color="green" />}
+        icon={<CheckedGif width={35} height={35} />}
         closeButton={isSuccess}
       />
     </YStack>

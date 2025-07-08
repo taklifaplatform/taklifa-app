@@ -37,6 +37,7 @@ import EmptyChat from './icons/empty-chat.svg';
 import EmptyData from './icons/empty-data.svg'; 
 import EmptyFolder from './icons/empty-folder.svg'; 
 import EmptyNotification from './icons/empty-notification.svg'; 
+import EmptyCoast from './icons/empty-coast.svg'; 
 import Eye from './icons/eye.svg'; 
 import Facebook from './icons/facebook.svg'; 
 import FindTrack from './icons/find-track.svg'; 
@@ -109,7 +110,6 @@ import WebLogoAr from './icons/web-logo-ar.svg';
 import WebLogoEn from './icons/web-logo-en.svg'; 
 import WhatsappContact from './icons/whatsapp-contact.svg'; 
 
-
 export {
   About,
   Account,
@@ -148,6 +148,7 @@ export {
   EmptyData,
   EmptyFolder,
   EmptyNotification,
+  EmptyCoast,
   Eye,
   Facebook,
   FindTrack,

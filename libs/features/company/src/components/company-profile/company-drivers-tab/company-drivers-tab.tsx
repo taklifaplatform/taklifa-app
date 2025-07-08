@@ -66,9 +66,9 @@ export const CompanyDriversTab: React.FC<CompanyDriversTabProps> = ({
             </XStack>
           )}
           ListEmptyComponent={() => (
-            <View flex={1} alignItems='center' gap="$8" padding='$4'>
+            <View flex={1} alignItems='center' gap="$2" padding='$4'>
               <CustomIcon name="empty_data" size="$18" color="$color5" />
-              <H4>{t('common:no-vehicles-found')}</H4>
+              <H4 color="#8590A2">{t('common:no-vehicles-found')}</H4>
             </View>
           )}
         />

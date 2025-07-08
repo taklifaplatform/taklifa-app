@@ -99,9 +99,9 @@ export function NotificationScreen(props: NotificationScreenProps) {
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={() => (
-          <View flex={1} alignItems='center' gap="$8">
+          <View flex={1} alignItems='center' gap="$2">
             <CustomIcon name="empty_notification" size="$18" color="$color5" />
-            <H4>{t('common:no-notification-found')}</H4>
+            <H4 color="#8590A2">{t('common:no-notification-found')}</H4>
           </View>
         )}
         renderItem={({ item, index }) => <NotificationCard key={`${item.id}-${index}`} notification={item} />}
