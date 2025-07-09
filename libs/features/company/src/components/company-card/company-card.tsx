@@ -43,7 +43,7 @@ export const CompanyCard: React.FC<CompanyCardProps> = ({
 
   const renderLocationInfo = () =>
     !!company?.location?.id && (
-      <TitleInfo icon={<MapPin size={20} color="$color0" />} title={company?.location?.country?.name} />
+      <TitleInfo icon={<MapPin size={20} color="$color0" />} title={company?.location?.address + ' ' + company?.location?.country?.name} />
     );
 
   const renderRatingsInfo = () =>

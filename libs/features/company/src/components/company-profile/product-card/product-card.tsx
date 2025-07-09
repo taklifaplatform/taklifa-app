@@ -2,9 +2,9 @@ import { Building2, Minus, Plus } from '@tamagui/lucide-icons';
 import { TitleInfo } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import React from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import { useRouter } from 'solito/router';
-import { XStack, YStack, Image, Text, Button } from 'tamagui';
+import { XStack, YStack, Image, Text, Button, Theme } from 'tamagui';
 
 export type ProductCardProps = {
   product: any;
@@ -36,16 +36,33 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       alignItems="center"
     >
       <XStack flex={1} alignItems="center" justifyContent="center">
-        <Image
-          source={
-            product?.images[0]?.original_url
-              ? { uri: product?.images[0]?.original_url || '' }
-              : product?.images[0]
-          }
-          width={140}
-          height={130}
-          borderRadius={10}
-        />
+        {!!product?.images?.[0]?.original_url ? (
+          <Image
+            source={{
+              uri: product?.images[0]?.original_url,
+            }}
+            width={140}
+            height={130}
+            borderRadius={10}
+          />
+        ) : (
+          <Theme reset>
+            <View
+              width={140}
+              height={130}
+              backgroundColor="$color2"
+              borderRadius={10}
+              borderWidth={1}
+              borderColor="$color8"
+              overflow="hidden"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <CustomIcon name="image-blank" size={100} color="$color2" />
+            </View>
+          </Theme>
+        )
+      }
       </XStack>
 
       <YStack
@@ -55,12 +72,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         alignItems="flex-start"
       >
         <Text fontWeight={'bold'} fontSize={'$2'} numberOfLines={1}>
-          {product?.title || ''}
+          {product?.name || ''}
         </Text>
         <TitleInfo
           icon={<Building2 size={20} color="#000000" />}
           title={product?.description}
           flex={1}
+          textAlign="left"
         />
         <XStack gap="$2" alignItems="center">
           <Text fontWeight={'bold'} fontSize={'$3'}>
@@ -116,7 +134,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           theme={'accent'}
           backgroundColor="transparent"
           pressStyle={{
-            backgroundColor: 'gray'
+            backgroundColor: 'gray',
           }}
           borderWidth={1}
           borderColor="$color11"

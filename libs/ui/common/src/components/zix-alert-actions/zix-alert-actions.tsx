@@ -25,34 +25,25 @@ export const ZixAlertActions: React.FC<ZixAlertActionsProps> = ({
     <View>
       {children}
       {closeButton && (
-        <Sheet modal open snapPoints={[100, 100]} position={100}>
+        <Sheet modal open snapPoints={[50, 100]} position={1}>
           <Sheet.Overlay
             animation="lazy"
-            enterStyle={{ opacity: 0 }}
-            exitStyle={{ opacity: 0 }}
+            backgroundColor="black"
+            opacity={0.6}
           />
           <Sheet.Frame
             justifyContent="flex-end"
-            backgroundColor="gray"
-            opacity={0.9}
-            overflow="hidden"
             alignItems="center"
-            marginBottom={40}
+            backgroundColor="transparent"
           >
             <YStack
-              marginHorizontal={'$4'}
+              width={'90%'}
               alignItems="center"
               justifyContent="center"
               padding={'$6'}
-              zIndex={1000}
               backgroundColor={'white'}
               borderRadius={'$4'}
               gap={'$4'}
-              opacity={1}
-              position="absolute"
-              bottom={400}
-              left={0}
-              right={0}
             >
               {icon && icon}
               <Text fontSize={'$4'} fontWeight="bold" textAlign="center">

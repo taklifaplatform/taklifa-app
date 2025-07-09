@@ -6,7 +6,6 @@ import {
   CompaniesService,
   CompanyTransformer,
   LocationService,
-  VehiclesService
 } from '@zix/api';
 import { CompanyCard } from '@zix/features/company';
 import { USER_ROLES, useAuth, useMixpanel } from '@zix/services/auth';
@@ -74,51 +73,7 @@ export function HomeScreen() {
   const [showMap, setShowMap] = useState(true);
   const [search, setSearch] = useState<string>();
 
-  const { data: vehiclesData } = useQuery({
-    queryFn: () =>
-      VehiclesService.fetchAllVehicles({
-        search,
-      }),
-    enabled: user?.active_role?.name === USER_ROLES.solo_driver,
-    queryKey: ['VehiclesService.fetchAllVehicles', user?.id, `-${search}`],
-  });
 
-  const shouldShowAddVehicleWarning = useMemo(() => {
-    return (
-      user?.active_role?.name === USER_ROLES.solo_driver &&
-      !vehiclesData?.data?.length
-    );
-  }, [user, vehiclesData]);
-  const renderAddVehicleWarning = () => {
-    if (!shouldShowAddVehicleWarning || urgencyMode) return null;
-    return (
-      <View padding="$3" backgroundColor="#FF3B30" gap="$2">
-        <XStack justifyContent="space-between" alignItems="center">
-          <Text
-            flex={1}
-            color="#FFFFFF"
-            fontSize="$2"
-            textAlign="left"
-            fontWeight="bold"
-          >
-            {t(
-              'common:add-vehicle-warning',
-              'يرجى تسجيل المركبه لاضافتها على الخريطة هنا',
-            )}
-          </Text>
-          <Button
-            size="$2"
-            backgroundColor="#FFFFFF"
-            onPress={() => router.push('/app/company/vehicles/create')}
-          >
-            <Text color="#FF3B30" fontSize="$4" fontWeight="bold">
-              {t('common:add-vehicle', 'إضافة مركبة')}
-            </Text>
-          </Button>
-        </XStack>
-      </View>
-    );
-  };
 
   const [currentRegion, setCurrentRegion] = useState<Region>({
     latitude: 24.608423604325434,
@@ -388,7 +343,6 @@ export function HomeScreen() {
           setSearch={setSearch}
           MaterialIcons={MaterialIcons}
         />
-        {renderAddVehicleWarning()}
         <YStack flex={1} position="relative">
           <MapSection
             showMap={showMap}

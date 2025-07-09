@@ -26,6 +26,7 @@ export const DeleteProduct: React.FC<DeleteProductProps> = ({
       snapPoints={[30, 50]}
       disableRemoveScroll
       trigger={trigger}
+      colorHeader="#FFF2F1"
     >
       <YStack flex={1} alignItems="center" gap="$6" marginTop={'$4'}>
         <YStack alignItems="center" justifyContent="center" gap="$2">

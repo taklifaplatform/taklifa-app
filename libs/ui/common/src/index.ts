@@ -54,7 +54,7 @@ export * from "./components/zix-alert-dialog/zix-alert-dialog";
 
 export * from "./components/zix-alert-actions/zix-alert-actions";
 
-export * from "./components/filter-product/filter-product";
+export * from "./components/filter-price/filter-price";
 
 export * from "./components/search-product/search-product";
 

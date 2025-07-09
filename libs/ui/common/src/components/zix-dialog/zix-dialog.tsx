@@ -25,6 +25,7 @@ export type ZixDialogProps = DialogProps & {
   dialogContentProps?: DialogContentProps;
   preventClickOutside?: boolean;
   snapPoints?: number[];
+  colorHeader?: string;
 };
 
 export function ZixDialog({
@@ -40,6 +41,7 @@ export function ZixDialog({
   dialogContentProps,
   preventClickOutside,
   snapPoints = [70, 100],
+  colorHeader = '$color3',
   ...dialogProps
 }: ZixDialogProps) {
   const { width, height } = useWindowDimensions();
@@ -64,7 +66,7 @@ export function ZixDialog({
         />
         <Dialog.Content
           key="content"
-          padding={'$0'}
+          padding={'$4'}
           bordered
           elevate
           // animation={[
@@ -107,7 +109,9 @@ export function ZixDialog({
               theme={'accent'}
               justifyContent={'center'}
               padding={contentPadding}
-              backgroundColor={'$color3'}
+              backgroundColor={colorHeader}
+              borderTopLeftRadius={'$4'}
+              borderTopRightRadius={'$4'}
             >
               {title ? (
                 <Dialog.Title fontWeight="bold" fontSize={'$3'}>{title}</Dialog.Title>

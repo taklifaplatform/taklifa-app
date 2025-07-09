@@ -5,7 +5,7 @@ import { ZixSlider } from '../zix-slider/zix-slider';
 import { CustomIcon } from '@zix/ui/icons';
 import { Filter } from '@tamagui/lucide-icons';
 
-export const FilterProduct = () => {
+export const FilterPrice = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 100]);
 
@@ -71,4 +71,4 @@ export const FilterProduct = () => {
   );
 };
 
-export default FilterProduct;
+export default FilterPrice;

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { CompanyTransformer, ServicesService } from '@zix/api';
+import { CompanyTransformer, ServiceService } from '@zix/api';
 import { AnnouncementCard } from '@zix/features/announcements';
-import { FilterByOrder, FilterProduct, SearchProduct } from '@zix/ui/common';
+import { FilterByOrder, FilterPrice, FullScreenSpinner, SearchProduct } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import React, { useState } from 'react';
@@ -18,12 +18,16 @@ export const CompanyServicesTab: React.FC<CompanyServicesTabProps> = ({
   const [orderBy, setOrderBy] = useState('cheapest');
   const [search, setSearch] = useState('');
 
-  const { data } = useQuery({
-    queryFn: () => ServicesService.listCompanyServices({
-      company: company.id as string,
+  const { data, isLoading } = useQuery({
+    queryFn: () => ServiceService.listServices({
+      perPage: 10,
     }),
     queryKey: ['ServicesService.listCompanyServices', company.id],
   })
+  console.log(JSON.stringify(data?.data, null, 2))
+  if (isLoading) {
+    return <FullScreenSpinner />;
+  }
 
   return (
     <FlatList
@@ -37,7 +41,7 @@ export const CompanyServicesTab: React.FC<CompanyServicesTabProps> = ({
       )}
       ListHeaderComponent={() => (
         <XStack flex={1} gap="$2" alignItems="center" paddingVertical={'$4'}>
-          <FilterProduct />
+          <FilterPrice />
           <FilterByOrder orderBy={orderBy} setOrderBy={setOrderBy} />
           <SearchProduct
             placeholder="ابحث عن منتج"

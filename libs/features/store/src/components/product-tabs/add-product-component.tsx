@@ -180,7 +180,7 @@ export const AddProductComponent = () => {
         closeButton={isOpen}
       >
         <ZixButton
-          disabled={images.length === 0}
+          // disabled={images.length === 0}
           onPress={() => {
             setIsOpen(true);
           }}

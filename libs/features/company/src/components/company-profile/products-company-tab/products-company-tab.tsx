@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import { CompanyTransformer, ServicesService } from '@zix/api';
+import { CompanyTransformer, ProductsService } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import {
   FilterByOrder,
-  FilterProduct,
+  FilterPrice,
+  FullScreenSpinner,
   SearchProduct
 } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
@@ -18,6 +19,7 @@ export type ProductsCompanyTabProps = {
   company: CompanyTransformer;
 };
 
+
 export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
   company,
 }) => {
@@ -25,14 +27,13 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
   const { getUrlPrefix } = useAuth();
   const [orderBy, setOrderBy] = useState('cheapest');
   const [search, setSearch] = useState('');
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryFn: () =>
-      ServicesService.listCompanyServices({
-        company: company.id as string,
+      ProductsService.fetchAllProduct({
+        companyId: company.id as string,
       }),
-    queryKey: ['ServicesService.listCompanyServices', company.id],
+    queryKey: ['ProductsService.fetchAllProduct', company.id],
   });
-
   const renderItem = ({ item, index }: { item: any; index: number }) => (
     <TouchableOpacity
       onPress={() => {
@@ -43,6 +44,10 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
     </TouchableOpacity>
   );
 
+  if (isLoading) {
+    return <FullScreenSpinner />;
+  }
+
   return (
     <FlatList
       data={data?.data || []}
@@ -50,7 +55,7 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
       keyExtractor={(item, index) => `product-${item.id}-${index}`}
       ListHeaderComponent={() => (
         <XStack flex={1} gap="$2" alignItems="center" paddingVertical={'$4'}>
-          <FilterProduct />
+          <FilterPrice />
           <FilterByOrder orderBy={orderBy} setOrderBy={setOrderBy} />
           <SearchProduct
             placeholder="ابحث عن منتج"
