@@ -2,18 +2,24 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { DriverTransformer } from './DriverTransformer';
 import type { MediaTransformer } from './MediaTransformer';
 import type { PriceTransformer } from './PriceTransformer';
-import type { SimpleCompanyTransformer } from './SimpleCompanyTransformer';
+import type { UserTransformer } from './UserTransformer';
 export type ServiceTransformer = {
     id?: number;
-    companies?: SimpleCompanyTransformer;
-    driver?: DriverTransformer;
+    user?: UserTransformer;
     title?: string;
     description?: string;
-    cover?: MediaTransformer;
-    images?: MediaTransformer;
     price?: PriceTransformer;
+    city?: string;
+    metadata?: any[];
+    metadata_fields?: any[];
+    category_id?: number;
+    sub_category_id?: number;
+    images?: MediaTransformer;
+    views_count?: number;
+    likes_count?: number;
+    comments_count?: number;
+    created_at?: string;
 };
 

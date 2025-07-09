@@ -2,14 +2,15 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { CoverUpdateServiceRequest } from './CoverUpdateServiceRequest';
 import type { ImagesUpdateServiceRequest } from './ImagesUpdateServiceRequest';
-import type { PriceUpdateServiceRequest } from './PriceUpdateServiceRequest';
 export type UpdateServiceRequest = {
     title?: string;
     description?: string;
-    price?: PriceUpdateServiceRequest;
-    cover?: CoverUpdateServiceRequest;
+    price?: string;
+    category_id?: string;
+    sub_category_id?: string;
+    metadata?: Array<string>;
+    city?: string;
     images?: Array<ImagesUpdateServiceRequest>;
 };
 

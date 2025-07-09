@@ -2,25 +2,22 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { DriverTransformer } from '../models/DriverTransformer';
+import type { ProductCategoryTransformer } from '../models/ProductCategoryTransformer';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-export class DriversService {
+export class ProductCategoriesService {
     /**
-     * Fetch all drivers.
+     * Display a listing of product categories.
      * @returns any Successful response
      * @throws ApiError
      */
-    public static fetchAllDrivers({
+    public static listProductCategories({
         page,
         perPage,
         search,
-        latitude,
-        latitudeDelta,
-        longitude,
-        longitudeDelta,
-        urgencyServiceProvider,
+        companyId,
+        categoryId,
     }: {
         /**
          * Page number
@@ -31,13 +28,10 @@ export class DriversService {
          */
         perPage?: number,
         search?: string,
-        latitude?: any,
-        latitudeDelta?: any,
-        longitude?: any,
-        longitudeDelta?: any,
-        urgencyServiceProvider?: any,
+        companyId?: string,
+        categoryId?: string,
     }): CancelablePromise<{
-        data?: Array<DriverTransformer>;
+        data?: Array<ProductCategoryTransformer>;
         links?: {
             first?: string;
             last?: string;
@@ -61,36 +55,33 @@ export class DriversService {
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/drivers',
+            url: '/api/product-categories',
             query: {
                 'page': page,
                 'per_page': perPage,
                 'search': search,
-                'latitude': latitude,
-                'latitude_delta': latitudeDelta,
-                'longitude': longitude,
-                'longitude_delta': longitudeDelta,
-                'urgency_service_provider': urgencyServiceProvider,
+                'company_id': companyId,
+                'category_id': categoryId,
             },
         });
     }
     /**
-     * Retrieve a driver.
+     * Display the specified product category.
      * @returns any Successful response
      * @throws ApiError
      */
-    public static retrieveDriver({
-        driver,
+    public static retrieveProductCategory({
+        productCategory,
     }: {
-        driver: string,
+        productCategory: string,
     }): CancelablePromise<{
-        data?: DriverTransformer;
+        data?: ProductCategoryTransformer;
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/drivers/{driver}',
+            url: '/api/product-categories/{productCategory}',
             path: {
-                'driver': driver,
+                'productCategory': productCategory,
             },
         });
     }

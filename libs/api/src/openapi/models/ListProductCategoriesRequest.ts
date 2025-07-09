@@ -2,12 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type ListServiceRequest = {
+export type ListProductCategoriesRequest = {
     search?: string;
+    company_id?: string;
     category_id?: string;
-    sub_category_id?: string;
-    sort_by?: string;
-    sort_direction?: string;
-    years?: string;
 };
 

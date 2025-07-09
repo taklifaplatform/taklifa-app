@@ -8,8 +8,6 @@ export type CompanyTransformer = {
     id?: string;
     name?: string;
     about?: string;
-    working_hours_id?: string;
-    vehicles_count?: number;
     contact_number?: string;
     logo?: MediaTransformer;
     location_id?: string;

@@ -7,7 +7,6 @@ import type { LocationTransformer } from './LocationTransformer';
 import type { MediaTransformer } from './MediaTransformer';
 import type { SimpleCompanyTransformer } from './SimpleCompanyTransformer';
 import type { UserSimpleRoleTransformer } from './UserSimpleRoleTransformer';
-import type { VehicleTransformer } from './VehicleTransformer';
 export type DriverTransformer = {
     id?: number;
     username?: string;
@@ -27,7 +26,6 @@ export type DriverTransformer = {
         score?: number;
         count?: number;
     };
-    vehicle?: VehicleTransformer;
     roles?: Array<UserSimpleRoleTransformer>;
 };
 
