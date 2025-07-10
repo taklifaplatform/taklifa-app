@@ -114,16 +114,7 @@ export function useAuth(): AuthHelpers {
    * The number of steps in the registration process.
    */
   const registerSteps = useMemo(() => {
-    if (requestedAccountType === 'customer') {
-      return 2;
-    }
-    if (requestedAccountType === 'company_owner') {
-      return 3;
-    }
-    if (requestedAccountType === 'solo_driver') {
-      return 3;
-    }
-    return 0;
+    return 3;
   }, [requestedAccountType]);
 
   const avatarUrl = useMemo(() => {

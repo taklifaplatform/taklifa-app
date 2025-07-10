@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { Stack, Text, Theme, XStack } from 'tamagui';
+import { Stack, Theme } from 'tamagui';
 
 import { useToastController } from '@tamagui/toast';
 import { AuthService } from '@zix/api';
@@ -10,18 +10,14 @@ import {
   handleFormErrors,
 } from '@zix/ui/forms';
 import { t } from 'i18next';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { z } from 'zod';
 import { AuthHeader } from '../../components/auth-header/auth-header';
-import { Platform } from 'react-native';
 
 export const VerifyPhoneNumberFormSchema = z.object({
-  pin_code: Platform.select({
-    web: formFields.number,
-    default: formFields.code,
-  }),
+  pin_code: formFields.code,
 });
 const { useParams } = createParam<{ phone?: string }>();
 
@@ -73,68 +69,6 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
     },
   });
 
-  async function resendCode() {
-    AuthService.sendPhoneNumberVerification({
-      requestBody: {
-        phone_number: phoneNumber,
-      },
-    })
-      .then(() => {
-        toast.show(t('auth:pin_code.code_sent'));
-      })
-      .catch((error) => {
-        console.log('error', JSON.stringify(error, null, 2), "phone=> ", phoneNumber);
-        toast.show(error.message, {
-          preset: 'error',
-        });
-      });
-  }
-
-  const [lastSentTime, setLastSentTime] = useState(null);
-  const cooldownPeriod = 60 * 1000; // 1 minute in milliseconds
-  const currentTime = new Date().getTime();
-  const [canResed, setCanResed] = useState(true);
-
-  const handleResendCode = () => {
-    if (!lastSentTime || currentTime - lastSentTime >= cooldownPeriod) {
-      resendCode();
-      setLastSentTime(currentTime);
-      // setCanResed(true) after 60 seconds
-      setCanResed(false)
-      setTimeout(() => {
-        setCanResed(true)
-      }, 60000)
-    } else {
-      const timeLeft = Math.ceil((cooldownPeriod - (currentTime - lastSentTime)) / 1000);
-      toast.show(`Please wait ${timeLeft} more seconds before resending the code`, {
-        preset: 'error',
-      });
-    }
-  };
-
-
-  const ResendCodeNumber = () => {
-    return (
-      <XStack
-        onPress={handleResendCode}
-        margin="$4"
-        gap="$2"
-        alignItems="center"
-        justifyContent="center"
-        cursor="pointer"
-      >
-        <Text textAlign="center" theme="alt1">
-          {t('auth:pin_code.didnt_receive_code')}
-        </Text>
-        <Theme name="accent">
-          <Text fontSize="$4" color={canResed ? "$color10" : "gray"}>
-            {t('auth:pin_code.resend')}: {phoneNumberProp}
-          </Text>
-        </Theme>
-      </XStack>
-    );
-  };
-
   return (
     <FormProvider {...form}>
       <SchemaForm
@@ -143,18 +77,14 @@ export const VerifyPhoneNumberForm: React.FC<VerifyPhoneNumberFormProps> = ({
         defaultValues={{
           pin_code: '',
         }}
-        props={{
-          pin_code: {},
-        }}
         renderAfter={({ submit }) => {
           return (
             <Stack>
-              <Theme inverse>
-                <SubmitButton onPress={() => submit()}>
-                  {t('common:confirm')}
+              <Theme name="accent">
+                <SubmitButton onPress={() => submit()} color="$color2" >
+                  {t('common:next')}
                 </SubmitButton>
               </Theme>
-              <ResendCodeNumber />
             </Stack>
           );
         }}

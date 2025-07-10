@@ -98,10 +98,11 @@ export const LocationField: React.FC<LocationFieldProps> = ({
   const renderInputActivator = () =>
     (type === 'simple' || !locationData?.address) && (
       <ZixInput
-        rightIcon={(props) => <LocateFixed {...props} />}
+        leftIcon={(props) => <LocateFixed size={30} color="#000000" />}
         placeholder={placeholder}
         value={locationData?.address}
         height='$4'
+        {...props}
       />
     );
 
@@ -117,8 +118,9 @@ export const LocationField: React.FC<LocationFieldProps> = ({
         >
           {renderAddressCard()}
         </XStack>
-        {renderAddressMap()}
         {renderInputActivator()}
+        {renderAddressMap()}
+        
         <View
           onPress={async () => {
             const loc = await editLocation(value)

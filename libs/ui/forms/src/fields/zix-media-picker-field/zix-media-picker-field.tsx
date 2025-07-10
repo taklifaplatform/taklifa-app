@@ -11,7 +11,6 @@ import { MediaService, MediaTransformer } from '@zix/api';
 import {
   ActionSheet,
   ActionSheetRef,
-  ZixButton,
   ZixDialog,
 } from '@zix/ui/common';
 import { randomUUID } from 'expo-crypto';
@@ -57,6 +56,7 @@ export type ZixMediaPickerFieldProps = {
   isOptional?: boolean;
   maxFileSize?: number;
   showCustomImagePicker?: boolean;
+  trigger?: React.ReactNode;
 };
 
 export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
@@ -69,6 +69,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
   maxFileSize = 10 * 1024 * 1024,
   notAvatar,
   showCustomImagePicker = false,
+  trigger,
 }) => {
   const Previewer = MediaPreviewers[type];
   const { permission, requestPermission } = useCamera();
@@ -135,25 +136,26 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
         contentPadding="$1"
         snapPoints={[30, 50]}
         disableRemoveScroll
-        trigger={
-          <ZixButton
-            theme={'accent'}
-            width={'$20'}
-            height={'$4'}
-            borderRadius={'$4'}
-            backgroundColor="$color1"
-            alignSelf="center"
-            margin="$4"
-          >
-            <Text fontWeight="600" fontSize="$1" color="#FFFFFF">
-              {' '}
-              اختر الصور
-            </Text>
-          </ZixButton>
-        }
+        trigger={trigger}
       >
         <YStack alignItems="flex-start" gap="$5" padding="$6">
+          
+{type === 'files' || type === 'file' ? (
           <TouchableOpacity
+            onPress={() => {
+              setIsOpen(false);
+              launchDocumentPicker();
+            }}
+            style={{ flexDirection: 'row', alignItems: 'center', gap: 20 }}
+          >
+            <FileImage size={25} color="#000000" />
+            <Text fontSize="$2" color="#000000" fontWeight="600">
+              اختيار الملفات
+            </Text>
+          </TouchableOpacity>
+          ): (
+            <>
+            <TouchableOpacity
             onPress={() => {
               setIsOpen(false);
               launchMediaPicker();
@@ -177,18 +179,8 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
               التقاط صورة
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              setIsOpen(false);
-              launchDocumentPicker();
-            }}
-            style={{ flexDirection: 'row', alignItems: 'center', gap: 20 }}
-          >
-            <FileImage size={25} color="#000000" />
-            <Text fontSize="$2" color="#000000" fontWeight="600">
-              اختيار الملفات
-            </Text>
-          </TouchableOpacity>
+            </>
+          )}
         </YStack>
       </ZixDialog>
     );

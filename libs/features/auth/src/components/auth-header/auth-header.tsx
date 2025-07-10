@@ -49,7 +49,7 @@ export const AuthHeader: React.FC<AuthHeaderProps> = (props) => {
           <Button
             pressStyle={{ backgroundColor: 'transparent', borderWidth: 0 }}
             icon={<CustomIcon name="arrow_left" size="$2" color="$color11" />}
-            backgroundColor="$color2"
+            backgroundColor="transparent"
             width="$5"
             onPress={() => onGoBack()}
           />
@@ -57,20 +57,14 @@ export const AuthHeader: React.FC<AuthHeaderProps> = (props) => {
           <View width="$5" />
         )}
 
-        {showIcon && (
-          <Avatar size="$10" margin="$2">
-            <Theme name="accent">
-              <CustomIcon name={iconName} size="$10" color={iconColor} />
-            </Theme>
-          </Avatar>
-        )}
+        
 
         {canGoNext ? (
           <Button
             disabled={!canGoNext}
             pressStyle={{ backgroundColor: 'transparent', borderWidth: 0 }}
             icon={<CustomIcon name="arrow_right" size="$2" color="$color11" />}
-            backgroundColor="$color2"
+            backgroundColor="transparent"
             onPress={() => onGoNext()}
             width="$5"
           />
@@ -98,6 +92,13 @@ export const AuthHeader: React.FC<AuthHeaderProps> = (props) => {
               {props.description}
             </Paragraph>
           )}
+          {showIcon && (
+          <Avatar size="$10" margin="$2">
+            <Theme name="accent">
+              <CustomIcon name={iconName} size="$10" color={iconColor} />
+            </Theme>
+          </Avatar>
+        )}
         </YStack>
       </YStack>
     </View>

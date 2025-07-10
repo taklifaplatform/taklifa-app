@@ -133,13 +133,15 @@ export const SendResetPhoneNumberForm: React.FC<SendResetPhoneNumberFormProps> =
           pin_code: '',
         }}
         props={{
-          pin_code: {},
+          pin_code: {
+            backgroundColor: '#FFFFFF',
+          },
         }}
         renderAfter={({ submit }) => {
           return (
             <Stack>
-              <Theme inverse>
-                <SubmitButton onPress={() => submit()}>
+              <Theme name="accent">
+                <SubmitButton onPress={() => submit()} color="$color2" >
                   {t('common:confirm')}
                 </SubmitButton>
               </Theme>

@@ -1,4 +1,4 @@
-import { Check, Plus, PlusSquare, X, XCircle } from "@tamagui/lucide-icons";
+import { Check, CirclePlus, Plus, PlusSquare, X, XCircle } from "@tamagui/lucide-icons";
 import { Button, Text, XStack, useStyle } from "tamagui";
 import { t } from 'i18next';
 import { IconProps } from "@tamagui/helpers-icon";
@@ -63,9 +63,10 @@ export const ZixFilesInputMediaPickerPreviewer: React.FC<ZixMediaPreviewerProps>
         <Button
           width="$3"
           color='$color10'
-          icon={(props: IconProps) => <Plus {...props} />}
+          icon={(props: IconProps) => <CirclePlus {...props} />}
           scaleIcon={1.8}
           onPress={onPress}
+          unstyled
         />
       </XStack>
     </XStack>

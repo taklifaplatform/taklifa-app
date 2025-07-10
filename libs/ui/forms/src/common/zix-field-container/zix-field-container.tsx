@@ -65,6 +65,7 @@ export type BaseZixFieldContainerProps = ThemeableStackProps & {
   errorMessage?: string;
   label?: string
   isOptional?: boolean
+  showFieldset?: boolean
 };
 
 
@@ -83,6 +84,7 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
   label,
   isOptional,
   errorMessage,
+  showFieldset = true,
   ...rest
 }) => {
   const id = useId()
@@ -169,7 +171,7 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
 
   return (
     <Theme name={error ? 'error' : themeName} forceClassName>
-      <Fieldset >
+      <Fieldset display={showFieldset ? 'block' : 'none'}>
         {
           collapsible ? renderAccordion() : (
             <>

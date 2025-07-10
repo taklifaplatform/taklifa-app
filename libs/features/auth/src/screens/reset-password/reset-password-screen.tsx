@@ -19,6 +19,7 @@ import { Paragraph, Stack, Text, Theme } from 'tamagui';
 import { z } from 'zod';
 import { AuthHeader } from '../../components/auth-header/auth-header';
 import { useMixpanel } from '@zix/services/auth';
+import { SignInLink } from '../../components/signin-link/signin-link';
 
 const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
 
@@ -70,16 +71,22 @@ export const ResetPasswordScreen = () => {
         defaultValues={{
           phone: params?.phone || '',
         }}
+        props={{
+          phone_number: {
+            backgroundColor: '#FFFFFF',
+          },
+        }}
         onSubmit={mutateAsync}
         renderAfter={({ submit }) => {
           return (
             <Stack gap="$4">
-              <Theme inverse>
-                <SubmitButton onPress={() => submit()} borderRadius="$10">
+              <Theme name="accent">
+                <SubmitButton onPress={() => submit()} borderRadius="$10" color="$color2">
                   {t('common:next')}
                 </SubmitButton>
               </Theme>
-              <SignInLink />
+              {/* <SignInLink /> */}
+            <SignInLink />
 
 
             </Stack>
@@ -103,35 +110,5 @@ export const ResetPasswordScreen = () => {
   );
 };
 
-const SignInLink = () => {
-  const phone = useWatch<z.infer<typeof ResetPasswordSchema>>({
-    name: 'phone_number',
-  });
-
-  return (
-    <Link
-      href={`/auth/login?${new URLSearchParams(phone ? { phone } : undefined)}`}
-    >
-      <Stack
-        flexDirection="row"
-        alignItems="center"
-        gap="$2"
-        justifyContent="center"
-      >
-        <Paragraph textAlign="center" theme="alt1">
-          {t('auth:reset_password.done_resetting')}
-        </Paragraph>
-        <Theme name="accent">
-          <Text textDecorationLine="underline" color={'$color1'} theme={'accent'}>
-            {t('auth:sign_in')}
-          </Text>
-        </Theme>
-        <Theme name="accent">
-          <CustomIcon name="arrow_right" color="$color1" />
-        </Theme>
-      </Stack>
-    </Link>
-  );
-};
 
 export default ResetPasswordScreen;

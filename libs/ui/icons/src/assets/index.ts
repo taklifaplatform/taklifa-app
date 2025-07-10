@@ -8,6 +8,7 @@ import AlertCercle from './icons/alert-cercle.svg';
 import Alert from './icons/alert.svg'; 
 import AppBadging from './icons/app-badging.svg'; 
 import AppStore from './icons/app-store.svg'; 
+import Apple from './icons/apple.svg'; 
 import Apps from './icons/apps.svg'; 
 import AspectRatio from './icons/aspect-ratio.svg'; 
 import AssistantNavigation from './icons/assistant-navigation.svg'; 
@@ -40,11 +41,13 @@ import EmptyNotification from './icons/empty-notification.svg';
 import EmptyCoast from './icons/empty-coast.svg'; 
 import Eye from './icons/eye.svg'; 
 import Facebook from './icons/facebook.svg'; 
+import Email from './icons/email.svg'; 
 import FindTrack from './icons/find-track.svg'; 
 import Flip from './icons/flip.svg'; 
 import Followed from './icons/followed.svg'; 
 import Garage from './icons/garage.svg'; 
 import GooglePlay from './icons/google-play.svg'; 
+import Google from './icons/google.svg'; 
 import HalfStar from './icons/half-star.svg'; 
 import Hash from './icons/hash.svg'; 
 import HomeInfo from './icons/home-info.svg'; 
@@ -75,6 +78,7 @@ import Orders from './icons/orders.svg';
 import Other from './icons/other.svg'; 
 import PaperMoney from './icons/paper-money.svg'; 
 import Payments from './icons/payments.svg'; 
+import Phone from './icons/phone.svg'; 
 import RadioButtonChecked from './icons/radio-button-checked.svg'; 
 import Ringing from './icons/ringing.svg'; 
 import Riyal from './icons/riyal.svg'; 
@@ -119,6 +123,7 @@ export {
   Alert,
   AppBadging,
   AppStore,
+  Apple,
   Apps,
   AspectRatio,
   AssistantNavigation,
@@ -151,11 +156,13 @@ export {
   EmptyCoast,
   Eye,
   Facebook,
+  Email,
   FindTrack,
   Flip,
   Followed,
   Garage,
   GooglePlay,
+  Google,
   HalfStar,
   Hash,
   HomeInfo,
@@ -186,6 +193,7 @@ export {
   Other,
   PaperMoney,
   Payments,
+  Phone,
   RadioButtonChecked,
   Ringing,
   Riyal,

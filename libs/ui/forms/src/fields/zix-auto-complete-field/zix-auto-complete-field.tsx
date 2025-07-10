@@ -56,9 +56,6 @@ export const ZixAutoCompleteField: React.FC<ZixAutoCompleteFieldProps> = (
     }
   );
   useEffect(() => {
-    console.log("================================================")
-    console.log('props.value::', props.value)
-    console.log("================================================")
     setTimeout(() => {
       console.log("REFETCHING")
       refetch();

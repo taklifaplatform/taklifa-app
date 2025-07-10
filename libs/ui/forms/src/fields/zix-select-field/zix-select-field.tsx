@@ -116,6 +116,7 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
           iconAfter={ChevronDown}
           {...SHARED_FIELDS_STYLE}
           {...selectTriggerProps}
+          backgroundColor="white"
         >
           {renderSelectedItem(value, placeholder)}
           {/* <Select.Value fontSize="$1" placeholder={placeholder} /> */}

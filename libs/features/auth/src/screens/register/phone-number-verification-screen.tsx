@@ -11,14 +11,10 @@ export const SignUpPhoneNumberVerificationScreen = () => {
   const { registerSteps, requestedAccountType } = useAuth();
 
   async function onSuccess(user?: UserTransformer) {
-    if (requestedAccountType === 'customer') {
-      router.replace('/auth/register/success');
-    }
     if (requestedAccountType === 'company_owner') {
       router.replace('/auth/create-company');
-    }
-    if (requestedAccountType === 'solo_driver') {
-      router.replace('/auth/verify-kyc');
+    } else {
+      router.replace('/auth/register/success');
     }
   }
 

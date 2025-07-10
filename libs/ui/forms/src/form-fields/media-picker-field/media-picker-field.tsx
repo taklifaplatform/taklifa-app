@@ -16,11 +16,13 @@ export const MediaPickerFieldSchema = z.object({
 });
 
 export type MediaPickerFieldProps = ZixMediaPickerFieldProps & {
-  containerProps?: BaseFormFieldContainerProps
+  containerProps?: BaseFormFieldContainerProps;
+  showCustomImagePicker?: boolean;
 }
 
 export const MediaPickerField: React.FC<MediaPickerFieldProps> = ({
   containerProps = {},
+  showCustomImagePicker = false,
   ...props
 }) => {
   const { field, error } = useTsController<MediaTransformer | MediaTransformer[]>()
@@ -34,6 +36,7 @@ export const MediaPickerField: React.FC<MediaPickerFieldProps> = ({
         hasError={!!error?.errorMessage}
         placeholder={placeholder}
         isOptional={isOptional}
+        showCustomImagePicker={showCustomImagePicker}
       />
     </FormFieldContainer>
   )

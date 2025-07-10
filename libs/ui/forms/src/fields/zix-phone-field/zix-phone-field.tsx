@@ -55,6 +55,7 @@ export const ZixPhoneField: React.FC<ZixPhoneFieldProps> = ({
               scaleIcon: 0.5,
             }}
             disabled={props.disabled}
+            {...props}
           />
         </Stack>
         <ZixInput
@@ -67,6 +68,7 @@ export const ZixPhoneField: React.FC<ZixPhoneFieldProps> = ({
           keyboardType="name-phone-pad"
           inputMode="numeric"
           disabled={props.disabled}
+          {...props}
         />
       </XStack>
     </Theme>

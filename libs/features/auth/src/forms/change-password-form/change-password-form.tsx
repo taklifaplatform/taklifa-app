@@ -92,14 +92,16 @@ export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
       props={{
         password: {
           secureTextEntry: true,
+          backgroundColor: '#FFFFFF',
         },
         password_confirmation: {
           secureTextEntry: true,
+          backgroundColor: '#FFFFFF',
         },
       }}
       renderAfter={({ submit }) => (
-        <Theme inverse>
-          <SubmitButton onPress={() => submit()}>
+        <Theme name="accent">
+          <SubmitButton onPress={() => submit()} color="$color2">
             {t('common:confirm')}
           </SubmitButton>
         </Theme>

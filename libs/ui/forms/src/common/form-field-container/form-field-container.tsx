@@ -4,11 +4,13 @@ import ZixFieldContainer, { BaseZixFieldContainerProps } from '../zix-field-cont
 
 export type BaseFormFieldContainerProps = BaseZixFieldContainerProps & {
   fieldInfo?: typeof useFieldInfo;
+  showFieldset?: boolean
 };
 
 export const FormFieldContainer: React.FC<BaseFormFieldContainerProps> = ({
   children,
   fieldInfo = useFieldInfo,
+  showFieldset = true,
   ...props
 }) => {
   const { error } = useTsController()
@@ -20,6 +22,7 @@ export const FormFieldContainer: React.FC<BaseFormFieldContainerProps> = ({
       error={error}
       label={label}
       isOptional={isOptional}
+      showFieldset={showFieldset}
     >
       {children}
     </ZixFieldContainer>

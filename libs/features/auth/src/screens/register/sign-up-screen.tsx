@@ -8,7 +8,7 @@ import {
   handleFormErrors,
 } from '@zix/ui/forms';
 import { t } from 'i18next';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
@@ -26,6 +26,7 @@ export const SignUpSchema = z
   .object({
     name: formFields.text.min(3).describe(t('forms:name')),
     phone_number: formFields.phone.describe(t('forms:phone_number')),
+    email: formFields.text.email().describe(t('forms:email')).optional().nullable(),
     password: formFields.secure_text.describe(t('forms:password')),
     password_confirmation: formFields.secure_text.describe(
       t('forms:password_confirmation'),
@@ -62,6 +63,7 @@ export const SignUpScreen = () => {
   const toast = useToastController();
   const router = useRouter();
   const updateParams = useUpdateParams();
+  const [method, setMethod] = useState<string | null>(null);
 
   const {
     setAuthAccessToken,
@@ -70,6 +72,12 @@ export const SignUpScreen = () => {
     requestedAccountType,
   } = useAuth();
   const { params } = useParams();
+
+  useEffect(() => {
+    if (params?.method) {
+      setMethod(params?.method);
+    }
+  }, [params?.method]);
 
   useEffect(() => {
     if (params?.phone) {
@@ -84,13 +92,18 @@ export const SignUpScreen = () => {
       AuthService.register({
         requestBody: {
           is_customer: requestedAccountType === USER_ROLES.customer,
-          is_solo_driver: requestedAccountType === USER_ROLES.solo_driver,
+          // is_company_owner: requestedAccountType === USER_ROLES.company_owner,
+          // is_service_provider: requestedAccountType === USER_ROLES.service_provider,
           ...variables,
         },
       }),
     onSuccess({ data }) {
-      setAuthAccessToken(data?.plainTextToken);
-      setAuthUser(data?.user);
+      if (data?.plainTextToken) {
+        setAuthAccessToken(data?.plainTextToken);
+      }
+      if (data?.user) {
+        setAuthUser(data?.user);
+      }
       router.push({
         pathname: '/auth/verify-phone-number',
         query: {
@@ -120,10 +133,39 @@ export const SignUpScreen = () => {
             password_confirmation: '',
             accept_terms: false,
           }}
+          props={{
+            username: {
+              backgroundColor: '#FFFFFF',
+            },
+            name: {
+              backgroundColor: '#FFFFFF',
+            },
+            phone_number: {
+              backgroundColor: '#FFFFFF',
+            },
+            email: {
+              backgroundColor: '#FFFFFF',
+              containerProps: {
+                showFieldset: method === 'email' ? true : false,
+              },
+            },
+            password: {
+              backgroundColor: '#FFFFFF',
+              containerProps: {
+                showFieldset: method === 'google' || method === 'apple' ? false : true,
+              },
+            },
+            password_confirmation: {
+              backgroundColor: '#FFFFFF',
+              containerProps: {
+                showFieldset: method === 'google' || method === 'apple' ? false : true,
+              },
+            }
+          }}
           onSubmit={mutateAsync}
           renderAfter={({ submit }) => (
-            <Theme inverse>
-              <SubmitButton onPress={() => submit()} borderRadius="$10">
+            <Theme name="accent">
+              <SubmitButton onPress={() => submit()} borderRadius="$10" color="$color2">
                 {t('common:next')}
               </SubmitButton>
             </Theme>

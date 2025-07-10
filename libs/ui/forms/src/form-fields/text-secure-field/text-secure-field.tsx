@@ -30,7 +30,7 @@ export const TextSecureField: React.FC<TextSecureFieldProps> = ({
         onChangeText={field.onChange}
         ref={field.ref}
         placeholder={placeholder}
-        rightIcon={(props) => showPassword ? (
+        leftIcon={(props) => showPassword ? (
           <EyeOff {...props} />
         ) : (
           <Eye {...props} />

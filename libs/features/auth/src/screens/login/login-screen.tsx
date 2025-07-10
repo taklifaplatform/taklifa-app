@@ -10,14 +10,13 @@ import {
   formFields,
   handleFormErrors,
 } from '@zix/ui/forms';
-import { CustomIcon } from '@zix/ui/icons';
+import { ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import React, { useEffect } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { createParam } from 'solito';
 import { Link } from 'solito/link';
 import { z } from 'zod';
-import { ScreenLayout } from '@zix/ui/layouts';
 
 const { useParams, useUpdateParams } = createParam<{ phone?: string }>();
 
@@ -89,13 +88,17 @@ export const LoginScreen: React.FC = () => {
           props={{
             password: {
               afterElement: <ForgotPasswordLink />,
+              backgroundColor: '#FFFFFF',
+            },
+            phone_number: {
+              backgroundColor: '#FFFFFF',
             },
           }}
           renderAfter={({ submit }) => {
             return (
               <Stack gap="$4">
-                <Theme inverse>
-                  <SubmitButton onPress={() => submit()} borderRadius="$10">
+                <Theme name="accent">
+                  <SubmitButton onPress={() => submit()} borderRadius="$10" color="$color2">
                     {t('auth:sign_in')}
                   </SubmitButton>
                 </Theme>
@@ -107,8 +110,7 @@ export const LoginScreen: React.FC = () => {
           {(fields) => (
             <>
               <AuthHeader
-                title={t('common:app_name')}
-                description={t('common:welcome')}
+                title='مرحبــــا بك فــــي'
               />
               {Object.values(fields)}
             </>
@@ -128,21 +130,28 @@ const SignUpLink = () => {
         phone ? { phone } : {},
       ).toString()}`}
     >
+
       <Stack
         flexDirection="row"
         alignItems="center"
         gap="$2"
         justifyContent="center"
+        marginBottom="$4"
+        padding="$4"
       >
-        <Paragraph textAlign="center" theme="alt1">
+        <Paragraph
+          textAlign="center"
+          theme="alt1"
+          fontSize="$4"
+          fontWeight="bold"
+        >
           {t('auth:dont_have_account')}{' '}
         </Paragraph>
 
         <Theme name="accent">
-          <Text textDecorationLine="underline" color="$color1">
+          <Text color="$color1" fontWeight="bold" fontSize="$4">
             {t('auth:sign_up')}
           </Text>
-          <CustomIcon theme="accent" name="arrow_right" color="$color1" />
         </Theme>
       </Stack>
     </Link>

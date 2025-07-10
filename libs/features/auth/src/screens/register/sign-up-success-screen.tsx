@@ -1,10 +1,7 @@
-import { useAuth, useMixpanel } from '@zix/services/auth';
-import { SubmitButton } from '@zix/ui/forms';
-import { CustomIcon } from '@zix/ui/icons';
-import { ScreenLayout } from '@zix/ui/layouts';
-import { t } from 'i18next';
-import { H2, Text, Theme, YStack } from 'tamagui';
-import { AuthHeader } from '../../components/auth-header/auth-header';
+import { ZixAlertActions } from '@zix/ui/common';
+import { CheckedGif } from '@zix/ui/icons';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'solito/router';
 
 /**
  * Renders the sign-up success screen.
@@ -13,56 +10,24 @@ import { AuthHeader } from '../../components/auth-header/auth-header';
  * and a button to proceed to the next step or redirect to a specified page.
  */
 export const SignUpSuccessScreen = () => {
-  useMixpanel('Sign Up Success Screen view')
-  const { registerSteps, requestedAccountType, redirectUserToActiveDashboard } =
-    useAuth();
+  const [isSuccess, setIsSuccess] = useState(true);
+  const router = useRouter();
 
-  const renderAccountVerificationProcessMessage = () =>
-    requestedAccountType !== 'customer' && (
-      <YStack gap="$3" paddingVertical="$4">
-        <Text textAlign="center">
-          {t('auth:verification_in_progress.title')}
-        </Text>
-        <Text textAlign="center">
-          {t('auth:verification_in_progress.description')}
-        </Text>
-      </YStack>
-    );
+  useEffect(() => {
+    setTimeout(() => {
+      setIsSuccess(false);
+      router.push('/app/(tabs)/');
+    }, 3000);
+  }, []);
 
   return (
-    <ScreenLayout safeAreaBottom>
-      <YStack flex={1}>
-        <AuthHeader
-          showIcon={false}
-          activeStep={registerSteps + 1}
-          totalSteps={registerSteps}
-        />
-        <YStack
-          flex={1}
-          gap="$3"
-          justifyContent="space-between"
-          alignItems="center"
-          paddingBottom="$4"
-        >
-          <YStack alignItems="center" gap="$8">
-            <H2 $sm={{ size: '$8' }} textAlign="center">
-              {t('auth:account_created.description')}
-            </H2>
-            <CustomIcon name="success" size="$12" color="$color5" />
-          </YStack>
-          {renderAccountVerificationProcessMessage()}
-        </YStack>
-        <Theme inverse>
-          <SubmitButton
-            margin="$4"
-            borderRadius="$10"
-            onPress={() => redirectUserToActiveDashboard()}
-          >
-            {t('common:next')}
-          </SubmitButton>
-        </Theme>
-      </YStack>
-    </ScreenLayout>
+    <ZixAlertActions
+      title="تم إنشاء حسابك بنجاح!"
+      description="قد يستغرق الأمر بضعة أيام للتحقق من حسابك
+يمكنك البدء باستخدام تطبيق تكلفة الآن"
+      icon={<CheckedGif width={35} height={35} />}
+      closeButton={isSuccess}
+    />
   );
 };
 

@@ -114,14 +114,15 @@ export const InvitationScreen: React.FC = () => {
       props={{
         phone_number: {
           disabled: true,
+          backgroundColor: '#FFFFFF',
         }
       }}
       onSubmit={loginAsync}
       renderAfter={({ submit }) => {
         return (
           <Stack gap="$4">
-            <Theme inverse>
-              <SubmitButton onPress={() => submit()} borderRadius="$10">
+            <Theme name="accent">
+              <SubmitButton onPress={() => submit()} borderRadius="$10" color="$color2">
                 التالي
               </SubmitButton>
             </Theme>

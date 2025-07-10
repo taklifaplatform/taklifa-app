@@ -16,8 +16,8 @@ import { FormFieldContainer } from '../../common';
 import { CodeInputFieldProps } from './code-input-field';
 import { useMultiLang } from '@zix/i18n';
 
-const CELL_COUNT = 6;
-const CELL_WIDTH = 40;
+const CELL_COUNT = 4;
+const CELL_WIDTH = 50;
 const CELL_HEIGHT = 54;
 
 export const CodeInputField: React.FC<CodeInputFieldProps> = ({
@@ -44,6 +44,7 @@ export const CodeInputField: React.FC<CodeInputFieldProps> = ({
       borderRadius: 12,
       textAlign: 'center',
       padding: (CELL_WIDTH + CELL_HEIGHT) * 0.1,
+      backgroundColor: '#F7F8F9',
       // theme: theme,
       // color: theme.colors..get(),
     }),
@@ -66,7 +67,7 @@ export const CodeInputField: React.FC<CodeInputFieldProps> = ({
 
   return (
     <FormFieldContainer {...containerProps} fieldInfo={useStringFieldInfo}>
-      <XStack justifyContent='space-around'>
+      <XStack justifyContent='space-around' marginTop={'$8'}>
         <CodeField
           ref={ref}
           {...propsCode}

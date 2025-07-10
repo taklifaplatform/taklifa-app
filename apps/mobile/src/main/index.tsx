@@ -10,7 +10,8 @@ export default function Screen() {
 
   function redirectUser() {
     setTimeout(() => {
-      router.replace('/app');
+      router.replace('/auth/create-company');
+      // router.replace('/auth/login');
     }, 1000);
   }
   const router = useRouter();

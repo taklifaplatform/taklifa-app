@@ -94,6 +94,22 @@ export const AddProductComponent = () => {
             setImages([...images, ...(value as MediaTransformer[])]);
           }}
           showCustomImagePicker
+          trigger={
+            <ZixButton
+              theme={'accent'}
+              width={'$20'}
+              height={'$4'}
+              borderRadius={'$4'}
+              backgroundColor="$color1"
+              alignSelf="center"
+              margin="$4"
+            >
+              <Text fontWeight="600" fontSize="$1" color="#FFFFFF">
+                {' '}
+                اختر الصور
+              </Text>
+            </ZixButton>
+          }
         />
         <Text fontSize="$1" color="$color0">
           10 MB حتى PNG, JPG, Webp
@@ -150,14 +166,14 @@ export const AddProductComponent = () => {
                 title="تأكيد الحذف"
                 trigger={
                   <TouchableOpacity
-                  style={{
-                    position: 'absolute',
-                    top: 10,
-                    left: 10,
-                    backgroundColor: '#FEECEE',
-                    borderRadius: 20,
-                    padding: 5,
-                  }}
+                    style={{
+                      position: 'absolute',
+                      top: 10,
+                      left: 10,
+                      backgroundColor: '#FEECEE',
+                      borderRadius: 20,
+                      padding: 5,
+                    }}
                   >
                     <Trash2 size={20} color="red" />
                   </TouchableOpacity>
@@ -174,9 +190,7 @@ export const AddProductComponent = () => {
       <ZixAlertActions
         title="جاري تحليل الصور وإنشاء المنتجات..."
         description="سيتم إنشاء منتج منفصل لكل صورة"
-        icon={
-          <MagicGif width={35} height={35} />
-        }
+        icon={<MagicGif width={35} height={35} />}
         closeButton={isOpen}
       >
         <ZixButton

@@ -13,9 +13,9 @@ export const InlineStepper: React.FC<InlineStepperProps> = (
   props: InlineStepperProps
 ) => {
   const {
-    stepColorPrec = '#25D366',
-    stepColorActive = '$color1',
-    stepColorPrev = '#25D366',
+    stepColorPrec = '$color1',
+    stepColorActive = '$color3',
+    stepColorPrev = '#D9D9D9',
   } = props;
 
   const totalSteps = Array.from(Array(props.totalSteps).keys()).map(
@@ -40,8 +40,22 @@ export const InlineStepper: React.FC<InlineStepperProps> = (
                 size="$3"
                 borderRadius="$5"
                 marginRight="$2"
+                borderWidth={1}
+                borderColor={
+                  index >= props.activeStep
+                    ? index <= props.activeStep
+                      ? '$color1'
+                      : stepColorPrev
+                    : stepColorPrec
+                }
               >
-                <Text color="black" fontSize="$5" fontWeight="$16">
+                <Text color={
+                  index >= props.activeStep
+                    ? index <= props.activeStep
+                      ? '$color1'
+                      : '#000000'
+                    : '#FFFFFF'
+                } fontSize="$5" fontWeight="700">
                   {index}
                 </Text>
               </Square>
