@@ -36,10 +36,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       alignItems="center"
     >
       <XStack flex={1} alignItems="center" justifyContent="center">
-        {!!product?.images?.[0]?.original_url ? (
+        {!!product?.image?.original_url ? (
           <Image
             source={{
-              uri: product?.images[0]?.original_url,
+              uri: product?.original_url,
             }}
             width={140}
             height={130}
@@ -76,15 +76,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </Text>
         <TitleInfo
           icon={<Building2 size={20} color="#000000" />}
-          title={product?.description}
+          title={product?.company?.name}
           flex={1}
           textAlign="left"
         />
         <XStack gap="$2" alignItems="center">
           <Text fontWeight={'bold'} fontSize={'$3'}>
-            {product?.price?.value || ''}
+            {product?.variant?.price || ''}
           </Text>
-          {product?.price?.value && (
+          {product?.variant?.price && (
             <CustomIcon name="riyal" size="$1" color="#000000" />
           )}
         </XStack>
@@ -123,6 +123,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           justifyContent="center"
           alignItems="center"
           onPress={() => {}}
+          disabled={product.is_available}
         >
           <Text fontSize={'$1'} fontWeight={'bold'} color="#FFFFFF">
             أضف لعرض سعر

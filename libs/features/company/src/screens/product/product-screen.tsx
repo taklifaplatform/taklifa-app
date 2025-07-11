@@ -22,13 +22,46 @@ import {
   ScrollView,
   Separator,
   Text,
+  View,
   XStack,
   YStack,
 } from 'tamagui';
 import { ProductCard } from '../../components';
+import { createParam } from 'solito';
+import { useQuery } from '@tanstack/react-query';
+import { ProductsService } from '@zix/api';
+import { RefreshControl } from 'react-native';
+import moment from 'moment';
+import { ZixMediasListWidget } from '@zix/ui/widgets';
+
+const { useParams } = createParam<{ product?: string }>();
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 export function ProductScreen() {
   useMixpanel('Company Profile Screen view');
+  const { params } = useParams();
+
+  const {
+    data: product,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ['product', params?.product],
+    queryFn: () =>
+      ProductsService.retrieveProduct({
+        product: params?.product,
+      }),
+  });
+
+  const { data: products } = useQuery({
+    queryKey: ['company', product?.data?.company?.id],
+    queryFn: () =>
+      ProductsService.fetchAllProduct({
+        companyId: product?.data?.company?.id,
+      }),
+  });
+
+  console.log('product', JSON.stringify(product, null, 2));
 
   const handleUpdateCart = (value: number, state: 'plus' | 'minus') => {
     console.log(value, state);
@@ -37,8 +70,7 @@ export function ProductScreen() {
   const renderLocationInfo = () => (
     <TitleInfo
       icon={<MapPin size={20} color="$color0" />}
-      title="خدمات لياسة الجدران الخارجية"
-   
+      title={product?.data?.company?.name}
     />
   );
 
@@ -46,13 +78,12 @@ export function ProductScreen() {
     <TitleInfo
       icon={<Star size={20} color="$color0" />}
       title="7,4 (350 تقييمات)"
-   
     />
   );
   const renderTimeInfo = () => (
     <TitleInfo
       icon={<ClockFading size={20} color="$color0" />}
-      title="منذ ساعة"
+      title={moment(product?.data?.created_at).fromNow()}
     />
   );
 
@@ -68,18 +99,38 @@ export function ProductScreen() {
         lineHeight={'$6'}
         textAlign="left"
       >
-        يتم عمل الاسلاك وتركيب الزوايا اولا ثم عمل طرطشة بالاسمنت وتركه ليجف
-        وتتم معالجته برش الماء لمدة 3 ايام لزيادة التماسك ثم البدء باللياسة بعمل
-        البوجات لضمان استقامة الحائط او السقف وبعد الانتهاء يتم رش اللياسة لمدة
-        3 ايام. 
+        {product?.data?.description}
       </Paragraph>
+      {/* <ZixMediasListWidget
+        position="relative"
+        height={100}
+        imageWidth={100}
+        imageHeight={100}
+        medias={[
+          {
+            original_url:
+              'https://cdn-icons-png.flaticon.com/512/616/615495.png',
+          },
+          {
+            original_url:
+              'https://cdn-icons-png.flaticon.com/512/616/619495.png',
+          },
+          {
+            original_url:
+              'https://cdn-icons-png.flaticon.com/512/616/616425.png',
+          },
+          {
+            original_url:
+              'https://cdn-icons-png.flaticon.com/512/616/616495.png',
+          },
+        ]}
+      /> */}
     </YStack>
   );
 
   const baseOptions = {
-    width: Dimensions.get('window').width - 40,
+    width: SCREEN_WIDTH - 40,
     height: 330,
-    autoPlay: true,
     scrollAnimationDuration: 3000,
   };
   const carouselRef = useRef<ICarouselInstance>(null);
@@ -114,37 +165,19 @@ export function ProductScreen() {
         autoPlay={false}
         maxScrollDistancePerSwipe={10}
         scrollAnimationDuration={3000}
-        data={[
-          {
-            title: 'اعمال خرسانة الاساس ',
-            description: 'خدمات لياسة الجدران الخارجية',
-            price: {
-              value: 3500,
-            },
-            images: [require('./pic.png')],
-          },
-          {
-            title: 'مغسلة رخام',
-            description: 'خدمات لياسة الجدران الخارجية',
-            price: {
-              value: 5500,
-            },
-            images: [require('./pic.png')],
-          },
-        ]}
+        data={products?.data || []}
         renderItem={({ item, index }) => (
-          // <ProductCard product={item} index={index} useShowButton={false} />
           <XStack flex={1} justifyContent="center" alignItems="center" gap="$3">
-            <ProductCard
-              product={item}
-              index={index + 1}
-              useShowButton={false}
-            />
-            <ProductCard
-              product={item}
-              index={index + 2}
-              useShowButton={false}
-            />
+            <ProductCard product={item} index={index} useShowButton={false} />
+            {products?.data[index + 1] ? (
+              <ProductCard
+                product={products?.data[index + 1]}
+                index={index + 1}
+                useShowButton={false}
+              />
+            ) : (
+              <View width={SCREEN_WIDTH / 2.4} />
+            )}
           </XStack>
         )}
       />
@@ -203,9 +236,9 @@ export function ProductScreen() {
   const renderProductProfile = () => (
     <ScrollView
       flex={1}
-      // refreshControl={
-      //   <RefreshControl refreshing={isLoading} onRefresh={refetch} />
-      // }
+      refreshControl={
+        <RefreshControl refreshing={isLoading} onRefresh={refetch} />
+      }
     >
       <YStack
         flex={1}
@@ -216,12 +249,14 @@ export function ProductScreen() {
         alignItems="flex-start"
         padding="$4"
       >
-        <Image
-          source={require('./pic.png')}
-          width={Dimensions.get('window').width - 40}
-          height={280}
-          borderRadius={10}
-        />
+        {product?.data?.image?.original_url && (
+          <Image
+            source={{ uri: product?.data?.image?.original_url }}
+            width={Dimensions.get('window').width - 40}
+            height={280}
+            borderRadius={10}
+          />
+        )}
         <YStack
           width="100%"
           gap="$2"
@@ -232,7 +267,7 @@ export function ProductScreen() {
           borderRadius="$5"
         >
           <Text fontWeight="bold" fontSize="$4">
-            مغسلة رخام
+            {product?.data?.name}
           </Text>
           <YStack gap="$2">
             {renderLocationInfo()}
@@ -244,16 +279,13 @@ export function ProductScreen() {
           {renderPriceInfo()}
           {renderAddToCartInfo()}
         </YStack>
+
         {renderDescriptionInfo()}
         <Separator width="100%" />
         {renderCarouselInfo()}
       </YStack>
     </ScrollView>
   );
-  // const company = data?.data;
-
-  // const renderLoadingSpinner = () =>
-  //   !company?.id && !isError && <FullScreenSpinner />;
 
   const renderHeader = () => (
     <AppHeader

@@ -96,7 +96,7 @@ export function HomeScreen() {
     queryKey: ['CompaniesService.fetchAllCompanies', search],
     staleTime: 5 * 1000,
   });
-
+  console.log('companiesQuery', JSON.stringify(companiesQuery, null, 2))
   const [selectedCompany, setSelectedCompany] = useState<CompanyTransformer>();
 
   const [companiesList, setCompaniesList] = useState<CompanyTransformer[]>([]);
@@ -275,7 +275,7 @@ export function HomeScreen() {
                 onAnimateToCompany(company);
               }}
             />
-
+ 
             {company.branches && (
               <MapCompanyMarker
                 key={`marker-${company.id}-${company.branches.id}`}
