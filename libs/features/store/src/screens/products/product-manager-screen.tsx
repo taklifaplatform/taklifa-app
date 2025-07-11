@@ -35,6 +35,7 @@ const UpdateProductFormSchema = z
     title: true,
     description: true,
   });
+  
 
 export const ProductManagerScreen = () => {
   const [productId] = useParam('product');

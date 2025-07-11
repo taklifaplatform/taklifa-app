@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useToastController } from '@tamagui/toast';
 import { CompanyAdminService } from '@zix/api';
@@ -18,10 +18,10 @@ import { ScreenLayout } from '@zix/ui/layouts';
 import { t } from 'i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'solito/router';
-import { Image, Text, Theme, XStack, YStack } from 'tamagui';
+import { Avatar, Image, Text, Theme, XStack, YStack } from 'tamagui';
 import { z } from 'zod';
 import { AuthHeader } from '../../components/auth-header/auth-header';
-import { ZixButton } from '@zix/ui/common';
+import { UserAvatar, ZixButton } from '@zix/ui/common';
 import { CirclePlus, ImagePlus, Upload } from '@tamagui/lucide-icons';
 const CreateCompanyFormSchema = z
   .object({
@@ -49,6 +49,7 @@ export const CreateCompanyScreen: React.FC = () => {
   const { refetchUser, registerSteps } = useAuth();
   const toast = useToastController();
   const router = useRouter();
+  const [logo, setLogo] = useState('');
 
   const { mutateAsync } = useMutation({
     mutationFn(requestBody: z.infer<typeof CreateCompanyFormSchema>) {
@@ -68,6 +69,7 @@ export const CreateCompanyScreen: React.FC = () => {
       handleFormErrors(form, error?.body?.errors);
     },
   });
+
   return (
     <ScreenLayout safeAreaBottom>
       <FormProvider {...form}>
@@ -103,7 +105,7 @@ export const CreateCompanyScreen: React.FC = () => {
             <>
               <AuthHeader
                 showIcon={false}
-                activeStep={2}
+                activeStep={3}
                 totalSteps={registerSteps || 1}
                 title="قم انشاء شركة"
               />
@@ -113,37 +115,45 @@ export const CreateCompanyScreen: React.FC = () => {
                 alignItems="center"
                 marginTop="$6"
               >
-                <YStack
-                  width={100}
-                  height={100}
-                  padding="$4"
-                  alignItems="center"
-                  justifyContent="center"
-                  backgroundColor="#F1F2F4"
-                  borderRadius="$14"
-                >
-                  {form.getValues('logo')?.url ? (
+                {logo !== '' ? (
+                  <Avatar
+                    size={'$8'}
+                    circular
+                    borderWidth="$0.75"
+                    backgroundColor="white"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
                     <Image
-                      source={{ uri: form.getValues('logo')?.original_url }}
+                      source={{ uri: logo }}
                       width={100}
                       height={100}
                       resizeMode="contain"
-                      borderRadius={100}
                     />
-                  ) : (
+                  </Avatar>
+                ) : (
+                  <YStack
+                    width={100}
+                    height={100}
+                    padding="$4"
+                    alignItems="center"
+                    justifyContent="center"
+                    backgroundColor="#F1F2F4"
+                    borderRadius="$14"
+                  >
                     <ImagePlus size={50} color="green" />
-                  )}
-                </YStack>
+                  </YStack>
+                )}
               </XStack>
               <ZixFieldContainer label="">
                 <ZixMediaPickerField
                   type="image"
                   onChange={(value) => {
                     form.setValue('logo', {
-                      url: value?.url,
+                      url: value?.original_url,
                       uuid: value?.uuid,
-                      original_url: value?.original_url,
                     });
+                    setLogo(value.original_url);
                   }}
                   showCustomImagePicker={true}
                   trigger={

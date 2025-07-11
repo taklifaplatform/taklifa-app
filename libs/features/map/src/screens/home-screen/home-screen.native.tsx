@@ -96,6 +96,7 @@ export function HomeScreen() {
     queryKey: ['CompaniesService.fetchAllCompanies', search],
     staleTime: 5 * 1000,
   });
+
   const [selectedCompany, setSelectedCompany] = useState<CompanyTransformer>();
 
   const [companiesList, setCompaniesList] = useState<CompanyTransformer[]>([]);

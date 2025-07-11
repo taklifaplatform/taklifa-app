@@ -14,7 +14,7 @@ import SignInLink from '../../components/signin-link/signin-link';
 export const SelectAccountTypeScreen: React.FC = () => {
   useMixpanel('Select Account Type Page view')
   const router = useRouter();
-  const { requestedAccountType, setRequestedAccountType, user} = useAuth();
+  const { requestedAccountType, setRequestedAccountType} = useAuth();
 
   function onRedirectUser() {
     router.push('/auth/register/select-method-register');
@@ -29,7 +29,6 @@ export const SelectAccountTypeScreen: React.FC = () => {
         />
 
         <YStack gap="$4" marginHorizontal="$4" marginTop="$10">
-          {!user?.roles?.find((role) => role.name === 'customer') && (
             <InlineItemSelect
               icon="user_type_customer"
               title='عميل تكلفة'
@@ -41,8 +40,6 @@ export const SelectAccountTypeScreen: React.FC = () => {
                 onRedirectUser();
               }}
             />
-          )}
-          {!user?.roles?.find((role) => role.name === 'solo_driver') && (
             <InlineItemSelect
               icon="user_type_solo_transporter"
               title='تقدم خدمة'
@@ -54,7 +51,6 @@ export const SelectAccountTypeScreen: React.FC = () => {
                 onRedirectUser();
               }}
             />
-          )}
           <InlineItemSelect
             icon="user_type_company"
             title='تبيع منتج'
