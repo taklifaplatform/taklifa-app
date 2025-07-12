@@ -168,10 +168,13 @@ export const ZixFieldContainer: React.FC<BaseZixFieldContainerProps> = ({
     </Accordion>
   )
 
+  if (!showFieldset) {
+    return null;
+  }
 
   return (
     <Theme name={error ? 'error' : themeName} forceClassName>
-      <Fieldset display={showFieldset ? 'block' : 'none'}>
+      <Fieldset>
         {
           collapsible ? renderAccordion() : (
             <>

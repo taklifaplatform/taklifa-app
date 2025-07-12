@@ -63,23 +63,47 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
   onSearch,
   ...props
 }) => {
-  const renderSearchBar = () => onSearch && (
-    <YStack width='100%' padding='$4' marginVertical='$4'>
-      <ZixInput
-        placeholder={t('common:search')}
-        value={search}
-        onChangeText={onSearch}
-        rightIcon={(props) => <CustomIcon name='search' {...props} />}
-      />
-    </YStack>
-  );
-
   const renderItemContent = (item: BaseSelectFieldItem) => (
     <XStack alignItems='center' gap='$2' flex={1} overflow='hidden'>
       <Text fontSize='$4'>{item.icon}</Text>
       <Text numberOfLines={1} fontSize='$4'>{item.name}</Text>
     </XStack>
   )
+
+  const renderSearchBar = () => onSearch && (
+    <YStack width='100%' padding='$4' marginVertical='$4'>
+      <ZixInput
+        placeholder={t('common:search')}
+        value={search}
+        onChangeText={onSearch}
+        rightIcon={() => <CustomIcon name='search' />}
+      />
+    </YStack>
+  );
+
+  // Move useMemo outside of conditional rendering to fix React Hooks rule violation
+  const selectItems = useMemo(
+    () => options.map((item, i) => (
+      <Select.Item
+        index={i}
+        key={`${item.id}-${i}`}
+        value={`${item.id}`}
+        padding="$4"
+        borderBottomWidth={1}
+        borderColor='$color5'
+        width="100%"
+        justifyContent='space-between'
+      >
+        <Select.ItemText>
+          {renderItemContent(item)}
+        </Select.ItemText>
+        <Select.ItemIndicator marginLeft="$4" theme='accent'>
+          <CustomIcon name='radio_button_checked' color='$color1' />
+        </Select.ItemIndicator>
+      </Select.Item>
+    )),
+    [options]
+  );
 
   const renderSelectedItem = (_value: string | undefined, placeholder: string | undefined) => {
     const item = options.find(item => item.id === _value)
@@ -166,33 +190,7 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
           <Select.Viewport minWidth={200} minHeight={400}>
             <Select.Group disabled={disabled}>
               {renderSearchBar()}
-              {useMemo(
-                () => options.map((item, i) => {
-                  return (
-                    <Select.Item
-                      index={i}
-                      key={`${item.id}-${i}`}
-                      value={`${item.id}`}
-                      padding="$4"
-                      borderBottomWidth={1}
-                      borderColor='$color5'
-                      width="100%"
-                      justifyContent='space-between'
-                    // onPress={() => {
-                    //   onChange?.(String(item.id))
-                    // }}
-                    >
-                      <Select.ItemText>
-                        {renderItemContent(item)}
-                      </Select.ItemText>
-                      <Select.ItemIndicator marginLeft="$4" theme='accent'>
-                        <CustomIcon name='radio_button_checked' color='$color1' />
-                      </Select.ItemIndicator>
-                    </Select.Item>
-                  )
-                }),
-                [options]
-              )}
+              {selectItems}
             </Select.Group>
           </Select.Viewport>
 
