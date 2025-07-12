@@ -29,7 +29,7 @@ export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = React.memo(({
     height: '$4',
     borderRadius: '$4',
   })
-  const renderCarIcon = () => (company?.logo?.original_url && !showCustomIcon) ? (
+  const renderCompanyLogo = () => (company?.logo?.original_url && !showCustomIcon) ? (
     <Image
       source={{ uri: company.logo?.original_url }}
       style={style}
@@ -39,11 +39,11 @@ export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = React.memo(({
       }}
     />
   ) : (
-    <View theme='accent' backgroundColor='$color1' borderRadius='$4' width='$4' height='$4'>
-      <CustomIcon name='logo' size="$4" color='$color1' />
+    <View theme='accent' style={style} backgroundColor='$color1'>
+      <CustomIcon name='logo_light' size="$3" color='$color1' />
     </View>
   )
-  // const renderCarIcon = () => (
+  // const renderCompanyLogo = () => (
   //   <View theme='accent' backgroundColor='$color1' borderRadius='$4' width='$4' height='$4'>
   //     <CustomIcon name='logo' size="$4" color='$color1' />
   //   </View>
@@ -54,6 +54,7 @@ export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = React.memo(({
   if (!location) {
     return null;
   }
+  
 
   return (
     <Marker
@@ -65,13 +66,16 @@ export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = React.memo(({
       onPress={() => onPress?.()}
     >
       <View
-        width='$8'
-        height='$8'
+        width='$4'
+        height='$4'
+        borderRadius='$8'
+        backgroundColor='$color1'
+        overflow='hidden'
         alignItems={Platform.OS === 'android' ? undefined : 'center'}
         justifyContent={Platform.OS === 'android' ? undefined : 'center'}
         borderColor='$color5'
       >
-        {renderCarIcon()}
+        {renderCompanyLogo()}
       </View>
     </Marker>
   );
