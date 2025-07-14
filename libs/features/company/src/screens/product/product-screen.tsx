@@ -22,6 +22,7 @@ import {
   ScrollView,
   Separator,
   Text,
+  Theme,
   View,
   XStack,
   YStack,
@@ -101,30 +102,6 @@ export function ProductScreen() {
       >
         {product?.data?.description}
       </Paragraph>
-      {/* <ZixMediasListWidget
-        position="relative"
-        height={100}
-        imageWidth={100}
-        imageHeight={100}
-        medias={[
-          {
-            original_url:
-              'https://cdn-icons-png.flaticon.com/512/616/615495.png',
-          },
-          {
-            original_url:
-              'https://cdn-icons-png.flaticon.com/512/616/619495.png',
-          },
-          {
-            original_url:
-              'https://cdn-icons-png.flaticon.com/512/616/616425.png',
-          },
-          {
-            original_url:
-              'https://cdn-icons-png.flaticon.com/512/616/616495.png',
-          },
-        ]}
-      /> */}
     </YStack>
   );
 
@@ -249,14 +226,54 @@ export function ProductScreen() {
         alignItems="flex-start"
         padding="$4"
       >
-        {product?.data?.image?.original_url && (
+        {product?.data?.image?.original_url ? (
           <Image
             source={{ uri: product?.data?.image?.original_url }}
-            width={Dimensions.get('window').width - 40}
+            width={SCREEN_WIDTH - 40}
             height={280}
             borderRadius={10}
           />
+        ) : (
+          <Theme reset>
+            <View
+              width={SCREEN_WIDTH - 40}
+              height={280}
+              backgroundColor="$color2"
+              borderRadius={10}
+              borderWidth={1}
+              borderColor="$color8"
+              overflow="hidden"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <CustomIcon name="image-blank" size={240} color="$color2" />
+            </View>
+          </Theme>
         )}
+        <ZixMediasListWidget
+          position="relative"
+          height={100}
+          imageWidth={100}
+          imageHeight={100}
+          medias={[
+            {
+              original_url:
+                'https://cdn-icons-png.flaticon.com/512/616/615495.png',
+            },
+            {
+              original_url:
+                'https://cdn-icons-png.flaticon.com/512/616/619495.png',
+            },
+            {
+              original_url:
+                'https://cdn-icons-png.flaticon.com/512/616/616425.png',
+            },
+            {
+              original_url:
+                'https://cdn-icons-png.flaticon.com/512/616/616495.png',
+            },
+          ]}
+        />
         <YStack
           width="100%"
           gap="$2"

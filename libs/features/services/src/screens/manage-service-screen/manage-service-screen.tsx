@@ -1,7 +1,7 @@
 
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { AnnouncementCategoryTransformer, AnnouncementService } from '@zix/api';
+import { ServiceService } from '@zix/api';
 import { useMixpanel } from '@zix/services/auth';
 import { ZixButton } from '@zix/ui/common';
 import { formFields, handleFormErrors, SchemaForm, SubmitButton, ZixFieldContainer } from '@zix/ui/forms';
@@ -12,10 +12,10 @@ import { useForm } from 'react-hook-form';
 import { FlatList } from 'react-native';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
-import { View, Text, Theme, YStack } from 'tamagui';
+import { Text, Theme, YStack } from 'tamagui';
 import { z } from 'zod';
 
-const ManageAnnouncementFormSchema = z
+const ManageServiceFormSchema = z
   .object({
     images: formFields.medias.describe(t('forms:announcement-images')),
     category_id: formFields.text.describe(t('forms:announcement-category')),
@@ -30,16 +30,16 @@ const ManageAnnouncementFormSchema = z
   });
 
 /* eslint-disable-next-line */
-export interface ManageAnnouncementScreenProps {
+export interface ManageServiceScreenProps {
 }
 
-const { useParam } = createParam<{ announcement?: string }>();
+const { useParam } = createParam<{ service?: string }>();
 
-export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
-  useMixpanel('Manage Announcement Screen view')
-  const form = useForm<z.infer<typeof ManageAnnouncementFormSchema>>();
+export function ManageServiceScreen(props: ManageServiceScreenProps) {
+  useMixpanel('Manage services Screen view')
+  const form = useForm<z.infer<typeof ManageServiceFormSchema>>();
   const toast = useToastController();
-  const [announcementId] = useParam('announcement');
+  const [serviceId] = useParam('service');
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -47,44 +47,44 @@ export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
   const subCategoryId = form.watch('sub_category_id');
 
   const { data: categoriesData } = useQuery({
-    queryFn: () => AnnouncementService.listAnnouncementCategories({}),
-    queryKey: ['AnnouncementService.listAnnouncementCategories'],
+    queryFn: () => ServiceService.listServiceCategories({}),
+    queryKey: ['ServiceService.listServiceCategories'],
   })
 
   const selectedCategory = useMemo(() => categoriesData?.data?.find((category) => category.id === categoryId), [categoriesData, categoryId]);
 
   const { data, refetch } = useQuery({
     queryFn: () =>
-      AnnouncementService.retrieveAnnouncement({
-        announcement: announcementId,
+      ServiceService.retrieveService({
+        service: serviceId,
       }),
-    enabled: !!announcementId,
-    queryKey: ['AnnouncementService.retrieveAnnouncement', announcementId],
+    enabled: !!serviceId,
+    queryKey: ['ServicesService.retrieveService', serviceId],
   })
 
   const { mutateAsync, isPending } = useMutation({
-    async mutationFn(requestBody: z.infer<typeof ManageAnnouncementFormSchema>) {
-      if (announcementId) {
-        return AnnouncementService.updateAnnouncement({
-          announcement: announcementId,
+    async mutationFn(requestBody: z.infer<typeof ManageServiceFormSchema>) {
+      if (serviceId) {
+        return ServiceService.updateService({
+          service: serviceId,
           requestBody,
         });
       }
 
-      return AnnouncementService.createAnnouncement({
+      return ServiceService.createService({
         requestBody,
       });
     },
     onSuccess() {
       queryClient.refetchQueries({
-        queryKey: ['AnnouncementService.listAnnouncements'],
+        queryKey: ['ServiceService.listServices'],
       })
-      if (announcementId) {
+      if (serviceId) {
         refetch();
       }
 
       form.reset();
-      router.replace(`/app/announcements`);
+      router.replace(`/app/services`);
       console.log('onSuccess::')
     },
     onError(error: any) {
@@ -147,10 +147,10 @@ export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
     />
   )
 
-  const renderForm = () => (!announcementId || data?.data?.id) && (
+  const renderForm = () => (!serviceId || data?.data?.id) && (
     <SchemaForm
       form={form}
-      schema={ManageAnnouncementFormSchema}
+      schema={ManageServiceFormSchema}
       props={{
         description: {
           isMultiline: true,
@@ -207,7 +207,7 @@ export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
     <ScreenLayout safeAreaBottom authProtected>
       <AppHeader
         showBackButton
-        title={announcementId ? t('common:update-announcement') : t('common:create-announcement')}
+        title={serviceId ? t('common:update-announcement') : t('common:create-announcement')}
       />
       {renderForm()}
       {/* <DebugObject object={data} /> */}
@@ -216,4 +216,4 @@ export function ManageAnnouncementScreen(props: ManageAnnouncementScreenProps) {
 }
 
 
-export default ManageAnnouncementScreen;
+export default ManageServiceScreen;

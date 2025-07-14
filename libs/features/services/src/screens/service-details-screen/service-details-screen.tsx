@@ -7,9 +7,10 @@ import {
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
-  AnalyticsService,
-  AnnouncementService,
-  AnnouncementTransformer,
+  // AnalyticsService,
+  // AnnouncementService,
+  // AnnouncementTransformer,
+  ServiceTransformer,
 } from '@zix/api';
 import { ZixMediasListWidget } from '@zix/ui/widgets';
 
@@ -31,19 +32,19 @@ import { Button, H4, Separator, Text, View, XStack, YStack } from 'tamagui';
 const { useParam } = createParam<{ announcement?: string }>();
 
 type InfoCardProps = {
-  announcement: AnnouncementTransformer;
+  service: ServiceTransformer;
 };
 
 type DescriptionSectionProps = {
   description: string;
 };
 
-type SimilarAnnouncementsProps = {
-  announcements: AnnouncementTransformer[];
+type SimilarservicesProps = {
+  services: ServiceTransformer[];
 };
 
 type OwnerActionsProps = {
-  announcement: AnnouncementTransformer;
+  service: ServiceTransformer;
   onDelete: () => void;
   onEdit: () => void;
   status: string;
@@ -51,7 +52,7 @@ type OwnerActionsProps = {
 };
 
 
-const InfoCard = ({ announcement }: InfoCardProps) => (
+const InfoCard = ({ service }: InfoCardProps) => (
   <YStack
     backgroundColor="$color2"
     borderRadius={10}
@@ -62,47 +63,47 @@ const InfoCard = ({ announcement }: InfoCardProps) => (
     gap="$3"
   >
     <Text fontSize={'$3'} fontWeight="700" textAlign="left">
-      {announcement.title}
+      {service.title}
     </Text>
     <XStack alignItems="center" gap={'$2'}>
       <Text fontWeight={'700'} fontSize={'$3'}>
-        {announcement?.price || '0'}
+        {service?.price || '0'}
       </Text>
       <CustomIcon name="saudi-riyal-symbol" size={'$1'} color="$color12" />
     </XStack>
     <XStack alignItems="center" gap="$3" justifyContent="center" theme="accent">
       <XStack flex={1} alignItems="center" gap="$2">
-        <UserAvatar user={announcement?.user} size={10} />
+        <UserAvatar user={service?.user} size={10} />
         <Text color="$color12" fontSize={10} numberOfLines={1}>
-          {announcement?.user?.name || announcement?.user?.username}
+          {service?.user?.name || service?.user?.username}
         </Text>
       </XStack>
-      {!!announcement?.city && (
+      {!!service?.city && (
         <XStack flex={1} alignItems="center" gap="$2">
           <CustomIcon name="location" size={10} color="$color8" />
           <Text color="$color12" fontSize={10} numberOfLines={1}>
-            {announcement?.city}
+            {service?.city}
           </Text>
         </XStack>
       )}
       <XStack flex={1} alignItems="center" gap="$2">
         <CustomIcon name="time" size={10} color="$color8" />
         <Text fontSize={10} color="$color12">
-          {moment(announcement?.created_at).fromNow()}
+          {moment(service?.created_at).fromNow()}
         </Text>
       </XStack>
     </XStack>
-    <UserContactActions
-      user={announcement.user!}
+    {/* <UserContactActions
+      user={service.user!}
       onContractPressAnalytic={() => {
-        AnalyticsService.storeAnnouncementAnalytic({
-          announcement: announcement.id?.toString() || '',
+        AnalyticsService.storeserviceAnalytic({
+          service: service.id?.toString() || '',
           requestBody: {
             action_type: 'call_press',
           },
         });
       }}
-    />
+    /> */}
   </YStack>
 );
 
@@ -116,7 +117,7 @@ const DescriptionSection = ({ description }: DescriptionSectionProps) => {
       <TouchableOpacity onPress={() => setIsDescriptionOpen((v) => !v)}>
         <XStack alignItems="center" gap={8} justifyContent="space-between">
           <Text fontWeight="bold" fontSize={16} textAlign="left">
-            {t('common:description-announcement')}
+            {t('common:description-service')}
           </Text>
           {isDescriptionOpen ? (
             <ChevronUp size={18} color="#222" />
@@ -136,112 +137,112 @@ const DescriptionSection = ({ description }: DescriptionSectionProps) => {
   );
 };
 
-const SimilarAnnouncements = ({ announcements }: SimilarAnnouncementsProps) => {
-  const router = useRouter();
-  if (announcements.length === 0) return null;
+// const Similarservices = ({ services }: SimilarservicesProps) => {
+//   const router = useRouter();
+//   if (services.length === 0) return null;
 
-  return (
-    <YStack gap="$2" marginTop={16}>
-      <XStack
-        alignItems="center"
-        justifyContent="space-between"
-        marginBottom={8}
-      >
-        <Text fontWeight="bold" fontSize={16} textAlign="left">
-          {t('common:similar-announcements')}
-        </Text>
-        <TouchableOpacity
-          onPress={() => router.push('/app/announcements')}
-          style={{ flexDirection: 'row', alignItems: 'center' }}
-        >
-          <Text fontSize={13} color="$color12" marginLeft={4}>
-            {t('common:view-more')}
-          </Text>
-          <ChevronLeft size={16} color="$color12" />
-        </TouchableOpacity>
-      </XStack>
-      <FlatList
-        data={announcements}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={(item, idx) => `${item.id ?? idx}`}
-        contentContainerStyle={{ gap: 12 }}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={{ width: 180 }}
-            onPress={() => {
-              AnalyticsService.storeAnnouncementAnalytic({
-                announcement: item.id?.toString() || '',
-                requestBody: {
-                  action_type: 'view',
-                },
-              }).then((res) => {
-                console.log('Announcement analytic stored', res);
-              });
-              router.push(`/app/announcements/${item.id}`);
-            }}
-            key={item.id}
-          >
-            <YStack backgroundColor="$color2" borderRadius={12} gap={6}>
-              {item.images && item.images.length > 0 ? (
-                <Image
-                  source={{
-                    uri: Array.isArray(item.images) && item.images[0]?.url,
-                  }}
-                  style={{ width: '100%', height: 90, borderRadius: 8 }}
-                  contentFit="cover"
-                />
-              ) : (
-                <View
-                  style={{ width: '100%', height: 90, borderRadius: 8 }}
-                  overflow="hidden"
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  <CustomIcon name="image-blank" size={90} color="$color2" />
-                </View>
-              )}
-              <YStack
-                backgroundColor="$color2"
-                borderRadius={12}
-                padding={8}
-                gap={6}
-              >
-                <Text
-                  fontWeight="bold"
-                  fontSize={10}
-                  numberOfLines={1}
-                  textAlign="left"
-                >
-                  {item.title}
-                </Text>
-                <XStack alignItems="center" gap={4}>
-                  <UserAvatar user={item?.user} size={10} />
-                  <Text color="#888" fontSize={12}>
-                    {item.user?.name}
-                  </Text>
-                </XStack>
-                <XStack alignItems="center" gap={8}>
-                  <Text fontWeight="bold" fontSize={14}>
-                    {item.price || '0'}
-                  </Text>
-                  <CustomIcon
-                    name="saudi-riyal-symbol"
-                    size={14}
-                    color="#888"
-                  />
-                </XStack>
-              </YStack>
-            </YStack>
-          </TouchableOpacity>
-        )}
-      />
-    </YStack>
-  );
-};
+//   return (
+//     <YStack gap="$2" marginTop={16}>
+//       <XStack
+//         alignItems="center"
+//         justifyContent="space-between"
+//         marginBottom={8}
+//       >
+//         <Text fontWeight="bold" fontSize={16} textAlign="left">
+//           {t('common:similar-services')}
+//         </Text>
+//         <TouchableOpacity
+//           onPress={() => router.push('/app/services')}
+//           style={{ flexDirection: 'row', alignItems: 'center' }}
+//         >
+//           <Text fontSize={13} color="$color12" marginLeft={4}>
+//             {t('common:view-more')}
+//           </Text>
+//           <ChevronLeft size={16} color="$color12" />
+//         </TouchableOpacity>
+//       </XStack>
+//       <FlatList
+//         data={services}
+//         horizontal
+//         showsHorizontalScrollIndicator={false}
+//         keyExtractor={(item, idx) => `${item.id ?? idx}`}
+//         contentContainerStyle={{ gap: 12 }}
+//         renderItem={({ item }) => (
+//           <TouchableOpacity
+//             style={{ width: 180 }}
+//             onPress={() => {
+//               AnalyticsService.storeserviceAnalytic({
+//                 service: item.id?.toString() || '',
+//                 requestBody: {
+//                   action_type: 'view',
+//                 },
+//               }).then((res) => {
+//                 console.log('service analytic stored', res);
+//               });
+//               router.push(`/app/services/${item.id}`);
+//             }}
+//             key={item.id}
+//           >
+//             <YStack backgroundColor="$color2" borderRadius={12} gap={6}>
+//               {item.images && item.images.length > 0 ? (
+//                 <Image
+//                   source={{
+//                     uri: Array.isArray(item.images) && item.images[0]?.url,
+//                   }}
+//                   style={{ width: '100%', height: 90, borderRadius: 8 }}
+//                   contentFit="cover"
+//                 />
+//               ) : (
+//                 <View
+//                   style={{ width: '100%', height: 90, borderRadius: 8 }}
+//                   overflow="hidden"
+//                   alignItems="center"
+//                   justifyContent="center"
+//                 >
+//                   <CustomIcon name="image-blank" size={90} color="$color2" />
+//                 </View>
+//               )}
+//               <YStack
+//                 backgroundColor="$color2"
+//                 borderRadius={12}
+//                 padding={8}
+//                 gap={6}
+//               >
+//                 <Text
+//                   fontWeight="bold"
+//                   fontSize={10}
+//                   numberOfLines={1}
+//                   textAlign="left"
+//                 >
+//                   {item.title}
+//                 </Text>
+//                 <XStack alignItems="center" gap={4}>
+//                   <UserAvatar user={item?.user} size={10} />
+//                   <Text color="#888" fontSize={12}>
+//                     {item.user?.name}
+//                   </Text>
+//                 </XStack>
+//                 <XStack alignItems="center" gap={8}>
+//                   <Text fontWeight="bold" fontSize={14}>
+//                     {item.price || '0'}
+//                   </Text>
+//                   <CustomIcon
+//                     name="saudi-riyal-symbol"
+//                     size={14}
+//                     color="#888"
+//                   />
+//                 </XStack>
+//               </YStack>
+//             </YStack>
+//           </TouchableOpacity>
+//         )}
+//       />
+//     </YStack>
+//   );
+// };
 
 const OwnerActions = ({
-  announcement,
+  service,
   onDelete,
   onEdit,
   status,
@@ -270,7 +271,7 @@ const OwnerActions = ({
           iconAfter={<CustomIcon name="edit" size={13} color="$color12" />}
           onPress={onEdit}
         >
-          {t('forms:edit-announcement')}
+          {t('forms:edit-service')}
         </Button>
         {/*status button */}
         <Button
@@ -290,7 +291,7 @@ const OwnerActions = ({
             />
           }
         >
-          {t('common:announcement-status')}
+          {t('common:service-status')}
           <Text fontWeight="700" color={status === 'active' ? 'green' : 'red'}>
             {STATUS_OPTIONS.find((opt) => opt.value === status)?.label}
           </Text>
@@ -313,7 +314,7 @@ const OwnerActions = ({
           >
             <XStack justifyContent="space-between" alignItems="center">
               <Text fontWeight="bold" fontSize={18} marginBottom={8}>
-                {t('forms:announcement-status')}
+                {t('forms:service-status')}
               </Text>
               <TouchableOpacity onPress={() => setStatusSheetOpen(false)}>
                 <X size={24} color="$color12" />
@@ -376,7 +377,7 @@ const OwnerActions = ({
         iconAfter={<CustomIcon name="delete" size={13} color="#FF3B30" />}
         onPress={() => setDeleteSheetOpen(true)}
       >
-        {t('forms:delete-announcement')}
+        {t('forms:delete-service')}
       </Button>
       <Sheet
         open={deleteSheetOpen}
@@ -396,7 +397,7 @@ const OwnerActions = ({
         >
           <XStack justifyContent="space-between" alignItems="center">
             <Text fontWeight="bold" fontSize={18} marginBottom={8}>
-              {t('forms:delete-announcement')}
+              {t('forms:delete-service')}
             </Text>
             <TouchableOpacity onPress={() => setDeleteSheetOpen(false)}>
               <X size={24} color="$color12" />
@@ -441,48 +442,48 @@ const OwnerActions = ({
 };
 
 // Main Component
-export const AnnouncementDetailsScreen = () => {
-  useMixpanel('Announcement Details Screen view');
+export const ServiceDetailsScreen = () => {
+  useMixpanel('service Details Screen view');
   const router = useRouter();
   const { user } = useAuth();
   const toast = useToastController();
-  const [announcementId] = useParam('announcement');
+  const [serviceId] = useParam('service');
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [status, setStatus] = useState('active');
 
-  const { data: announcementData, isLoading } = useQuery({
+  const { data: serviceData, isLoading } = useQuery({
     queryFn: () =>
-      AnnouncementService.retrieveAnnouncement({
-        announcement: announcementId || '',
+      ServiceService.retrieveService({
+        service: serviceId || '',
       }),
-    queryKey: ['AnnouncementService.retrieveAnnouncement', announcementId],
-    enabled: !!announcementId,
+    queryKey: ['AnnouncementService.retrieveAnnouncement', serviceId],
+    enabled: !!serviceId,
   });
 
-  const announcement = announcementData?.data;
+  const service = serviceData?.data;
 
   const { data: similarData } = useQuery({
     queryFn: () =>
       AnnouncementService.listAnnouncements({
         perPage: 10,
-        categoryId: announcement?.category_id,
+        categoryId: service?.category_id,
       }),
     queryKey: [
       'AnnouncementService.listAnnouncements',
       'similar',
-      announcement?.category_id,
+      service?.category_id,
     ],
-    enabled: !!announcement?.category_id,
+    enabled: !!service?.category_id,
   });
 
   const similarAnnouncements = (similarData?.data || []).filter(
-    (a: AnnouncementTransformer) => a.id !== announcement?.id,
+    (a: AnnouncementTransformer) => a.id !== service?.id,
   );
 
   const { mutate } = useMutation({
     mutationFn: () =>
       AnnouncementService.deleteAnnouncement({
-        announcement: announcementId || '',
+        service: serviceId || '',
       }),
     onSuccess: () => {
       router.back();
@@ -508,15 +509,15 @@ export const AnnouncementDetailsScreen = () => {
   }, [mutate]);
 
   const handleEdit = useCallback(() => {
-    router.push(`/app/announcements/${announcementId}/edit`);
-  }, [announcementId, router]);
+    router.push(`/app/services/${serviceId}/edit`);
+  }, [serviceId, router]);
 
   const handleStatusChange = useCallback((newStatus: string) => {
     setStatus(newStatus);
     // TODO: Implement status update API call
   }, []);
 
-  if (!announcement?.id) {
+  if (!service?.id) {
     return (
       <ScreenLayout>
         <AppHeader showBackButton title={t('common:market')} />
@@ -538,9 +539,9 @@ export const AnnouncementDetailsScreen = () => {
   return (
     <ScreenLayout>
       <AppHeader showBackButton title={t('common:market')} />
-      {user?.id === announcement?.user?.id && (
+      {user?.id === service?.user?.id && (
         <OwnerActions
-          announcement={announcement}
+          service={service}
           onDelete={handleDelete}
           onEdit={handleEdit}
           status={status}
@@ -608,4 +609,4 @@ export const AnnouncementDetailsScreen = () => {
   );
 };
 
-export default AnnouncementDetailsScreen;
+export default ServiceDetailsScreen;

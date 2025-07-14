@@ -1,4 +1,4 @@
-import { AnnouncementTransformer } from "@zix/api";
+import { AnnouncementTransformer, ServiceTransformer } from "@zix/api";
 import { YStack, XStack, Text, Image, View, Button, Stack, Theme } from "tamagui";
 import { TouchableOpacity } from "react-native";
 import { useRouter } from "solito/router";
@@ -7,19 +7,19 @@ import { TitleInfo } from "@zix/ui/common";
 import { useAuth } from "@zix/services/auth";
 import { CustomIcon } from '@zix/ui/icons';
 
-type AnnouncementCardProps = {
-  announcement: AnnouncementTransformer;
+type ServiceCardProps = {
+  service: ServiceTransformer;
   showHeader?: boolean;
 };
 
-export const AnnouncementCard = ({ announcement, showHeader }: AnnouncementCardProps) => {
+export const ServiceCard = ({ service, showHeader }: ServiceCardProps) => {
   const router = useRouter();
   const { user } = useAuth();
-  const isOwner = user?.id === announcement?.user?.id;
+  const isOwner = user?.id === service?.user?.id;
   return (
     <TouchableOpacity
         onPress={() => {
-          router.push(`/app/products/${announcement.id}`);
+          router.push(`/app/services/${service.id}`);
         }}
       >
         <XStack
@@ -56,9 +56,9 @@ export const AnnouncementCard = ({ announcement, showHeader }: AnnouncementCardP
           )}
           {/* //image */}
           <YStack>
-            {announcement?.images?.length ? (
+            {service?.images?.length ? (
               <Image
-                source={{ uri: announcement?.images[0]?.url }}
+                source={{ uri: service?.images[0]?.url }}
                 style={{
                   width: 100,
                   height: 120,
@@ -91,11 +91,11 @@ export const AnnouncementCard = ({ announcement, showHeader }: AnnouncementCardP
               fontSize={'$2'}
               numberOfLines={1}
             >
-              {announcement?.title || ''}
+              {service?.title || ''}
             </Text>
             <TitleInfo
               icon={<Building2 size={15} color="#000000" />}
-              title={announcement?.description || ''}
+              title={service?.description || ''}
               flex={1}
               textAlign="left"
             />
@@ -106,10 +106,10 @@ export const AnnouncementCard = ({ announcement, showHeader }: AnnouncementCardP
               gap="$3"
               theme={showHeader ? 'accent' : undefined}
             >
-              {!!announcement?.city && (
+              {!!service?.city && (
                 <TitleInfo
                   icon={<MapPin size={15} color="#000000" />}
-                  title={announcement.city}
+                  title={service.city}
                   textAlign="left"
                 />
               )}
@@ -124,7 +124,7 @@ export const AnnouncementCard = ({ announcement, showHeader }: AnnouncementCardP
             <XStack justifyContent="space-between" marginTop={'$4'}>
               <XStack alignItems="center" gap={'$2'}>
                 <Text fontWeight={'bold'} fontSize={'$5'}>
-                  {announcement?.price || '0'}
+                  {service?.price || '0'}
                 </Text>
                 <CustomIcon name="riyal" size={'$2'} color="#000000" />
               </XStack>
@@ -141,7 +141,7 @@ export const AnnouncementCard = ({ announcement, showHeader }: AnnouncementCardP
                 borderRadius={10}
                 justifyContent="center"
                 alignItems="center"
-                onPress={() => router.push(`/app/products/${announcement.id}`)}
+                onPress={() => router.push(`/app/services/${service.id}`)}
               >
                 <Text fontSize={'$1'} fontWeight={'bold'} color="$color11">
                   شاهد التفاصيل
@@ -154,4 +154,4 @@ export const AnnouncementCard = ({ announcement, showHeader }: AnnouncementCardP
   );
 };
 
-export default AnnouncementCard;
+export default ServiceCard;

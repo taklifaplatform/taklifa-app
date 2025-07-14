@@ -25,7 +25,7 @@ export const AppLayout = () => {
         }}
       />
       <Tabs.Screen
-        name="announcement"
+        name="services"
         options={{
           title: t('common:services'),
           tabBarIcon: ({ size, focused }) => (

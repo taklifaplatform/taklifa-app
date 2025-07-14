@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { CompanyTransformer, ServiceService } from '@zix/api';
-import { AnnouncementCard } from '@zix/features/announcements';
+import { AnnouncementCard } from 'libs/features/services/src';
 import { FilterByOrder, FilterPrice, FullScreenSpinner, SearchProduct } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
