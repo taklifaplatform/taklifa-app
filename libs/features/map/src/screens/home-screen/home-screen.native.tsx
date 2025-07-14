@@ -10,7 +10,7 @@ import {
 import { CompanyCard } from '@zix/features/company';
 import { USER_ROLES, useAuth, useMixpanel } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
-import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
+import { AppCustomHeader, ScreenLayout } from '@zix/ui/layouts';
 import { MapCompanyMarker } from '@zix/ui/sawaeed';
 import * as Location from 'expo-location';
 import { t } from 'i18next';
@@ -670,22 +670,24 @@ interface AppHeaderSectionProps {
 }
 const AppHeaderSection: FC<AppHeaderSectionProps> = memo(
   function AppHeaderSection({ search, setSearch, MaterialIcons }) {
-    return (
-      <AppHeader
+    return  (
+      <AppCustomHeader
         showSearchBar
-        searchProps={{
-          value: search,
-          onChangeText: setSearch,
-          rightIcon: () =>
-            search && search.length > 0 ? (
-              <Button
-                unstyled
-                theme="accent"
-                icon={<MaterialIcons name="cancel" size={24} color={'grey'} />}
-                onPress={() => setSearch('')}
-              />
-            ) : null,
-        }}
+        
+      //   searchProps={{
+      //     value: search,
+      //     onChangeText: setSearch,
+      //     rightIcon: () =>
+      //       search && search.length > 0 ? (
+      //         <Button
+      //           unstyled
+      //           theme="accent"
+      //           icon={<MaterialIcons name="cancel" size={24} color={'grey'} />}
+      //           onPress={() => setSearch('')}
+                
+      //         />
+      //       ) : null,
+      //   }}
       />
     );
   },

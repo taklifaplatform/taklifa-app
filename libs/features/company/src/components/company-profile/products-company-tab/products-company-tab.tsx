@@ -13,7 +13,7 @@ import React, { useState } from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
 import { useRouter } from 'solito/router';
 import { H4, View, XStack } from 'tamagui';
-import { ProductCard } from '../product-card/product-card';
+import { ProductCard } from '@zix/ui/common';
 
 export type ProductsCompanyTabProps = {
   company: CompanyTransformer;

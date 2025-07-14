@@ -26,6 +26,7 @@ export type ZixDialogProps = DialogProps & {
   preventClickOutside?: boolean;
   snapPoints?: number[];
   colorHeader?: string;
+  disableDrag?: boolean;
 };
 
 export function ZixDialog({
@@ -42,6 +43,7 @@ export function ZixDialog({
   preventClickOutside,
   snapPoints = [70, 100],
   colorHeader = '$color3',
+  disableDrag = true,
   ...dialogProps
 }: ZixDialogProps) {
   const { width, height } = useWindowDimensions();
@@ -49,7 +51,7 @@ export function ZixDialog({
     <Dialog modal {...dialogProps}>
       {trigger && <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>}
       <Dialog.Adapt platform="touch">
-        <Dialog.Sheet zIndex={200000} modal disableDrag snapPoints={snapPoints}>
+        <Dialog.Sheet zIndex={200000} modal disableDrag={disableDrag} snapPoints={snapPoints} >
           <Dialog.Sheet.Frame>
             <Dialog.Adapt.Contents />
           </Dialog.Sheet.Frame>
@@ -128,7 +130,7 @@ export function ZixDialog({
             </XStack>
           )}
 
-          {description ? (
+          {/* {description ? (
             <Dialog.Description
               paddingTop={contentPadding}
               paddingRight={contentPadding}
@@ -140,7 +142,7 @@ export function ZixDialog({
             <VisuallyHidden>
               <Dialog.Description />
             </VisuallyHidden>
-          )}
+          )} */}
           {children}
         </Dialog.Content>
       </Dialog.Portal>

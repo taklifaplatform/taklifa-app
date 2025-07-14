@@ -6,15 +6,19 @@ import {
   ArrowRight,
   ClockFading,
   MapPin,
-  Minus,
-  Plus,
   Star,
 } from '@tamagui/lucide-icons';
+import { useQuery } from '@tanstack/react-query';
+import { ProductsService } from '@zix/api';
 import { useMixpanel } from '@zix/services/auth';
-import { TitleInfo } from '@zix/ui/common';
+import { ManageCountProduct, ProductCard, TitleInfo } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
-import { useRef } from 'react';
+import { ZixMediasListWidget } from '@zix/ui/widgets';
+import moment from 'moment';
+import { useRef, useState } from 'react';
+import { RefreshControl } from 'react-native';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
+import { createParam } from 'solito';
 import {
   Button,
   Image,
@@ -27,13 +31,6 @@ import {
   XStack,
   YStack,
 } from 'tamagui';
-import { ProductCard } from '../../components';
-import { createParam } from 'solito';
-import { useQuery } from '@tanstack/react-query';
-import { ProductsService } from '@zix/api';
-import { RefreshControl } from 'react-native';
-import moment from 'moment';
-import { ZixMediasListWidget } from '@zix/ui/widgets';
 
 const { useParams } = createParam<{ product?: string }>();
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -41,7 +38,7 @@ const { width: SCREEN_WIDTH } = Dimensions.get('window');
 export function ProductScreen() {
   useMixpanel('Company Profile Screen view');
   const { params } = useParams();
-
+  const [count, setCount] = useState(1);
   const {
     data: product,
     isLoading,
@@ -63,10 +60,6 @@ export function ProductScreen() {
   });
 
   console.log('product', JSON.stringify(product, null, 2));
-
-  const handleUpdateCart = (value: number, state: 'plus' | 'minus') => {
-    console.log(value, state);
-  };
 
   const renderLocationInfo = () => (
     <TitleInfo
@@ -171,29 +164,13 @@ export function ProductScreen() {
   );
   const renderAddToCartInfo = () => (
     <XStack width="100%" gap="$3">
-      <XStack
+      <ManageCountProduct
+        value={count}
+        onUpdate={setCount}
         width={'50%'}
-        justifyContent="space-between"
-        alignItems="center"
-        borderWidth={1}
-        borderColor="$color0"
-        borderRadius={10}
-        padding={'$2'}
-      >
-        <Button
-          icon={<Plus size={12} color="$color11" />}
-          unstyled
-          onPress={() => handleUpdateCart(1, 'plus')}
-        />
-        <Text fontSize={'$2'} fontWeight={'bold'} color="$color11">
-          1
-        </Text>
-        <Button
-          icon={<Minus size={12} color="$color11" />}
-          unstyled
-          onPress={() => handleUpdateCart(1, 'minus')}
-        />
-      </XStack>
+        height={30}
+        size={10}
+      />
       <Button
         theme={'accent'}
         width={'40%'}

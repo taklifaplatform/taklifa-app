@@ -15,3 +15,5 @@ export * from './layouts/auth-layout/auth-layout';
 export * from './layouts/main-layout/main-layout';
 
 export * from './components/app-header/app-header';
+
+export * from './components/app-header/app-custom-header';

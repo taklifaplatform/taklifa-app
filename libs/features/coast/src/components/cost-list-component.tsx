@@ -1,15 +1,16 @@
+import { SquarePen, Trash2 } from '@tamagui/lucide-icons';
+import { ManageCountProduct } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { FlatList } from 'react-native';
-import { Image, Text, XStack, YStack, Button } from 'tamagui';
-import { Plus, Minus, Trash2, SquarePen } from '@tamagui/lucide-icons';
+import { Image, Text, XStack, YStack } from 'tamagui';
+import { useState } from 'react';
 
 export interface CostListComponentProps {
   product: [];
 }
 export const CostListComponent = ({ product }: CostListComponentProps) => {
-  const handleUpdateCart = (value: number, state: 'plus' | 'minus') => {
-    console.log(value, state);
-  };
+  const [count, setCount] = useState(0);
+  
   return (
     <FlatList
       data={product}
@@ -41,29 +42,7 @@ export const CostListComponent = ({ product }: CostListComponentProps) => {
                   </Text>
                   <CustomIcon name="riyal" size={'$1'} color={'black'} />
                 </XStack>
-                <XStack
-                  width={100}
-                  justifyContent="space-between"
-                  alignItems="center"
-                  borderWidth={1}
-                  borderColor="$color0"
-                  borderRadius={10}
-                  padding={'$2'}
-                >
-                  <Button
-                    icon={<Plus size={10} color="$color11" />}
-                    unstyled
-                    onPress={() => handleUpdateCart(1, 'plus')}
-                  />
-                  <Text fontSize={'$1'} fontWeight={'bold'} color="$color11">
-                    1
-                  </Text>
-                  <Button
-                    icon={<Minus size={10} color="$color11" />}
-                    unstyled
-                    onPress={() => handleUpdateCart(1, 'minus')}
-                  />
-                </XStack>
+                <ManageCountProduct value={count} onUpdate={setCount} width={100} height={30} size={10} />
               </XStack>
             </YStack>
           </XStack>

@@ -1,10 +1,11 @@
-import { Building2, Minus, Plus } from '@tamagui/lucide-icons';
-import { TitleInfo } from '@zix/ui/common';
+import { Building2 } from '@tamagui/lucide-icons';
 import { CustomIcon } from '@zix/ui/icons';
-import React from 'react';
+import React, { useState } from 'react';
 import { Dimensions, View } from 'react-native';
 import { useRouter } from 'solito/router';
-import { XStack, YStack, Image, Text, Button, Theme } from 'tamagui';
+import { Button, Image, Text, Theme, XStack, YStack } from 'tamagui';
+import { ManageCountProduct } from '../manage-count-product/manage-count-product';
+import { TitleInfo } from '../title-info/title-info';
 
 export type ProductCardProps = {
   product: any;
@@ -19,10 +20,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const { width: SCREEN_WIDTH } = Dimensions.get('window');
   const router = useRouter();
-  const handleUpdateCart = (value: number, state: 'plus' | 'minus') => {
-    console.log(value, state);
-  };
-
+  const [count, setCount] = useState(1);
   return (
     <YStack
       flex={1}
@@ -61,8 +59,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               <CustomIcon name="image-blank" size={100} color="$color2" />
             </View>
           </Theme>
-        )
-      }
+        )}
       </XStack>
 
       <YStack
@@ -90,29 +87,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </XStack>
       </YStack>
       {useShowButton && (
-        <XStack
+        <ManageCountProduct
+          value={count}
+          onUpdate={setCount}
           width={'100%'}
-          justifyContent="space-between"
-          alignItems="center"
-          borderWidth={1}
-          borderColor="$color0"
-          borderRadius={10}
-          padding={'$3'}
-        >
-          <Button
-            icon={<Plus size={12} color="$color11" />}
-            unstyled
-            onPress={() => handleUpdateCart(1, 'plus')}
-          />
-          <Text fontSize={'$2'} fontWeight={'bold'} color="$color11">
-            1
-          </Text>
-          <Button
-            icon={<Minus size={12} color="$color11" />}
-            unstyled
-            onPress={() => handleUpdateCart(1, 'minus')}
-          />
-        </XStack>
+          height={30}
+          size={10}
+        />
       )}
       {useShowButton && (
         <Button

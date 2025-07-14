@@ -1,19 +1,15 @@
 import {
-  ArrowUp,
-  ChevronRight,
   ChevronUp,
-  Layout,
   LayoutGrid,
   LayoutList,
-  Plus,
-  Search,
+  Search
 } from '@tamagui/lucide-icons';
 import { ZixButton, ZixDialog } from '@zix/ui/common';
-import React, { useState } from 'react';
-import { FlatList } from 'react-native';
-import { View, Text, YStack, XStack, Input } from 'tamagui';
-import { ProductCard } from './product-card';
 import { CustomIcon } from '@zix/ui/icons';
+import { useState } from 'react';
+import { FlatList } from 'react-native';
+import { Input, Text, XStack, YStack } from 'tamagui';
+import { ProductCard } from './product-card';
 
 export const ListProductsComponent = () => {
   const [mode, setMode] = useState<'list' | 'grid'>('list');

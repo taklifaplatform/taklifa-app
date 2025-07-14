@@ -50,8 +50,6 @@ export * from "./components/title-info/title-info";
 
 export * from "./components/filter-by-order/filter-by-order";
 
-export * from "./components/zix-alert-dialog/zix-alert-dialog";
-
 export * from "./components/zix-alert-actions/zix-alert-actions";
 
 export * from "./components/filter-price/filter-price";
@@ -59,3 +57,7 @@ export * from "./components/filter-price/filter-price";
 export * from "./components/search-product/search-product";
 
 export * from "./components/delete-product/delete-product";
+
+export * from "./components/product-card/product-card";
+
+export * from "./components/manage-count-product/manage-count-product";
