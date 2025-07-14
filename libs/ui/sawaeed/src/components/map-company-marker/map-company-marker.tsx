@@ -25,8 +25,8 @@ export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = React.memo(({
 
 
   const style = useStyle({
-    width: '$4',
-    height: '$4',
+    width: '$2',
+    height: '$2',
     borderRadius: '$4',
   })
   const renderCompanyLogo = () => (company?.logo?.original_url && !showCustomIcon) ? (
@@ -40,7 +40,7 @@ export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = React.memo(({
     />
   ) : (
     <View theme='accent' style={style} backgroundColor='$color1'>
-      <CustomIcon name='logo_light' size="$3" color='$color1' />
+      <CustomIcon name='logo_light' size="$1" color='$color1' />
     </View>
   )
   // const renderCompanyLogo = () => (
@@ -54,7 +54,16 @@ export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = React.memo(({
   if (!location) {
     return null;
   }
-  
+
+
+  // return <Marker
+  //   key={company.id}
+  //   coordinate={{
+  //     latitude: parseFloat(location.latitude ?? '0'),
+  //     longitude: parseFloat(location.longitude ?? '0'),
+  //   }}
+  //   onPress={() => onPress?.()}
+  // />
 
   return (
     <Marker
@@ -66,8 +75,8 @@ export const MapCompanyMarker: React.FC<MapCompanyMarkerProps> = React.memo(({
       onPress={() => onPress?.()}
     >
       <View
-        width='$4'
-        height='$4'
+        width='$2'
+        height='$2'
         borderRadius='$8'
         backgroundColor='$color1'
         overflow='hidden'
