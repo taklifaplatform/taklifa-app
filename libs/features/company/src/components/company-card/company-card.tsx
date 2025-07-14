@@ -1,23 +1,18 @@
+import { MapPin, Star } from '@tamagui/lucide-icons';
 import { CompanyTransformer } from '@zix/api';
-import { CustomIcon } from '@zix/ui/icons';
+import { useAuth } from '@zix/services/auth';
+import { TitleInfo, UserAvatar } from '@zix/ui/common';
 import { useRouter } from 'solito/router';
 import {
-  Image,
-  Separator,
   Text,
-  Theme,
   ThemeableStackProps,
   XStack,
-  YStack,
+  YStack
 } from 'tamagui';
 import {
   CompanyContactActions,
   CompanyContactActionsProps,
 } from '../company-profile/company-contact-actions/company-contact-actions';
-import { useAuth } from '@zix/services/auth';
-import { MapPin, Star } from '@tamagui/lucide-icons';
-import { t } from 'i18next';
-import { TitleInfo, UserAvatar } from '@zix/ui/common';
 
 export type CompanyCardProps = ThemeableStackProps & {
   company: CompanyTransformer;

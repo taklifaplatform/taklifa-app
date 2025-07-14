@@ -1,13 +1,15 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-import { LayoutList, Map, X } from '@tamagui/lucide-icons';
+import { LayoutList, Map } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
 import {
   CompaniesService,
   CompanyTransformer,
   LocationService,
 } from '@zix/api';
-import { CompanyCard } from '@zix/features/company';
+import {
+  CompanyCard
+} from '@zix/features/company';
 import { USER_ROLES, useAuth, useMixpanel } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppCustomHeader, ScreenLayout } from '@zix/ui/layouts';
@@ -20,14 +22,14 @@ import {
   Dimensions,
   FlatList,
   Keyboard,
-  Platform
+  Platform,
+  ScrollView,
 } from 'react-native';
 import MapView, { Circle, Region } from 'react-native-maps';
-import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
-import { useRouter } from 'solito/router';
-import { Button, H4, Spinner, Text, View, XStack, YStack } from 'tamagui';
+import { Button, H4, Spinner, View, XStack, YStack } from 'tamagui';
 // import MapFilters from '../../components/map-filters/map-filters';
-import { useToastController } from '@tamagui/toast';
+import { ZixDialog } from '@zix/ui/common';
+import { SheetSection } from '../../components/sheet-section/sheet-section';
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
 
@@ -57,13 +59,8 @@ const mapStyle = [
 
 export function HomeScreen() {
   useMixpanel('Home Page view');
-  const USER_CARD_WIDTH = width;
-  const USER_CARD_HEIGHT = Math.max(100, height / 5.5);
 
   const mapRef = useRef<MapView>(null);
-  const carouselRef = useRef<ICarouselInstance>(null);
-  const toast = useToastController();
-  const router = useRouter();
   const { getUrlPrefix, user, urgencyMode } = useAuth();
 
   const [filters, setFilters] = useState({
@@ -72,8 +69,6 @@ export function HomeScreen() {
   });
   const [showMap, setShowMap] = useState(true);
   const [search, setSearch] = useState<string>();
-
-
 
   const [currentRegion, setCurrentRegion] = useState<Region>({
     latitude: 24.608423604325434,
@@ -101,6 +96,7 @@ export function HomeScreen() {
   const [companiesList, setCompaniesList] = useState<CompanyTransformer[]>([]);
 
   const [showCarousel, setShowCarousel] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const getDriverLocation = async () => {
     try {
@@ -173,28 +169,6 @@ export function HomeScreen() {
     }
   }
 
-  function onCloseCarouselButtonPress() {
-    setCompaniesList([]);
-    setShowCarousel(false);
-    setSelectedCompany(undefined);
-    if (mapRef && mapRef.current) {
-      mapRef.current.animateCamera(
-        {
-          zoom: 10,
-        },
-        { duration: 1000 },
-      );
-    }
-  }
-
-  // Carousel SnapItem
-  function onSnapToItem(index: number) {
-    if (companiesList?.length < index) {
-      return;
-    }
-    onAnimateToCompany(companiesList[index]);
-    setSelectedCompany(companiesList[index]);
-  }
 
   // Keyboard Detect
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
@@ -219,14 +193,6 @@ export function HomeScreen() {
       setKeyboardVisible(false);
     }
   }, [isFocused]);
-
-  // const [isCentered, setIsCentered] = useState(false);
-  // useEffect(() => {
-  //   if (showMap && !isCentered) {
-  //     autoCenterToUserLocation();
-  //     setIsCentered(true);
-  //   }
-  // }, [showMap, isCentered])
 
   // TODO: KEEP
   useFocusEffect(
@@ -272,9 +238,10 @@ export function HomeScreen() {
                 setSelectedCompany(company);
                 setShowCarousel(true);
                 onAnimateToCompany(company);
+                setOpen(true);
               }}
             />
- 
+
             {company.branches && (
               <MapCompanyMarker
                 key={`marker-${company.id}-${company.branches.id}`}
@@ -285,6 +252,7 @@ export function HomeScreen() {
                   setSelectedCompany(company);
                   setShowCarousel(true);
                   onAnimateToCompany(company);
+                  setOpen(true);
                 }}
               />
             )}
@@ -307,24 +275,6 @@ export function HomeScreen() {
     [],
   );
 
-  const renderCarouselItem = ({
-    item,
-    index,
-  }: {
-    index: number;
-    item: CompanyTransformer;
-  }) => {
-    return (
-      <CompanyCard
-        key={`view-${item.id}-${index}`}
-        company={item}
-        flex={1}
-        height={USER_CARD_HEIGHT}
-        marginHorizontal="$4"
-        backgroundColor="$color2"
-      />
-    );
-  };
 
   const defaultIndex = selectedCompany?.id
     ? companiesList.findIndex((c) => c.id === selectedCompany.id)
@@ -334,7 +284,7 @@ export function HomeScreen() {
     defaultIndex >= 0 && defaultIndex < companiesList.length ? defaultIndex : 0;
 
   const [showUrgencyCircle, setShowUrgencyCircle] = useState(false);
-
+  console.log('selectedCompany', JSON.stringify(selectedCompany, null, 2))
   return (
     <ScreenLayout>
       <YStack flex={1}>
@@ -370,18 +320,22 @@ export function HomeScreen() {
             showMap={showMap}
             autoCenterToUserLocation={autoCenterToUserLocation}
           />
-          <CarouselSection
-            showCarousel={showCarousel}
-            companiesList={companiesList}
-            USER_CARD_WIDTH={USER_CARD_WIDTH}
-            USER_CARD_HEIGHT={USER_CARD_HEIGHT}
-            carouselRef={carouselRef}
-            safeDefaultIndex={safeDefaultIndex}
-            renderCarouselItem={renderCarouselItem}
-            onSnapToItem={onSnapToItem}
-            onCloseCarouselButtonPress={onCloseCarouselButtonPress}
-            X={X}
-          />
+          <ZixDialog
+            title={selectedCompany?.name || ''}
+            snapPoints={[40, 80]}
+            disableDrag={false}
+            contentPadding="$1"
+            open={open}
+            onOpenChange={setOpen}
+          >
+            <ScrollView flex={1}>
+              {selectedCompany && (
+              <YStack padding="$4" marginBottom="$4" gap="$4">
+                  <SheetSection company={selectedCompany} />
+              </YStack>
+              )}
+            </ScrollView>
+          </ZixDialog>
           <FiltersSection
             isKeyboardVisible={isKeyboardVisible}
             filters={filters}
@@ -496,70 +450,6 @@ const ListSection: FC<ListSectionProps> = memo(function ListSection({
 });
 
 // Memoized Carousel Section
-interface CarouselSectionProps {
-  showCarousel: boolean;
-  companiesList: CompanyTransformer[];
-  USER_CARD_WIDTH: number;
-  USER_CARD_HEIGHT: number;
-  carouselRef: React.RefObject<ICarouselInstance>;
-  safeDefaultIndex: number;
-  renderCarouselItem: (props: {
-    item: CompanyTransformer;
-    index: number;
-  }) => JSX.Element;
-  onSnapToItem: (index: number) => void;
-  onCloseCarouselButtonPress: () => void;
-  X: any;
-}
-const CarouselSection: FC<CarouselSectionProps> = memo(
-  function CarouselSection({
-    showCarousel,
-    companiesList,
-    USER_CARD_WIDTH,
-    USER_CARD_HEIGHT,
-    carouselRef,
-    safeDefaultIndex,
-    renderCarouselItem,
-    onSnapToItem,
-    onCloseCarouselButtonPress,
-    X,
-  }) {
-    if (!showCarousel || companiesList.length === 0) return null;
-    return (
-      <YStack
-        position="absolute"
-        bottom={0}
-        backgroundColor={'$color1'}
-        borderTopRightRadius={'$6'}
-        borderTopLeftRadius={'$6'}
-        paddingVertical="$5"
-      >
-        <Button
-          icon={X}
-          scaleIcon={1.5}
-          backgroundColor="$color1"
-          size="$3"
-          width="$6"
-          position="absolute"
-          top="$-6"
-          left="$4"
-          onPress={onCloseCarouselButtonPress}
-        />
-        <Carousel
-          key={companiesList.length}
-          ref={carouselRef}
-          width={USER_CARD_WIDTH}
-          height={USER_CARD_HEIGHT}
-          autoPlay={false}
-          data={companiesList}
-          defaultIndex={safeDefaultIndex}
-          renderItem={renderCarouselItem}
-          onSnapToItem={onSnapToItem}
-        />
-      </YStack>
-    );
-  },
-);
 
 // Memoized Switcher Button
 interface SwitcherButtonProps {
@@ -637,7 +527,12 @@ const FiltersSection: FC<FiltersSectionProps> = memo(function FiltersSection({
 }) {
   if (isKeyboardVisible) return null;
   return (
-    <View position="absolute" bottom={showCarousel ? 270 : 10} left={1} right={1}>
+    <View
+      position="absolute"
+      bottom={10}
+      left={1}
+      right={1}
+    >
       <XStack
         alignItems="center"
         paddingHorizontal="$2"
@@ -670,26 +565,7 @@ interface AppHeaderSectionProps {
 }
 const AppHeaderSection: FC<AppHeaderSectionProps> = memo(
   function AppHeaderSection({ search, setSearch, MaterialIcons }) {
-    return  (
-      <AppCustomHeader
-        showSearchBar
-        
-      //   searchProps={{
-      //     value: search,
-      //     onChangeText: setSearch,
-      //     rightIcon: () =>
-      //       search && search.length > 0 ? (
-      //         <Button
-      //           unstyled
-      //           theme="accent"
-      //           icon={<MaterialIcons name="cancel" size={24} color={'grey'} />}
-      //           onPress={() => setSearch('')}
-                
-      //         />
-      //       ) : null,
-      //   }}
-      />
-    );
+    return <AppCustomHeader showSearchBar />;
   },
 );
 

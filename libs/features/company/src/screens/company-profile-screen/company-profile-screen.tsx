@@ -24,7 +24,7 @@ export function CompanyProfileScreen() {
     isAuthMemberInThisCompany,
   } = useAuth();
 
-  const { data, refetch, isLoading, isError, error } = useQuery({
+   const { data, refetch, isLoading, isError, error } = useQuery({
     queryFn() {
       if (!companyId) {
         return;
@@ -37,8 +37,12 @@ export function CompanyProfileScreen() {
     queryKey: ['CompaniesService.retrieveCompany', companyId],
   });
 
+  const company = data?.data;
+  
+  
+
   const renderCompanyProfile = () =>
-    data?.data && (
+    company && (
       <ScrollView
         flex={1}
         refreshControl={
@@ -47,16 +51,16 @@ export function CompanyProfileScreen() {
       >
         <YStack padding="$4" marginBottom="$4" gap="$4">
           <CompanyCard
-            company={data.data}
+            company={company}
             backgroundColor="$color2"
             showContactActions
             useShowButton={true}
           />
         </YStack>
-        <CompanyProfileTabs company={data.data} />
+        <CompanyProfileTabs company={company} />
       </ScrollView>
     );
-  const company = data?.data;
+  
 
   const renderLoadingSpinner = () =>
     !company?.id && !isError && <FullScreenSpinner />;

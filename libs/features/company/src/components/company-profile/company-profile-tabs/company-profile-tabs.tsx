@@ -2,7 +2,6 @@ import { CompanyTransformer } from '@zix/api';
 import React, { useMemo } from 'react';
 
 import { ZixTab } from '@zix/ui/common';
-import AboutCompanyTab from '../about-company-tab/about-company-tab';
 import CompanyServicesTab from '../company-services-tab/company-services-tab';
 import ProductsCompanyTab from '../products-company-tab/products-company-tab';
 
@@ -13,7 +12,6 @@ export type ProfileTabsProps = {
 export const CompanyProfileTabs: React.FC<ProfileTabsProps> = ({
   company
 }) => {
-
   const tabs = useMemo(() => {
     const _tabs = [
       {
