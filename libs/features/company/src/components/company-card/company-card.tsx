@@ -19,6 +19,7 @@ export type CompanyCardProps = ThemeableStackProps & {
   companyContactActionsProps?: Partial<CompanyContactActionsProps>;
   showContactActions?: boolean;
   useShowButton?: boolean;
+  setShowSheet?: (show: boolean) => void;
 };
 
 export const CompanyCard: React.FC<CompanyCardProps> = ({
@@ -27,12 +28,16 @@ export const CompanyCard: React.FC<CompanyCardProps> = ({
   companyContactActionsProps = {},
   showContactActions = true,
   useShowButton = false,
+  setShowSheet,
   ...props
 }) => {
   const router = useRouter();
   const { getUrlPrefix } = useAuth();
 
   function onPress() {
+    if (setShowSheet) {
+      setShowSheet(false);
+    }
     router.push(`${getUrlPrefix}/companies/${company.id}`);
   }
 

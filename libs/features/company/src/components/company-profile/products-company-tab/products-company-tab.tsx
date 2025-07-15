@@ -17,11 +17,15 @@ import { ProductCard } from '@zix/ui/common';
 
 export type ProductsCompanyTabProps = {
   company: CompanyTransformer;
+  hideFilters?: boolean;
+  setShowSheet?: (show: boolean) => void;
 };
 
 
 export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
   company,
+  hideFilters = false,
+  setShowSheet,
 }) => {
   const router = useRouter();
   const { getUrlPrefix } = useAuth();
@@ -37,6 +41,9 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
   const renderItem = ({ item, index }: { item: any; index: number }) => (
     <TouchableOpacity
       onPress={() => {
+        if (setShowSheet) {
+          setShowSheet(false);
+        }
         router.push(`${getUrlPrefix}/products/${item.id}`);
       }}
     >
@@ -53,7 +60,7 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
       data={data?.data || []}
       renderItem={renderItem}
       keyExtractor={(item, index) => `product-${item.id}-${index}`}
-      ListHeaderComponent={() => (
+      ListHeaderComponent={() => !hideFilters && (
         <XStack flex={1} gap="$2" alignItems="center" paddingVertical={'$4'}>
           <FilterPrice />
           <FilterByOrder orderBy={orderBy} setOrderBy={setOrderBy} />

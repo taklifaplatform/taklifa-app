@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { CompanyTransformer, ServiceService } from '@zix/api';
-import { AnnouncementCard } from 'libs/features/services/src';
+import { ServiceCard } from '@zix/features/services';
 import { FilterByOrder, FilterPrice, FullScreenSpinner, SearchProduct } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
@@ -10,10 +10,14 @@ import { H4, View, XStack } from 'tamagui';
 
 export type CompanyServicesTabProps = {
   company: CompanyTransformer
+  hideFilters?: boolean;
+  setShowSheet?: (show: boolean) => void;
 }
 
 export const CompanyServicesTab: React.FC<CompanyServicesTabProps> = ({
-  company
+  company,
+  hideFilters = false,
+  setShowSheet,
 }) => {
   const [orderBy, setOrderBy] = useState('cheapest');
   const [search, setSearch] = useState('');
@@ -24,7 +28,7 @@ export const CompanyServicesTab: React.FC<CompanyServicesTabProps> = ({
     }),
     queryKey: ['ServicesService.listCompanyServices', company.id],
   })
-  console.log(JSON.stringify(data?.data, null, 2))
+
   if (isLoading) {
     return <FullScreenSpinner />;
   }
@@ -37,9 +41,9 @@ export const CompanyServicesTab: React.FC<CompanyServicesTabProps> = ({
       }}
       showsVerticalScrollIndicator={false}
       renderItem={({ item, index }) => (
-        <AnnouncementCard key={index} announcement={item} showHeader={false} />
+        <ServiceCard key={index} service={item} showHeader={false} setShowSheet={setShowSheet} />
       )}
-      ListHeaderComponent={() => (
+      ListHeaderComponent={() => !hideFilters && (
         <XStack flex={1} gap="$2" alignItems="center" paddingVertical={'$4'}>
           <FilterPrice />
           <FilterByOrder orderBy={orderBy} setOrderBy={setOrderBy} />

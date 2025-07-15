@@ -1,4 +1,4 @@
-import { AnnouncementTransformer, ServiceTransformer } from "@zix/api";
+import { ServiceTransformer } from "@zix/api";
 import { YStack, XStack, Text, Image, View, Button, Stack, Theme } from "tamagui";
 import { TouchableOpacity } from "react-native";
 import { useRouter } from "solito/router";
@@ -10,15 +10,19 @@ import { CustomIcon } from '@zix/ui/icons';
 type ServiceCardProps = {
   service: ServiceTransformer;
   showHeader?: boolean;
+  setShowSheet?: (show: boolean) => void;
 };
 
-export const ServiceCard = ({ service, showHeader }: ServiceCardProps) => {
+export const ServiceCard = ({ service, showHeader, setShowSheet }: ServiceCardProps) => {
   const router = useRouter();
   const { user } = useAuth();
   const isOwner = user?.id === service?.user?.id;
   return (
     <TouchableOpacity
         onPress={() => {
+          if (setShowSheet) {
+            setShowSheet(false);
+          }
           router.push(`/app/services/${service.id}`);
         }}
       >

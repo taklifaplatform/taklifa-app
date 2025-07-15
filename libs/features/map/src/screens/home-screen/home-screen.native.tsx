@@ -1,16 +1,18 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { LayoutList, Map } from '@tamagui/lucide-icons';
-import { useQuery } from '@tanstack/react-query';
+import {
+  QueryClientProvider,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import {
   CompaniesService,
   CompanyTransformer,
-  LocationService,
+  LocationService
 } from '@zix/api';
-import {
-  CompanyCard
-} from '@zix/features/company';
-import { USER_ROLES, useAuth, useMixpanel } from '@zix/services/auth';
+import { CompanyCard } from '@zix/features/company';
+import { useAuth, useMixpanel, USER_ROLES } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppCustomHeader, ScreenLayout } from '@zix/ui/layouts';
 import { MapCompanyMarker } from '@zix/ui/sawaeed';
@@ -19,19 +21,15 @@ import { t } from 'i18next';
 import type { FC } from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  Dimensions,
   FlatList,
   Keyboard,
-  Platform,
-  ScrollView,
+  Platform
 } from 'react-native';
 import MapView, { Circle, Region } from 'react-native-maps';
 import { Button, H4, Spinner, View, XStack, YStack } from 'tamagui';
 // import MapFilters from '../../components/map-filters/map-filters';
 import { ZixDialog } from '@zix/ui/common';
-import { SheetSection } from '../../components/sheet-section/sheet-section';
-const { width } = Dimensions.get('window');
-const { height } = Dimensions.get('window');
+import { CompanyDetail } from '../../components/company-detail/company-detail';
 
 const initialCamera = {
   center: {
@@ -61,7 +59,7 @@ export function HomeScreen() {
   useMixpanel('Home Page view');
 
   const mapRef = useRef<MapView>(null);
-  const { getUrlPrefix, user, urgencyMode } = useAuth();
+  const { user, urgencyMode } = useAuth();
 
   const [filters, setFilters] = useState({
     vehicle_model: 'all',
@@ -94,6 +92,8 @@ export function HomeScreen() {
   const [selectedCompany, setSelectedCompany] = useState<CompanyTransformer>();
 
   const [companiesList, setCompaniesList] = useState<CompanyTransformer[]>([]);
+
+  const queryClient = useQueryClient();
 
   const [showCarousel, setShowCarousel] = useState(false);
   const [open, setOpen] = useState(false);
@@ -169,7 +169,6 @@ export function HomeScreen() {
     }
   }
 
-
   // Keyboard Detect
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const isFocused = useIsFocused();
@@ -200,6 +199,7 @@ export function HomeScreen() {
       // autoCenterToUserLocation()
     }, []),
   );
+
 
   async function autoCenterToUserLocation() {
     try {
@@ -275,16 +275,7 @@ export function HomeScreen() {
     [],
   );
 
-
-  const defaultIndex = selectedCompany?.id
-    ? companiesList.findIndex((c) => c.id === selectedCompany.id)
-    : 0;
-
-  const safeDefaultIndex =
-    defaultIndex >= 0 && defaultIndex < companiesList.length ? defaultIndex : 0;
-
   const [showUrgencyCircle, setShowUrgencyCircle] = useState(false);
-  console.log('selectedCompany', JSON.stringify(selectedCompany, null, 2))
   return (
     <ScreenLayout>
       <YStack flex={1}>
@@ -322,19 +313,18 @@ export function HomeScreen() {
           />
           <ZixDialog
             title={selectedCompany?.name || ''}
-            snapPoints={[40, 80]}
+            snapPoints={[80, 30, 80]}
             disableDrag={false}
             contentPadding="$1"
             open={open}
             onOpenChange={setOpen}
           >
-            <ScrollView flex={1}>
-              {selectedCompany && (
-              <YStack padding="$4" marginBottom="$4" gap="$4">
-                  <SheetSection company={selectedCompany} />
-              </YStack>
-              )}
-            </ScrollView>
+            <QueryClientProvider client={queryClient}>
+              <CompanyDetail
+                company={selectedCompany || ({} as CompanyTransformer)}
+                setShowSheet={setOpen}
+              />
+            </QueryClientProvider>
           </ZixDialog>
           <FiltersSection
             isKeyboardVisible={isKeyboardVisible}
@@ -527,12 +517,7 @@ const FiltersSection: FC<FiltersSectionProps> = memo(function FiltersSection({
 }) {
   if (isKeyboardVisible) return null;
   return (
-    <View
-      position="absolute"
-      bottom={10}
-      left={1}
-      right={1}
-    >
+    <View position="absolute" bottom={10} left={1} right={1}>
       <XStack
         alignItems="center"
         paddingHorizontal="$2"
