@@ -9,19 +9,21 @@ export type ProfileTabsProps = {
   company: CompanyTransformer;
   hideFilters?: boolean;
   setShowSheet?: (show: boolean) => void;
+  myStore?: boolean;
 }
 
 export const CompanyProfileTabs: React.FC<ProfileTabsProps> = ({
   company,
   hideFilters = false,
   setShowSheet,
+  myStore = false,
 }) => {
   const tabs = useMemo(() => {
     const _tabs = [
       {
         key: 'products',
         title: 'المنتجات',
-        content: <ProductsCompanyTab company={company} hideFilters={hideFilters} setShowSheet={setShowSheet} />
+        content: <ProductsCompanyTab company={company} hideFilters={hideFilters} setShowSheet={setShowSheet} myStore={myStore} />
       },
       {
         key: 'services',

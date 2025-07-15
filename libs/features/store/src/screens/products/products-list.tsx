@@ -1,12 +1,14 @@
-import { useMixpanel } from '@zix/services/auth';
+import { useAuth, useMixpanel } from '@zix/services/auth';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { Text, XStack, YStack } from 'tamagui';
 import { CompanyProfileTabs } from '@zix/features/company';
 import { useRouter } from 'solito/router';
-import { ZixButton, ZixDialog } from '@zix/ui/common';
+import { DebugObject, ZixButton, ZixDialog } from '@zix/ui/common';
 import { FilePlus2, PlusSquare, Sparkles } from '@tamagui/lucide-icons';
 import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
+import { useQuery } from '@tanstack/react-query';
+import { CompanyAdminService } from '@zix/api';
 
 export type ProductsListScreenProps = {
   showHeader?: boolean;
@@ -19,20 +21,16 @@ export const ProductsListScreen: React.FC<ProductsListScreenProps> = ({
 }) => {
   const router = useRouter();
   useMixpanel('Store List Screen view');
+  const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <ScreenLayout>
       <AppHeader title={'متجري'} showSearchBar />
-      <YStack flex={1} paddingVertical="$4">
-        <CompanyProfileTabs
-          company={{
-            id: 1,
-            name: 'متجري',
-            description: 'متجري',
-            image: 'https://via.placeholder.com/150',
-          }}
-        />
+      <YStack flex={1} paddingTop="$4">
+        {user?.active_company && (
+          <CompanyProfileTabs company={user.active_company} myStore={true} />
+        )}
       </YStack>
       <ZixDialog
         title={'اضافة منتج جديد'}
@@ -48,8 +46,9 @@ export const ProductsListScreen: React.FC<ProductsListScreenProps> = ({
             height={'$4'}
             borderRadius={'$4'}
             backgroundColor="$color1"
-            alignSelf="flex-start"
-            margin="$4"
+            position="absolute"
+            bottom={40}
+            left={20}
             icon={<PlusSquare size={20} color="#FFFFFF" />}
           />
         }

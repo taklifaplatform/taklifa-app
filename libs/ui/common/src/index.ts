@@ -61,3 +61,5 @@ export * from "./components/delete-product/delete-product";
 export * from "./components/product-card/product-card";
 
 export * from "./components/manage-count-product/manage-count-product";
+
+export * from "./components/product-thumb-card/product-thumb-card";

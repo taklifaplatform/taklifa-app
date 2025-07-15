@@ -71,11 +71,6 @@ export const ResetPasswordScreen = () => {
         defaultValues={{
           phone: params?.phone || '',
         }}
-        props={{
-          phone_number: {
-            backgroundColor: '#FFFFFF',
-          },
-        }}
         onSubmit={mutateAsync}
         renderAfter={({ submit }) => {
           return (

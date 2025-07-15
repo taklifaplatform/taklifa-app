@@ -88,10 +88,6 @@ export const LoginScreen: React.FC = () => {
           props={{
             password: {
               afterElement: <ForgotPasswordLink />,
-              backgroundColor: '#FFFFFF',
-            },
-            phone_number: {
-              backgroundColor: '#FFFFFF',
             },
           }}
           renderAfter={({ submit }) => {

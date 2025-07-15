@@ -132,11 +132,6 @@ export const SendResetPhoneNumberForm: React.FC<SendResetPhoneNumberFormProps> =
         defaultValues={{
           pin_code: '',
         }}
-        props={{
-          pin_code: {
-            backgroundColor: '#FFFFFF',
-          },
-        }}
         renderAfter={({ submit }) => {
           return (
             <Stack>

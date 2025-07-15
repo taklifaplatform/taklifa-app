@@ -16,6 +16,7 @@ import {
   NumberField,
   PhoneField,
   SelectField,
+  SelectRadioGroupField,
   ShipmentItemsField,
   TextAreaField,
   TextField,
@@ -36,6 +37,7 @@ export const formFieldsMappings = [
   [formFields.accept_terms, AcceptTermsField] as const,
   [formFields.select, SelectField] as const,
   [formFields.select_row, SelectRowOptionField] as const,
+  [formFields.select_radio_group, SelectRadioGroupField] as const,
   [formFields.autocomplete, AutoCompleteField] as const,
 
   /**

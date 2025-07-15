@@ -64,14 +64,7 @@ export const KycVerificationScreen = () => {
           props={{
             location_id: {
               backUrl: '/auth/verify-kyc',
-              backgroundColor: '#FFFFFF',
-            },
-            nationality_id: {
-              backgroundColor: '#FFFFFF',
-            },
-            identity_card: {
-              backgroundColor: '#FFFFFF',
-            },
+            }
           }}
           onSubmit={mutateAsync}
           renderAfter={({ submit }) => {

@@ -2,8 +2,12 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type VariantsUpdateProductRequest = {
+export type VariantUpdateProductRequest = {
     price?: number;
     price_currency?: string;
+    type?: string;
+    type_unit?: string;
+    type_value?: number;
+    stock?: number;
 };
 

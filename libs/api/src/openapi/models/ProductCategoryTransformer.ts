@@ -2,12 +2,12 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { CompanyTransformer } from './CompanyTransformer';
+import type { SimpleCompanyTransformer } from './SimpleCompanyTransformer';
 export type ProductCategoryTransformer = {
     id?: string;
     name?: string;
     description?: string | null;
-    order?: number | null;
-    company?: CompanyTransformer;
+    order?: number;
+    company?: SimpleCompanyTransformer;
 };
 

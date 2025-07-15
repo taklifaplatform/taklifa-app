@@ -2,7 +2,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { CompanyBranchTransformer } from './CompanyBranchTransformer';
 import type { MediaTransformer } from './MediaTransformer';
 export type SimpleCompanyTransformer = {
     id?: string;
@@ -12,6 +11,5 @@ export type SimpleCompanyTransformer = {
     verification_status?: string;
     logo?: MediaTransformer;
     contact_number?: string;
-    branches?: CompanyBranchTransformer;
 };
 

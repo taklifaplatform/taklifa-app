@@ -17,3 +17,4 @@ export * from './location-field/location-field';
 export * from './country-field/country-field';
 export * from './shipment-items-field/shipment-items-field';
 export * from './shipment-items-field/shipment-item';
+export * from './select-radio-group-field/select-radio-group-field';

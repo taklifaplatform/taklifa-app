@@ -25,7 +25,7 @@ export class CartService {
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/carts/{company_id}/{identifier}',
+            url: '/api/cart/{company_id}/{identifier}',
             path: {
                 'company_id': companyId,
                 'identifier': identifier,
@@ -48,7 +48,7 @@ export class CartService {
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/carts/{company_id}/{identifier}/items',
+            url: '/api/cart/{company_id}/{identifier}/items',
             path: {
                 'company_id': companyId,
                 'identifier': identifier,
@@ -73,7 +73,7 @@ export class CartService {
     }> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/carts/{company_id}/{identifier}/items',
+            url: '/api/cart/{company_id}/{identifier}/items',
             path: {
                 'company_id': companyId,
                 'identifier': identifier,

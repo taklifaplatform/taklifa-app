@@ -67,17 +67,6 @@ export const AuthDriverVerificationScreen = () => {
       <FormProvider {...form}>
         <SchemaForm
           schema={DriverVerificationFormSchema}
-          props={{
-            driving_license_number: {
-              backgroundColor: '#FFFFFF',
-            },
-            driving_license_card: {
-              backgroundColor: '#FFFFFF',
-            },
-            assurance_card: {
-              backgroundColor: '#FFFFFF',
-            },
-          }}
 
           onSubmit={mutateAsync}
           renderAfter={({ submit }) => {

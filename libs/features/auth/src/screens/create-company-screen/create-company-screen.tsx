@@ -79,14 +79,7 @@ export const CreateCompanyScreen: React.FC = () => {
             name: '',
           }}
           props={{
-            name: {
-              backgroundColor: '#FFFFFF',
-            },
-            about: {
-              backgroundColor: '#FFFFFF',
-            },
             location_id: {
-              backgroundColor: '#FFFFFF',
               height: '$5',
             },
           }}

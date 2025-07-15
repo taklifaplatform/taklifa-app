@@ -30,7 +30,7 @@ export class CompanyInvitationsService {
          */
         perPage?: number,
         search?: string,
-        role?: 'company_manager' | 'company_driver',
+        role?: 'company_manager',
     }): CancelablePromise<{
         data?: Array<CompanyInvitationTransformer>;
         links?: {

@@ -2,11 +2,14 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { VariantsUpdateProductRequest } from './VariantsUpdateProductRequest';
+import type { ImagesUpdateProductRequest } from './ImagesUpdateProductRequest';
+import type { VariantUpdateProductRequest } from './VariantUpdateProductRequest';
 export type UpdateProductRequest = {
     name?: string;
     description?: string;
-    company_id?: string;
-    variants?: Array<VariantsUpdateProductRequest>;
+    category_id?: string;
+    variant?: VariantUpdateProductRequest;
+    is_available?: boolean;
+    images?: Array<ImagesUpdateProductRequest>;
 };
 

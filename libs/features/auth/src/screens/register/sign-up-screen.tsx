@@ -134,29 +134,17 @@ export const SignUpScreen = () => {
             accept_terms: false,
           }}
           props={{
-            username: {
-              backgroundColor: '#FFFFFF',
-            },
-            name: {
-              backgroundColor: '#FFFFFF',
-            },
-            phone_number: {
-              backgroundColor: '#FFFFFF',
-            },
             email: {
-              backgroundColor: '#FFFFFF',
               containerProps: {
                 showFieldset: method === 'email' ? true : false,
               },
             },
             password: {
-              backgroundColor: '#FFFFFF',
               containerProps: {
                 showFieldset: method === 'google' || method === 'apple' ? false : true,
               },
             },
             password_confirmation: {
-              backgroundColor: '#FFFFFF',
               containerProps: {
                 showFieldset: method === 'google' || method === 'apple' ? false : true,
               },

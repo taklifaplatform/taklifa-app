@@ -114,7 +114,6 @@ export const InvitationScreen: React.FC = () => {
       props={{
         phone_number: {
           disabled: true,
-          backgroundColor: '#FFFFFF',
         }
       }}
       onSubmit={loginAsync}

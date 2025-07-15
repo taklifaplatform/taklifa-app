@@ -2,13 +2,13 @@ import { useTsController } from '@ts-react/form';
 import React from 'react';
 
 import { BaseFormFieldContainerProps, FormFieldContainer } from '../../common';
-import { ZixSelectField, ZixSelectFieldProps } from '../../fields';
+import { ZixSelectRadioGroupnField, ZixSelectRowOptionFieldProps } from '../../fields';
 
-export type SelectFieldProps = ZixSelectFieldProps & {
+export type SelectRadioGroupFieldProps = ZixSelectRowOptionFieldProps & {
   containerProps?: BaseFormFieldContainerProps;
 }
 
-export const SelectField: React.FC<SelectFieldProps> = ({
+export const SelectRadioGroupField: React.FC<SelectRadioGroupFieldProps> = ({
   containerProps = {},
   ...props
 }) => {
@@ -17,10 +17,9 @@ export const SelectField: React.FC<SelectFieldProps> = ({
     error,
     formState: { isSubmitting },
   } = useTsController<string>();
-  console.log("props", props.options)
   return (
     <FormFieldContainer {...containerProps}>
-      <ZixSelectField
+      <ZixSelectRadioGroupnField
         {...props}
         disabled={isSubmitting}
         hasError={!!error?.errorMessage}
@@ -31,4 +30,4 @@ export const SelectField: React.FC<SelectFieldProps> = ({
   );
 }
 
-export default SelectField;
+export default SelectRadioGroupField;

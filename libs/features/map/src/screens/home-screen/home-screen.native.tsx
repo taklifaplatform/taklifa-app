@@ -9,22 +9,18 @@ import {
 import {
   CompaniesService,
   CompanyTransformer,
-  LocationService
+  LocationService,
 } from '@zix/api';
 import { CompanyCard } from '@zix/features/company';
 import { useAuth, useMixpanel, USER_ROLES } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
-import { AppCustomHeader, ScreenLayout } from '@zix/ui/layouts';
+import { AppCustomHeader, AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { MapCompanyMarker } from '@zix/ui/sawaeed';
 import * as Location from 'expo-location';
 import { t } from 'i18next';
 import type { FC } from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import {
-  FlatList,
-  Keyboard,
-  Platform
-} from 'react-native';
+import { FlatList, Keyboard, Platform } from 'react-native';
 import MapView, { Circle, Region } from 'react-native-maps';
 import { Button, H4, Spinner, View, XStack, YStack } from 'tamagui';
 // import MapFilters from '../../components/map-filters/map-filters';
@@ -200,7 +196,6 @@ export function HomeScreen() {
     }, []),
   );
 
-
   async function autoCenterToUserLocation() {
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
@@ -283,6 +278,7 @@ export function HomeScreen() {
           search={search}
           setSearch={setSearch}
           MaterialIcons={MaterialIcons}
+          showMap={showMap}
         />
         <YStack flex={1} position="relative">
           <MapSection
@@ -406,7 +402,7 @@ const ListSection: FC<ListSectionProps> = memo(function ListSection({
 }) {
   if (showMap) return null;
   return (
-    <View flex={1} marginTop={isKeyboardVisible ? 0 : '$10'}>
+    <View flex={1} >
       <FlatList
         style={{ flex: 1 }}
         data={companiesList}
@@ -547,10 +543,30 @@ interface AppHeaderSectionProps {
   search: string | undefined;
   setSearch: React.Dispatch<React.SetStateAction<string | undefined>>;
   MaterialIcons: any;
+  showMap: boolean;
 }
 const AppHeaderSection: FC<AppHeaderSectionProps> = memo(
-  function AppHeaderSection({ search, setSearch, MaterialIcons }) {
-    return <AppCustomHeader showSearchBar />;
+  function AppHeaderSection({ search, setSearch, MaterialIcons, showMap }) {
+    return showMap ? (
+      <AppCustomHeader showSearchBar />
+    ) : (
+      <AppHeader
+        showSearchBar
+        searchProps={{
+          value: search,
+          onChangeText: setSearch,
+          rightIcon: () =>
+            search && search.length > 0 ? (
+              <Button
+                unstyled
+                theme="accent"
+                icon={<MaterialIcons name="cancel" size={24} color={'grey'} />}
+                onPress={() => setSearch('')}
+              />
+            ) : null,
+        }}
+      />
+    );
   },
 );
 

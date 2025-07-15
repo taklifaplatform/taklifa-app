@@ -7,5 +7,6 @@ export * from './zix-phone-field/zix-phone-field';
 export * from './zix-money-field/zix-money-field';
 export * from './zix-select-field/zix-select-field';
 export * from './zix-select-row-option-field/zix-select-row-option-field';
+export * from './zix-select-radio-group-field/zix-select-radio-group-field';
 export * from './zix-date-fields';
 export * from './zix-map-location-picker-field/zix-map-location-picker-field';

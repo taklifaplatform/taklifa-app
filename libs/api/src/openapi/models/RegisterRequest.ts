@@ -8,6 +8,7 @@ export type RegisterRequest = {
     password?: string;
     password_confirmation?: string;
     is_customer?: boolean;
-    is_solo_driver?: boolean;
+    is_company_owner?: boolean;
+    is_service_provider?: boolean;
 };
 

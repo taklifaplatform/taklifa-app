@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { DriversService } from '@zix/api';
+import { DriversService, UserService } from '@zix/api';
 
 import { useMixpanel } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
@@ -17,16 +17,19 @@ const { useParam } = createParam<{ user: string }>();
 export function UserProfileScreen() {
   const [userId] = useParam('user');
   useMixpanel(`User Profile Screen view - User:${userId}`)
-
+  
   const { data, refetch, isLoading } = useQuery({
     queryFn() {
       if (!userId) {
         return;
       }
 
-      return DriversService.retrieveDriver({
-        driver: userId,
-      });
+      // TODO: if we gonna enable public profile add ability to retreive user by id
+      return UserService.retrieveUser()
+
+      // return DriversService.retrieveDriver({
+      //   driver: userId,
+      // });
     },
     queryKey: ['DriversService.retrieveDriver', userId],
   });

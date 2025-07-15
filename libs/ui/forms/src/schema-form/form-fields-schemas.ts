@@ -108,4 +108,6 @@ export const formFields = {
   ),
 
   money: createUniqueFieldSchema(MoneySchema, 'money'),
+
+  select_radio_group: createUniqueFieldSchema(z.string(), 'select_radio_group'),
 };
