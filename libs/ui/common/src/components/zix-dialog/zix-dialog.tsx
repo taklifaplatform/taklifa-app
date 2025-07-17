@@ -27,6 +27,7 @@ export type ZixDialogProps = DialogProps & {
   snapPoints?: number[];
   colorHeader?: string;
   disableDrag?: boolean;
+  setDisableDrag?: (disable: boolean) => void;
 };
 
 export function ZixDialog({
@@ -44,9 +45,11 @@ export function ZixDialog({
   snapPoints = [70, 100],
   colorHeader = '$color10',
   disableDrag = true,
+  setDisableDrag,
   ...dialogProps
 }: ZixDialogProps) {
   const { width, height } = useWindowDimensions();
+ 
   return (
     <Dialog modal {...dialogProps}>
       {trigger && <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>}
@@ -120,6 +123,10 @@ export function ZixDialog({
               backgroundColor={colorHeader}
               borderTopLeftRadius={'$4'}
               borderTopRightRadius={'$4'}
+              onPress={(ev) => {
+                ev.preventDefault();
+                setDisableDrag?.(false);
+              }}
             >
               {title ? (
                 <Dialog.Title fontWeight="bold" fontSize={'$3'}>{title}</Dialog.Title>

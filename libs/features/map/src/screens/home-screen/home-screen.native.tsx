@@ -271,6 +271,7 @@ export function HomeScreen() {
   );
 
   const [showUrgencyCircle, setShowUrgencyCircle] = useState(false);
+  const [disableDrag, setDisableDrag] = useState(false);
   return (
     <ScreenLayout>
       <YStack flex={1}>
@@ -310,15 +311,20 @@ export function HomeScreen() {
           <ZixDialog
             title={selectedCompany?.name || ''}
             snapPoints={[80, 30, 80]}
-            disableDrag={false}
+            disableDrag={disableDrag}
             contentPadding="$1"
             open={open}
             onOpenChange={setOpen}
+            setDisableDrag={setDisableDrag}
           >
             <QueryClientProvider client={queryClient}>
               <CompanyDetail
                 company={selectedCompany || ({} as CompanyTransformer)}
                 setShowSheet={setOpen}
+                onScroll={() => {
+                  setDisableDrag(true);
+                }}
+              
               />
             </QueryClientProvider>
           </ZixDialog>
