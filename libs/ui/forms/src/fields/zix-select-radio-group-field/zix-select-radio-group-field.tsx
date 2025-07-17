@@ -14,7 +14,7 @@ ZixSelectRadioGroupnFieldProps
 > = ({ options = [], onChange, value, ...props }) => {
   return (
     <RadioGroup
-      value={value || ''}
+      value={value?.toString() || ''}
       onValueChange={(value) => onChange?.(value)}
       // width="100%"
       flexDirection="row"
@@ -24,7 +24,7 @@ ZixSelectRadioGroupnFieldProps
       {options &&
         options.map((item, i) => {
           return (
-            <XStack width={props.width} paddingLeft='$6' alignItems="center" key={item.id} backgroundColor={value === item.id ? props?.colorSelected ?? 'red' : 'transparent'}>
+            <XStack gap="$2" width={props.width} paddingLeft='$6' alignItems="center" key={item.id} backgroundColor={value === item.id ? props?.colorSelected ?? 'red' : 'transparent'}>
               <RadioGroup.Item value={item.id} id={item.id} size={props.size}>
                 <RadioGroup.Indicator color={value === item.id ? props?.colorIndicator ?? '' : 'transparent'} />
               </RadioGroup.Item>

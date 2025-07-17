@@ -42,7 +42,7 @@ export function ZixDialog({
   dialogContentProps,
   preventClickOutside,
   snapPoints = [70, 100],
-  colorHeader = '$color3',
+  colorHeader = '$color10',
   disableDrag = true,
   ...dialogProps
 }: ZixDialogProps) {
@@ -51,7 +51,13 @@ export function ZixDialog({
     <Dialog modal {...dialogProps}>
       {trigger && <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>}
       <Dialog.Adapt platform="touch">
+       
         <Dialog.Sheet zIndex={200000} modal disableDrag={disableDrag} snapPoints={snapPoints} >
+        <Dialog.Sheet.Overlay
+          animation="lazy"
+          backgroundColor="black"
+          opacity={0.6}
+        />
           <Dialog.Sheet.Frame>
             <Dialog.Adapt.Contents />
           </Dialog.Sheet.Frame>
@@ -71,14 +77,14 @@ export function ZixDialog({
           padding={'$4'}
           bordered
           elevate
-          // animation={[
-          //   'quick',
-          //   {
-          //     opacity: {
-          //       overshootClamping: true,
-          //     },
-          //   },
-          // ]}
+          animation={[
+            'quick',
+            {
+              opacity: {
+                overshootClamping: true,
+              },
+            },
+          ]}
           enterStyle={{ x: 0, y: -20, opacity: 0, scale: 0.9 }}
           exitStyle={{ x: 0, y: 10, opacity: 0, scale: 0.95 }}
           x={0}
@@ -129,6 +135,7 @@ export function ZixDialog({
               )}
             </XStack>
           )}
+
 
           {/* {description ? (
             <Dialog.Description

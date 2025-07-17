@@ -137,8 +137,8 @@ export const ListProductsComponent = () => {
           paddingBottom: 60,
         }}
       />
-      <ZixButton theme={'accent'} position='absolute' bottom={0} right={0} width={'100%'} backgroundColor="#000000" icon={<CustomIcon name="add_store" size={20} color="$color3" />} >
-        <Text fontWeight="500" fontSize={'$3'} color="$color3">
+      <ZixButton theme={'accent'} position='absolute' bottom={0} right={0} width={'100%'} backgroundColor="$color0" icon={<CustomIcon name="add_store" size={20} color="$color10" />} >
+        <Text fontWeight="500" fontSize={'$3'} color="$color10">
         نشر منتجات في متجري
         </Text>
       </ZixButton>

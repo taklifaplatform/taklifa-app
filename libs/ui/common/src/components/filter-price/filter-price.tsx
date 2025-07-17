@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { XStack, YStack, Text } from 'tamagui';
+import { XStack, YStack, Text, Theme } from 'tamagui';
 import { ZixDialog } from '../zix-dialog/zix-dialog';
 import { ZixSlider } from '../zix-slider/zix-slider';
 import { CustomIcon } from '@zix/ui/icons';
@@ -29,7 +29,7 @@ export const FilterPrice = () => {
           borderColor="$color0"
           gap="$2"
         >
-          <Text fontWeight="bold" fontSize={'$3'}>
+          <Text fontWeight="bold" fontSize={'$3'} color="$color0">
             الفلتر
           </Text>
           <Filter size={20} color="$color0" />
@@ -44,7 +44,9 @@ export const FilterPrice = () => {
               <Text fontWeight="600" fontSize={'$3'}>
                 {priceRange[1] * 6000}
               </Text>
-              <CustomIcon name="riyal" size="$1" />
+              <Theme name="accent">
+                <CustomIcon name="riyal" size="$1" color="$color0"/>
+              </Theme>
             </XStack>
             <Text fontWeight="600" fontSize={'$3'}>
               {' '}

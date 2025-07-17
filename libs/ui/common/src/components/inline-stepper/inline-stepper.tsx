@@ -14,7 +14,7 @@ export const InlineStepper: React.FC<InlineStepperProps> = (
 ) => {
   const {
     stepColorPrec = '$color1',
-    stepColorActive = '$color3',
+    stepColorActive = '$color10',
     stepColorPrev = '#D9D9D9',
   } = props;
 

@@ -113,7 +113,7 @@ const SubCategoryList = memo(
                 ? onSelect(undefined)
                 : onSelect(item as ServiceCategoryTransformer)
             }
-            backgroundColor={'$color3'}
+            backgroundColor={'$color10'}
             borderRadius={10}
           >
             <CustomIcon name={item?.icon} size={10} />

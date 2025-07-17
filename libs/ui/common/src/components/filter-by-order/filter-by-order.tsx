@@ -86,7 +86,7 @@ export const FilterByOrder: React.FC<FilterByOrderProps> = ({ orderBy, setOrderB
           borderColor="$color0"
           gap="$2"
         >
-          <Text fontWeight="bold" fontSize={'$3'}>
+          <Text fontWeight="bold" fontSize={'$3'} color="$color0">
             {listFilterByOrder.find((item) => item.value === orderBy)?.label}
           </Text>
           <ChevronUp size={20} color="$color0" />

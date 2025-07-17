@@ -1,4 +1,4 @@
-import { Bell, CreditCard, Handshake, Store } from '@tamagui/lucide-icons';
+import { Bell, CreditCard, Handshake, House, Store } from '@tamagui/lucide-icons';
 import { CustomIcon } from '@zix/ui/icons';
 import { Tabs } from 'expo-router';
 import { t } from 'i18next';
@@ -17,11 +17,7 @@ export const AppLayout = () => {
         options={{
           title: t('navigation:customer-dashboard.home'),
           tabBarIcon: ({ size, focused }) => (
-            <CustomIcon
-              name="home"
-              size={size}
-              color={focused ? '#0F5837' : '#17221D'}
-            />
+            <House size={size} theme="accent" color={focused ? '$color1' : '$color0'} fill={focused ? '$color3' : '$color2'} />
           ),
         }}
       />
@@ -31,8 +27,9 @@ export const AppLayout = () => {
           title: t('common:services'),
           tabBarIcon: ({ size, focused }) => (
             <Handshake
-              color={focused ? '#0F5837' : '#17221D'}
-              fill={focused ? '#EFFEF6' : '#FFFFFF'}
+              color={focused ? '$color1' : '$color0'}
+              theme="accent"
+              fill={focused ? '$color3' : '$color2'}
               size={size}
             />
           ),
@@ -46,8 +43,9 @@ export const AppLayout = () => {
                 title: 'متجري',
                 tabBarIcon: ({ size, focused }) => (
                   <Store
-                    color={focused ? '#0F5837' : '#17221D'}
-                    fill={focused ? '#EFFEF6' : '#FFFFFF'}
+                    color={focused ? '$color1' : '$color0'}
+                    theme="accent"
+                    fill={focused ? '$color3' : '$color2'}
                     size={size}
                   />
                 ),
@@ -64,8 +62,9 @@ export const AppLayout = () => {
           title: t('settings:notifications'),
           tabBarIcon: ({ size, focused }) => (
             <Bell
-              color={focused ? '#0F5837' : '#17221D'}
-              fill={focused ? '#EFFEF6' : '#FFFFFF'}
+              color={focused ? '$color1' : '$color0'}
+              theme="accent"
+              fill={focused ? '$color3' : '$color2'}
               size={size}
             />
           ),
@@ -77,8 +76,9 @@ export const AppLayout = () => {
           title: t('common:costs'),
           tabBarIcon: ({ size, focused }) => (
             <CreditCard
-              color={focused ? '#0F5837' : '#17221D'}
-              fill={focused ? '#EFFEF6' : '#FFFFFF'}
+              color={focused ? '$color1' : '$color0'}
+              theme="accent"
+              fill={focused ? '$color3' : '$color2'}
               size={size}
             />
           ),

@@ -319,7 +319,9 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
               <Text fontSize={'$5'} fontWeight={'bold'} color="$color11">
                 {product?.variant.price}
               </Text>
-              <CustomIcon name="riyal" size="$1" />
+              <Theme name="accent">
+                <CustomIcon name="riyal" size="$1" color="$color0" />
+              </Theme>
             </XStack>
           </YStack>
         </XStack>

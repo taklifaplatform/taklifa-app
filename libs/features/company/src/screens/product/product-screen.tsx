@@ -159,7 +159,9 @@ export function ProductScreen() {
       <Text fontSize={'$5'} fontWeight={'bold'} color="$color11">
         3.500
       </Text>
-      <CustomIcon name="riyal" size="$1" />
+      <Theme name="accent">
+        <CustomIcon name="riyal" size="$1" color="$color0" />
+      </Theme>
     </XStack>
   );
   const renderAddToCartInfo = () => (

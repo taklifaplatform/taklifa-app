@@ -72,7 +72,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {product?.name || ''}
         </Text>
         <TitleInfo
-          icon={<Building2 size={20} color="#000000" />}
+          icon={
+            <Theme name="accent">
+              <Building2 size={20} color="$color0" />
+            </Theme>
+          }
           title={product?.company?.name}
           flex={1}
           textAlign="left"
@@ -82,7 +86,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             {product?.variant?.price || ''}
           </Text>
           {product?.variant?.price && (
-            <CustomIcon name="riyal" size="$1" color="#000000" />
+            <Theme name="accent">
+              <CustomIcon name="riyal" size="$1" color="$color0" />
+            </Theme>
           )}
         </XStack>
       </YStack>
@@ -106,7 +112,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           onPress={() => {}}
           disabled={product.is_available}
         >
-          <Text fontSize={'$1'} fontWeight={'bold'} color="#FFFFFF">
+          <Text fontSize={'$1'} fontWeight={'bold'} color="$color2">
             أضف لعرض سعر
           </Text>
         </Button>
@@ -119,7 +125,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             backgroundColor: 'gray',
           }}
           borderWidth={1}
-          borderColor="$color11"
+          borderColor="$color0"
           width={'100%'}
           height={35}
           borderRadius={10}
@@ -127,7 +133,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           alignItems="center"
           onPress={() => router.push(`/app/products/${product.id}`)}
         >
-          <Text fontSize={'$1'} fontWeight={'bold'} color="$color11">
+          <Text fontSize={'$1'} fontWeight={'bold'} color="$color0">
             شاهد التفاصيل
           </Text>
         </Button>

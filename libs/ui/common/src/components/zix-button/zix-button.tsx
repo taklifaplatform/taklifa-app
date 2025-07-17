@@ -24,7 +24,7 @@ const CustomButton = styled(Button, {
         flexDirection: 'row',
         paddingVertical: '$4',
         hoverStyle: {
-          backgroundColor: '$color3',
+          backgroundColor: '$color10',
           borderRadius: '$3',
         },
       },

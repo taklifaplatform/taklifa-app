@@ -130,7 +130,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     return (
       <ZixDialog
         title={'ارفع صور المنتج'}
-        
+        colorHeader="$color10"
         open={isOpen}
         onOpenChange={setIsOpen}
         contentPadding="$1"

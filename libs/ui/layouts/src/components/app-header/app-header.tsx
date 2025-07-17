@@ -103,7 +103,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
         <Button
           unstyled
           size="$2"
-          color={'#FFFFFF'}
+          color={'$color2'}
           icon={<CustomIcon name="arrow_left" size="$2" />}
           onPress={() => {
             if (goBack) {
@@ -127,7 +127,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
     !showBackButton && showSearchBar && (
       <Button
         icon={isSearchBarOpen ? X : Search}
-        color={'#FFFFFF'}
+        color={'$color2'}
         scaleIcon={1.5}
         paddingHorizontal={0}
         onPress={() => setIsSearchBarOpen(!isSearchBarOpen)}
@@ -171,7 +171,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
                   fontSize={18}
                   fontWeight="bold"
                   numberOfLines={1}
-                  color={'#FFFFFF'}
+                  color={'$color2'}
                 >
                   {title ?? <CustomIcon name="logo_light" size="$5" />}
                 </H4>

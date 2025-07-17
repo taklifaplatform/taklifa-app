@@ -27,6 +27,7 @@ export const SearchProduct: React.FC<SearchProductProps> = ({
       <Input
         placeholder={placeholder}
         backgroundColor="transparent"
+        placeholderTextColor="$color0"
         borderWidth={0}
         value={value}
         onChangeText={onChangeText}

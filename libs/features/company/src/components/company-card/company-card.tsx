@@ -7,7 +7,8 @@ import {
   Text,
   ThemeableStackProps,
   XStack,
-  YStack
+  YStack,
+  Theme
 } from 'tamagui';
 import {
   CompanyContactActions,
@@ -43,12 +44,12 @@ export const CompanyCard: React.FC<CompanyCardProps> = ({
 
   const renderLocationInfo = () =>
     !!company?.location?.id && (
-      <TitleInfo icon={<MapPin size={20} color="$color0" />} title={company?.location?.address + ' ' + company?.location?.country?.name} />
+      <TitleInfo icon={<Theme name="accent"><MapPin size={20} color="$color0" /></Theme>} title={company?.location?.address + ' ' + company?.location?.country?.name} />
     );
 
   const renderRatingsInfo = () =>
     !!company.rating_stats?.count && (
-      <TitleInfo icon={<Star size={20} color="$color1" />} title={`(${company.rating_stats?.count}) ${company.rating_stats?.score}`} />
+      <TitleInfo icon={<Theme name="accent"><Star size={20} color="$color0" /></Theme>} title={`(${company.rating_stats?.count}) ${company.rating_stats?.score}`} />
     );
 
   return (

@@ -116,7 +116,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
   const renderLocationInfo = () =>
     !!company?.location?.id && (
       <TitleInfo
-        icon={<MapPin size={20} color="$color11" />}
+        icon={<MapPin size={20} color="$color0" />}
         title={company?.location?.country?.name}
       />
     );
@@ -124,11 +124,12 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
   const renderRatingsInfo = () =>
     !!company.rating_stats?.count && (
       <TitleInfo
-        icon={<Star size={20} color="$color11" />}
+        icon={<Star size={20} color="$color0" />}
         title={`(${company.rating_stats?.count}) ${company.rating_stats?.score}`}
       />
     );
   const renderAboutUs = () => (
+    <Theme name="accent">
     <YStack
       padding="$6"
       justifyContent="flex-start"
@@ -147,9 +148,9 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
         <ZixButton
           theme="accent"
           flex={1}
-          backgroundColor="$color0"
+          backgroundColor="$color"
           icon={(props: IconProps) => (
-            <Compass {...props} size={20} color="$color2" />
+            <Compass {...props} size={20} color="$color0" />
           )}
           color="$color2"
           fontWeight="600"
@@ -161,19 +162,19 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
           {t('shipment:destination')}
         </ZixButton>
         <Button
-          theme="success"
-          backgroundColor="$color9"
-          flex={1}
-          icon={(props: IconProps) => (
-            <CustomIcon {...props} name="whatsapp-contact" />
-          )}
-          onPress={_onWhatsappPress}
-          color="#FFFFFF"
-          fontWeight="600"
-          {...sharedButtonStyle}
-        >
-          تواصل بنا مباشر
-        </Button>
+        theme="success"
+        backgroundColor="$color7"
+        flex={1}
+        icon={(props: IconProps) => (
+          <CustomIcon {...props} name="whatsapp-contact" />
+        )}
+        onPress={_onWhatsappPress}
+        fontWeight="600"
+        color="$color2"
+        {...sharedButtonStyle}
+      >
+        تواصل بنا مباشر
+      </Button>
       </XStack>
       <Separator borderWidth={0.5} borderColor="$color9" width="100%" />
       <YStack gap="$4" alignItems="flex-start" justifyContent="flex-start">
@@ -185,6 +186,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
         </Paragraph>
       </YStack>
     </YStack>
+    </Theme>
   );
 
   return (
@@ -201,7 +203,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
             <Button
               theme="accent"
               flex={1}
-              backgroundColor="$color0"
+              backgroundColor="$color"
               icon={(props: IconProps) => (
                 <CircleEllipsis {...props} size={20} color="$color2" />
               )}
@@ -222,7 +224,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
         <ZixButton
           theme="accent"
           flex={1}
-          backgroundColor="$color0"
+          backgroundColor="$color"
           icon={(props: IconProps) => (
             <Compass {...props} size={20} color="$color2" />
           )}
@@ -238,29 +240,31 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
       )}
       <Button
         theme="success"
-        backgroundColor="$color9"
+        backgroundColor="$color7"
         flex={1}
         icon={(props: IconProps) => (
           <CustomIcon {...props} name="whatsapp-contact" />
         )}
         onPress={_onWhatsappPress}
-        color="#FFFFFF"
         fontWeight="600"
         {...sharedButtonStyle}
       >
         تواصل بنا مباشر
       </Button>
       {!useShowButton && (
-        <Button
-          flex={1}
-          backgroundColor={'transparent'}
-          borderWidth={1}
-          borderColor={'$color0'}
-          onPress={onCallPress}
-          {...sharedButtonStyle}
-        >
-          {t('shipment:details')}
-        </Button>
+        <Theme name="accent">
+          <Button
+            flex={1}
+            backgroundColor={'transparent'}
+            borderWidth={1}
+            borderColor={'$color0'}
+            color="$color0"
+            onPress={onCallPress}
+            {...sharedButtonStyle}
+          >
+            {t('shipment:details')}
+          </Button>
+        </Theme>
       )}
     </XStack>
   );

@@ -28,7 +28,7 @@ export const ServiceCard = ({ service, showHeader, setShowSheet }: ServiceCardPr
       >
         <XStack
           theme={'accent'}
-          backgroundColor={isOwner ? '$color3' : '#F1F2F4'}
+          backgroundColor={isOwner ? '$color10' : '#F1F2F4'}
           borderWidth={1}
           borderColor={isOwner ? '$color1' : '#F1F2F4'}
           borderRadius="$4"
@@ -98,7 +98,7 @@ export const ServiceCard = ({ service, showHeader, setShowSheet }: ServiceCardPr
               {service?.title || ''}
             </Text>
             <TitleInfo
-              icon={<Building2 size={15} color="#000000" />}
+              icon={<Building2 size={15} color="$color0" />}
               title={service?.description || ''}
               flex={1}
               textAlign="left"

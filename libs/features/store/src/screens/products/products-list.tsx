@@ -36,6 +36,7 @@ export const ProductsListScreen: React.FC<ProductsListScreenProps> = ({
         title={'اضافة منتج جديد'}
         open={isOpen}
         onOpenChange={setIsOpen}
+        colorHeader="$color10"
         contentPadding="$1"
         snapPoints={[25, 75]}
         disableRemoveScroll

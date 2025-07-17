@@ -457,6 +457,7 @@ const SwitcherButton: FC<SwitcherButtonProps> = memo(function SwitcherButton({
     <Button
       theme="accent"
       color={'#FFFFFF'}
+      backgroundColor="$color1"
       icon={showMap ? LayoutList : Map}
       scaleIcon={1.75}
       fontWeight="500"
@@ -482,6 +483,7 @@ const CenterButton: FC<CenterButtonProps> = memo(function CenterButton({
       theme="accent"
       icon={<CustomIcon name="my_location" size={30} color={'#FFFFFF'} />}
       circular
+      backgroundColor="$color1"
       position="absolute"
       bottom="$3"
       right="$4"

@@ -45,7 +45,7 @@ export const AddProductComponent = () => {
       gap="$3"
       theme={'accent'}
       alignItems="center"
-      backgroundColor="$color3"
+      backgroundColor="$color10"
       borderRadius="$4"
       paddingHorizontal="$4"
       paddingVertical="$5"
@@ -79,7 +79,7 @@ export const AddProductComponent = () => {
           alignItems="center"
           justifyContent="center"
           gap="$3"
-          backgroundColor="$color3"
+          backgroundColor="$color10"
           borderRadius="$10"
           padding="$3"
         >
@@ -87,7 +87,7 @@ export const AddProductComponent = () => {
         </Stack>
 
         <ZixMediaPickerField
-          type="files"
+          type="image"
           value={images}
           isMultiple={true}
           onChange={(value) => {
