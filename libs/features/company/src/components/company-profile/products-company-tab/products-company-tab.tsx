@@ -5,7 +5,7 @@ import {
   FilterByOrder,
   FilterPrice,
   FullScreenSpinner,
-  SearchProduct
+  SearchProduct,
 } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
@@ -14,6 +14,7 @@ import { FlatList, TouchableOpacity } from 'react-native';
 import { useRouter } from 'solito/router';
 import { H4, View, XStack } from 'tamagui';
 import { ProductCard, ProductThumbCard } from '@zix/ui/common';
+import { Sparkles } from '@tamagui/lucide-icons';
 
 export type ProductsCompanyTabProps = {
   company: CompanyTransformer;
@@ -21,7 +22,6 @@ export type ProductsCompanyTabProps = {
   setShowSheet?: (show: boolean) => void;
   myStore?: boolean;
 };
-
 
 export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
   company,
@@ -49,8 +49,7 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
         router.push(`${getUrlPrefix}/products/${item.id}`);
       }}
     >
-        <ProductCard product={item} index={index} useShowButton={true} />
-      
+      <ProductCard product={item} index={index} useShowButton={true} />
     </TouchableOpacity>
   );
 
@@ -63,7 +62,23 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
         router.push(`${getUrlPrefix}/products/${item.id}`);
       }}
     >
-    <ProductThumbCard product={item} index={index} useShowButton={true} />
+      <ProductThumbCard product={item} index={index} useShowButton={true} />
+      {item.created_with_ai && (
+        <View
+          theme="accent"
+          position="absolute"
+          top={10}
+          left={10}
+          backgroundColor="$color10"
+          width="30"
+          height="30"
+          justifyContent="center"
+          alignItems="center"
+          borderRadius="$8"
+        >
+          <Sparkles size={20} color="$color1" />
+        </View>
+      )}
     </TouchableOpacity>
   );
 
@@ -77,18 +92,20 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
       renderItem={renderMyStoreItem}
       keyExtractor={(item, index) => `product-${item.id}-${index}`}
       showsVerticalScrollIndicator={false}
-      ListHeaderComponent={() => !hideFilters && (
-        <XStack flex={1} gap="$2" alignItems="center" paddingVertical={'$4'}>
-          <FilterPrice />
-          <FilterByOrder orderBy={orderBy} setOrderBy={setOrderBy} />
-          <SearchProduct
-            placeholder="ابحث عن منتج"
-            value={search}
-            onChangeText={setSearch}
-          />
-        </XStack>
-      )}
-      contentContainerStyle={{justifyContent: 'center', }}
+      ListHeaderComponent={() =>
+        !hideFilters && (
+          <XStack flex={1} gap="$2" alignItems="center" paddingVertical={'$4'}>
+            <FilterPrice />
+            <FilterByOrder orderBy={orderBy} setOrderBy={setOrderBy} />
+            <SearchProduct
+              placeholder="ابحث عن منتج"
+              value={search}
+              onChangeText={setSearch}
+            />
+          </XStack>
+        )
+      }
+      contentContainerStyle={{ justifyContent: 'center' }}
       ListEmptyComponent={() => (
         <View flex={1} alignItems="center" gap="$2" padding="$4">
           <CustomIcon name="empty_data" size="$18" color="$color5" />
@@ -102,19 +119,21 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
       renderItem={renderItem}
       keyExtractor={(item, index) => `product-${item.id}-${index}`}
       showsVerticalScrollIndicator={false}
-      ListHeaderComponent={() => !hideFilters && (
-        <XStack flex={1} gap="$2" alignItems="center" paddingVertical={'$4'}>
-          <FilterPrice />
-          <FilterByOrder orderBy={orderBy} setOrderBy={setOrderBy} />
-          <SearchProduct
-            placeholder="ابحث عن منتج"
-            value={search}
-            onChangeText={setSearch}
-          />
-        </XStack>
-      )}
+      ListHeaderComponent={() =>
+        !hideFilters && (
+          <XStack flex={1} gap="$2" alignItems="center" paddingVertical={'$4'}>
+            <FilterPrice />
+            <FilterByOrder orderBy={orderBy} setOrderBy={setOrderBy} />
+            <SearchProduct
+              placeholder="ابحث عن منتج"
+              value={search}
+              onChangeText={setSearch}
+            />
+          </XStack>
+        )
+      }
       numColumns={2}
-      columnWrapperStyle={ { gap: 10, padding: 10 }}
+      columnWrapperStyle={{ gap: 10, padding: 10 }}
       contentContainerStyle={{ justifyContent: 'center' }}
       ListEmptyComponent={() => (
         <View flex={1} alignItems="center" gap="$2" padding="$4">

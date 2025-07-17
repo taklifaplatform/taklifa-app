@@ -1,4 +1,4 @@
-import { MapPin, Star } from '@tamagui/lucide-icons';
+import { BadgeCheck, MapPin, Star } from '@tamagui/lucide-icons';
 import { CompanyTransformer } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { TitleInfo, UserAvatar } from '@zix/ui/common';
@@ -72,9 +72,13 @@ export const CompanyCard: React.FC<CompanyCardProps> = ({
 
         <XStack alignItems="center" gap="$2" flex={1}>
           <YStack alignItems="flex-start" gap="$2">
-            <Text color="$color12" fontWeight="bold">
+            <XStack alignItems="center" gap="$3">
+              <Text color="$color12" fontWeight="bold">
               {company?.name}
             </Text>
+            <BadgeCheck theme="accent" size={16} color="$color1" />
+            </XStack>
+            
 
             {renderLocationInfo()}
             {renderRatingsInfo()}
