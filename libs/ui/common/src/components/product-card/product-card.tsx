@@ -30,8 +30,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       padding={'$4'}
       gap="$4"
       width={SCREEN_WIDTH / 2.4}
-      justifyContent="center"
-      alignItems="center"
     >
       <XStack flex={1} alignItems="center" justifyContent="center">
         {!!product?.image?.original_url ? (
@@ -71,23 +69,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <Text fontWeight={'bold'} fontSize={'$2'} numberOfLines={1}>
           {product?.name || ''}
         </Text>
-        <TitleInfo
-          icon={
-            <Theme name="accent">
-              <Building2 size={20} color="$color0" />
-            </Theme>
-          }
-          title={product?.company?.name}
-          flex={1}
-          textAlign="left"
-        />
-        <XStack gap="$2" alignItems="center">
+        <XStack gap="$2" alignItems="center" justifyContent="flex-start">
           <Text fontWeight={'bold'} fontSize={'$3'}>
             {product?.variant?.price || ''}
           </Text>
           {product?.variant?.price && (
             <Theme name="accent">
-              <CustomIcon name="riyal" size="$1" color="$color0" />
+              <CustomIcon name="riyal" size="$1" color="#000000" />
             </Theme>
           )}
         </XStack>

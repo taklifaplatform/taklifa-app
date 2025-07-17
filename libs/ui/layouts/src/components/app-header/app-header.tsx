@@ -138,7 +138,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
 
   const renderCardHeader = () => showCardHeader && (
     <XStack gap="$2" alignItems="center" >
-      <CustomIcon name="riyal" size="$1" color="$color2" />
+      <CustomIcon theme="accent" name="riyal" size="$1" color="$color2" />
       <Text fontSize={'$2'} fontWeight={'bold'} color="$color2">{cardHeaderValue}</Text>
       <ShoppingBag size={20} color="$color2" />
     </XStack>

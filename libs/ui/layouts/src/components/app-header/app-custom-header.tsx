@@ -1,4 +1,4 @@
-import { ArrowLeft, MapPin, Search, X } from '@tamagui/lucide-icons';
+import { ArrowLeft, MapPin, Search, Upload, X } from '@tamagui/lucide-icons';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { ProductsService } from '@zix/api';
 import { COMPANY_MANAGER_ROLES, useAuth } from '@zix/services/auth';
@@ -139,12 +139,17 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
           }
           placeholder={t('common:search')}
           placeholderTextColor="$color11"
+          borderRadius={'$8'}
           style={{
             paddingLeft: 60,
           }}
-          borderWidth={0.5}
-          borderColor="$color1"
+          borderWidth={0}
           backgroundColor="$color1"
+          shadowColor="black"
+          shadowOffset={{ width: 0, height: 4 }}
+          shadowOpacity={0.25}
+          shadowRadius={3.84}
+          elevation={5}
           fontWeight="600"
           value={selectedProduct ? selectedProduct : searchValue}
           onChangeText={(text) => {
@@ -202,7 +207,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
         <YStack
           gap="$2"
           position="absolute"
-          top={110}
+          top={120}
           left={0}
           right={0}
           paddingHorizontal="$4"
@@ -213,6 +218,11 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
           marginHorizontal="$4"
           justifyContent="center"
           alignItems="flex-start"
+          shadowColor="grey"
+          shadowOffset={{ width: 0, height: 2 }}
+          shadowOpacity={0.1}
+          shadowRadius={2}
+          elevation={1}
         >
           {searchResults.map((result: any) => (
             <TouchableOpacity
@@ -248,9 +258,26 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
         title={selectedProduct || 'أبحث على المنتجات'}
         open={open}
         onOpenChange={setOpen}
-        contentPadding="$1"
+        contentPadding="$3"
         snapPoints={[70]}
+        hideHiddenRightButton={true}
         disableDrag
+        hiddenRightButton={
+          <XStack gap="$4" alignItems="center" justifyContent="center">
+            <Button
+              size="$3"
+              backgroundColor="#F1F2F4"
+              justifyContent="center"
+              alignItems="center"
+              unstyled
+              circular
+              icon={<X size={16} color="$color0" />}
+              onPress={() => {
+                setOpen?.(false);
+              }}
+            />
+          </XStack>
+        }
       >
         {listProducts()}
       </ZixDialog>
@@ -355,7 +382,10 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
           justifyContent="center"
           alignItems="center"
           backgroundColor="$color11"
-          onPress={() => {}}
+          onPress={() => {
+            setOpen(false);
+            router.push(`${getUrlPrefix}/products/${product.id}`);
+          }}
         >
           <Text fontSize={'$1'} fontWeight={'bold'} color="#FFFFFF">
             شاهد التفاصيل

@@ -28,11 +28,14 @@ export type ZixDialogProps = DialogProps & {
   colorHeader?: string;
   disableDrag?: boolean;
   setDisableDrag?: (disable: boolean) => void;
+  hideHiddenRightButton?: boolean;
+  hiddenRightButton?: ReactNode;
 };
 
 export function ZixDialog({
   children,
   trigger,
+  hiddenRightButton,
   title,
   description,
   hideCloseButton,
@@ -46,21 +49,26 @@ export function ZixDialog({
   colorHeader = '$color10',
   disableDrag = true,
   setDisableDrag,
+  hideHiddenRightButton = false,
   ...dialogProps
 }: ZixDialogProps) {
   const { width, height } = useWindowDimensions();
- 
+
   return (
     <Dialog modal {...dialogProps}>
       {trigger && <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>}
       <Dialog.Adapt platform="touch">
-       
-        <Dialog.Sheet zIndex={200000} modal disableDrag={disableDrag} snapPoints={snapPoints} >
-        <Dialog.Sheet.Overlay
-          animation="lazy"
-          backgroundColor="black"
-          opacity={0.6}
-        />
+        <Dialog.Sheet
+          zIndex={200000}
+          modal
+          disableDrag={disableDrag}
+          snapPoints={snapPoints}
+        >
+          <Dialog.Sheet.Overlay
+            animation="lazy"
+            backgroundColor="black"
+            opacity={0.6}
+          />
           <Dialog.Sheet.Frame>
             <Dialog.Adapt.Contents />
           </Dialog.Sheet.Frame>
@@ -118,7 +126,9 @@ export function ZixDialog({
           {(!hideCloseButton || title) && (
             <XStack
               theme={'accent'}
-              justifyContent={'center'}
+              justifyContent={
+                hideHiddenRightButton ? 'space-between' : 'center'
+              }
               padding={contentPadding}
               backgroundColor={colorHeader}
               borderTopLeftRadius={'$4'}
@@ -129,7 +139,9 @@ export function ZixDialog({
               }}
             >
               {title ? (
-                <Dialog.Title fontWeight="bold" fontSize={'$3'}>{title}</Dialog.Title>
+                <Dialog.Title fontWeight="bold" fontSize={'$3'}>
+                  {title}
+                </Dialog.Title>
               ) : (
                 <VisuallyHidden>
                   <Dialog.Title></Dialog.Title>
@@ -140,23 +152,9 @@ export function ZixDialog({
                   <Button size="$3" circular icon={<X />} />
                 </Dialog.Close>
               )}
+              {hideHiddenRightButton && hiddenRightButton}
             </XStack>
           )}
-
-
-          {/* {description ? (
-            <Dialog.Description
-              paddingTop={contentPadding}
-              paddingRight={contentPadding}
-              paddingLeft={contentPadding}
-            >
-              {description}
-            </Dialog.Description>
-          ) : (
-            <VisuallyHidden>
-              <Dialog.Description />
-            </VisuallyHidden>
-          )} */}
           {children}
         </Dialog.Content>
       </Dialog.Portal>

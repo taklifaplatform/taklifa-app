@@ -76,6 +76,7 @@ export const CompanyCard: React.FC<CompanyCardProps> = ({
               <Text color="$color12" fontWeight="bold">
               {company?.name}
             </Text>
+            {/* TODO: add badge check if company is verified */}
             <BadgeCheck theme="accent" size={16} color="$color1" />
             </XStack>
             
