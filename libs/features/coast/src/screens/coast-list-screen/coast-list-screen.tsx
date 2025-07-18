@@ -19,7 +19,7 @@ export const CoastListScreen: React.FC<ServicesListScreenProps> = ({
       <YStack
         gap={'$4'}
         theme="accent"
-        backgroundColor="$color3"
+        backgroundColor="$color10"
         padding={'$6'}
         borderRadius={'$4'}
       >
@@ -32,7 +32,7 @@ export const CoastListScreen: React.FC<ServicesListScreenProps> = ({
           </XStack>
           <XStack gap={'$2'} alignItems="center">
             <Text fontSize={'$6'} fontWeight={'bold'}>
-              1000
+              0.0
             </Text>
             <CustomIcon name="riyal" size={'$3'} color="#000000" />
           </XStack>
@@ -40,8 +40,8 @@ export const CoastListScreen: React.FC<ServicesListScreenProps> = ({
         {showButton && (
           <Button
             backgroundColor="$color0"
-            borderRadius={'$4'}
-            height={'$4'}
+            borderRadius='$5'
+            height='$4'
             icon={<FileDown size={15} color="#FFFFFF" />}
           >
             <Text fontSize={'$2'} fontWeight={'bold'} color="#FFFFFF">
@@ -61,7 +61,7 @@ export const CoastListScreen: React.FC<ServicesListScreenProps> = ({
       <YStack flex={1} padding={'$2'} marginTop='$3'>
         
         <FlatList
-        data={['1','2','3']}
+        data={[]}
         style={{ flex: 1}}
         ListHeaderComponent={() => renderCoastTotal({ showButton: true })}
         showsVerticalScrollIndicator={false}

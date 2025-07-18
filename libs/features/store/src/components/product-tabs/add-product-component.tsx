@@ -1,18 +1,13 @@
-import {
-  CheckCircle,
-  ImageUp,
-  Trash2,
-  WandSparkles,
-} from '@tamagui/lucide-icons';
+import { ImageUp, Trash2, WandSparkles } from '@tamagui/lucide-icons';
 import { MediaTransformer } from '@zix/api';
-import { ZixAlertActions, ZixButton, DeleteProduct } from '@zix/ui/common';
+import { DeleteProduct, ZixAlertActions, ZixButton } from '@zix/ui/common';
 import { ZixMediaPickerField } from '@zix/ui/forms';
+import { CheckedGif, MagicGif } from '@zix/ui/icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Dimensions, FlatList, TouchableOpacity } from 'react-native';
 import { Image, Paragraph, Stack, Text, YStack } from 'tamagui';
-import { useRouter } from 'expo-router';
-import { CheckedGif, MagicGif } from '@zix/ui/icons';
 
 export const AddProductComponent = () => {
   const [images, setImages] = useState<MediaTransformer[]>([]);
@@ -194,7 +189,7 @@ export const AddProductComponent = () => {
         closeButton={isOpen}
       >
         <ZixButton
-          // disabled={images.length === 0}
+          disabled={images.length === 0}
           onPress={() => {
             setIsOpen(true);
           }}
@@ -237,7 +232,7 @@ export const AddProductComponent = () => {
       </ZixAlertActions>
       <ZixAlertActions
         title="تم إنشاء المنتجات بنجاح!"
-        description="تم إنشاء 4 منتج من 4 صورة"
+        description={`تم إنشاء ${images.length} منتج من ${images.length} صورة`}
         icon={<CheckedGif width={35} height={35} />}
         closeButton={isSuccess}
       />

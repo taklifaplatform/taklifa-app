@@ -375,6 +375,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
           </Button>
         </XStack>
         <Button
+          unstyled
           theme={'accent'}
           width={'100%'}
           height={35}

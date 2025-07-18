@@ -1,22 +1,24 @@
-import { Building2 } from '@tamagui/lucide-icons';
 import { CustomIcon } from '@zix/ui/icons';
 import React, { useState } from 'react';
-import { Dimensions, View } from 'react-native';
+import { Dimensions, TouchableOpacity } from 'react-native';
 import { useRouter } from 'solito/router';
-import { Button, Image, Text, Theme, XStack, YStack } from 'tamagui';
+import { Image, Text, Theme, XStack, YStack, View } from 'tamagui';
 import { ManageCountProduct } from '../manage-count-product/manage-count-product';
-import { TitleInfo } from '../title-info/title-info';
+import { ProductTransformer } from '@zix/api';
+import { ZixButton } from '../zix-button/zix-button';
 
 export type ProductCardProps = {
-  product: any;
+  product: ProductTransformer;
   index: number;
   useShowButton?: boolean;
+  setShowSheet?: (show: boolean) => void;
 };
 
 export const ProductCard: React.FC<ProductCardProps> = ({
   product,
   index,
   useShowButton = false,
+  setShowSheet,
 }) => {
   const { width: SCREEN_WIDTH } = Dimensions.get('window');
   const router = useRouter();
@@ -31,55 +33,63 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       gap="$4"
       width={SCREEN_WIDTH / 2.4}
     >
-      <XStack flex={1} alignItems="center" justifyContent="center">
-        {!!product?.image?.original_url ? (
-          <Image
-            source={{
-              uri: product?.original_url,
-            }}
-            width={140}
-            height={130}
-            borderRadius={10}
-          />
-        ) : (
-          <Theme reset>
-            <View
+      <TouchableOpacity
+        onPress={() => {
+          if (setShowSheet) {
+            setShowSheet(false);
+          }
+          router.push(`/app/products/${product.id}`);
+        }}
+        style={{
+          flex: 1,
+          gap: 10,
+        }}
+      >
+        <XStack flex={1} alignItems="center" justifyContent="center">
+          {!!product?.image?.original_url ? (
+            <Image
+              source={{
+                uri: product?.original_url,
+              }}
               width={140}
               height={130}
-              backgroundColor="$color2"
               borderRadius={10}
-              borderWidth={1}
-              borderColor="$color8"
-              overflow="hidden"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <CustomIcon name="image-blank" size={100} color="$color2" />
-            </View>
-          </Theme>
-        )}
-      </XStack>
-
-      <YStack
-        flex={1}
-        gap="$3"
-        justifyContent="flex-start"
-        alignItems="flex-start"
-      >
-        <Text fontWeight={'bold'} fontSize={'$2'} numberOfLines={1}>
-          {product?.name || ''}
-        </Text>
-        <XStack gap="$2" alignItems="center" justifyContent="flex-start">
-          <Text fontWeight={'bold'} fontSize={'$3'}>
-            {product?.variant?.price || ''}
-          </Text>
-          {product?.variant?.price && (
-            <Theme name="accent">
-              <CustomIcon name="riyal" size="$1" color="#000000" />
+            />
+          ) : (
+            <Theme reset>
+              <View
+                width={140}
+                height={130}
+                backgroundColor="$color2"
+                borderRadius={'$4'}
+                borderWidth={1}
+                borderColor="$color8"
+                overflow="hidden"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <CustomIcon name="image-blank" size={100} color="$color2" />
+              </View>
             </Theme>
           )}
         </XStack>
-      </YStack>
+
+        <YStack gap="$3" justifyContent="flex-start" alignItems="flex-start">
+          <Text fontWeight={'bold'} fontSize={'$2'} numberOfLines={1}>
+            {product?.name || ''}
+          </Text>
+          <XStack gap="$2" alignItems="center" justifyContent="flex-start">
+            <Text fontWeight={'bold'} fontSize={'$3'}>
+              {product?.variant?.price || ''}
+            </Text>
+            {product?.variant?.price && (
+              <Theme name="accent">
+                <CustomIcon name="riyal" size="$1" color="$color0" />
+              </Theme>
+            )}
+          </XStack>
+        </YStack>
+      </TouchableOpacity>
       {useShowButton && (
         <ManageCountProduct
           value={count}
@@ -90,41 +100,43 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         />
       )}
       {useShowButton && (
-        <Button
+        <ZixButton
           theme={'accent'}
           width={'100%'}
           height={35}
-          borderRadius={10}
           justifyContent="center"
           alignItems="center"
           onPress={() => {}}
           disabled={product.is_available}
+          fontSize={'$1'}
+          fontWeight={'bold'}
+          color="$color2"
         >
-          <Text fontSize={'$1'} fontWeight={'bold'} color="$color2">
-            أضف لعرض سعر
-          </Text>
-        </Button>
+          أضف لعرض سعر
+        </ZixButton>
       )}
       {!useShowButton && (
-        <Button
+        <ZixButton
           theme={'accent'}
+          unstyled
           backgroundColor="transparent"
           pressStyle={{
             backgroundColor: 'gray',
           }}
           borderWidth={1}
           borderColor="$color0"
-          width={'100%'}
+          borderRadius={'$4'}
+          // width={'100%'}
           height={35}
-          borderRadius={10}
           justifyContent="center"
           alignItems="center"
           onPress={() => router.push(`/app/products/${product.id}`)}
+          fontSize={'$1'}
+          fontWeight={'bold'}
+          color="$color0"
         >
-          <Text fontSize={'$1'} fontWeight={'bold'} color="$color0">
-            شاهد التفاصيل
-          </Text>
-        </Button>
+          شاهد التفاصيل
+        </ZixButton>
       )}
     </YStack>
   );

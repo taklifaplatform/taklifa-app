@@ -10,7 +10,6 @@ import { useAuth, useMixpanel } from '@zix/services/auth';
 import { ActionSheetRef, FilterByOrder, ZixButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader } from '@zix/ui/layouts';
-import { useFlatListQuery } from '@zix/utils';
 import { t } from 'i18next';
 import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { FlatList } from 'react-native';
@@ -65,11 +64,12 @@ const CategoryList = memo(
               ? '$color1'
               : '$color11'
           }
-          borderRadius={10}
+          borderRadius={'$4'}
+          fontSize={'$1'}
+          fontWeight={'bold'}
+          color="$color2"
         >
-          <Text color="#FFFFFF" fontSize={14} fontWeight="bold">
-            {item.name}
-          </Text>
+          {item.name}
         </ZixButton>
       )}
       horizontal
@@ -114,10 +114,9 @@ const SubCategoryList = memo(
                 : onSelect(item as ServiceCategoryTransformer)
             }
             backgroundColor={'$color10'}
-            borderRadius={10}
+            fontSize={'$1'}
           >
-            <CustomIcon name={item?.icon} size={10} />
-            <Text>{item.name}</Text>
+            {item.name}
           </ZixButton>
         )}
         horizontal
@@ -186,34 +185,48 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
   const [sortBy, setSortBy] = useState<'created_at' | 'price'>('created_at');
   const [selectedYears, setSelectedYears] = useState<string[]>([]);
 
-  const { data: servicesData, ...servicesQuery } = useFlatListQuery({
-    initialPageParam: 1,
-    queryFn: ({ pageParam }: { pageParam: number }) =>
-      ServiceService.listServices({
-        perPage: 20,
-        page: pageParam || 1,
-        search: search,
-        categoryId: selectedCategory?.id,
-        subCategoryId: selectedSubCategory?.id,
-        years: selectedYears.length > 0 ? selectedYears?.join(',') : undefined,
-        sortBy: sortBy,
-        sortDirection: sortDirection,
-      }),
-    queryKey: [
-      'ServiceService.listServices',
-      search,
-      selectedCategory?.id,
-      selectedSubCategory?.id,
-      sortBy,
-      sortDirection,
-      selectedYears.join(','),
-    ],
-  });
+  // const { data: servicesData, ...servicesQuery } = useFlatListQuery({
+  //   initialPageParam: 1,
+  //   queryFn: ({ pageParam }: { pageParam: number }) =>
+  //     ServiceService.listServices({
+  //       perPage: 20,
+  //       page: pageParam || 1,
+  //       search: search,
+  //       categoryId: selectedCategory?.id,
+  //       subCategoryId: selectedSubCategory?.id,
+  //       years: selectedYears.length > 0 ? selectedYears?.join(',') : undefined,
+  //       sortBy: sortBy,
+  //       sortDirection: sortDirection,
+  //     }),
+  //   queryKey: [
+  //     'ServiceService.listServices',
+  //     search,
+  //     selectedCategory?.id,
+  //     selectedSubCategory?.id,
+  //     sortBy,
+  //     sortDirection,
+  //     selectedYears.join(','),
+  //   ],
+  // });
 
   const { data: categoriesData } = useQuery({
     queryFn: () => ServiceService.listServiceCategories({}),
     queryKey: ['ServiceService.listServiceCategories'],
   });
+
+  const servicesData = [
+    {
+      id: 1,
+      title: 'Service 1',
+      price: 100,
+      icon: 'riyal',
+      city: 'Riyadh',
+      created_at: '2021-01-01',
+      updated_at: '2021-01-01',
+      description: 'Description 1',
+      images: [],
+    },
+  ];
 
   // Memoize subcategories
   const subCategories = useMemo(
@@ -280,7 +293,7 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
               textProps={{
                 color: '$color1',
               }}
-              backgroundColor="$color3"
+              backgroundColor="$color10"
             >
               أضف خدمات الأن
             </ZixButton>
@@ -308,15 +321,16 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
 
         <FlatList
           showsVerticalScrollIndicator={false}
-          refreshing={servicesQuery.isLoading}
-          onRefresh={servicesQuery.refetch}
-          onEndReached={servicesQuery.fetchNextPage}
+          // refreshing={servicesQuery.isLoading}
+          // onRefresh={servicesQuery.refetch}
+          // onEndReached={servicesQuery.fetchNextPage}
           removeClippedSubviews={true}
           contentContainerStyle={{ gap: 20 }}
           initialNumToRender={10}
           style={{ flex: 1 }}
-          data={(servicesData as ServiceTransformer[]) || []}
-          keyExtractor={(item: ServiceTransformer, index: number): string =>
+          // data={(servicesData as ServiceTransformer[]) || []}
+          data={(servicesData as any[]) || []}
+          keyExtractor={(item: any, index: number): string =>
             `${item.id ?? index}`
           }
           renderItem={({ item, index }) => (

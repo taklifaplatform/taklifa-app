@@ -16,6 +16,7 @@ export const SearchProduct: React.FC<SearchProductProps> = ({
     <XStack
       theme={'accent'}
       backgroundColor={'transparent'}
+      flex={1}
       borderRadius="$4"
       alignItems="center"
       paddingHorizontal="$2"
@@ -25,14 +26,17 @@ export const SearchProduct: React.FC<SearchProductProps> = ({
       gap="$2"
     >
       <Input
+        flex={1}
         placeholder={placeholder}
+        fontSize={'$1'}
         backgroundColor="transparent"
         placeholderTextColor="$color0"
         borderWidth={0}
         value={value}
         onChangeText={onChangeText}
-      />
-      <Search size={20} color="$color0" />
+        textAlign="right"
+      /> 
+   <Search size={20} color="$color0" />
     </XStack>
   );
 };

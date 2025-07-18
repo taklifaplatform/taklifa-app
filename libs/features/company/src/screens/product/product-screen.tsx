@@ -100,7 +100,7 @@ export function ProductScreen() {
 
   const baseOptions = {
     width: SCREEN_WIDTH - 40,
-    height: 330,
+    height: 280,
     scrollAnimationDuration: 3000,
   };
   const carouselRef = useRef<ICarouselInstance>(null);
