@@ -408,6 +408,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     if (Platform.OS === 'web') {
       launchMediaPicker();
     } else {
+      setIsOpen(true);
       actionRef.current?.open();
     }
   }
@@ -506,7 +507,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
 
   return (
     <>
-      {!showCustomImagePicker && (
+    
         <Previewer
           onPress={onOpenMediaPicker}
           previews={Object.values(previews)}
@@ -515,10 +516,10 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
           isOptional={isOptional} //
           notAvatar={notAvatar}
         />
-      )}
-      {showCustomImagePicker && renderCustomImagePicker()}
+    
+      { renderCustomImagePicker()}
 
-      {!showCustomImagePicker && renderImagePicker()}
+      {/* {!showCustomImagePicker && renderImagePicker()} */}
       { renderUploadProgressDialog()}
     </>
   );

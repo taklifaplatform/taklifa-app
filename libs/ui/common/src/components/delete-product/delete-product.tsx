@@ -28,7 +28,7 @@ export const DeleteProduct: React.FC<DeleteProductProps> = ({
       trigger={trigger}
       colorHeader="#FFF2F1"
     >
-      <YStack flex={1} alignItems="center" gap="$6" marginTop={'$4'} backgroundColor="transparent">
+      <YStack flex={1} alignItems="center" gap="$6" paddingTop={'$4'} backgroundColor="white">
         <YStack alignItems="center" justifyContent="center" gap="$2">
           <TrashGif width={30} height={30} />
           <Text fontWeight="bold" fontSize={'$3'}>
