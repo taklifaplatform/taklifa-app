@@ -3,7 +3,12 @@ import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ProductsService } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
-import { DeleteProduct, FullScreenSpinner, ZixAlertActions, ZixButton } from '@zix/ui/common';
+import {
+  DeleteProduct,
+  FullScreenSpinner,
+  ZixAlertActions,
+  ZixButton,
+} from '@zix/ui/common';
 import {
   formFields,
   handleFormErrors,
@@ -69,7 +74,6 @@ export const ProductManagerScreen = () => {
   const { mutateAsync } = useMutation({
     mutationFn: (requestBody: z.infer<typeof UpdateProductFormSchema>) => {
       if (productId) {
-        
         return ProductsService.updateProduct({
           product: productId as string,
           requestBody,
@@ -78,7 +82,6 @@ export const ProductManagerScreen = () => {
       return ProductsService.storeProduct({
         requestBody,
       });
-      
     },
     onSuccess() {
       toast.show(productId ? 'تم تحديث المنتج بنجاح' : 'تم إضافة المنتج بنجاح');
@@ -285,34 +288,38 @@ export const ProductManagerScreen = () => {
       <AppHeader
         title={productId ? 'تعديل المنتج' : 'إضافة منتج'}
         showBackButton
-        deleteButton={() => (
-          <DeleteProduct
-          title="تأكيد الحذف"
-          trigger={
-            <ZixButton
-              theme={'error'}
-              width={'100%'}
-              height={'$3'}
-              backgroundColor="#FFF2F1"
-              icon={<Trash2 size={20} color="#FF6369" />}
-              borderWidth={1}
-              borderColor="#FF6369"
-            >
-              <Text fontWeight="500" fontSize={'$3'} color="#FF6369">
-                حذف
-              </Text>
-            </ZixButton>
-            }
-            onDelete={() => {
-              deleteProduct(productId as string);
-            }}
-        />
-        )}
+        deleteButton={() =>
+          productId && (
+            <DeleteProduct
+              title="تأكيد الحذف"
+              trigger={
+                <ZixButton
+                  theme={'error'}
+                  width={'100%'}
+                  height={'$3'}
+                  backgroundColor="#FFF2F1"
+                  icon={<Trash2 size={20} color="#FF6369" />}
+                  borderWidth={1}
+                  borderColor="#FF6369"
+                >
+                  <Text fontWeight="500" fontSize={'$3'} color="#FF6369">
+                    حذف
+                  </Text>
+                </ZixButton>
+              }
+              onDelete={() => {
+                deleteProduct(productId as string);
+              }}
+            />
+          )
+        }
       />
       <YStack flex={1}>{renderForm()}</YStack>
       <ZixAlertActions
         title={productId ? 'تم تحديث المنتج بنجاح' : 'تم إضافة المنتج بنجاح'}
-        description={productId ? 'تم حفظ التغييرات على المنتج' : 'تم إضافة المنتج بنجاح'}
+        description={
+          productId ? 'تم حفظ التغييرات على المنتج' : 'تم إضافة المنتج بنجاح'
+        }
         icon={<CheckCircle size={20} color="green" />}
         closeButton={open}
       />
