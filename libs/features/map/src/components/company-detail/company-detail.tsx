@@ -5,12 +5,11 @@ import { ScrollView, YStack } from 'tamagui';
 interface CompanyDetailProps {
   company: CompanyTransformer;
   setShowSheet: (show: boolean) => void;
-  onScroll?: (event: any) => void;
 }
 
-export function CompanyDetail({ company, setShowSheet, onScroll }: CompanyDetailProps) {
+export function CompanyDetail({ company, setShowSheet }: CompanyDetailProps) {
   return (
-    <ScrollView flex={1} onScroll={onScroll}>
+    <ScrollView flex={1}>
       <YStack padding="$4" marginBottom="$4" gap="$4">
         <CompanyCard
           company={company}

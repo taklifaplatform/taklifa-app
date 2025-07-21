@@ -1,9 +1,11 @@
 import { Minus, Plus } from '@tamagui/lucide-icons';
 import { Button, XStack, Text } from 'tamagui';
+import { useState, useEffect } from 'react';
 
 export type ManageCountProductProps = {
   value: number;
   onUpdate: (value: number) => void;
+  max?: number | null;
   width?: number | string;
   height?: number | string;
   size?: number;
@@ -14,13 +16,24 @@ export const ManageCountProduct = ({
   onUpdate,
   width = 100,
   height = 30,
-  size = 10,
+  size = 15,
+  max = 100,
 }: ManageCountProductProps) => {
+  const [count, setCount] = useState(value);
+
+  useEffect(() => {
+    onUpdate(count);
+  }, [count]);
+
   const handleUpdateCart = (value: number, state: 'plus' | 'minus') => {
     if (state === 'plus') {
-      onUpdate(value + 1);
+      if (count < (max ?? 100)) {
+        setCount(count + 1);
+      }
     } else {
-      onUpdate(value - 1);
+      if (count > 0) {
+        setCount(count - 1);
+      }
     }
   };
   return (

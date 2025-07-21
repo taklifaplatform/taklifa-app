@@ -127,7 +127,7 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
           onRefresh={refetch}
           showsVerticalScrollIndicator={false}
           numColumns={2}
-          columnWrapperStyle={{ gap: 10, padding: 10 }}
+          columnWrapperStyle={{ gap: 15, paddingVertical: 10 }}
           contentContainerStyle={{ justifyContent: 'center' }}
           ListEmptyComponent={() => (
             <View flex={1} alignItems="center" gap="$2" padding="$4">

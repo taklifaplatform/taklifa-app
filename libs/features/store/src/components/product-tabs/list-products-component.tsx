@@ -1,25 +1,28 @@
-import {
-  ChevronUp,
-  LayoutGrid,
-  LayoutList,
-  Search,
-} from '@tamagui/lucide-icons';
+import { ChevronUp, LayoutGrid, LayoutList } from '@tamagui/lucide-icons';
 import { BatchProductTransformer } from '@zix/api';
 import { SearchProduct, ZixButton, ZixDialog } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { useMemo, useState } from 'react';
 import { FlatList } from 'react-native';
-import { Input, Text, XStack, YStack } from 'tamagui';
+import { View, H4, Text, XStack, YStack } from 'tamagui';
 import { ProductCard } from './product-card';
 
-export const ListProductsComponent = ({ batchProduct }: { batchProduct: BatchProductTransformer }) => {
+export const ListProductsComponent = ({
+  batchProduct,
+}: {
+  batchProduct: BatchProductTransformer;
+}) => {
   const [mode, setMode] = useState<'list' | 'grid'>('list');
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState('');
 
   const [deletedProducts, setDeletedProducts] = useState<string[]>([]);
   const products = useMemo(() => {
-    return batchProduct.products?.filter((product) => !deletedProducts.includes(product.id)) || [];
+    return (
+      batchProduct.products?.filter(
+        (product) => !deletedProducts.includes(product.id ?? ''),
+      ) || []
+    );
   }, [batchProduct.products, deletedProducts]);
   const handleDelete = (id: string) => {
     setDeletedProducts([...deletedProducts, id]);
@@ -57,13 +60,13 @@ export const ListProductsComponent = ({ batchProduct }: { batchProduct: BatchPro
 
   return (
     <YStack flex={1} gap="$3">
-      <XStack alignItems="center" justifyContent="space-between">
+      <XStack alignItems="center" gap="$2">
         <ZixButton
           icon={
             mode === 'grid' ? (
-              <LayoutGrid size={18} color={'white'} />
+              <LayoutGrid size={20} color={'white'} />
             ) : (
-              <LayoutList size={18} color={'white'} />
+              <LayoutList size={20} color={'white'} />
             )
           }
           onPress={() => setMode(mode === 'grid' ? 'list' : 'grid')}
@@ -72,21 +75,30 @@ export const ListProductsComponent = ({ batchProduct }: { batchProduct: BatchPro
           backgroundColor={'green'}
           unstyled
         />
-        {renderFilterByType()}
-
-        <SearchProduct value={search} onChangeText={setSearch} />
+        {/* {renderFilterByType()} */}
+        {/* <SearchProduct value={search} onChangeText={setSearch} /> */}
       </XStack>
       <FlatList
         data={products}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
-          <ProductCard product={item} mode={mode} onDelete={handleDelete} />
+          <ProductCard
+            product={item}
+            mode={mode}
+            onDelete={() => handleDelete(item.id ?? '')}
+          />
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id ?? ''}
         contentContainerStyle={{
           gap: 10,
           paddingBottom: 60,
         }}
+        ListEmptyComponent={
+          <View flex={1} alignItems="center" gap="$2" padding="$4">
+            <CustomIcon name="empty_data" size="$18" color="$color5" />
+            <H4 color="#8590A2">لم تقم بإضافة أي منتج بعد</H4>
+          </View>
+        }
       />
       <ZixButton
         theme={'accent'}

@@ -1,39 +1,42 @@
 import { ImageUp, Trash2, WandSparkles } from '@tamagui/lucide-icons';
-import { BatchProductTransformer, MediaTransformer, ProductsService } from '@zix/api';
+import {
+  BatchProductTransformer,
+  MediaTransformer,
+  ProductsService,
+} from '@zix/api';
 import { DeleteProduct, ZixAlertActions, ZixButton } from '@zix/ui/common';
 import { ZixMediaPickerField } from '@zix/ui/forms';
 import { CheckedGif, MagicGif } from '@zix/ui/icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Dimensions, FlatList, TouchableOpacity } from 'react-native';
 import { Image, Paragraph, Stack, Text, YStack } from 'tamagui';
 
 export type BatchAddProductComponentProps = {
   onSuccess?: (data: BatchProductTransformer) => void;
-}
+};
 
-export const BatchAddProductComponent = ({ onSuccess }: BatchAddProductComponentProps) => {
+export const BatchAddProductComponent = ({
+  onSuccess,
+}: BatchAddProductComponentProps) => {
   const [images, setImages] = useState<MediaTransformer[]>([]);
   const SCREEN_WIDTH = Dimensions.get('window').width;
   const [isOpen, setIsOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const router = useRouter();
 
   async function createProducts() {
     setIsOpen(true);
     try {
       const result = await ProductsService.batchCreateProducts({
         requestBody: {
-          images
-        }
+          images,
+        },
       });
       setIsOpen(false);
       setIsSuccess(true);
 
-      console.log('===================')
-      console.log(result);
-      console.log('===================')
+      // TODO reset dstate
+      setImages([]);
       setTimeout(() => {
         setIsSuccess(false);
         onSuccess?.(result.data as BatchProductTransformer);
@@ -41,12 +44,8 @@ export const BatchAddProductComponent = ({ onSuccess }: BatchAddProductComponent
     } catch (error) {
       setIsOpen(false);
       alert('Oops! Something went wrong');
-      console.log('===================')
-      console.log(error);
-      console.log('===================')
     }
   }
-
 
   const renderMessageDescription = () => (
     <YStack
@@ -77,7 +76,7 @@ export const BatchAddProductComponent = ({ onSuccess }: BatchAddProductComponent
         alignItems="center"
         justifyContent="center"
         borderRadius="$4"
-        padding="$9"
+        padding="$4"
         backgroundColor="$color3"
         borderWidth={1}
         borderColor="$color0"
@@ -147,22 +146,26 @@ export const BatchAddProductComponent = ({ onSuccess }: BatchAddProductComponent
         }
         data={images}
         keyExtractor={(item) => item.uuid?.toString() ?? ''}
-        numColumns={2}
-        showsVerticalScrollIndicator={false}
-        style={{
+        contentContainerStyle={{
           gap: 10,
           marginBottom: 80,
         }}
+        numColumns={2}
+        columnWrapperStyle={{
+          gap: 10,
+        }}
+        showsVerticalScrollIndicator={false}
+
         renderItem={({ item }) => {
           return (
             <Stack
-              width={SCREEN_WIDTH / 2 - 45}
+              flex={1}
               height={SCREEN_WIDTH / 2 - 45}
               borderWidth={1}
               borderColor="$color3"
               borderRadius="$4"
               overflow="hidden"
-              margin="$2"
+              // margin="$2"
               padding="$2"
               alignItems="center"
               justifyContent="center"

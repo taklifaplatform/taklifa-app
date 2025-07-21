@@ -15,9 +15,6 @@ export const AiProductCreatorsScreen = () => {
         key: 'add-products',
         title: 'اضافة المنتجات',
         content: <BatchAddProductComponent onSuccess={(data) => {
-          console.log('===================')
-          console.log("SHOULD CHANGE TAB");
-          console.log('===================')
           setBatchProduct(data);
           setActiveTab('list-products');
         }} />,
@@ -25,7 +22,7 @@ export const AiProductCreatorsScreen = () => {
       {
         key: 'list-products',
         title: 'قائمة المنتجات',
-        content: <ListProductsComponent batchProduct={batchProduct} />,
+        content: <ListProductsComponent batchProduct={batchProduct || ({} as BatchProductTransformer)} />,
       },
     ];
     return _tabs;

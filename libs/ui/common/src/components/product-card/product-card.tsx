@@ -23,7 +23,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const { width: SCREEN_WIDTH } = Dimensions.get('window');
   const router = useRouter();
   const [count, setCount] = useState(1);
-  console.log('product::', JSON.stringify(product, null, 2));
   return (
     <YStack
       flex={1}
@@ -97,7 +96,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           onUpdate={setCount}
           width={'100%'}
           height={30}
-          size={10}
+          size={15}
         />
       )}
       {useShowButton && (

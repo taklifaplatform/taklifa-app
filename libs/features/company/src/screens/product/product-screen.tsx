@@ -59,8 +59,6 @@ export function ProductScreen() {
       }),
   });
 
-  console.log('product', JSON.stringify(product, null, 2));
-
   const renderLocationInfo = () => (
     <TitleInfo
       icon={<MapPin size={20} color="$color0" />}
@@ -168,10 +166,14 @@ export function ProductScreen() {
     <XStack width="100%" gap="$3">
       <ManageCountProduct
         value={count}
-        onUpdate={setCount}
+        onUpdate={(value) => {
+          console.log('value:: onUpdate', value);
+          setCount(value);
+        }}
         width={'50%'}
         height={30}
-        size={10}
+        size={15}
+        max={product?.data?.variant?.stock}
       />
       <Button
         theme={'accent'}

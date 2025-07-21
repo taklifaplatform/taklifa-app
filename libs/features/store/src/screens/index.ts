@@ -7,5 +7,3 @@ export * from './products/ai-product-creators-screen';
 
 export * from './products/product-manager-screen';
 
-export * from './products/list-ai-products-screen';
-

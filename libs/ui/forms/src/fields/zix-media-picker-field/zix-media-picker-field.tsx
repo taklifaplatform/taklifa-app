@@ -508,7 +508,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
   return (
     <>
     
-        <Previewer
+        {!showCustomImagePicker && <Previewer
           onPress={onOpenMediaPicker}
           previews={Object.values(previews)}
           onRemoveMedia={onRemoveMedia}
@@ -516,7 +516,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
           isOptional={isOptional} //
           notAvatar={notAvatar}
         />
-    
+    }
       { renderCustomImagePicker()}
 
       {/* {!showCustomImagePicker && renderImagePicker()} */}
