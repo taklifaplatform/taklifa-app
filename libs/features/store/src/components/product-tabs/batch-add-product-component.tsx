@@ -1,38 +1,52 @@
 import { ImageUp, Trash2, WandSparkles } from '@tamagui/lucide-icons';
-import { MediaTransformer } from '@zix/api';
+import { BatchProductTransformer, MediaTransformer, ProductsService } from '@zix/api';
 import { DeleteProduct, ZixAlertActions, ZixButton } from '@zix/ui/common';
 import { ZixMediaPickerField } from '@zix/ui/forms';
 import { CheckedGif, MagicGif } from '@zix/ui/icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Dimensions, FlatList, TouchableOpacity } from 'react-native';
 import { Image, Paragraph, Stack, Text, YStack } from 'tamagui';
 
-export const AddProductComponent = () => {
+export type BatchAddProductComponentProps = {
+  onSuccess?: (data: BatchProductTransformer) => void;
+}
+
+export const BatchAddProductComponent = ({ onSuccess }: BatchAddProductComponentProps) => {
   const [images, setImages] = useState<MediaTransformer[]>([]);
   const SCREEN_WIDTH = Dimensions.get('window').width;
   const [isOpen, setIsOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    if (isOpen) {
-      setTimeout(() => {
-        setIsOpen(false);
-        setIsSuccess(true);
-      }, 3000);
-    }
-  }, [isOpen]);
+  async function createProducts() {
+    setIsOpen(true);
+    try {
+      const result = await ProductsService.batchCreateProducts({
+        requestBody: {
+          images
+        }
+      });
+      setIsOpen(false);
+      setIsSuccess(true);
 
-  useEffect(() => {
-    if (isSuccess) {
+      console.log('===================')
+      console.log(result);
+      console.log('===================')
       setTimeout(() => {
         setIsSuccess(false);
-        router.push('/app/products/list-products');
-      }, 3000);
+        onSuccess?.(result.data as BatchProductTransformer);
+      }, 1000);
+    } catch (error) {
+      setIsOpen(false);
+      alert('Oops! Something went wrong');
+      console.log('===================')
+      console.log(error);
+      console.log('===================')
     }
-  }, [isSuccess]);
+  }
+
 
   const renderMessageDescription = () => (
     <YStack
@@ -191,7 +205,8 @@ export const AddProductComponent = () => {
         <ZixButton
           disabled={images.length === 0}
           onPress={() => {
-            setIsOpen(true);
+            // setIsOpen(true);
+            createProducts();
           }}
           unstyled
         >
@@ -240,4 +255,4 @@ export const AddProductComponent = () => {
   );
 };
 
-export default AddProductComponent;
+export default BatchAddProductComponent;

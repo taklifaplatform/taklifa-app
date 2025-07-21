@@ -2,7 +2,7 @@ import { CompanyTransformer } from '@zix/api';
 import React, { useMemo } from 'react';
 
 import { ZixTab } from '@zix/ui/common';
-import AddProductComponent from './add-product-component';
+import BatchAddProductComponent from './batch-add-product-component';
 import ListProductsComponent from './list-products-component';
 
 export type ProfileTabsProps = {
@@ -16,7 +16,7 @@ export const ProductsCompanyTab: React.FC<ProfileTabsProps> = ({ company, tabKey
       {
         key: 'add-products',
         title: 'اضافة المنتجات',
-        content: <AddProductComponent />,
+        content: <BatchAddProductComponent />,
       },
       {
         key: 'list-products',

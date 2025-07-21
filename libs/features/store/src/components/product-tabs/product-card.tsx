@@ -1,11 +1,12 @@
 import { SquarePen, Trash2 } from '@tamagui/lucide-icons';
+import { ProductTransformer } from '@zix/api';
 import { DeleteProduct, ZixButton } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
-import { View, Text, YStack, Stack, XStack, Image } from 'tamagui';
 import { useRouter } from 'expo-router';
+import { Image, Stack, Text, XStack, YStack } from 'tamagui';
 
 interface ProductCardProps {
-  product: any;
+  product: ProductTransformer;
   mode: 'grid' | 'list';
   onDelete: (id: number) => void;
 }
@@ -31,14 +32,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         alignItems="flex-start"
         justifyContent="flex-start"
       >
-        <Image
-          source={product.image}
-          style={{
-            width: mode === 'grid' ? '100%' : 130,
-            height: mode === 'grid' ? 200 : 130,
-            borderRadius: 10,
-          }}
-        />
+        {
+          product.image && (
+            <Image
+              source={{
+                uri: product.image.original_url,
+              }}
+              style={{
+                width: mode === 'grid' ? '100%' : 130,
+                height: mode === 'grid' ? 200 : 130,
+                borderRadius: 10,
+              }}
+            />
+          )
+        }
         <YStack flex={1} gap="$2" alignItems="flex-start">
           <Text
             fontWeight="bold"
@@ -47,7 +54,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             textAlign="left"
             numberOfLines={2}
           >
-            {product.title}
+            {product.name}
           </Text>
           <Text
             fontWeight="500"

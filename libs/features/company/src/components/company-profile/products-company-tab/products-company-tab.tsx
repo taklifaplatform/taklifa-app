@@ -70,7 +70,7 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
       }}
     >
       <ProductThumbCard product={item} index={index} useShowButton={true} />
-      {!item.created_with_ai && (
+      {!!item.created_with_ai && (
         <View
           theme="accent"
           position="absolute"

@@ -4,61 +4,25 @@ import {
   LayoutList,
   Search,
 } from '@tamagui/lucide-icons';
+import { BatchProductTransformer } from '@zix/api';
 import { SearchProduct, ZixButton, ZixDialog } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { FlatList } from 'react-native';
 import { Input, Text, XStack, YStack } from 'tamagui';
 import { ProductCard } from './product-card';
 
-export const ListProductsComponent = () => {
+export const ListProductsComponent = ({ batchProduct }: { batchProduct: BatchProductTransformer }) => {
   const [mode, setMode] = useState<'list' | 'grid'>('list');
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState('');
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      title: 'جهاز تكييف مركزي بقدرة 30 طن',
-      description:
-        'تتميز هذه الوحدة بقدرتها الفائقة على تبريد المساحات الواسعة، مما يجعلها مثالية للمكاتب الكبيرة والمراكز التجارية.....',
-      price: 75.0,
-      image: require('./tak1.png'),
-    },
-    {
-      id: 2,
-      title: 'باب المنيوم سنقل',
-      description:
-        'هذا المكيف المحمول يتميز بتصميمه المدمج وسهولة نقله، مما يجعله خيارًا رائعًا للتبريد المؤقت في أي مكان.....',
-      price: 100.0,
-      image: require('./tak2.png'),
-    },
-    {
-      id: 3,
-      title: 'مكيف سبليت بقدرة 2 طن',
-      description:
-        'مع نظام تشغيل هادئ وكفاءة عالية، يوفر هذا المكيف حلولًا مثالية لتبريد الغرف المتوسطة بحجمها.....',
-      price: 100.0,
-      image: require('./tak3.png'),
-    },
-    {
-      id: 4,
-      title: 'باب المنيوم سنقل',
-      description:
-        'مع نظام تشغيل هادئ وكفاءة عالية، يوفر هذا المكيف حلولًا مثالية لتبريد الغرف المتوسطة بحجمها.....',
-      price: 100.0,
-      image: require('./tak4.png'),
-    },
-    {
-      id: 5,
-      title: 'باب المنيوم سنقل',
-      description:
-        'مع نظام تشغيل هادئ وكفاءة عالية، يوفر هذا المكيف حلولًا مثالية لتبريد الغرف المتوسطة بحجمها.....',
-      price: 100.0,
-      image: require('./tak5.png'),
-    },
-  ]);
-  const handleDelete = (id: number) => {
-    setProducts(products.filter((product) => product.id !== id));
+
+  const [deletedProducts, setDeletedProducts] = useState<string[]>([]);
+  const products = useMemo(() => {
+    return batchProduct.products?.filter((product) => !deletedProducts.includes(product.id)) || [];
+  }, [batchProduct.products, deletedProducts]);
+  const handleDelete = (id: string) => {
+    setDeletedProducts([...deletedProducts, id]);
   };
   const renderFilterByType = () => {
     return (
