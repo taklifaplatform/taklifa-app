@@ -18,7 +18,6 @@ export class ProductCategoriesService {
         search,
         categoryId,
         parentId,
-        perPage,
     }: {
         /**
          * Page number
@@ -31,7 +30,6 @@ export class ProductCategoriesService {
         search?: string,
         categoryId?: string,
         parentId?: string,
-        perPage?: '1',
     }): CancelablePromise<{
         data?: Array<ProductCategoryTransformer>;
         links?: {
@@ -64,7 +62,6 @@ export class ProductCategoriesService {
                 'search': search,
                 'category_id': categoryId,
                 'parent_id': parentId,
-                'per_page': perPage,
             },
         });
     }

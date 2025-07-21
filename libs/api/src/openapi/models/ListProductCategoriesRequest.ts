@@ -6,6 +6,5 @@ export type ListProductCategoriesRequest = {
     search?: string;
     category_id?: string;
     parent_id?: string;
-    per_page?: number;
 };
 
