@@ -23,6 +23,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const { width: SCREEN_WIDTH } = Dimensions.get('window');
   const router = useRouter();
   const [count, setCount] = useState(1);
+  console.log('product::', JSON.stringify(product, null, 2));
   return (
     <YStack
       flex={1}
@@ -49,7 +50,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {!!product?.image?.original_url ? (
             <Image
               source={{
-                uri: product?.original_url,
+                uri: product?.image?.original_url,
               }}
               width={140}
               height={130}

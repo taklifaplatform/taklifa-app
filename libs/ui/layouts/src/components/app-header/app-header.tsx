@@ -21,6 +21,7 @@ export type AppHeaderProps = {
   renderAfterSearchBar?: () => React.ReactNode;
   title?: string;
   headerBackgroundColor?: ColorTokens | 'transparent';
+  deleteButton?: () => React.ReactNode;
 };
 
 export const AppHeader: React.FC<AppHeaderProps> = ({
@@ -34,6 +35,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   headerTitle,
   title,
   renderAfterSearchBar,
+  deleteButton,
 }) => {
   const { user, activeRole, isLoggedIn, getUrlPrefix, urgencyMode } = useAuth();
   const router = useRouter();
@@ -146,8 +148,8 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
 
   const renderMobileHeader = () => (
     <YStack
-      theme="accent"
-      themeShallow
+    theme="accent"
+      
       backgroundColor={'$color1'}
       paddingBottom="$1"
     >
@@ -159,6 +161,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
             alignItems="center"
             justifyContent="space-between"
           >
+            
             <XStack flex={0.25} justifyContent="flex-start">
               {renderAvatar()}
               {renderBackButton()}
@@ -181,11 +184,13 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
               {headerRight ? headerRight() : null}
               {renderToggleSearchBar()}
               {renderCardHeader()}
+              {deleteButton ? deleteButton() : null}
             </XStack>
           </XStack>
 
           {renderSearchBar()}
           {renderAfterSearchBar?.()}
+          
         </YStack>
       </AppHeaderWrapper>
     </YStack>

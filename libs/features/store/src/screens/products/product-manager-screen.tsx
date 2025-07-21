@@ -1,8 +1,9 @@
-import { CheckCircle } from '@tamagui/lucide-icons';
+import { CheckCircle, Trash2 } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ProductsService } from '@zix/api';
-import { FullScreenSpinner, ZixAlertActions } from '@zix/ui/common';
+import { useAuth } from '@zix/services/auth';
+import { DeleteProduct, FullScreenSpinner, ZixAlertActions, ZixButton } from '@zix/ui/common';
 import {
   formFields,
   handleFormErrors,
@@ -39,6 +40,8 @@ const UpdateProductFormSchema = z.object({
 
 export const ProductManagerScreen = () => {
   const [productId] = useParam('product');
+  const queryClient = useQueryClient();
+  const { user } = useAuth();
   const { data, isLoading } = useQuery({
     enabled: !!productId,
     queryKey: ['ProductsService.retrieveProduct', productId],
@@ -80,12 +83,35 @@ export const ProductManagerScreen = () => {
     onSuccess() {
       toast.show(productId ? 'تم تحديث المنتج بنجاح' : 'تم إضافة المنتج بنجاح');
       setOpen(true);
+      queryClient.invalidateQueries({
+        queryKey: ['ProductsService.fetchAllProduct', user?.active_company?.id],
+      });
     },
     onError(error: any) {
       toast.show('حدث خطأ ما', {
         message: error.message,
       });
       handleFormErrors(form, error);
+    },
+  });
+
+  const { mutateAsync: deleteProduct } = useMutation({
+    mutationFn: (productId: string) => {
+      return ProductsService.deleteProduct({
+        product: productId,
+      });
+    },
+    onSuccess() {
+      toast.show('تم حذف المنتج بنجاح');
+      queryClient.invalidateQueries({
+        queryKey: ['ProductsService.fetchAllProduct', user?.active_company?.id],
+      });
+      router.back();
+    },
+    onError(error: any) {
+      toast.show('حدث خطأ ما', {
+        message: error.message,
+      });
     },
   });
 
@@ -152,7 +178,6 @@ export const ProductManagerScreen = () => {
               color="white"
               onPress={() => {
                 const values = form.getValues();
-                console.log('values::', JSON.stringify(values, null, 2));
                 mutateAsync(values);
               }}
             >
@@ -260,6 +285,29 @@ export const ProductManagerScreen = () => {
       <AppHeader
         title={productId ? 'تعديل المنتج' : 'إضافة منتج'}
         showBackButton
+        deleteButton={() => (
+          <DeleteProduct
+          title="تأكيد الحذف"
+          trigger={
+            <ZixButton
+              theme={'error'}
+              width={'100%'}
+              height={'$3'}
+              backgroundColor="#FFF2F1"
+              icon={<Trash2 size={20} color="#FF6369" />}
+              borderWidth={1}
+              borderColor="#FF6369"
+            >
+              <Text fontWeight="500" fontSize={'$3'} color="#FF6369">
+                حذف
+              </Text>
+            </ZixButton>
+            }
+            onDelete={() => {
+              deleteProduct(productId as string);
+            }}
+        />
+        )}
       />
       <YStack flex={1}>{renderForm()}</YStack>
       <ZixAlertActions

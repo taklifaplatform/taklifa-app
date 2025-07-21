@@ -234,24 +234,7 @@ export function ProductScreen() {
           height={100}
           imageWidth={100}
           imageHeight={100}
-          medias={[
-            {
-              original_url:
-                'https://cdn-icons-png.flaticon.com/512/616/615495.png',
-            },
-            {
-              original_url:
-                'https://cdn-icons-png.flaticon.com/512/616/619495.png',
-            },
-            {
-              original_url:
-                'https://cdn-icons-png.flaticon.com/512/616/616425.png',
-            },
-            {
-              original_url:
-                'https://cdn-icons-png.flaticon.com/512/616/616495.png',
-            },
-          ]}
+          medias={product?.data?.images || []}
         />
         <YStack
           width="100%"
