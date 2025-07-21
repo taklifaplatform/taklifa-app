@@ -10,6 +10,7 @@ export type ProductTransformer = {
     id?: string;
     name?: string;
     description?: string | null;
+    batch_product_id?: string | null;
     created_with_ai?: boolean;
     company?: SimpleCompanyTransformer;
     image?: MediaTransformer;

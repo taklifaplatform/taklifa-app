@@ -4,7 +4,8 @@
 /* eslint-disable */
 export type ListProductCategoriesRequest = {
     search?: string;
-    company_id?: string;
     category_id?: string;
+    parent_id?: string;
+    per_page?: number;
 };
 

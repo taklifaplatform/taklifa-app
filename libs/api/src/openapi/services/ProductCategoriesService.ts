@@ -16,8 +16,9 @@ export class ProductCategoriesService {
         page,
         perPage,
         search,
-        companyId,
         categoryId,
+        parentId,
+        perPage,
     }: {
         /**
          * Page number
@@ -28,8 +29,9 @@ export class ProductCategoriesService {
          */
         perPage?: number,
         search?: string,
-        companyId?: string,
         categoryId?: string,
+        parentId?: string,
+        perPage?: '1',
     }): CancelablePromise<{
         data?: Array<ProductCategoryTransformer>;
         links?: {
@@ -60,28 +62,49 @@ export class ProductCategoriesService {
                 'page': page,
                 'per_page': perPage,
                 'search': search,
-                'company_id': companyId,
                 'category_id': categoryId,
+                'parent_id': parentId,
+                'per_page': perPage,
             },
         });
     }
     /**
-     * Display the specified product category.
+     * Get all sub-categories for a specific parent category
      * @returns any Successful response
      * @throws ApiError
      */
-    public static retrieveProductCategory({
-        productCategory,
+    public static retrieveSubCategories({
+        parentId,
     }: {
-        productCategory: string,
+        parentId: string,
     }): CancelablePromise<{
-        data?: ProductCategoryTransformer;
+        data?: Array<ProductCategoryTransformer>;
+        links?: {
+            first?: string;
+            last?: string;
+            prev?: string;
+            next?: string;
+        };
+        meta?: {
+            current_page?: number;
+            from?: number;
+            last_page?: number;
+            links?: Array<{
+                url?: string;
+                label?: string;
+                active?: boolean;
+            }>;
+            path?: string;
+            per_page?: number;
+            to?: number;
+            total?: number;
+        };
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/product-categories/{productCategory}',
+            url: '/api/product-categories/{parentId}',
             path: {
-                'productCategory': productCategory,
+                'parentId': parentId,
             },
         });
     }

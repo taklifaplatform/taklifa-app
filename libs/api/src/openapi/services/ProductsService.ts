@@ -2,6 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { BatchCreateProductRequest } from '../models/BatchCreateProductRequest';
+import type { BatchProductTransformer } from '../models/BatchProductTransformer';
 import type { ProductTransformer } from '../models/ProductTransformer';
 import type { UpdateProductRequest } from '../models/UpdateProductRequest';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -143,6 +145,45 @@ export class ProductsService {
             url: '/api/products/{product}',
             path: {
                 'product': product,
+            },
+        });
+    }
+    /**
+     * Create a new batch of products using AI with provided images.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static batchCreateProducts({
+        requestBody,
+    }: {
+        requestBody: BatchCreateProductRequest,
+    }): CancelablePromise<{
+        data?: BatchProductTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/products/ai/batch-create',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * Get or generate products from a batch using AI.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static generateProductsFromBatch({
+        batchProduct,
+    }: {
+        batchProduct: string,
+    }): CancelablePromise<{
+        data?: Array<ProductTransformer>;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/products/ai/batch-create/{batchProduct}/products',
+            path: {
+                'batchProduct': batchProduct,
             },
         });
     }

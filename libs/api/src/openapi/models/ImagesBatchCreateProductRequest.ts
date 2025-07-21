@@ -2,9 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type UpdateProductCategoryRequest = {
-    name?: string;
-    description?: string;
-    order?: number;
+export type ImagesBatchCreateProductRequest = {
+    uuid?: string;
+    id?: string;
 };
 
