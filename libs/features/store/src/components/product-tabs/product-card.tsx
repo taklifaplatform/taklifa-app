@@ -33,7 +33,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         justifyContent="flex-start"
       >
         {
-          product.image && (
+          !!product.image?.original_url && (
             <Image
               source={{
                 uri: product.image.original_url,
