@@ -102,13 +102,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       {useShowButton && (
         <ZixButton
           theme={'accent'}
-          width={'100%'}
           height={35}
           justifyContent="center"
           alignItems="center"
           onPress={() => {}}
           disabled={product.is_available}
-          fontSize={'$1'}
+          fontSize={12}
+          backgroundColor="$color1"
           fontWeight={'bold'}
           color="$color2"
         >

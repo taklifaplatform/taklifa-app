@@ -16,6 +16,7 @@ import { FlatList } from 'react-native';
 import { useRouter } from 'solito/router';
 import { H4, Text, Theme, View, XStack, YStack } from 'tamagui';
 import ServiceCard from '../../components/service-card';
+import { useFlatListQuery } from '@zix/utils';
 
 export interface ServicesListScreenProps {
   showHeader: boolean;
@@ -185,48 +186,34 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
   const [sortBy, setSortBy] = useState<'created_at' | 'price'>('created_at');
   const [selectedYears, setSelectedYears] = useState<string[]>([]);
 
-  // const { data: servicesData, ...servicesQuery } = useFlatListQuery({
-  //   initialPageParam: 1,
-  //   queryFn: ({ pageParam }: { pageParam: number }) =>
-  //     ServiceService.listServices({
-  //       perPage: 20,
-  //       page: pageParam || 1,
-  //       search: search,
-  //       categoryId: selectedCategory?.id,
-  //       subCategoryId: selectedSubCategory?.id,
-  //       years: selectedYears.length > 0 ? selectedYears?.join(',') : undefined,
-  //       sortBy: sortBy,
-  //       sortDirection: sortDirection,
-  //     }),
-  //   queryKey: [
-  //     'ServiceService.listServices',
-  //     search,
-  //     selectedCategory?.id,
-  //     selectedSubCategory?.id,
-  //     sortBy,
-  //     sortDirection,
-  //     selectedYears.join(','),
-  //   ],
-  // });
+  const { data: servicesData, ...servicesQuery } = useFlatListQuery({
+    initialPageParam: 1,
+    queryFn: ({ pageParam }: { pageParam: number }) =>
+      ServiceService.listServices({
+        perPage: 20,
+        page: pageParam || 1,
+        search: search,
+        categoryId: selectedCategory?.id,
+        subCategoryId: selectedSubCategory?.id,
+        years: selectedYears.length > 0 ? selectedYears?.join(',') : undefined,
+        sortBy: sortBy,
+        sortDirection: sortDirection,
+      }),
+    queryKey: [
+      'ServiceService.listServices',
+      search,
+      selectedCategory?.id,
+      selectedSubCategory?.id,
+      sortBy,
+      sortDirection,
+      selectedYears.join(','),
+    ],
+  });
 
   const { data: categoriesData } = useQuery({
     queryFn: () => ServiceService.listServiceCategories({}),
     queryKey: ['ServiceService.listServiceCategories'],
   });
-
-  const servicesData = [
-    {
-      id: 1,
-      title: 'Service 1',
-      price: 100,
-      icon: 'riyal',
-      city: 'Riyadh',
-      created_at: '2021-01-01',
-      updated_at: '2021-01-01',
-      description: 'Description 1',
-      images: [],
-    },
-  ];
 
   // Memoize subcategories
   const subCategories = useMemo(
@@ -321,15 +308,14 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
 
         <FlatList
           showsVerticalScrollIndicator={false}
-          // refreshing={servicesQuery.isLoading}
-          // onRefresh={servicesQuery.refetch}
-          // onEndReached={servicesQuery.fetchNextPage}
+          refreshing={servicesQuery.isLoading}
+          onRefresh={servicesQuery.refetch}
+          onEndReached={servicesQuery.fetchNextPage}
           removeClippedSubviews={true}
-          contentContainerStyle={{ gap: 20 }}
+          contentContainerStyle={{ gap: 20, paddingTop: 30 }}
           initialNumToRender={10}
           style={{ flex: 1 }}
-          // data={(servicesData as ServiceTransformer[]) || []}
-          data={(servicesData as any[]) || []}
+          data={(servicesData as ServiceTransformer[]) || []}
           keyExtractor={(item: any, index: number): string =>
             `${item.id ?? index}`
           }

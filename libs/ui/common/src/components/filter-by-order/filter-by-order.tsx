@@ -72,7 +72,7 @@ export const FilterByOrder: React.FC<FilterByOrderProps> = ({ orderBy, setOrderB
       open={isOpen}
       onOpenChange={setIsOpen}
       contentPadding="$1"
-      snapPoints={[35, 50]}
+      snapPoints={[40, 55]}
       disableRemoveScroll
       trigger={
         <XStack

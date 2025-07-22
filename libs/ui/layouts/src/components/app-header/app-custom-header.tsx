@@ -365,11 +365,12 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
             width={'40%'}
             height={35}
             borderRadius={'$4'}
+            backgroundColor="$color1"
             justifyContent="center"
             alignItems="center"
             onPress={() => {}}
           >
-            <Text fontSize={'$1'} fontWeight={'bold'} color="#FFFFFF">
+            <Text fontSize={12} fontWeight={'bold'} color="#FFFFFF">
               أضف لعرض سعر
             </Text>
           </Button>

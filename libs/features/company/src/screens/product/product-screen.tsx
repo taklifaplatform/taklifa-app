@@ -4,8 +4,8 @@ import { Dimensions } from 'react-native';
 import {
   ArrowLeft,
   ArrowRight,
+  Building2,
   ClockFading,
-  MapPin,
   Star,
 } from '@tamagui/lucide-icons';
 import { useQuery } from '@tanstack/react-query';
@@ -61,15 +61,15 @@ export function ProductScreen() {
 
   const renderLocationInfo = () => (
     <TitleInfo
-      icon={<MapPin size={20} color="$color0" />}
+      icon={<Building2 size={20} color="$color0" />}
       title={product?.data?.company?.name}
     />
   );
 
-  const renderRatingsInfo = () => (
+  const renderRatingsInfo = () => product?.data?.rating_stats?.score && (
     <TitleInfo
       icon={<Star size={20} color="$color0" />}
-      title="7,4 (350 تقييمات)"
+      title={`${product?.data?.rating_stats?.score} (${product?.data?.rating_stats?.count} تقييمات)`}
     />
   );
   const renderTimeInfo = () => (
@@ -155,7 +155,7 @@ export function ProductScreen() {
   const renderPriceInfo = () => (
     <XStack width="100%" gap="$2" alignItems="center" paddingVertical={'$2'}>
       <Text fontSize={'$5'} fontWeight={'bold'} color="$color11">
-        3.500
+        {product?.data?.variant?.price}
       </Text>
       <Theme name="accent">
         <CustomIcon name="riyal" size="$1" color="$color0" />
@@ -167,24 +167,24 @@ export function ProductScreen() {
       <ManageCountProduct
         value={count}
         onUpdate={(value) => {
-          console.log('value:: onUpdate', value);
           setCount(value);
         }}
         width={'50%'}
-        height={30}
+        height={35}
         size={15}
         max={product?.data?.variant?.stock}
       />
       <Button
         theme={'accent'}
-        width={'40%'}
+        flex={1}
         height={35}
         borderRadius={10}
+        backgroundColor="$color1"
         justifyContent="center"
         alignItems="center"
         onPress={() => {}}
       >
-        <Text fontSize={'$1'} fontWeight={'bold'} color="#FFFFFF">
+        <Text fontSize={12} fontWeight={'bold'} color="#FFFFFF">
           أضف لعرض سعر
         </Text>
       </Button>
@@ -272,7 +272,7 @@ export function ProductScreen() {
     <AppHeader
       showBackButton
       showCardHeader
-      cardHeaderValue={'3.500'}
+      cardHeaderValue={product?.data?.variant?.price}
       title=""
     />
   );

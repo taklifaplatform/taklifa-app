@@ -60,15 +60,14 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
         <Text fontWeight={'bold'} fontSize={'$2'} numberOfLines={1}>
           {product?.name || ''}
         </Text>
-        <XStack gap="$6">
+        <XStack gap="$4" flex={1}>
           <TitleInfo
             icon={
               <Theme name="accent">
                 <MapPin size={16} color="$color0" />
               </Theme>
             }
-            title={product?.company?.name || ''}
-            flex={1}
+            title={product?.name || ''}
             textAlign="left"
           />
           <TitleInfo
@@ -83,8 +82,8 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
 
         <XStack
           width={'100%'}
-          alignItems="center"
           justifyContent="space-between"
+          alignItems="center"
         >
           <XStack gap="$2" alignItems="center">
             <Text fontWeight={'bold'} fontSize={'$3'}>
@@ -99,8 +98,8 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
           <Theme name="accent">
             <ZixButton
               width={'50%'}
-              backgroundColor="$color"
-              icon={<SquarePen size={16} color="$color2" />}
+              backgroundColor="$color0"
+              icon={<SquarePen size={12} color="$color2" />}
               height={35}
               borderRadius={'$4'}
               justifyContent="center"

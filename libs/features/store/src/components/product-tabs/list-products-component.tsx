@@ -1,11 +1,14 @@
 import { ChevronUp, LayoutGrid, LayoutList } from '@tamagui/lucide-icons';
-import { BatchProductTransformer } from '@zix/api';
-import { SearchProduct, ZixButton, ZixDialog } from '@zix/ui/common';
+import { BatchProductTransformer, ProductsService } from '@zix/api';
+import { DebugObject, SearchProduct, ZixButton, ZixDialog } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { useMemo, useState } from 'react';
 import { FlatList } from 'react-native';
 import { View, H4, Text, XStack, YStack } from 'tamagui';
 import { ProductCard } from './product-card';
+import { useToastController } from '@tamagui/toast';
+import { useAuth } from '@zix/services/auth';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const ListProductsComponent = ({
   batchProduct,
@@ -17,6 +20,9 @@ export const ListProductsComponent = ({
   const [search, setSearch] = useState('');
 
   const [deletedProducts, setDeletedProducts] = useState<string[]>([]);
+  const queryClient = useQueryClient();
+  const toast = useToastController();
+  const { user } = useAuth();
   const products = useMemo(() => {
     return (
       batchProduct.products?.filter(
@@ -27,6 +33,27 @@ export const ListProductsComponent = ({
   const handleDelete = (id: string) => {
     setDeletedProducts([...deletedProducts, id]);
   };
+
+  const { mutateAsync } = useMutation({
+    mutationFn: (requestBody) => {
+      
+      return ProductsService.storeProduct({
+        requestBody,
+      });
+    },
+    onSuccess() {
+      toast.show( 'تم إضافة المنتج بنجاح');
+     
+      queryClient.invalidateQueries({
+        queryKey: ['ProductsService.fetchAllProduct', user?.active_company?.id],
+      });
+    },
+    onError(error: any) {
+      toast.show('حدث خطأ ما', {
+        message: error.message,
+      });
+    },
+  });
   const renderFilterByType = () => {
     return (
       <ZixDialog
@@ -60,6 +87,7 @@ export const ListProductsComponent = ({
 
   return (
     <YStack flex={1} gap="$3">
+      
       <XStack alignItems="center" gap="$2">
         <ZixButton
           icon={
@@ -82,11 +110,12 @@ export const ListProductsComponent = ({
         data={products}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
-          <ProductCard
-            product={item}
-            mode={mode}
-            onDelete={() => handleDelete(item.id ?? '')}
-          />
+          <DebugObject object={batchProduct} />
+          // <ProductCard
+          //   product={item}
+          //   mode={mode}
+          //   onDelete={() => handleDelete(item.id ?? '')}
+          // />
         )}
         keyExtractor={(item) => item.id ?? ''}
         contentContainerStyle={{

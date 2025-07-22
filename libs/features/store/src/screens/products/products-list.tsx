@@ -1,14 +1,12 @@
-import { useAuth, useMixpanel } from '@zix/services/auth';
-import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
-import { Text, XStack, YStack } from 'tamagui';
-import { CompanyProfileTabs } from '@zix/features/company';
-import { useRouter } from 'solito/router';
-import { DebugObject, ZixButton, ZixDialog } from '@zix/ui/common';
 import { FilePlus2, PlusSquare, Sparkles } from '@tamagui/lucide-icons';
+import { CompanyProfileTabs } from '@zix/features/company';
+import { useAuth, useMixpanel } from '@zix/services/auth';
+import { ZixButton, ZixDialog } from '@zix/ui/common';
+import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
-import { useQuery } from '@tanstack/react-query';
-import { CompanyAdminService } from '@zix/api';
+import { useRouter } from 'solito/router';
+import { Text, XStack, YStack } from 'tamagui';
 
 export type ProductsListScreenProps = {
   showHeader?: boolean;
@@ -26,7 +24,7 @@ export const ProductsListScreen: React.FC<ProductsListScreenProps> = ({
 
   return (
     <ScreenLayout>
-      <AppHeader title={'متجري'} showSearchBar />
+      <AppHeader title={'متجري'} />
       <YStack flex={1} paddingTop="$4">
         {user?.active_company && (
           <CompanyProfileTabs company={user.active_company} myStore={true} />

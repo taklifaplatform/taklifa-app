@@ -480,7 +480,8 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
             // enterStyle={{ x: 0, y: 20, opacity: 0, scale: 0.9 }}
             // exitStyle={{ x: 0, y: 20, opacity: 0, scale: 0.9 }}
             gap="$4"
-            width="100%"
+            width='90%'
+            paddingHorizontal='$4'
           >
             <Dialog.Title>
               {t('core:media_picker.uploading_title')}
@@ -493,7 +494,7 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
                 ?.replace('{uploaded}', uploadedFiles.toString())
                 .replace('{total}', totalFiles.toString())}
             </Dialog.Description>
-            <XStack space="$4" alignItems="center" width="100%">
+            <XStack space="$4" alignItems="center" width="100%" paddingHorizontal='$6'>
               <Progress value={progress} width="100%" size="$4">
                 <Progress.Indicator animation="bouncy" />
               </Progress>
