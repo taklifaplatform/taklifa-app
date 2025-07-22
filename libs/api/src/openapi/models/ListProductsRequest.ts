@@ -5,5 +5,10 @@
 export type ListProductsRequest = {
     search?: string;
     company_id?: string;
+    order_by?: string;
+    order_direction?: string;
+    min_price?: number;
+    max_price?: number;
+    include_unpublished?: boolean;
 };
 

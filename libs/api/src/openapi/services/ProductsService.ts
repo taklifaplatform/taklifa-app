@@ -20,6 +20,11 @@ export class ProductsService {
         perPage,
         search,
         companyId,
+        orderBy,
+        orderDirection,
+        minPrice,
+        maxPrice,
+        includeUnpublished,
     }: {
         /**
          * Page number
@@ -31,6 +36,11 @@ export class ProductsService {
         perPage?: number,
         search?: string,
         companyId?: string,
+        orderBy?: string,
+        orderDirection?: '"asc"' | '"desc"',
+        minPrice?: any,
+        maxPrice?: any,
+        includeUnpublished?: boolean,
     }): CancelablePromise<{
         data?: Array<ProductTransformer>;
         links?: {
@@ -62,6 +72,11 @@ export class ProductsService {
                 'per_page': perPage,
                 'search': search,
                 'company_id': companyId,
+                'order_by': orderBy,
+                'order_direction': orderDirection,
+                'min_price': minPrice,
+                'max_price': maxPrice,
+                'include_unpublished': includeUnpublished,
             },
         });
     }
@@ -149,6 +164,26 @@ export class ProductsService {
         });
     }
     /**
+     * Publish the specified product.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static publishProduct({
+        product,
+    }: {
+        product: string,
+    }): CancelablePromise<{
+        data?: ProductTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/products/{product}/publish',
+            path: {
+                'product': product,
+            },
+        });
+    }
+    /**
      * Create a new batch of products using AI with provided images.
      * @returns any Successful response
      * @throws ApiError
@@ -172,16 +207,36 @@ export class ProductsService {
      * @returns any Successful response
      * @throws ApiError
      */
-    public static generateProductsFromBatch({
+    public static retrieveBatchProducts({
         batchProduct,
     }: {
         batchProduct: string,
     }): CancelablePromise<{
-        data?: Array<ProductTransformer>;
+        data?: Array<BatchProductTransformer>;
+    }> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/products/ai/batch-create/{batchProduct}/products',
+            path: {
+                'batchProduct': batchProduct,
+            },
+        });
+    }
+    /**
+     * Publish a batch of products.
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static publishBatchProducts({
+        batchProduct,
+    }: {
+        batchProduct: string,
+    }): CancelablePromise<{
+        data?: BatchProductTransformer;
     }> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/products/ai/batch-create/{batchProduct}/products',
+            url: '/api/products/ai/batch-create/{batchProduct}/publish',
             path: {
                 'batchProduct': batchProduct,
             },

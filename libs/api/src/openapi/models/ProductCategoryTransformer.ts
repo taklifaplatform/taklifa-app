@@ -7,6 +7,5 @@ export type ProductCategoryTransformer = {
     name?: string;
     description?: string | null;
     order?: number;
-    parent_id?: string | null;
 };
 

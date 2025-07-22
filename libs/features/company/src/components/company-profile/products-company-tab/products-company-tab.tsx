@@ -43,9 +43,14 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
         search: search && search.length > 0 ? search : undefined,
         perPage: 5,
         page: pageParam || 1,
+        includeUnpublished: myStore
       }),
-    queryKey: ['ProductsService.fetchAllProduct', company.id, search],
+    queryKey: ['ProductsService.fetchAllProduct', company.id, search, myStore],
   });
+
+  if(productsQuery.created_with_a){
+    console.log("products", JSON.stringify(data, null, 2))
+  }
 
   useEffect(() => {
     queryClient.invalidateQueries({

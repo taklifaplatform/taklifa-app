@@ -60,6 +60,7 @@ export type { LiveLocationTransformer } from './models/LiveLocationTransformer';
 export type { LocationTransformer } from './models/LocationTransformer';
 export type { LoginRequest } from './models/LoginRequest';
 export type { LogoUpdateCompanyRequest } from './models/LogoUpdateCompanyRequest';
+export type { MainProductCategoryTransformer } from './models/MainProductCategoryTransformer';
 export type { MediaTransformer } from './models/MediaTransformer';
 export type { NotificationStatusTransformer } from './models/NotificationStatusTransformer';
 export type { NotificationTransformer } from './models/NotificationTransformer';

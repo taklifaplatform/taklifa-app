@@ -18,6 +18,7 @@ export type ProductTransformer = {
     variant?: ProductVariantTransformer;
     category?: ProductCategoryTransformer;
     is_available?: boolean;
+    is_published?: boolean;
     created_at?: string;
     updated_at?: string;
 };

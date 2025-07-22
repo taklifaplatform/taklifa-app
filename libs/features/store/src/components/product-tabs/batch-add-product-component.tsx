@@ -1,6 +1,7 @@
 import { ImageUp, Trash2, WandSparkles } from '@tamagui/lucide-icons';
+import { useQueryClient } from '@tanstack/react-query';
+import { useAuth } from '@zix/services/auth';
 import {
-  BatchProductTransformer,
   MediaTransformer,
   ProductsService,
 } from '@zix/api';
@@ -8,21 +9,19 @@ import { DeleteProduct, ZixAlertActions, ZixButton } from '@zix/ui/common';
 import { ZixMediaPickerField } from '@zix/ui/forms';
 import { CheckedGif, MagicGif } from '@zix/ui/icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Dimensions, FlatList, TouchableOpacity } from 'react-native';
 import { Image, Paragraph, Stack, Text, YStack } from 'tamagui';
 
-export type BatchAddProductComponentProps = {
-  onSuccess?: (data: BatchProductTransformer) => void;
-};
-
-export const BatchAddProductComponent = ({
-  onSuccess,
-}: BatchAddProductComponentProps) => {
+export const BatchAddProductComponent = () => {
   const [images, setImages] = useState<MediaTransformer[]>([]);
   const SCREEN_WIDTH = Dimensions.get('window').width;
+  const { getUrlPrefix, user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const router = useRouter()
+  const queryClient = useQueryClient();
 
   async function createProducts() {
     setIsOpen(true);
@@ -39,7 +38,11 @@ export const BatchAddProductComponent = ({
       setImages([]);
       setTimeout(() => {
         setIsSuccess(false);
-        onSuccess?.(result.data as BatchProductTransformer);
+        queryClient.invalidateQueries({
+          queryKey: ['ProductsService.fetchAllProduct', user.active_company?.id, true],
+        });
+        router.replace(`${getUrlPrefix}/(tabs)/my-store`)
+        // onSuccess?.(result.data as BatchProductTransformer);
       }, 1000);
     } catch (error) {
       setIsOpen(false);
@@ -131,36 +134,25 @@ export const BatchAddProductComponent = ({
   }
 
   return (
-    <YStack flex={1} marginTop="$3" gap="$3">
+    <YStack flex={1} marginTop="$1" gap="$3">
       <FlatList
-        ListHeaderComponent={
-          <>
-            {renderMessageDescription()}
-            <YStack alignItems="flex-start" borderRadius="$4" padding="$3">
-              <Text fontWeight="bold" fontSize="$5">
-                ارفع صور المنتج
-              </Text>
-            </YStack>
-            {renderBoxAddImage()}
-          </>
-        }
+        ListHeaderComponent={<>{renderMessageDescription()}</>}
         data={images}
         keyExtractor={(item) => item.uuid?.toString() ?? ''}
         contentContainerStyle={{
           gap: 10,
           marginBottom: 80,
         }}
-        numColumns={2}
+        numColumns={3}
         columnWrapperStyle={{
           gap: 10,
         }}
         showsVerticalScrollIndicator={false}
-
         renderItem={({ item }) => {
           return (
             <Stack
               flex={1}
-              height={SCREEN_WIDTH / 2 - 45}
+              height={100}
               borderWidth={1}
               borderColor="$color3"
               borderRadius="$4"
@@ -197,6 +189,16 @@ export const BatchAddProductComponent = ({
             </Stack>
           );
         }}
+        ListFooterComponent={
+          <>
+            <YStack alignItems="flex-start" borderRadius="$4" padding="$3">
+              <Text fontWeight="bold" fontSize="$5">
+                ارفع صور المنتج
+              </Text>
+            </YStack>
+            {renderBoxAddImage()}
+          </>
+        }
       />
 
       <ZixAlertActions
