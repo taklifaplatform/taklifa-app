@@ -13,15 +13,17 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
 import { useRouter } from 'solito/router';
 import { H4, View, XStack, YStack } from 'tamagui';
-import { ProductCard, ProductThumbCard } from '@zix/ui/common';
+import { ProductCard } from '@zix/ui/common';
 import { Sparkles } from '@tamagui/lucide-icons';
 import { useFlatListQuery } from '@zix/utils';
+import { ProductThumbCard } from '@zix/features/store';
 
 export type ProductsCompanyTabProps = {
   company: CompanyTransformer;
   hideFilters?: boolean;
   setShowSheet?: (show: boolean) => void;
   myStore?: boolean;
+  onEditProduct?: (productId: string) => void;
 };
 
 export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
@@ -29,6 +31,7 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
   hideFilters = false,
   setShowSheet,
   myStore = false,
+  onEditProduct,
 }) => {
   const router = useRouter();
   const { getUrlPrefix } = useAuth();
@@ -36,21 +39,19 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
   const [search, setSearch] = useState<string>();
   const queryClient = useQueryClient();
   //
-  const { data, isLoading, refetch, ...productsQuery } = useFlatListQuery({
+  const { data, refetch, ...productsQuery } = useFlatListQuery({
     queryFn: ({ pageParam }: { pageParam: number }) =>
       ProductsService.fetchAllProduct({
         companyId: company.id as string,
         search: search && search.length > 0 ? search : undefined,
         perPage: 5,
         page: pageParam || 1,
-        includeUnpublished: myStore
+        // orderBy: 'is_published',
+        // orderDirection: 'asc',
+        includeUnpublished: (!myStore ? 'false' : 'true') as any,
       }),
     queryKey: ['ProductsService.fetchAllProduct', company.id, search, myStore],
   });
-
-  if(productsQuery.created_with_a){
-    console.log("products", JSON.stringify(data, null, 2))
-  }
 
   useEffect(() => {
     queryClient.invalidateQueries({
@@ -75,10 +76,15 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
         if (setShowSheet) {
           setShowSheet(false);
         }
-        router.push(`${getUrlPrefix}/products/${item.id}`);
+        // router.push(`${getUrlPrefix}/products/${item.id}`);
       }}
     >
-      <ProductThumbCard product={item} index={index} useShowButton={true} />
+      <ProductThumbCard
+        product={item}
+        index={index}
+        useShowButton={true}
+        onEditProduct={onEditProduct}
+      />
       {!!item.created_with_ai && (
         <View
           theme="accent"
@@ -98,9 +104,9 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
   );
 
   return (
-    <YStack>
+    <YStack flex={1}>
       {!hideFilters && (
-        <XStack flex={1} gap="$2" alignItems="center" paddingVertical={'$4'}>
+        <XStack gap="$2" alignItems="center" paddingVertical={'$4'}>
           <FilterPrice />
           <FilterByOrder orderBy={orderBy} setOrderBy={setOrderBy} />
           <SearchProduct
@@ -110,7 +116,7 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
           />
         </XStack>
       )}
-      {isLoading && <FullScreenSpinner />}
+      {productsQuery.refetch && <FullScreenSpinner />}
       {myStore ? (
         <FlatList
           data={data || []}

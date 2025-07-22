@@ -37,10 +37,10 @@ export class ProductsService {
         search?: string,
         companyId?: string,
         orderBy?: string,
-        orderDirection?: '"asc"' | '"desc"',
+        orderDirection?: string,
         minPrice?: any,
         maxPrice?: any,
-        includeUnpublished?: boolean,
+        includeUnpublished?: any,
     }): CancelablePromise<{
         data?: Array<ProductTransformer>;
         links?: {

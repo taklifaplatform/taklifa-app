@@ -10,37 +10,47 @@ export type ProfileTabsProps = {
   hideFilters?: boolean;
   setShowSheet?: (show: boolean) => void;
   myStore?: boolean;
-}
+  onEditProduct?: (productId: string) => void;
+};
 
 export const CompanyProfileTabs: React.FC<ProfileTabsProps> = ({
   company,
   hideFilters = false,
   setShowSheet,
   myStore = false,
+  onEditProduct,
 }) => {
   const tabs = useMemo(() => {
     const _tabs = [
       {
         key: 'products',
         title: 'المنتجات',
-        content: <ProductsCompanyTab company={company} hideFilters={hideFilters} setShowSheet={setShowSheet} myStore={myStore} />
+        content: (
+          <ProductsCompanyTab
+            company={company}
+            hideFilters={hideFilters}
+            setShowSheet={setShowSheet}
+            myStore={myStore}
+            onEditProduct={onEditProduct}
+          />
+        ),
       },
       {
         key: 'services',
         title: 'الخدمات',
-        content: <CompanyServicesTab company={company} hideFilters={hideFilters} setShowSheet={setShowSheet} />
+        content: (
+          <CompanyServicesTab
+            company={company}
+            hideFilters={hideFilters}
+            setShowSheet={setShowSheet}
+          />
+        ),
       },
-    ]
-    return _tabs
-  }, [company])
+    ];
+    return _tabs;
+  }, [company]);
 
-  return (
-    <ZixTab
-      defaultActiveTab='products'
-      tabs={tabs}
-    />
-  );
-}
-
+  return <ZixTab defaultActiveTab="products" tabs={tabs} />;
+};
 
 export default CompanyProfileTabs;

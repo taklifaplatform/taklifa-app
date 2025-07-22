@@ -9,18 +9,22 @@ interface DeleteProductProps {
   title: string;
   trigger: React.ReactNode;
   onDelete: () => void;
+  open: boolean;
+  setIsOpen: (open: boolean) => void;
 }
 
 export const DeleteProduct: React.FC<DeleteProductProps> = ({
   title,
   trigger,
   onDelete,
+    open,
+    setIsOpen,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  console.log('open DeleteProduct', open);
   return (
     <ZixDialog
       title={title}
-      open={isOpen}
+      open={open}
       onOpenChange={setIsOpen}
       contentPadding="$1"
       snapPoints={[30, 50]}

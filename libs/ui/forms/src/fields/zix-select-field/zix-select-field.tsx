@@ -13,6 +13,7 @@ import {
   Sheet,
   Spinner,
   Text,
+  TextProps,
   Theme,
   View,
   XStack,
@@ -40,6 +41,7 @@ export type ZixSelectFieldProps = SelectProps & {
   disabled?: boolean
   hasError?: boolean
   selectTriggerProps?: SelectTriggerProps
+  selectTriggerTextProps?: TextProps
   width?: number | string
 
   search?: string
@@ -58,15 +60,16 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
   disabled,
   hasError,
   selectTriggerProps = {},
+  selectTriggerTextProps = {},
   width = '100%',
   search,
   onSearch,
   ...props
 }) => {
-  const renderItemContent = (item: BaseSelectFieldItem) => (
+  const renderItemContent = (item: BaseSelectFieldItem, textProps: TextProps = {}) => (
     <XStack alignItems='center' gap='$2' flex={1} overflow='hidden'>
       <Text fontSize='$4'>{item.icon}</Text>
-      <Text numberOfLines={1} fontSize='$4'>{item.name}</Text>
+      <Text numberOfLines={1} fontSize='$4' {...textProps}>{item.name}</Text>
     </XStack>
   )
 
@@ -91,7 +94,7 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
         padding="$4"
         borderBottomWidth={1}
         borderColor='$color5'
-        width="100%"
+        width='100%'
         justifyContent='space-between'
       >
         <Select.ItemText>
@@ -107,9 +110,9 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
 
   const renderSelectedItem = (_value: string | undefined, placeholder: string | undefined) => {
     const item = options.find(item => item.id === _value)
-    return item ? renderItemContent(item) : (
+    return item ? renderItemContent(item, selectTriggerTextProps) : (
       <XStack alignItems='center' gap='$2' flex={1} overflow='hidden'>
-        <Text numberOfLines={1} fontSize='$4'>
+        <Text numberOfLines={1} fontSize='$4' {...selectTriggerTextProps}>
           {value ?? placeholder}
         </Text>
       </XStack>
@@ -172,7 +175,7 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
             alignItems="center"
             justifyContent="center"
             position="relative"
-            width="100%"
+            width='100%'
             height="$3"
           >
             <YStack zIndex={10}>

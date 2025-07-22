@@ -30,6 +30,7 @@ export type ZixDialogProps = DialogProps & {
   setDisableDrag?: (disable: boolean) => void;
   hideHiddenRightButton?: boolean;
   hiddenRightButton?: ReactNode;
+  deleteButton?: () => React.ReactNode;
 };
 
 export function ZixDialog({
@@ -50,6 +51,7 @@ export function ZixDialog({
   disableDrag = true,
   setDisableDrag,
   hideHiddenRightButton = false,
+  deleteButton,
   ...dialogProps
 }: ZixDialogProps) {
   const { width, height } = useWindowDimensions();
@@ -153,6 +155,7 @@ export function ZixDialog({
                 </Dialog.Close>
               )}
               {hideHiddenRightButton && hiddenRightButton}
+              {deleteButton ? deleteButton() : null}
             </XStack>
           )}
           {children}

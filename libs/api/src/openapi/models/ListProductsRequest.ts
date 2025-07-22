@@ -9,6 +9,6 @@ export type ListProductsRequest = {
     order_direction?: string;
     min_price?: number;
     max_price?: number;
-    include_unpublished?: boolean;
+    include_unpublished?: string;
 };
 

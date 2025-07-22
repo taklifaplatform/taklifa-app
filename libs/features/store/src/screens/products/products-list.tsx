@@ -1,4 +1,9 @@
-import { FilePlus2, PlusSquare, Sparkles } from '@tamagui/lucide-icons';
+import {
+  FilePlus2,
+  PlusSquare,
+  Sparkles,
+  SquarePen,
+} from '@tamagui/lucide-icons';
 import { CompanyProfileTabs } from '@zix/features/company';
 import { useAuth, useMixpanel } from '@zix/services/auth';
 import { ZixButton, ZixDialog } from '@zix/ui/common';
@@ -6,7 +11,9 @@ import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useRouter } from 'solito/router';
-import { Text, XStack, YStack } from 'tamagui';
+import { Text, Theme, XStack, YStack } from 'tamagui';
+import { QueryClientProvider, useQueryClient } from '@tanstack/react-query';
+import { ProductManagerComponent } from '../../components';
 
 export type ProductsListScreenProps = {
   showHeader?: boolean;
@@ -22,12 +29,24 @@ export const ProductsListScreen: React.FC<ProductsListScreenProps> = ({
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
+  const [isProductEditDialogOpen, setIsProductEditDialogOpen] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState<string | null>(
+    null,
+  );
+  const queryClient = useQueryClient();
   return (
     <ScreenLayout>
       <AppHeader title={'متجري'} />
       <YStack flex={1} paddingTop="$4">
         {user?.active_company && (
-          <CompanyProfileTabs company={user.active_company} myStore={true} />
+          <CompanyProfileTabs
+            company={user.active_company}
+            myStore={true}
+            onEditProduct={(productId) => {
+              setSelectedProductId(productId);
+              setIsProductEditDialogOpen(true);
+            }}
+          />
         )}
       </YStack>
       <ZixDialog
@@ -120,6 +139,24 @@ export const ProductsListScreen: React.FC<ProductsListScreenProps> = ({
             </TouchableOpacity>
           </YStack>
         </XStack>
+      </ZixDialog>
+      <ZixDialog
+        title="تعديل المنتج"
+        open={isProductEditDialogOpen}
+        onOpenChange={setIsProductEditDialogOpen}
+        snapPoints={[90]}
+      >
+        <QueryClientProvider client={queryClient}>
+          {selectedProductId && (
+            <ProductManagerComponent
+              productId={selectedProductId}
+              setCloseDialog={(open) => {
+                setIsProductEditDialogOpen(false);
+                setSelectedProductId(null);
+              }}
+            />
+          )}
+        </QueryClientProvider>
       </ZixDialog>
     </ScreenLayout>
   );
