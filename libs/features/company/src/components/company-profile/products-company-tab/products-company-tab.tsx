@@ -15,6 +15,7 @@ import { useRouter } from 'solito/router';
 import { H4, View, XStack, YStack } from 'tamagui';
 import { ProductCard, ProductThumbCard } from '@zix/ui/common';
 import { Sparkles } from '@tamagui/lucide-icons';
+import { useFlatListQuery } from '@zix/utils';
 
 export type ProductsCompanyTabProps = {
   company: CompanyTransformer;
@@ -34,11 +35,14 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
   const [orderBy, setOrderBy] = useState('cheapest');
   const [search, setSearch] = useState<string>();
   const queryClient = useQueryClient();
-  const { data, isLoading, refetch } = useQuery({
-    queryFn: () =>
+  //
+  const { data, isLoading, refetch, ...productsQuery } = useFlatListQuery({
+    queryFn: ({ pageParam }: { pageParam: number }) =>
       ProductsService.fetchAllProduct({
         companyId: company.id as string,
         search: search && search.length > 0 ? search : undefined,
+        perPage: 5,
+        page: pageParam || 1,
       }),
     queryKey: ['ProductsService.fetchAllProduct', company.id, search],
   });
@@ -104,11 +108,14 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
       {isLoading && <FullScreenSpinner />}
       {myStore ? (
         <FlatList
-          data={data?.data || []}
+          data={data || []}
+          refreshing={productsQuery.isLoading}
+          onRefresh={productsQuery.refetch}
+          onEndReached={productsQuery.fetchNextPage}
+          removeClippedSubviews={true}
+          initialNumToRender={10}
           renderItem={renderMyStoreItem}
           keyExtractor={(item, index) => `product-${item.id}-${index}`}
-          refreshing={isLoading}
-          onRefresh={refetch}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ justifyContent: 'center' }}
           ListEmptyComponent={() => (
@@ -120,11 +127,14 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
         />
       ) : (
         <FlatList
-          data={data?.data || []}
+          data={data || []}
+          refreshing={productsQuery.isLoading}
+          onRefresh={productsQuery.refetch}
+          onEndReached={productsQuery.fetchNextPage}
+          removeClippedSubviews={true}
+          initialNumToRender={10}
           renderItem={renderItem}
           keyExtractor={(item, index) => `product-${item.id}-${index}`}
-          refreshing={isLoading}
-          onRefresh={refetch}
           showsVerticalScrollIndicator={false}
           numColumns={2}
           columnWrapperStyle={{ gap: 15, paddingVertical: 10 }}
