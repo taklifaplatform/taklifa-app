@@ -78,6 +78,33 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
     },
   });
 
+  const { mutateAsync: publishProduct } = useMutation({
+    mutationFn: (requestBody: any) => {
+     
+      if (product.id) {
+        return ProductsService.publishProduct({
+          product: product.id as string,
+          requestBody,
+        });
+      } 
+    },
+    onSuccess(response) {
+      toast.show('تم تحديث المنتج بنجاح' );
+      setProductEdited(false);
+
+      queryClient.invalidateQueries({
+        queryKey: ['ProductsService.fetchAllProduct', user?.active_company?.id],
+      });
+    },
+    onError(error: any) {
+      alert(error.message);
+      toast.show('حدث خطأ ما', {
+        message: error.message,
+      });
+      handleFormErrors(form, error);
+    },
+  });
+
   console.log('product', product.name,product.is_published);
 
   return (
@@ -210,7 +237,7 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
             fontWeight={'bold'}
             color="$color2"
             onPress={() => {
-              updateProduct({
+              publishProduct({
                 ...product,
                 is_published: 1,
               });
