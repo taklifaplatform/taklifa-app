@@ -2,7 +2,8 @@ import { Bell, CreditCard, Handshake, House, Store } from '@tamagui/lucide-icons
 import { CustomIcon } from '@zix/ui/icons';
 import { Tabs } from 'expo-router';
 import { t } from 'i18next';
-import { useAuth } from '@zix/services/auth';
+import { useAuth, useCart } from '@zix/services/auth';
+import { Text, View } from 'tamagui';
 
 /**
  * TODO:
@@ -10,6 +11,7 @@ import { useAuth } from '@zix/services/auth';
  */
 export const AppLayout = () => {
   const { user } = useAuth();
+  const { totalItems } = useCart();
   return (
     <Tabs screenOptions={{ headerShown: false }}>
       <Tabs.Screen
@@ -40,19 +42,19 @@ export const AppLayout = () => {
         options={
           user?.active_company
             ? {
-                title: 'متجري',
-                tabBarIcon: ({ size, focused }) => (
-                  <Store
-                    color={focused ? '$color1' : '$color0'}
-                    theme="accent"
-                    fill={focused ? '$color3' : '$color2'}
-                    size={size}
-                  />
-                ),
-              }
+              title: 'متجري',
+              tabBarIcon: ({ size, focused }) => (
+                <Store
+                  color={focused ? '$color1' : '$color0'}
+                  theme="accent"
+                  fill={focused ? '$color3' : '$color2'}
+                  size={size}
+                />
+              ),
+            }
             : {
-                href: null,
-              }
+              href: null,
+            }
         }
       />
 
@@ -75,12 +77,30 @@ export const AppLayout = () => {
         options={{
           title: t('common:costs'),
           tabBarIcon: ({ size, focused }) => (
-            <CreditCard
-              color={focused ? '$color1' : '$color0'}
-              theme="accent"
-              fill={focused ? '$color3' : '$color2'}
-              size={size}
-            />
+            <View position='relative'>
+              <CreditCard
+                color={focused ? '$color1' : '$color0'}
+                theme="accent"
+                fill={focused ? '$color3' : '$color2'}
+                size={size}
+              />
+              {
+                totalItems > 0 && (
+                  <View
+                    position='absolute'
+                    top={-10}
+                    right={-10}
+                    backgroundColor='red'
+                    paddingHorizontal={4}
+                    paddingVertical={2}
+                    borderRadius='50%'
+                    justifyContent='center'
+                    alignItems='center' >
+                    <Text fontSize={'$1'} fontWeight='bold' color='white'>{totalItems}</Text>
+                  </View>
+                )
+              }
+            </View>
           ),
         }}
       />
