@@ -14,6 +14,7 @@ export type ZixSelectRadioGroupnFieldProps = SelectProps & {
 export const ZixSelectRadioGroupnField: React.FC<
 ZixSelectRadioGroupnFieldProps
 > = ({ options = [], onChange, value, width, colorSelected, colorIndicator, ...props }) => {
+  console.log('value', value);
   return (
     <RadioGroup
       value={value?.toString() || ''}

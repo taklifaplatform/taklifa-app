@@ -150,7 +150,7 @@ export const ProductsListScreen: React.FC<ProductsListScreenProps> = ({
           {selectedProductId && (
             <ProductManagerComponent
               productId={selectedProductId}
-              setCloseDialog={(open) => {
+              onUpdate={() => {
                 setIsProductEditDialogOpen(false);
                 setSelectedProductId(null);
               }}

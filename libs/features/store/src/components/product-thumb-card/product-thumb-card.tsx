@@ -7,7 +7,7 @@ import {
 import { ProductsService, ProductTransformer } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { ZixButton } from '@zix/ui/common';
-import { ZixInput, ZixSelectField } from '@zix/ui/forms';
+import { handleFormErrors, ZixInput, ZixSelectField } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
 import React, { useState } from 'react';
 import { Dimensions } from 'react-native';
@@ -46,30 +46,39 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
     { name: 'م.ط', id: 'm4' },
   ];
   const [productPrice, setProductPrice] = useState(product.variant?.price);
-  const [productUnit, setProductUnit] = useState(product.variant?.type_unit);
-  const [open, setOpen] = useState(false);
+  const [productUnit, setProductUnit] = useState(product.variant?.type_unit?.toString());
   const queryClient = useQueryClient();
   const toast = useToastController();
   const { user } = useAuth();
-  const { mutateAsync: deleteProduct } = useMutation({
-    mutationFn: (productId: string) => {
-      return ProductsService.deleteProduct({
-        product: productId,
-      });
+
+  const { mutateAsync: updateProduct } = useMutation({
+    mutationFn: (requestBody: any) => {
+     
+      if (product.id) {
+        return ProductsService.updateProduct({
+          product: product.id as string,
+          requestBody,
+        });
+      } 
     },
-    onSuccess() {
-      toast.show('تم حذف المنتج بنجاح');
+    onSuccess(response) {
+      toast.show('تم تحديث المنتج بنجاح' );
+      setProductEdited(false);
+
       queryClient.invalidateQueries({
         queryKey: ['ProductsService.fetchAllProduct', user?.active_company?.id],
       });
-      setOpen(false);
     },
     onError(error: any) {
+      alert(error.message);
       toast.show('حدث خطأ ما', {
         message: error.message,
       });
+      handleFormErrors(form, error);
     },
   });
+
+  console.log('product', product.name,product.is_published);
 
   return (
     <YStack
@@ -170,7 +179,16 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
                   size="$3"
                   height="$3"
                   backgroundColor="$color0"
-                  onPress={() => {}}
+                  onPress={() => {
+                    updateProduct({
+                      ...product,
+                      variant: {
+                        ...product.variant,
+                        price: productPrice,
+                        type_unit: productUnit,
+                      },
+                    });
+                  }}
                   color="$color2"
                   icon={Save}
                 />
@@ -188,10 +206,15 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
             borderRadius={'$4'}
             justifyContent="center"
             alignItems="center"
-            onPress={() => {}}
             fontSize={'$1'}
             fontWeight={'bold'}
             color="$color2"
+            onPress={() => {
+              updateProduct({
+                ...product,
+                is_published: 1,
+              });
+            }}
           >
             نشر
           </ZixButton>

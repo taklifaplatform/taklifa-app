@@ -75,7 +75,7 @@ export const ProductManagerComponent = ({
 
   const { mutateAsync } = useMutation({
     mutationFn: (requestBody: z.infer<typeof UpdateProductFormSchema>) => {
-      console.log('requestBody', JSON.stringify(requestBody, null, 2));
+
       if (productId) {
         return ProductsService.updateProduct({
           product: productId as string,
@@ -88,7 +88,7 @@ export const ProductManagerComponent = ({
       }
     },
     onSuccess(response) {
-      toast.show(productId ? 'تم تحديث المنتج بنجاح' : 'تم إضافة المنتج بنجاح');
+      // toast.show(productId ? 'تم تحديث المنتج بنجاح' : 'تم إضافة المنتج بنجاح');
       setOpen(true);
 
       queryClient.invalidateQueries({
@@ -97,23 +97,14 @@ export const ProductManagerComponent = ({
       onUpdate?.(response.data);
     },
     onError(error: any) {
-      toast.show('حدث خطأ ما', {
-        message: error.message,
-      });
+      alert(error.message);
+      // toast.show('حدث خطأ ما', {
+      //   message: error.message,
+      // });
       handleFormErrors(form, error);
     },
   });
 
-  // useEffect(() => {
-  //   if (open) {
-  //     setTimeout(() => {
-  //       setOpen(false);
-  //       if (!setCloseDialog) {
-  //         router.back();
-  //       }
-  //     }, 3000);
-  //   }
-  // }, [open]);
 
   useEffect(() => {
     console.log(
@@ -121,9 +112,7 @@ export const ProductManagerComponent = ({
       form.watch('variant.type_unit'),
     );
   }, [
-    form.watch('variant.type'),
     form.watch('variant.type_unit'),
-    form.watch('variant.type_value'),
   ]);
 
   const product = useMemo(() => {
@@ -137,7 +126,7 @@ export const ProductManagerComponent = ({
       }
     );
   }, [data?.data]);
-
+  console.log('product', JSON.stringify(product.data, null, 2));
   if (isLoading) {
     return <FullScreenSpinner />;
   }
@@ -145,7 +134,12 @@ export const ProductManagerComponent = ({
     <SchemaForm
       form={form}
       schema={UpdateProductFormSchema}
-      defaultValues={product?.data}
+      defaultValues={
+        {
+          ...product?.data,
+          is_available: product?.data?.is_available?.toString(),
+        }
+      }
       props={{
         is_available: {
           options: [
@@ -168,7 +162,6 @@ export const ProductManagerComponent = ({
               backgroundColor="$color1"
               color="white"
               onPress={() => {
-                alert('1');
                 const values = form.getValues();
                 mutateAsync(values);
               }}
@@ -185,11 +178,11 @@ export const ProductManagerComponent = ({
               borderColor="$color0"
               color="$color0"
               onPress={() => {
-                // if (setCloseDialog) {
-                //   setCloseDialog(false);
-                // } else {
-                //   router.back();
-                // }
+                if (onUpdate) {
+                  onUpdate(product?.data);
+                } else {
+                  router.back();
+                }
               }}
             >
               إلغاء
@@ -233,10 +226,10 @@ export const ProductManagerComponent = ({
                     options={unitTypes}
                     value={
                       form.getValues('variant.type_unit') ||
-                      product?.data?.variant?.type_unit
+                      product?.data?.variant?.type_unit|| 'm'
                     }
                     onChange={(value) => {
-                      form.setValue('variant.type_unit', value);
+                      form.setValue('variant.type_unit', value.toString());
                     }}
                   />
                 
