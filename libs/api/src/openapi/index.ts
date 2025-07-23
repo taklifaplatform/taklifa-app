@@ -67,7 +67,7 @@ export type { NotificationTransformer } from './models/NotificationTransformer';
 export type { PriceTransformer } from './models/PriceTransformer';
 export type { ProductCategoryTransformer } from './models/ProductCategoryTransformer';
 export type { ProductTransformer } from './models/ProductTransformer';
-export { ProductVariantTransformer } from './models/ProductVariantTransformer';
+export type { ProductVariantTransformer } from './models/ProductVariantTransformer';
 export type { QueryRequest } from './models/QueryRequest';
 export type { RatesUpdateRatingRequest } from './models/RatesUpdateRatingRequest';
 export type { RatingScoreTransformer } from './models/RatingScoreTransformer';

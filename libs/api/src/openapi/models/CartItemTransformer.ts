@@ -4,6 +4,7 @@
 /* eslint-disable */
 import type { ProductTransformer } from './ProductTransformer';
 import type { ProductVariantTransformer } from './ProductVariantTransformer';
+import type { SimpleCompanyTransformer } from './SimpleCompanyTransformer';
 export type CartItemTransformer = {
     id?: string;
     cart_id?: string;
@@ -14,5 +15,6 @@ export type CartItemTransformer = {
     total_price?: number;
     product?: ProductTransformer;
     variant?: ProductVariantTransformer;
+    company?: SimpleCompanyTransformer;
 };
 

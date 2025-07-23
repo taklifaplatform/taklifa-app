@@ -18,13 +18,9 @@
       "@zix/api": ["libs/api/src/index.ts"],
       "@zix/expo-update": ["tools/expo-update/src/index.ts"],
       "@zix/features/account": ["libs/features/account/src/index.ts"],
-      "@zix/features/services": [
-        "libs/features/services/src/index.ts"
-      ],
-      "@zix/features/store": ["libs/features/store/src/index.ts"],
-      "@zix/features/coast": ["libs/features/coast/src/index.ts"],
       "@zix/features/auth": ["libs/features/auth/src/index.ts"],
       "@zix/features/chat": ["libs/features/chat/src/index.ts"],
+      "@zix/features/coast": ["libs/features/coast/src/index.ts"],
       "@zix/features/company": ["libs/features/company/src/index.ts"],
       "@zix/features/complain": ["libs/features/complain/src/index.ts"],
       "@zix/features/contact-us": ["libs/features/contact-us/src/index.ts"],
@@ -33,6 +29,8 @@
       "@zix/features/notifications": [
         "libs/features/notifications/src/index.ts"
       ],
+      "@zix/features/services": ["libs/features/services/src/index.ts"],
+      "@zix/features/store": ["libs/features/store/src/index.ts"],
       "@zix/features/support": ["libs/features/support/src/index.ts"],
       "@zix/features/users": ["libs/features/users/src/index.ts"],
       "@zix/features/working-hours": [

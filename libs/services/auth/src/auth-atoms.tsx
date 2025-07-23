@@ -3,7 +3,7 @@ import { UserTransformer } from "@zix/api";
 import { atomWithStorage, createJSONStorage } from "jotai/utils";
 import { AUTH_ROLE_TYPE } from "./types";
 
-const storage = createJSONStorage(() => AsyncStorage);
+export const storage = createJSONStorage(() => AsyncStorage);
 
 export const AUTH_TOKEN_KEY = "AUTH_TOKEN_KEY";
 export const AUTH_USER_KEY = "AUTH_USER_KEY";

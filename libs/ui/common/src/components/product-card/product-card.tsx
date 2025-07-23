@@ -6,6 +6,7 @@ import { Image, Text, Theme, XStack, YStack, View } from 'tamagui';
 import { ManageCountProduct } from '../manage-count-product/manage-count-product';
 import { ProductTransformer } from '@zix/api';
 import { ZixButton } from '../zix-button/zix-button';
+import { useCart } from '@zix/services/auth';
 
 export type ProductCardProps = {
   product: ProductTransformer;
@@ -20,9 +21,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   useShowButton = false,
   setShowSheet,
 }) => {
+  const { addItemToCart } = useCart();
   const { width: SCREEN_WIDTH } = Dimensions.get('window');
   const router = useRouter();
   const [count, setCount] = useState(1);
+
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
+  async function onAddToCart() {
+    setIsAddingToCart(true);
+    await addItemToCart(product, count);
+    setIsAddingToCart(false);
+    setCount(1);
+  }
+  //
   return (
     <YStack
       flex={1}
@@ -105,12 +116,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           height={35}
           justifyContent="center"
           alignItems="center"
-          onPress={() => {}}
-          disabled={product.is_available}
+          onPress={() => onAddToCart()}
           fontSize={12}
           backgroundColor="$color1"
           fontWeight={'bold'}
           color="$color2"
+          loading={isAddingToCart}
         >
           أضف لعرض سعر
         </ZixButton>

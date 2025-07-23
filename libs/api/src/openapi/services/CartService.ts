@@ -3,7 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { AddCartItemRequest } from '../models/AddCartItemRequest';
-import type { CartItemTransformer } from '../models/CartItemTransformer';
 import type { CartTransformer } from '../models/CartTransformer';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -14,44 +13,18 @@ export class CartService {
      * @returns any Successful response
      * @throws ApiError
      */
-    public static getOrCreateCart({
-        companyId,
-        identifier,
+    public static getCart({
+        code,
     }: {
-        companyId: string,
-        identifier: string,
+        code: string,
     }): CancelablePromise<{
         data?: CartTransformer;
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/cart/{company_id}/{identifier}',
+            url: '/api/cart/{code}',
             path: {
-                'company_id': companyId,
-                'identifier': identifier,
-            },
-        });
-    }
-    /**
-     * Get cart items.
-     * @returns any Successful response
-     * @throws ApiError
-     */
-    public static getCartItems({
-        companyId,
-        identifier,
-    }: {
-        companyId: string,
-        identifier: string,
-    }): CancelablePromise<{
-        data?: CartItemTransformer;
-    }> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/cart/{company_id}/{identifier}/items',
-            path: {
-                'company_id': companyId,
-                'identifier': identifier,
+                'code': code,
             },
         });
     }
@@ -60,23 +33,20 @@ export class CartService {
      * @returns any Successful response
      * @throws ApiError
      */
-    public static addCartItem({
-        companyId,
-        identifier,
+    public static addItem({
+        code,
         requestBody,
     }: {
-        companyId: string,
-        identifier: string,
+        code: string,
         requestBody: AddCartItemRequest,
     }): CancelablePromise<{
         data?: CartTransformer;
     }> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/cart/{company_id}/{identifier}/items',
+            url: '/api/cart/{code}/items',
             path: {
-                'company_id': companyId,
-                'identifier': identifier,
+                'code': code,
             },
             body: requestBody,
             mediaType: 'application/json',

@@ -3,3 +3,4 @@ export * from './use-auth';
 export * from './types';
 export * from './useMixpanel';
 export * from './mixpanel';
+export * from './useCart';
