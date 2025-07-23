@@ -6,37 +6,53 @@ import { useState } from 'react';
 import { IFilterOption } from '../zix-advanced-filters/zix-advanced-filters';
 
 export interface FilterByOrderProps {
-  orderBy: string;
-  setOrderBy: (orderBy: string) => void;
+  orderBy: {
+    type: string;
+    direction: string;
+  };
+  setOrderBy: (orderBy: {
+    type: string;
+    direction: string;
+  }) => void;
 }
 
 const listFilterByOrder = [
   {
     label: 'الأرخص أولا',
-    value: 'cheapest',
+    value: {
+      type: 'price',
+      direction: 'asc',
+    },
   },
   {
     label: 'الأغلى أولا',
-    value: 'expensive',
+    value: {
+      type: 'price',
+      direction: 'desc',
+    },
   },
   {
     label: 'الأحدث أولا',
-    value: 'newest',
+    value: {
+      type: 'created_at',
+      direction: 'desc',
+    },
   },
   {
     label: 'الأقدم أولا',
-    value: 'oldest',
+    value: {
+      type: 'created_at',
+      direction: 'asc',
+    },
   },
 ];
 export const FilterByOrder: React.FC<FilterByOrderProps> = ({ orderBy, setOrderBy }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState(listFilterByOrder[0]);
   const renderFilterItem = (item: IFilterOption, isSelected = false) => (
     <XStack
       onPress={() => {
         setIsOpen(false);
-        setSelectedFilter(item);
-        setOrderBy(item.value);
+        setOrderBy(item.value as { type: string; direction: string });
       }}
       hoverStyle={{ backgroundColor: '$color5' }}
       pressStyle={{ opacity: 0.5 }}
@@ -57,7 +73,7 @@ export const FilterByOrder: React.FC<FilterByOrderProps> = ({ orderBy, setOrderB
       </XStack>
       <YStack>
         <Theme name="accent">
-          {item.value === orderBy ? (
+          {item.value.type === orderBy.type && item.value.direction === orderBy.direction ? (
             <CircleCheck size={20} color="$color1" />
           ) : (
             <Circle size={20} color="$color0" />
@@ -87,7 +103,7 @@ export const FilterByOrder: React.FC<FilterByOrderProps> = ({ orderBy, setOrderB
           gap="$2"
         >
           <Text fontWeight="bold" fontSize={'$3'} color="$color0">
-            {listFilterByOrder.find((item) => item.value === orderBy)?.label}
+            {listFilterByOrder.find((item) => item.value.type === orderBy.type && item.value.direction === orderBy.direction)?.label}
           </Text>
           <ChevronUp size={20} color="$color0" />
         </XStack>

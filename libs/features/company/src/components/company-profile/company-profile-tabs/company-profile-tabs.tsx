@@ -10,7 +10,6 @@ export type ProfileTabsProps = {
   hideFilters?: boolean;
   setShowSheet?: (show: boolean) => void;
   myStore?: boolean;
-  onEditProduct?: (productId: string) => void;
 };
 
 export const CompanyProfileTabs: React.FC<ProfileTabsProps> = ({
@@ -18,7 +17,6 @@ export const CompanyProfileTabs: React.FC<ProfileTabsProps> = ({
   hideFilters = false,
   setShowSheet,
   myStore = false,
-  onEditProduct,
 }) => {
   const tabs = useMemo(() => {
     const _tabs = [
@@ -31,7 +29,6 @@ export const CompanyProfileTabs: React.FC<ProfileTabsProps> = ({
             hideFilters={hideFilters}
             setShowSheet={setShowSheet}
             myStore={myStore}
-            onEditProduct={onEditProduct}
           />
         ),
       },

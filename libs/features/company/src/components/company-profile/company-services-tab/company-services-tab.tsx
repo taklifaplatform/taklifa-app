@@ -19,7 +19,14 @@ export const CompanyServicesTab: React.FC<CompanyServicesTabProps> = ({
   hideFilters = false,
   setShowSheet,
 }) => {
-  const [orderBy, setOrderBy] = useState('cheapest');
+  const [orderBy, setOrderBy] = useState({
+    type: 'price',
+    direction: 'asc',
+  });
+  const [priceRange, setPriceRange] = useState({
+    min: 0,
+    max: 60000,
+  });
   const [search, setSearch] = useState('');
 
   const { data, isLoading } = useQuery({
@@ -45,7 +52,7 @@ export const CompanyServicesTab: React.FC<CompanyServicesTabProps> = ({
       )}
       ListHeaderComponent={() => !hideFilters && (
         <XStack flex={1} gap="$2" alignItems="center" paddingVertical={'$4'}>
-          <FilterPrice />
+          <FilterPrice priceRange={priceRange} setPriceRange={setPriceRange} />
           <FilterByOrder orderBy={orderBy} setOrderBy={setOrderBy} />
           <SearchProduct
             placeholder="ابحث عن منتج"

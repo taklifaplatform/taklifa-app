@@ -183,7 +183,10 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
   // sort direction
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   // sort by
-  const [sortBy, setSortBy] = useState<'created_at' | 'price'>('created_at');
+  const [sortBy, setSortBy] = useState({
+    type: 'price',
+    direction: 'asc',
+  });
   const [selectedYears, setSelectedYears] = useState<string[]>([]);
 
   const { data: servicesData, ...servicesQuery } = useFlatListQuery({
@@ -196,8 +199,8 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
         categoryId: selectedCategory?.id,
         subCategoryId: selectedSubCategory?.id,
         years: selectedYears.length > 0 ? selectedYears?.join(',') : undefined,
-        sortBy: sortBy,
-        sortDirection: sortDirection,
+        sortBy: sortBy.type,
+        sortDirection: sortBy.direction,
       }),
     queryKey: [
       'ServiceService.listServices',
@@ -228,8 +231,10 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
       setSelectedSubCategory(undefined);
       if (!cat) {
         setSelectedYears([]);
-        setSortBy('created_at');
-        setSortDirection('desc');
+        setSortBy({
+          type: 'created_at',
+          direction: 'desc',
+        });
       }
     },
     [],
@@ -240,7 +245,10 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
     },
     [],
   );
-  const [orderBy, setOrderBy] = useState('cheapest');
+  const [orderBy, setOrderBy] = useState({
+    type: 'price',
+    direction: 'asc',
+  });
 
   return (
     <View flex={1}>

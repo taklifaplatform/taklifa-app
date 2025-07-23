@@ -12,7 +12,7 @@ import { t } from 'i18next';
 import React, { useEffect, useState } from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
 import { useRouter } from 'solito/router';
-import { H4, View, XStack, YStack } from 'tamagui';
+import { H4, Text, View, XStack, YStack } from 'tamagui';
 import { ProductCard } from '@zix/ui/common';
 import { Sparkles } from '@tamagui/lucide-icons';
 import { useFlatListQuery } from '@zix/utils';
@@ -23,7 +23,6 @@ export type ProductsCompanyTabProps = {
   hideFilters?: boolean;
   setShowSheet?: (show: boolean) => void;
   myStore?: boolean;
-  onEditProduct?: (productId: string) => void;
 };
 
 export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
@@ -31,13 +30,19 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
   hideFilters = false,
   setShowSheet,
   myStore = false,
-  onEditProduct,
 }) => {
-  const router = useRouter();
-  const { getUrlPrefix } = useAuth();
-  const [orderBy, setOrderBy] = useState('cheapest');
+  const [orderBy, setOrderBy] = useState({
+    type: 'price',
+    direction: 'asc',
+  });
+  const [priceRange, setPriceRange] = useState({
+    min: 0,
+    max: 60000,
+  });
   const [search, setSearch] = useState<string>();
   const queryClient = useQueryClient();
+
+  console.log('company', company.name);
   //
   const { data, refetch, ...productsQuery } = useFlatListQuery({
     queryFn: ({ pageParam }: { pageParam: number }) =>
@@ -46,18 +51,47 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
         search: search && search.length > 0 ? search : undefined,
         perPage: 5,
         page: pageParam || 1,
-        // orderBy: 'is_published',
-        // orderDirection: 'asc',
+        orderBy: orderBy.type,
+        orderDirection: orderBy.direction,
         includeUnpublished: (!myStore ? 'false' : 'true') as any,
+        minPrice: priceRange.min,
+        maxPrice: priceRange.max,
       }),
-    queryKey: ['ProductsService.fetchAllProduct', company.id, search, myStore],
+    queryKey: [
+      'ProductsService.fetchAllProduct',
+      company.id,
+      search,
+      myStore,
+      orderBy,
+      priceRange,
+    ],
   });
 
   useEffect(() => {
     queryClient.invalidateQueries({
-      queryKey: ['ProductsService.fetchAllProduct', company.id, search],
+      queryKey: [
+        'ProductsService.fetchAllProduct',
+        company.id,
+        search,
+        myStore,
+        orderBy,
+      ],
     });
   }, [search]);
+
+  useEffect(() => {
+    queryClient.invalidateQueries({
+      queryKey: [
+        'ProductsService.fetchAllProduct',
+        company.id,
+        search,
+        myStore,
+        orderBy,
+        priceRange,
+      ],
+    });
+  }, [orderBy, priceRange]);
+
   const renderItem = ({ item, index }: { item: any; index: number }) => (
     <ProductCard
       product={item}
@@ -68,23 +102,19 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
   );
 
   const renderMyStoreItem = ({ item, index }: { item: any; index: number }) => (
-    <TouchableOpacity
-      style={{
-        paddingTop: 10,
-      }}
-      onPress={() => {
-        if (setShowSheet) {
-          setShowSheet(false);
-        }
-        // router.push(`${getUrlPrefix}/products/${item.id}`);
-      }}
-    >
-      <ProductThumbCard
-        product={item}
-        index={index}
-        useShowButton={true}
-        onEditProduct={onEditProduct}
-      />
+    // <TouchableOpacity
+    //   style={{
+    //     paddingTop: 10,
+    //   }}
+    //   onPress={() => {
+    //     if (setShowSheet) {
+    //       setShowSheet(false);
+    //     }
+    //     // router.push(`${getUrlPrefix}/products/${item.id}`);
+    //   }}
+    // >
+    <>
+      <ProductThumbCard product={item} index={index} useShowButton={true} />
       {!!item.created_with_ai && (
         <View
           theme="accent"
@@ -100,14 +130,15 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
           <Sparkles size={20} color="$color1" />
         </View>
       )}
-    </TouchableOpacity>
+    </>
+    // </TouchableOpacity>
   );
 
   return (
     <YStack flex={1}>
       {!hideFilters && (
         <XStack gap="$2" alignItems="center" paddingVertical={'$4'}>
-          <FilterPrice />
+          <FilterPrice priceRange={priceRange} setPriceRange={setPriceRange} />
           <FilterByOrder orderBy={orderBy} setOrderBy={setOrderBy} />
           <SearchProduct
             placeholder="أبحث على المنتجات"
@@ -116,7 +147,7 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
           />
         </XStack>
       )}
-      {productsQuery.refetch && <FullScreenSpinner />}
+      {/* {productsQuery.refetch && <FullScreenSpinner />} */}
       {myStore ? (
         <FlatList
           data={data || []}

@@ -15,12 +15,12 @@ import { Text, Theme, XStack, YStack } from 'tamagui';
 import { QueryClientProvider, useQueryClient } from '@tanstack/react-query';
 import { ProductManagerComponent } from '../../components';
 
-export type ProductsListScreenProps = {
+export type MyStoreScreenProps = {
   showHeader?: boolean;
   search?: string;
 };
 
-export const ProductsListScreen: React.FC<ProductsListScreenProps> = ({
+export const MyStoreScreen: React.FC<MyStoreScreenProps> = ({
   showHeader,
   search,
 }) => {
@@ -28,11 +28,6 @@ export const ProductsListScreen: React.FC<ProductsListScreenProps> = ({
   useMixpanel('Store List Screen view');
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-
-  const [isProductEditDialogOpen, setIsProductEditDialogOpen] = useState(false);
-  const [selectedProductId, setSelectedProductId] = useState<string | null>(
-    null,
-  );
   const queryClient = useQueryClient();
   return (
     <ScreenLayout>
@@ -42,11 +37,6 @@ export const ProductsListScreen: React.FC<ProductsListScreenProps> = ({
           <CompanyProfileTabs
             company={user.active_company}
             myStore={true}
-            onEditProduct={(productId) => {
-              setSelectedProductId(productId);
-              
-              // setIsProductEditDialogOpen(true);
-            }}
           />
         )}
       </YStack>
@@ -163,4 +153,4 @@ export const ProductsListScreen: React.FC<ProductsListScreenProps> = ({
   );
 };
 
-export default ProductsListScreen;
+export default MyStoreScreen;

@@ -1,7 +1,7 @@
 
 export * from './manage-store-screen/manage-store-screen';
 
-export * from './products/products-list';
+export * from './products/my-store-screen';
 
 export * from './products/ai-product-creators-screen';
 

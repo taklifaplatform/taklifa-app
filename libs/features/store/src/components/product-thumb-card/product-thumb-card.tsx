@@ -1,9 +1,6 @@
 import { Save, SquarePen } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
-import {
-  useMutation,
-  useQueryClient
-} from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ProductsService, ProductTransformer } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { ZixButton } from '@zix/ui/common';
@@ -18,14 +15,12 @@ export type ProductThumbCardProps = {
   product: ProductTransformer;
   index: number;
   useShowButton?: boolean;
-  onEditProduct?: (productId: string) => void;
 };
 
 export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
   product,
   index,
   useShowButton = false,
-  onEditProduct,
 }) => {
   const { width: SCREEN_WIDTH } = Dimensions.get('window');
   const [productEdited, setProductEdited] = useState(false);
@@ -46,23 +41,24 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
     { name: 'م.ط', id: 'm4' },
   ];
   const [productPrice, setProductPrice] = useState(product.variant?.price);
-  const [productUnit, setProductUnit] = useState(product.variant?.type_unit?.toString());
+  const [productUnit, setProductUnit] = useState(
+    product.variant?.type_unit?.toString(),
+  );
   const queryClient = useQueryClient();
   const toast = useToastController();
   const { user, getUrlPrefix } = useAuth();
 
   const { mutateAsync: updateProduct } = useMutation({
     mutationFn: (requestBody: any) => {
-     
       if (product.id) {
         return ProductsService.updateProduct({
           product: product.id as string,
           requestBody,
         });
-      } 
+      }
     },
-    onSuccess(response) {
-      toast.show('تم تحديث المنتج بنجاح' );
+    onSuccess() {
+      toast.show('تم تحديث المنتج بنجاح');
       setProductEdited(false);
 
       queryClient.invalidateQueries({
@@ -80,16 +76,15 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
 
   const { mutateAsync: publishProduct } = useMutation({
     mutationFn: (requestBody: any) => {
-     
       if (product.id) {
         return ProductsService.publishProduct({
           product: product.id as string,
           requestBody,
         });
-      } 
+      }
     },
-    onSuccess(response) {
-      toast.show('تم تحديث المنتج بنجاح' );
+    onSuccess() {
+      toast.show('تم تحديث المنتج بنجاح');
       setProductEdited(false);
 
       queryClient.invalidateQueries({
@@ -104,8 +99,6 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
       handleFormErrors(form, error);
     },
   });
-
-  console.log('product', product.name,product.is_published);
 
   return (
     <YStack
@@ -130,7 +123,12 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
               borderRadius="$4"
             />
           ) : (
-            <CustomIcon name="image-blank" size={100} color="$color2" />
+            <CustomIcon
+              name="image-blank"
+              width="$7"
+              height="$8"
+              color="$color2"
+            />
           )}
         </XStack>
 
@@ -150,16 +148,17 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
             >
               {product?.name || ''}
             </Text>
-            {onEditProduct && (
-              <ZixButton
-                size="$3"
-                height="$3"
-                backgroundColor="$color0"
-                onPress={() => router.push(`${getUrlPrefix}/products/${product.id}/edit`)}
-                color="$color2"
-                icon={SquarePen}
-              />
-            )}
+
+            <ZixButton
+              size="$3"
+              height="$3"
+              backgroundColor="$color0"
+              onPress={() =>
+                router.push(`${getUrlPrefix}/products/${product.id}/edit`)
+              }
+              color="$color2"
+              icon={SquarePen}
+            />
           </XStack>
 
           <XStack flex={1} justifyContent="space-between" alignItems="center">
@@ -169,7 +168,7 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
                   size: '$3',
                   height: '$3',
                   flex: undefined,
-                  width: 70,
+                  width: 80,
                   padding: 5,
                 }}
                 selectTriggerTextProps={{
