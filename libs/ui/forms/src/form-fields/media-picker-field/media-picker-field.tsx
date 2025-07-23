@@ -28,7 +28,7 @@ export const MediaPickerField: React.FC<MediaPickerFieldProps> = ({
   const { field, error } = useTsController<MediaTransformer | MediaTransformer[]>()
   const { placeholder, isOptional } = useFieldInfo();
   return (
-    <FormFieldContainer {...containerProps}>
+    <FormFieldContainer {...containerProps} >
       <ZixMediaPickerField
         {...props}
         value={field.value}

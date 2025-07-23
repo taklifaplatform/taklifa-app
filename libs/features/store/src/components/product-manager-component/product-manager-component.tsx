@@ -126,7 +126,6 @@ export const ProductManagerComponent = ({
       }
     );
   }, [data?.data]);
-  console.log('product', JSON.stringify(product.data, null, 2));
   if (isLoading) {
     return <FullScreenSpinner />;
   }
@@ -214,7 +213,7 @@ export const ProductManagerComponent = ({
         variant: { type_unit, ...variant },
         ...fields
       }) => (
-        <YStack gap="$4">
+        <YStack gap="$4" >
           {Object.values(fields)}
           <ZixFieldContainer label="نوع المتغير">
             <YStack gap="$4">

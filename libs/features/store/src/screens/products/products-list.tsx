@@ -44,7 +44,8 @@ export const ProductsListScreen: React.FC<ProductsListScreenProps> = ({
             myStore={true}
             onEditProduct={(productId) => {
               setSelectedProductId(productId);
-              setIsProductEditDialogOpen(true);
+              
+              // setIsProductEditDialogOpen(true);
             }}
           />
         )}
@@ -140,7 +141,7 @@ export const ProductsListScreen: React.FC<ProductsListScreenProps> = ({
           </YStack>
         </XStack>
       </ZixDialog>
-      <ZixDialog
+      {/* <ZixDialog
         title="تعديل المنتج"
         open={isProductEditDialogOpen}
         onOpenChange={setIsProductEditDialogOpen}
@@ -157,7 +158,7 @@ export const ProductsListScreen: React.FC<ProductsListScreenProps> = ({
             />
           )}
         </QueryClientProvider>
-      </ZixDialog>
+      </ZixDialog> */}
     </ScreenLayout>
   );
 };

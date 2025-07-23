@@ -10,16 +10,20 @@ import {
   ZixButton,
 } from '@zix/ui/common';
 import {
-  formFields
+  formFields,
+  handleFormErrors,
+  SchemaForm,
+  SubmitButton,
+  ZixFieldContainer,
+  ZixSelectField
 } from '@zix/ui/forms';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { useRouter } from 'expo-router';
 import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
-import { Text, YStack } from 'tamagui';
+import { Text, XStack, YStack } from 'tamagui';
 import { z } from 'zod';
-import { ProductManagerComponent } from '../../components/product-manager-component/product-manager-component';
 
 const { useParam } = createParam<{ product: string }>();
 
@@ -31,9 +35,7 @@ const UpdateProductFormSchema = z.object({
   variant: z.object({
     price: formFields.text.describe('السعر (اختياري)').optional(),
     stock: formFields.number.describe('المخزون (اختياري)').optional(),
-    type: formFields.select.describe(''),
     type_unit: formFields.select.describe(''),
-    type_value: formFields.number.describe(''),
   }),
   is_available: formFields.select_radio_group.describe('الحالة'),
 });
@@ -42,6 +44,22 @@ export const ProductManagerScreen = () => {
   const [productId] = useParam('product');
   const queryClient = useQueryClient();
   const { user } = useAuth();
+
+  const unitTypes = [
+    { name: 'م', id: 'm' },
+    { name: 'سم', id: 'cm' },
+    { name: 'مم', id: 'mm' },
+    { name: 'إنش', id: 'in' },
+    { name: 'م²', id: 'm2' },
+    { name: 'قدم²', id: 'ft2' },
+    { name: 'م³', id: 'm3' },
+    { name: 'لتر', id: 'ltr' },
+    { name: 'مل', id: 'ml' },
+    { name: 'طن', id: 'ton' },
+    { name: 'كجم', id: 'kg' },
+    { name: 'جم', id: 'g' },
+    { name: 'م.ط', id: 'm4' },
+  ];
   const { data, isLoading } = useQuery({
     enabled: !!productId,
     queryKey: ['ProductsService.retrieveProduct', productId],
@@ -53,8 +71,41 @@ export const ProductManagerScreen = () => {
   const form = useForm<z.infer<typeof UpdateProductFormSchema>>();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
   const toast = useToastController();
+
+  const { mutateAsync } = useMutation({
+    mutationFn: (requestBody: z.infer<typeof UpdateProductFormSchema>) => {
+
+      if (productId) {
+        return ProductsService.updateProduct({
+          product: productId as string,
+          requestBody,
+        });
+      } else {
+        return ProductsService.storeProduct({
+          requestBody,
+        });
+      }
+    },
+    onSuccess(response) {
+      toast.show(productId ? 'تم تحديث المنتج بنجاح' : 'تم إضافة المنتج بنجاح');
+      setOpen(true);
+
+      queryClient.invalidateQueries({
+        queryKey: ['ProductsService.fetchAllProduct', user?.active_company?.id],
+      });
+      router.back();
+    },
+    onError(error: any) {
+      alert(error.message);
+      toast.show('حدث خطأ ما', {
+        message: error.message,
+      });
+      handleFormErrors(form, error);
+    },
+  });
 
 
 
@@ -80,13 +131,25 @@ export const ProductManagerScreen = () => {
   });
 
   useEffect(() => {
-    if (open) {
-      setTimeout(() => {
-        setOpen(false);
-        router.back();
-      }, 3000);
-    }
-  }, [open]);
+    console.log(
+      "form.watch('variant.type_value')",
+      form.watch('variant.type_unit'),
+    );
+  }, [
+    form.watch('variant.type_unit'),
+  ]);
+
+  const product = useMemo(() => {
+    return (
+      data ?? {
+        variant: {
+          type: 'weight',
+          type_unit: 'kg',
+          type_value: 0,
+        },
+      }
+    );
+  }, [data?.data]);
 
 
   if (isLoading) {
@@ -103,8 +166,8 @@ export const ProductManagerScreen = () => {
           productId && (
             <DeleteProduct
               title="تأكيد الحذف"
-              open={open}
-              setIsOpen={setOpen}
+              open={openDeleteDialog}
+              setIsOpen={setOpenDeleteDialog}
               trigger={
                 <ZixButton
                   theme={'error'}
@@ -128,7 +191,98 @@ export const ProductManagerScreen = () => {
         }
       />
       <YStack flex={1}>
-        <ProductManagerComponent productId={productId as string} />
+      <SchemaForm
+      form={form}
+      schema={UpdateProductFormSchema}
+      defaultValues={
+        {
+          ...product?.data,
+          is_available: product?.data?.is_available?.toString(),
+        }
+      }
+      props={{
+        is_available: {
+          options: [
+            { name: 'متوفر', id: '1' },
+            { name: 'غير متوفر', id: '0' },
+          ],
+          width: '50%',
+          colorSelected: '#EFFEF6',
+          colorIndicator: '#0F5837',
+        },
+      }}
+      onSubmit={(data) => {
+        // mutateAsync(data);
+      }}
+      renderAfter={({ submit }) => {
+        return (
+          <YStack gap="$4" marginBottom={'$4'}>
+            <SubmitButton
+              theme={'accent'}
+              backgroundColor="$color1"
+              color="white"
+              onPress={() => {
+                const values = form.getValues();
+                mutateAsync(values);
+              }}
+            >
+              {productId ? 'حفظ التغييرات' : 'إضافة المنتج'}
+            </SubmitButton>
+            <SubmitButton
+              theme={'accent'}
+              pressStyle={{
+                backgroundColor: 'transparent',
+              }}
+              backgroundColor="transparent"
+              borderWidth={1}
+              borderColor="$color0"
+              color="$color0"
+              onPress={() => {
+                  router.back()
+              }}
+            >
+              إلغاء
+            </SubmitButton>
+          </YStack>
+        );
+      }}
+    >
+      {({
+        variant: { type_unit, ...variant },
+        ...fields
+      }) => (
+        <YStack gap="$4" >
+          {Object.values(fields)}
+          <ZixFieldContainer label="نوع المتغير">
+            <YStack gap="$4">
+              <XStack gap="$4" width="100%">
+              <ZixSelectField
+                selectTriggerProps={{
+                  size: '$3',
+                  height: '$4',
+                  flex: undefined,
+                  width: '100%',
+                  padding: 10,
+                }}
+                selectTriggerTextProps={{
+                  fontSize: 12,
+                }}
+                size="$3"
+                options={unitTypes}
+                value={form.getValues('variant.type_unit') || product?.data?.variant?.type_unit|| 'm'}
+                onChange={(value) => {
+                  form.setValue('variant.type_unit', value.toString());
+                }}
+              />
+              </XStack>
+
+              
+            </YStack>
+          </ZixFieldContainer>
+          <YStack gap="$4">{Object.values(variant)}</YStack>
+        </YStack>
+      )}
+    </SchemaForm>
       </YStack>
       <ZixAlertActions
         title={productId ? 'تم تحديث المنتج بنجاح' : 'تم إضافة المنتج بنجاح'}

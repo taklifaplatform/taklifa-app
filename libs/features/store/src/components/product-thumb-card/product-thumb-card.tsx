@@ -49,7 +49,7 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
   const [productUnit, setProductUnit] = useState(product.variant?.type_unit?.toString());
   const queryClient = useQueryClient();
   const toast = useToastController();
-  const { user } = useAuth();
+  const { user, getUrlPrefix } = useAuth();
 
   const { mutateAsync: updateProduct } = useMutation({
     mutationFn: (requestBody: any) => {
@@ -128,7 +128,7 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
                 size="$3"
                 height="$3"
                 backgroundColor="$color0"
-                onPress={() => onEditProduct(product.id as string)}
+                onPress={() => router.push(`${getUrlPrefix}/products/${product.id}/edit`)}
                 color="$color2"
                 icon={SquarePen}
               />
@@ -143,7 +143,7 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
                   height: '$3',
                   flex: undefined,
                   width: 70,
-                  padding: 0,
+                  padding: 5,
                 }}
                 selectTriggerTextProps={{
                   fontSize: 12,
