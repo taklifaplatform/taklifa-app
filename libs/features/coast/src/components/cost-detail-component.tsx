@@ -1,4 +1,5 @@
 import { CartItemTransformer, SimpleCompanyTransformer } from '@zix/api';
+import { useCart } from '@zix/services/auth';
 import { Dimensions } from 'react-native';
 import { YStack } from 'tamagui';
 import { CostHeader } from './cost-header';
@@ -11,6 +12,7 @@ export const CostDetailComponent = ({
   company: SimpleCompanyTransformer;
   items: CartItemTransformer[];
 }) => {
+  const { formatCurrency } = useCart();
   const SCREEN_WIDTH = Dimensions.get('window').width;
   const totalCost = items.reduce((acc, item) => acc + Number(item.total_price), 0);
   return (
@@ -26,11 +28,7 @@ export const CostDetailComponent = ({
     >
       <CostHeader
         title={company.name ?? ''}
-        price={Number(totalCost).toLocaleString('en-US', {
-          style: 'currency',
-          currency: 'SAR',
-          signDisplay: 'never',
-        })}
+        price={formatCurrency(totalCost)}
       />
       <CostListComponent items={items} />
     </YStack>

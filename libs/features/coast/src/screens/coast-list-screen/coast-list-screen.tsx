@@ -1,10 +1,10 @@
-import { FileDown, ShoppingBag, RefreshCw } from '@tamagui/lucide-icons';
-import { useCart, useMixpanel, GroupedCompanyItems } from '@zix/services/auth';
+import { FileDown, RefreshCw, ShoppingBag } from '@tamagui/lucide-icons';
+import { GroupedCompanyItems, useCart, useMixpanel } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
-import { useEffect, useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
-import { Button, H4, Text, View, XStack, YStack, Spinner } from 'tamagui';
+import { Button, H4, Spinner, Text, View, XStack, YStack } from 'tamagui';
 import { CostDetailComponent } from '../../components/cost-detail-component';
 
 export interface ServicesListScreenProps {
@@ -15,14 +15,15 @@ export const CoastListScreen: React.FC<ServicesListScreenProps> = ({
   showHeader = true,
 }) => {
   useMixpanel('Coast List Screen view');
-  const { 
-    groupedCompanyItems, 
-    totalCost, 
+  const {
+    groupedCompanyItems,
+    totalCost,
     totalItems,
     hasItems,
-    isLoading, 
-    error, 
-    getCart 
+    isLoading,
+    error,
+    getCart,
+    formatCurrency
   } = useCart();
 
   useEffect(() => {
@@ -33,12 +34,7 @@ export const CoastListScreen: React.FC<ServicesListScreenProps> = ({
     getCart();
   }, [getCart]);
 
-  const formatCurrency = useCallback((amount: number) => {
-    return Number(amount).toLocaleString('en-US', {
-      style: 'currency',
-      currency: 'SAR',
-    });
-  }, []);
+
 
   const renderCoastTotal = useCallback(({ showButton = true }: { showButton?: boolean }) => {
     return (
@@ -69,7 +65,7 @@ export const CoastListScreen: React.FC<ServicesListScreenProps> = ({
             <CustomIcon name="riyal" size={'$3'} color="#000000" />
           </XStack>
         </XStack>
-        
+
         {showButton && hasItems && (
           <Button
             backgroundColor="$color0"
@@ -91,8 +87,8 @@ export const CoastListScreen: React.FC<ServicesListScreenProps> = ({
   }, [totalCost, totalItems, hasItems, formatCurrency]);
 
   const renderGroupedItem = useCallback(({ item }: { item: GroupedCompanyItems }) => (
-    <CostDetailComponent 
-      company={item.company} 
+    <CostDetailComponent
+      company={item.company}
       items={item.items}
     />
   ), []);
@@ -158,7 +154,7 @@ export const CoastListScreen: React.FC<ServicesListScreenProps> = ({
     </View>
   ), []);
 
-  const getKeyExtractor = useCallback((item: GroupedCompanyItems) => 
+  const getKeyExtractor = useCallback((item: GroupedCompanyItems) =>
     item.company.id || `company-${Math.random()}`, []
   );
 

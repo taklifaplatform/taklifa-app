@@ -218,6 +218,13 @@ export function useCart() {
 
   const hasItems = groupedCompanyItems.length > 0;
 
+  const formatCurrency = useCallback((amount: number) => {
+    return Number(amount).toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'SAR',
+    }).replace('SAR', '').replace('SR', '').replace('ر.س', '');
+  }, []);
+
   return {
     // Data
     cart,
@@ -225,7 +232,7 @@ export function useCart() {
     totalItems,
     totalCost,
     hasItems,
-    
+    formatCurrency,
     // State
     isLoading,
     error,

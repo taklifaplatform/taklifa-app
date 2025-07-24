@@ -18,7 +18,7 @@ export const CartItemComponent = ({
   onEdit,
   onRemove,
 }: CartItemComponentProps) => {
-  const { updateItemQuantity, removeItem } = useCart();
+  const { updateItemQuantity, removeItem, formatCurrency } = useCart();
   const [isUpdating, setIsUpdating] = useState(false);
 
   // Use the actual cart quantity as default
@@ -66,19 +66,11 @@ export const CartItemComponent = ({
   }, [isUpdating, onRemove, item, removeItem]);
 
   const formattedPrice = useMemo(() => {
-    return Number(item.total_price || 0).toLocaleString('en-US', {
-      style: 'currency',
-      currency: 'SAR',
-      signDisplay: 'never',
-    });
+    return formatCurrency(Number(item.total_price || 0));
   }, [item.total_price]);
 
   const unitPrice = useMemo(() => {
-    return Number(item.unit_price || 0).toLocaleString('en-US', {
-      style: 'currency',
-      currency: 'SAR',
-      signDisplay: 'never',
-    });
+    return formatCurrency(Number(item.unit_price || 0));
   }, [item.unit_price]);
 
   return (
