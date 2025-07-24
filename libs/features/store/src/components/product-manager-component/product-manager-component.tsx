@@ -158,8 +158,7 @@ export const ProductManagerComponent = ({
           <YStack gap="$4" marginBottom={'$4'}>
             <SubmitButton
               theme={'accent'}
-              backgroundColor="$color1"
-              color="white"
+              color="$color2" backgroundColor="$color1"
               onPress={() => {
                 const values = form.getValues();
                 mutateAsync(values);

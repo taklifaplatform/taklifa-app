@@ -72,7 +72,7 @@ export const AuthDriverVerificationScreen = () => {
           renderAfter={({ submit }) => {
             return (
               <Theme name="accent">
-                <SubmitButton onPress={submit} color="$color2">{t('common:next')}</SubmitButton>
+                <SubmitButton onPress={submit} color="$color2" backgroundColor="$color1">{t('common:next')}</SubmitButton>
               </Theme>
             );
           }}

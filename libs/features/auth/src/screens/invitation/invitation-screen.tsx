@@ -121,7 +121,7 @@ export const InvitationScreen: React.FC = () => {
         return (
           <Stack gap="$4">
             <Theme name="accent">
-              <SubmitButton onPress={() => submit()} borderRadius="$10" color="$color2">
+              <SubmitButton onPress={() => submit()} borderRadius="$10" color="$color2" backgroundColor="$color1">
                 التالي
               </SubmitButton>
             </Theme>
@@ -171,7 +171,7 @@ export const InvitationScreen: React.FC = () => {
         return (
           <Stack gap="$4">
             <Theme inverse>
-              <SubmitButton onPress={() => submit()} borderRadius="$10">
+              <SubmitButton onPress={() => submit()} borderRadius="$10" color="$color2" backgroundColor="$color1">
                 التالي
               </SubmitButton>
             </Theme>

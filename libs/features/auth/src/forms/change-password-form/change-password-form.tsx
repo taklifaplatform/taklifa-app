@@ -91,7 +91,7 @@ export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
       }}
       renderAfter={({ submit }) => (
         <Theme name="accent">
-          <SubmitButton onPress={() => submit()} color="$color2">
+          <SubmitButton onPress={() => submit()} color="$color2" backgroundColor="$color1">
             {t('common:confirm')}
           </SubmitButton>
         </Theme>

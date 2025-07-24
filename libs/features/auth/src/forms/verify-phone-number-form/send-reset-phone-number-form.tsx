@@ -136,7 +136,7 @@ export const SendResetPhoneNumberForm: React.FC<SendResetPhoneNumberFormProps> =
           return (
             <Stack>
               <Theme name="accent">
-                <SubmitButton onPress={() => submit()} color="$color2" >
+                <SubmitButton onPress={() => submit()} color="$color2" backgroundColor="$color1" >
                   {t('common:confirm')}
                 </SubmitButton>
               </Theme>

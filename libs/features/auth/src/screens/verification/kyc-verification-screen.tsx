@@ -70,7 +70,7 @@ export const KycVerificationScreen = () => {
           renderAfter={({ submit }) => {
             return (
               <Theme name="accent">
-                <SubmitButton onPress={() => submit()} color="$color2">
+                <SubmitButton onPress={() => submit()} color="$color2" backgroundColor="$color1">
                   {t('common:confirm')}
                 </SubmitButton>
               </Theme>

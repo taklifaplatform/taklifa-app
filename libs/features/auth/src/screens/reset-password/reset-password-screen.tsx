@@ -76,7 +76,7 @@ export const ResetPasswordScreen = () => {
           return (
             <Stack gap="$4">
               <Theme name="accent">
-                <SubmitButton onPress={() => submit()} borderRadius="$10" color="$color2">
+                <SubmitButton onPress={() => submit()} borderRadius="$10" color="$color2" backgroundColor="$color1">
                   {t('common:next')}
                 </SubmitButton>
               </Theme>

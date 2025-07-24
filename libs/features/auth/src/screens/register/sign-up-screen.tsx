@@ -153,7 +153,7 @@ export const SignUpScreen = () => {
           onSubmit={mutateAsync}
           renderAfter={({ submit }) => (
             <Theme name="accent">
-              <SubmitButton onPress={() => submit()} borderRadius="$10" color="$color2">
+              <SubmitButton onPress={() => submit()} borderRadius="$10" ccolor="$color2" backgroundColor="$color1">
                 {t('common:next')}
               </SubmitButton>
             </Theme>
