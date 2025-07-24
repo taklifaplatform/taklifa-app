@@ -1,13 +1,12 @@
+import { ProductTransformer } from '@zix/api';
 import { CustomIcon } from '@zix/ui/icons';
 import React, { useState } from 'react';
 import { Dimensions, TouchableOpacity } from 'react-native';
 import { useRouter } from 'solito/router';
-import { Image, Text, Theme, XStack, YStack, View } from 'tamagui';
+import { Image, Text, Theme, View, XStack, YStack } from 'tamagui';
+import { AddToCartButton } from '../add-to-cart-button/add-to-cart-button';
 import { ManageCountProduct } from '../manage-count-product/manage-count-product';
-import { ProductTransformer } from '@zix/api';
 import { ZixButton } from '../zix-button/zix-button';
-import { useCart } from '@zix/services/auth';
-import { Check } from '@tamagui/lucide-icons';
 
 export type ProductCardProps = {
   product: ProductTransformer;
@@ -22,22 +21,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   useShowButton = false,
   setShowSheet,
 }) => {
-  const { addItemToCart } = useCart();
   const { width: SCREEN_WIDTH } = Dimensions.get('window');
   const router = useRouter();
   const [count, setCount] = useState(1);
 
-  const [isAddedToCart, setIsAddedToCart] = useState(false);
-
-  const [isAddingToCart, setIsAddingToCart] = useState(false);
-  async function onAddToCart() {
-    setIsAddingToCart(true);
-    await addItemToCart(product, count);
-    setIsAddingToCart(false);
-    setCount(1);
-    setIsAddedToCart(true);
-  }
-  
   return (
     <YStack
       flex={1}
@@ -110,25 +97,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           value={count}
           onUpdate={setCount}
           width={'100%'}
-          height={30}
+          height={35}
           size={15}
         />
       )}
       {useShowButton && (
-        <ZixButton
-          theme={'accent'}
-          height={35}
-          justifyContent="center"
-          alignItems="center"
-          onPress={() => onAddToCart()}
-          fontSize={12}
-          backgroundColor="$color1"
-          fontWeight={'bold'}
-          color="$color2"
-          loading={isAddingToCart}
-        >
-          {isAddedToCart ? <Check size={16} color="#FFF" /> : 'أضف لعرض سعر '}
-        </ZixButton>
+        <AddToCartButton width={'100%'} height={35} product={product} />
       )}
       {!useShowButton && (
         <ZixButton

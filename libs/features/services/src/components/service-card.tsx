@@ -1,7 +1,7 @@
 import { Building2, Clock, MapPin, Rocket } from '@tamagui/lucide-icons';
 import { ServiceTransformer } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
-import { TitleInfo } from '@zix/ui/common';
+import { TextInfo } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { TouchableOpacity } from 'react-native';
 import { useRouter } from 'solito/router';
@@ -94,7 +94,7 @@ export const ServiceCard = ({
           >
             {service?.title || ''}
           </Text>
-          <TitleInfo
+          <TextInfo
             icon={<Building2 size={15} color="$color0" />}
             title={service?.description || ''}
             flex={1}
@@ -108,13 +108,13 @@ export const ServiceCard = ({
             theme={showHeader ? 'accent' : undefined}
           >
             {!!service?.city && (
-              <TitleInfo
+              <TextInfo
                 icon={<MapPin size={15} color="#000000" />}
                 title={service.city}
                 textAlign="left"
               />
             )}
-            <TitleInfo
+            <TextInfo
               icon={<Clock size={15} color="#000000" />}
               title={'منذ ساعة'}
             />

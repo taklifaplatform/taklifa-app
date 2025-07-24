@@ -1,12 +1,12 @@
-import { Image, YStack, Text, XStack, Theme } from 'tamagui';
+import { Text, XStack } from 'tamagui';
 
-export interface TitleInfoProps {
+export interface TextInfoProps {
   icon: React.ReactNode;
   title: string;
   props?: any;
 }
 
-export const TitleInfo: React.FC<TitleInfoProps> = ({ icon, title, ...props }) => {
+export const TextInfo: React.FC<TextInfoProps> = ({ icon, title, ...props }) => {
   return (
     <XStack alignItems="center" gap="$2">
       {icon}
@@ -17,4 +17,4 @@ export const TitleInfo: React.FC<TitleInfoProps> = ({ icon, title, ...props }) =
   );
 };
 
-export default TitleInfo;
+export default TextInfo;

@@ -24,19 +24,22 @@ export const CartItemComponent = ({
   // Use the actual cart quantity as default
   const currentQuantity = item.quantity || 1;
 
-  const handleQuantityUpdate = useCallback(async (newQuantity: number) => {
-    if (newQuantity === currentQuantity || isUpdating) return;
+  const handleQuantityUpdate = useCallback(
+    async (newQuantity: number) => {
+      if (newQuantity === currentQuantity || isUpdating) return;
 
-    try {
-      setIsUpdating(true);
+      try {
+        setIsUpdating(true);
 
-      await updateItemQuantity(item, newQuantity);
-    } catch (error) {
-      console.error('Failed to update quantity:', error);
-    } finally {
-      setIsUpdating(false);
-    }
-  }, [currentQuantity, isUpdating, item, updateItemQuantity]);
+        await updateItemQuantity(item, newQuantity);
+      } catch (error) {
+        console.error('Failed to update quantity:', error);
+      } finally {
+        setIsUpdating(false);
+      }
+    },
+    [currentQuantity, isUpdating, item, updateItemQuantity],
+  );
 
   const handleEdit = useCallback(() => {
     if (onEdit) {
@@ -85,12 +88,16 @@ export const CartItemComponent = ({
       opacity={isUpdating ? 0.6 : 1}
     >
       <XStack gap={'$3'} alignItems="center" flex={1}>
-        <Image
-          source={require('./pic.png')}
-          width={60}
-          height={70}
-          borderRadius={10}
-        />
+        {item.product?.image?.original_url ? (
+          <Image
+            source={{ uri: item.product?.image?.original_url }}
+            width={60}
+            height={70}
+            borderRadius={10}
+          />
+        ) : (
+          <CustomIcon name="image-blank" size={'$7'} color={'$color8'} />
+        )}
         <YStack gap={'$2'} flex={1} alignItems="flex-start">
           <Text fontSize={'$3'} fontWeight={'bold'} numberOfLines={2}>
             {item.product?.name || 'اسم المنتج غير متوفر'}
@@ -107,7 +114,11 @@ export const CartItemComponent = ({
             <CustomIcon name="riyal" size={'$1'} color={'$color8'} />
           </XStack>
 
-          <XStack width={'100%'} justifyContent="space-between" alignItems="center">
+          <XStack
+            width={'100%'}
+            justifyContent="space-between"
+            alignItems="center"
+          >
             <XStack gap={'$2'} alignItems="center">
               <Text fontSize={'$4'} fontWeight={'bold'} color="$color12">
                 {formattedPrice}
@@ -118,8 +129,8 @@ export const CartItemComponent = ({
             <ManageCountProduct
               value={currentQuantity}
               onUpdate={handleQuantityUpdate}
-              // width={100}
-              // height={30}
+              width={100}
+              height={35}
               size={15}
               min={1}
               max={99}
@@ -158,17 +169,22 @@ export const CostListComponent = ({
   onItemEdit,
   onItemRemove,
 }: CostListComponentProps) => {
-  const getItemKey = useCallback((item: CartItemTransformer) =>
-    item.id || `${item.product_id}-${item.variant_id}`, []
+  const getItemKey = useCallback(
+    (item: CartItemTransformer) =>
+      item.id || `${item.product_id}-${item.variant_id}`,
+    [],
   );
 
-  const renderCartItem = useCallback(({ item }: { item: CartItemTransformer }) => (
-    <CartItemComponent
-      item={item}
-      onEdit={onItemEdit}
-      onRemove={onItemRemove}
-    />
-  ), [onItemEdit, onItemRemove]);
+  const renderCartItem = useCallback(
+    ({ item }: { item: CartItemTransformer }) => (
+      <CartItemComponent
+        item={item}
+        onEdit={onItemEdit}
+        onRemove={onItemRemove}
+      />
+    ),
+    [onItemEdit, onItemRemove],
+  );
 
   if (!items || items.length === 0) {
     return (

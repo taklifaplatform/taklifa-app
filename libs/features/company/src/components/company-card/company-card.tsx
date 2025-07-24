@@ -1,7 +1,7 @@
 import { BadgeCheck, MapPin, Star } from '@tamagui/lucide-icons';
 import { CompanyTransformer } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
-import { TitleInfo, UserAvatar } from '@zix/ui/common';
+import { TextInfo, UserAvatar } from '@zix/ui/common';
 import { useRouter } from 'solito/router';
 import {
   Text,
@@ -44,12 +44,12 @@ export const CompanyCard: React.FC<CompanyCardProps> = ({
 
   const renderLocationInfo = () =>
     !!company?.location?.id && (
-      <TitleInfo icon={<Theme name="accent"><MapPin size={20} color="$color0" /></Theme>} title={company?.location?.address + ' ' + company?.location?.country?.name} />
+      <TextInfo icon={<Theme name="accent"><MapPin size={20} color="$color0" /></Theme>} title={company?.location?.address + ' ' + company?.location?.country?.name} />
     );
 
   const renderRatingsInfo = () =>
     !!company.rating_stats?.count && (
-      <TitleInfo icon={<Theme name="accent"><Star size={20} color="$color0" /></Theme>} title={`(${company.rating_stats?.count}) ${company.rating_stats?.score}`} />
+      <TextInfo icon={<Theme name="accent"><Star size={20} color="$color0" /></Theme>} title={`(${company.rating_stats?.count}) ${company.rating_stats?.score}`} />
     );
 
   return (

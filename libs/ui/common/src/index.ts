@@ -46,7 +46,7 @@ export * from "./components/data-not-found/data-not-found";
 
 export * from "./components/zix-slider/zix-slider";
 
-export * from "./components/title-info/title-info";
+export * from "./components/text-info/text-info";
 
 export * from "./components/filter-by-order/filter-by-order";
 
@@ -61,3 +61,5 @@ export * from "./components/delete-product/delete-product";
 export * from "./components/product-card/product-card";
 
 export * from "./components/manage-count-product/manage-count-product";
+
+export * from "./components/add-to-cart-button/add-to-cart-button";

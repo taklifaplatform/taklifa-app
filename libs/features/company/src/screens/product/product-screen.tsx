@@ -11,7 +11,7 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { ProductsService } from '@zix/api';
 import { useMixpanel } from '@zix/services/auth';
-import { ManageCountProduct, ProductCard, TitleInfo } from '@zix/ui/common';
+import { AddToCartButton, ManageCountProduct, ProductCard, TextInfo } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { ZixMediasListWidget } from '@zix/ui/widgets';
 import moment from 'moment';
@@ -60,20 +60,20 @@ export function ProductScreen() {
   });
 
   const renderLocationInfo = () => (
-    <TitleInfo
+    <TextInfo
       icon={<Building2 size={20} color="$color0" />}
       title={product?.data?.company?.name}
     />
   );
 
   const renderRatingsInfo = () => product?.data?.rating_stats?.score && (
-    <TitleInfo
+    <TextInfo
       icon={<Star size={20} color="$color0" />}
       title={`${product?.data?.rating_stats?.score} (${product?.data?.rating_stats?.count} تقييمات)`}
     />
   );
   const renderTimeInfo = () => (
-    <TitleInfo
+    <TextInfo
       icon={<ClockFading size={20} color="$color0" />}
       title={moment(product?.data?.created_at).fromNow()}
     />
@@ -163,7 +163,7 @@ export function ProductScreen() {
     </XStack>
   );
   const renderAddToCartInfo = () => (
-    <XStack width="100%" gap="$3">
+    <XStack width="100%" justifyContent="space-between" alignItems="center">
       <ManageCountProduct
         value={count}
         onUpdate={(value) => {
@@ -174,20 +174,7 @@ export function ProductScreen() {
         size={15}
         max={product?.data?.variant?.stock}
       />
-      <Button
-        theme={'accent'}
-        flex={1}
-        height={35}
-        borderRadius={10}
-        backgroundColor="$color1"
-        justifyContent="center"
-        alignItems="center"
-        onPress={() => {}}
-      >
-        <Text fontSize={12} fontWeight={'bold'} color="#FFFFFF">
-          أضف لعرض سعر
-        </Text>
-      </Button>
+      <AddToCartButton width={'45%'} height={35} product={product?.data} />
     </XStack>
   );
 

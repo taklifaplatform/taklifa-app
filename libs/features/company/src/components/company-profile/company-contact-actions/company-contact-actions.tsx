@@ -9,7 +9,7 @@ import {
 import { useToastController } from '@tamagui/toast';
 import { AnalyticsService, CompanyTransformer } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
-import { TitleInfo, ZixButton, ZixDialog } from '@zix/ui/common';
+import { TextInfo, ZixButton, ZixDialog } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import { useState } from 'react';
@@ -79,14 +79,14 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
   
   const renderLocationInfo = () =>
     !!company?.location?.id && (
-      <TitleInfo
+      <TextInfo
         icon={<MapPin size={20} color="$color0" />}
         title={company?.location?.address}
       />
     );
     const renderContactInfo = () =>
       !!company?.location?.id && (
-        <TitleInfo
+        <TextInfo
           icon={<Phone size={20} color="$color0" />}
           title={company?.contact_number}
         />
@@ -94,7 +94,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
 
   const renderRatingsInfo = () =>
     !!company.rating_stats?.count && (
-      <TitleInfo
+      <TextInfo
         icon={<Star size={20} color="$color0" />}
         title={`(${company.rating_stats?.count}) ${company.rating_stats?.score}`}
       />

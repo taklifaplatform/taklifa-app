@@ -5,7 +5,7 @@ import { ProductDetailComponent } from '@zix/features/company';
 import { COMPANY_MANAGER_ROLES, useAuth } from '@zix/services/auth';
 import {
   ManageCountProduct,
-  TitleInfo,
+  TextInfo,
   UserAvatar,
   ZixAvatar,
   ZixButton,
@@ -27,6 +27,7 @@ import {
   XStack,
   YStack,
 } from 'tamagui';
+import { AddToCartButton } from '@zix/ui/common';
 
 export type AppCustomHeaderProps = {
   searchProps?: ZixInputProps;
@@ -61,8 +62,13 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
   const [searchResults, setSearchResults] = useState<ProductTransformer[]>([]);
   const [open, setOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState('');
-  const [selectedProductDetail, setSelectedProductDetail] =
-    useState<ProductTransformer | null>(null);
+  const [selectedProductDetail, setSelectedProductDetail] = useState<{
+    product: ProductTransformer | null;
+    index: number;
+  } | null>({
+    product: null,
+    index: 0,
+  });
   const [count, setCount] = useState(1);
   const queryClient = useQueryClient();
 
@@ -85,8 +91,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
   );
 
   useEffect(() => {
-      setSearchResults(data?.data || []);
-    
+    setSearchResults(data?.data || []);
   }, [data]);
 
   useEffect(() => {
@@ -94,7 +99,9 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
       setSearchResults([]);
       return;
     }
-      queryClient.invalidateQueries({ queryKey: ['ProductsService.fetchAllProduct', searchValue] });
+    queryClient.invalidateQueries({
+      queryKey: ['ProductsService.fetchAllProduct', searchValue],
+    });
   }, [searchValue]);
 
   useEffect(() => {
@@ -134,11 +141,14 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
                 <ArrowLeft size={'$1.5'} color="$color6" />
               </ZixButton>
             ) : isSearchBarFocused ? (
-              <ZixButton unstyled onPress={() => {
-                setIsSearchBarFocused(false);
-                setSearchValue('');
-                setSearchResults([]);
-                }}>
+              <ZixButton
+                unstyled
+                onPress={() => {
+                  setIsSearchBarFocused(false);
+                  setSearchValue('');
+                  setSearchResults([]);
+                }}
+              >
                 <X size={'$1.5'} color="$color6" />
               </ZixButton>
             ) : (
@@ -263,7 +273,9 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
   const sheetContent = () => {
     return (
       <ZixDialog
-        title={'قارن الاسعار'}
+        title={
+          !selectedProductDetail?.product ? 'قارن الاسعار' : 'تفاصيل المنتج'
+        }
         open={open}
         onOpenChange={setOpen}
         contentPadding="$3"
@@ -282,40 +294,55 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
               icon={<X size={16} color="$color0" />}
               onPress={() => {
                 setOpen(false);
-                setSelectedProductDetail(null);
+                setSelectedProductDetail({ product: null, index: 0 });
               }}
             />
           </XStack>
         }
       >
-        {listProducts()}
+        {!selectedProductDetail?.product ? (
+          <FlatList
+            data={listProductsData?.data}
+            style={{
+              padding: 10,
+              gap: 10,
+              backgroundColor: '$color1',
+            }}
+            renderItem={({ item, index }) => renderProductCard(item, index)}
+            keyExtractor={(item) => item.id}
+          />
+        ) : (
+          <ProductDetailComponent
+            product={selectedProductDetail?.product}
+            onNextProduct={() => {
+              if (
+                selectedProductDetail.index + 1 <
+                listProductsData?.data?.length
+              ) {
+                setSelectedProductDetail({
+                  product:
+                    listProductsData?.data?.[selectedProductDetail.index + 1] ||
+                    null,
+                  index: selectedProductDetail.index + 1,
+                });
+              }
+            }}
+            onPreviousProduct={() => {
+              if (selectedProductDetail.index - 1 >= 0) {
+                setSelectedProductDetail({
+                  product:
+                    listProductsData?.data?.[selectedProductDetail.index - 1] ||
+                    null,
+                  index: selectedProductDetail.index - 1,
+                });
+              }
+            }}
+          />
+        )}
       </ZixDialog>
     );
   };
-  const listProducts = () => {
-    return !selectedProductDetail ? (
-      <FlatList
-        data={listProductsData?.data}
-        style={{
-          padding: 10,
-          gap: 10,
-          backgroundColor: '$color1',
-        }}
-        renderItem={({ item, index }) => renderProductCard(item, index)}
-        keyExtractor={(item) => item.id}
-      />
-    ) : (
-      <ProductDetailComponent
-        product={selectedProductDetail as ProductTransformer | null}
-        onNextProduct={() =>
-          setSelectedProductDetail(listProductsData?.data?.[count + 1] || null)
-        }
-        onPreviousProduct={() =>
-          setSelectedProductDetail(listProductsData?.data?.[count - 1] || null)
-        }
-      />
-    );
-  };
+
   const renderProductCard = (product: ProductTransformer, index: number) => {
     return (
       <YStack
@@ -340,7 +367,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
             <Text fontWeight="bold" fontSize="$4" color="$color1">
               {product?.company?.name}
             </Text>
-            <TitleInfo
+            <TextInfo
               icon={<MapPin size={16} color="$color0" />}
               title={product?.company?.name}
             />
@@ -379,28 +406,20 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
             </XStack>
           </YStack>
         </XStack>
-        <XStack width="100%" gap="$3" justifyContent="space-between">
+        <XStack
+          width="100%"
+          gap="$3"
+          justifyContent="space-between"
+          alignItems="center"
+        >
           <ManageCountProduct
             value={count}
             onUpdate={setCount}
             width={'55%'}
-            height={30}
+            height={40}
             size={20}
           />
-          <Button
-            theme={'accent'}
-            width={'40%'}
-            height={35}
-            borderRadius={'$4'}
-            backgroundColor="$color1"
-            justifyContent="center"
-            alignItems="center"
-            onPress={() => {}}
-          >
-            <Text fontSize={12} fontWeight={'bold'} color="#FFFFFF">
-              أضف لعرض سعر
-            </Text>
-          </Button>
+          <AddToCartButton width={'40%'} height={40} product={product} />
         </XStack>
         <Button
           unstyled
@@ -412,7 +431,10 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
           alignItems="center"
           backgroundColor="$color11"
           onPress={() => {
-            setSelectedProductDetail(product);
+            setSelectedProductDetail({
+              product: product,
+              index: index,
+            });
           }}
         >
           <Text fontSize={'$1'} fontWeight={'bold'} color="#FFFFFF">
