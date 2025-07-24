@@ -44,7 +44,7 @@ export const SelectAccountTypeScreen: React.FC = () => {
                 icon="user_type_customer"
                 title='عميل تكلفة'
                 subTitle='تسجيل مستخدم'
-                value="customer"
+                value={USER_ROLES.customer}
                 selectedValue={requestedAccountType}
                 onSelect={(value) => {
                   setRequestedAccountType(value);
@@ -59,7 +59,7 @@ export const SelectAccountTypeScreen: React.FC = () => {
                 icon="user_type_solo_transporter"
                 title='تقدم خدمة'
                 subTitle='( يمكنك عرض خدماتك في قسم الخدمات )'
-                value="solo_driver"
+                value={USER_ROLES.service_provider}
                 selectedValue={requestedAccountType}
                 onSelect={(value) => {
                   setRequestedAccountType(value);
@@ -74,7 +74,7 @@ export const SelectAccountTypeScreen: React.FC = () => {
             icon="user_type_company"
             title='تبيع منتج'
             subTitle='يمكنك إنشاء متجرك وعرض منتجاتك للبيع على الخريطة'
-            value="company_owner"
+            value={USER_ROLES.company_owner}
             selectedValue={requestedAccountType}
             onSelect={(value) => {
               setRequestedAccountType(value);

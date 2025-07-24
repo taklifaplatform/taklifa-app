@@ -41,7 +41,7 @@ export const BatchAddProductComponent = () => {
         queryClient.invalidateQueries({
           queryKey: ['ProductsService.fetchAllProduct', user.active_company?.id, true],
         });
-        router.replace(`${getUrlPrefix}/(tabs)/my-store`)
+        router.replace(`${getUrlPrefix}/(tabs)/store`)
         // onSuccess?.(result.data as BatchProductTransformer);
       }, 1000);
     } catch (error) {

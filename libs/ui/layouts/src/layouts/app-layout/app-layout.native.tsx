@@ -38,7 +38,7 @@ export const AppLayout = () => {
         }}
       />
       <Tabs.Screen
-        name="my-store"
+        name="store"
         options={
           user?.active_company
             ? {

@@ -284,7 +284,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
         disableDrag
         rigthComponent={
           <XStack gap="$4" alignItems="center" justifyContent="center">
-            <Button
+            {!selectedProductDetail?.product ? <Button
               size="$3"
               backgroundColor="#F1F2F4"
               justifyContent="center"
@@ -296,7 +296,20 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
                 setOpen(false);
                 setSelectedProductDetail({ product: null, index: 0 });
               }}
+            /> :
+            <Button
+              size="$3"
+              backgroundColor="#F1F2F4"
+              justifyContent="center"
+              alignItems="center"
+              unstyled
+              circular
+              icon={<ArrowLeft size={16} color="$color0" />}
+              onPress={() => {
+                setSelectedProductDetail({ product: null, index: 0 });
+              }}
             />
+          }
           </XStack>
         }
       >
