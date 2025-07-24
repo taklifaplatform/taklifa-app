@@ -149,7 +149,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
             )
           }
           placeholder="إبحث وقارن"
-          placeholderTextColor="$color11"
+          placeholderTextColor="$color10"
           borderRadius={'$8'}
           style={{
             paddingLeft: 60,
