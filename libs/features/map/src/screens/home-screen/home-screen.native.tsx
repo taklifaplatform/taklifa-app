@@ -309,7 +309,7 @@ export function HomeScreen() {
           />
           <ZixDialog
             title={selectedCompany?.name || ''}
-            snapPoints={[70]}
+            snapPoints={[80]}
             disableDrag={true}
             contentPadding="$1"
             open={open}

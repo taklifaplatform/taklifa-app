@@ -146,7 +146,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
               renderAvatar()
             )
           }
-          placeholder={t('common:search')}
+          placeholder="إبحث وقارن"
           placeholderTextColor="$color11"
           borderRadius={'$8'}
           style={{
