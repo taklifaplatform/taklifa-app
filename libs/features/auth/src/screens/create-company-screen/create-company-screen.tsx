@@ -1,10 +1,12 @@
 import { useMutation } from '@tanstack/react-query';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
+import { CirclePlus, ImagePlus, Upload } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
 import { CompanyAdminService } from '@zix/api';
 import { useAuth, useMixpanel } from '@zix/services/auth';
+import { ZixButton } from '@zix/ui/common';
 import {
   SchemaForm,
   SubmitButton,
@@ -21,8 +23,6 @@ import { useRouter } from 'solito/router';
 import { Avatar, Image, Text, Theme, XStack, YStack } from 'tamagui';
 import { z } from 'zod';
 import { AuthHeader } from '../../components/auth-header/auth-header';
-import { UserAvatar, ZixButton } from '@zix/ui/common';
-import { CirclePlus, ImagePlus, Upload } from '@tamagui/lucide-icons';
 const CreateCompanyFormSchema = z
   .object({
     logo: formFields.image.optional().describe(t('forms:company_logo')),

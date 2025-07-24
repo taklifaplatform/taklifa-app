@@ -42,7 +42,6 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
   const [search, setSearch] = useState<string>();
   const queryClient = useQueryClient();
 
-  console.log('company', company.name);
   //
   const { data, refetch, ...productsQuery } = useFlatListQuery({
     queryFn: ({ pageParam }: { pageParam: number }) =>

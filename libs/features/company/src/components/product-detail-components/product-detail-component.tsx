@@ -2,20 +2,20 @@ import { CustomIcon } from "@zix/ui/icons";
 import { ZixMediasListWidget } from "@zix/ui/widgets";
 import {  Dimensions, RefreshControl,  } from "react-native";
 import { ScrollView,  Button, Separator, Theme, YStack, Image, Text, XStack, View, Paragraph } from "tamagui";
-import { ManageCountProduct, TitleInfo } from "@zix/ui/common";
-import { Building2, ClockFading, Star } from "@tamagui/lucide-icons";
+import { ManageCountProduct, TitleInfo, ZixButton } from "@zix/ui/common";
+import { ArrowLeft, ArrowRight, Building2, ClockFading, Star } from "@tamagui/lucide-icons";
 import moment from "moment";
 import { useState } from "react";
 import { ProductTransformer } from "@zix/api";
 
 export const ProductDetailComponent = ({
   product,
-  isLoading,
-  refetch,
+  onNextProduct,
+  onPreviousProduct,
 }: {
   product?: ProductTransformer | null;
-  isLoading: boolean;
-  refetch: () => void;
+  onNextProduct: () => void;
+  onPreviousProduct: () => void;
 }) => {
   const SCREEN_WIDTH = Dimensions.get('window').width;
   const [count, setCount] = useState(1);
@@ -131,13 +131,6 @@ export const ProductDetailComponent = ({
             </View>
           </Theme>
         )}
-        <ZixMediasListWidget
-          position="relative"
-          height={100}
-          imageWidth={100}
-          imageHeight={100}
-          medias={product?.images || []}
-        />
         <YStack
           width="100%"
           gap="$2"
@@ -163,7 +156,17 @@ export const ProductDetailComponent = ({
 
         {renderDescriptionInfo()}
         <Separator width="100%" />
-        {/* {renderCarouselInfo()} */}
+        <XStack gap="$2" justifyContent="space-between" width="100%">
+          <ZixButton  backgroundColor="$color1"
+          icon={<ArrowRight size={20} color="$color0" />}
+          onPress={() => onNextProduct()}
+          />
+          <ZixButton  backgroundColor="$color1"
+          icon={<ArrowLeft size={20} color="$color0" />}
+          onPress={() => onPreviousProduct()}
+          />
+          
+        </XStack>
       </YStack>
     </ScrollView>
   );

@@ -1,6 +1,7 @@
 import { Minus, Plus } from '@tamagui/lucide-icons';
-import { Button, XStack, Text } from 'tamagui';
-import { useState, useEffect, useCallback } from 'react';
+import { ZixInput } from '@zix/ui/forms';
+import { useCallback, useEffect, useState } from 'react';
+import { Button, XStack } from 'tamagui';
 
 export type ManageCountProductProps = {
   value: number;
@@ -59,48 +60,53 @@ export const ManageCountProduct = ({
       height={height}
       justifyContent="space-between"
       alignItems="center"
-      borderWidth={1}
       borderColor={disabled ? "$color6" : "$color0"}
       borderRadius={10}
       opacity={disabled ? 0.6 : 1}
     >
-      <Button
-        icon={
-          <Minus 
-            size={size} 
-            color={canDecrement ? "$color11" : "$color8"} 
-          />
-        }
-        unstyled
-        size={size}
-        onPress={handleDecrement}
-        disabled={!canDecrement}
-        opacity={canDecrement ? 1 : 0.5}
+      <ZixInput
+        value={internalValue.toString()}
+        onChangeText={(text) => {
+          const num = Number(text);
+          if (!isNaN(num)) {
+            setInternalValue(num);
+          }
+        }}
+        rightIcon={() =><Button
+          icon={
+            <Minus 
+              size={size} 
+              color={canDecrement ? "$color11" : "$color8"} 
+            />
+          }
+          unstyled
+          size={size}
+          onPress={handleDecrement}
+          disabled={!canDecrement}
+          opacity={canDecrement ? 1 : 0.5}
+        />}
+        leftIcon={() => <Button
+          icon={
+            <Plus 
+              size={size} 
+              color={canIncrement ? "$color11" : "$color8"} 
+            />
+          }
+          unstyled
+          size={size}
+          onPress={handleIncrement}
+          disabled={!canIncrement}
+          opacity={canIncrement ? 1 : 0.5}
+        />}
+        keyboardType="numeric"
+        style={{
+          width: 50,
+          height: 30,
+          textAlign: 'center',
+          backgroundColor: 'white',
+        }}
       />
       
-      <Text 
-        fontSize={'$2'} 
-        fontWeight={'bold'} 
-        color={disabled ? "$color8" : "$color11"}
-        minWidth={20}
-        textAlign="center"
-      >
-        {internalValue}
-      </Text>
-      
-      <Button
-        icon={
-          <Plus 
-            size={size} 
-            color={canIncrement ? "$color11" : "$color8"} 
-          />
-        }
-        unstyled
-        size={size}
-        onPress={handleIncrement}
-        disabled={!canIncrement}
-        opacity={canIncrement ? 1 : 0.5}
-      />
     </XStack>
   );
 };

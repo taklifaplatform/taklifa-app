@@ -1,6 +1,6 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-import { LayoutList, Map } from '@tamagui/lucide-icons';
+import { LayoutList, Map, Upload, X } from '@tamagui/lucide-icons';
 import {
   QueryClientProvider,
   useQuery,
@@ -24,7 +24,7 @@ import { FlatList, Keyboard, Platform } from 'react-native';
 import MapView, { Circle, Region } from 'react-native-maps';
 import { Button, H4, Spinner, View, XStack, YStack } from 'tamagui';
 // import MapFilters from '../../components/map-filters/map-filters';
-import { ZixDialog } from '@zix/ui/common';
+import { ZixButton, ZixDialog } from '@zix/ui/common';
 import { CompanyDetail } from '../../components/company-detail/company-detail';
 
 const initialCamera = {
@@ -309,9 +309,38 @@ export function HomeScreen() {
           />
           <ZixDialog
             title={selectedCompany?.name || ''}
+            hideHiddenRightButton={true}
+            hiddenRightButton={
+              <XStack gap="$4" alignItems="center" justifyContent="center">
+                <Button
+                  size="$3"
+                  backgroundColor="#F1F2F4"
+                  justifyContent="center"
+                  alignItems="center"
+                  unstyled
+                  circular
+                  icon={<Upload size={16} color="$color0" />}
+                  onPress={() => {
+                    alert('upload');
+                  }}
+                />
+                <Button
+                  size="$3"
+                  backgroundColor="#F1F2F4"
+                  justifyContent="center"
+                  alignItems="center"
+                  unstyled
+                  circular
+                  icon={<X size={16} color="$color0" />}
+                  onPress={() => {
+                    setOpen(false);
+                  }}
+                />
+              </XStack>
+            }
             snapPoints={[80]}
             disableDrag={true}
-            contentPadding="$1"
+            contentPadding="$3"
             open={open}
             onOpenChange={setOpen}
           >
@@ -402,7 +431,7 @@ const ListSection: FC<ListSectionProps> = memo(function ListSection({
 }) {
   if (showMap) return null;
   return (
-    <View flex={1} >
+    <View flex={1}>
       <FlatList
         style={{ flex: 1 }}
         data={companiesList}

@@ -7,6 +7,7 @@ import { ManageCountProduct } from '../manage-count-product/manage-count-product
 import { ProductTransformer } from '@zix/api';
 import { ZixButton } from '../zix-button/zix-button';
 import { useCart } from '@zix/services/auth';
+import { Check } from '@tamagui/lucide-icons';
 
 export type ProductCardProps = {
   product: ProductTransformer;
@@ -26,12 +27,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const router = useRouter();
   const [count, setCount] = useState(1);
 
+  const [isAddedToCart, setIsAddedToCart] = useState(false);
+
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   async function onAddToCart() {
     setIsAddingToCart(true);
     await addItemToCart(product, count);
     setIsAddingToCart(false);
     setCount(1);
+    setIsAddedToCart(true);
   }
   //
   return (
@@ -123,7 +127,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           color="$color2"
           loading={isAddingToCart}
         >
-          أضف لعرض سعر
+          {isAddedToCart ? <Check size={16} color="#FFF" /> : 'أضف لعرض سعر '}
         </ZixButton>
       )}
       {!useShowButton && (
