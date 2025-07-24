@@ -309,8 +309,8 @@ export function HomeScreen() {
           />
           <ZixDialog
             title={selectedCompany?.name || ''}
-            hideHiddenRightButton={true}
-            hiddenRightButton={
+            justifyContentTitle={'space-between'}
+            rigthComponent={
               <XStack gap="$4" alignItems="center" justifyContent="center">
                 <Button
                   size="$3"

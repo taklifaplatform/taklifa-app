@@ -271,9 +271,9 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
         onOpenChange={setOpen}
         contentPadding="$3"
         snapPoints={[80]}
-        hideHiddenRightButton={true}
+        justifyContentTitle={'space-between'}
         disableDrag
-        hiddenRightButton={
+        rigthComponent={
           <XStack gap="$4" alignItems="center" justifyContent="center">
             <Button
               size="$3"

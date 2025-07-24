@@ -28,15 +28,15 @@ export type ZixDialogProps = DialogProps & {
   colorHeader?: string;
   disableDrag?: boolean;
   setDisableDrag?: (disable: boolean) => void;
-  hideHiddenRightButton?: boolean;
-  hiddenRightButton?: ReactNode;
+  justifyContentTitle?: 'space-between' | 'center' | 'flex-start' | 'flex-end';
+  rigthComponent?: ReactNode;
   deleteButton?: () => React.ReactNode;
 };
 
 export function ZixDialog({
   children,
   trigger,
-  hiddenRightButton,
+  // hiddenRightButton,
   title,
   description,
   hideCloseButton,
@@ -50,7 +50,8 @@ export function ZixDialog({
   colorHeader = '$color10',
   disableDrag = true,
   setDisableDrag,
-  hideHiddenRightButton = false,
+  justifyContentTitle = 'center',
+  rigthComponent,
   deleteButton,
   ...dialogProps
 }: ZixDialogProps) {
@@ -128,9 +129,7 @@ export function ZixDialog({
           {(!hideCloseButton || title) && (
             <XStack
               theme={'accent'}
-              justifyContent={
-                hideHiddenRightButton ? 'space-between' : 'center'
-              }
+              justifyContent={justifyContentTitle}
               padding={contentPadding}
               backgroundColor={colorHeader}
               borderTopLeftRadius={'$4'}
@@ -154,7 +153,7 @@ export function ZixDialog({
                   <Button size="$3" circular icon={<X />} />
                 </Dialog.Close>
               )}
-              {hideHiddenRightButton && hiddenRightButton}
+              {rigthComponent && rigthComponent}
               {deleteButton ? deleteButton() : null}
             </XStack>
           )}
