@@ -85,19 +85,16 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
   );
 
   useEffect(() => {
+      setSearchResults(data?.data || []);
+    
+  }, [data]);
+
+  useEffect(() => {
     if (searchValue.trim() === '') {
       setSearchResults([]);
       return;
     }
-    console.log("searchValue", searchValue);
-    queryClient.invalidateQueries({ queryKey: ['ProductsService.fetchAllProduct', searchValue] });
-    // queryClient.setQueryData(
-    //   ['ProductsService.fetchAllProduct', searchValue],
-    //   data?.data,
-    // );
-    console.log("isLoading", isLoading);
-    console.log("data?.data", data?.data);
-    setSearchResults(data?.data || []);
+      queryClient.invalidateQueries({ queryKey: ['ProductsService.fetchAllProduct', searchValue] });
   }, [searchValue]);
 
   useEffect(() => {
