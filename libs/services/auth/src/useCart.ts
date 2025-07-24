@@ -243,6 +243,7 @@ export function useCart() {
     updateItemQuantity,
     removeItem,
     clearCart,
+    getCartCode,
   };
 }
 

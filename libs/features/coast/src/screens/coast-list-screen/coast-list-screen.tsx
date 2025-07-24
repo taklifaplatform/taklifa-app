@@ -2,10 +2,12 @@ import { FileDown, RefreshCw, ShoppingBag } from '@tamagui/lucide-icons';
 import { GroupedCompanyItems, useCart, useMixpanel } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
-import { useCallback, useEffect } from 'react';
-import { FlatList, RefreshControl } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { Alert, FlatList, Linking, RefreshControl } from 'react-native';
 import { Button, H4, Spinner, Text, View, XStack, YStack } from 'tamagui';
 import { CostDetailComponent } from '../../components/cost-detail-component';
+import { OpenAPI } from '@zix/api';
+import * as FileSystem from 'expo-file-system';
 
 export interface ServicesListScreenProps {
   showHeader?: boolean;
@@ -23,7 +25,8 @@ export const CoastListScreen: React.FC<ServicesListScreenProps> = ({
     isLoading,
     error,
     getCart,
-    formatCurrency
+    formatCurrency,
+    getCartCode
   } = useCart();
 
   useEffect(() => {
@@ -33,6 +36,27 @@ export const CoastListScreen: React.FC<ServicesListScreenProps> = ({
   const handleRefresh = useCallback(() => {
     getCart();
   }, [getCart]);
+
+  const [isDownloading, setIsDownloading] = useState(false);
+  async function onDownloadQuote() {
+    Alert.alert('Download Quote', 'Are you sure you want to download the quote?');
+    setIsDownloading(true);
+    const cartCode = await getCartCode();
+    const url = `${OpenAPI.BASE}/download/cart/invoice/${cartCode}`;
+    console.log('url', url);
+    // FileSystem.downloadAsync(url, FileSystem.documentDirectory + 'quote.pdf')
+    //   .then(({ uri }) => {
+    //     console.log('Downloaded to:', uri);
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error downloading file:', error);
+    //   });
+    Linking.openURL(url)
+      .catch((err) => {
+        console.error('Error opening URL:', err);
+      });
+    setIsDownloading(false);
+  }
 
 
 
@@ -72,10 +96,7 @@ export const CoastListScreen: React.FC<ServicesListScreenProps> = ({
             borderRadius="$5"
             height="$4"
             icon={<FileDown size={15} color="#FFFFFF" />}
-            onPress={() => {
-              // TODO: Implement download quote functionality
-              console.log('Download quote pressed');
-            }}
+            onPress={() => onDownloadQuote()}
           >
             <Text fontSize={'$2'} fontWeight={'bold'} color="#FFFFFF">
               تحميل عرض السعر
