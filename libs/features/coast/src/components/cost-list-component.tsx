@@ -91,7 +91,7 @@ export const CartItemComponent = ({
           height={70}
           borderRadius={10}
         />
-        <YStack gap={'$2'} flex={1}>
+        <YStack gap={'$2'} flex={1} alignItems="flex-start">
           <Text fontSize={'$3'} fontWeight={'bold'} numberOfLines={2}>
             {item.product?.name || 'اسم المنتج غير متوفر'}
           </Text>
@@ -107,7 +107,7 @@ export const CartItemComponent = ({
             <CustomIcon name="riyal" size={'$1'} color={'$color8'} />
           </XStack>
 
-          <XStack justifyContent="space-between" alignItems="center">
+          <XStack width={'100%'} justifyContent="space-between" alignItems="center">
             <XStack gap={'$2'} alignItems="center">
               <Text fontSize={'$4'} fontWeight={'bold'} color="$color12">
                 {formattedPrice}
@@ -118,9 +118,9 @@ export const CartItemComponent = ({
             <ManageCountProduct
               value={currentQuantity}
               onUpdate={handleQuantityUpdate}
-              width={100}
-              height={30}
-              size={10}
+              // width={100}
+              // height={30}
+              size={15}
               min={1}
               max={99}
               disabled={isUpdating}

@@ -72,8 +72,8 @@ export const CompanyCard: React.FC<CompanyCardProps> = ({
 
         <XStack alignItems="center" gap="$2" flex={1}>
           <YStack alignItems="flex-start" gap="$2">
-            <XStack alignItems="center" gap="$3">
-              <Text color="$color12" fontWeight="bold">
+            <XStack theme='accent' alignItems="center" gap="$3">
+              <Text fontSize='$6' fontWeight="bold" color="$color1">
               {company?.name}
             </Text>
             {/* TODO: add badge check if company is verified */}

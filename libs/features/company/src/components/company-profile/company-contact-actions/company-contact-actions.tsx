@@ -3,6 +3,7 @@ import {
   CircleEllipsis,
   Compass,
   MapPin,
+  Phone,
   Star
 } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
@@ -75,14 +76,21 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
       `https://wa.me/${phoneNumber.includes('+') ? phoneNumber : `+${phoneNumber}`}`,
     );
   }
-
+  
   const renderLocationInfo = () =>
     !!company?.location?.id && (
       <TitleInfo
         icon={<MapPin size={20} color="$color0" />}
-        title={company?.location?.country?.name}
+        title={company?.location?.address}
       />
     );
+    const renderContactInfo = () =>
+      !!company?.location?.id && (
+        <TitleInfo
+          icon={<Phone size={20} color="$color0" />}
+          title={company?.contact_number}
+        />
+      );
 
   const renderRatingsInfo = () =>
     !!company.rating_stats?.count && (
@@ -104,6 +112,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
         </Text>
         <YStack gap="$2">
           {renderLocationInfo()}
+          {renderContactInfo()}
           {renderRatingsInfo()}
         </YStack>
 

@@ -37,7 +37,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     setCount(1);
     setIsAddedToCart(true);
   }
-  //
+  
   return (
     <YStack
       flex={1}

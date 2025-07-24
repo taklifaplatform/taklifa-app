@@ -11,15 +11,16 @@ import { Text, XStack, YStack } from 'tamagui';
 export interface CostHeaderProps {
   title: string;
   price: string;
+  logo: string;
 }
-export const CostHeader = ({ title, price }: CostHeaderProps) => {
+export const CostHeader = ({ title, price, logo }: CostHeaderProps) => {
   return (
-    <XStack alignItems="center" justifyContent="space-between">
+    <XStack theme='accent' alignItems="center" justifyContent="space-between">
       <XStack gap={'$3'} alignItems="flex-start">
-        <UserAvatar user={{}} size={'$3'} />
+        <UserAvatar user={{logo: logo}} size={'$3'} />
         <YStack gap={'$2'}>
           <XStack gap={'$2'}>
-            <Text fontWeight={'bold'}>{title}</Text>
+            <Text fontWeight={'bold'} fontSize={'$4'} color="$color1">{title}</Text>
             <BadgeCheck size={20} color={'green'} />
           </XStack>
           <XStack gap={'$3'} alignItems="center">
