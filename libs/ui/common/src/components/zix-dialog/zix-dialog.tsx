@@ -36,7 +36,6 @@ export type ZixDialogProps = DialogProps & {
 export function ZixDialog({
   children,
   trigger,
-  // hiddenRightButton,
   title,
   description,
   hideCloseButton,

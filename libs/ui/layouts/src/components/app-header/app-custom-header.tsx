@@ -105,11 +105,11 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
   }, [searchValue]);
 
   useEffect(() => {
-    if (selectedProduct) {
-      setSearchValue('');
-      setIsSearchBarFocused(false);
-      setOpen(true);
-    }
+    // if (selectedProduct) {
+    //   setSearchValue('');
+    //   setIsSearchBarFocused(false);
+    //   setOpen(true);
+    // }
     queryClient.setQueryData(
       ['ProductsService.fetchAllProduct', selectedProduct],
       listProductsData?.data,
@@ -118,7 +118,10 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
 
   useEffect(() => {
     if (!open) {
-      setSelectedProduct('');
+      // setSelectedProduct('');
+      // setSearchValue('');
+      // setIsSearchBarFocused(false);
+      // setSearchResults([]);
     }
   }, [open]);
 
@@ -169,7 +172,8 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
           shadowRadius={3.84}
           elevation={5}
           fontWeight="600"
-          value={selectedProduct ? selectedProduct : searchValue}
+          // value={selectedProduct ? selectedProduct : searchValue}
+          value={searchValue}
           onChangeText={(text) => {
             setSearchValue(text);
             setIsSearchBarFocused(true);
@@ -255,9 +259,9 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
                 justifyContent: 'space-between',
               }}
               onPress={() => {
-                setSearchValue('');
+                // setSearchValue('');
                 setIsSearchBarFocused(false);
-                setSearchValue(result.name);
+                // setSearchValue(result.name);
                 setSelectedProduct(result.name);
                 setOpen(true);
               }}
@@ -284,32 +288,53 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
         disableDrag
         rigthComponent={
           <XStack gap="$4" alignItems="center" justifyContent="center">
-            {!selectedProductDetail?.product ? <Button
+            {!selectedProductDetail?.product ? (
+              <XStack gap="$4">
+                <ZixButton
+                  size="$3"
+                  backgroundColor="#F1F2F4"
+                  justifyContent="center"
+                  alignItems="center"
+                  unstyled
+                  circular
+                  onPress={() => {
+                    setOpen(false);
+                    setSelectedProductDetail({ product: null, index: 0 });
+                  }}
+                >
+                  <ArrowLeft size={16} color="$color0" />
+                </ZixButton>
+                <ZixButton
+                  size="$3"
+                  backgroundColor="#F1F2F4"
+                  justifyContent="center"
+                  alignItems="center"
+                  unstyled
+                  circular
+                  onPress={() => {
+                    setOpen(false);
+                    setIsSearchBarFocused(false);
+                    setSearchValue('');
+                    setSearchResults([]);
+                    setSelectedProduct('');
+                  }}
+                >
+                  <X size={16} color="$color0" />
+                </ZixButton>
+              </XStack>
+            ) : (
+              <ZixButton
               size="$3"
               backgroundColor="#F1F2F4"
               justifyContent="center"
               alignItems="center"
               unstyled
               circular
-              icon={<X size={16} color="$color0" />}
-              onPress={() => {
-                setOpen(false);
-                setSelectedProductDetail({ product: null, index: 0 });
-              }}
-            /> :
-            <Button
-              size="$3"
-              backgroundColor="#F1F2F4"
-              justifyContent="center"
-              alignItems="center"
-              unstyled
-              circular
-              icon={<ArrowLeft size={16} color="$color0" />}
-              onPress={() => {
-                setSelectedProductDetail({ product: null, index: 0 });
-              }}
-            />
-          }
+                  onPress={() => setSelectedProductDetail({ product: null, index: 0 })}
+                >
+                  <ArrowLeft size={16} color="$color0" />
+                </ZixButton>
+            )}
           </XStack>
         }
       >
