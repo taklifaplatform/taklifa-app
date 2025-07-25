@@ -9,13 +9,11 @@ import { Image, Text, XStack, YStack } from 'tamagui';
 
 export interface CartItemComponentProps {
   item: CartItemTransformer;
-  onEdit?: (item: CartItemTransformer) => void;
   onRemove?: (item: CartItemTransformer) => void;
 }
 
 export const CartItemComponent = ({
   item,
-  onEdit,
   onRemove,
 }: CartItemComponentProps) => {
   const { updateItemQuantity, removeItem, formatCurrency } = useCart();
@@ -40,15 +38,6 @@ export const CartItemComponent = ({
     },
     [currentQuantity, isUpdating, item, updateItemQuantity],
   );
-
-  const handleEdit = useCallback(() => {
-    if (onEdit) {
-      onEdit(item);
-    } else {
-      // Default edit behavior - could open a modal or navigate to edit screen
-      console.log('Edit item:', item);
-    }
-  }, [onEdit, item]);
 
   const handleRemove = useCallback(async () => {
     if (isUpdating) return;
@@ -141,12 +130,6 @@ export const CartItemComponent = ({
       </XStack>
 
       <XStack gap={'$3'} alignItems="center" paddingLeft={'$2'}>
-        <SquarePen
-          size={18}
-          color={'$color10'}
-          onPress={handleEdit}
-          style={{ opacity: isUpdating ? 0.5 : 1 }}
-        />
         <Trash2
           size={18}
           color={'$red9'}

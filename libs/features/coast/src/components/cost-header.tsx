@@ -33,7 +33,6 @@ export const CostHeader = ({ title, price, logo }: CostHeaderProps) => {
         </YStack>
       </XStack>
       <XStack gap={'$4'} alignItems="flex-end">
-        <SquarePen size={18} color={'black'} />
         <Trash2 size={18} color={'black'} />
       </XStack>
     </XStack>
