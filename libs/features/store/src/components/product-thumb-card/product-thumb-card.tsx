@@ -6,7 +6,7 @@ import { useAuth } from '@zix/services/auth';
 import { ZixButton } from '@zix/ui/common';
 import { handleFormErrors, ZixInput, ZixSelectField } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { useRouter } from 'solito/router';
 import { Image, Text, Theme, XStack, YStack } from 'tamagui';
@@ -62,7 +62,7 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
       setProductEdited(false);
 
       queryClient.invalidateQueries({
-        queryKey: ['ProductsService.fetchAllProduct', user?.active_company?.id],
+        queryKey: ['ProductsService.fetchAllProduct', user?.active_company?.id, 'true'],
       });
     },
     onError(error: any) {
@@ -73,7 +73,7 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
       handleFormErrors(form, error);
     },
   });
-
+  
   const { mutateAsync: publishProduct } = useMutation({
     mutationFn: (requestBody: any) => {
       if (product.id) {
@@ -88,7 +88,7 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
       setProductEdited(false);
 
       queryClient.invalidateQueries({
-        queryKey: ['ProductsService.fetchAllProduct', user?.active_company?.id],
+        queryKey: ['ProductsService.fetchAllProduct', user?.active_company?.id, 'true'],
       });
     },
     onError(error: any) {
@@ -99,6 +99,11 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
       handleFormErrors(form, error);
     },
   });
+
+  useEffect(() => {
+    setProductPrice(product.variant?.price);
+    setProductUnit(product.variant?.type_unit?.toString());
+  }, [product]);
 
   return (
     <YStack

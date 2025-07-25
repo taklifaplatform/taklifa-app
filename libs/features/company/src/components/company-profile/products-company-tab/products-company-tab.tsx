@@ -146,7 +146,7 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
           />
         </XStack>
       )}
-      {/* {productsQuery.refetch && <FullScreenSpinner />} */}
+      {productsQuery.refetch && <FullScreenSpinner />}
       {myStore ? (
         <FlatList
           data={data || []}
@@ -178,7 +178,7 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
           keyExtractor={(item, index) => `product-${item.id}-${index}`}
           showsVerticalScrollIndicator={false}
           numColumns={2}
-          columnWrapperStyle={{ gap: 15, paddingVertical: 10 }}
+          columnWrapperStyle={{ gap: 19, paddingVertical: 10 }}
           contentContainerStyle={{ justifyContent: 'center' }}
           ListEmptyComponent={() => (
             <View flex={1} alignItems="center" gap="$2" padding="$4">

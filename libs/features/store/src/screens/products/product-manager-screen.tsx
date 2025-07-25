@@ -77,7 +77,6 @@ export const ProductManagerScreen = () => {
 
   const { mutateAsync } = useMutation({
     mutationFn: (requestBody: z.infer<typeof UpdateProductFormSchema>) => {
-
       if (productId) {
         return ProductsService.updateProduct({
           product: productId as string,

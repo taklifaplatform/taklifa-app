@@ -15,7 +15,6 @@ export const CostDetailComponent = ({
   const { formatCurrency } = useCart();
   const SCREEN_WIDTH = Dimensions.get('window').width;
   const totalCost = items.reduce((acc, item) => acc + Number(item.total_price), 0);
-  console.log('company', JSON.stringify(company, null, 2));
   return (
     <YStack
       width={SCREEN_WIDTH - 20}

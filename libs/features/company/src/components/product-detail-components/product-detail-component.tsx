@@ -46,7 +46,6 @@ export const ProductDetailComponent = ({
 }) => {
   const SCREEN_WIDTH = Dimensions.get('window').width;
   const [count, setCount] = useState(1);
-  console.log('product', JSON.stringify(product, null, 2));
 
   const renderLocationInfo = () => (
     <TextInfo

@@ -27,13 +27,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <YStack
-      flex={1}
       backgroundColor="$color2"
       borderRadius={'$4'}
       key={index}
       padding={'$4'}
       gap="$4"
-      width={SCREEN_WIDTH / 2.4}
+      width={SCREEN_WIDTH / 2.3}
     >
       <TouchableOpacity
         onPress={() => {

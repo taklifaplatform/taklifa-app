@@ -8,10 +8,8 @@ import { useRouter } from 'solito/router';
 export default function Screen() {
   const { width, height } = Dimensions.get('window');
   const {user, getUrlPrefix} = useAuth();
-  console.log("user", JSON.stringify(user, null, 2))
 
   function redirectUser() {
-    console.log("getUrlPrefix", getUrlPrefix)
     setTimeout(() => {
       if(user?.roles?.includes({name: USER_ROLES.company_owner})){
         router.replace(`${getUrlPrefix}/store`);
