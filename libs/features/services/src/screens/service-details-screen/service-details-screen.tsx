@@ -1,30 +1,28 @@
 import {
   ChevronDown,
-  ChevronLeft,
   ChevronUp,
-  X
+  Circle,
+  CircleCheck,
+  Trash2,
 } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import {
-  // AnalyticsService,
-  // AnnouncementService,
-  // AnnouncementTransformer,
-  ServiceTransformer,
-} from '@zix/api';
+import { ServiceService, ServiceTransformer } from '@zix/api';
 import { ZixMediasListWidget } from '@zix/ui/widgets';
 
-import { Sheet } from '@tamagui/sheet';
-import { UserContactActions } from '@zix/features/users';
 import { useAuth, useMixpanel } from '@zix/services/auth';
-import { UserAvatar } from '@zix/ui/common';
+import { DeleteProduct, UserAvatar, ZixDialog } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
-import { Image } from 'expo-image';
 import { t } from 'i18next';
 import moment from 'moment';
 import { useCallback, useState } from 'react';
-import { ActivityIndicator, Alert, FlatList, ScrollView, TouchableOpacity } from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import { createParam } from 'solito';
 import { useRouter } from 'solito/router';
 import { Button, H4, Separator, Text, View, XStack, YStack } from 'tamagui';
@@ -39,10 +37,6 @@ type DescriptionSectionProps = {
   description: string;
 };
 
-type SimilarservicesProps = {
-  services: ServiceTransformer[];
-};
-
 type OwnerActionsProps = {
   service: ServiceTransformer;
   onDelete: () => void;
@@ -50,7 +44,6 @@ type OwnerActionsProps = {
   status: string;
   onStatusChange: (status: string) => void;
 };
-
 
 const InfoCard = ({ service }: InfoCardProps) => (
   <YStack
@@ -126,120 +119,14 @@ const DescriptionSection = ({ description }: DescriptionSectionProps) => {
           )}
         </XStack>
       </TouchableOpacity>
-      {
-        isDescriptionOpen && (
-          <Text textAlign="left" fontSize={14} color="$color12" marginBottom={16}>
-            {description}
-          </Text>
-        )
-      }
+      {isDescriptionOpen && (
+        <Text textAlign="left" fontSize={14} color="$color12" marginBottom={16}>
+          {description}
+        </Text>
+      )}
     </YStack>
   );
 };
-
-// const Similarservices = ({ services }: SimilarservicesProps) => {
-//   const router = useRouter();
-//   if (services.length === 0) return null;
-
-//   return (
-//     <YStack gap="$2" marginTop={16}>
-//       <XStack
-//         alignItems="center"
-//         justifyContent="space-between"
-//         marginBottom={8}
-//       >
-//         <Text fontWeight="bold" fontSize={16} textAlign="left">
-//           {t('common:similar-services')}
-//         </Text>
-//         <TouchableOpacity
-//           onPress={() => router.push('/app/services')}
-//           style={{ flexDirection: 'row', alignItems: 'center' }}
-//         >
-//           <Text fontSize={13} color="$color12" marginLeft={4}>
-//             {t('common:view-more')}
-//           </Text>
-//           <ChevronLeft size={16} color="$color12" />
-//         </TouchableOpacity>
-//       </XStack>
-//       <FlatList
-//         data={services}
-//         horizontal
-//         showsHorizontalScrollIndicator={false}
-//         keyExtractor={(item, idx) => `${item.id ?? idx}`}
-//         contentContainerStyle={{ gap: 12 }}
-//         renderItem={({ item }) => (
-//           <TouchableOpacity
-//             style={{ width: 180 }}
-//             onPress={() => {
-//               AnalyticsService.storeserviceAnalytic({
-//                 service: item.id?.toString() || '',
-//                 requestBody: {
-//                   action_type: 'view',
-//                 },
-//               }).then((res) => {
-//                 console.log('service analytic stored', res);
-//               });
-//               router.push(`/app/services/${item.id}`);
-//             }}
-//             key={item.id}
-//           >
-//             <YStack backgroundColor="$color2" borderRadius={12} gap={6}>
-//               {item.images && item.images.length > 0 ? (
-//                 <Image
-//                   source={{
-//                     uri: Array.isArray(item.images) && item.images[0]?.url,
-//                   }}
-//                   style={{ width: '100%', height: 90, borderRadius: 8 }}
-//                   contentFit="cover"
-//                 />
-//               ) : (
-//                 <View
-//                   style={{ width: '100%', height: 90, borderRadius: 8 }}
-//                   overflow="hidden"
-//                   alignItems="center"
-//                   justifyContent="center"
-//                 >
-//                   <CustomIcon name="image-blank" size={90} color="$color2" />
-//                 </View>
-//               )}
-//               <YStack
-//                 backgroundColor="$color2"
-//                 borderRadius={12}
-//                 padding={8}
-//                 gap={6}
-//               >
-//                 <Text
-//                   fontWeight="bold"
-//                   fontSize={10}
-//                   numberOfLines={1}
-//                   textAlign="left"
-//                 >
-//                   {item.title}
-//                 </Text>
-//                 <XStack alignItems="center" gap={4}>
-//                   <UserAvatar user={item?.user} size={10} />
-//                   <Text color="#888" fontSize={12}>
-//                     {item.user?.name}
-//                   </Text>
-//                 </XStack>
-//                 <XStack alignItems="center" gap={8}>
-//                   <Text fontWeight="bold" fontSize={14}>
-//                     {item.price || '0'}
-//                   </Text>
-//                   <CustomIcon
-//                     name="saudi-riyal-symbol"
-//                     size={14}
-//                     color="#888"
-//                   />
-//                 </XStack>
-//               </YStack>
-//             </YStack>
-//           </TouchableOpacity>
-//         )}
-//       />
-//     </YStack>
-//   );
-// };
 
 const OwnerActions = ({
   service,
@@ -274,53 +161,42 @@ const OwnerActions = ({
           {t('forms:edit-service')}
         </Button>
         {/*status button */}
-        <Button
-          backgroundColor="$color3"
-          borderRadius={10}
-          size="$2"
-          textProps={{
-            fontSize: 12,
-            fontWeight: '500',
-          }}
-          color="$color12"
-          onPress={() => setStatusSheetOpen(true)}
-          iconAfter={
-            <CustomIcon
-              name="radio_button_checked"
-              color={status === 'active' ? 'green' : 'red'}
-            />
-          }
-        >
-          {t('common:service-status')}
-          <Text fontWeight="700" color={status === 'active' ? 'green' : 'red'}>
-            {STATUS_OPTIONS.find((opt) => opt.value === status)?.label}
-          </Text>
-        </Button>
-        <Sheet
+        <ZixDialog
           open={statusSheetOpen}
           onOpenChange={setStatusSheetOpen}
-          native
-          modal
-          snapPoints={[28]}
-          dismissOnSnapToBottom
-        >
-          <Sheet.Overlay />
-          <YStack
-            gap="$2"
-            padding="$4"
-            backgroundColor="#FFF"
-            borderRadius={20}
-            height={220}
-          >
-            <XStack justifyContent="space-between" alignItems="center">
-              <Text fontWeight="bold" fontSize={18} marginBottom={8}>
-                {t('forms:service-status')}
+          title={t('common:service-status')}
+          description={t('common:service-status-description')}
+          snapPoints={[40]}
+          contentPadding="$1"
+          trigger={
+            <Button
+              backgroundColor="$color3"
+              borderRadius={10}
+              size="$2"
+              textProps={{
+                fontSize: 12,
+                fontWeight: '500',
+              }}
+              color="$color12"
+              onPress={() => setStatusSheetOpen(true)}
+              iconAfter={
+                <CustomIcon
+                  name="radio_button_checked"
+                  color={status === 'active' ? 'green' : 'red'}
+                />
+              }
+            >
+              {t('common:service-status')}
+              <Text
+                fontWeight="700"
+                color={status === 'active' ? 'green' : 'red'}
+              >
+                {STATUS_OPTIONS.find((opt) => opt.value === status)?.label}
               </Text>
-              <TouchableOpacity onPress={() => setStatusSheetOpen(false)}>
-                <X size={24} color="$color12" />
-              </TouchableOpacity>
-            </XStack>
-
+            </Button>
+          }
+        >
+          <YStack gap="$4" padding="$4">
             {STATUS_OPTIONS.map((opt) => (
               <XStack
                 theme="accent"
@@ -340,103 +216,45 @@ const OwnerActions = ({
                 <Text
                   fontWeight={status === opt.value ? 'bold' : 'normal'}
                   fontSize={16}
-                  color={
-                    opt.value === 'active' && status === 'active'
-                      ? 'green'
-                      : opt.value === 'inactive' && status === 'inactive'
-                        ? '#FF9325'
-                        : '$color12'
-                  }
+                  color={status === opt.value ? '$color1' : '$color12'}
                 >
                   {opt.label}
                 </Text>
-                <CustomIcon
-                  name="radio_button_checked"
-                  color={
-                    opt.value === 'active' && status === 'active'
-                      ? 'green'
-                      : opt.value === 'inactive' && status === 'inactive'
-                        ? '#FF9325'
-                        : 'gray'
-                  }
-                />
+                {status === opt.value ? (
+                  <CircleCheck size={20} color="$color1" />
+                ) : (
+                  <Circle size={20} color="$color0" />
+                )}
               </XStack>
             ))}
           </YStack>
-        </Sheet>
+        </ZixDialog>
       </XStack>
       {/*delete button */}
-      <Button
-        backgroundColor="#FFEEEE"
-        size="$2"
-        textProps={{
-          fontSize: 12,
-          fontWeight: '500',
-        }}
-        color="#FF3B30"
-        iconAfter={<CustomIcon name="delete" size={13} color="#FF3B30" />}
-        onPress={() => setDeleteSheetOpen(true)}
-      >
-        {t('forms:delete-service')}
-      </Button>
-      <Sheet
+      <DeleteProduct
+        title="تأكيد الحذف"
         open={deleteSheetOpen}
-        onOpenChange={setDeleteSheetOpen}
-        native
-        modal
-        snapPoints={[38]}
-        dismissOnSnapToBottom
-      >
-        <Sheet.Overlay />
-        {/* <Sheet.Handle /> */}
-        <YStack
-          gap="$4"
-          padding="$4"
-          backgroundColor="#FFF0F0"
-          borderRadius={20}
-        >
-          <XStack justifyContent="space-between" alignItems="center">
-            <Text fontWeight="bold" fontSize={18} marginBottom={8}>
-              {t('forms:delete-service')}
-            </Text>
-            <TouchableOpacity onPress={() => setDeleteSheetOpen(false)}>
-              <X size={24} color="$color12" />
-            </TouchableOpacity>
-          </XStack>
-          <View
-            alignSelf="center"
-            backgroundColor="#FFF0F0"
-            borderRadius={50}
-            width={80}
-            height={80}
-            alignItems="center"
-            justifyContent="center"
-            marginBottom={16}
-          >
-            <CustomIcon name="delted" size={150} color="#FF3B30" />
-          </View>
-          <Text fontSize={16} textAlign="center" color="#222" marginBottom={16}>
-            {t('common:are-you-sure-delete')}
-          </Text>
-          <Button
-            backgroundColor="#FF3B30"
-            color="#fff"
-            borderRadius={10}
-            width="100%"
-            marginTop={16}
+        setIsOpen={setDeleteSheetOpen}
+        trigger={
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#FEECEE',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 5,
+              borderRadius: 10,
+              padding: 5,
+            }}
             onPress={() => {
-              setDeleteSheetOpen(false);
-              onDelete();
-            }}
-            textProps={{
-              fontSize: 18,
-              fontWeight: '700',
+              setDeleteSheetOpen(true);
             }}
           >
-            {t('common:yes-delete')}
-          </Button>
-        </YStack>
-      </Sheet>
+            <Text color="#FF3B30">حذف</Text>
+            <Trash2 size={20} color="red" />
+          </TouchableOpacity>
+        }
+        onDelete={onDelete}
+      />
     </XStack>
   );
 };
@@ -448,7 +266,6 @@ export const ServiceDetailsScreen = () => {
   const { user } = useAuth();
   const toast = useToastController();
   const [serviceId] = useParam('service');
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [status, setStatus] = useState('active');
 
   const { data: serviceData, isLoading } = useQuery({
@@ -462,27 +279,9 @@ export const ServiceDetailsScreen = () => {
 
   const service = serviceData?.data;
 
-  const { data: similarData } = useQuery({
-    queryFn: () =>
-      AnnouncementService.listAnnouncements({
-        perPage: 10,
-        categoryId: service?.category_id,
-      }),
-    queryKey: [
-      'AnnouncementService.listAnnouncements',
-      'similar',
-      service?.category_id,
-    ],
-    enabled: !!service?.category_id,
-  });
-
-  const similarAnnouncements = (similarData?.data || []).filter(
-    (a: AnnouncementTransformer) => a.id !== service?.id,
-  );
-
   const { mutate } = useMutation({
     mutationFn: () =>
-      AnnouncementService.deleteAnnouncement({
+      ServiceService.deleteService({
         service: serviceId || '',
       }),
     onSuccess: () => {
@@ -523,18 +322,15 @@ export const ServiceDetailsScreen = () => {
         <AppHeader showBackButton title={t('common:market')} />
         <View flex={1} alignItems="center" justifyContent="center">
           <CustomIcon name="empty_data" size="$18" color="$color5" />
-          {
-            isLoading ? (
-              <ActivityIndicator size="large" color="#0000ff" />
-            ) : (
-              <H4>{t('common:announcement-not-found')}</H4>
-            )
-          }
+          {isLoading ? (
+            <ActivityIndicator size="large" color="#0000ff" />
+          ) : (
+            <H4>{t('common:announcement-not-found')}</H4>
+          )}
         </View>
       </ScreenLayout>
     );
   }
-
 
   return (
     <ScreenLayout>
@@ -550,20 +346,14 @@ export const ServiceDetailsScreen = () => {
       )}
       <ScrollView showsVerticalScrollIndicator={false}>
         <YStack flex={1} gap="$4" padding="$3">
-          {/* <ImageCarousel
-            images={images}
-            selectedImageIndex={selectedImageIndex}
-            onImageSelect={setSelectedImageIndex}
-          /> */}
-
           <ZixMediasListWidget
-            medias={announcement?.images || []}
+            medias={service?.images || []}
             imageWidth={100}
             imageHeight={100}
           />
-          <InfoCard announcement={announcement} />
+          <InfoCard service={service} />
           <Separator marginVertical="$2" />
-          <DescriptionSection description={announcement.description} />
+          <DescriptionSection description={service.description || ''} />
 
           <YStack
             justifyContent="space-between"
@@ -577,8 +367,9 @@ export const ServiceDetailsScreen = () => {
               <Text color="$color10" fontSize={13}>
                 رقم إعلان:
               </Text>
-              <Text color="$color12" fontSize={12} textTransform='uppercase'>
-                {announcement?.id?.toString().substring(0, 8)}-{announcement?.id?.toString().substring(9, 12)}
+              <Text color="$color12" fontSize={12} textTransform="uppercase">
+                {service?.id?.toString().substring(0, 8)}-
+                {service?.id?.toString().substring(9, 12)}
               </Text>
             </XStack>
             <XStack alignItems="center" gap="$3">
@@ -587,7 +378,7 @@ export const ServiceDetailsScreen = () => {
                 عدد المشاهدات:
               </Text>
               <Text color="$color12" fontSize={13}>
-                {announcement?.views_count}
+                {service?.views_count}
               </Text>
             </XStack>
             {/* <Button
@@ -601,8 +392,6 @@ export const ServiceDetailsScreen = () => {
             </Button> */}
           </YStack>
           <Separator borderColor="$color4" borderWidth={0.25} />
-
-          {/* <SimilarAnnouncements announcements={similarAnnouncements} /> */}
         </YStack>
       </ScrollView>
     </ScreenLayout>

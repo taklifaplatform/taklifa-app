@@ -30,20 +30,20 @@ ZixSelectRadioGroupnFieldProps
               <RadioGroup.Item value={item.id} id={item.id} size={props.size}>
                 <RadioGroup.Indicator backgroundColor={value === item.id ? colorIndicator ?? '' : 'transparent'} />
               </RadioGroup.Item>
-              <Label size={props.size} htmlFor={item.id}>
+              <Label size={props.size} htmlFor={item.id} >
                 {item.name}
               </Label>
             </XStack>
           ))}
         </ScrollView>
       ) : (
-        <XStack gap="$2" paddingLeft='$3' alignItems="center">
+        <XStack gap="$2" paddingLeft='$3' alignItems="center" theme='accent'>
           {options.map((item, i) => (
-            <XStack alignItems="center" gap="$2" width={width} key={item.id} backgroundColor={value === item.id ? colorSelected ?? 'red' : 'transparent'}>
-              <RadioGroup.Item value={item.id} id={item.id} size={props.size}>
+            <XStack alignItems="center" gap="$2" width={width} key={item.id} backgroundColor={value === item.id ? colorSelected : 'transparent'} borderRadius={'$2'} padding={'$2'}>
+              <RadioGroup.Item value={item.id} id={item.id} size={props.size} backgroundColor={'transparent'} borderColor={value === item.id ? colorIndicator : '$color12'}>
                 <RadioGroup.Indicator backgroundColor={value === item.id ? colorIndicator ?? '' : 'transparent'} />
               </RadioGroup.Item>
-              <Label size={props.size} htmlFor={item.id}>
+              <Label size={props.size} htmlFor={item.id} color={value === item.id ? '$color11' : '$color12'}>
                 {item.name}
               </Label>
             </XStack>
