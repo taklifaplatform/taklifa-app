@@ -32,7 +32,7 @@ export const ServiceCard = ({
     >
       <XStack
         theme={'accent'}
-        backgroundColor={isOwner ? '$color10' : '#F1F2F4'}
+        backgroundColor={isOwner ? '#EFFEF6' : '#F1F2F4'}
         borderWidth={1}
         borderColor={isOwner ? '$color1' : '#F1F2F4'}
         borderRadius="$4"
@@ -49,7 +49,7 @@ export const ServiceCard = ({
             left={10}
             gap={'$2'}
             padding="$2"
-            backgroundColor="$color10"
+            backgroundColor="#EFFEF6"
             alignItems="center"
             justifyContent="center"
             borderRadius={'$6'}
@@ -95,9 +95,10 @@ export const ServiceCard = ({
             {service?.title || ''}
           </Text>
           <TextInfo
-            icon={<Building2 size={15} color="$color0" />}
+            icon={<Building2 size={15} color="$color11" />}
             title={service?.description || ''}
             flex={1}
+            color="$color11"
             textAlign="left"
           />
           <Stack
@@ -109,14 +110,16 @@ export const ServiceCard = ({
           >
             {!!service?.city && (
               <TextInfo
-                icon={<MapPin size={15} color="#000000" />}
+                icon={<MapPin size={15} color="$color11" />}
                 title={service.city}
+                color="$color11"
                 textAlign="left"
               />
             )}
             <TextInfo
-              icon={<Clock size={15} color="#000000" />}
+              icon={<Clock size={15} color="$color11" />}
               title={'منذ ساعة'}
+              color="$color11"
             />
           </Stack>
           {/* //price */}

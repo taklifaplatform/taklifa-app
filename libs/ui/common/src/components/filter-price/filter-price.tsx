@@ -36,35 +36,35 @@ export const FilterPrice: React.FC<FilterPriceProps> = ({ priceRange, setPriceRa
           borderColor="$color0"
           gap="$2"
         >
-          <Text fontWeight="bold" fontSize={'$3'} color="$color0">
+          <Text fontWeight="bold" fontSize={'$3'} color="$color12">
             الفلتر
           </Text>
-          <Filter size={20} color="$color0" />
+          <Filter size={20} color="$color12" />
         </XStack>
       }
     >
       <XStack flex={1} gap="$4" padding="$4">
         <YStack gap="$4" alignItems="center" justifyContent="center">
-          <Text>السعر</Text>
+          <Text color="$color12">السعر</Text>
           <XStack width="100%" justifyContent="center" gap="$4">
             <XStack>
-              <Text fontWeight="600" fontSize={'$3'}>
+              <Text fontWeight="600" fontSize={'$3'} color="$color12">
                 {priceRange.max}
               </Text>
               <Theme name="accent">
-                <CustomIcon name="riyal" size="$1" color="$color0"/>
+                <CustomIcon name="riyal" size="$1" color="$color12"/>
               </Theme>
             </XStack>
-            <Text fontWeight="600" fontSize={'$3'}>
+            <Text fontWeight="600" fontSize={'$3'} color="$color12">
               {' '}
               -{' '}
             </Text>
 
             <XStack>
-              <Text fontWeight="600" fontSize={'$3'}>
+              <Text fontWeight="600" fontSize={'$3'} color="$color12">
                 {priceRange.min}
               </Text>
-              <CustomIcon name="riyal" size="$1" />
+              <CustomIcon name="riyal" size="$1" color="$color12" />
             </XStack>
           </XStack>
           <ZixSlider

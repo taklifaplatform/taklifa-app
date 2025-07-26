@@ -118,9 +118,9 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
         <View
           theme="accent"
           position="absolute"
-          top={24}
-          left={10}
-          backgroundColor="$color10"
+          top={13}
+          left={5}
+          backgroundColor="#EFFEF6"
           padding="$2"
           justifyContent="center"
           alignItems="center"

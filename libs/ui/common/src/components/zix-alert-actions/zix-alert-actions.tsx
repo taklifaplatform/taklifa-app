@@ -37,6 +37,7 @@ export const ZixAlertActions: React.FC<ZixAlertActionsProps> = ({
             backgroundColor="transparent"
           >
             <YStack
+              theme="accent"
               width={'90%'}
               alignItems="center"
               justifyContent="center"
@@ -46,10 +47,10 @@ export const ZixAlertActions: React.FC<ZixAlertActionsProps> = ({
               gap={'$4'}
             >
               {icon && icon}
-              <Text fontSize={'$4'} fontWeight="bold" textAlign="center">
+              <Text fontSize={'$4'} fontWeight="bold" textAlign="center" color="$color11">
                 {title}
               </Text>
-              <Text fontSize={14} textAlign="center">
+              <Text fontSize={14} textAlign="center" color="$color11">
                 {description}
               </Text>
             </YStack>

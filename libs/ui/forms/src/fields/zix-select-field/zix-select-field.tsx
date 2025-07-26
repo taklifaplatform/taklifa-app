@@ -133,7 +133,7 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
   }
 
   return (
-    <Theme name={hasError ? 'red' : 'themeName'} forceClassName>
+    <Theme name={hasError ? 'red' : 'accent'} forceClassName>
       <Select {...props} value={`${value}`} defaultValue={`${value}`} onValueChange={val => {
         onChange?.(String(val))
       }} >

@@ -1,10 +1,7 @@
 import { ImageUp, Trash2, WandSparkles } from '@tamagui/lucide-icons';
 import { useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '@zix/services/auth';
-import {
-  MediaTransformer,
-  ProductsService,
-} from '@zix/api';
+import { MediaTransformer, ProductsService } from '@zix/api';
 import { DeleteProduct, ZixAlertActions, ZixButton } from '@zix/ui/common';
 import { ZixMediaPickerField } from '@zix/ui/forms';
 import { CheckedGif, MagicGif } from '@zix/ui/icons';
@@ -20,7 +17,9 @@ export const BatchAddProductComponent = () => {
   const { getUrlPrefix, user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const router = useRouter()
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<MediaTransformer | null>(null);
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   async function createProducts() {
@@ -39,9 +38,13 @@ export const BatchAddProductComponent = () => {
       setTimeout(() => {
         setIsSuccess(false);
         queryClient.invalidateQueries({
-          queryKey: ['ProductsService.fetchAllProduct', user.active_company?.id, true],
+          queryKey: [
+            'ProductsService.fetchAllProduct',
+            user.active_company?.id,
+            true,
+          ],
         });
-        router.replace(`${getUrlPrefix}/(tabs)/store`)
+        router.replace(`${getUrlPrefix}/(tabs)/store`);
         // onSuccess?.(result.data as BatchProductTransformer);
       }, 1000);
     } catch (error) {
@@ -90,7 +93,7 @@ export const BatchAddProductComponent = () => {
           alignItems="center"
           justifyContent="center"
           gap="$3"
-          backgroundColor="$color10"
+          backgroundColor="#EFFEF6"
           borderRadius="$10"
           padding="$3"
         >
@@ -148,16 +151,16 @@ export const BatchAddProductComponent = () => {
           gap: 10,
         }}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => {
+        renderItem={({ item, index }) => {
           return (
             <Stack
-              flex={1}
-              height={100}
+              width={SCREEN_WIDTH / 3 - 15}
+              height={SCREEN_WIDTH / 3 - 15}
+              key={index}
               borderWidth={1}
               borderColor="$color3"
               borderRadius="$4"
               overflow="hidden"
-              // margin="$2"
               padding="$2"
               alignItems="center"
               justifyContent="center"
@@ -168,6 +171,8 @@ export const BatchAddProductComponent = () => {
               />
               <DeleteProduct
                 title="تأكيد الحذف"
+                open={openDeleteDialog}
+                setIsOpen={setOpenDeleteDialog}
                 trigger={
                   <TouchableOpacity
                     style={{
@@ -178,12 +183,17 @@ export const BatchAddProductComponent = () => {
                       borderRadius: 20,
                       padding: 5,
                     }}
+                    onPress={() => {
+                      console.log('delete', index);
+                      setOpenDeleteDialog(true);
+                      setSelectedImage(item);
+                    }}
                   >
                     <Trash2 size={20} color="red" />
                   </TouchableOpacity>
                 }
                 onDelete={() => {
-                  setImages(images.filter((image) => image.uuid !== item.uuid));
+                  setImages(images.filter((image) => image.uuid !== selectedImage?.uuid));
                 }}
               />
             </Stack>

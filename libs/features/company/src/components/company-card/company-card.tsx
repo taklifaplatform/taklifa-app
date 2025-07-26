@@ -44,7 +44,7 @@ export const CompanyCard: React.FC<CompanyCardProps> = ({
 
   const renderLocationInfo = () =>
     !!company?.location?.id && (
-      <TextInfo icon={<Theme name="accent"><MapPin size={20} color="$color0" /></Theme>} title={company?.location?.address + ' ' + company?.location?.country?.name} />
+      <TextInfo icon={<Theme name="accent"><MapPin size={20} color="$color0" /></Theme>} title={company?.location?.address} />
     );
 
   const renderRatingsInfo = () =>
@@ -54,6 +54,7 @@ export const CompanyCard: React.FC<CompanyCardProps> = ({
 
   return (
     <YStack
+      flex={1}
       onPress={onPress}
       backgroundColor="$color1"
       borderRadius="$5"
@@ -63,6 +64,7 @@ export const CompanyCard: React.FC<CompanyCardProps> = ({
       {...props}
     >
       <XStack
+      flex={1}
         justifyContent="center"
         paddingHorizontal={padding}
         alignItems="center"
@@ -71,9 +73,9 @@ export const CompanyCard: React.FC<CompanyCardProps> = ({
         <UserAvatar user={company} size="$5" />
 
         <XStack alignItems="center" gap="$2" flex={1}>
-          <YStack alignItems="flex-start" gap="$2">
+          <YStack flex={1} alignItems="flex-start" gap="$2">
             <XStack theme='accent' alignItems="center" gap="$3">
-              <Text fontSize='$6' fontWeight="bold" color="$color1">
+              <Text fontSize='$5' fontWeight="bold" color="$color1" textAlign='left'>
               {company?.name}
             </Text>
             {/* TODO: add badge check if company is verified */}

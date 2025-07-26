@@ -45,6 +45,7 @@ export const CompanyServicesTab: React.FC<CompanyServicesTabProps> = ({
       data={data?.data || []}
       contentContainerStyle={{
         gap: 10,
+        paddingTop: 10,
       }}
       showsVerticalScrollIndicator={false}
       renderItem={({ item, index }) => (

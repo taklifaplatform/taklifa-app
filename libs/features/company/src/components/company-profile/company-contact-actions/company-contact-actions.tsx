@@ -107,7 +107,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
         alignItems="flex-start"
         gap="$6"
       >
-        <Text fontWeight="bold" fontSize="$2">
+        <Text fontWeight="bold" fontSize="$2" color="$color12">
           تواصل معنا
         </Text>
         <YStack gap="$2">
@@ -157,10 +157,10 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
         </XStack>
         <Separator borderWidth={0.5} borderColor="$color9" width="100%" />
         <YStack gap="$4" alignItems="flex-start" justifyContent="flex-start">
-          <Text fontWeight="bold" fontSize="$2">
+          <Text fontWeight="bold" fontSize="$2" color="$color12">
             من نحن
           </Text>
-          <Paragraph color="$color11" fontSize="$2" fontWeight="400">
+          <Paragraph color="$color12" fontSize="$2" fontWeight="400">
             {company?.about}
           </Paragraph>
         </YStack>

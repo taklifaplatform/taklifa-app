@@ -302,7 +302,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
                     setSelectedProductDetail({ product: null, index: 0 });
                   }}
                 >
-                  <ArrowLeft size={16} color="$color0" />
+                  <ArrowLeft size={16} color="black" />
                 </ZixButton>
                 <ZixButton
                   size="$3"
@@ -319,7 +319,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
                     setSelectedProduct('');
                   }}
                 >
-                  <X size={16} color="$color0" />
+                  <X size={16} color="black" />
                 </ZixButton>
               </XStack>
             ) : (
@@ -332,7 +332,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
               circular
                   onPress={() => setSelectedProductDetail({ product: null, index: 0 })}
                 >
-                  <ArrowLeft size={16} color="$color0" />
+                  <ArrowLeft size={16} color="black" />
                 </ZixButton>
             )}
           </XStack>

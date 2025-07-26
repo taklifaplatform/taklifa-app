@@ -68,7 +68,7 @@ export const FilterByOrder: React.FC<FilterByOrderProps> = ({ orderBy, setOrderB
       <XStack gap="$4" alignItems="center" flex={1}>
         {/* {item.icon} */}
         <YStack gap="$2">
-          <Text fontWeight="700">{item.label}</Text>
+          <Text fontWeight="700" color="$color12">{item.label}</Text>
         </YStack>
       </XStack>
       <YStack>

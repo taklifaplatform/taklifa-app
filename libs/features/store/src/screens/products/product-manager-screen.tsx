@@ -267,7 +267,7 @@ export const ProductManagerScreen = () => {
                 }}
                 size="$3"
                 options={unitTypes}
-                value={form.getValues('variant.type_unit') || product?.data?.variant?.type_unit|| 'm'}
+                value={form.getValues('variant.type_unit') || product?.data?.variant?.type_unit}
                 onChange={(value) => {
                   form.setValue('variant.type_unit', value.toString());
                 }}

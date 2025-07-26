@@ -288,7 +288,7 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
               textProps={{
                 color: '$color1',
               }}
-              backgroundColor="$color10"
+              backgroundColor="#EFFEF6"
             >
               أضف خدمات الأن
             </ZixButton>
@@ -310,7 +310,7 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
           gap="$2"
           padding="$4"
         >
-          <Text>تصفية حسب:</Text>
+          <Text color="$color12">تصفية حسب:</Text>
           <FilterByOrder orderBy={orderBy} setOrderBy={setOrderBy} />
         </XStack>
 

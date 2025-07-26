@@ -8,11 +8,7 @@ import {
   Paperclip,
 } from '@tamagui/lucide-icons';
 import { MediaService, MediaTransformer } from '@zix/api';
-import {
-  ActionSheet,
-  ActionSheetRef,
-  ZixDialog,
-} from '@zix/ui/common';
+import { ActionSheet, ActionSheetRef, ZixDialog } from '@zix/ui/common';
 import { randomUUID } from 'expo-crypto';
 import { getDocumentAsync } from 'expo-document-picker';
 
@@ -126,7 +122,6 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     );
   };
   const renderCustomImagePicker = () => {
-    
     return (
       <ZixDialog
         title={'ارفع صور المنتج'}
@@ -139,46 +134,45 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
         trigger={trigger}
       >
         <YStack alignItems="flex-start" gap="$5" padding="$6">
-          
-{type === 'files' || type === 'file' ? (
-          <TouchableOpacity
-            onPress={() => {
-              setIsOpen(false);
-              launchDocumentPicker();
-            }}
-            style={{ flexDirection: 'row', alignItems: 'center', gap: 20 }}
-          >
-            <FileImage size={25} color="#000000" />
-            <Text fontSize="$2" color="#000000" fontWeight="600">
-              اختيار الملفات
-            </Text>
-          </TouchableOpacity>
-          ): (
-            <>
+          {type === 'files' || type === 'file' ? (
             <TouchableOpacity
-            onPress={() => {
-              setIsOpen(false);
-              launchMediaPicker();
-            }}
-            style={{ flexDirection: 'row', alignItems: 'center', gap: 20 }}
-          >
-            <Images size={25} color="#000000" />
-            <Text fontSize="$2" color="#000000" fontWeight="600">
-              مكتبة الصور
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              setIsOpen(false);
-              launchCamera();
-            }}
-            style={{ flexDirection: 'row', alignItems: 'center', gap: 20 }}
-          >
-            <Camera size={25} color="#000000" />
-            <Text fontSize="$2" color="#000000" fontWeight="600">
-              التقاط صورة
-            </Text>
-          </TouchableOpacity>
+              onPress={() => {
+                setIsOpen(false);
+                launchDocumentPicker();
+              }}
+              style={{ flexDirection: 'row', alignItems: 'center', gap: 20 }}
+            >
+              <FileImage size={25} color="$color12" />
+              <Text fontSize="$2" color="$color12" fontWeight="600">
+                اختيار الملفات
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            <>
+              <TouchableOpacity
+                onPress={() => {
+                  setIsOpen(false);
+                  launchMediaPicker();
+                }}
+                style={{ flexDirection: 'row', alignItems: 'center', gap: 20 }}
+              >
+                <Images size={25} color="$color12" />
+                <Text fontSize="$2" color="$color12" fontWeight="600">
+                  مكتبة الصور
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  setIsOpen(false);
+                  launchCamera();
+                }}
+                style={{ flexDirection: 'row', alignItems: 'center', gap: 20 }}
+              >
+                <Camera size={25} color="$color12" />
+                <Text fontSize="$2" color="$color12" fontWeight="600">
+                  التقاط صورة
+                </Text>
+              </TouchableOpacity>
             </>
           )}
         </YStack>
@@ -449,7 +443,8 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
     let progress = 0;
     try {
       // Use integer arithmetic to avoid precision loss
-      progress = totalFiles > 0 ? Math.round((uploadedFiles * 100) / totalFiles) : 0;
+      progress =
+        totalFiles > 0 ? Math.round((uploadedFiles * 100) / totalFiles) : 0;
     } catch (error) {
       console.log('error', error);
     }
@@ -480,8 +475,8 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
             // enterStyle={{ x: 0, y: 20, opacity: 0, scale: 0.9 }}
             // exitStyle={{ x: 0, y: 20, opacity: 0, scale: 0.9 }}
             gap="$4"
-            width='90%'
-            paddingHorizontal='$4'
+            width="90%"
+            paddingHorizontal="$4"
           >
             <Dialog.Title>
               {t('core:media_picker.uploading_title')}
@@ -494,7 +489,12 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
                 ?.replace('{uploaded}', uploadedFiles.toString())
                 .replace('{total}', totalFiles.toString())}
             </Dialog.Description>
-            <XStack space="$4" alignItems="center" width="100%" paddingHorizontal='$6'>
+            <XStack
+              space="$4"
+              alignItems="center"
+              width="100%"
+              paddingHorizontal="$6"
+            >
               <Progress value={progress} width="100%" size="$4">
                 <Progress.Indicator animation="bouncy" />
               </Progress>
@@ -508,8 +508,8 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
 
   return (
     <>
-    
-        {!showCustomImagePicker && <Previewer
+      {!showCustomImagePicker && (
+        <Previewer
           onPress={onOpenMediaPicker}
           previews={Object.values(previews)}
           onRemoveMedia={onRemoveMedia}
@@ -517,11 +517,11 @@ export const ZixMediaPickerField: React.FC<ZixMediaPickerFieldProps> = ({
           isOptional={isOptional} //
           notAvatar={notAvatar}
         />
-    }
-      { renderCustomImagePicker()}
+      )}
+      {renderCustomImagePicker()}
 
       {/* {!showCustomImagePicker && renderImagePicker()} */}
-      { renderUploadProgressDialog()}
+      {renderUploadProgressDialog()}
     </>
   );
 };

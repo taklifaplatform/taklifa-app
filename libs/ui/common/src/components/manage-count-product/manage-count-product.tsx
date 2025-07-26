@@ -99,12 +99,10 @@ export const ManageCountProduct = ({
           opacity={canIncrement ? 1 : 0.5}
         />}
         keyboardType="numeric"
-        style={{
-          width: width,
-          height: height,
-          textAlign: 'center',
-          backgroundColor: 'white',
-        }}
+        width={width}
+        height={height}
+        textAlign="center"
+        backgroundColor="$color2"
       />
       
     </XStack>

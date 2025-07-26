@@ -101,7 +101,7 @@ const palettes = {
     "hsla(153, 71%, 20%, 0.5)",
     "hsla(153, 71%, 20%, 0.75)",
     "hsla(153, 71%, 20%, 1)", // color1 : background
-    "hsla(48, 100%, 96%, 1)", // color2 : Substle Background
+    "hsla(48, 100%, 96%, 1)", // color2 : Substle Background²
     "hsla(153, 71%, 20%, 1)", // color3: UI Background
     "hsla(142, 70%, 49%, 1)", // color4: Hovezr UI Background
     "hsla(153, 71%, 20%, 1)", // color5: Active UI Background
@@ -122,17 +122,17 @@ const palettes = {
     "hsla(153, 71%, 54%, 0.25)",
     "hsla(153, 71%, 54%, 0.5)",
     "hsla(153, 71%, 54%, 0.75)",
-    "hsla(153, 71%, 54%, 1)",
-    "hsla(153, 71%, 96%, 1)",
-    "hsla(153, 71%, 85%, 1)",
-    "hsla(153, 71%, 54%, 1)",
-    "hsla(153, 71%, 74%, 1)",
-    "hsla(153, 71%, 54%, 1)",
-    "hsla(153, 71%, 53%, 1)",
-    "hsla(153, 71%, 52%, 1)",
+    "hsla(153, 71%, 20%, 1)", // color1
+    "hsla(153, 71%, 96%, 1)", // color2
+    "hsla(153, 71%, 85%, 1)", // color3
+    "hsla(153, 71%, 54%, 1)", // color4
+    "hsla(153, 71%, 74%, 1)", // color5
+    "hsla(153, 71%, 54%, 1)", // color6
+    "hsla(153, 71%, 53%, 1)", // color7
+    "hsla(153, 71%, 52%, 1)", // color8
     "hsla(153, 71%, 20%, 1)", // color9: Primary
-    "hsla(153, 71%, 50%, 1)",
-    "hsla(202, 76%, 0%, 1)",
+    "hsla(153, 71%, 85%, 1)", // color10
+    "hsla(202, 76%, 0%, 1)", // color11
     "hsla(48, 100%, 96%, 1)", // color12: Text
     "hsla(201, 76%, 8%, 0.75)",
     "hsla(201, 76%, 8%, 0.5)",

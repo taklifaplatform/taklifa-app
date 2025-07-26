@@ -17,10 +17,9 @@ export const DeleteProduct: React.FC<DeleteProductProps> = ({
   title,
   trigger,
   onDelete,
-    open,
-    setIsOpen,
+  open,
+  setIsOpen,
 }) => {
-  console.log('open DeleteProduct', open);
   return (
     <ZixDialog
       title={title}
@@ -32,15 +31,20 @@ export const DeleteProduct: React.FC<DeleteProductProps> = ({
       trigger={trigger}
       colorHeader="#FFF2F1"
     >
-      <YStack flex={1} alignItems="center" gap="$6" paddingTop={'$4'} backgroundColor="white">
+      <YStack
+        theme="accent"
+        flex={1}
+        alignItems="center"
+        gap="$6"
+        paddingTop={'$4'}
+        backgroundColor="white"
+      >
         <YStack alignItems="center" justifyContent="center" gap="$2">
           <TrashGif width={30} height={30} />
-          <Text fontWeight="bold" fontSize={'$3'}>
+          <Text fontWeight="bold" fontSize={'$3'} color="$color11">
             هل ترغب في حذف هذا المنتج؟
           </Text>
-          <Text fontSize={'$2'} >
-            سيتم حذف هذا العنصر نهائيًا
-          </Text>
+          <Text fontSize={'$2'}>سيتم حذف هذا العنصر نهائيًا</Text>
         </YStack>
 
         <XStack gap="$2">

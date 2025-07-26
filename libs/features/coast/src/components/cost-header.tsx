@@ -21,19 +21,19 @@ export const CostHeader = ({ title, price, logo }: CostHeaderProps) => {
         <YStack gap={'$2'}>
           <XStack gap={'$2'}>
             <Text fontWeight={'bold'} fontSize={'$4'} color="$color1">{title}</Text>
-            <BadgeCheck size={20} color={'green'} />
+            <BadgeCheck size={20} color='$color1' />
           </XStack>
           <XStack gap={'$3'} alignItems="center">
-            <ShoppingBag size={16} color={'black'} />
-            <Text fontSize={'$3'} fontWeight={'bold'}>
+            <ShoppingBag size={16} color='$color12' />
+            <Text fontSize={'$3'} fontWeight={'bold'} color='$color12'>
               {price}
             </Text>
-            <CustomIcon name="riyal" size={'$1'} color={'black'} />
+            <CustomIcon name="riyal" size={'$1'} color='$color12' />
           </XStack>
         </YStack>
       </XStack>
       <XStack gap={'$4'} alignItems="flex-end">
-        <Trash2 size={18} color={'black'} />
+        <Trash2 size={18} color='$color12' />
       </XStack>
     </XStack>
   );

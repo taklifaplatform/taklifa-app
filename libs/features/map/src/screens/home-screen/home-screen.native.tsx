@@ -312,30 +312,32 @@ export function HomeScreen() {
             justifyContentTitle={'space-between'}
             rigthComponent={
               <XStack gap="$4" alignItems="center" justifyContent="center">
-                <Button
+                <ZixButton
                   size="$3"
                   backgroundColor="#F1F2F4"
                   justifyContent="center"
                   alignItems="center"
                   unstyled
                   circular
-                  icon={<Upload size={16} color="$color0" />}
                   onPress={() => {
                     alert('upload');
                   }}
-                />
-                <Button
+                >
+                  <Upload size={16} color="black" />
+                </ZixButton>
+                <ZixButton
                   size="$3"
                   backgroundColor="#F1F2F4"
                   justifyContent="center"
                   alignItems="center"
                   unstyled
                   circular
-                  icon={<X size={16} color="$color0" />}
                   onPress={() => {
                     setOpen(false);
                   }}
-                />
+                >
+                  <X size={16} color="black" />
+                </ZixButton>
               </XStack>
             }
             snapPoints={[80]}

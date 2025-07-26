@@ -155,9 +155,10 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
             </Text>
 
             <ZixButton
+            theme='accent'
               size="$3"
               height="$3"
-              backgroundColor="$color0"
+              backgroundColor="$color11"
               onPress={() =>
                 router.push(`${getUrlPrefix}/products/${product.id}/edit`)
               }
@@ -193,6 +194,7 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
                 minWidth={100}
                 flex={undefined}
                 value={productPrice?.toString() || ''}
+                placeholderTextColor='$color0'
                 onChangeText={(value) => {
                   setProductEdited(true);
                   setProductPrice(Number(value));
@@ -209,7 +211,7 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
                 <ZixButton
                   size="$3"
                   height="$3"
-                  backgroundColor="$color0"
+                  backgroundColor="$color11"
                   onPress={() => {
                     updateProduct({
                       ...product,

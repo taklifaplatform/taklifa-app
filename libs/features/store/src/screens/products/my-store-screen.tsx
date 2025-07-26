@@ -31,7 +31,7 @@ export const MyStoreScreen: React.FC<MyStoreScreenProps> = ({
   const queryClient = useQueryClient();
   return (
     <ScreenLayout>
-      <AppHeader title={'متجري'} />
+      <AppHeader title={'متجري'}  />
       <YStack flex={1} paddingTop="$4">
         {user?.active_company && (
           <CompanyProfileTabs
@@ -87,11 +87,11 @@ export const MyStoreScreen: React.FC<MyStoreScreenProps> = ({
                 router.push('/app/products/create');
               }}
             >
-              <FilePlus2 size={20} color="#000000" />
+              <FilePlus2 size={20} color="$color12" />
               <Text
                 fontSize="$2"
                 fontWeight="bold"
-                color="#000000"
+                color="$color12"
                 textAlign="center"
                 maxWidth={'$10'}
               >
@@ -118,11 +118,11 @@ export const MyStoreScreen: React.FC<MyStoreScreenProps> = ({
                 router.push('/app/products/create-with-ai');
               }}
             >
-              <Sparkles size={20} color="#000000" />
+              <Sparkles size={20} color="$color12" />
               <Text
                 fontSize="$2"
                 fontWeight="bold"
-                color="#000000"
+                color="$color12"
                 textAlign="center"
               >
                 اضافة منتج بالذكاء الاصطناعي

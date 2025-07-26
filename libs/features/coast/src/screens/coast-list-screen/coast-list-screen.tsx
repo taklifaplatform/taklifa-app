@@ -72,33 +72,33 @@ export const CoastListScreen: React.FC<ServicesListScreenProps> = ({
       >
         <XStack justifyContent="space-between" alignItems="center">
           <XStack gap={'$2'} alignItems="center">
-            <ShoppingBag size={25} color="#000000" />
-            <Text fontSize={'$5'} fontWeight={'bold'}>
+            <ShoppingBag size={25} color="$color12" />
+            <Text fontSize={'$5'} fontWeight={'bold'} color="$color12">
               المجموع
             </Text>
             {totalItems > 0 && (
-              <Text fontSize={'$3'} color="$color7" fontWeight={'600'}>
+              <Text fontSize={'$3'} color="$color3" fontWeight={'600'}>
                 ({totalItems} عنصر)
               </Text>
             )}
           </XStack>
           <XStack gap={'$2'} alignItems="center">
-            <Text fontSize={'$6'} fontWeight={'bold'}>
+            <Text fontSize={'$6'} fontWeight={'bold'} color="$color12">
               {formatCurrency(totalCost)}
             </Text>
-            <CustomIcon name="riyal" size={'$3'} color="#000000" />
+            <CustomIcon name="riyal" size={'$3'} color="$color12" />
           </XStack>
         </XStack>
 
         {showButton && hasItems && (
           <Button
-            backgroundColor="$color0"
+            backgroundColor="$color11"
             borderRadius="$5"
             height="$4"
-            icon={<FileDown size={15} color="#FFFFFF" />}
+            icon={<FileDown size={15} color="$color0" />}
             onPress={() => onDownloadQuote()}
           >
-            <Text fontSize={'$2'} fontWeight={'bold'} color="#FFFFFF">
+            <Text fontSize={'$2'} fontWeight={'bold'} color="$color0">
               تحميل عرض السعر
             </Text>
           </Button>
