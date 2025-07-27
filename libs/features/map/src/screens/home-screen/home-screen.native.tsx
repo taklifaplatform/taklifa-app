@@ -20,7 +20,7 @@ import * as Location from 'expo-location';
 import { t } from 'i18next';
 import type { FC } from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { FlatList, Keyboard, Platform, Share } from 'react-native';
+import { Alert, FlatList, Keyboard, Linking, Platform, Share } from 'react-native';
 import MapView, { Circle, Region } from 'react-native-maps';
 import { Button, H4, Spinner, View, XStack, YStack } from 'tamagui';
 // import MapFilters from '../../components/map-filters/map-filters';
@@ -201,6 +201,25 @@ export function HomeScreen() {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         console.log('Permission to access location was denied');
+        // we need to an alert to the user to allow the location permission from the settings
+        Alert.alert(
+          'Permission to access location was denied',
+          'Please allow the location permission from the settings',
+          [
+            {
+              text: 'Open Settings',
+              onPress: () => {
+                Linking.openSettings();
+              },
+            },
+            {
+              text: 'Cancel',
+              onPress: () => {
+                //
+              },
+            },
+          ],
+        );
         return;
       }
 
