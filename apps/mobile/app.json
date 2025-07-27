@@ -61,7 +61,6 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FECA16"
       },
-      "googleServicesFile": "./google-services.json",
       "package": "app.taklifa",
       "versionCode": 1,
       "permissions": [
