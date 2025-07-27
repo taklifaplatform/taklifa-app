@@ -38,6 +38,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         onPress={() => {
           if (setShowSheet) {
             setShowSheet(false);
+            if (product.company) {
+              router.push(`/app/companies/${product.company.id}`);
+            }
           }
           router.push(`/app/products/${product.id}`);
         }}
