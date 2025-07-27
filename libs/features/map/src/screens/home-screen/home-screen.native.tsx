@@ -20,7 +20,7 @@ import * as Location from 'expo-location';
 import { t } from 'i18next';
 import type { FC } from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { FlatList, Keyboard, Platform } from 'react-native';
+import { FlatList, Keyboard, Platform, Share } from 'react-native';
 import MapView, { Circle, Region } from 'react-native-maps';
 import { Button, H4, Spinner, View, XStack, YStack } from 'tamagui';
 // import MapFilters from '../../components/map-filters/map-filters';
@@ -320,7 +320,12 @@ export function HomeScreen() {
                   unstyled
                   circular
                   onPress={() => {
-                    alert('upload');
+                    // alert('upload');
+                    // share link
+                    Share.share({
+                      message: 'Check out this link',
+                      url: `https://taklifa.com/app/companies/${selectedCompany?.id}`,
+                    });
                   }}
                 >
                   <Upload size={16} color="black" />
