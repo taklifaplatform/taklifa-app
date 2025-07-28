@@ -342,7 +342,7 @@ export function HomeScreen() {
                     // alert('upload');
                     // share link
                     Share.share({
-                      message: 'Check out this link',
+                      message: `https://taklifa.com/app/companies/${selectedCompany?.id}`,
                       url: `https://taklifa.com/app/companies/${selectedCompany?.id}`,
                     });
                   }}
