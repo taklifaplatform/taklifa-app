@@ -14,8 +14,8 @@ import {
 import { ZixInput, ZixInputProps } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
-import { useCallback, useEffect, useState } from 'react';
-import { FlatList, TouchableOpacity } from 'react-native';
+import { useCallback, useEffect, useState, useRef } from 'react';
+import { FlatList, TouchableOpacity, Animated } from 'react-native';
 import { useRouter } from 'solito/router';
 import {
   Button,
@@ -27,7 +27,6 @@ import {
   View,
   XStack,
   YStack,
-  AnimatePresence,
 } from 'tamagui';
 import { AddToCartButton } from '@zix/ui/common';
 
@@ -84,6 +83,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
   ]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [prevIndex, setPrevIndex] = useState<number | null>(null);
+  const animatedValue = useRef(new Animated.Value(0)).current;
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
@@ -134,6 +134,16 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
     return () => clearInterval(interval);
   }, [currentIndex]);
 
+  useEffect(() => {
+    // Animate the text change
+    animatedValue.setValue(30); // Start from below
+    Animated.timing(animatedValue, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }, [currentIndex, animatedValue]);
+
   const renderSearchBar = () => (
     <Theme reset>
       <View
@@ -146,35 +156,38 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
         zIndex={1000}
       >
         {!isSearchBarFocused && (
-        <AnimatePresence>
-          <Stack
-            key={`current-${currentIndex}`}
-            onPress={() => {
-              setIsSearchBarFocused(true);
-            }}
-            animation="200ms"
+          <XStack
             position="absolute"
             left={60}
             top={22}
             zIndex={99999}
-            overflow="hidden"
-            enterStyle={{
-              opacity: 0,
-              translateY: 20,
+            alignItems="center"
+            onPress={() => {
+              setIsSearchBarFocused(true);
             }}
-            exitStyle={{
-              opacity: 0,
-              translateY: 0,
-            }}
-            opacity={1}
-            translateY={0}
           >
             <Text color="$color10" fontWeight="600">
-              ابحث  {animatedText[currentIndex]}
+              ابحث{' '}
             </Text>
-          </Stack>
-        </AnimatePresence>
-)}
+            <View
+              overflow="hidden"
+            >
+              <Animated.View
+                style={{
+                  transform: [{ translateY: animatedValue }],
+                  opacity: animatedValue.interpolate({
+                    inputRange: [-30, 0, 30],
+                    outputRange: [0, 1, 0],
+                  }),
+                }}
+              >
+                <Text color="$color10" fontWeight="600">
+                  {animatedText[currentIndex]}
+                </Text>
+              </Animated.View>
+            </View>
+          </XStack>
+        )}
         <ZixInput
           rightIcon={() => <Search size="$1.5" color="$color6" />}
           leftIcon={() =>
