@@ -6,7 +6,7 @@ import {
 } from '@tamagui/lucide-icons';
 import { UserAvatar } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
-import { Text, XStack, YStack } from 'tamagui';
+import { Text, Theme, XStack, YStack } from 'tamagui';
 
 export interface CostHeaderProps {
   title: string;
@@ -15,7 +15,8 @@ export interface CostHeaderProps {
 }
 export const CostHeader = ({ title, price, logo }: CostHeaderProps) => {
   return (
-    <XStack theme='accent' alignItems="center" justifyContent="space-between">
+    <Theme name='accent'>
+    <XStack alignItems="center" justifyContent="space-between">
       <XStack gap={'$3'} alignItems="flex-start">
         <UserAvatar user={{logo: logo}} size={'$3'} />
         <YStack gap={'$2'}>
@@ -36,6 +37,7 @@ export const CostHeader = ({ title, price, logo }: CostHeaderProps) => {
         <Trash2 size={18} color='$color12' />
       </XStack>
     </XStack>
+    </Theme>
   );
 };
 

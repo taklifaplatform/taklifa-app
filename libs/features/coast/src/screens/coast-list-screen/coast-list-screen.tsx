@@ -73,7 +73,7 @@ export const CoastListScreen: React.FC<ServicesListScreenProps> = ({
         <XStack justifyContent="space-between" alignItems="center">
           <XStack gap={'$2'} alignItems="center">
             <ShoppingBag size={25} color="$color12" />
-            <Text fontSize={'$5'} fontWeight={'bold'} color="$color12">
+            <Text theme='accent' fontSize={'$5'} fontWeight={'bold'} color="$color12">
               المجموع
             </Text>
             {totalItems > 0 && (
@@ -95,10 +95,10 @@ export const CoastListScreen: React.FC<ServicesListScreenProps> = ({
             backgroundColor="$color11"
             borderRadius="$5"
             height="$4"
-            icon={<FileDown size={15} color="$color0" />}
+            icon={<FileDown size={15} color="$color2" />}
             onPress={() => onDownloadQuote()}
           >
-            <Text fontSize={'$2'} fontWeight={'bold'} color="$color0">
+            <Text fontSize={'$2'} fontWeight={'bold'} color="$color2">
               تحميل عرض السعر
             </Text>
           </Button>

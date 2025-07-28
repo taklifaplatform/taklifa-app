@@ -39,6 +39,7 @@ export const ServiceCard = ({
         marginHorizontal={showHeader ? '$4' : undefined}
         padding="$4"
         gap={'$3'}
+        marginBottom={'$4'}
         justifyContent="center"
         alignItems="center"
       >

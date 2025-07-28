@@ -94,6 +94,7 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
         padding="$4"
         borderBottomWidth={1}
         borderColor='$color5'
+        backgroundColor="white"
         width='100%'
         justifyContent='space-between'
       >
