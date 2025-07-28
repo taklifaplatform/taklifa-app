@@ -103,7 +103,8 @@ export const UserContactActions: React.FC<UserContactActionsProps> = ({
           <ZixButton
             theme='accent'
             flex={width > 400 ? 0.5 : 0.2}
-            backgroundColor='$color0'
+            backgroundColor='$color11'
+            borderColor='$color12'
             icon={(props: IconProps) => <Compass {...props} size={20} color='$color2' />}
             color='$color2'
             fontWeight='600'

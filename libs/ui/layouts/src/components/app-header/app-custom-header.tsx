@@ -14,7 +14,7 @@ import {
 import { ZixInput, ZixInputProps } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
 import { useCallback, useEffect, useState, useRef } from 'react';
-import { FlatList, TouchableOpacity, Animated, Platform } from 'react-native';
+import { FlatList, TouchableOpacity, Animated, Platform, TextInput } from 'react-native';
 import { useRouter } from 'solito/router';
 import {
   Button,
@@ -50,12 +50,13 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
   const router = useRouter();
   const onAvatarPress = useCallback(() => {
     if (isLoggedIn) {
-      router.push(`${getUrlPrefix}/users/${user?.id}`);
+      router.push(`${getUrlPrefix}/users/${user?.id}`)
     } else {
       //   router.push('/auth/login');
       router.push(`${getUrlPrefix}/account/settings`);
     }
   }, [isLoggedIn, router, user, getUrlPrefix]);
+  const inputRef = useRef<TextInput>(null);
   const [isSearchBarFocused, setIsSearchBarFocused] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [searchResults, setSearchResults] = useState<ProductTransformer[]>([]);
@@ -153,15 +154,17 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
         paddingVertical="$2"
         zIndex={1000}
       >
-        {!isSearchBarFocused && (
+        {searchValue.length === 0 && !isSearchBarFocused && (
           <XStack
             position="absolute"
             left={60}
-            top={22}
+            top={13}
             zIndex={99999}
+            height={40}
             alignItems="center"
             onPress={() => {
               setIsSearchBarFocused(true);
+              inputRef.current?.focus();
             }}
           >
             {Platform.OS === 'ios' && (
@@ -192,6 +195,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
           </XStack>
         )}
         <ZixInput
+          ref={inputRef}
           rightIcon={() => <Search size="$1.5" color="$color6" />}
           leftIcon={() =>
             selectedProduct ? (
@@ -203,6 +207,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
                 unstyled
                 onPress={() => {
                   setIsSearchBarFocused(false);
+                  inputRef.current?.blur();
                   setSearchValue('');
                   setSearchResults([]);
                 }}
@@ -454,7 +459,18 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
         borderRadius="$5"
         margin={'$2'}
       >
-        <XStack gap="$4" alignItems="center">
+        <TouchableOpacity
+          style={{
+            flexDirection: 'row',
+            gap: 10,
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+          }}
+          onPress={() => {
+            setOpen(false);
+            router.push(`${getUrlPrefix}/companies/${product?.company?.id}`);
+          }}
+        >
           <ZixAvatar media={product?.company?.logo} size="$3" />
           <YStack
             theme="accent"
@@ -470,7 +486,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
               title={product?.company?.name}
             />
           </YStack>
-        </XStack>
+        </TouchableOpacity>
         <XStack gap="$4" alignItems="center">
           {product?.image ? (
             <Image

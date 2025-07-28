@@ -62,7 +62,11 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
       setProductEdited(false);
 
       queryClient.invalidateQueries({
-        queryKey: ['ProductsService.fetchAllProduct', user?.active_company?.id, 'true'],
+        queryKey: [
+          'ProductsService.fetchAllProduct',
+          user?.active_company?.id,
+          'true',
+        ],
       });
     },
     onError(error: any) {
@@ -73,7 +77,7 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
       handleFormErrors(form, error);
     },
   });
-  
+
   const { mutateAsync: publishProduct } = useMutation({
     mutationFn: (requestBody: any) => {
       if (product.id) {
@@ -88,7 +92,11 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
       setProductEdited(false);
 
       queryClient.invalidateQueries({
-        queryKey: ['ProductsService.fetchAllProduct', user?.active_company?.id, 'true'],
+        queryKey: [
+          'ProductsService.fetchAllProduct',
+          user?.active_company?.id,
+          'true',
+        ],
       });
     },
     onError(error: any) {
@@ -104,7 +112,7 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
     setProductPrice(product.variant?.price);
     setProductUnit(product.variant?.type_unit?.toString());
   }, [product]);
-
+  console.log(product.variant?.price);
   return (
     <YStack
       flex={1}
@@ -155,7 +163,7 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
             </Text>
 
             <ZixButton
-            theme='accent'
+              theme="accent"
               size="$3"
               height="$3"
               backgroundColor="$color11"
@@ -193,15 +201,36 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
                 height="$3"
                 minWidth={100}
                 flex={undefined}
+                borderColor={
+                  product.variant?.price?.toString() === '0.00'
+                    ? 'red'
+                    : '$color2'
+                }
+                borderWidth={
+                  product.variant?.price?.toString() === '0.00' ? 1 : 0
+                }
+                color={
+                  product.variant?.price?.toString() === '0.00'
+                    ? 'red'
+                    : '$color11'
+                }
                 value={productPrice?.toString() || ''}
-                placeholderTextColor='$color0'
+                placeholderTextColor="$color0"
                 onChangeText={(value) => {
                   setProductEdited(true);
                   setProductPrice(Number(value));
                 }}
                 leftIcon={() => (
                   <Theme name="accent">
-                    <CustomIcon name="riyal" size="$1" color="$color0" />
+                    <CustomIcon
+                      name="riyal"
+                      size="$1"
+                      color={
+                        product.variant?.price?.toString() === '0.00'
+                          ? 'red'
+                          : '$color11'
+                      }
+                    />
                   </Theme>
                 )}
               />

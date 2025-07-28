@@ -28,7 +28,6 @@ export const MyStoreScreen: React.FC<MyStoreScreenProps> = ({
   useMixpanel('Store List Screen view');
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const queryClient = useQueryClient();
   return (
     <ScreenLayout>
       <AppHeader title={'متجري'}  />
@@ -131,24 +130,6 @@ export const MyStoreScreen: React.FC<MyStoreScreenProps> = ({
           </YStack>
         </XStack>
       </ZixDialog>
-      {/* <ZixDialog
-        title="تعديل المنتج"
-        open={isProductEditDialogOpen}
-        onOpenChange={setIsProductEditDialogOpen}
-        snapPoints={[90]}
-      >
-        <QueryClientProvider client={queryClient}>
-          {selectedProductId && (
-            <ProductManagerComponent
-              productId={selectedProductId}
-              onUpdate={() => {
-                setIsProductEditDialogOpen(false);
-                setSelectedProductId(null);
-              }}
-            />
-          )}
-        </QueryClientProvider>
-      </ZixDialog> */}
     </ScreenLayout>
   );
 };

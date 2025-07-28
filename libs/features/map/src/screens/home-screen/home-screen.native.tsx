@@ -10,8 +10,10 @@ import {
   CompaniesService,
   CompanyTransformer,
   LocationService,
+  UserTransformer,
+  UsersService,
 } from '@zix/api';
-import { CompanyCard } from '@zix/features/company';
+import { CompanyCard, CompanyProfileTabs } from '@zix/features/company';
 import { useAuth, useMixpanel, USER_ROLES } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppCustomHeader, AppHeader, ScreenLayout } from '@zix/ui/layouts';
@@ -20,12 +22,20 @@ import * as Location from 'expo-location';
 import { t } from 'i18next';
 import type { FC } from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Alert, FlatList, Keyboard, Linking, Platform, Share } from 'react-native';
+import {
+  Alert,
+  FlatList,
+  Keyboard,
+  Linking,
+  Platform,
+  Share,
+} from 'react-native';
 import MapView, { Circle, Region } from 'react-native-maps';
 import { Button, H4, Spinner, View, XStack, YStack } from 'tamagui';
 // import MapFilters from '../../components/map-filters/map-filters';
-import { ZixButton, ZixDialog } from '@zix/ui/common';
+import { ZixButton, ZixDialog, ZixTab } from '@zix/ui/common';
 import { CompanyDetail } from '../../components/company-detail/company-detail';
+import { UserCard } from '@zix/features/users';
 
 const initialCamera = {
   center: {
@@ -84,6 +94,10 @@ export function HomeScreen() {
     },
     queryKey: ['CompaniesService.fetchAllCompanies', search],
     staleTime: 5 * 1000,
+  });
+  const usersQuery = useQuery({
+    queryFn: () => UsersService.fetchAllUsers(),
+      queryKey: ['UsersService.fetchAllUsers'],
   });
   const [selectedCompany, setSelectedCompany] = useState<CompanyTransformer>();
 
@@ -312,7 +326,6 @@ export function HomeScreen() {
           />
           <ListSection
             showMap={showMap}
-            isKeyboardVisible={isKeyboardVisible}
             companiesList={
               (filters.provider_type === 'all' ||
                 filters.provider_type === 'company') &&
@@ -321,6 +334,7 @@ export function HomeScreen() {
                 : []
             }
             isFetching={isFetching}
+            usersList={usersQuery.data?.data || []}
           />
           <CenterButton
             showMap={showMap}
@@ -445,47 +459,92 @@ const MapSection: FC<MapSectionProps> = memo(function MapSection({
 // Memoized List Section
 interface ListSectionProps {
   showMap: boolean;
-  isKeyboardVisible: boolean;
   companiesList: CompanyTransformer[];
+  usersList: UserTransformer[];
   isFetching: boolean;
 }
 const ListSection: FC<ListSectionProps> = memo(function ListSection({
   showMap,
-  isKeyboardVisible,
   companiesList,
+  usersList,
   isFetching,
 }) {
   if (showMap) return null;
-  return (
-    <View flex={1}>
-      <FlatList
-        style={{ flex: 1 }}
-        data={companiesList}
-        keyExtractor={(item: CompanyTransformer, index) =>
-          `company-${item.id}-${index}`
-        }
-        renderItem={({ item, index }) => (
-          <CompanyCard
-            key={`stack-company-${item.id}-${index}`}
-            company={item}
-            flex={1}
-            marginHorizontal="$4"
-            marginVertical="$2"
-            backgroundColor="$color2"
-            useShowButton={false}
+  const tabs = useMemo(() => {
+    const _tabs = [
+      {
+        key: 'company',
+        title: 'الشركات و المؤسسات',
+        content: (
+          <FlatList
+            style={{ flex: 1 }}
+            data={companiesList}
+            keyExtractor={(item: CompanyTransformer, index) =>
+              `company-${item.id}-${index}`
+            }
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item, index }) => (
+              <CompanyCard
+                key={`stack-company-${item.id}-${index}`}
+                company={item}
+                flex={1}
+                marginVertical="$2"
+                backgroundColor="$color2"
+                useShowButton={false}
+              />
+            )}
+            refreshing={isFetching}
+            onRefresh={() => {
+              // TODO
+            }}
+            ListEmptyComponent={
+              <View flex={1} alignItems="center" gap="$2">
+                <CustomIcon name="empty_data" size="$18" color="$color5" />
+                <H4 color="#8590A2">لا يوجد بيانات</H4>
+              </View>
+            }
           />
-        )}
-        refreshing={isFetching}
-        onRefresh={() => {
-          // TODO
-        }}
-        ListEmptyComponent={
-          <View flex={1} alignItems="center" gap="$2">
-            <CustomIcon name="empty_data" size="$18" color="$color5" />
-            <H4 color="#8590A2">لا يوجد بيانات</H4>
-          </View>
-        }
-      />
+        ),
+      },
+      {
+        key: 'individual',
+        title: 'الأفراد',
+        content: (
+          <FlatList
+            style={{ flex: 1 }}
+            data={usersList}
+            keyExtractor={(item: UserTransformer, index) =>
+              `user-${item.id}-${index}`
+            }
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item, index }) => (
+              <UserCard
+                key={`stack-user-${item.id}-${index}`}
+                user={item}
+                flex={1}
+                marginVertical="$2"
+                backgroundColor="$color2"
+              />
+            )}
+            refreshing={isFetching}
+            onRefresh={() => {
+              // TODO
+            }}
+            ListEmptyComponent={
+              <View flex={1} alignItems="center" gap="$2">
+                <CustomIcon name="empty_data" size="$18" color="$color5" />
+                <H4 color="#8590A2">لا يوجد بيانات</H4>
+              </View>
+            }
+          />
+        ),
+      },
+    ];
+    return _tabs;
+  }, []);
+  return (
+    <View flex={1} marginTop="$6" marginBottom="0">
+      <ZixTab defaultActiveTab="company" tabs={tabs} />
     </View>
   );
 });
@@ -494,20 +553,13 @@ const ListSection: FC<ListSectionProps> = memo(function ListSection({
 
 // Memoized Switcher Button
 interface SwitcherButtonProps {
-  showCarousel: boolean;
   showMap: boolean;
   setShowMap: React.Dispatch<React.SetStateAction<boolean>>;
-  t: typeof t;
-  urgencyMode: boolean;
 }
 const SwitcherButton: FC<SwitcherButtonProps> = memo(function SwitcherButton({
-  showCarousel,
   showMap,
   setShowMap,
-  t,
-  urgencyMode,
 }) {
-  // if (showCarousel) return null;
   return (
     <Button
       theme="accent"
@@ -518,6 +570,8 @@ const SwitcherButton: FC<SwitcherButtonProps> = memo(function SwitcherButton({
       fontWeight="500"
       fontSize="$2"
       size="$3"
+      width={50}
+      height={40}
       onPress={() => setShowMap(!showMap)}
     />
   );
@@ -570,27 +624,17 @@ const FiltersSection: FC<FiltersSectionProps> = memo(function FiltersSection({
 }) {
   if (isKeyboardVisible) return null;
   return (
-    <View position="absolute" bottom={10} left={1} right={1}>
-      <XStack
-        alignItems="center"
-        paddingHorizontal="$2"
-        gap="$2"
-        paddingTop="$2"
-      >
+    <View position="absolute" bottom={20} left={1} right={1}>
+     
         <SwitcherButton
-          showCarousel={showCarousel}
           showMap={showMap}
           setShowMap={setShowMap}
-          t={t}
-          urgencyMode={urgencyMode}
         />
         {/* <MapFiltersTaklifa
           urgencyMode={urgencyMode}
           values={filters}
           onChange={(values) => setFilters({ ...filters, ...values })}
         /> */}
-        {isFetching && <Spinner color="$color1" />}
-      </XStack>
     </View>
   );
 });

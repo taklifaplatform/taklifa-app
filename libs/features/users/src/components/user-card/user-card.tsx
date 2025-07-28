@@ -1,16 +1,15 @@
-import { AnalyticsService, DriverTransformer } from '@zix/api';
+import { UserTransformer } from '@zix/api';
 import { useAuth } from '@zix/services/auth';
 import { UserAvatar } from '@zix/ui/common';
-import { ZixMediasListWidget } from '@zix/ui/widgets';
 import { getLastActivityStatus } from '@zix/utils';
 import React, { useMemo } from 'react';
 import { useRouter } from 'solito/router';
-import { Image, Separator, Text, ThemeableStackProps, XStack, YStack } from 'tamagui';
+import { Image, Text, ThemeableStackProps, XStack, YStack } from 'tamagui';
 import { UserContactActions, UserContactActionsProps } from '../user-contact-actions/user-contact-actions';
 import { UserInfoRow } from '../user-info-row/user-info-row';
 
 export type UserCardProps = ThemeableStackProps & {
-  user: DriverTransformer;
+  user: UserTransformer;
   userContactActionsProps?: Partial<UserContactActionsProps>
   showContactActions?: boolean;
 };
@@ -32,13 +31,13 @@ export const UserCard: React.FC<UserCardProps> = React.memo(({
   }, [user?.companies]);
 
   function onPress() {
-    AnalyticsService
-      .storeUserAnalytic({
-        user: user.id?.toString() || '',
-        requestBody: {
-          action_type: 'profile_view',
-        }
-      })
+    // AnalyticsService
+    //   .storeUserAnalytic({
+    //     user: user.id?.toString() || '',
+    //     requestBody: {
+    //       action_type: 'profile_view',
+    //     }
+    //   })
     router.push(`/app/users/${user.id}`);
   }
 
@@ -85,9 +84,7 @@ export const UserCard: React.FC<UserCardProps> = React.memo(({
       </XStack>
 
       <UserInfoRow user={user} paddingHorizontal={padding} />
-      {/* <ZixMediasListWidget medias={user?.vehicle?.images || []} paddingHorizontal={padding} /> */}
-      {showContactActions && <Separator borderColor="$gray6" />}
-      {showContactActions && <UserContactActions {...userContactActionsProps} user={user} paddingHorizontal={padding} />}
+      {showContactActions && <UserContactActions {...userContactActionsProps} user={user} paddingHorizontal={padding} useDestinationButton={false} />}
     </YStack>
   );
 },

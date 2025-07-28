@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { DriversService, UserService } from '@zix/api';
+import { UsersService } from '@zix/api';
 
 import { useMixpanel } from '@zix/services/auth';
 import { FullScreenSpinner } from '@zix/ui/common';
@@ -24,12 +24,10 @@ export function UserProfileScreen() {
         return;
       }
 
-      // TODO: if we gonna enable public profile add ability to retreive user by id
-      return UserService.retrieveUser()
+      return UsersService.retrieveUser({
+        user: userId,
+      })
 
-      // return DriversService.retrieveDriver({
-      //   driver: userId,
-      // });
     },
     queryKey: ['DriversService.retrieveDriver', userId],
   });
@@ -55,7 +53,7 @@ export function UserProfileScreen() {
             <ProfileHeader user={data.data} />
             <UserInfoRow user={data.data} />
           </YStack>
-          <UserContactActions user={data.data} />
+          <UserContactActions user={data.data} useDestinationButton={false} />
         </YStack>
         <ProfileTabs user={data.data} />
       </ScrollView>

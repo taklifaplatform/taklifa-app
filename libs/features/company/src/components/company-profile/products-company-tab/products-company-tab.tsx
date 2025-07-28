@@ -1,22 +1,20 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Sparkles } from '@tamagui/lucide-icons';
+import { useQueryClient } from '@tanstack/react-query';
 import { CompanyTransformer, ProductsService } from '@zix/api';
-import { useAuth } from '@zix/services/auth';
+import { ProductThumbCard } from '@zix/features/store';
 import {
   FilterByOrder,
   FilterPrice,
   FullScreenSpinner,
+  ProductCard,
   SearchProduct,
 } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
+import { useFlatListQuery } from '@zix/utils';
 import { t } from 'i18next';
 import React, { useEffect, useState } from 'react';
-import { FlatList, TouchableOpacity } from 'react-native';
-import { useRouter } from 'solito/router';
-import { H4, Text, View, XStack, YStack } from 'tamagui';
-import { ProductCard } from '@zix/ui/common';
-import { Sparkles } from '@tamagui/lucide-icons';
-import { useFlatListQuery } from '@zix/utils';
-import { ProductThumbCard } from '@zix/features/store';
+import { FlatList } from 'react-native';
+import { H4, View, XStack, YStack } from 'tamagui';
 
 export type ProductsCompanyTabProps = {
   company: CompanyTransformer;
@@ -101,17 +99,6 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
   );
 
   const renderMyStoreItem = ({ item, index }: { item: any; index: number }) => (
-    // <TouchableOpacity
-    //   style={{
-    //     paddingTop: 10,
-    //   }}
-    //   onPress={() => {
-    //     if (setShowSheet) {
-    //       setShowSheet(false);
-    //     }
-    //     // router.push(`${getUrlPrefix}/products/${item.id}`);
-    //   }}
-    // >
     <>
       <ProductThumbCard product={item} index={index} useShowButton={true} />
       {!!item.created_with_ai && (
@@ -130,7 +117,6 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
         </View>
       )}
     </>
-    // </TouchableOpacity>
   );
 
   return (

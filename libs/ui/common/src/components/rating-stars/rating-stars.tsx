@@ -1,5 +1,5 @@
 
-import { CustomIcon } from '@zix/ui/icons';
+import { Star, StarFull, StarHalf } from '@tamagui/lucide-icons';
 import React from 'react';
 
 import { XStack, View, SizeTokens, Button } from 'tamagui';
@@ -19,7 +19,7 @@ export const RatingStars: React.FC<RatingStarsProps> = ({
   const renderStar = (index: number) => {
     const isHalf = score - index === 0.5;
     const isFilled = score - index >= 1;
-    return isFilled ? <CustomIcon name='star' color='$color1' size={size} /> : isHalf ? <CustomIcon name='half_star' color='$color1' size={size} /> : <CustomIcon name='half_star' color='$color1' size={size} />
+    return isFilled ? <StarFull color='$color1' size={size} /> : isHalf ? <StarHalf color='$color1' size={size} /> : <Star size={size} />
   };
 
   return (
