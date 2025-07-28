@@ -21,11 +21,13 @@ import {
   Button,
   ColorTokens,
   Image,
+  Stack,
   Text,
   Theme,
   View,
   XStack,
   YStack,
+  AnimatePresence,
 } from 'tamagui';
 import { AddToCartButton } from '@zix/ui/common';
 
@@ -70,6 +72,18 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
     index: 0,
   });
   const [count, setCount] = useState(1);
+  const [animatedText, setAnimatedText] = useState<string[]>([
+    'عن عطور',
+    ' عن ملابس',
+    'عن مواد غذائية',
+    'عن مواد بناء',
+    'عن مواد صناعية',
+    'عن مواد زراعية',
+    'عن شاحنات',
+    'و قارن',
+  ]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [prevIndex, setPrevIndex] = useState<number | null>(null);
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
@@ -105,11 +119,6 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
   }, [searchValue]);
 
   useEffect(() => {
-    // if (selectedProduct) {
-    //   setSearchValue('');
-    //   setIsSearchBarFocused(false);
-    //   setOpen(true);
-    // }
     queryClient.setQueryData(
       ['ProductsService.fetchAllProduct', selectedProduct],
       listProductsData?.data,
@@ -117,13 +126,13 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
   }, [selectedProduct]);
 
   useEffect(() => {
-    if (!open) {
-      // setSelectedProduct('');
-      // setSearchValue('');
-      // setIsSearchBarFocused(false);
-      // setSearchResults([]);
-    }
-  }, [open]);
+    const interval = setInterval(() => {
+      setPrevIndex(currentIndex);
+      setCurrentIndex((prev) => (prev + 1) % animatedText.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [currentIndex]);
 
   const renderSearchBar = () => (
     <Theme reset>
@@ -136,6 +145,36 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
         paddingVertical="$2"
         zIndex={1000}
       >
+        {!isSearchBarFocused && (
+        <AnimatePresence>
+          <Stack
+            key={`current-${currentIndex}`}
+            onPress={() => {
+              setIsSearchBarFocused(true);
+            }}
+            animation="200ms"
+            position="absolute"
+            left={60}
+            top={22}
+            zIndex={99999}
+            overflow="hidden"
+            enterStyle={{
+              opacity: 0,
+              translateY: 20,
+            }}
+            exitStyle={{
+              opacity: 0,
+              translateY: 0,
+            }}
+            opacity={1}
+            translateY={0}
+          >
+            <Text color="$color10" fontWeight="600">
+              ابحث  {animatedText[currentIndex]}
+            </Text>
+          </Stack>
+        </AnimatePresence>
+)}
         <ZixInput
           rightIcon={() => <Search size="$1.5" color="$color6" />}
           leftIcon={() =>
@@ -158,7 +197,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
               renderAvatar()
             )
           }
-          placeholder="إبحث وقارن"
+          placeholder=""
           placeholderTextColor="$color10"
           borderRadius={'$8'}
           style={{
@@ -172,14 +211,17 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
           shadowRadius={3.84}
           elevation={5}
           fontWeight="600"
-          // value={selectedProduct ? selectedProduct : searchValue}
           value={searchValue}
           onChangeText={(text) => {
             setSearchValue(text);
             setIsSearchBarFocused(true);
           }}
+          autoFocus={isSearchBarFocused}
           onFocus={() => {
             setIsSearchBarFocused(true);
+          }}
+          onBlur={() => {
+            setIsSearchBarFocused(false);
           }}
           {...searchProps}
         />
@@ -324,16 +366,18 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
               </XStack>
             ) : (
               <ZixButton
-              size="$3"
-              backgroundColor="#F1F2F4"
-              justifyContent="center"
-              alignItems="center"
-              unstyled
-              circular
-                  onPress={() => setSelectedProductDetail({ product: null, index: 0 })}
-                >
-                  <ArrowLeft size={16} color="black" />
-                </ZixButton>
+                size="$3"
+                backgroundColor="#F1F2F4"
+                justifyContent="center"
+                alignItems="center"
+                unstyled
+                circular
+                onPress={() =>
+                  setSelectedProductDetail({ product: null, index: 0 })
+                }
+              >
+                <ArrowLeft size={16} color="black" />
+              </ZixButton>
             )}
           </XStack>
         }
@@ -412,7 +456,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
           </YStack>
         </XStack>
         <XStack gap="$4" alignItems="center">
-          {product.image ? (
+          {product?.image ? (
             <Image
               source={{ uri: product.image?.original_url }}
               width={80}
@@ -436,7 +480,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
               paddingVertical={'$2'}
             >
               <Text fontSize={'$5'} fontWeight={'bold'} color="$color11">
-                {product?.variant.price}
+                {product?.variant?.price}
               </Text>
               <Theme name="accent">
                 <CustomIcon name="riyal" size="$1" color="$color0" />
