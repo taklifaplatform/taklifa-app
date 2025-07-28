@@ -13,15 +13,13 @@ import {
 } from '@zix/ui/common';
 import { ZixInput, ZixInputProps } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
-import { t } from 'i18next';
 import { useCallback, useEffect, useState, useRef } from 'react';
-import { FlatList, TouchableOpacity, Animated } from 'react-native';
+import { FlatList, TouchableOpacity, Animated, Platform } from 'react-native';
 import { useRouter } from 'solito/router';
 import {
   Button,
   ColorTokens,
   Image,
-  Stack,
   Text,
   Theme,
   View,
@@ -166,12 +164,12 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
               setIsSearchBarFocused(true);
             }}
           >
-            <Text color="$color10" fontWeight="600">
-              ابحث{' '}
-            </Text>
-            <View
-              overflow="hidden"
-            >
+            {Platform.OS === 'ios' && (
+              <Text color="$color10" fontWeight="600">
+                ابحث{' '}
+              </Text>
+            )}
+            <View overflow="hidden">
               <Animated.View
                 style={{
                   transform: [{ translateY: animatedValue }],
@@ -186,6 +184,11 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
                 </Text>
               </Animated.View>
             </View>
+            {Platform.OS !== 'ios' && (
+              <Text color="$color10" fontWeight="600">
+                ابحث{' '}
+              </Text>
+            )}
           </XStack>
         )}
         <ZixInput
