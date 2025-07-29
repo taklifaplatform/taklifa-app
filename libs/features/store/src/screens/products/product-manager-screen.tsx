@@ -94,7 +94,7 @@ export const ProductManagerScreen = () => {
       setOpen(true);
 
       queryClient.invalidateQueries({
-        queryKey: ['ProductsService.fetchAllProduct', user?.active_company?.id],
+        queryKey: ['ProductsService.fetchAllProduct'],
       });
       router.back();
     },
