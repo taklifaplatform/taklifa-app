@@ -266,6 +266,10 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
             fontSize={'$1'}
             fontWeight={'bold'}
             color="$color2"
+            disabled={!isValidPrice}
+            disabledStyle={{
+              opacity: 0.5,
+            }}
             onPress={() => {
               publishProduct({
                 ...product,
