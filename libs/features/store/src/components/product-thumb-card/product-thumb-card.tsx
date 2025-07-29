@@ -39,6 +39,7 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
     { name: 'كجم', id: 'kg' },
     { name: 'جم', id: 'g' },
     { name: 'م.ط', id: 'm4' },
+    { name: 'قدم', id: 'ft' },
   ];
   const [productPrice, setProductPrice] = useState(product.variant?.price);
   const [productUnit, setProductUnit] = useState(
@@ -70,7 +71,6 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
       });
     },
     onError(error: any) {
-      alert(error.message);
       toast.show('حدث خطأ ما', {
         message: error.message,
       });
@@ -111,8 +111,10 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
   useEffect(() => {
     setProductPrice(product.variant?.price);
     setProductUnit(product.variant?.type_unit?.toString());
-  }, [product]);
-  console.log(product.variant?.price);
+  }, [product.variant?.price, product.variant?.type_unit]);
+
+  const isValidPrice = productPrice && productPrice > 0;
+
   return (
     <YStack
       flex={1}
@@ -197,23 +199,11 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
                 }}
               />
               <ZixInput
+                theme={!isValidPrice ? 'error' : 'default'}
                 size="$3"
                 height="$3"
                 minWidth={100}
                 flex={undefined}
-                borderColor={
-                  product.variant?.price?.toString() === '0.00'
-                    ? 'red'
-                    : '$color2'
-                }
-                borderWidth={
-                  product.variant?.price?.toString() === '0.00' ? 1 : 0
-                }
-                color={
-                  product.variant?.price?.toString() === '0.00'
-                    ? 'red'
-                    : '$color11'
-                }
                 value={productPrice?.toString() || ''}
                 placeholderTextColor="$color0"
                 onChangeText={(value) => {
@@ -226,7 +216,8 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
                       name="riyal"
                       size="$1"
                       color={
-                        product.variant?.price?.toString() === '0.00'
+                        product.variant?.price?.toString() &&
+                        productPrice?.toString() === '0.00'
                           ? 'red'
                           : '$color11'
                       }
@@ -240,7 +231,11 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
                 <ZixButton
                   size="$3"
                   height="$3"
-                  backgroundColor="$color11"
+                  backgroundColor="$color1"
+                  disabledStyle={{
+                    opacity: 0.5,
+                  }}
+                  disabled={!isValidPrice}
                   onPress={() => {
                     updateProduct({
                       ...product,

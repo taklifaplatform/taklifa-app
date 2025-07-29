@@ -15,11 +15,11 @@ import {
   SchemaForm,
   SubmitButton,
   ZixFieldContainer,
-  ZixSelectField
+  ZixSelectField,
 } from '@zix/ui/forms';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { useRouter } from 'expo-router';
-import { useEffect, useMemo, useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { Text, XStack, YStack } from 'tamagui';
@@ -30,14 +30,15 @@ const { useParam } = createParam<{ product: string }>();
 const UpdateProductFormSchema = z.object({
   images: formFields.medias.describe('الصورة').optional(),
   name: formFields.text.min(2).max(150).describe('اسم المنتج'),
-  description: formFields.textarea.describe('الوصف').optional(),
+  short_description: formFields.textarea.describe('الوصف المختصر').optional(),
+  description: formFields.textarea.describe('الوصف'),
 
   variant: z.object({
-    price: formFields.text.describe('السعر (اختياري)').optional(),
+    price: formFields.text.describe('السعر'),
     stock: formFields.number.describe('المخزون (اختياري)').optional(),
     type_unit: formFields.select.describe(''),
   }),
-  is_available: formFields.select_radio_group.describe('الحالة'),
+  is_available: formFields.select_radio_group.describe('الحالة').optional(),
 });
 
 export const ProductManagerScreen = () => {
@@ -60,7 +61,7 @@ export const ProductManagerScreen = () => {
     { name: 'جم', id: 'g' },
     { name: 'م.ط', id: 'm4' },
   ];
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isFetching } = useQuery({
     enabled: !!productId,
     queryKey: ['ProductsService.retrieveProduct', productId],
     queryFn: () =>
@@ -106,9 +107,6 @@ export const ProductManagerScreen = () => {
     },
   });
 
-
-
-
   const { mutateAsync: deleteProduct } = useMutation({
     mutationFn: (productId: string) => {
       return ProductsService.deleteProduct({
@@ -129,32 +127,143 @@ export const ProductManagerScreen = () => {
     },
   });
 
-  useEffect(() => {
-    console.log(
-      "form.watch('variant.type_value')",
-      form.watch('variant.type_unit'),
+  const renderForm = () =>
+    !productId || (productId && data?.data?.id && !isFetching) ? (
+      <SchemaForm
+        form={form}
+        schema={UpdateProductFormSchema}
+        defaultValues={
+          data?.data?.id
+            ? {
+                ...data?.data,
+                is_available: data?.data?.is_available ? 1 : 0,
+              }
+            : {
+                variant: {
+                  type_unit: 'kg',
+                  type_value: 0,
+                },
+                is_available: 1,
+              }
+        }
+        props={{
+          is_available: {
+            options: [
+              { name: 'متوفر', id: 1 },
+              { name: 'غير متوفر', id: 0 },
+            ],
+            width: '50%',
+            colorSelected: '#EFFEF6',
+            colorIndicator: '#0F5837',
+          },
+        }}
+        onSubmit={mutateAsync}
+        renderAfter={({ submit }) => {
+          return (
+            <YStack gap="$4" marginBottom={'$4'}>
+              <SubmitButton
+                theme={'accent'}
+                color="$color2"
+                backgroundColor="$color1"
+                disabledStyle={{
+                  opacity: 0.5,
+                }}
+                onPress={() => {
+                  const values = form.getValues();
+                  const requiredFielKeys = [
+                    'name',
+                    'description',
+                    'variant.price',
+                    'variant.type_unit',
+                  ];
+                  let hasError = false;
+                  requiredFielKeys.forEach((key) => {
+                    if (key.includes('.')) {
+                      const [parentKey, childKey] = key.split('.');
+                      if (!values[parentKey]?.[childKey]) {
+                        form.setError(key, {
+                          type: 'custom',
+                          message: 'هذا الحقل مطلوب',
+                        });
+                        hasError = true;
+                      }
+                    } else {
+                      if (!values[key]) {
+                        form.setError(key, {
+                          type: 'custom',
+                          message: 'هذا الحقل مطلوب',
+                        });
+                        hasError = true;
+                      }
+                    }
+                  });
+                  if (!hasError) {
+                    submit();
+                  }
+                  submit();
+                }}
+              >
+                {productId ? 'حفظ التغييرات' : 'إضافة المنتج'}
+              </SubmitButton>
+              <SubmitButton
+                theme={'accent'}
+                pressStyle={{
+                  backgroundColor: 'transparent',
+                }}
+                backgroundColor="transparent"
+                borderWidth={1}
+                borderColor="$color0"
+                color="$color0"
+                onPress={() => {
+                  router.back();
+                }}
+              >
+                إلغاء
+              </SubmitButton>
+            </YStack>
+          );
+        }}
+      >
+        {({ is_available, variant: { type_unit, ...variant }, ...fields }) => (
+          <YStack gap="$4">
+            {Object.values(fields)}
+            <ZixFieldContainer label="نوع المتغير">
+              <YStack gap="$4">
+                <XStack gap="$4" width="100%">
+                  <ZixSelectField
+                    selectTriggerProps={{
+                      size: '$3',
+                      height: '$4',
+                      flex: undefined,
+                      width: '100%',
+                      padding: 10,
+                    }}
+                    selectTriggerTextProps={{
+                      fontSize: 12,
+                    }}
+                    size="$3"
+                    options={unitTypes}
+                    // value={type_unit}
+                    value={
+                      form.getValues('variant.type_unit') ||
+                      data?.data?.variant?.type_unit
+                    }
+                    onChange={(value) => {
+                      form.setValue('variant.type_unit', value.toString());
+                    }}
+                  />
+                  <Text>{type_unit}</Text>
+                </XStack>
+              </YStack>
+            </ZixFieldContainer>
+            <YStack gap="$4">{Object.values(variant)}</YStack>
+            {is_available}
+          </YStack>
+        )}
+      </SchemaForm>
+    ) : (
+      <FullScreenSpinner />
     );
-  }, [
-    form.watch('variant.type_unit'),
-  ]);
-
-  const product = useMemo(() => {
-    return (
-      data ?? {
-        variant: {
-          type: 'weight',
-          type_unit: 'kg',
-          type_value: 0,
-        },
-      }
-    );
-  }, [data?.data]);
-
-
-  if (isLoading) {
-    return <FullScreenSpinner />;
-  }
-
 
   return (
     <ScreenLayout>
@@ -189,99 +298,7 @@ export const ProductManagerScreen = () => {
           )
         }
       />
-      <YStack flex={1}>
-      <SchemaForm
-      form={form}
-      schema={UpdateProductFormSchema}
-      defaultValues={
-        {
-          ...product?.data,
-          is_available: product?.data?.is_available?.toString(),
-        }
-      }
-      props={{
-        is_available: {
-          options: [
-            { name: 'متوفر', id: '1' },
-            { name: 'غير متوفر', id: '0' },
-          ],
-          width: '50%',
-          colorSelected: '#EFFEF6',
-          colorIndicator: '#0F5837',
-        },
-      }}
-      onSubmit={(data) => {
-        // mutateAsync(data);
-      }}
-      renderAfter={({ submit }) => {
-        return (
-          <YStack gap="$4" marginBottom={'$4'}>
-            <SubmitButton
-              theme={'accent'}
-              color="$color2" backgroundColor="$color1"
-              onPress={() => {
-                const values = form.getValues();
-                mutateAsync(values);
-              }}
-            >
-              {productId ? 'حفظ التغييرات' : 'إضافة المنتج'}
-            </SubmitButton>
-            <SubmitButton
-              theme={'accent'}
-              pressStyle={{
-                backgroundColor: 'transparent',
-              }}
-              backgroundColor="transparent"
-              borderWidth={1}
-              borderColor="$color0"
-              color="$color0"
-              onPress={() => {
-                  router.back()
-              }}
-            >
-              إلغاء
-            </SubmitButton>
-          </YStack>
-        );
-      }}
-    >
-      {({
-        variant: { type_unit, ...variant },
-        ...fields
-      }) => (
-        <YStack gap="$4" >
-          {Object.values(fields)}
-          <ZixFieldContainer label="نوع المتغير">
-            <YStack gap="$4">
-              <XStack gap="$4" width="100%">
-              <ZixSelectField
-                selectTriggerProps={{
-                  size: '$3',
-                  height: '$4',
-                  flex: undefined,
-                  width: '100%',
-                  padding: 10,
-                }}
-                selectTriggerTextProps={{
-                  fontSize: 12,
-                }}
-                size="$3"
-                options={unitTypes}
-                value={form.getValues('variant.type_unit') || product?.data?.variant?.type_unit}
-                onChange={(value) => {
-                  form.setValue('variant.type_unit', value.toString());
-                }}
-              />
-              </XStack>
-
-              
-            </YStack>
-          </ZixFieldContainer>
-          <YStack gap="$4">{Object.values(variant)}</YStack>
-        </YStack>
-      )}
-    </SchemaForm>
-      </YStack>
+      <YStack flex={1}>{renderForm()}</YStack>
       <ZixAlertActions
         title={productId ? 'تم تحديث المنتج بنجاح' : 'تم إضافة المنتج بنجاح'}
         description={

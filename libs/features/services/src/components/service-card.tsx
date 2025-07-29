@@ -146,7 +146,11 @@ export const ServiceCard = ({
               borderRadius={10}
               justifyContent="center"
               alignItems="center"
-              onPress={() => router.push(`/app/services/${service.id}`)}
+              onPress={() =>{ 
+                if (setShowSheet) {
+                  setShowSheet(false);
+                }
+                router.push(`/app/services/${service.id}`)}}
             >
               <Text fontSize={'$1'} fontWeight={'bold'} color="$color11">
                 شاهد التفاصيل
