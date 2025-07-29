@@ -106,10 +106,10 @@ export const LocationField: React.FC<LocationFieldProps> = ({
       />
     );
 
+
   return (
     <FormFieldContainer {...containerProps} error={error}>
-      <YStack gap="$4" position="relative"
-      >
+      <YStack gap="$4" position="relative">
         <XStack
           width={Platform.OS === 'web' ? '42%' : '100%'}
           $sm={{
@@ -119,8 +119,11 @@ export const LocationField: React.FC<LocationFieldProps> = ({
           {renderAddressCard()}
         </XStack>
         {renderInputActivator()}
-        {renderAddressMap()}
-        
+        {/* {renderAddressMap()} */}
+        <View height={Platform.OS === 'web' ? 200 : "$16"}>
+          <ZixMapPointerField value={locationData} />
+        </View>
+
         <View
           onPress={async () => {
             const loc = await editLocation(value)
