@@ -21,7 +21,7 @@ export function CompanyDetail({ company, setShowSheet }: CompanyDetailProps) {
       </YStack>
       <CompanyProfileTabs
         company={company}
-        hideFilters={true}
+        hideFilters={false}
         setShowSheet={setShowSheet}
       />
     </ScrollView>

@@ -19,7 +19,7 @@ import {
 } from '@zix/ui/forms';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { useRouter } from 'expo-router';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { createParam } from 'solito';
 import { Text, XStack, YStack } from 'tamagui';
@@ -30,7 +30,7 @@ const { useParam } = createParam<{ product: string }>();
 const UpdateProductFormSchema = z.object({
   images: formFields.medias.describe('الصورة').optional(),
   name: formFields.text.min(2).max(150).describe('اسم المنتج'),
-  short_description: formFields.textarea.describe('الوصف المختصر').optional(),
+  // short_description: formFields.textarea.describe('الوصف المختصر').optional(),
   description: formFields.textarea.describe('الوصف'),
 
   variant: z.object({
@@ -44,7 +44,7 @@ const UpdateProductFormSchema = z.object({
 export const ProductManagerScreen = () => {
   const [productId] = useParam('product');
   const queryClient = useQueryClient();
-  const { user } = useAuth();
+  const { user, getUrlPrefix } = useAuth();
 
   const unitTypes = [
     { name: 'م', id: 'm' },
@@ -94,12 +94,10 @@ export const ProductManagerScreen = () => {
     },
     onSuccess(response) {
       toast.show(productId ? 'تم تحديث المنتج بنجاح' : 'تم إضافة المنتج بنجاح');
-      setOpen(true);
-
       queryClient.invalidateQueries({
         queryKey: ['ProductsService.fetchAllProduct'],
       });
-      router.back();
+      setOpen(true);
     },
     onError(error: any) {
       alert(error.message);
@@ -129,6 +127,15 @@ export const ProductManagerScreen = () => {
       });
     },
   });
+
+  useEffect(() => {
+    if (open) {
+      setTimeout(() => {
+        setOpen(false);
+        router.replace(`${getUrlPrefix}/(tabs)/store`);
+      }, 1000);
+    }
+  }, [open]);
 
   const renderForm = () =>
     !productId || (productId && data?.data?.id && !isFetching) ? (

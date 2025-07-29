@@ -2,7 +2,7 @@ import { ArrowLeft, MapPin, Search, X } from '@tamagui/lucide-icons';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { ProductsService, ProductTransformer } from '@zix/api';
 import { ProductDetailComponent } from '@zix/features/company';
-import { COMPANY_MANAGER_ROLES, useAuth } from '@zix/services/auth';
+import { COMPANY_MANAGER_ROLES, useAuth, useCart } from '@zix/services/auth';
 import {
   ManageCountProduct,
   TextInfo,
@@ -33,6 +33,8 @@ import {
   YStack,
 } from 'tamagui';
 import { AddToCartButton } from '@zix/ui/common';
+import { useTypeUnitArabic } from '@zix/utils';
+import AnimatedWord from './animated-word';
 
 export type AppCustomHeaderProps = {
   searchProps?: ZixInputProps;
@@ -76,196 +78,8 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
     index: 0,
   });
   const [count, setCount] = useState(1);
-  const [animatedText, setAnimatedText] = useState<string[]>([
-    'مكيف مركزي',
-
-    'بلاط سيراميك',
-
-    'بلاط رخام',
-
-    'دهان داخلي',
-
-    'دهان خارجي',
-
-    'جبس بورد',
-
-    'حجر طبيعي',
-
-    'حجر صناعي',
-
-    'سلك شائك',
-
-    'طابوق أحمر',
-
-    'طابوق عازل',
-
-    'حديد تسليح',
-
-    'خرسانة جاهزة',
-
-    'باب حديد',
-
-    'باب خشب',
-
-    'باب زجاج',
-
-    'سيراميك أرضيات',
-
-    'سيراميك جدران',
-
-    'رخام أرضيات',
-
-    'رخام درج',
-
-    'عزل مائي',
-
-    'عزل حراري',
-
-    'مظلة سيارات',
-
-    'خزان أرضي',
-
-    'خزان علوي',
-
-    'صرف صحي',
-
-    'بلاط حوش',
-
-    'بلاط إنترلوك',
-
-    'موكيت أرضيات',
-
-    'ورق جدران',
-
-    'شبابيك ألمنيوم',
-
-    'أبواب خشب',
-
-    'مغسلة رخام',
-
-    'أدوات صحية',
-
-    'خلاط موية',
-
-    'مضخة ماء',
-
-    'ليات سباكة',
-
-    'كراسي حمام',
-
-    'رخام مطابخ',
-
-    'مكيف شباك',
-
-    'حديد تسليح',
-
-    'حديد سابك',
-
-    'حديد طري',
-
-    'حديد صلب',
-
-    'حديد مجلفن',
-
-    'حديد شبك',
-
-    'حديد مباني',
-
-    'حديد زوايا',
-
-    'حديد مبروم',
-
-    'حديد ألواح',
-
-    'مغسلة رخام',
-
-    'مكاتب إدارية',
-
-    'كراسي مكتبية',
-
-    'وورك ستيشن',
-
-    'أثاث مكتبي',
-
-    'حجر طبيعي',
-
-    'حجر صناعي',
-
-    'طابوق أحمر',
-
-    'طابوق عازل',
-
-    'سلك شائك',
-
-    'أدوات صحية',
-
-    'خلاط موية',
-
-    'ليات سباكة',
-
-    'كراسي حمام',
-
-    'عزل مائي',
-
-    'عزل حراري',
-
-    'صرف صحي',
-
-    'خزان أرضي',
-
-    'خزان علوي',
-
-    'مضخة ماء',
-
-    'دهان داخلي',
-
-    'دهان خارجي',
-
-    'جبس بورد',
-
-    'ورق جدران',
-
-    'بديل رخام',
-
-    'بديل خشب',
-
-    'ألواح تكسيات',
-
-    'باب خشب',
-
-    'باب حديد',
-
-    'باب زجاج',
-
-    'شبابيك ألمنيوم',
-
-    'أبواب خشب',
-
-    'حديد تسليح',
-
-    'حديد سابك',
-
-    'حديد طري',
-
-    'حديد صلب',
-
-    'حديد مجلفن',
-
-    'حديد شبك',
-
-    'حديد مباني',
-
-    'حديد زوايا',
-
-    'حديد مبروم',
-
-    'حديد ألواح',
-
-    'خرسانة جاهزة',
-  ]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [prevIndex, setPrevIndex] = useState<number | null>(null);
-  const animatedValue = useRef(new Animated.Value(0)).current;
+  
+  
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
@@ -307,24 +121,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
     );
   }, [selectedProduct]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setPrevIndex(currentIndex);
-      setCurrentIndex((prev) => (prev + 1) % animatedText.length);
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [currentIndex]);
-
-  useEffect(() => {
-    // Animate the text change
-    animatedValue.setValue(30); // Start from below
-    Animated.timing(animatedValue, {
-      toValue: 0,
-      duration: 200,
-      useNativeDriver: true,
-    }).start();
-  }, [currentIndex, animatedValue]);
+  
 
   const renderSearchBar = () => (
     <Theme reset>
@@ -356,19 +153,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
               </Text>
             )}
             <View overflow="hidden">
-              <Animated.View
-                style={{
-                  transform: [{ translateY: animatedValue }],
-                  opacity: animatedValue.interpolate({
-                    inputRange: [-30, 0, 30],
-                    outputRange: [0, 1, 0],
-                  }),
-                }}
-              >
-                <Text color="$color10" fontWeight="600">
-                {'  '} {animatedText[currentIndex]}
-                </Text>
-              </Animated.View>
+              <AnimatedWord />
             </View>
             {Platform.OS !== 'ios' && (
               <Text color="$color10" fontWeight="600">
@@ -628,8 +413,9 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
       </ZixDialog>
     );
   };
-
+  
   const renderProductCard = (product: ProductTransformer, index: number) => {
+    console.log('product')
     return (
       <YStack
         key={index}
@@ -699,8 +485,8 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
                 <CustomIcon name="riyal" size="$1" color="$color0" />
               </Theme>
               {product?.variant?.type_unit && (
-                <Text fontSize="$1" color="$color11">
-                  / {product?.variant?.type_unit}
+                <Text fontSize={'$5'} fontWeight={'bold'} color="$color11">
+                  / {useTypeUnitArabic({ type_unit: product?.variant?.type_unit })}
                 </Text>
               )}
             </XStack>
@@ -719,7 +505,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
             height={40}
             size={20}
           />
-          <AddToCartButton width={'40%'} height={40} product={product} />
+          <AddToCartButton width={'40%'} height={40} product={product} count={count} />
         </XStack>
         <Button
           unstyled

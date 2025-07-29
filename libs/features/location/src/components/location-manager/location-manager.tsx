@@ -91,7 +91,12 @@ export const LocationManager: React.FC<LocationManagerProps> = ({
     <SchemaForm
       form={form}
       schema={LocationManagerSchema}
-      defaultValues={location}
+      defaultValues={
+        {
+          ...location,
+          country_id: location.country_id?.toString() || '',
+        }
+      }
       props={{
         notes: {
           containerProps: {
@@ -104,7 +109,7 @@ export const LocationManager: React.FC<LocationManagerProps> = ({
         },
         city_id: {
           api: 'geography/cities',
-        }
+        },
       }}
       onSubmit={mutateAsync}
       renderAfter={({ submit }) => {
@@ -130,13 +135,13 @@ export const LocationManager: React.FC<LocationManagerProps> = ({
           />
           <Separator marginTop="$4" />
 
-          <ZixFieldContainer
+          {/* <ZixFieldContainer
             label={t('common:address-information')}
             labelBold
             collapsible
-          >
-            <YStack gap="$4">
-              {address}
+          > */}
+            <YStack gap="$4" backgroundColor="$color10" padding="$4" borderRadius="$4">
+              {/* {address} */}
               {country_id}
               {/* {building_name}
               <XStack alignItems="flex-start" gap="$4">
@@ -150,7 +155,7 @@ export const LocationManager: React.FC<LocationManagerProps> = ({
 
             </YStack>
 
-          </ZixFieldContainer>
+          {/* </ZixFieldContainer> */}
           {/* {notes} */}
         </YStack>
       )}

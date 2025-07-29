@@ -28,6 +28,7 @@ import {
   Keyboard,
   Linking,
   Platform,
+  RefreshControl,
   Share,
 } from 'react-native';
 import MapView, { Circle, Region } from 'react-native-maps';
@@ -95,10 +96,10 @@ export function HomeScreen() {
     queryKey: ['CompaniesService.fetchAllCompanies', search],
     staleTime: 5 * 1000,
   });
-  const usersQuery = useQuery({
-    queryFn: () => UsersService.fetchAllUsers(),
-    queryKey: ['UsersService.fetchAllUsers'],
-  });
+  // const usersQuery = useQuery({
+  //   queryFn: () => UsersService.fetchAllUsers(),
+  //   queryKey: ['UsersService.fetchAllUsers'],
+  // });
   const [selectedCompany, setSelectedCompany] = useState<CompanyTransformer>();
 
   const [companiesList, setCompaniesList] = useState<CompanyTransformer[]>([]);
@@ -334,7 +335,6 @@ export function HomeScreen() {
                 : []
             }
             isFetching={isFetching}
-            usersList={usersQuery.data?.data || []}
           />
 
           <ZixDialog
@@ -458,23 +458,89 @@ const MapSection: FC<MapSectionProps> = memo(function MapSection({
 interface ListSectionProps {
   showMap: boolean;
   companiesList: CompanyTransformer[];
-  usersList: UserTransformer[];
   isFetching: boolean;
 }
 const ListSection: FC<ListSectionProps> = memo(function ListSection({
   showMap,
   companiesList,
-  usersList,
   isFetching,
 }) {
   if (showMap) return null;
-  const tabs = useMemo(() => {
-    const _tabs = [
-      {
-        key: 'company',
-        title: 'الشركات و المؤسسات',
-        content: (
-          <FlatList
+  // const tabs = useMemo(() => {
+  //   const _tabs = [
+  //     {
+  //       key: 'company',
+  //       title: 'الشركات و المؤسسات',
+  //       content: (
+  //         <FlatList
+  //           style={{ flex: 1 }}
+  //           data={companiesList}
+  //           keyExtractor={(item: CompanyTransformer, index) =>
+  //             `company-${item.id}-${index}`
+  //           }
+  //           showsVerticalScrollIndicator={false}
+  //           renderItem={({ item, index }) => (
+  //             <CompanyCard
+  //               key={`stack-company-${item.id}-${index}`}
+  //               company={item}
+  //               flex={1}
+  //               marginVertical="$2"
+  //               backgroundColor="$color2"
+  //               useShowButton={false}
+  //             />
+  //           )}
+  //           refreshing={isFetching}
+  //           onRefresh={() => {
+  //             // TODO
+  //           }}
+  //           ListEmptyComponent={
+  //             <View flex={1} alignItems="center" gap="$2">
+  //               <CustomIcon name="empty_data" size="$18" color="$color5" />
+  //               <H4 color="#8590A2">لا يوجد بيانات</H4>
+  //             </View>
+  //           }
+  //         />
+  //       ),
+  //     },
+  //     {
+  //       key: 'individual',
+  //       title: 'الأفراد',
+  //       content: (
+  //         <FlatList
+  //           style={{ flex: 1 }}
+  //           data={usersList}
+  //           keyExtractor={(item: UserTransformer, index) =>
+  //             `user-${item.id}-${index}`
+  //           }
+  //           showsVerticalScrollIndicator={false}
+  //           renderItem={({ item, index }) => (
+  //             <UserCard
+  //               key={`stack-user-${item.id}-${index}`}
+  //               user={item}
+  //               flex={1}
+  //               marginVertical="$2"
+  //               backgroundColor="$color2"
+  //             />
+  //           )}
+  //           refreshing={isFetching}
+  //           onRefresh={() => {
+  //             // TODO
+  //           }}
+  //           ListEmptyComponent={
+  //             <View flex={1} alignItems="center" gap="$2">
+  //               <CustomIcon name="empty_data" size="$18" color="$color5" />
+  //               <H4 color="#8590A2">لا يوجد بيانات</H4>
+  //             </View>
+  //           }
+  //         />
+  //       ),
+  //     },
+  //   ];
+  //   return _tabs;
+  // }, []);
+  return (
+    <View flex={1} margin="$5" marginVertical="0">
+      <FlatList
             style={{ flex: 1 }}
             data={companiesList}
             keyExtractor={(item: CompanyTransformer, index) =>
@@ -491,43 +557,15 @@ const ListSection: FC<ListSectionProps> = memo(function ListSection({
                 useShowButton={false}
               />
             )}
-            refreshing={isFetching}
-            onRefresh={() => {
-              // TODO
-            }}
-            ListEmptyComponent={
-              <View flex={1} alignItems="center" gap="$2">
-                <CustomIcon name="empty_data" size="$18" color="$color5" />
-                <H4 color="#8590A2">لا يوجد بيانات</H4>
-              </View>
-            }
-          />
-        ),
-      },
-      {
-        key: 'individual',
-        title: 'الأفراد',
-        content: (
-          <FlatList
-            style={{ flex: 1 }}
-            data={usersList}
-            keyExtractor={(item: UserTransformer, index) =>
-              `user-${item.id}-${index}`
-            }
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item, index }) => (
-              <UserCard
-                key={`stack-user-${item.id}-${index}`}
-                user={item}
-                flex={1}
-                marginVertical="$2"
-                backgroundColor="$color2"
+            // refreshing={isFetching}
+            refreshControl={
+              <RefreshControl
+                refreshing={isFetching}
+                onRefresh={() => {
+                  // TODO
+                }}
               />
-            )}
-            refreshing={isFetching}
-            onRefresh={() => {
-              // TODO
-            }}
+            }
             ListEmptyComponent={
               <View flex={1} alignItems="center" gap="$2">
                 <CustomIcon name="empty_data" size="$18" color="$color5" />
@@ -535,14 +573,6 @@ const ListSection: FC<ListSectionProps> = memo(function ListSection({
               </View>
             }
           />
-        ),
-      },
-    ];
-    return _tabs;
-  }, []);
-  return (
-    <View flex={1} marginTop="$6" marginBottom="0">
-      <ZixTab defaultActiveTab="company" tabs={tabs} />
     </View>
   );
 });

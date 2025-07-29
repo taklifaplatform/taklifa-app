@@ -13,7 +13,7 @@ import { CustomIcon } from '@zix/ui/icons';
 import { useFlatListQuery } from '@zix/utils';
 import { t } from 'i18next';
 import React, { useEffect, useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 import { H4, View, XStack, YStack } from 'tamagui';
 
 export type ProductsCompanyTabProps = {
@@ -132,12 +132,17 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
           />
         </XStack>
       )}
-      {productsQuery.refetch && <FullScreenSpinner />}
       {myStore ? (
         <FlatList
           data={data || []}
-          refreshing={productsQuery.isLoading}
-          onRefresh={productsQuery.refetch}
+          refreshControl={
+            <RefreshControl
+              refreshing={productsQuery.isLoading}
+              onRefresh={productsQuery.refetch}
+            />
+          }
+          // refreshing={productsQuery.isLoading}
+          // onRefresh={productsQuery.refetch}
           onEndReached={productsQuery.fetchNextPage}
           removeClippedSubviews={true}
           initialNumToRender={10}
@@ -155,6 +160,12 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
       ) : (
         <FlatList
           data={data || []}
+          // refreshControl={
+          //   <RefreshControl
+          //     refreshing={productsQuery.isLoading}
+          //     onRefresh={productsQuery.refetch}
+          //   />
+          // }
           refreshing={productsQuery.isLoading}
           onRefresh={productsQuery.refetch}
           onEndReached={productsQuery.fetchNextPage}

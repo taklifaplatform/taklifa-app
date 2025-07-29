@@ -39,24 +39,6 @@ export const CartItemComponent = ({
     [currentQuantity, isUpdating, item, updateItemQuantity],
   );
 
-  const handleRemove = useCallback(async () => {
-    if (isUpdating) return;
-
-    try {
-      setIsUpdating(true);
-
-      if (onRemove) {
-        onRemove(item);
-      } else if (item.id) {
-        await removeItem(item.id);
-      }
-    } catch (error) {
-      console.error('Failed to remove item:', error);
-    } finally {
-      setIsUpdating(false);
-    }
-  }, [isUpdating, onRemove, item, removeItem]);
-
   const formattedPrice = useMemo(() => {
     return formatCurrency(Number(item.total_price || 0));
   }, [item.total_price]);
@@ -133,7 +115,9 @@ export const CartItemComponent = ({
         <Trash2
           size={18}
           color={'$red9'}
-          onPress={handleRemove}
+          onPress={() => {
+            handleQuantityUpdate(0);
+          }}
           style={{ opacity: isUpdating ? 0.5 : 1 }}
         />
       </XStack>

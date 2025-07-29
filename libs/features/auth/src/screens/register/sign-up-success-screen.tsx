@@ -22,9 +22,9 @@ export const SignUpSuccessScreen = () => {
 
   return (
     <ZixAlertActions
-      title="تم إنشاء حسابك بنجاح!"
-      description="قد يستغرق الأمر بضعة أيام للتحقق من حسابك
-يمكنك البدء باستخدام تطبيق تكلفة الآن"
+      title="تم إنشاء حساب متجرك بنجاح!"
+      description="سيتم تفعيل متجرك بعد لحظات
+      اذهب للمتجر الخاص بك و اضف منتجاتك"
       icon={<CheckedGif width={35} height={35} />}
       closeButton={isSuccess}
     />
