@@ -97,7 +97,7 @@ export function HomeScreen() {
   });
   const usersQuery = useQuery({
     queryFn: () => UsersService.fetchAllUsers(),
-      queryKey: ['UsersService.fetchAllUsers'],
+    queryKey: ['UsersService.fetchAllUsers'],
   });
   const [selectedCompany, setSelectedCompany] = useState<CompanyTransformer>();
 
@@ -255,12 +255,26 @@ export function HomeScreen() {
 
   const renderMapCompanies = () =>
     (filters.provider_type === 'all' || filters.provider_type === 'company') &&
-    !urgencyMode
+      !urgencyMode
       ? companiesQuery.data?.data?.map((company, index) => (
-          <>
+        <>
+          <MapCompanyMarker
+            key={`marker-${company.id}-${index}`}
+            company={company}
+            onPress={() => {
+              setCompaniesList([company]);
+              setSelectedCompany(company);
+              setShowCarousel(true);
+              onAnimateToCompany(company);
+              setOpen(true);
+            }}
+          />
+
+          {company.branches && (
             <MapCompanyMarker
-              key={`marker-${company.id}-${index}`}
+              key={`marker-${company.id}-${company.branches.id}`}
               company={company}
+              branch={company.branches}
               onPress={() => {
                 setCompaniesList([company]);
                 setSelectedCompany(company);
@@ -269,23 +283,9 @@ export function HomeScreen() {
                 setOpen(true);
               }}
             />
-
-            {company.branches && (
-              <MapCompanyMarker
-                key={`marker-${company.id}-${company.branches.id}`}
-                company={company}
-                branch={company.branches}
-                onPress={() => {
-                  setCompaniesList([company]);
-                  setSelectedCompany(company);
-                  setShowCarousel(true);
-                  onAnimateToCompany(company);
-                  setOpen(true);
-                }}
-              />
-            )}
-          </>
-        ))
+          )}
+        </>
+      ))
       : null;
 
   // Debounced region setter
@@ -329,17 +329,14 @@ export function HomeScreen() {
             companiesList={
               (filters.provider_type === 'all' ||
                 filters.provider_type === 'company') &&
-              !urgencyMode
+                !urgencyMode
                 ? companiesQuery.data?.data || []
                 : []
             }
             isFetching={isFetching}
             usersList={usersQuery.data?.data || []}
           />
-          <CenterButton
-            showMap={showMap}
-            autoCenterToUserLocation={autoCenterToUserLocation}
-          />
+
           <ZixDialog
             title={selectedCompany?.name || ''}
             justifyContentTitle={'space-between'}
@@ -400,6 +397,7 @@ export function HomeScreen() {
             showMap={showMap}
             setShowMap={setShowMap}
             urgencyMode={urgencyMode}
+            autoCenterToUserLocation={autoCenterToUserLocation}
           />
         </YStack>
       </YStack>
@@ -593,9 +591,6 @@ const CenterButton: FC<CenterButtonProps> = memo(function CenterButton({
       icon={<CustomIcon name="my_location" size={30} color={'#FFFFFF'} />}
       circular
       backgroundColor="$color1"
-      position="absolute"
-      bottom="$3"
-      right="$4"
       onPress={() => autoCenterToUserLocation()}
     />
   );
@@ -611,6 +606,7 @@ interface FiltersSectionProps {
   showMap: boolean;
   setShowMap: React.Dispatch<React.SetStateAction<boolean>>;
   urgencyMode: boolean;
+  autoCenterToUserLocation: () => Promise<void>;
 }
 const FiltersSection: FC<FiltersSectionProps> = memo(function FiltersSection({
   isKeyboardVisible,
@@ -621,16 +617,22 @@ const FiltersSection: FC<FiltersSectionProps> = memo(function FiltersSection({
   showMap,
   setShowMap,
   urgencyMode,
+  autoCenterToUserLocation,
 }) {
   if (isKeyboardVisible) return null;
   return (
-    <View position="absolute" bottom={20} left={1} right={1}>
-     
+    <View position="absolute" bottom='$3' left='$4' right='$4'>
+      <XStack justifyContent='space-between'>
         <SwitcherButton
           showMap={showMap}
           setShowMap={setShowMap}
         />
-        {/* <MapFiltersTaklifa
+        <CenterButton
+          showMap={showMap}
+          autoCenterToUserLocation={autoCenterToUserLocation}
+        />
+      </XStack>
+      {/* <MapFiltersTaklifa
           urgencyMode={urgencyMode}
           values={filters}
           onChange={(values) => setFilters({ ...filters, ...values })}
