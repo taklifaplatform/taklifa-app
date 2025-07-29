@@ -31,6 +31,7 @@ import {
   XStack,
   YStack,
 } from 'tamagui';
+import { useTypeUnitArabic } from '@zix/utils';
 
 const { useParams } = createParam<{ product?: string }>();
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -160,6 +161,9 @@ export function ProductScreen() {
       <Theme name="accent">
         <CustomIcon name="riyal" size="$1" color="$color0" />
       </Theme>
+      <Text fontSize={'$5'} fontWeight={'bold'} color="$color11">
+       / {useTypeUnitArabic({type_unit: product?.data?.variant?.type_unit || ''})}
+      </Text>
     </XStack>
   );
   const renderAddToCartInfo = () => (

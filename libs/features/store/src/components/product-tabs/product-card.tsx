@@ -72,9 +72,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               color="$color0"
               textAlign="left"
             >
-              {product.price}
+              {product.variant?.price}
             </Text>
             <CustomIcon name="riyal" size={20} color="#000000" />
+            {product?.variant?.type_unit && (
+              <Text fontSize="$1" color="$color11">
+                / {product?.variant?.type_unit}
+              </Text>
+            )}
           </XStack>
         </YStack>
       </Stack>

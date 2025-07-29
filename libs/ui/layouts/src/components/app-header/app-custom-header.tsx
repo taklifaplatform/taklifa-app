@@ -14,7 +14,13 @@ import {
 import { ZixInput, ZixInputProps } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
 import { useCallback, useEffect, useState, useRef } from 'react';
-import { FlatList, TouchableOpacity, Animated, Platform, TextInput } from 'react-native';
+import {
+  FlatList,
+  TouchableOpacity,
+  Animated,
+  Platform,
+  TextInput,
+} from 'react-native';
 import { useRouter } from 'solito/router';
 import {
   Button,
@@ -50,7 +56,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
   const router = useRouter();
   const onAvatarPress = useCallback(() => {
     if (isLoggedIn) {
-      router.push(`${getUrlPrefix}/users/${user?.id}`)
+      router.push(`${getUrlPrefix}/users/${user?.id}`);
     } else {
       //   router.push('/auth/login');
       router.push(`${getUrlPrefix}/account/settings`);
@@ -71,14 +77,191 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
   });
   const [count, setCount] = useState(1);
   const [animatedText, setAnimatedText] = useState<string[]>([
-    'عن عطور',
-    ' عن ملابس',
-    'عن مواد غذائية',
-    'عن مواد بناء',
-    'عن مواد صناعية',
-    'عن مواد زراعية',
-    'عن شاحنات',
-    'و قارن',
+    'مكيف مركزي',
+
+    'بلاط سيراميك',
+
+    'بلاط رخام',
+
+    'دهان داخلي',
+
+    'دهان خارجي',
+
+    'جبس بورد',
+
+    'حجر طبيعي',
+
+    'حجر صناعي',
+
+    'سلك شائك',
+
+    'طابوق أحمر',
+
+    'طابوق عازل',
+
+    'حديد تسليح',
+
+    'خرسانة جاهزة',
+
+    'باب حديد',
+
+    'باب خشب',
+
+    'باب زجاج',
+
+    'سيراميك أرضيات',
+
+    'سيراميك جدران',
+
+    'رخام أرضيات',
+
+    'رخام درج',
+
+    'عزل مائي',
+
+    'عزل حراري',
+
+    'مظلة سيارات',
+
+    'خزان أرضي',
+
+    'خزان علوي',
+
+    'صرف صحي',
+
+    'بلاط حوش',
+
+    'بلاط إنترلوك',
+
+    'موكيت أرضيات',
+
+    'ورق جدران',
+
+    'شبابيك ألمنيوم',
+
+    'أبواب خشب',
+
+    'مغسلة رخام',
+
+    'أدوات صحية',
+
+    'خلاط موية',
+
+    'مضخة ماء',
+
+    'ليات سباكة',
+
+    'كراسي حمام',
+
+    'رخام مطابخ',
+
+    'مكيف شباك',
+
+    'حديد تسليح',
+
+    'حديد سابك',
+
+    'حديد طري',
+
+    'حديد صلب',
+
+    'حديد مجلفن',
+
+    'حديد شبك',
+
+    'حديد مباني',
+
+    'حديد زوايا',
+
+    'حديد مبروم',
+
+    'حديد ألواح',
+
+    'مغسلة رخام',
+
+    'مكاتب إدارية',
+
+    'كراسي مكتبية',
+
+    'وورك ستيشن',
+
+    'أثاث مكتبي',
+
+    'حجر طبيعي',
+
+    'حجر صناعي',
+
+    'طابوق أحمر',
+
+    'طابوق عازل',
+
+    'سلك شائك',
+
+    'أدوات صحية',
+
+    'خلاط موية',
+
+    'ليات سباكة',
+
+    'كراسي حمام',
+
+    'عزل مائي',
+
+    'عزل حراري',
+
+    'صرف صحي',
+
+    'خزان أرضي',
+
+    'خزان علوي',
+
+    'مضخة ماء',
+
+    'دهان داخلي',
+
+    'دهان خارجي',
+
+    'جبس بورد',
+
+    'ورق جدران',
+
+    'بديل رخام',
+
+    'بديل خشب',
+
+    'ألواح تكسيات',
+
+    'باب خشب',
+
+    'باب حديد',
+
+    'باب زجاج',
+
+    'شبابيك ألمنيوم',
+
+    'أبواب خشب',
+
+    'حديد تسليح',
+
+    'حديد سابك',
+
+    'حديد طري',
+
+    'حديد صلب',
+
+    'حديد مجلفن',
+
+    'حديد شبك',
+
+    'حديد مباني',
+
+    'حديد زوايا',
+
+    'حديد مبروم',
+
+    'حديد ألواح',
+
+    'خرسانة جاهزة',
   ]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [prevIndex, setPrevIndex] = useState<number | null>(null);
@@ -169,7 +352,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
           >
             {Platform.OS === 'ios' && (
               <Text color="$color10" fontWeight="600">
-                ابحث{' '}
+                ابحث عن
               </Text>
             )}
             <View overflow="hidden">
@@ -183,13 +366,13 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
                 }}
               >
                 <Text color="$color10" fontWeight="600">
-                  {animatedText[currentIndex]}
+                {'  '} {animatedText[currentIndex]}
                 </Text>
               </Animated.View>
             </View>
             {Platform.OS !== 'ios' && (
               <Text color="$color10" fontWeight="600">
-                ابحث{' '}
+                 ابحث عن
               </Text>
             )}
           </XStack>
@@ -502,9 +685,6 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
             <Text fontWeight="bold" fontSize="$4">
               {product?.name}
             </Text>
-            <Text fontSize="$1" color="$color11">
-              السعر
-            </Text>
             <XStack
               width="100%"
               gap="$2"
@@ -514,9 +694,15 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
               <Text fontSize={'$5'} fontWeight={'bold'} color="$color11">
                 {product?.variant?.price}
               </Text>
+
               <Theme name="accent">
                 <CustomIcon name="riyal" size="$1" color="$color0" />
               </Theme>
+              {product?.variant?.type_unit && (
+                <Text fontSize="$1" color="$color11">
+                  / {product?.variant?.type_unit}
+                </Text>
+              )}
             </XStack>
           </YStack>
         </XStack>

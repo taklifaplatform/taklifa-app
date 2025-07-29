@@ -7,6 +7,7 @@ import { Image, Text, Theme, View, XStack, YStack } from 'tamagui';
 import { AddToCartButton } from '../add-to-cart-button/add-to-cart-button';
 import { ManageCountProduct } from '../manage-count-product/manage-count-product';
 import { ZixButton } from '../zix-button/zix-button';
+import { useTypeUnitArabic } from '@zix/utils';
 
 export type ProductCardProps = {
   product: ProductTransformer;
@@ -91,6 +92,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 <CustomIcon name="riyal" size="$1" color="$color0" />
               </Theme>
             )}
+            {product?.variant?.type_unit && (
+              <Text fontWeight={'bold'} fontSize={'$3'}>
+              /  {useTypeUnitArabic({ type_unit: product?.variant?.type_unit })}
+              </Text>
+            )}
           </XStack>
         </YStack>
       </TouchableOpacity>
@@ -122,7 +128,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           borderWidth={1}
           borderColor="$color0"
           borderRadius={'$4'}
-          // width={'100%'}
           height={35}
           justifyContent="center"
           alignItems="center"
