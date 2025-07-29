@@ -8,22 +8,23 @@ export const AddToCartButton = ({
   product,
   width = '100%',
   height = 40,
+  count,
 }: {
   product: ProductTransformer;
   width?: number | string;
   height?: number | string;
+  count?: number;
 }) => {
   const { addItemToCart } = useCart();
-  const [count, setCount] = useState(1);
+  // const [count, setCount] = useState(1);
 
   const [isAddedToCart, setIsAddedToCart] = useState(false);
 
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   async function onAddToCart() {
     setIsAddingToCart(true);
-    await addItemToCart(product, count);
+    await addItemToCart(product, count || 1);
     setIsAddingToCart(false);
-    setCount(1);
     setIsAddedToCart(true);
   }
   return (

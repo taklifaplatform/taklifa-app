@@ -104,7 +104,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         />
       )}
       {useShowButton && (
-        <AddToCartButton width={'100%'} height={35} product={product} />
+        <AddToCartButton
+          width={'100%'}
+          height={35}
+          product={product}
+          count={count}
+        />
       )}
       {!useShowButton && (
         <ZixButton
