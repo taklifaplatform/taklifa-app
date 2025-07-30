@@ -2,8 +2,9 @@ import { ArrowLeft, MapPin, Search, X } from '@tamagui/lucide-icons';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { ProductsService, ProductTransformer } from '@zix/api';
 import { ProductDetailComponent } from '@zix/features/company';
-import { COMPANY_MANAGER_ROLES, useAuth, useCart } from '@zix/services/auth';
+import { COMPANY_MANAGER_ROLES, useAuth } from '@zix/services/auth';
 import {
+  AddToCartButton,
   ManageCountProduct,
   TextInfo,
   UserAvatar,
@@ -13,13 +14,13 @@ import {
 } from '@zix/ui/common';
 import { ZixInput, ZixInputProps } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
-import { useCallback, useEffect, useState, useRef } from 'react';
+import { useTypeUnitArabic } from '@zix/utils';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   FlatList,
-  TouchableOpacity,
-  Animated,
   Platform,
   TextInput,
+  TouchableOpacity
 } from 'react-native';
 import { useRouter } from 'solito/router';
 import {
@@ -32,8 +33,6 @@ import {
   XStack,
   YStack,
 } from 'tamagui';
-import { AddToCartButton } from '@zix/ui/common';
-import { useTypeUnitArabic } from '@zix/utils';
 import AnimatedWord from './animated-word';
 
 export type AppCustomHeaderProps = {
@@ -77,9 +76,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
     product: null,
     index: 0,
   });
-  const [count, setCount] = useState(1);
-  
-  
+
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
@@ -121,7 +118,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
     );
   }, [selectedProduct]);
 
-  
+
 
   const renderSearchBar = () => (
     <Theme reset>
@@ -157,7 +154,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
             </View>
             {Platform.OS !== 'ios' && (
               <Text color="$color10" fontWeight="600">
-                 ابحث عن
+                ابحث عن
               </Text>
             )}
           </XStack>
@@ -379,7 +376,7 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
               gap: 10,
               backgroundColor: '$color1',
             }}
-            renderItem={({ item, index }) => renderProductCard(item, index)}
+            renderItem={({ item, index }) => <ProductCard product={item} index={index} setOpen={setOpen} router={router} getUrlPrefix={getUrlPrefix} setSelectedProductDetail={setSelectedProductDetail} />}
             keyExtractor={(item) => item.id}
           />
         ) : (
@@ -413,125 +410,127 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
       </ZixDialog>
     );
   };
-  
-  const renderProductCard = (product: ProductTransformer, index: number) => {
-    console.log('product')
-    return (
-      <YStack
-        key={index}
-        width="100%"
-        gap="$3"
-        alignItems="flex-start"
-        justifyContent="flex-start"
-        backgroundColor="$color2"
-        padding="$4"
-        borderRadius="$5"
-        margin={'$2'}
-      >
-        <TouchableOpacity
-          style={{
-            flexDirection: 'row',
-            gap: 10,
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-          }}
-          onPress={() => {
-            setOpen(false);
-            router.push(`${getUrlPrefix}/companies/${product?.company?.id}`);
-          }}
-        >
-          <ZixAvatar media={product?.company?.logo} size="$3" />
-          <YStack
-            theme="accent"
-            gap="$2"
-            justifyContent="flex-start"
-            alignItems="flex-start"
-          >
-            <Text fontWeight="bold" fontSize="$4" color="$color1">
-              {product?.company?.name}
-            </Text>
-            <TextInfo
-              icon={<MapPin size={16} color="$color0" />}
-              title={product?.company?.name}
-            />
-          </YStack>
-        </TouchableOpacity>
-        <XStack gap="$4" alignItems="center">
-          {product?.image ? (
-            <Image
-              source={{ uri: product.image?.original_url }}
-              width={80}
-              height={80}
-              borderRadius={'$4'}
-            />
-          ) : (
-            <CustomIcon name="image-blank" size={80} color="$color0" />
-          )}
-          <YStack gap="$2" justifyContent="flex-start" alignItems="flex-start">
-            <Text fontWeight="bold" fontSize="$4">
-              {product?.name}
-            </Text>
-            <XStack
-              width="100%"
-              gap="$2"
-              alignItems="center"
-              paddingVertical={'$2'}
-            >
-              <Text fontSize={'$5'} fontWeight={'bold'} color="$color11">
-                {product?.variant?.price}
-              </Text>
 
-              <Theme name="accent">
-                <CustomIcon name="riyal" size="$1" color="$color0" />
-              </Theme>
-              {product?.variant?.type_unit && (
-                <Text fontSize={'$5'} fontWeight={'bold'} color="$color11">
-                  / {useTypeUnitArabic({ type_unit: product?.variant?.type_unit })}
-                </Text>
-              )}
-            </XStack>
-          </YStack>
-        </XStack>
-        <XStack
-          width="100%"
-          gap="$3"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <ManageCountProduct
-            value={count}
-            onUpdate={setCount}
-            width={'55%'}
-            height={40}
-            size={20}
-          />
-          <AddToCartButton width={'40%'} height={40} product={product} count={count} />
-        </XStack>
-        <Button
-          unstyled
-          theme={'accent'}
-          width={'100%'}
-          height={35}
-          borderRadius={'$4'}
-          justifyContent="center"
-          alignItems="center"
-          backgroundColor="$color11"
-          onPress={() => {
-            setSelectedProductDetail({
-              product: product,
-              index: index,
-            });
-          }}
-        >
-          <Text fontSize={'$1'} fontWeight={'bold'} color="#FFFFFF">
-            شاهد التفاصيل
-          </Text>
-        </Button>
-      </YStack>
-    );
-  };
 
   return <>{renderSearchBar()}</>;
 };
+
+const ProductCard = ({ product, index, setOpen, router, getUrlPrefix, setSelectedProductDetail }: { product: ProductTransformer, index: number, setOpen: (open: boolean) => void, router: any, getUrlPrefix: string, setSelectedProductDetail: (product: ProductTransformer) => void }) => {
+  const [count, setCount] = useState(1);
+  console.log('product')
+  return (
+    <YStack
+      key={index}
+      width="100%"
+      gap="$3"
+      alignItems="flex-start"
+      justifyContent="flex-start"
+      backgroundColor="$color2"
+      padding="$4"
+      borderRadius="$5"
+      margin={'$2'}
+    >
+      <TouchableOpacity
+        style={{
+          flexDirection: 'row',
+          gap: 10,
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+        }}
+        onPress={() => {
+          setOpen(false);
+          router.push(`${getUrlPrefix}/companies/${product?.company?.id}`);
+        }}
+      >
+        <ZixAvatar media={product?.company?.logo} size="$3" />
+        <YStack
+          theme="accent"
+          gap="$2"
+          justifyContent="flex-start"
+          alignItems="flex-start"
+        >
+          <Text fontWeight="bold" fontSize="$4" color="$color1">
+            {product?.company?.name}
+          </Text>
+          <TextInfo
+            icon={<MapPin size={16} color="$color0" />}
+            title={product?.company?.name}
+          />
+        </YStack>
+      </TouchableOpacity>
+      <XStack gap="$4" alignItems="center">
+        {product?.image ? (
+          <Image
+            source={{ uri: product.image?.original_url }}
+            width={80}
+            height={80}
+            borderRadius={'$4'}
+          />
+        ) : (
+          <CustomIcon name="image-blank" size={80} color="$color0" />
+        )}
+        <YStack gap="$2" justifyContent="flex-start" alignItems="flex-start">
+          <Text fontWeight="bold" fontSize="$4">
+            {product?.name}
+          </Text>
+          <XStack
+            width="100%"
+            gap="$2"
+            alignItems="center"
+            paddingVertical={'$2'}
+          >
+            <Text fontSize={'$5'} fontWeight={'bold'} color="$color11">
+              {product?.variant?.price}
+            </Text>
+
+            <Theme name="accent">
+              <CustomIcon name="riyal" size="$1" color="$color0" />
+            </Theme>
+            {product?.variant?.type_unit && (
+              <Text fontSize={'$5'} fontWeight={'bold'} color="$color11">
+                / {useTypeUnitArabic({ type_unit: product?.variant?.type_unit })}
+              </Text>
+            )}
+          </XStack>
+        </YStack>
+      </XStack>
+      <XStack
+        width="100%"
+        gap="$3"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <ManageCountProduct
+          value={count}
+          onUpdate={setCount}
+          width={'55%'}
+          height={40}
+          size={20}
+        />
+        <AddToCartButton width={'40%'} height={40} product={product} count={count} />
+      </XStack>
+      <Button
+        unstyled
+        theme={'accent'}
+        width={'100%'}
+        height={35}
+        borderRadius={'$4'}
+        justifyContent="center"
+        alignItems="center"
+        backgroundColor="$color11"
+        onPress={() => {
+          setSelectedProductDetail({
+            product: product,
+            index: index,
+          });
+        }}
+      >
+        <Text fontSize={'$1'} fontWeight={'bold'} color="#FFFFFF">
+          شاهد التفاصيل
+        </Text>
+      </Button>
+    </YStack>
+  );
+}
 
 export default AppCustomHeader;
