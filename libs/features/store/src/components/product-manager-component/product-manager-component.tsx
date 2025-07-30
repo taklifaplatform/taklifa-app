@@ -58,6 +58,7 @@ export const ProductManagerComponent = ({
 
   const toast = useToastController();
   const unitTypes = [
+    { name: 'عدد', id: 'count' },
     { name: 'م', id: 'm' },
     { name: 'سم', id: 'cm' },
     { name: 'مم', id: 'mm' },

@@ -60,12 +60,12 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
     // if (onContractPressAnalytic) {
     //   onContractPressAnalytic(type)
     // } else {
-    AnalyticsService.storeUserAnalytic({
-      user: company.id?.toString() || '',
-      requestBody: {
-        action_type: 'call_press',
-      },
-    });
+    // AnalyticsService.storeUserAnalytic({
+    //   user: company.id?.toString() || '',
+    //   requestBody: {
+    //     action_type: 'call_press',
+    //   },
+    // });
     // }
   }
 
@@ -165,7 +165,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
           </Paragraph>
         </YStack>
       </YStack>
-    </Theme>
+     </Theme>
   );
 
   return (
@@ -221,8 +221,8 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
           {t('shipment:destination')}
         </ZixButton>
       )}
+      <Theme name="accent">
       <ZixButton
-        theme="success"
         unstyled
         justifyContent="center"
         alignItems="center"
@@ -239,6 +239,7 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
       >
         تواصل بنا مباشر
       </ZixButton>
+      </Theme>
       {!useShowButton && (
         <Theme name="accent">
           <ZixButton
@@ -248,8 +249,8 @@ export const CompanyContactActions: React.FC<CompanyContactActionsProps> = ({
             alignItems="center"
             backgroundColor={'transparent'}
             borderWidth={1}
-            borderColor={'$color0'}
-            color="$color0"
+            borderColor='$color11'
+            color="$color11"
             onPress={onDetailsPress}
             {...sharedButtonStyle}
           >

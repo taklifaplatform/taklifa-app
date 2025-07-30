@@ -145,6 +145,7 @@ export const ZixSelectField: React.FC<ZixSelectFieldProps> = ({
           {...SHARED_FIELDS_STYLE}
           {...selectTriggerProps}
           backgroundColor="white"
+          borderColor={hasError ? 'red' : '$color0'}
         >
           {renderSelectedItem(value, placeholder)}
           {/* <Select.Value fontSize="$1" placeholder={placeholder} /> */}

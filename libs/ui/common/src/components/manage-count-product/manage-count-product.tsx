@@ -6,6 +6,7 @@ import { Button, XStack } from 'tamagui';
 export type ManageCountProductProps = {
   value: number;
   onUpdate: (value: number) => void;
+  onChangeValue?: (value: number) => void;
   min?: number;
   max?: number;
   width?: number | string;
@@ -17,6 +18,7 @@ export type ManageCountProductProps = {
 export const ManageCountProduct = ({
   value,
   onUpdate,
+  onChangeValue,
   min = 1,
   max = 100,
   width = 100,
@@ -66,10 +68,11 @@ export const ManageCountProduct = ({
     >
       <ZixInput
         value={internalValue.toString()}
-        onChangeText={(text) => {
+        onChangeText={(text: string) => {
           const num = Number(text);
           if (!isNaN(num)) {
             setInternalValue(num);
+            onChangeValue?.(num);
           }
         }}
         rightIcon={() =><Button

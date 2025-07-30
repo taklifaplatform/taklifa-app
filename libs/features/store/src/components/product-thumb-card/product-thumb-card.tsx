@@ -27,6 +27,7 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
   const [isPublished, setIsPublished] = useState(product.is_published);
   const router = useRouter();
   const unitTypes = [
+    { name: 'عدد', id: 'count' },
     { name: 'م', id: 'm' },
     { name: 'سم', id: 'cm' },
     { name: 'مم', id: 'mm' },

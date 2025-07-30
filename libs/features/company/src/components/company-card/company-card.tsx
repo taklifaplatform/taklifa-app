@@ -44,25 +44,26 @@ export const CompanyCard: React.FC<CompanyCardProps> = ({
 
   const renderLocationInfo = () =>
     !!company?.location?.id && (
-      <TextInfo icon={<Theme name="accent"><MapPin size={20} color="$color0" /></Theme>} title={company?.location?.address} />
+      <TextInfo icon={<MapPin size={20} color="$color11" />} title={company?.location?.address} />
     );
 
   const renderRatingsInfo = () =>
     !!company.rating_stats?.count && (
-      <TextInfo icon={<Theme name="accent"><Star size={20} color="$color0" /></Theme>} title={`(${company.rating_stats?.count}) ${company.rating_stats?.score}`} />
+      <TextInfo icon={<Star size={20} color="$color11" />} title={`(${company.rating_stats?.count}) ${company.rating_stats?.score}`} />
     );
 
   return (
     <YStack
       flex={1}
       onPress={onPress}
-      backgroundColor="$color1"
+      backgroundColor="$color12"
       borderRadius="$5"
       paddingVertical={padding}
       gap="$6"
       // justifyContent='space-between'
       {...props}
     >
+      <Theme name="accent">
       <XStack
       flex={1}
         justifyContent="center"
@@ -74,12 +75,12 @@ export const CompanyCard: React.FC<CompanyCardProps> = ({
 
         <XStack alignItems="center" gap="$2" flex={1}>
           <YStack flex={1} alignItems="flex-start" gap="$2">
-            <XStack theme='accent' alignItems="center" gap="$3">
+            <XStack alignItems="center" gap="$3">
               <Text fontSize='$5' fontWeight="bold" color="$color1" textAlign='left'>
               {company?.name}
             </Text>
             {/* TODO: add badge check if company is verified */}
-            <BadgeCheck theme="accent" size={16} color="$color1" />
+            <BadgeCheck size={16} color="$color1" />
             </XStack>
             
 
@@ -88,6 +89,7 @@ export const CompanyCard: React.FC<CompanyCardProps> = ({
           </YStack>
         </XStack>
       </XStack>
+      </Theme>
       {showContactActions && (
         <CompanyContactActions
           {...companyContactActionsProps}

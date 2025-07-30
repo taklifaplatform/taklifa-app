@@ -1,11 +1,11 @@
-import { SquarePen, Trash2 } from '@tamagui/lucide-icons';
+import { Save, Trash2 } from '@tamagui/lucide-icons';
 import { CartItemTransformer } from '@zix/api';
 import { useCart } from '@zix/services/auth';
-import { ManageCountProduct } from '@zix/ui/common';
+import { FullScreenSpinner, ManageCountProduct } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { useCallback, useMemo, useState } from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
-import { Image, Text, XStack, YStack } from 'tamagui';
+import { Image, Separator, Text, XStack, YStack } from 'tamagui';
 
 export interface CartItemComponentProps {
   item: CartItemTransformer;
@@ -18,6 +18,7 @@ export const CartItemComponent = ({
 }: CartItemComponentProps) => {
   const { updateItemQuantity, formatCurrency } = useCart();
   const [isUpdating, setIsUpdating] = useState(false);
+  const [newQuantity, setNewQuantity] = useState<number | null>(null);
 
   // Use the actual cart quantity as default
   const currentQuantity = item.quantity || 1;
@@ -48,17 +49,16 @@ export const CartItemComponent = ({
   }, [item.unit_price]);
 
   return (
-    <XStack
+    <YStack
       flex={1}
       backgroundColor={'$color2'}
       padding={'$3'}
       borderRadius={'$4'}
       marginVertical={'$2'}
-      justifyContent="space-between"
       alignItems="center"
-      opacity={isUpdating ? 0.6 : 1}
+      // opacity={isUpdating ? 0.6 : 1}
     >
-      <XStack gap={'$3'} alignItems="center" flex={1}>
+      <XStack gap={'$3'} alignItems="center" flex={1} paddingVertical={'$3'}>
         {item.product?.image?.original_url ? (
           <Image
             source={{ uri: item.product?.image?.original_url }}
@@ -70,9 +70,27 @@ export const CartItemComponent = ({
           <CustomIcon name="image-blank" size={'$7'} color={'$color8'} />
         )}
         <YStack gap={'$2'} flex={1} alignItems="flex-start">
-          <Text fontSize={'$3'} fontWeight={'bold'} numberOfLines={2}>
-            {item.product?.name || 'اسم المنتج غير متوفر'}
-          </Text>
+          <XStack
+            width={'100%'}
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Text fontSize={'$3'} fontWeight={'bold'} numberOfLines={2}>
+              {item.product?.name || 'اسم المنتج غير متوفر'}
+            </Text>
+            <TouchableOpacity
+              style={{ paddingLeft: 10 }}
+              onPress={() => {
+                handleQuantityUpdate(0);
+              }}
+            >
+              <Trash2
+                size={18}
+                color={'$red9'}
+                style={{ opacity: isUpdating ? 0.5 : 1 }}
+              />
+            </TouchableOpacity>
+          </XStack>
 
           {/* Unit price display */}
           <XStack gap={'$2'} alignItems="center">
@@ -84,46 +102,55 @@ export const CartItemComponent = ({
             </Text>
             <CustomIcon name="riyal" size={'$1'} color={'$color8'} />
           </XStack>
-
-          <XStack
-            width={'100%'}
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <XStack gap={'$2'} alignItems="center">
-              <Text fontSize={'$4'} fontWeight={'bold'} color="$color12">
-                {formattedPrice}
-              </Text>
-              <CustomIcon name="riyal" size={'$2'} color={'$color12'} />
-            </XStack>
-
-            <ManageCountProduct
-              value={currentQuantity}
-              onUpdate={handleQuantityUpdate}
-              width={100}
-              height={35}
-              size={15}
-              min={1}
-              max={99}
-              disabled={isUpdating}
-            />
-          </XStack>
         </YStack>
       </XStack>
-
-      <TouchableOpacity
-        style={{ paddingLeft: 10 }}
-        onPress={() => {
-          handleQuantityUpdate(0);
-        }}
+      <Separator
+        marginVertical={'$2'}
+        backgroundColor={'$color6'}
+        width={'100%'}
+      />
+      <XStack
+        width={'100%'}
+        justifyContent="space-between"
+        alignItems="center"
+        paddingVertical={'$3'}
       >
-        <Trash2
-          size={18}
-          color={'$red9'}
-          style={{ opacity: isUpdating ? 0.5 : 1 }}
+        <ManageCountProduct
+          value={currentQuantity}
+          onUpdate={handleQuantityUpdate}
+          onChangeValue={(value) => {
+            setNewQuantity(value);
+          }}
+          width={130}
+          height={35}
+          size={15}
+          min={1}
+          max={99}
+          disabled={isUpdating}
         />
-      </TouchableOpacity>
-    </XStack>
+        {newQuantity && (
+          <TouchableOpacity
+            onPress={() => {
+              handleQuantityUpdate(newQuantity);
+              setNewQuantity(null);
+            }}
+          >
+            <Save size={18} color={'$color12'} />
+          </TouchableOpacity>
+        )}
+        {
+          isUpdating && (
+            <FullScreenSpinner />
+          )
+        }
+        <XStack gap={'$2'} alignItems="center">
+          <Text fontSize={'$4'} fontWeight={'bold'} color="$color12">
+            {formattedPrice}
+          </Text>
+          <CustomIcon name="riyal" size={'$2'} color={'$color12'} />
+        </XStack>
+      </XStack>
+    </YStack>
   );
 };
 

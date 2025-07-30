@@ -1,5 +1,6 @@
 export const useTypeUnitArabic = ({type_unit}: {type_unit: string | null}) => {
     const unitTypes = [
+      { name: 'عدد', id: 'count' },
         { name: 'م', id: 'm' },
         { name: 'سم', id: 'cm' },
         { name: 'مم', id: 'mm' },

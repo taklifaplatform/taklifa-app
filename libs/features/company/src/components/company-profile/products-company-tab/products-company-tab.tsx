@@ -39,7 +39,6 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
   });
   const [search, setSearch] = useState<string>();
   const queryClient = useQueryClient();
-
   //
   const { data, refetch, ...productsQuery } = useFlatListQuery({
     queryFn: ({ pageParam }: { pageParam: number }) =>
@@ -141,8 +140,8 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
               onRefresh={productsQuery.refetch}
             />
           }
-          // refreshing={productsQuery.isLoading}
-          // onRefresh={productsQuery.refetch}
+          refreshing={productsQuery.isLoading}
+          onRefresh={productsQuery.refetch}
           onEndReached={productsQuery.fetchNextPage}
           removeClippedSubviews={true}
           initialNumToRender={10}
@@ -160,12 +159,12 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
       ) : (
         <FlatList
           data={data || []}
-          // refreshControl={
-          //   <RefreshControl
-          //     refreshing={productsQuery.isLoading}
-          //     onRefresh={productsQuery.refetch}
-          //   />
-          // }
+          refreshControl={
+            <RefreshControl
+              refreshing={productsQuery.isLoading}
+              onRefresh={productsQuery.refetch}
+            />
+          }
           refreshing={productsQuery.isLoading}
           onRefresh={productsQuery.refetch}
           onEndReached={productsQuery.fetchNextPage}
