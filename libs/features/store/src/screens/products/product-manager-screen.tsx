@@ -218,7 +218,6 @@ export const ProductManagerScreen = () => {
       'name',
       'description',
       'variant.price',
-      'variant.type_unit',
     ] as const;
 
     let hasError = false;
@@ -249,6 +248,11 @@ export const ProductManagerScreen = () => {
         }
       }
     });
+
+    // form invalid
+    if (hasError) {
+      toast.show('البيانات غير صحيحة');
+    }
 
     return !hasError;
   }, [form]);
