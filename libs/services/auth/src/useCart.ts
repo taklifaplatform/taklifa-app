@@ -73,8 +73,14 @@ export function useCart() {
   }, [cart?.items]);
 
   const addItemToCart = useCallback(async (item: ProductTransformer, quantity: number): Promise<void> => {
+    
     try {
       setCartState(prev => ({ ...prev, isLoading: true, error: null }));
+
+      if (!item.variant?.id) {
+        alert('المنتج غير متوفر');
+        return;
+      }
       
       const code = await getCartCode();
       await CartService.addItem({

@@ -4,7 +4,7 @@ import { useCart } from '@zix/services/auth';
 import { ManageCountProduct } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { useCallback, useMemo, useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 import { Image, Text, XStack, YStack } from 'tamagui';
 
 export interface CartItemComponentProps {
@@ -16,7 +16,7 @@ export const CartItemComponent = ({
   item,
   onRemove,
 }: CartItemComponentProps) => {
-  const { updateItemQuantity, removeItem, formatCurrency } = useCart();
+  const { updateItemQuantity, formatCurrency } = useCart();
   const [isUpdating, setIsUpdating] = useState(false);
 
   // Use the actual cart quantity as default
@@ -111,16 +111,18 @@ export const CartItemComponent = ({
         </YStack>
       </XStack>
 
-      <XStack gap={'$3'} alignItems="center" paddingLeft={'$2'}>
+      <TouchableOpacity
+        style={{ paddingLeft: 10 }}
+        onPress={() => {
+          handleQuantityUpdate(0);
+        }}
+      >
         <Trash2
           size={18}
           color={'$red9'}
-          onPress={() => {
-            handleQuantityUpdate(0);
-          }}
           style={{ opacity: isUpdating ? 0.5 : 1 }}
         />
-      </XStack>
+      </TouchableOpacity>
     </XStack>
   );
 };

@@ -1,8 +1,13 @@
-import { Bell, CreditCard, Handshake, House, Store } from '@tamagui/lucide-icons';
-import { CustomIcon } from '@zix/ui/icons';
+import {
+  Bell,
+  CreditCard,
+  Handshake,
+  Home,
+  Store
+} from '@tamagui/lucide-icons';
+import { useAuth, useCart } from '@zix/services/auth';
 import { Tabs } from 'expo-router';
 import { t } from 'i18next';
-import { useAuth, useCart } from '@zix/services/auth';
 import { Text, View } from 'tamagui';
 
 /**
@@ -19,7 +24,11 @@ export const AppLayout = () => {
         options={{
           title: t('navigation:customer-dashboard.home'),
           tabBarIcon: ({ size, focused }) => (
-            <House size={size} theme="accent" color={focused ? '$color1' : '$color0'} fill={focused ? '$color3' : '$color2'} />
+            <Home
+              size={size}
+              color={focused ? '#0F5837' : '#17221D'}
+              fill={focused ? '#D9FFEC' : 'white'}
+            />
           ),
         }}
       />
@@ -29,9 +38,8 @@ export const AppLayout = () => {
           title: t('common:services'),
           tabBarIcon: ({ size, focused }) => (
             <Handshake
-              color={focused ? '$color1' : '$color0'}
-              theme="accent"
-              fill={focused ? '$color3' : '$color2'}
+              color={focused ? '#0F5837' : '#17221D'}
+              fill={focused ? '#D9FFEC' : 'white'}
               size={size}
             />
           ),
@@ -42,19 +50,18 @@ export const AppLayout = () => {
         options={
           user?.active_company
             ? {
-              title: 'متجري',
-              tabBarIcon: ({ size, focused }) => (
-                <Store
-                  color={focused ? '$color1' : '$color0'}
-                  theme="accent"
-                  fill={focused ? '$color3' : '$color2'}
-                  size={size}
-                />
-              ),
-            }
+                title: 'متجري',
+                tabBarIcon: ({ size, focused }) => (
+                  <Store
+                    color={focused ? '#0F5837' : '#17221D'}
+                    fill={focused ? '#D9FFEC' : 'white'}
+                    size={size}
+                  />
+                ),
+              }
             : {
-              href: null,
-            }
+                href: null,
+              }
         }
       />
 
@@ -64,9 +71,8 @@ export const AppLayout = () => {
           title: t('settings:notifications'),
           tabBarIcon: ({ size, focused }) => (
             <Bell
-              color={focused ? '$color1' : '$color0'}
-              theme="accent"
-              fill={focused ? '$color3' : '$color2'}
+              color={focused ? '#0F5837' : '#17221D'}
+              fill={focused ? '#D9FFEC' : 'white'}
               size={size}
             />
           ),
@@ -77,29 +83,29 @@ export const AppLayout = () => {
         options={{
           title: t('common:costs'),
           tabBarIcon: ({ size, focused }) => (
-            <View position='relative'>
+            <View position="relative">
               <CreditCard
-                color={focused ? '$color1' : '$color0'}
-                theme="accent"
-                fill={focused ? '$color3' : '$color2'}
+                color={focused ? '#0F5837' : '#17221D'}
+                fill={focused ? '#D9FFEC' : 'white'}
                 size={size}
               />
-              {
-                totalItems > 0 && (
-                  <View
-                    position='absolute'
-                    top={-10}
-                    right={-10}
-                    backgroundColor='red'
-                    paddingHorizontal={4}
-                    paddingVertical={2}
-                    borderRadius='50%'
-                    justifyContent='center'
-                    alignItems='center' >
-                    <Text fontSize={'$1'} fontWeight='bold' color='white'>{totalItems}</Text>
-                  </View>
-                )
-              }
+              {totalItems > 0 && (
+                <View
+                  position="absolute"
+                  top={-10}
+                  right={-10}
+                  backgroundColor="red"
+                  paddingHorizontal={4}
+                  paddingVertical={2}
+                  borderRadius="50%"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Text fontSize={'$1'} fontWeight="bold" color="white">
+                    {totalItems}
+                  </Text>
+                </View>
+              )}
             </View>
           ),
         }}

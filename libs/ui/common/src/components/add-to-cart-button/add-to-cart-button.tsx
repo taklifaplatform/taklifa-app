@@ -16,7 +16,6 @@ export const AddToCartButton = ({
   count?: number;
 }) => {
   const { addItemToCart } = useCart();
-  // const [count, setCount] = useState(1);
 
   const [isAddedToCart, setIsAddedToCart] = useState(false);
 

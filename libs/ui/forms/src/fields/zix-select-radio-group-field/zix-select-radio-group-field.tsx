@@ -79,7 +79,7 @@ export const ZixSelectRadioGroupField: React.FC<ZixSelectRadioGroupFieldProps> =
               <Label
                 size={props.size}
                 htmlFor={itemId}
-                color={isSelected ? '$color11' : '$color12'}
+                color={isSelected ? '$color9' : '$color12'}
                 fontWeight={isSelected ? '600' : '400'}
               >
                 {item.name}

@@ -30,6 +30,7 @@ export const CostDetailComponent = ({
         title={company.name ?? ''}
         price={formatCurrency(totalCost)}
         logo={company.logo?.original_url ?? ''}
+        items={items}
       />
       <CostListComponent items={items} />
     </YStack>

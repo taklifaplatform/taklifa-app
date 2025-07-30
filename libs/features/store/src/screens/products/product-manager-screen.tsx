@@ -36,7 +36,7 @@ const UpdateProductFormSchema = z.object({
   variant: z.object({
     price: formFields.text.describe('السعر'),
     stock: formFields.number.describe('المخزون (اختياري)').optional(),
-    type_unit: formFields.select.describe(''),
+    type_unit: formFields.select.describe('').optional(),
   }),
   is_available: formFields.select_radio_group.describe('الحالة').optional(),
 });
@@ -100,7 +100,6 @@ export const ProductManagerScreen = () => {
       setOpen(true);
     },
     onError(error: any) {
-      alert(error.message);
       toast.show('حدث خطأ ما', {
         message: error.message,
       });
@@ -237,7 +236,7 @@ export const ProductManagerScreen = () => {
         {({ is_available, variant: { type_unit, ...variant }, ...fields }) => (
           <YStack gap="$4">
             {Object.values(fields)}
-            <ZixFieldContainer label="نوع المتغير">
+            <ZixFieldContainer label="نوع المتغير" isOptional={true}>
               <YStack gap="$4">
                 <XStack gap="$4" width="100%">
                   <ZixSelectField
