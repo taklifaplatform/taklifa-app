@@ -35,6 +35,7 @@ const { useParam } = createParam<{ product: string }>();
 const UpdateProductFormSchema = z.object({
   images: formFields.medias.describe('الصورة').optional(),
   name: formFields.text.min(2).max(150).describe('اسم المنتج'),
+  short_description: formFields.text.describe('الوصف المختصر').optional(),
   description: formFields.textarea.describe('الوصف'),
   variant: z.object({
     price: formFields.number.describe('السعر'), // Changed to number to match API

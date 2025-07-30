@@ -1,18 +1,17 @@
 import { Sparkles } from '@tamagui/lucide-icons';
-import { useQueryClient } from '@tanstack/react-query';
 import { CompanyTransformer, ProductsService } from '@zix/api';
 import { ProductThumbCard } from '@zix/features/store';
 import {
   FilterByOrder,
   FilterPrice,
-  FullScreenSpinner,
   ProductCard,
-  SearchProduct,
+  SearchProduct
 } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { useFlatListQuery } from '@zix/utils';
+import { useFocusEffect } from 'expo-router';
 import { t } from 'i18next';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import { H4, View, XStack, YStack } from 'tamagui';
 
@@ -30,17 +29,16 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
   myStore = false,
 }) => {
   const [orderBy, setOrderBy] = useState({
-    type: 'price',
-    direction: 'asc',
+    type: undefined,
+    direction: undefined,
   });
   const [priceRange, setPriceRange] = useState({
-    min: 0,
-    max: 60000,
+    min: undefined,
+    max: undefined,
   });
   const [search, setSearch] = useState<string>();
-  const queryClient = useQueryClient();
   //
-  const { data, refetch, ...productsQuery } = useFlatListQuery({
+  const { data, ...productsQuery } = useFlatListQuery({
     queryFn: ({ pageParam }: { pageParam: number }) =>
       ProductsService.fetchAllProduct({
         companyId: company.id as string,
@@ -49,7 +47,7 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
         page: pageParam || 1,
         orderBy: orderBy.type,
         orderDirection: orderBy.direction,
-        includeUnpublished: (!myStore ? 'false' : 'true') as any,
+        includeUnpublished: (!myStore ? undefined : 'true') as any,
         minPrice: priceRange.min,
         maxPrice: priceRange.max,
       }),
@@ -58,35 +56,17 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
       company.id,
       search,
       myStore,
-      orderBy,
+      orderBy.direction,
+      orderBy.type,
       priceRange,
     ],
   });
 
-  useEffect(() => {
-    queryClient.invalidateQueries({
-      queryKey: [
-        'ProductsService.fetchAllProduct',
-        company.id,
-        search,
-        myStore,
-        orderBy,
-      ],
-    });
-  }, [search]);
-
-  useEffect(() => {
-    queryClient.invalidateQueries({
-      queryKey: [
-        'ProductsService.fetchAllProduct',
-        company.id,
-        search,
-        myStore,
-        orderBy,
-        priceRange,
-      ],
-    });
-  }, [orderBy, priceRange]);
+  useFocusEffect(
+    useCallback(() => {
+      productsQuery.refetch()
+    }, [])
+  )
 
   const renderItem = ({ item, index }: { item: any; index: number }) => (
     <ProductCard
@@ -159,12 +139,6 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
       ) : (
         <FlatList
           data={data || []}
-          refreshControl={
-            <RefreshControl
-              refreshing={productsQuery.isLoading}
-              onRefresh={productsQuery.refetch}
-            />
-          }
           refreshing={productsQuery.isLoading}
           onRefresh={productsQuery.refetch}
           onEndReached={productsQuery.fetchNextPage}
