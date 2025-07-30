@@ -24,6 +24,7 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
 }) => {
   const { width: SCREEN_WIDTH } = Dimensions.get('window');
   const [productEdited, setProductEdited] = useState(false);
+  const [isPublished, setIsPublished] = useState(product.is_published);
   const router = useRouter();
   const unitTypes = [
     { name: 'م', id: 'm' },
@@ -90,7 +91,7 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
     onSuccess() {
       toast.show('تم تحديث المنتج بنجاح');
       setProductEdited(false);
-
+      setIsPublished(true);
       queryClient.invalidateQueries({
         queryKey: [
           'ProductsService.fetchAllProduct',
@@ -254,7 +255,7 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
           </XStack>
         </YStack>
       </XStack>
-      {!product?.is_published && (
+      {!isPublished && (
         <Theme name="accent">
           <ZixButton
             width={'100%'}

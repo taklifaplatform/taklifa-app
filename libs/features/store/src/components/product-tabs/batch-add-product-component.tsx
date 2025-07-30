@@ -34,7 +34,6 @@ export const BatchAddProductComponent = () => {
       setIsSuccess(true);
 
       // TODO reset dstate
-      setImages([]);
       setTimeout(() => {
         setIsSuccess(false);
         queryClient.invalidateQueries({
@@ -44,6 +43,8 @@ export const BatchAddProductComponent = () => {
             true,
           ],
         });
+        setImages([]);
+
         router.replace(`${getUrlPrefix}/(tabs)/store`);
         // onSuccess?.(result.data as BatchProductTransformer);
       }, 1000);
