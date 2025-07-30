@@ -1,11 +1,15 @@
 import { Save, Trash2 } from '@tamagui/lucide-icons';
 import { CartItemTransformer } from '@zix/api';
 import { useCart } from '@zix/services/auth';
-import { FullScreenSpinner, ManageCountProduct } from '@zix/ui/common';
+import {
+  FullScreenSpinner,
+  ManageCountProduct,
+  ZixButton,
+} from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { useCallback, useMemo, useState } from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
-import { Image, Separator, Text, XStack, YStack } from 'tamagui';
+import { Image, Separator, Text, Theme, XStack, YStack } from 'tamagui';
 
 export interface CartItemComponentProps {
   item: CartItemTransformer;
@@ -129,20 +133,22 @@ export const CartItemComponent = ({
           disabled={isUpdating}
         />
         {newQuantity && (
-          <TouchableOpacity
-            onPress={() => {
-              handleQuantityUpdate(newQuantity);
-              setNewQuantity(null);
-            }}
-          >
-            <Save size={18} color={'$color12'} />
-          </TouchableOpacity>
+          <Theme name="accent">
+            <ZixButton
+              size={'$3'}
+              icon={<Save size={22} color={'$color2'} />}
+              onPress={() => {
+                handleQuantityUpdate(newQuantity);
+                setNewQuantity(null);
+              }}
+            />
+          </Theme>
         )}
-        {
-          isUpdating && (
-            <FullScreenSpinner />
-          )
-        }
+        {isUpdating && (
+          <Theme name="accent">
+            <FullScreenSpinner size="large" color={'$color1'} />
+          </Theme>
+        )}
         <XStack gap={'$2'} alignItems="center">
           <Text fontSize={'$4'} fontWeight={'bold'} color="$color12">
             {formattedPrice}
