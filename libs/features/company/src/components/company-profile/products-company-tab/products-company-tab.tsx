@@ -104,8 +104,12 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
     <YStack flex={1}>
       {!hideFilters && (
         <XStack gap="$2" alignItems="center" paddingVertical={'$4'}>
-          <FilterPrice priceRange={priceRange} setPriceRange={setPriceRange} />
-          <FilterByOrder orderBy={orderBy} setOrderBy={setOrderBy} />
+          {!myStore && (
+            <>
+              <FilterPrice priceRange={priceRange} setPriceRange={setPriceRange} />
+              <FilterByOrder orderBy={orderBy} setOrderBy={setOrderBy} />
+            </>
+          )}
           <SearchProduct
             placeholder="أبحث على المنتجات"
             value={search}

@@ -4,17 +4,23 @@ import { ZixDialog } from '../zix-dialog/zix-dialog';
 import { ZixSlider } from '../zix-slider/zix-slider';
 import { CustomIcon } from '@zix/ui/icons';
 import { Filter } from '@tamagui/lucide-icons';
+import { ZixInput } from '@zix/ui/forms';
 
 type FilterPriceProps = {
   priceRange: {
-    min: number;
-    max: number;
+    min: number | undefined;
+    max: number | undefined;
   };
-  setPriceRange: (priceRange: { min: number; max: number }) => void;
+  setPriceRange: (priceRange: { min: number | undefined; max: number | undefined }) => void;
 };
 
 export const FilterPrice: React.FC<FilterPriceProps> = ({ priceRange, setPriceRange }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [snapPoints, setSnapPoints] = useState([35, 50]);
+
+  const handleSnapPoints = (points: number[]) => {
+    setSnapPoints(points);
+  };
 
   return (
     <ZixDialog
@@ -22,7 +28,7 @@ export const FilterPrice: React.FC<FilterPriceProps> = ({ priceRange, setPriceRa
       open={isOpen}
       onOpenChange={setIsOpen}
       contentPadding="$1"
-      snapPoints={[25, 50]}
+      snapPoints={snapPoints}
       disableRemoveScroll
       trigger={
         <XStack
@@ -43,39 +49,43 @@ export const FilterPrice: React.FC<FilterPriceProps> = ({ priceRange, setPriceRa
         </XStack>
       }
     >
-      <XStack flex={1} gap="$4" padding="$4">
-        <YStack gap="$4" alignItems="center" justifyContent="center">
+        <YStack flex={1} gap="$2" alignItems="center" justifyContent="flex-start" padding="$4">
           <Text color="$color12">السعر</Text>
-          <XStack width="100%" justifyContent="center" gap="$4">
-            <XStack>
-              <Text fontWeight="600" fontSize={'$3'} color="$color12">
-                {priceRange.max}
-              </Text>
-              <Theme name="accent">
-                <CustomIcon name="riyal" size="$1" color="$color12"/>
-              </Theme>
-            </XStack>
+          <XStack  gap="$4" justifyContent="center" alignItems="center" padding="$1" >
             <Text fontWeight="600" fontSize={'$3'} color="$color12">
-              {' '}
-              -{' '}
+              أقل سعر
             </Text>
-
-            <XStack>
-              <Text fontWeight="600" fontSize={'$3'} color="$color12">
-                {priceRange.min}
-              </Text>
-              <CustomIcon name="riyal" size="$1" color="$color12" />
-            </XStack>
+            <ZixInput
+              containerProps={{
+                width: '50%',
+              }}
+              leftIcon={() => <CustomIcon name="riyal" size="$1" color="$color12" />}
+              keyboardType='numeric'
+              placeholder="أقل سعر"
+              value={priceRange.min?.toString()}
+              onChangeText={(text) => setPriceRange({ ...priceRange, min: Number(text) })}
+              onFocus={() => handleSnapPoints([65, 70])}
+              onBlur={() => handleSnapPoints([35, 50])}
+            />
           </XStack>
-          <ZixSlider
-            min={0}
-            max={10}
-            step={1}
-            values={[priceRange.min / 100, priceRange.max / 6000]}
-            onValuesChange={(values) => setPriceRange({ min: values[0] * 100, max: values[1] * 6000 })}
-          />
+          <XStack  gap="$4" alignItems="center" justifyContent="flex-start" >
+            <Text fontWeight="600" fontSize={'$3'} color="$color12">
+              أعلى سعر
+            </Text>
+              <ZixInput
+                containerProps={{
+                  width: '50%',
+                }}
+              leftIcon={() => <CustomIcon name="riyal" size="$1" color="$color12" />}
+              keyboardType='numeric'
+              placeholder="أعلى سعر"
+              value={priceRange.max?.toString()}
+              onChangeText={(text) => setPriceRange({ ...priceRange, max: Number(text) })}
+              onFocus={() => handleSnapPoints([65, 70])}
+              onBlur={() => handleSnapPoints([35, 50])}
+            />
+          </XStack>
         </YStack>
-      </XStack>
     </ZixDialog>
   );
 };

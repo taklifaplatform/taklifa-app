@@ -7,12 +7,12 @@ import { IFilterOption } from '../zix-advanced-filters/zix-advanced-filters';
 
 export interface FilterByOrderProps {
   orderBy: {
-    type: string;
-    direction: string;
+    type: string | undefined;
+    direction: string | undefined;
   };
   setOrderBy: (orderBy: {
-    type: string;
-    direction: string;
+    type: string | undefined;
+    direction: string | undefined;
   }) => void;
 }
 
@@ -52,7 +52,7 @@ export const FilterByOrder: React.FC<FilterByOrderProps> = ({ orderBy, setOrderB
     <XStack
       onPress={() => {
         setIsOpen(false);
-        setOrderBy(item.value as { type: string; direction: string });
+        setOrderBy(item.value as { type: string | undefined; direction: string | undefined });
       }}
       hoverStyle={{ backgroundColor: '$color5' }}
       pressStyle={{ opacity: 0.5 }}
