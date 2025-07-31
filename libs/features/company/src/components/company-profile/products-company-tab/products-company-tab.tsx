@@ -64,7 +64,9 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
 
   useFocusEffect(
     useCallback(() => {
-      productsQuery.refetch()
+      setTimeout(() => {
+        productsQuery.refetch()
+      }, 1000)
     }, [])
   )
 
