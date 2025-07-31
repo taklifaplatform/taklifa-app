@@ -35,6 +35,7 @@ export const TextSecureField: React.FC<TextSecureFieldProps> = ({
         ) : (
           <Eye {...props} />
         )}
+        onLeftIconPress={() => setShowPassword(!showPassword)}
         onRightIconPress={() => setShowPassword(!showPassword)}
       />
     </FormFieldContainer>
