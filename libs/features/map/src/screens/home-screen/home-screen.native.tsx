@@ -1,6 +1,6 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-import { LayoutList, Map, Upload, X } from '@tamagui/lucide-icons';
+import { LayoutList, Map, ShoppingCart, Upload, X } from '@tamagui/lucide-icons';
 import {
   QueryClientProvider,
   useQuery,
@@ -9,11 +9,9 @@ import {
 import {
   CompaniesService,
   CompanyTransformer,
-  LocationService,
-  UserTransformer,
-  UsersService,
+  LocationService
 } from '@zix/api';
-import { CompanyCard, CompanyProfileTabs } from '@zix/features/company';
+import { CompanyCard } from '@zix/features/company';
 import { useAuth, useMixpanel, USER_ROLES } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppCustomHeader, AppHeader, ScreenLayout } from '@zix/ui/layouts';
@@ -28,15 +26,16 @@ import {
   Keyboard,
   Linking,
   Platform,
+  Pressable,
   RefreshControl,
   Share,
 } from 'react-native';
 import MapView, { Circle, Region } from 'react-native-maps';
-import { Button, H4, Spinner, View, XStack, YStack } from 'tamagui';
+import { Button, H4, View, XStack, YStack } from 'tamagui';
 // import MapFilters from '../../components/map-filters/map-filters';
-import { ZixButton, ZixDialog, ZixTab } from '@zix/ui/common';
+import { ZixButton, ZixDialog } from '@zix/ui/common';
+import Animated, { Easing, interpolateColor, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { CompanyDetail } from '../../components/company-detail/company-detail';
-import { UserCard } from '@zix/features/users';
 
 const initialCamera = {
   center: {
@@ -66,7 +65,7 @@ export function HomeScreen() {
   useMixpanel('Home Page view');
 
   const mapRef = useRef<MapView>(null);
-  const { user, urgencyMode } = useAuth();
+  const { user, saudiProductsMode, toggleSaudiProductsMode } = useAuth();
 
   const [filters, setFilters] = useState({
     vehicle_model: 'all',
@@ -91,9 +90,10 @@ export function HomeScreen() {
       return CompaniesService.fetchAllCompanies({
         perPage: Platform.select({ web: 80, ios: 50, android: 20 }),
         search,
+        hasSaudiProducts: saudiProductsMode ? 1 : 0,
       });
     },
-    queryKey: ['CompaniesService.fetchAllCompanies', search],
+    queryKey: ['CompaniesService.fetchAllCompanies -12', search, saudiProductsMode],
     staleTime: 5 * 1000,
   });
   // const usersQuery = useQuery({
@@ -255,8 +255,7 @@ export function HomeScreen() {
   }
 
   const renderMapCompanies = () =>
-    (filters.provider_type === 'all' || filters.provider_type === 'company') &&
-      !urgencyMode
+    (filters.provider_type === 'all' || filters.provider_type === 'company')
       ? companiesQuery.data?.data?.map((company, index) => (
         <>
           <MapCompanyMarker
@@ -329,8 +328,7 @@ export function HomeScreen() {
             showMap={showMap}
             companiesList={
               (filters.provider_type === 'all' ||
-                filters.provider_type === 'company') &&
-                !urgencyMode
+                filters.provider_type === 'company')
                 ? companiesQuery.data?.data || []
                 : []
             }
@@ -396,7 +394,7 @@ export function HomeScreen() {
             showCarousel={showCarousel}
             showMap={showMap}
             setShowMap={setShowMap}
-            urgencyMode={urgencyMode}
+            saudiProductsMode={saudiProductsMode}
             autoCenterToUserLocation={autoCenterToUserLocation}
           />
         </YStack>
@@ -541,38 +539,38 @@ const ListSection: FC<ListSectionProps> = memo(function ListSection({
   return (
     <View flex={1} margin="$5" marginVertical="0">
       <FlatList
-            style={{ flex: 1 }}
-            data={companiesList}
-            keyExtractor={(item: CompanyTransformer, index) =>
-              `company-${item.id}-${index}`
-            }
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item, index }) => (
-              <CompanyCard
-                key={`stack-company-${item.id}-${index}`}
-                company={item}
-                flex={1}
-                marginVertical="$2"
-                backgroundColor="$color2"
-                useShowButton={false}
-              />
-            )}
-            // refreshing={isFetching}
-            refreshControl={
-              <RefreshControl
-                refreshing={isFetching}
-                onRefresh={() => {
-                  // TODO
-                }}
-              />
-            }
-            ListEmptyComponent={
-              <View flex={1} alignItems="center" gap="$2">
-                <CustomIcon name="empty_data" size="$18" color="$color5" />
-                <H4 color="#8590A2">لا يوجد بيانات</H4>
-              </View>
-            }
+        style={{ flex: 1 }}
+        data={companiesList}
+        keyExtractor={(item: CompanyTransformer, index) =>
+          `company-${item.id}-${index}`
+        }
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item, index }) => (
+          <CompanyCard
+            key={`stack-company-${item.id}-${index}`}
+            company={item}
+            flex={1}
+            marginVertical="$2"
+            backgroundColor="$color2"
+            useShowButton={false}
           />
+        )}
+        // refreshing={isFetching}
+        refreshControl={
+          <RefreshControl
+            refreshing={isFetching}
+            onRefresh={() => {
+              // TODO
+            }}
+          />
+        }
+        ListEmptyComponent={
+          <View flex={1} alignItems="center" gap="$2">
+            <CustomIcon name="empty_data" size="$18" color="$color5" />
+            <H4 color="#8590A2">لا يوجد بيانات</H4>
+          </View>
+        }
+      />
     </View>
   );
 });
@@ -635,7 +633,7 @@ interface FiltersSectionProps {
   showCarousel: boolean;
   showMap: boolean;
   setShowMap: React.Dispatch<React.SetStateAction<boolean>>;
-  urgencyMode: boolean;
+  saudiProductsMode: boolean;
   autoCenterToUserLocation: () => Promise<void>;
 }
 const FiltersSection: FC<FiltersSectionProps> = memo(function FiltersSection({
@@ -646,7 +644,7 @@ const FiltersSection: FC<FiltersSectionProps> = memo(function FiltersSection({
   showCarousel,
   showMap,
   setShowMap,
-  urgencyMode,
+  saudiProductsMode,
   autoCenterToUserLocation,
 }) {
   if (isKeyboardVisible) return null;
@@ -657,13 +655,14 @@ const FiltersSection: FC<FiltersSectionProps> = memo(function FiltersSection({
           showMap={showMap}
           setShowMap={setShowMap}
         />
+        <ActivateSaudiProductsModeButton />
         <CenterButton
           showMap={showMap}
           autoCenterToUserLocation={autoCenterToUserLocation}
         />
       </XStack>
       {/* <MapFiltersTaklifa
-          urgencyMode={urgencyMode}
+          saudiProductsMode={saudiProductsMode}
           values={filters}
           onChange={(values) => setFilters({ ...filters, ...values })}
         /> */}
@@ -703,4 +702,88 @@ const AppHeaderSection: FC<AppHeaderSectionProps> = memo(
   },
 );
 
+
+
+const ActivateSaudiProductsModeButton = () => {
+  const { saudiProductsMode, toggleSaudiProductsMode } = useAuth();
+  // Animation shared values
+  const progress = useSharedValue(saudiProductsMode ? 1 : 0);
+  const scale = useSharedValue(1);
+
+
+  const handleSaudiProductsModeToggle = async () => {
+    toggleSaudiProductsMode();
+  };
+
+  useEffect(() => {
+    progress.value = withTiming(saudiProductsMode ? 1 : 0, { duration: 500, easing: Easing.out(Easing.exp) });
+  }, [saudiProductsMode]);
+
+  // Animated background color
+  const animatedStyle = useAnimatedStyle(() => ({
+    backgroundColor: interpolateColor(
+      progress.value,
+      [0, 1],
+      ['#FFF5F5', '#0F5837'] // Outlined to filled
+    ),
+    borderColor: '#0F5837',
+    borderWidth: 2,
+    transform: [{ scale: scale.value }],
+  }));
+
+  // Animated text color
+  const animatedTextStyle = useAnimatedStyle(() => ({
+    color: interpolateColor(
+      progress.value,
+      [0, 1],
+      ['#0F5837', '#FFFFFF']
+    ),
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginLeft: 8,
+  }));
+
+  // Animated icon style (scale/rotate for fun)
+  const animatedIconStyle = useAnimatedStyle(() => ({
+    transform: [
+      { scale: withTiming(saudiProductsMode ? 1.1 : 1, { duration: 300 }) },
+      { rotate: `${progress.value * 180}deg` },
+    ],
+  }));
+
+  // Handle press animation
+  const handlePressIn = () => {
+    scale.value = withTiming(0.95, { duration: 100 });
+  };
+  const handlePressOut = () => {
+    scale.value = withTiming(1, { duration: 100 });
+  };
+
+  return (
+    <Animated.View style={[{ borderRadius: 12, overflow: 'hidden' }, animatedStyle]}>
+      <Pressable
+        onPress={handleSaudiProductsModeToggle}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 6 }}
+        accessibilityRole="button"
+      >
+        <Animated.View style={animatedIconStyle}>
+          {saudiProductsMode ? (
+            <X color="#fff" size={28} />
+          ) : (
+            <ShoppingCart size={28} color="#0F5837" />
+          )}
+        </Animated.View>
+        <Animated.Text style={animatedTextStyle}>
+          {saudiProductsMode ? 'إغلاق' : 'المنتجات السعودية'}
+        </Animated.Text>
+      </Pressable>
+    </Animated.View>
+  );
+}
+
 export default HomeScreen;
+
+
+

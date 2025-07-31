@@ -16,6 +16,8 @@ export class CompaniesService {
         page,
         perPage,
         search,
+        hasSaudiProducts,
+        hasInternationalProducts,
     }: {
         /**
          * Page number
@@ -26,6 +28,8 @@ export class CompaniesService {
          */
         perPage?: number,
         search?: string,
+        hasSaudiProducts?: boolean,
+        hasInternationalProducts?: boolean,
     }): CancelablePromise<{
         data?: Array<CompanyTransformer>;
         links?: {
@@ -56,6 +60,8 @@ export class CompaniesService {
                 'page': page,
                 'per_page': perPage,
                 'search': search,
+                'has_saudi_products': hasSaudiProducts,
+                'has_international_products': hasInternationalProducts,
             },
         });
     }

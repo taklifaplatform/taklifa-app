@@ -9,7 +9,7 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class CartService {
     /**
-     * Get or create cart by company_id and identifier.
+     * Get cart by code.
      * @returns any Successful response
      * @throws ApiError
      */
@@ -50,6 +50,26 @@ export class CartService {
             },
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+    /**
+     * Clean Cart Items
+     * @returns any Successful response
+     * @throws ApiError
+     */
+    public static cleanCart({
+        code,
+    }: {
+        code: string,
+    }): CancelablePromise<{
+        data?: CartTransformer;
+    }> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/cart/{code}/items',
+            path: {
+                'code': code,
+            },
         });
     }
 }

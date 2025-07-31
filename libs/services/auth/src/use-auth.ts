@@ -46,8 +46,8 @@ export interface AuthHelpers {
   ) => boolean;
 
   isAuthMemberInThisCompany: (companyId?: string) => boolean;
-  toggleUrgencyMode: () => void;
-  urgencyMode: boolean;
+  toggleSaudiProductsMode: () => void;
+  saudiProductsMode: boolean;
 }
 
 export function useAuth(): AuthHelpers {
@@ -235,7 +235,7 @@ export function useAuth(): AuthHelpers {
     isAuthMemberInThisCompany,
     canManageThisCompany,
     activeCompanyId,
-    toggleUrgencyMode: authContext.toggleUrgencyMode,
-    urgencyMode: authContext.urgencyMode,
+    toggleSaudiProductsMode: authContext.toggleSaudiProductsMode,
+    saudiProductsMode: authContext.saudiProductsMode,
   };
 }

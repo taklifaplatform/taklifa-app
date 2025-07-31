@@ -2,8 +2,8 @@ import React, { createContext, useState } from 'react';
 
 
 export interface AuthContextType {
-  urgencyMode: boolean;
-  toggleUrgencyMode: () => void;
+  saudiProductsMode: boolean;
+  toggleSaudiProductsMode: () => void;
 }
 
 export interface AuthProviderProps {
@@ -11,21 +11,21 @@ export interface AuthProviderProps {
 }
 
 export const AuthContext = createContext<AuthContextType>({
-  urgencyMode: false,
-  toggleUrgencyMode: () => { },
+  saudiProductsMode: false,
+  toggleSaudiProductsMode: () => { },
 });
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({
   children
 }) => {
-  const [urgencyMode, setUrgencyMode] = useState(false);
+  const [saudiProductsMode, setSaudiProductsMode] = useState(false);
 
-  const toggleUrgencyMode = () => {
-    setUrgencyMode(!urgencyMode);
+  const toggleSaudiProductsMode = () => {
+    setSaudiProductsMode(!saudiProductsMode);
   };
 
   return (
-    <AuthContext.Provider value={{ urgencyMode, toggleUrgencyMode }}>
+    <AuthContext.Provider value={{ saudiProductsMode, toggleSaudiProductsMode }}>
       {children}
     </AuthContext.Provider>
   );
