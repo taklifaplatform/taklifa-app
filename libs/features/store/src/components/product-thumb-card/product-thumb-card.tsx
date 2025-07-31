@@ -268,7 +268,7 @@ export const ProductThumbCard: React.FC<ProductThumbCardProps> = ({
             fontSize={'$1'}
             fontWeight={'bold'}
             color="$color2"
-            disabled={!isValidPrice}
+            disabled={!isValidPrice || productEdited}
             disabledStyle={{
               opacity: 0.5,
             }}
