@@ -88,9 +88,6 @@ export function ManageServiceScreen(props: ManageServiceScreenProps) {
       console.log('onSuccess::')
     },
     onError(error: any) {
-      console.log('============')
-      console.log('onError::', JSON.stringify(error, null, 2))
-      console.log('============')
       toast.show(error?.body?.message || t('app:errors.something-went-wrong'), { preset: 'error' });
       handleFormErrors(form, error?.body?.errors);
     },
@@ -207,7 +204,7 @@ export function ManageServiceScreen(props: ManageServiceScreenProps) {
     <ScreenLayout safeAreaBottom authProtected>
       <AppHeader
         showBackButton
-        title={serviceId ? t('common:update-announcement') : t('common:create-announcement')}
+        title={serviceId ? 'تعديل الخدمة' : 'انشاء الخدمة'}
       />
       {renderForm()}
       {/* <DebugObject object={data} /> */}

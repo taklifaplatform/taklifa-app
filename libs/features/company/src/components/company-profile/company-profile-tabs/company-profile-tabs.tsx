@@ -1,5 +1,5 @@
 import { CompanyTransformer } from '@zix/api';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { ZixTab } from '@zix/ui/common';
 import CompanyServicesTab from '../company-services-tab/company-services-tab';
@@ -18,6 +18,7 @@ export const CompanyProfileTabs: React.FC<ProfileTabsProps> = ({
   setShowSheet,
   myStore = false,
 }) => {
+  
   const tabs = useMemo(() => {
     const _tabs = [
       {
@@ -47,7 +48,7 @@ export const CompanyProfileTabs: React.FC<ProfileTabsProps> = ({
     return _tabs;
   }, [company]);
 
-  return <ZixTab defaultActiveTab="products" tabs={tabs} />;
+  return <ZixTab defaultActiveTab={'products'} tabs={tabs} />;
 };
 
 export default CompanyProfileTabs;

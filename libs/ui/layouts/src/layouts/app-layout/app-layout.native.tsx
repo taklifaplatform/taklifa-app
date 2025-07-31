@@ -102,7 +102,7 @@ export const AppLayout = () => {
                   alignItems="center"
                 >
                   <Text fontSize={'$1'} fontWeight="bold" color="white">
-                    {totalItems}
+                    {totalItems > 99 ? '99+' : totalItems}
                   </Text>
                 </View>
               )}

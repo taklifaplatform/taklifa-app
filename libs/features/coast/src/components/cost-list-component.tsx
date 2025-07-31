@@ -121,10 +121,7 @@ export const CartItemComponent = ({
       >
         <ManageCountProduct
           value={currentQuantity}
-          onUpdate={handleQuantityUpdate}
-          onChangeValue={(value) => {
-            setNewQuantity(value);
-          }}
+          onUpdate={setNewQuantity}
           width={130}
           height={35}
           size={15}

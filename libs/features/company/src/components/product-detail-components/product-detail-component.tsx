@@ -1,11 +1,10 @@
 import { CustomIcon } from '@zix/ui/icons';
 import { ZixMediasListWidget } from '@zix/ui/widgets';
-import { Dimensions, RefreshControl } from 'react-native';
+import { Dimensions } from 'react-native';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 import {
   ScrollView,
-  Button,
   Separator,
   Theme,
   YStack,
@@ -112,9 +111,8 @@ export const ProductDetailComponent = ({
         width={'50%'}
         height={35}
         size={15}
-        max={product?.variant?.stock}
       />
-      <AddToCartButton width={'45%'} height={35} product={product} />
+      <AddToCartButton width={'45%'} height={35} product={product} count={count} />
     </XStack>
   );
 

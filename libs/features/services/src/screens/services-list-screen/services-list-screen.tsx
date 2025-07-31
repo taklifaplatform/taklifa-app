@@ -268,7 +268,7 @@ export const ServicesListScreen: React.FC<ServicesListScreenProps> = ({
               alignSelf="center"
               marginRight={10}
             >
-              {t('common:market')}
+              خدماتي
             </Text>
             <ZixButton
               minWidth={180}

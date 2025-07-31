@@ -1,19 +1,13 @@
-import {
-  FilePlus2,
-  PlusSquare,
-  Sparkles,
-  SquarePen,
-} from '@tamagui/lucide-icons';
-import { CompanyProfileTabs } from '@zix/features/company';
+import { FilePlus2, PlusSquare, Sparkles } from '@tamagui/lucide-icons';
+import { CompanyProfileTabs, ProductsCompanyTab } from '@zix/features/company';
 import { useAuth, useMixpanel } from '@zix/services/auth';
-import { ZixButton, ZixDialog } from '@zix/ui/common';
+import { ZixButton, ZixDialog, ZixTab } from '@zix/ui/common';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
-import { useState } from 'react';
+import { CompanyServicesTab } from 'libs/features/company/src/components/company-profile/company-services-tab/company-services-tab';
+import { useEffect, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useRouter } from 'solito/router';
-import { Text, Theme, XStack, YStack } from 'tamagui';
-import { QueryClientProvider, useQueryClient } from '@tanstack/react-query';
-import { ProductManagerComponent } from '../../components';
+import { Text, XStack, YStack } from 'tamagui';
 
 export type MyStoreScreenProps = {
   showHeader?: boolean;
@@ -28,19 +22,51 @@ export const MyStoreScreen: React.FC<MyStoreScreenProps> = ({
   useMixpanel('Store List Screen view');
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<'products' | 'services'>(
+    'products',
+  );
+
+  useEffect(() => {
+    console.log('activeTab', activeTab);
+  }, [activeTab]);
   return (
     <ScreenLayout>
-      <AppHeader title={'متجري'}  />
+      <AppHeader title={'متجري'} />
       <YStack flex={1} paddingTop="$4">
         {user?.active_company && (
-          <CompanyProfileTabs
-            company={user.active_company}
-            myStore={true}
+          <ZixTab
+            defaultActiveTab={'products'}
+            onTabChange={(tab) => setActiveTab(tab as 'products' | 'services')}
+            tabs={[
+              {
+                key: 'products',
+                title: 'المنتجات',
+                content: (
+                  <ProductsCompanyTab
+                    company={user.active_company}
+                    hideFilters={false}
+                    myStore={true}
+                  />
+                ),
+              },
+              {
+                key: 'services',
+                title: 'الخدمات',
+                content: (
+                  <CompanyServicesTab
+                    company={user.active_company}
+                    hideFilters={false}
+                  />
+                ),
+              },
+            ]}
           />
         )}
       </YStack>
       <ZixDialog
-        title={'اضافة منتج جديد'}
+        title={
+          activeTab === 'products' ? 'اضافة منتج جديد' : 'اضافة خدمة جديدة'
+        }
         open={isOpen}
         onOpenChange={setIsOpen}
         colorHeader="$color10"
@@ -83,7 +109,11 @@ export const MyStoreScreen: React.FC<MyStoreScreenProps> = ({
               }}
               onPress={() => {
                 setIsOpen(false);
-                router.push('/app/products/create');
+                if (activeTab === 'products') {
+                  router.push('/app/products/create');
+                } else {
+                  router.push('/app/services/create');
+                }
               }}
             >
               <FilePlus2 size={20} color="$color12" />
@@ -94,7 +124,9 @@ export const MyStoreScreen: React.FC<MyStoreScreenProps> = ({
                 textAlign="center"
                 maxWidth={'$10'}
               >
-                اضافة منتج يدويا
+                {activeTab === 'products'
+                  ? 'اضافة منتج يدويا'
+                  : 'اضافة خدمة جديدة'}
               </Text>
             </TouchableOpacity>
           </YStack>
@@ -124,7 +156,9 @@ export const MyStoreScreen: React.FC<MyStoreScreenProps> = ({
                 color="$color12"
                 textAlign="center"
               >
-                اضافة منتج بالذكاء الاصطناعي
+                {activeTab === 'products'
+                  ? 'اضافة منتج بالذكاء الاصطناعي'
+                  : 'اضافة خدمة بالذكاء الاصطناعي'}
               </Text>
             </TouchableOpacity>
           </YStack>

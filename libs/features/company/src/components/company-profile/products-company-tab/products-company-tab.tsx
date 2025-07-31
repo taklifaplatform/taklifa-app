@@ -157,9 +157,10 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
       ) : (
         <KeyboardAwareFlatList
           data={data || []}
-          extraScrollHeight={Platform.OS === 'ios' ? 40 : 100}
+          extraScrollHeight={Platform.OS === 'ios' ? 150 : 100}
           enableOnAndroid={true}
-          keyboardShouldPersistTaps="handled"
+          automaticallyAdjustKeyboardInsets
+          keyboardShouldPersistTaps={Platform.OS === 'ios' ? 'always' : 'handled'}
           refreshing={productsQuery.isLoading}
           onRefresh={productsQuery.refetch}
           onEndReached={productsQuery.fetchNextPage}

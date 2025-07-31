@@ -5,12 +5,13 @@ import { AccountSwitcher, AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { RefreshControl, TouchableOpacity } from 'react-native';
 import { createParam } from 'solito';
 
-import { useAuth, useMixpanel } from '@zix/services/auth';
+import { useAuth, useCart, useMixpanel } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import { useRouter } from 'solito/router';
 import { ScrollView, Stack, Text, YStack } from 'tamagui';
 import { CompanyCard } from '../../components';
 import CompanyProfileTabs from '../../components/company-profile/company-profile-tabs/company-profile-tabs';
+import { useMemo } from 'react';
 
 const { useParam } = createParam<{ company: string }>();
 
@@ -18,13 +19,14 @@ export function CompanyProfileScreen() {
   useMixpanel('Company Profile Screen view');
   const [companyId] = useParam('company');
   const router = useRouter();
+  const { cart, formatCurrency } = useCart();
   const {
     user: getUrlPrefix,
     canManageThisCompany,
     isAuthMemberInThisCompany,
   } = useAuth();
 
-   const { data, refetch, isLoading, isError, error } = useQuery({
+  const { data, refetch, isLoading, isError, error } = useQuery({
     queryFn() {
       if (!companyId) {
         return;
@@ -38,8 +40,13 @@ export function CompanyProfileScreen() {
   });
 
   const company = data?.data;
-  
-  
+
+  const totalCost = useMemo(() => {
+    return cart?.items
+      ?.filter((item) => item.company?.id === companyId)
+      .reduce((acc, item) => acc + (item.total_price || 0) * (item.quantity || 0), 0);
+    return formatCurrency(totalCost);
+  }, [cart]);
 
   const renderCompanyProfile = () =>
     company && (
@@ -60,7 +67,6 @@ export function CompanyProfileScreen() {
         <CompanyProfileTabs company={company} />
       </ScrollView>
     );
-  
 
   const renderLoadingSpinner = () =>
     !company?.id && !isError && <FullScreenSpinner />;
@@ -87,8 +93,7 @@ export function CompanyProfileScreen() {
     ) : (
       <AppHeader
         showBackButton
-        showCardHeader
-        cardHeaderValue={'3.500'}
+        cardHeaderValue={totalCost} //
         title=""
       />
     );

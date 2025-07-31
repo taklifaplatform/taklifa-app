@@ -56,14 +56,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               source={{
                 uri: product?.image?.original_url,
               }}
-              width={140}
+              width={147}
               height={130}
               borderRadius={10}
             />
           ) : (
             <Theme reset>
               <View
-                width={140}
+                width={147}
                 height={130}
                 backgroundColor="$color2"
                 borderRadius={'$4'}
@@ -94,7 +94,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             )}
             {product?.variant?.type_unit && (
               <Text fontWeight={'bold'} fontSize={'$3'}>
-              /  {useTypeUnitArabic({ type_unit: product?.variant?.type_unit })}
+                /{' '}
+                {useTypeUnitArabic({ type_unit: product?.variant?.type_unit })}
               </Text>
             )}
           </XStack>

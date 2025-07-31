@@ -6,8 +6,18 @@ import { CustomIcon } from '@zix/ui/icons';
 import { t } from 'i18next';
 import { useCallback, useState } from 'react';
 import { useRouter } from 'solito/router';
-import { Button, ColorTokens, H4, Theme, View, XStack, YStack, Text } from 'tamagui';
+import {
+  Button,
+  ColorTokens,
+  H4,
+  Theme,
+  View,
+  XStack,
+  YStack,
+  Text,
+} from 'tamagui';
 import { AppHeaderWrapper } from './app-header-wrapper';
+import { TouchableOpacity } from 'react-native';
 
 export type AppHeaderProps = {
   searchProps?: ZixInputProps;
@@ -126,7 +136,8 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
       : null;
 
   const renderToggleSearchBar = () =>
-    !showBackButton && showSearchBar && (
+    !showBackButton &&
+    showSearchBar && (
       <Button
         icon={isSearchBarOpen ? X : Search}
         color={'$color2'}
@@ -138,21 +149,21 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
       />
     );
 
-  const renderCardHeader = () => showCardHeader && (
-    <XStack gap="$2" alignItems="center" >
-      <CustomIcon theme="accent" name="riyal" size="$1" color="$color2" />
-      <Text fontSize={'$2'} fontWeight={'bold'} color="$color2">{cardHeaderValue}</Text>
-      <ShoppingBag size={20} color="$color2" />
-    </XStack>
-  );
+  const renderCardHeader = () =>
+    !!cardHeaderValue && (
+      <TouchableOpacity onPress={() => router.push(`${getUrlPrefix}/costs`)}>
+        <XStack gap="$2" alignItems="center">
+          <CustomIcon theme="accent" name="riyal" size="$1" color="$color2" />
+          <Text fontSize={'$2'} fontWeight={'bold'} color="$color2">
+            {cardHeaderValue}
+          </Text>
+          <ShoppingBag size={20} color="$color2" />
+        </XStack>
+      </TouchableOpacity>
+    );
 
   const renderMobileHeader = () => (
-    <YStack
-    theme="accent"
-      
-      backgroundColor={'$color1'}
-      paddingBottom="$1"
-    >
+    <YStack theme="accent" backgroundColor={'$color1'} paddingBottom="$1">
       <AppHeaderWrapper>
         <YStack>
           <XStack
@@ -161,7 +172,6 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
             alignItems="center"
             justifyContent="space-between"
           >
-            
             <XStack flex={0.25} justifyContent="flex-start">
               {renderAvatar()}
               {renderBackButton()}
@@ -190,7 +200,6 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
 
           {renderSearchBar()}
           {renderAfterSearchBar?.()}
-          
         </YStack>
       </AppHeaderWrapper>
     </YStack>

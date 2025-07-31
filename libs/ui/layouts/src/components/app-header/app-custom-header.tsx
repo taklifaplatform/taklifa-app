@@ -436,7 +436,7 @@ const ProductCard = ({
   setSelectedProductDetail: (product: ProductTransformer) => void;
 }) => {
   const [count, setCount] = useState(1);
-  console.log('product');
+
   return (
     <YStack
       key={index}

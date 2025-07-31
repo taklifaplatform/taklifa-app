@@ -560,7 +560,7 @@ const ListSection: FC<ListSectionProps> = memo(function ListSection({
         extraScrollHeight={Platform.OS === 'ios' ? 200 : 100}
         enableOnAndroid={true}
         keyboardShouldPersistTaps="handled"
-        style={{ flex: 1 }}
+        style={{ flex: 1}}
         data={companiesList}
         keyExtractor={(item: CompanyTransformer, index) =>
           `company-${item.id}-${index}`

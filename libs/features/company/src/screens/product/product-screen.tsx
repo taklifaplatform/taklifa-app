@@ -185,7 +185,6 @@ export function ProductScreen() {
         width={'50%'}
         height={35}
         size={15}
-        max={product?.data?.variant?.stock}
       />
       <AddToCartButton width={'45%'} height={35} product={product?.data} />
     </XStack>

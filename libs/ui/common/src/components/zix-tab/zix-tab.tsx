@@ -4,13 +4,13 @@ import { Button, ThemeableStackProps, View, XStack } from 'tamagui';
 export type ITab = {
   key: string;
   title: React.ReactNode;
-  content: React.ReactNode;
+  content: React.ReactNode | (() => React.ReactNode);
 };
 
 export type ZixTabProps = {
   defaultActiveTab: string;
   tabs: ITab[];
-
+  onTabChange?: (tab: string) => void;
   contentContainerProps?: ThemeableStackProps;
 };
 
@@ -18,8 +18,14 @@ export const ZixTab: React.FC<ZixTabProps> = ({
   defaultActiveTab,
   tabs = [],
   contentContainerProps = {},
+  onTabChange,
 }) => {
   const [activeTab, setActiveTab] = useState(defaultActiveTab);
+
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
+    onTabChange?.(tab);
+  };
 
   return (
     <View flex={1}>
@@ -30,7 +36,7 @@ export const ZixTab: React.FC<ZixTabProps> = ({
             flex={1}
             theme={ 'accent' }
             backgroundColor={activeTab === tab.key ? "$color1" : "transparent"}
-            onPress={() => setActiveTab(tab.key)}
+            onPress={() => handleTabChange(tab.key)}
             fontWeight="bold"
             fontSize="$1"
             color={activeTab === tab.key ? "$color2" : "$color12"}
