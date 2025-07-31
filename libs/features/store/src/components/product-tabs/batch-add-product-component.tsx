@@ -50,7 +50,7 @@ export const BatchAddProductComponent = () => {
       }, 1000);
     } catch (error) {
       setIsOpen(false);
-      alert('Oops! Something went wrong');
+      alert(error?.body?.message || 'Oops! Something went wrong');
     }
   }
 
