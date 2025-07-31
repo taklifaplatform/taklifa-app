@@ -16,12 +16,7 @@ import { ZixInput, ZixInputProps } from '@zix/ui/forms';
 import { CustomIcon } from '@zix/ui/icons';
 import { useTypeUnitArabic } from '@zix/utils';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import {
-  FlatList,
-  Platform,
-  TextInput,
-  TouchableOpacity
-} from 'react-native';
+import { FlatList, Platform, TextInput, TouchableOpacity } from 'react-native';
 import { useRouter } from 'solito/router';
 import {
   Button,
@@ -34,6 +29,7 @@ import {
   YStack,
 } from 'tamagui';
 import AnimatedWord from './animated-word';
+import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
 
 export type AppCustomHeaderProps = {
   searchProps?: ZixInputProps;
@@ -117,8 +113,6 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
       listProductsData?.data,
     );
   }, [selectedProduct]);
-
-
 
   const renderSearchBar = () => (
     <Theme reset>
@@ -369,14 +363,26 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
         }
       >
         {!selectedProductDetail?.product ? (
-          <FlatList
+          <KeyboardAwareFlatList
+            extraScrollHeight={Platform.OS === 'ios' ? 150 : 100}
+            enableOnAndroid={true}
+            keyboardShouldPersistTaps="handled"
             data={listProductsData?.data}
             style={{
               padding: 10,
               gap: 10,
               backgroundColor: '$color1',
             }}
-            renderItem={({ item, index }) => <ProductCard product={item} index={index} setOpen={setOpen} router={router} getUrlPrefix={getUrlPrefix} setSelectedProductDetail={setSelectedProductDetail} />}
+            renderItem={({ item, index }) => (
+              <ProductCard
+                product={item}
+                index={index}
+                setOpen={setOpen}
+                router={router}
+                getUrlPrefix={getUrlPrefix}
+                setSelectedProductDetail={setSelectedProductDetail}
+              />
+            )}
             keyExtractor={(item) => item.id}
           />
         ) : (
@@ -411,13 +417,26 @@ export const AppCustomHeader: React.FC<AppCustomHeaderProps> = ({
     );
   };
 
-
   return <>{renderSearchBar()}</>;
 };
 
-const ProductCard = ({ product, index, setOpen, router, getUrlPrefix, setSelectedProductDetail }: { product: ProductTransformer, index: number, setOpen: (open: boolean) => void, router: any, getUrlPrefix: string, setSelectedProductDetail: (product: ProductTransformer) => void }) => {
+const ProductCard = ({
+  product,
+  index,
+  setOpen,
+  router,
+  getUrlPrefix,
+  setSelectedProductDetail,
+}: {
+  product: ProductTransformer;
+  index: number;
+  setOpen: (open: boolean) => void;
+  router: any;
+  getUrlPrefix: string;
+  setSelectedProductDetail: (product: ProductTransformer) => void;
+}) => {
   const [count, setCount] = useState(1);
-  console.log('product')
+  console.log('product');
   return (
     <YStack
       key={index}
@@ -488,7 +507,8 @@ const ProductCard = ({ product, index, setOpen, router, getUrlPrefix, setSelecte
             </Theme>
             {product?.variant?.type_unit && (
               <Text fontSize={'$5'} fontWeight={'bold'} color="$color11">
-                / {useTypeUnitArabic({ type_unit: product?.variant?.type_unit })}
+                /{' '}
+                {useTypeUnitArabic({ type_unit: product?.variant?.type_unit })}
               </Text>
             )}
           </XStack>
@@ -507,7 +527,12 @@ const ProductCard = ({ product, index, setOpen, router, getUrlPrefix, setSelecte
           height={40}
           size={20}
         />
-        <AddToCartButton width={'40%'} height={40} product={product} count={count} />
+        <AddToCartButton
+          width={'40%'}
+          height={40}
+          product={product}
+          count={count}
+        />
       </XStack>
       <Button
         unstyled
@@ -531,6 +556,6 @@ const ProductCard = ({ product, index, setOpen, router, getUrlPrefix, setSelecte
       </Button>
     </YStack>
   );
-}
+};
 
 export default AppCustomHeader;

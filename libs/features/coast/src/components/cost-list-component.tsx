@@ -8,7 +8,7 @@ import {
 } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { useCallback, useMemo, useState } from 'react';
-import { FlatList, TouchableOpacity } from 'react-native';
+import { FlatList, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import { Image, Separator, Text, Theme, XStack, YStack } from 'tamagui';
 
 export interface CartItemComponentProps {

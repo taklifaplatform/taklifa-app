@@ -138,7 +138,8 @@
     "@tamagui/constants": "*",
     "expo-application": "*",
     "@expo/vector-icons": "*",
-    "lodash": "*"
+    "lodash": "*",
+    "react-native-keyboard-aware-scroll-view": "*"
   },
   "scripts": {
     "eas-build-post-install": "cd ../../ && node tools/scripts/eas-build-post-install.mjs . apps/mobile",

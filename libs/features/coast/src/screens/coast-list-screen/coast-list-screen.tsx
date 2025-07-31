@@ -3,11 +3,12 @@ import { GroupedCompanyItems, useCart, useMixpanel } from '@zix/services/auth';
 import { CustomIcon } from '@zix/ui/icons';
 import { AppHeader, ScreenLayout } from '@zix/ui/layouts';
 import { useCallback, useEffect, useState } from 'react';
-import { Alert, FlatList, Linking, RefreshControl } from 'react-native';
+import { Alert, FlatList, Linking, Platform, RefreshControl } from 'react-native';
 import { Button, H4, Spinner, Text, View, XStack, YStack } from 'tamagui';
 import { CostDetailComponent } from '../../components/cost-detail-component';
 import { OpenAPI } from '@zix/api';
 import * as FileSystem from 'expo-file-system';
+import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
 
 export interface ServicesListScreenProps {
   showHeader?: boolean;
@@ -207,7 +208,10 @@ export const CoastListScreen: React.FC<ServicesListScreenProps> = ({
     <ScreenLayout>
       {showHeader && <AppHeader title="التكاليف" />}
       <YStack flex={1} padding={'$2'} marginTop="$3">
-        <FlatList<GroupedCompanyItems>
+      <KeyboardAwareFlatList
+          extraScrollHeight={Platform.OS === 'ios' ? 40 : 100}
+          enableOnAndroid={true}
+          keyboardShouldPersistTaps="handled"
           data={groupedCompanyItems}
           style={{ flex: 1 }}
           contentContainerStyle={!hasItems ? { flex: 1 } : undefined}

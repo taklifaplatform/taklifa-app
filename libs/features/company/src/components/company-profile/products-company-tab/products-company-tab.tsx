@@ -1,19 +1,27 @@
 import { Sparkles } from '@tamagui/lucide-icons';
+import { useQuery } from '@tanstack/react-query';
 import { CompanyTransformer, ProductsService } from '@zix/api';
 import { ProductThumbCard } from '@zix/features/store';
 import {
   FilterByOrder,
   FilterPrice,
   ProductCard,
-  SearchProduct
+  SearchProduct,
 } from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { useFlatListQuery } from '@zix/utils';
 import { useFocusEffect } from 'expo-router';
 import { t } from 'i18next';
 import React, { useCallback, useState } from 'react';
-import { FlatList, RefreshControl } from 'react-native';
+import {
+  FlatList,
+  RefreshControl,
+  KeyboardAvoidingView,
+  Keyboard,
+  Platform,
+} from 'react-native';
 import { H4, View, XStack, YStack } from 'tamagui';
+import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
 
 export type ProductsCompanyTabProps = {
   company: CompanyTransformer;
@@ -37,8 +45,10 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
     max: undefined,
   });
   const [search, setSearch] = useState<string>();
-  //
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+
   const { data, ...productsQuery } = useFlatListQuery({
+    enabled: !isKeyboardVisible,
     queryFn: ({ pageParam }: { pageParam: number }) =>
       ProductsService.fetchAllProduct({
         companyId: company.id as string,
@@ -65,10 +75,10 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
   useFocusEffect(
     useCallback(() => {
       setTimeout(() => {
-        productsQuery.refetch()
-      }, 1000)
-    }, [])
-  )
+        productsQuery.refetch();
+      }, 1000);
+    }, []),
+  );
 
   const renderItem = ({ item, index }: { item: any; index: number }) => (
     <ProductCard
@@ -106,7 +116,10 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
         <XStack gap="$2" alignItems="center" paddingVertical={'$4'}>
           {!myStore && (
             <>
-              <FilterPrice priceRange={priceRange} setPriceRange={setPriceRange} />
+              <FilterPrice
+                priceRange={priceRange}
+                setPriceRange={setPriceRange}
+              />
               <FilterByOrder orderBy={orderBy} setOrderBy={setOrderBy} />
             </>
           )}
@@ -118,19 +131,18 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
         </XStack>
       )}
       {myStore ? (
-        <FlatList
+        <KeyboardAwareFlatList
           data={data || []}
+          extraScrollHeight={Platform.OS === 'ios' ? 150 : 100}
+          enableOnAndroid={true}
+          keyboardShouldPersistTaps="handled"
           refreshControl={
             <RefreshControl
               refreshing={productsQuery.isLoading}
               onRefresh={productsQuery.refetch}
             />
           }
-          refreshing={productsQuery.isLoading}
-          onRefresh={productsQuery.refetch}
           onEndReached={productsQuery.fetchNextPage}
-          removeClippedSubviews={true}
-          initialNumToRender={10}
           renderItem={renderMyStoreItem}
           keyExtractor={(item, index) => `product-${item.id}-${index}`}
           showsVerticalScrollIndicator={false}
@@ -143,8 +155,11 @@ export const ProductsCompanyTab: React.FC<ProductsCompanyTabProps> = ({
           )}
         />
       ) : (
-        <FlatList
+        <KeyboardAwareFlatList
           data={data || []}
+          extraScrollHeight={Platform.OS === 'ios' ? 40 : 100}
+          enableOnAndroid={true}
+          keyboardShouldPersistTaps="handled"
           refreshing={productsQuery.isLoading}
           onRefresh={productsQuery.refetch}
           onEndReached={productsQuery.fetchNextPage}

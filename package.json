@@ -99,6 +99,7 @@
     "react-native-confirmation-code-field": "^7.3.2",
     "react-native-dotenv": "^3.4.11",
     "react-native-gesture-handler": "~2.20.2",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-map-link": "^3.3.1",
     "react-native-maps": "1.18.0",
     "react-native-markdown-display": "^7.0.2",

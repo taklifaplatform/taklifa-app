@@ -1,6 +1,12 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-import { LayoutList, Map, ShoppingCart, Upload, X } from '@tamagui/lucide-icons';
+import {
+  LayoutList,
+  Map,
+  ShoppingCart,
+  Upload,
+  X,
+} from '@tamagui/lucide-icons';
 import {
   QueryClientProvider,
   useQuery,
@@ -9,7 +15,7 @@ import {
 import {
   CompaniesService,
   CompanyTransformer,
-  LocationService
+  LocationService,
 } from '@zix/api';
 import { CompanyCard } from '@zix/features/company';
 import { useAuth, useMixpanel, USER_ROLES } from '@zix/services/auth';
@@ -35,8 +41,15 @@ import MapView, { Circle, Region } from 'react-native-maps';
 import { Button, H4, View, XStack, YStack } from 'tamagui';
 // import MapFilters from '../../components/map-filters/map-filters';
 import { ZixButton, ZixDialog } from '@zix/ui/common';
-import Animated, { Easing, interpolateColor, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import Animated, {
+  Easing,
+  interpolateColor,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 import { CompanyDetail } from '../../components/company-detail/company-detail';
+import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
 
 const initialCamera = {
   center: {
@@ -94,7 +107,11 @@ export function HomeScreen() {
         hasSaudiProducts: saudiProductsMode ? 1 : 0,
       });
     },
-    queryKey: ['CompaniesService.fetchAllCompanies -12', search, saudiProductsMode],
+    queryKey: [
+      'CompaniesService.fetchAllCompanies -12',
+      search,
+      saudiProductsMode,
+    ],
     staleTime: 5 * 1000,
   });
   // const usersQuery = useQuery({
@@ -256,26 +273,12 @@ export function HomeScreen() {
   }
 
   const renderMapCompanies = () =>
-    (filters.provider_type === 'all' || filters.provider_type === 'company')
+    filters.provider_type === 'all' || filters.provider_type === 'company'
       ? companiesQuery.data?.data?.map((company, index) => (
-        <>
-          <MapCompanyMarker
-            key={`marker-${company.id}-${index}`}
-            company={company}
-            onPress={() => {
-              setCompaniesList([company]);
-              setSelectedCompany(company);
-              setShowCarousel(true);
-              onAnimateToCompany(company);
-              setOpen(true);
-            }}
-          />
-
-          {company.branches && (
+          <>
             <MapCompanyMarker
-              key={`marker-${company.id}-${company.branches.id}`}
+              key={`marker-${company.id}-${index}`}
               company={company}
-              branch={company.branches}
               onPress={() => {
                 setCompaniesList([company]);
                 setSelectedCompany(company);
@@ -284,9 +287,23 @@ export function HomeScreen() {
                 setOpen(true);
               }}
             />
-          )}
-        </>
-      ))
+
+            {company.branches && (
+              <MapCompanyMarker
+                key={`marker-${company.id}-${company.branches.id}`}
+                company={company}
+                branch={company.branches}
+                onPress={() => {
+                  setCompaniesList([company]);
+                  setSelectedCompany(company);
+                  setShowCarousel(true);
+                  onAnimateToCompany(company);
+                  setOpen(true);
+                }}
+              />
+            )}
+          </>
+        ))
       : null;
 
   // Debounced region setter
@@ -328,8 +345,8 @@ export function HomeScreen() {
           <ListSection
             showMap={showMap}
             companiesList={
-              (filters.provider_type === 'all' ||
-                filters.provider_type === 'company')
+              filters.provider_type === 'all' ||
+              filters.provider_type === 'company'
                 ? companiesQuery.data?.data || []
                 : []
             }
@@ -539,7 +556,10 @@ const ListSection: FC<ListSectionProps> = memo(function ListSection({
   // }, []);
   return (
     <View flex={1} margin="$5" marginVertical="0">
-      <FlatList
+      <KeyboardAwareFlatList
+        extraScrollHeight={Platform.OS === 'ios' ? 200 : 100}
+        enableOnAndroid={true}
+        keyboardShouldPersistTaps="handled"
         style={{ flex: 1 }}
         data={companiesList}
         keyExtractor={(item: CompanyTransformer, index) =>
@@ -650,12 +670,9 @@ const FiltersSection: FC<FiltersSectionProps> = memo(function FiltersSection({
 }) {
   if (isKeyboardVisible) return null;
   return (
-    <View position="absolute" bottom='$3' left='$4' right='$4'>
-      <XStack justifyContent='space-between'>
-        <SwitcherButton
-          showMap={showMap}
-          setShowMap={setShowMap}
-        />
+    <View position="absolute" bottom="$3" left="$4" right="$4">
+      <XStack justifyContent="space-between">
+        <SwitcherButton showMap={showMap} setShowMap={setShowMap} />
         <ActivateSaudiProductsModeButton />
         <CenterButton
           showMap={showMap}
@@ -703,21 +720,21 @@ const AppHeaderSection: FC<AppHeaderSectionProps> = memo(
   },
 );
 
-
-
 const ActivateSaudiProductsModeButton = () => {
   const { saudiProductsMode, toggleSaudiProductsMode } = useAuth();
   // Animation shared values
   const progress = useSharedValue(saudiProductsMode ? 1 : 0);
   const scale = useSharedValue(1);
 
-
   const handleSaudiProductsModeToggle = async () => {
     toggleSaudiProductsMode();
   };
 
   useEffect(() => {
-    progress.value = withTiming(saudiProductsMode ? 1 : 0, { duration: 500, easing: Easing.out(Easing.exp) });
+    progress.value = withTiming(saudiProductsMode ? 1 : 0, {
+      duration: 500,
+      easing: Easing.out(Easing.exp),
+    });
   }, [saudiProductsMode]);
 
   // Animated background color
@@ -725,7 +742,7 @@ const ActivateSaudiProductsModeButton = () => {
     backgroundColor: interpolateColor(
       progress.value,
       [0, 1],
-      ['#016837', '#0F5837'] // Outlined to filled
+      ['#016837', '#0F5837'], // Outlined to filled
     ),
     borderColor: '#0F5837',
     borderWidth: 2,
@@ -734,11 +751,7 @@ const ActivateSaudiProductsModeButton = () => {
 
   // Animated text color
   const animatedTextStyle = useAnimatedStyle(() => ({
-    color: interpolateColor(
-      progress.value,
-      [0, 1],
-      ['#FFFFFF', '#FFFFFF']
-    ),
+    color: interpolateColor(progress.value, [0, 1], ['#FFFFFF', '#FFFFFF']),
     fontWeight: 'bold',
     fontSize: 20,
   }));
@@ -760,19 +773,29 @@ const ActivateSaudiProductsModeButton = () => {
   };
 
   return (
-    <Animated.View style={[{ borderRadius: 12, overflow: 'hidden' }, animatedStyle]}>
+    <Animated.View
+      style={[{ borderRadius: 12, overflow: 'hidden' }, animatedStyle]}
+    >
       <Pressable
         onPress={handleSaudiProductsModeToggle}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
-        style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 6 }}
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          paddingHorizontal: 16,
+          paddingVertical: 6,
+        }}
         accessibilityRole="button"
       >
         <Animated.View style={animatedIconStyle}>
           {saudiProductsMode ? (
             <X color="#fff" size={28} />
           ) : (
-            <Image source={require('../../assets/saudi-industries.jpeg')} style={{ width: 28, height: 28 }} />
+            <Image
+              source={require('../../assets/saudi-industries.jpeg')}
+              style={{ width: 28, height: 28 }}
+            />
           )}
         </Animated.View>
         <Animated.Text style={animatedTextStyle}>
@@ -781,9 +804,6 @@ const ActivateSaudiProductsModeButton = () => {
       </Pressable>
     </Animated.View>
   );
-}
+};
 
 export default HomeScreen;
-
-
-

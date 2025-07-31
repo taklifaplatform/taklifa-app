@@ -43,7 +43,7 @@ export const ScreenLayout: React.FC<ScreenLayoutProps> = ({
   return (
     <Suspense fallback={<FullScreenSpinner />}>
       <SafeAreaView style={{ flex: 1 }} edges={edges}>
-        {children}
+          {children}
       </SafeAreaView>
     </Suspense>
   );
