@@ -346,11 +346,13 @@ export const ServiceDetailsScreen = () => {
       )}
       <ScrollView showsVerticalScrollIndicator={false}>
         <YStack flex={1} gap="$4" padding="$3">
-          <ZixMediasListWidget
-            medias={service?.images || []}
-            imageWidth={100}
-            imageHeight={100}
-          />
+          {service?.images && (
+            <ZixMediasListWidget
+              medias={service?.images || []}
+              imageWidth={100}
+              imageHeight={100}
+            />
+          )}
           <InfoCard service={service} />
           <Separator marginVertical="$2" />
           <DescriptionSection description={service.description || ''} />

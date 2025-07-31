@@ -11,7 +11,12 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { ProductsService } from '@zix/api';
 import { useMixpanel } from '@zix/services/auth';
-import { AddToCartButton, ManageCountProduct, ProductCard, TextInfo } from '@zix/ui/common';
+import {
+  AddToCartButton,
+  ManageCountProduct,
+  ProductCard,
+  TextInfo,
+} from '@zix/ui/common';
 import { CustomIcon } from '@zix/ui/icons';
 import { ZixMediasListWidget } from '@zix/ui/widgets';
 import moment from 'moment';
@@ -67,12 +72,13 @@ export function ProductScreen() {
     />
   );
 
-  const renderRatingsInfo = () => product?.data?.rating_stats?.score && (
-    <TextInfo
-      icon={<Star size={20} color="$color0" />}
-      title={`${product?.data?.rating_stats?.score} (${product?.data?.rating_stats?.count} تقييمات)`}
-    />
-  );
+  const renderRatingsInfo = () =>
+    product?.data?.rating_stats?.score && (
+      <TextInfo
+        icon={<Star size={20} color="$color0" />}
+        title={`${product?.data?.rating_stats?.score} (${product?.data?.rating_stats?.count} تقييمات)`}
+      />
+    );
   const renderTimeInfo = () => (
     <TextInfo
       icon={<ClockFading size={20} color="$color0" />}
@@ -162,7 +168,10 @@ export function ProductScreen() {
         <CustomIcon name="riyal" size="$1" color="$color0" />
       </Theme>
       <Text fontSize={'$5'} fontWeight={'bold'} color="$color11">
-       / {useTypeUnitArabic({type_unit: product?.data?.variant?.type_unit || ''})}
+        /{' '}
+        {useTypeUnitArabic({
+          type_unit: product?.data?.variant?.type_unit || '',
+        })}
       </Text>
     </XStack>
   );
@@ -222,13 +231,15 @@ export function ProductScreen() {
             </View>
           </Theme>
         )}
-        <ZixMediasListWidget
-          position="relative"
-          height={100}
-          imageWidth={100}
-          imageHeight={100}
-          medias={product?.data?.images || []}
-        />
+        {product?.data?.images && (
+          <ZixMediasListWidget
+            position="relative"
+            height={100}
+            imageWidth={100}
+            imageHeight={100}
+            medias={product?.data?.images || []}
+          />
+        )}
         <YStack
           width="100%"
           gap="$2"

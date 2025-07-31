@@ -98,7 +98,7 @@ export const ProductDetailComponent = ({
   const renderTypeUnitInfo = () => (
     <XStack width="100%" gap="$2" alignItems="center" paddingVertical={'$2'}>
       <Text fontSize={'$5'} fontWeight={'bold'} color="$color11">
-        {useTypeUnitArabic({type_unit: product?.variant?.type_unit || ''})}
+        {useTypeUnitArabic({ type_unit: product?.variant?.type_unit || '' })}
       </Text>
     </XStack>
   );
@@ -177,13 +177,15 @@ export const ProductDetailComponent = ({
               </View>
             </Theme>
           )}
-          <ZixMediasListWidget
-            position="relative"
-            medias={product?.images || []}
-            height={100}
-            imageWidth={100}
-            imageHeight={100}
-          />
+          {product?.images && (
+            <ZixMediasListWidget
+              position="relative"
+              medias={product?.images || []}
+              height={100}
+              imageWidth={100}
+              imageHeight={100}
+            />
+          )}
           <YStack
             width="100%"
             gap="$2"
