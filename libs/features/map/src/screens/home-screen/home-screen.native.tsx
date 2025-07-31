@@ -29,6 +29,7 @@ import {
   Pressable,
   RefreshControl,
   Share,
+  Image,
 } from 'react-native';
 import MapView, { Circle, Region } from 'react-native-maps';
 import { Button, H4, View, XStack, YStack } from 'tamagui';
@@ -724,7 +725,7 @@ const ActivateSaudiProductsModeButton = () => {
     backgroundColor: interpolateColor(
       progress.value,
       [0, 1],
-      ['#FFF5F5', '#0F5837'] // Outlined to filled
+      ['#016837', '#0F5837'] // Outlined to filled
     ),
     borderColor: '#0F5837',
     borderWidth: 2,
@@ -736,11 +737,10 @@ const ActivateSaudiProductsModeButton = () => {
     color: interpolateColor(
       progress.value,
       [0, 1],
-      ['#0F5837', '#FFFFFF']
+      ['#FFFFFF', '#FFFFFF']
     ),
     fontWeight: 'bold',
     fontSize: 20,
-    marginLeft: 8,
   }));
 
   // Animated icon style (scale/rotate for fun)
@@ -772,11 +772,11 @@ const ActivateSaudiProductsModeButton = () => {
           {saudiProductsMode ? (
             <X color="#fff" size={28} />
           ) : (
-            <ShoppingCart size={28} color="#0F5837" />
+            <Image source={require('../../assets/saudi-industries.jpeg')} style={{ width: 28, height: 28 }} />
           )}
         </Animated.View>
         <Animated.Text style={animatedTextStyle}>
-          {saudiProductsMode ? 'إغلاق' : 'المنتجات السعودية'}
+          {saudiProductsMode ? 'إغلاق' : 'صناعة سعودية'}
         </Animated.Text>
       </Pressable>
     </Animated.View>
